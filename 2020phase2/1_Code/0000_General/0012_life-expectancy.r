@@ -8,7 +8,7 @@
 
 
 
-#life expectancy based on mortality rate (based on Yusuf et al.)
+#life expectancy based on mortality rate (based on Yusuf et al. 2014)
 
     #method differences (rate vs. deaths/births/population)
         #-age capped (if only below a age threshold): rate aggregation does not make sense
