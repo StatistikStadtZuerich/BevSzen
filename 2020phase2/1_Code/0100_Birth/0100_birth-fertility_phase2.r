@@ -31,7 +31,7 @@
 
 #birth
     #age: only births of women at 'fertile age'
-    #origin: here origin of mother (at certain age range)
+    #origin: here origin of mother
     
     bir <- read_csv(bir_od) %>% 
         rename(year = EreignisDatJahr, age = AlterVMutterCd, bir = AnzGebuWir) %>% 
