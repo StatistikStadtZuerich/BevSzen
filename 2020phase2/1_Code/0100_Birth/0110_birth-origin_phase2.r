@@ -12,7 +12,7 @@
 #-------------------------------------------------------------------
 
 #working directory
-    setwd("O:/Projekte/BevSzen/2020_sandkasten_bad-rok/2020phase2/")
+  setwd(paste0(here::here(), "/2020phase2/"))
 
 #general (e.g. packages, colors)
     source("1_Code/0000_General/0000_general_phase2.r")

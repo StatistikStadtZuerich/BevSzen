@@ -12,7 +12,7 @@
 #-------------------------------------------------------------------
 
 #working directory
-    setwd("C:/GitTransfer/BevSzen/2020phase2/")
+    setwd(paste0(here::here(), "/2020phase2/"))
 
 #general (e.g. packages, colors)
     source("1_Code/0000_General/0000_general_phase2.r")
@@ -182,12 +182,12 @@
         ungroup()       
     
     # p103 <- ggplot(data = tfr_ya2) +
-    #     geom_vline(xintercept = year5, col = col_grey, linetype = "dashed") + 
+    #     geom_vline(xintercept = year5, col = col_grey, linetype = "dashed") +
     #     geom_line(aes(x = year, y = tfr_ya2, color = age_2)) +
-    #     geom_point(aes(x = year, y = tfr_ya2, color = age_2)) +      
+    #     geom_point(aes(x = year, y = tfr_ya2, color = age_2)) +
     #     labs(x = "year", y = "TFR", color = "") +
-    #     scale_x_continuous(breaks = pretty_breaks()) +      
-    #     scale_colour_manual(values = colorRampPalette(col_6)(length(age_2t))) + 
+    #     scale_x_continuous(breaks = pretty_breaks()) +
+    #     scale_colour_manual(values = colorRampPalette(col_6)(length(age_2t))) +
     #     neutral
     # 
     # ggsave(paste0(bir_res, "0103_TFR_by-year-age2.pdf"), 
@@ -250,7 +250,6 @@
 #-------------------------------------------------------------------
 
 #plot: fertility by district, year, age, origin
-    #test: x <- uni_d[2]
     
     # p110 <- function(x){
     #     ggplot(data = filter(fer_dyao, (district == x) & (year >= bir_base_begin))) +

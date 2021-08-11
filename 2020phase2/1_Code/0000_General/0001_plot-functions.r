@@ -197,5 +197,6 @@ sszplot <- function(data, geom = c("line", "point"),
   #     other geoms?
   #     colors if not indicated?
   #     different scales?
+  #     simple long format?
   
 }
