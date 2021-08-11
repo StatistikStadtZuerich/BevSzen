@@ -13,13 +13,13 @@
 #-------------------------------------------------------------------
 
 #working directory
-    setwd("O:/Projekte/BevSzen/2020_sandkasten_bad-rok/2020phase2/")
+    setwd("C:/GitTransfer/BevSzen/2020phase2/")
 
 #general (e.g. packages, colors)
     source("1_Code/0000_General/0000_general_phase2.r")
 
 #result path (for images)
-    rel_res <- "3_Results/0500_Relocation/"
+    rel_res <- "3_Results/0500_Relocation-Immigration/"
     
 #export path (for future rates)
     rel_exp <- "2_Data/4_Rates/" 
@@ -281,7 +281,8 @@
     
 #WHY mean and not sum over high age? result is mean age 
 #is more appropriate e.g. in plots
-#and can be explaned (e.g. the mean amount of relocations from people as of age x)
+#and can be explained (e.g. the mean amount of relocations from people as of age x)
+#in order to avoid a 'peak value' at age max (therefore mean and not sum)
            
 #aggregate
     dyao_amax_ybase <- filter(rei_dyao, (year >= rei_base_begin) & (year <= rei_base_end)) %>% 
@@ -291,6 +292,7 @@
                 rel = mean(rel)) %>% 
         ungroup() %>% 
         rename(age = age_new)
+
 
     
 #-------------------------------------------------------------------
@@ -547,7 +549,7 @@
         
         
 #-------------------------------------------------------------------
-#ya (without do)
+#ya (without d and o)
 #-------------------------------------------------------------------
     
 #Does this make sense? Is aggregation over origin helpful?
@@ -766,7 +768,7 @@
     
     
 #-------------------------------------------------------------------
-#smoothing (after different levels of aggregation were brought together
+#smoothing (after different levels of aggregation were brought together)
 #-------------------------------------------------------------------
  
 #smoothing (direction: age)
@@ -865,7 +867,7 @@
 #expand to ages beyond age threshold
 #-------------------------------------------------------------------
     
-#age at age threshold
+#proportion at age threshold
     prop_age_thres <- filter(prop_pred_begin, age == rei_age_max) %>% 
         rename(pred_age_thres = pred_roll) %>% 
         select(district, year, origin, pred_age_thres)
@@ -880,6 +882,8 @@
             by = c("district", "year", "age", "origin")) %>% 
         left_join(prop_age_thres, by = c("district", "year", "origin")) %>% 
         mutate(pred_all_age = if_else(age > rei_age_max, pred_age_thres, pred_roll))
+    
+    
     
 #smoothing (direction: age)
     pred_smooth <- group_by(prop_age, district, year, origin) %>%
