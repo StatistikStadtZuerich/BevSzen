@@ -12,7 +12,8 @@
 #-------------------------------------------------------------------
 
 #working directory
-  setwd(paste0(here::here(), "/2020phase2/"))
+    library(here)
+    setwd(paste0(here(), "/2020phase2/"))
 
 #general (e.g. packages, colors)
     source("1_Code/0000_General/0000_general_phase2.r")
@@ -23,7 +24,6 @@
 #birth: export path (for future rates)
     bir_exp <- "2_Data/4_Rates/"  
 
-    
 #-------------------------------------------------------------------
 #import and data preparation
 #-------------------------------------------------------------------

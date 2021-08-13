@@ -45,8 +45,9 @@ sszplot <- function(data, geom = c("line", "point"),
   
   stopifnot(!is.null(data) && !is.null(aes_x))
   
-  
+  #-------------------------------------------------------------------
   #### prep work ####
+  #-------------------------------------------------------------------
   
   ## checks location of current file and saves plots in folder
   ## "3_Results/(first part of this file name)/[name].[file_type]", where
@@ -103,12 +104,29 @@ sszplot <- function(data, geom = c("line", "point"),
   if (is.null(labs_x)) labs_x <- aes_x
   if (is.null(labs_y)) labs_y <- aes_y
 
-    
+  #-------------------------------------------------------------------   
   #### build the plot ####
+  #-------------------------------------------------------------------
   # default plot      
   res <- ggplot(data) +
     aest +
     neutral
+
+    # add vertical lines at i_x if i_x is set
+  if (!is.null(i_x)){
+    if (identical(i_x,"5"))
+      i_x <- data$year[data$year %% 5 == 0]
+    
+    res <- res + 
+      geom_vline(xintercept = i_x, col = col_grey, linetype = "dashed")
+  }
+  
+  # add horizontal lines at i_y if i_y is set
+  if (!is.null(i_y)){
+    for (i in 1:length(i_y))
+      res <- res + 
+        geom_hline(yintercept = i_y[i], col = col_grey, linetype = i)
+  }
   
   # add geom; if none was specified, uses line chart with dots as default
   # distinction dependent upon the colour grouping variable: if that is empty,
@@ -131,22 +149,6 @@ sszplot <- function(data, geom = c("line", "point"),
   
   res <- res + labs(x = labs_x, y = labs_y, colour = labs_col, linetype = labs_col)
   
-  # add vertical lines at i_x if i_x is set
-  if (!is.null(i_x)){
-    if (identical(i_x,"5"))
-      i_x <- data$year[data$year %% 5 == 0]
-    
-    res <- res + 
-      geom_vline(xintercept = i_x, col = col_grey, linetype = "dashed")
-  }
-  
-  # add horizontal lines at i_y if i_y is set
-  if (!is.null(i_y)){
-    for (i in 1:length(i_y))
-      res <- res + 
-        geom_hline(yintercept = i_y[i], col = col_grey, linetype = i)
-  }
-  
   # add continuous x scale with pretty breaks if scale_x is set
   if (!is.null(scale_x)){
     if (startsWith(scale_x, "cont")) {
@@ -154,6 +156,7 @@ sszplot <- function(data, geom = c("line", "point"),
         res <- res +
           scale_x_continuous(breaks = pretty_breaks())
     }
+    # preparation if a non-continuous non-pretty scale should be needed
     else if (startsWith(scale_x, "disc")) {}
   }
   
@@ -187,7 +190,7 @@ sszplot <- function(data, geom = c("line", "point"),
       facet_wrap(as.formula(paste("~", wrap)), ncol = col)
   }
   
-  # plot to file if name is setotherwise to graphics device
+  # plot to file if name is set, otherwise to graphics device
   # (file type per default pdf)
   if (!is.null(name)) {
       if (is.null(multi))
@@ -209,8 +212,8 @@ sszplot <- function(data, geom = c("line", "point"),
   #TODO:
   #     plot multi pages
   #     other geoms?
-  #     colors if not indicated?
-  #     different scales?
-  #     simple long format?
+  #     different scales for x?
+  #     simple long format function?
+  #     parameter for colour palette if not default
   
 }
