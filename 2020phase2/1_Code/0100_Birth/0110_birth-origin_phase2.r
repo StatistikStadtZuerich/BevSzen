@@ -69,18 +69,6 @@
     
     year5 <- cha_yo$year[cha_yo$year %% 5 == 0]    
     
-    # p170 <- ggplot(data = cha_yo) +
-    #     geom_vline(xintercept = year5, col = col_grey, linetype = "dashed") +     
-    #     geom_line(aes(x = year, y = cha_yo, color = origin)) +
-    #     geom_point(aes(x = year, y = cha_yo, color = origin)) +      
-    #     labs(x = "year", y = "origin change in %", color = "") +
-    #     scale_x_continuous(breaks = pretty_breaks()) +      
-    #     scale_colour_manual(values = col_o) +
-    #     neutral
-    # 
-    # ggsave(paste0(bir_res, "0170_origin-change_by-year-origin.pdf"), 
-    #     plot = p170, width = 7, height = 4)   
-    
     sszplot(cha_yo,
             aes_x = "year", aes_y = "cha_yo", aes_col = "origin",
             i_x = year5,
@@ -94,19 +82,6 @@
                       total = sum(total)) %>% 
         ungroup() %>% 
         mutate(cha_ya1o = if_else(total == 0, NA_real_, round(change / total * 100, round_rate)))    
-    
-    # p171 <- ggplot(data = cha_ya1o) +
-    #     geom_vline(xintercept = year5, col = col_grey, linetype = "dashed") + 
-    #     geom_line(aes(x = year, y = cha_ya1o, color = origin)) +
-    #     geom_point(aes(x = year, y = cha_ya1o, color = origin)) +      
-    #     facet_grid(~age_1) + 
-    #     labs(x = "year", y = "origin change in %", color = "") +
-    #     scale_x_continuous(breaks = pretty_breaks()) +      
-    #     scale_colour_manual(values = col_o) +
-    #     neutral
-    # 
-    # ggsave(paste0(bir_res, "0171_origin-change_by-year-age1-origin.pdf"), 
-    #     plot = p171, width = 12, height = 4)   
     
     sszplot(cha_ya1o,
             aes_x = "year", aes_y = "cha_ya1o", aes_col = "origin",
@@ -124,19 +99,6 @@
         ungroup() %>% 
         mutate(cha_ya2o = if_else(total == 0, NA_real_, round(change / total * 100, round_rate)))    
     
-    # p172 <- ggplot(data = cha_ya2o) +
-    #     geom_vline(xintercept = year5, col = col_grey, linetype = "dashed") + 
-    #     geom_line(aes(x = year, y = cha_ya2o, color = origin)) +
-    #     geom_point(aes(x = year, y = cha_ya2o, color = origin)) +      
-    #     facet_grid(~age_2) + 
-    #     labs(x = "year", y = "origin change in %", color = "") +
-    #     scale_x_continuous(breaks = pretty_breaks()) +      
-    #     scale_colour_manual(values = col_o) +
-    #     neutral
-    # 
-    # ggsave(paste0(bir_res, "0172_origin-change_by-year-age2-origin.pdf"), 
-    #     plot = p172, width = 12, height = 4) 
-    
     sszplot(cha_ya2o,
             aes_x = "year", aes_y = "cha_ya2o", aes_col = "origin",
             i_x = year5,
@@ -153,18 +115,6 @@
         ungroup() %>% 
         mutate(cha_dyo = if_else(total == 0, NA_real_, round(change / total * 100, round_rate)))    
     
-    # p173 <- ggplot(data = cha_dyo) + 
-    #     geom_vline(xintercept = year5, col = col_grey, linetype = "dashed") +       
-    #     geom_line(aes(x = year, y = cha_dyo, color = origin)) + 
-    #     geom_point(aes(x = year, y = cha_dyo, color = origin)) +        
-    #     facet_wrap(~district, ncol = 4) +
-    #     labs (x = "age", y = "origin change in %", color = "") +  
-    #     scale_colour_manual(values = col_o) + 
-    #     neutral
-    # 
-    # ggsave(paste0(bir_res, "0173_origin-change_by-district-year-origin.pdf"), 
-    #     plot = p173, width = 12, height = 14)     
-    
     sszplot(cha_dyo,
             aes_x = "year", aes_y = "cha_dyo", aes_col = "origin",
             i_x = year5,
@@ -180,19 +130,6 @@
                       total = sum(total)) %>% 
         ungroup() %>% 
         mutate(cha_dya1f = if_else(total == 0, NA_real_, round(change / total * 100, round_rate)))        
-    
-    
-    # p174 <- ggplot(data = cha_dya1f) + 
-    #     geom_vline(xintercept = year5, col = col_grey, linetype = "dashed") +         
-    #     geom_line(aes(x = year, y = cha_dya1f, color = age_1)) + 
-    #     geom_point(aes(x = year, y = cha_dya1f, color = age_1)) +   
-    #     scale_colour_manual(values = colorRampPalette(col_6)(length(age_1t))) + 
-    #     facet_wrap(~district, ncol = 4) +
-    #     labs (x = "", y = "origin change in %", color = "age") + 
-    #     neutral
-    # 
-    # ggsave(paste0(bir_res, "0174_origin-change_by-district-year-age1-foreign.pdf"), 
-    #     plot = p174, width = 12, height = 14)      
     
     sszplot(cha_dya1f,
             aes_x = "year", aes_y = "cha_dya1f", aes_col = "age_1",
@@ -228,17 +165,6 @@
   
   
 #plot
-    # p176 <- ggplot(data = cha_pred) + 
-    #     geom_vline(xintercept = c(bir_cha_base_begin, bir_cha_base_end), col = col_grey) +       
-    #     geom_line(aes(x = year, y = cha_all, color = origin)) + 
-    #     facet_wrap(~district, ncol = 4) +
-    #     labs (x = "age", y = "origin change in %", color = "") +  
-    #     scale_colour_manual(values = col_o) + 
-    #     neutral
-    # 
-    # ggsave(paste0(bir_res, "0175_origin-change_by-district-year-origin_past-future.pdf"), 
-    #     plot = p176, width = 12, height = 14)      
-
     sszplot(cha_pred,
         aes_x = "year", aes_y = "cha_all", aes_col = "origin",
         i_x = c(bir_cha_base_begin, bir_cha_base_end),

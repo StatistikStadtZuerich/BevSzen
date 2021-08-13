@@ -24,7 +24,7 @@
 #          is ignored (and therefore unnecessary) if aes_col is set
 # grid: if set, creates a facet grid with grid[1] on LHS and grid[2] on RHs of formula
 # wrap: if set, creates a facet wrap with this value on RHs of formula
-# col: argument cols for facet_grid, ncol for facet_wrap
+# ncol: argument cols for facet_grid, ncol for facet_wrap
 # title: title for the whole chart
 # name: if set, stores graphics under this name. otherwise to graphics device
 # file_type: select file type for storing. default is pdf
@@ -38,7 +38,7 @@ sszplot <- function(data, geom = c("line", "point"),
                     labs_x = NULL, labs_y = NULL, labs_col = NULL, labs_ltyp = NULL,
                     i_x = NULL, i_y = NULL,
                     scale_x = "cont_pretty", scale_y = NULL, fix_col = 1, breaks = NULL,
-                    grid = NULL, wrap = NULL, col = NULL,
+                    grid = NULL, wrap = NULL, ncol = NULL,
                     title = NULL,
                     name = NULL, file_type = "pdf", width = 7, height = 4,
                     multi = NULL){
@@ -184,10 +184,10 @@ sszplot <- function(data, geom = c("line", "point"),
   # add facet grid or wrap if either grid or wrap is set
   if (!is.null(grid)){
     res <- res +
-      facet_grid(as.formula(paste(grid[1], "~", grid[2])), cols = col)
+      facet_grid(as.formula(paste(grid[1], "~", grid[2])), cols = ncol)
   } else if (!is.null(wrap)){
     res <- res +
-      facet_wrap(as.formula(paste("~", wrap)), ncol = col)
+      facet_wrap(as.formula(paste("~", wrap)), ncol = ncol)
   }
   
   # plot to file if name is set, otherwise to graphics device
