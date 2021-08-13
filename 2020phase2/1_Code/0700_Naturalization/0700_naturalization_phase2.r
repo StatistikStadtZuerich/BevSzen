@@ -12,7 +12,8 @@
 #-------------------------------------------------------------------
 
 #working directory
-    setwd("C:/GitTransfer/BevSzen/2020phase2/")
+    library(here)
+    setwd(paste0(here(), "/2020phase2/"))
 
 #general (e.g. packages, colors)
     source("1_Code/0000_General/0000_general_phase2.r")
@@ -45,7 +46,7 @@
             summarize(nat = sum(nat)) %>% 
         ungroup() 
         
-#population (foreign population only)
+#population (foreign population only)   
     #year: begin of year population
   
     pop <- read_csv(pop_od) %>%   
