@@ -45,23 +45,35 @@ sszplot <- function(data, geom = c("line", "point"),
   
   stopifnot(!is.null(data) && !is.null(aes_x))
   
+  
   #### prep work ####
+  
+  ## checks location of current file and saves plots in folder
+  ## "3_Results/(first part of this file name)/[name].[file_type]", where
+  ## (first part of this file name) means e.g. 0100_birth.
+  ## creates the folder first if missing
+  
   # determine output path from file name (for saving)
   current_file <- regmatches(this.path(), regexpr("[a-zA-Z0-9._-]+$", this.path()))
+  
   # reduce to the nnnn_xyz part of the file name (e.g. 0100_birth)
   sub_path <- regmatches(current_file, regexpr("[0-9]{4}_[a-zA-Z0-9]+", current_file))
+  
   # handle folder hierarchy only on first two of nnnn (e.g. 0110_birth is converted to 0100_birth)
   sub_path <- sub("[0-9]{2}_", "00_", sub_path)
+  
   # create target path and create corresponding folder if not existing yet
   target <- paste(res_path, sub_path, sep = "/")
   if (!file.exists(paste(getwd(), target, sep = "/")))
     dir.create(paste(getwd(), target, sep = "/"), recursive = TRUE)
   target <- paste(target, paste0(name, ".", file_type), sep = "/")
+ 
   
-  # theme  -- this does not work yet (no effect; should apply a default line colour)
+  ## theme  -- this does not work yet (no effect; should apply a default line colour)
   theme_ssz <- theme(line = element_line(colour = col_6[1]))
   
-  # colours
+  
+  ## colours
   # if aes_col is set, selects as many colors as needed by grouping variable aes_x
   # from the predefined color palette col_6
   # if not, selects entry from predefined colour palette with given index fix_col (default 1)
@@ -77,7 +89,9 @@ sszplot <- function(data, geom = c("line", "point"),
           fix_col <- colorRampPalette(col_6)(count(unique(data[aes_col]))$n)
   
   
-  # aesthetics stuff. Need to use aes_string to build it up and then make the class "uneval"
+  ## aesthetics stuff
+  
+  # Need to use aes_string to build it up and then make the class "uneval"
   aest <- aes_string(x = aes_x, y = aes_y)
   if(!is.null(aes_col))
     aest <- c(aest, aes_string(colour = aes_col))
