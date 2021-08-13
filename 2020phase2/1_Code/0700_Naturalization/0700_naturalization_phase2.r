@@ -12,7 +12,8 @@
 #-------------------------------------------------------------------
 
 #working directory
-    setwd("O:/Projekte/BevSzen/2020_sandkasten_bad-rok/2020phase2/")
+    library(here)
+    setwd(paste0(here(), "/2020phase2/"))
 
 #general (e.g. packages, colors)
     source("1_Code/0000_General/0000_general_phase2.r")
@@ -45,7 +46,7 @@
             summarize(nat = sum(nat)) %>% 
         ungroup() 
         
-#population (foreign population only)
+#population (foreign population only)   
     #year: begin of year population
   
     pop <- read_csv(pop_od) %>%   
@@ -86,7 +87,7 @@
     p700 <- ggplot(data = proc) + 
         geom_line(aes(x = year, y = prop_nat), color = col_6[1]) +  
         scale_x_continuous(breaks = pretty_breaks()) +       
-        labs(x = "year", y = "proportion in % (naturalization on cizizenship change)") +  
+        labs(x = "year", y = "proportion in % (naturalization on citizenship change)") +  
         neutral
 
     ggsave(paste0(nat_res, "0700_naturalization-on-citizenship-change.pdf"), 
@@ -548,8 +549,8 @@
 #smooth processes (base years only)
     nat_a <- filter(nat_pop, (year >= nat_base_begin) & (year <= nat_base_end)) %>% 
         group_by(age) %>%
-            summarize(pop = sum(pop),
-                nat = sum(nat)) %>%
+            summarize(pop = mean(pop),
+                nat = mean(nat)) %>%
         ungroup() %>% 
         arrange(age) %>% 
         mutate(pop_a = pmax(0, predict(loess(pop ~ age, span = nat_pop_span_a, degree = 1, na.action = na.aggregate))),
