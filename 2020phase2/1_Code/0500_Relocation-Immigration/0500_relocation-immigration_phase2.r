@@ -16,12 +16,11 @@
 #-------------------------------------------------------------------
 
 #working directory
-    setwd("O:/Projekte/BevSzen/2020_sandkasten_bad-rok/2020phase2/")
+    library(here)
+    setwd(paste0(here(), "/2020phase2/"))
 
 #general (e.g. packages, colors)
     source("1_Code/0000_General/0000_general_phase2.r")
-
-
 
 
 #-------------------------------------------------------------------
@@ -42,12 +41,9 @@
                 rem_age_max = rei_age_max,                
                 rem_mis_span_dyao = rei_ims_span_dyao,
                 rem_rel_span_dyao = rei_rel_span_dyao, 
-                rem_mis_span_yao = rei_ims_span_yao,
-                rem_rel_span_yao = rei_rel_span_yao, 
-                rem_mis_span_ya = rei_ims_span_ya,
-                rem_rel_span_ya = rei_rel_span_ya,
-                rem_mis_thres_d = rei_ims_thres_d,
-                rem_mis_thres_o = rei_ims_thres_o,
+                rem_mis_span_dao = rei_ims_span_dao,
+                rem_rel_span_dao = rei_rel_span_dao, 
+                rem_mis_thres_y = rei_ims_thres_y,
                 rem_prop_span = rei_prop_span,
                 rem_window_thres = rei_window_thres,
                 rem_prop_trend = rei_prop_trend,
