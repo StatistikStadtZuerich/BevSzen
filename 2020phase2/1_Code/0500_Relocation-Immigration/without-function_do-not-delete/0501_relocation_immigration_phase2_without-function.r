@@ -13,13 +13,14 @@
 #-------------------------------------------------------------------
 
 #working directory
-    setwd("C:/GitTransfer/BevSzen/2020phase2/")
+    library(here)
+    setwd(paste0(here(), "/2020phase2/"))
 
 #general (e.g. packages, colors)
     source("1_Code/0000_General/0000_general_phase2.r")
 
 #result path (for images)
-    rel_res <- "3_Results/0500_Relocation-Immigration/dao/"
+    rel_res <- "3_Results/0500_Relocation-Immigration/"
     
 #export path (for future rates)
     rel_exp <- "2_Data/4_Rates/" 
