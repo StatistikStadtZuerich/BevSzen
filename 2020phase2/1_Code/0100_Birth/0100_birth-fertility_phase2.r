@@ -167,27 +167,21 @@
         
     sszplot(tfr_ya2o, aes_x = "year", aes_y = "tfr_ya2o", aes_col = "origin",
             grid = c("","age_2"), labs_y = "TFR", i_x = "5",
-            width = 16, height = 5) 
+            name = "0105_TFR-by-year-age2", width = 16, height = 5) 
 
 #-------------------------------------------------------------------
 #fertility plots (before any corrections)
 #-------------------------------------------------------------------
 
 #plot: fertility by district, year, age, origin
-    pdf(paste0(bir_res, "0110_fertility_by-district-year-age-origin.pdf"),
-        width = 9, height = 6)
-
-        # lapply(uni_d, p110)
-        lapply(uni_d, function(x) {
-          sszplot(filter(fer_dyao, (district == x) & (year >= bir_base_begin)),
-                  aes_x = "age", aes_y = "fer_dyao", aes_col = "origin",
-                  wrap = "as.factor(year)", labs_y = "fertility rate (in % per year)",
-                  title = as.character(x),
-                  geom = "line") 
-          }
-        )
-    dev.off()
-    
+    sszplot(filter(fer_dyao, year >= bir_base_begin),
+            aes_x = "age", aes_y = "fer_dyao", aes_col = "origin",
+            wrap = "as.factor(year)", labs_y = "fertility rate (in % per year)",
+            title = "as.character(x)",
+            geom = "line",
+            name = "0110_fertility_by-district-year-age-origin", width = 9, height = 6,
+            multi = uni_d, multif = "filter(district == x)") 
+       
 #plot: fertility by year, age, origin
     sszplot(filter(fer_yao, year >= bir_base_begin),
             aes_x = "age", aes_y = "fer_yao", aes_col = "origin",
@@ -233,19 +227,15 @@
         select(district, year, origin, age, cat, fer)
     
 #plot: initial vs. corrected fertility
-    pdf(paste0(bir_res, "0120_fertility_tail-correction.pdf"),
-        width = 13, height = 8)
-
-        lapply(uni_d, function(x) {
-          sszplot(filter(fer_cor, district == x),
-                  aes_x = "age", aes_y = "fer", aes_col = "origin", aes_ltyp = "cat",
-                  wrap = "as.factor(year)",
-                  labs_y = "fertility rate (in % per year)",
-                  title = as.character(x), geom = "line") 
-          }
-        )
-    dev.off()    
-    
+    sszplot(fer_cor,
+            aes_x = "age", aes_y = "fer", aes_col = "origin", aes_ltyp = "cat",
+            wrap = "as.factor(year)",
+            labs_y = "fertility rate (in % per year)",
+            title = "as.character(x)",
+            geom = "line", 
+            name = "0120_fertility_tail-correction", width = 13, height = 8,
+            multi = uni_d, multif = "filter(district == x)") 
+        
 #plot: cumulative population from the tails
     
     p121 <- function(x){
@@ -308,22 +298,15 @@
             fit_lev[1], fit_lev[2]), levels = fit_lev)) %>% 
         select(district, year, age, origin, cat, fer)  
     
-#plot: 
-    pdf(paste0(bir_res, "0130_fertility_fit.pdf"),
-        width = 13, height = 8)
-
-        lapply(uni_d, function(x) {
-          sszplot(filter(fit_dat, district == x),
-                  aes_x = "age", aes_y = "fer", aes_col = "origin", aes_ltyp = "cat",
-                  wrap = "as.factor(year)",
-                  labs_y = "fertility rate (in % per year)",
-                  title = as.character(x),
-                  geom = "line")
-          }
-        )
-    dev.off()     
-    
-    
+# #plot: 
+    sszplot(fit_dat, 
+            aes_x = "age", aes_y = "fer", aes_col = "origin", aes_ltyp = "cat",
+            wrap = "as.factor(year)",
+            labs_y = "fertility rate (in % per year)",
+            title = "as.character(x)",
+            geom = "line",
+            name = "0130_fertility_fit", width = 13, height = 8,
+            multi = uni_d, multif = "filter(district == x)")  
     
 #-------------------------------------------------------------------
 #prediction
@@ -352,20 +335,15 @@
 #-------------------------------------------------------------------
   
 #plot
-    pdf(paste0(bir_res, "0140_fertility-prediction_by-district.pdf"),
-        width = 12, height = 14)
-
-    lapply(uni_o, function(x) {
-      sszplot(filter(fer_pred, origin == x),
-              aes_x = "age", aes_y = "fer_all", aes_col = "as.factor(year)",
-              wrap = "district",
-              labs_y = "fertility rate (in % per year)",
-              scale_y = c(0, bir_plot_lim),
-              title = as.character(x),
-              geom = "line")
-      }
-    )
-    dev.off()  
+    sszplot(fer_pred, 
+            aes_x = "age", aes_y = "fer_all", aes_col = "as.factor(year)",
+            wrap = "district",
+            labs_y = "fertility rate (in % per year)",
+            scale_y = c(0, bir_plot_lim),
+            title = "as.character(x)",
+            geom = "line",
+            name = "0140_fertility-prediction_by-district", width = 12, height = 14,
+            multi = uni_o, multif = "filter(origin == x)")  
         
 #-------------------------------------------------------------------
 #plot the precitions: along year, for selected age
@@ -373,42 +351,32 @@
      
 #selected age
     uni_age <- sort(unique(fer_pred$age))
-    sel_age <- uni_age[(uni_age %% 5) == 0]    
+    sel_age <- uni_age[(uni_age %% 5) == 0]
     
-#time plot function (x: district, y: origin)
-    timeplot <- function(x, y){
-      
-        age_dat <- filter(fer_pred, (origin == y) & (age %in% sel_age))
-             
-        sszplot(filter(age_dat, district == x),
-                aes_x = "year", aes_y = "fer_fit", fix_col = 1,
-                labs_y = "fertility rate (in % per year)",
-                wrap = "age", col = 4,
-                scale_y = c(0, bir_plot_lim),
-                title = paste0(uni_o[uni_o == y], ": ", as.character(x)),
-                geom = "point")
-        } 
-        
 #plot: Swiss
-    p141 <- function(x){timeplot(x, y = uni_o[1])}
-   
-    pdf(paste0(bir_res, "0141_fertility-prediction_by-district_along-year_Swiss.pdf"),
-        width = 11, height = 5)
-    
-        lapply(uni_d, p141)
-    dev.off()          
+    age_dat <- filter(fer_pred, (origin == uni_o[1]) & (age %in% sel_age))    
+    sszplot(age_dat,
+            aes_x = "year", aes_y = "fer_fit", fix_col = 1,
+            labs_y = "fertility rate (in % per year)",
+            wrap = "age", ncol = 4,
+            scale_y = c(0, bir_plot_lim),
+            title = paste0("as.character(paste0('", levels(uni_o)[uni_o == uni_o[1]], ": ', x))"),
+            geom = "point",
+            name = "0141_fertility-prediction_by-district_along-year_Swiss", width = 11, height = 5,
+            multi = uni_d, multif = "filter(district == x)")  
     
 #plot: foreign
-    p142 <- function(x){timeplot(x, y = uni_o[2])}
-   
-    pdf(paste0(bir_res, "0142_fertility-prediction_by-district_along-year_foreign.pdf"),
-        width = 11, height = 5)
-    
-        lapply(uni_d, p142)
-    dev.off()       
-    
-    
-    
+    age_dat <- filter(fer_pred, (origin == uni_o[2]) & (age %in% sel_age))    
+    sszplot(age_dat,
+            aes_x = "year", aes_y = "fer_fit", fix_col = 1,
+            labs_y = "fertility rate (in % per year)",
+            wrap = "age", ncol = 4,
+            scale_y = c(0, bir_plot_lim),
+            title = paste0("as.character(paste0('", levels(uni_o)[uni_o == uni_o[2]], ": ', x))"),
+            geom = "point",
+            name = "0142_fertility-prediction_by-district_along-year_foreign", width = 11, height = 5,
+            multi = uni_d, multif = "filter(district == x)")     
+
 #-------------------------------------------------------------------
 #fit gam to future fertility rates
 #-------------------------------------------------------------------
@@ -431,20 +399,14 @@
         filter(year %in% sel_years)      
   
 #plot
-    pdf(paste0(bir_res, "0150_fertility-prediction_before-after-fit.pdf"),
-        width = 10, height = 6)
-
-        lapply(uni_d, function(x) {
-          sszplot(filter(sel_dat, district == x),
-                  aes_x = "age", aes_y = "fer", aes_col = "cat",
-                  grid = c("origin", "as.factor(year)"),
-                  labs_y = "fertility rate (in % per year)",
-                  title = as.character(x),
-                  geom = "line")
-          }
-        )
-    dev.off()    
- 
+    sszplot(sel_dat,
+            aes_x = "age", aes_y = "fer", aes_col = "cat",
+            grid = c("origin", "as.factor(year)"),
+            labs_y = "fertility rate (in % per year)",
+            title = "as.character(x)",
+            geom = "line",
+            name = "0150_fertility-prediction_before-after-fit", width = 10, height = 6,
+            multi = uni_d, multif = "filter(district ==x)") 
        
 #-------------------------------------------------------------------
 #export fertility rates
@@ -482,7 +444,7 @@
     sszplot(tfr_dyo,
             aes_x = "year", aes_y = "tfr", aes_col = "origin",
             i_x = c(bir_base_begin, szen_begin),
-            wrap = "district", col = 4,
+            wrap = "district", ncol = 4,
             geom = "line",
             name = "0160_TFR_by-district-origin", width = 12, height = 14)   
    
@@ -498,22 +460,15 @@
         ungroup()
     
 #plot
-    pdf(paste0(bir_res, "0161_TFR_by-district-origin-age1.pdf"), 
-        width = 12, height = 14)    
-        
-        # lapply(uni_o, p161) 
-        lapply(uni_o, function(x) {
-          sszplot(filter(tfr_a1, origin == x),
-                  aes_x = "year", aes_y = "tfr", aes_col = "age_1",
-                  i_x = c(bir_base_begin, szen_begin),
-                  labs_col = "age",
-                  wrap = "district", col = 4,
-                  geom = "line",
-                  title = as.character(x))  
-          }
-        )
-    dev.off()
-    
+    sszplot(tfr_a1,
+            aes_x = "year", aes_y = "tfr", aes_col = "age_1",
+            i_x = c(bir_base_begin, szen_begin),
+            labs_col = "age",
+            wrap = "district", ncol = 4,
+            geom = "line",
+            title = "as.character(x)",
+            name = "0161_TFR_by-district-origin-age1", width = 12, height = 14,
+            multi = uni_o, multif = "filter(origin == x)")      
      
 #-------------------------------------------------------------------
 #TFR by age class (more detailled)
@@ -527,19 +482,13 @@
         ungroup()
     
 #plot
-    pdf(paste0(bir_res, "0162_TFR_by-district-origin-age2.pdf"), 
-        width = 12, height = 14)    
-        
-        # lapply(uni_o, p162)
-        lapply(uni_o, function(x) {
-          sszplot(filter(tfr_a2, origin == x),
-                  aes_x = "year", aes_y = "tfr", aes_col = "age_2",
-                  i_x = c(bir_base_begin, szen_begin),
-                  labs_col = "age",
-                  wrap = "district", col = 4,
-                  geom = "line",
-                  title = as.character(x))  
-          }
-        )        
-    dev.off()
-
+    sszplot(tfr_a2,
+            aes_x = "year", aes_y = "tfr", aes_col = "age_2",
+            i_x = c(bir_base_begin, szen_begin),
+            labs_col = "age",
+            wrap = "district", ncol = 4,
+            geom = "line",
+            title = "as.character(x)",
+            name = "0162_TFR_by-district-origin-age2", width = 12, height = 14,
+            multi = uni_o, multif = "filter(origin == x)")   
+    

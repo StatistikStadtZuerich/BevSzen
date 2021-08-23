@@ -1,7 +1,8 @@
 #-------------------------------------------------------------------
 #generic plot function
 #
-# Kind of a ggplot wrapper to obtain similar and uniform plots. 
+# Kind of a ggplot wrapper to obtain similar and uniform plots
+# with less code
 #
 #rok/bad, July 2021
 #-------------------------------------------------------------------
@@ -25,13 +26,17 @@
 # grid: if set, creates a facet grid with grid[1] on LHS and grid[2] on RHs of formula
 # wrap: if set, creates a facet wrap with this value on RHs of formula
 # ncol: argument cols for facet_grid, ncol for facet_wrap
-# title: title for the whole chart
+# title: title for the whole chart, as object or string (esp. in case of multipage plots)
 # name: if set, stores graphics under this name. otherwise to graphics device
 # file_type: select file type for storing. default is pdf
 # width: width of output file
 # height: height of output file
 # multi: apply the plot on this list recursively and combine the plots on multipage document
 #         --> this is not working yet!!! (code removed)
+# multif: run the plot recursively with this expression in tidy format (usually a filter).
+#         format e.g.: "filter(district == x)"
+
+## caveat: all parameters have to be added to the recursive function call at the very end!
 
 sszplot <- function(data, geom = c("line", "point"),
                     aes_x, aes_y, aes_col = NULL, aes_ltyp = NULL,
@@ -41,7 +46,7 @@ sszplot <- function(data, geom = c("line", "point"),
                     grid = NULL, wrap = NULL, ncol = NULL,
                     title = NULL,
                     name = NULL, file_type = "pdf", width = 7, height = 4,
-                    multi = NULL){
+                    multi = NULL, multif = NULL){
   
   stopifnot(!is.null(data) && !is.null(aes_x))
   
@@ -80,14 +85,17 @@ sszplot <- function(data, geom = c("line", "point"),
   # if not, selects entry from predefined colour palette with given index fix_col (default 1)
   col_time <- c(rep(col_grey, length(uniy_bir_base)),
                 colorRampPalette(col_6[1:5])(length(uniy_szen)))
-  
-  if (is.null(aes_col))
-    fix_col <- col_6[fix_col] else
-      if (identical(aes_col, "origin"))
-        fix_col <- col_o else
-      if (grepl("year", aes_col))
-        fix_col <- col_time else
-          fix_col <- colorRampPalette(col_6)(count(unique(data[aes_col]))$n)
+ 
+  # no colour handling if function is in multipage mode 
+  if (is.null(multi)) {
+    if (is.null(aes_col))
+      fix_col <- col_6[fix_col] else
+        if (identical(aes_col, "origin"))
+          fix_col <- col_o else
+        if (grepl("year", aes_col))
+          fix_col <- col_time else
+            fix_col <- colorRampPalette(col_6)(count(unique(data[aes_col]))$n)
+  }
   
   
   ## aesthetics stuff
@@ -195,14 +203,24 @@ sszplot <- function(data, geom = c("line", "point"),
   if (!is.null(name)) {
       if (is.null(multi))
         ggsave(target, plot = res, width = width, height = height) else {
-  ## this is work in progress, not working yet        
-          pdf(target, width = 13, height = 8)
-    
-          lapply(multi, sszplot)
           
-          dev.off()
-        }
-    
+  # if multiple similar plots have to be generated with one plot per page (via lapply):
+  # data term is built on the fly from original data parameter together with multif:
+  # data %>% <multif>, e.g. data %>% filter(district == x)
+          pdf(target, width = width, height = height)
+       
+          lapply(multi, function(x) {
+            sszplot(data = eval(str2lang(paste("data %>% ", multif))), geom = geom,
+             aes_x = aes_x, aes_y = aes_y, aes_col = aes_col, aes_ltyp = aes_ltyp,
+             labs_x = labs_x, labs_y = labs_y, labs_col = labs_col, labs_ltyp = labs_ltyp,
+             i_x = i_x, i_y = i_y,
+             scale_x = scale_x, scale_y = scale_y, fix_col = fix_col, breaks = breaks,
+             grid = grid, wrap = wrap, ncol = ncol,
+             title = eval(str2expression(title)))
+          }
+          )
+          dev.off()  
+        }    
   } else {
     print(res)
   }
@@ -210,7 +228,6 @@ sszplot <- function(data, geom = c("line", "point"),
 
   
   #TODO:
-  #     plot multi pages
   #     other geoms?
   #     different scales for x?
   #     simple long format function?
