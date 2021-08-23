@@ -13,7 +13,8 @@
 #-------------------------------------------------------------------
 
 #working directory
-    setwd("C:/GitTransfer/BevSzen/2020phase2/")
+    library(here)
+    setwd(paste0(here(), "/2020phase2/"))
 
 #general (e.g. packages, colors)
     source("1_Code/0000_General/0000_general_phase2.r")
@@ -433,267 +434,105 @@
             
 
 #-------------------------------------------------------------------
-#yao (without d)
+#dao (without y)
 #-------------------------------------------------------------------
           
-#aggregate
-    yao <- group_by(dyao_amax_ybase, year, age, origin) %>% 
-            summarize(ims = sum(ims),
-                rel = sum(rel)) %>% 
+#aggregate (mean per year)
+    dao <- group_by(dyao_amax_ybase, district, age, origin) %>% 
+            summarize(ims = mean(ims),
+                rel = mean(rel)) %>% 
         ungroup()
     
 #smoothing (direction: age)
-    yao_smooth <- group_by(yao, year, origin) %>%
+    dao_smooth <- group_by(dao, district, origin) %>%
             arrange(age) %>% 
-            mutate(ims_a = pmax(0, predict(loess(ims ~ age, span = rei_ims_span_yao, degree = 1, na.action = na.aggregate))),
-                rel_a = pmax(0, predict(loess(rel ~ age, span = rei_rel_span_yao, degree = 1, na.action = na.aggregate)))) %>% 
+            mutate(ims_a = pmax(0, predict(loess(ims ~ age, span = rei_ims_span_dao, degree = 1, na.action = na.aggregate))),
+                rel_a = pmax(0, predict(loess(rel ~ age, span = rei_rel_span_dao, degree = 1, na.action = na.aggregate)))) %>% 
         ungroup()    
     
 #plot preparation
-    temp_initial <- gather(yao_smooth, `rel`, `ims`, key = category, value = count) %>% 
+    temp_initial <- gather(dao_smooth, `rel`, `ims`, key = category, value = count) %>% 
         mutate(cat = factor(if_else(category == "rel", 
             process_lev[1], process_lev[2]), levels = process_lev),
             smooth = factor(smooth_lev[1], levels = smooth_lev)) %>% 
-        select(year, age, origin, cat, smooth, count) 
+        select(district, age, origin, cat, smooth, count) 
         
-    temp_smooth <- gather(yao_smooth, `rel_a`, `ims_a`, key = category, value = count) %>% 
+    temp_smooth <- gather(dao_smooth, `rel_a`, `ims_a`, key = category, value = count) %>% 
         mutate(cat = factor(if_else(category == "rel_a", 
             process_lev[1], process_lev[2]), levels = process_lev),
             smooth = factor(smooth_lev[2], levels = smooth_lev)) %>% 
-        select(year, age, origin, cat, smooth, count) 
+        select(district, age, origin, cat, smooth, count) 
     
-    yao_smooth_plot <- bind_rows(temp_initial, temp_smooth)        
+    dao_smooth_plot <- bind_rows(temp_initial, temp_smooth)        
     
-    
-#plot: focus age 
-    
-    #base years (subjectively, but last year in the plot)
-        year_plot <- seq(rei_base_end, rei_base_begin, by = -7)       
-      
-    #plot 
-        p510 <- ggplot(data = filter(yao_smooth_plot, year %in% year_plot)) + 
+
+#plot 
+    p510 <- function(x){
+        ggplot(data = filter(dao_smooth_plot, (district == x))) + 
             geom_line(aes(x = age, y = count, color = cat, linetype = smooth, alpha = smooth)) +  
-            facet_grid(origin ~  year) +
+            facet_grid(origin ~  .) +
             scale_colour_manual(values = col_6[1:2]) + 
             scale_alpha_manual(values = c(0.3, 1)) +
             scale_x_continuous(breaks = pretty_breaks()) +               
             labs(x = "age", y = "quantity per year", color = "", linetype = "", alpha = "") + 
             guides(alpha = FALSE) +
-            neutral
+            ggtitle(as.character(x)) +
+            neutral}
+
+    pdf(paste0(rel_res, "0510_processes_dao_smooth.pdf"),
+        width = 10, height = 8)
+
+        lapply(uni_d, p510)
+
+    dev.off()  
+
+
+    
+#proportion after smoothing
+    prop_dao_smooth <- mutate(dao_smooth, rel_prop_dao = pmax(0, pmin(100, 
+        if_else(ims_a == 0, NA_real_, round(rel_a / ims_a * 100, round_prop)))))      
         
-    ggsave(paste0(rel_res, "0510_processes_yao_smooth_focus-age.pdf"), 
-        plot = p510, width = 15, height = 8)      
+    
+#plot        
+    p511 <- ggplot(data = prop_dao_smooth) +
+        geom_line(aes(x = age, y = rel_prop_dao, color = origin)) +  
+        facet_wrap(~district, ncol = 4) +
+        scale_colour_manual(values = col_o) +       
+        labs(x = "age", y = "proportion in % (relocation on immigration*)", color = "") +  
+        neutral
+    
+    ggsave(paste0(rel_res, "0511_proportion_dao_smooth.pdf"), 
+        plot = p511, width = 11, height = 10)      
                 
- 
-    
-#plot: focus years 
-    
-    #age (subjectively selected)
-        age_plot <- seq(0, 60, by = 20) 
-          
-    #plot 
-        p511 <- ggplot(data = filter(yao_smooth_plot, age %in% age_plot)) + 
-            geom_line(aes(x = year, y = count, color = cat, linetype = smooth, alpha = smooth)) +  
-            facet_grid(origin ~  age) +
-            scale_colour_manual(values = col_6[1:2]) + 
-            scale_alpha_manual(values = c(0.3, 1)) +
-            scale_x_continuous(breaks = pretty_breaks()) +               
-            labs(x = "year", y = "quantity per year", color = "", linetype = "", alpha = "") + 
-            guides(alpha = FALSE) +
-            neutral
-        
-    ggsave(paste0(rel_res, "0511_processes_yao_smooth_focus-years.pdf"), 
-        plot = p511, width = 15, height = 8)      
-                    
-    
-#proportion after smoothing
-    prop_yao_smooth <- mutate(yao_smooth, rel_prop_yao = pmax(0, pmin(100, 
-        if_else(ims_a == 0, NA_real_, round(rel_a / ims_a * 100, round_prop)))))      
-        
-    
+   
+  
 
-#plot: focus age
-        
-    #base years (subjectively, but last year in the plot)
-        year_plot <- seq(rei_base_end, rei_base_begin, by = -3)           
-        
-    #plot        
-        p512 <- ggplot(data = filter(prop_yao_smooth, year %in% year_plot)) + 
-            geom_line(aes(x = age, y = rel_prop_yao, color = origin)) +  
-            facet_wrap(~ as.factor(year), ncol = 3) +
-            scale_colour_manual(values = col_o) +       
-            labs(x = "age", y = "proportion in % (relocation on immigration*)", color = "") +  
-            expand_limits(y = 0) +               
-            neutral
-        
-    ggsave(paste0(rel_res, "0512_proportion_yao_smooth_focus-age.pdf"), 
-        plot = p512, width = 15, height = 8)             
-        
-        
-#plot: focus years
-        
-    #age (subjectively selected)
-        age_plot <- seq(0, 70, by = 10)           
-        
-    #plot        
-        p513 <- ggplot(data = filter(prop_yao_smooth, age %in% age_plot)) + 
-            geom_line(aes(x = year, y = rel_prop_yao, color = origin)) +  
-            facet_wrap(~ as.factor(age), ncol = 4) +
-            scale_colour_manual(values = col_o) +       
-            labs(x = "year", y = "proportion in % (relocation on immigration*)", color = "") +  
-            expand_limits(y = 0) +               
-            neutral
-        
-    ggsave(paste0(rel_res, "0513_proportion_yao_smooth_focus-years.pdf"), 
-        plot = p513, width = 15, height = 8)             
-        
-        
-#-------------------------------------------------------------------
-#ya (without d and o)
-#-------------------------------------------------------------------
-    
-#Does this make sense? Is aggregation over origin helpful?
-#Yes, this could be helpful, more often for the foreign than the Swiss categories
-          
-#aggregate
-    ya <- group_by(dyao_amax_ybase, year, age) %>% 
-            summarize(ims = sum(ims),
-                rel = sum(rel)) %>% 
-        ungroup()
-            
-#smoothing (direction: age)
-    ya_smooth <- group_by(ya, year) %>%
-            arrange(age) %>% 
-            mutate(ims_a = pmax(0, predict(loess(ims ~ age, span = rei_ims_span_ya, degree = 1, na.action = na.aggregate))),
-                rel_a = pmax(0, predict(loess(rel ~ age, span = rei_rel_span_ya, degree = 1, na.action = na.aggregate)))) %>% 
-        ungroup()    
-       
-#plot preparation
-    temp_initial <- gather(ya_smooth, `rel`, `ims`, key = category, value = count) %>% 
-        mutate(cat = factor(if_else(category == "rel", 
-            process_lev[1], process_lev[2]), levels = process_lev),
-            smooth = factor(smooth_lev[1], levels = smooth_lev)) %>% 
-        select(year, age, cat, smooth, count) 
-        
-    temp_smooth <- gather(ya_smooth, `rel_a`, `ims_a`, key = category, value = count) %>% 
-        mutate(cat = factor(if_else(category == "rel_a", 
-            process_lev[1], process_lev[2]), levels = process_lev),
-            smooth = factor(smooth_lev[2], levels = smooth_lev)) %>% 
-        select(year, age, cat, smooth, count) 
-    
-    ya_smooth_plot <- bind_rows(temp_initial, temp_smooth)            
-            
-#plot: focus age 
-    
-    #base years (subjectively, but last year in the plot)
-        year_plot <- seq(rei_base_end, rei_base_begin, by = -3)       
-      
-    #plot 
-        p514 <- ggplot(data = filter(ya_smooth_plot, year %in% year_plot)) + 
-            geom_line(aes(x = age, y = count, color = cat, linetype = smooth, alpha = smooth)) +  
-            facet_wrap( ~year, ncol = 3) +
-            scale_colour_manual(values = col_6[1:2]) + 
-            scale_alpha_manual(values = c(0.3, 1)) +
-            scale_x_continuous(breaks = pretty_breaks()) +               
-            labs(x = "age", y = "quantity per year", color = "", linetype = "", alpha = "") + 
-            guides(alpha = FALSE) +
-            neutral   
-    
-    ggsave(paste0(rel_res, "0514_processes_ya_smooth_focus-age.pdf"), 
-        plot = p514, width = 15, height = 8)    
-    
-#plot: focus years 
-    
-    #age (subjectively selected)
-        age_plot <- seq(0, 70, by = 10) 
-          
-    #plot 
-        p515 <- ggplot(data = filter(ya_smooth_plot, age %in% age_plot)) + 
-            geom_line(aes(x = year, y = count, color = cat, linetype = smooth, alpha = smooth)) +  
-             facet_wrap( ~age, ncol = 4) +
-            scale_colour_manual(values = col_6[1:2]) + 
-            scale_alpha_manual(values = c(0.3, 1)) +
-            scale_x_continuous(breaks = pretty_breaks()) +               
-            labs(x = "year", y = "quantity per year", color = "", linetype = "", alpha = "") + 
-            guides(alpha = FALSE) +
-            neutral
-        
-    ggsave(paste0(rel_res, "0515_processes_ya_smooth_focus-years.pdf"), 
-        plot = p515, width = 15, height = 8)      
-                        
-    
-#proportion after smoothing
-    prop_ya_smooth <- mutate(ya_smooth, rel_prop_ya = pmax(0, pmin(100, 
-        if_else(ims_a == 0, NA_real_, round(rel_a / ims_a * 100, round_prop)))))      
-        
-
-#plot: focus age
-        
-    #base years (subjectively, but last year in the plot)
-        year_plot <- seq(rei_base_end, rei_base_begin, by = -3)           
-        
-    #plot        
-        p516 <- ggplot(data = filter(prop_ya_smooth, year %in% year_plot)) + 
-            geom_line(aes(x = age, y = rel_prop_ya), color = col_6[1]) +  
-            facet_wrap(~ as.factor(year), ncol = 3) +
-            labs(x = "age", y = "proportion in % (relocation on immigration*)", color = "") +  
-            expand_limits(y = 0) +               
-            neutral
-        
-    ggsave(paste0(rel_res, "0516_proportion_ya_smooth_focus-age.pdf"), 
-        plot = p516, width = 15, height = 8)              
-    
-#plot: focus years
-        
-    #age (subjectively selected)
-        age_plot <- seq(0, 70, by = 10)           
-        
-    #plot        
-        p517 <- ggplot(data = filter(prop_ya_smooth, age %in% age_plot)) + 
-            geom_line(aes(x = year, y = rel_prop_ya), color = col_6[1]) +  
-            facet_wrap(~ as.factor(age), ncol = 4) +
-            labs(x = "year", y = "proportion in % (relocation on immigration*)", color = "") +  
-            expand_limits(y = 0) +               
-            neutral
-        
-    ggsave(paste0(rel_res, "0517_proportion_ya_smooth_focus-years.pdf"), 
-        plot = p517, width = 15, height = 8)             
-            
-    
 #-------------------------------------------------------------------
 #proportion from different aggregation levels
 #-------------------------------------------------------------------
        
-#threshold tests
-    # rei_ims_thres_d <- 0.8 
-    # rei_rel_thres_o <- 0.1  
-    
+#threshold test
+    # rei_ims_thres_y <- 0.8 
+
 #proportion    
     temp_dyao <- select(prop_dyao_smooth, district, year, age, origin, ims_a, rel_prop_dyao) %>% 
         rename(ims = ims_a)
-    temp_yao <- select(prop_yao_smooth, year, age, origin, rel_prop_yao)    
-    temp_ya <- select(prop_ya_smooth, year, age, rel_prop_ya)    
-      
-    sources <- c("dyao", "yao", "ya")    
+    temp_dao <- select(prop_dao_smooth, district, age, origin, rel_prop_dao)    
     
-    prop_agg <- left_join(temp_dyao, temp_yao, by = c("year", "age", "origin")) %>% 
-        left_join(temp_ya, by = c("year", "age")) %>% 
-        mutate(rel_prop = case_when(ims >= rei_ims_thres_d ~ rel_prop_dyao,
-                                    ims >= rei_ims_thres_o ~ rel_prop_yao,
-                                    TRUE ~ rel_prop_ya), 
-               rel_prop_source = factor(case_when(ims >= rei_ims_thres_d ~ sources[1],
-                                    ims >= rei_ims_thres_o ~ sources[2],
-                                    TRUE ~ sources[3]), levels = sources))
+    sources <- c("dyao", "dao")    
     
-    
+    prop_agg <- left_join(temp_dyao, temp_dao, by = c("district", "age", "origin")) %>% 
+        mutate(rel_prop = if_else(ims >= rei_ims_thres_y, rel_prop_dyao, rel_prop_dao), 
+            rel_prop_source = factor(if_else(ims >= rei_ims_thres_y, sources[1], sources[2]), levels = sources))               
+
     #look at certain data points (to understand the values in the numerator of the proportion)    
         test <- filter(prop_agg, (district == "Wollishofen") & (year == 2014) & (origin == "foreign") & (rel_prop_dyao > 70))    
         test     
 
 #plot: entire curves (different aggregations levels)
-    entire_curves <- select(prop_agg, district, year, age, origin, rel_prop_dyao, rel_prop_yao, rel_prop_ya) %>% 
-        rename(dyao = rel_prop_dyao, yao = rel_prop_yao, ya = rel_prop_ya) %>%    
-        gather(`dyao`, `yao`, `ya`, key = category, value = count) %>% 
+    entire_curves <- select(prop_agg, district, year, age, origin, rel_prop_dyao, rel_prop_dao) %>% 
+        rename(dyao = rel_prop_dyao, dao = rel_prop_dao) %>%    
+        gather(`dyao`, `dao`, key = category, value = count) %>% 
         mutate(cat = factor(category, levels = sources))
     
 
@@ -701,7 +540,7 @@
     #base years (subjectively, but last year in the plot)
         year_plot <- seq(rei_base_end, rei_base_begin, by = -3)      
         
-    p518 <- function(x){
+    p512 <- function(x){
         ggplot(data = filter(entire_curves, (district == x) & (year %in% year_plot))) + 
             geom_line(aes(x = age, y = count, color = cat)) +         
             facet_grid(year ~ origin) +
@@ -711,10 +550,10 @@
             ggtitle(as.character(x)) +
             neutral}
 
-    pdf(paste0(rel_res, "0518_proportion_different-aggregation-levels.pdf"),
+    pdf(paste0(rel_res, "0512_proportion_different-aggregation-levels.pdf"),
         width = 12, height = 8)
 
-        lapply(uni_d, p518)
+        lapply(uni_d, p512)
 
     dev.off()      
     
@@ -724,7 +563,7 @@
     #base years (subjectively, but last year in the plot)
         year_plot <- seq(rei_base_end, rei_base_begin, by = -3)      
         
-    p519 <- function(x){
+    p513 <- function(x){
         ggplot(data = filter(prop_agg, (district == x) & (year %in% year_plot))) + 
             geom_line(aes(x = age, y = rel_prop), color = "black") +         
             geom_point(aes(x = age, y = rel_prop, color = rel_prop_source)) +  
@@ -735,10 +574,10 @@
             ggtitle(as.character(x)) +
             neutral}
 
-    pdf(paste0(rel_res, "0519_one-proportion-from-different-aggregation-levels_focus-age.pdf"),
+    pdf(paste0(rel_res, "0513_one-proportion-from-different-aggregation-levels_focus-age.pdf"),
         width = 12, height = 8)
 
-        lapply(uni_d, p519)
+        lapply(uni_d, p513)
 
     dev.off()  
     
@@ -748,7 +587,7 @@
     #age (subjectively selected)
         age_plot <- seq(0, 60, by = 20)      
         
-    p520 <- function(x){
+    p514 <- function(x){
         ggplot(data = filter(prop_agg, (district == x) & (age %in% age_plot))) + 
             geom_line(aes(x = year, y = rel_prop), color = "black") +         
             geom_point(aes(x = year, y = rel_prop, color = rel_prop_source)) +  
@@ -759,10 +598,10 @@
             ggtitle(as.character(x)) +
             neutral}
 
-    pdf(paste0(rel_res, "0520_one-proportion-from-different-aggregation-levels_focus-years.pdf"),
+    pdf(paste0(rel_res, "0514_one-proportion-from-different-aggregation-levels_focus-years.pdf"),
         width = 12, height = 8)
 
-        lapply(uni_d, p520)
+        lapply(uni_d, p514)
 
     dev.off()  
     
@@ -791,7 +630,7 @@
         year_plot <- seq(rei_base_end, rei_base_begin, by = -3)       
       
     #plot 
-        p521 <- function(x){
+        p515 <- function(x){
             ggplot(data = filter(plot_agg_smooth, (district == x) & (year %in% year_plot))) + 
                 geom_line(aes(x = age, y = count, linetype = cat, alpha = cat), color = col_6[1]) +  
                 facet_grid(year ~ origin) +
@@ -802,10 +641,10 @@
                 ggtitle(as.character(x)) +
                 neutral}
     
-        pdf(paste0(rel_res, "0521_one-proportion_smoothing_focus-age.pdf"),
+        pdf(paste0(rel_res, "0515_one-proportion_smoothing_focus-age.pdf"),
             width = 12, height = 8)
     
-            lapply(uni_d, p521)
+            lapply(uni_d, p515)
     
         dev.off() 
         
@@ -817,7 +656,7 @@
         age_plot <- seq(0, 60, by = 20) 
       
     #plot 
-        p522 <- function(x){
+        p516 <- function(x){
             ggplot(data = filter(plot_agg_smooth, (district == x) & (age %in% age_plot))) + 
                 geom_line(aes(x = year, y = count, linetype = cat, alpha = cat), color = col_6[1]) +  
                 facet_grid(origin ~  age) +
@@ -828,10 +667,10 @@
                 ggtitle(as.character(x)) +
                 neutral}
     
-        pdf(paste0(rel_res, "0522_one-proportion_smoothing_focus-years.pdf"),
+        pdf(paste0(rel_res, "0516_one-proportion_smoothing_focus-years.pdf"),
             width = 15, height = 8)
     
-            lapply(uni_d, p522)
+            lapply(uni_d, p516)
     
         dev.off()   
 
@@ -906,7 +745,7 @@
         year_plot <- seq(szen_begin, szen_end, by = 7)       
       
     #plot 
-        p523 <- function(x){
+        p517 <- function(x){
             ggplot(data = filter(plot_pred_smooth, (district == x) & (year %in% year_plot))) + 
                 geom_line(aes(x = age, y = count, linetype = cat, alpha = cat), color = col_6[1]) +  
                 facet_grid(origin ~  year) +
@@ -917,10 +756,10 @@
                 ggtitle(as.character(x)) +
                 neutral}
     
-        pdf(paste0(rel_res, "0523_prediction_dyao_smooth.pdf"),
+        pdf(paste0(rel_res, "0517_prediction_dyao_smooth.pdf"),
             width = 15, height = 8)
     
-            lapply(uni_d, p523)
+            lapply(uni_d, p517)
     
         dev.off()   
             
@@ -953,7 +792,7 @@
     # plot(1:length(col_time), 1:length(col_time), col = col_time, pch = 16, cex = 2)
        
 #plot: focus age distribution
-    p524 <- function(x){
+    p518 <- function(x){
         ggplot(data = filter(rei_past_pred, district == x)) +
             geom_line(aes(x = age, y = prop, color = as.factor(year))) +
             facet_grid(. ~ origin) +
@@ -963,10 +802,10 @@
             ggtitle(as.character(x)) +
             neutral}
 
-      pdf(paste0(rel_res, "0524_proportion_dyao_past-future.pdf"),
+      pdf(paste0(rel_res, "0518_proportion_dyao_past-future.pdf"),
           width = 14, height = 7)
   
-          lapply(uni_d, p524)
+          lapply(uni_d, p518)
   
       dev.off()   
       
@@ -991,7 +830,7 @@
     #colors
         col_years_plot <- colorRampPalette(col_6[1:5])(length(year_plot))
 
-    p525 <- function(x){
+    p519 <- function(x){
         ggplot(data = filter(plot_a_past_pred, (district == x) & (year %in% year_plot))) +
             geom_line(aes(x = age, y = prop, color = as.factor(year), size = time, alpha = time)) +
             facet_grid(. ~ origin ) +
@@ -1003,10 +842,10 @@
             ggtitle(as.character(x)) +
             neutral}
 
-    pdf(paste0(rel_res, "0525_proportion_dyao_past-future_focus-age.pdf"),
+    pdf(paste0(rel_res, "0519_proportion_dyao_past-future_focus-age.pdf"),
         width = 14, height = 7)
 
-        lapply(uni_d, p525)
+        lapply(uni_d, p519)
 
     dev.off()   
             
@@ -1019,7 +858,7 @@
     #colors
         col_age_pred <- colorRampPalette(col_6[1:5])(length(age_plot_pred))
 
-    p526 <- function(x){
+    p520 <- function(x){
         ggplot(data = filter(plot_a_past_pred, (district == x) & (age %in% age_plot_pred))) +
             geom_vline(xintercept = c(rei_base_begin, rei_base_end), color = col_grey, linetype = 1) +
             geom_line(aes(x = year, y = prop, color = as.factor(age))) +
@@ -1029,10 +868,10 @@
             ggtitle(as.character(x)) +
             neutral}
 
-    pdf(paste0(rel_res, "0526_proportion_dyao_past-future_focus-years.pdf"),
+    pdf(paste0(rel_res, "0520_proportion_dyao_past-future_focus-years.pdf"),
         width = 14, height = 6)
 
-        lapply(uni_d, p526)
+        lapply(uni_d, p520)
 
     dev.off()   
             
