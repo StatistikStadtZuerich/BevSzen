@@ -208,21 +208,28 @@
         #new reserves, usage proportion
         mutate(reserve_new = capacity - buildings, 
             usage_prop = pmax(0, pmin(100, 
-            if_else(usage == 0, 0, usage / reserve_new * 100) + car_pp)))
+                if_else(usage == 0, 0, usage / reserve_new * 100) + car_pp)))
+    
+    
+#-------------------------------------------------------------------
+#usage per year
+#-------------------------------------------------------------------
+
+#distribution of usage per year 
+    usage_y <- tibble(year = szen_begin:szen_end) %>% 
+        mutate(delta = year - date_end, 
+            exp = exp(car_lamda * delta),
+            exp_end = if_else(year <= car_y, exp, 0),
+            distr = exp_end / sum(exp_end))
+    # sum(usage_y$distr)
+    
+
+
+
+
     
     
     
     
-    
-    
-    
-    
-        
-    
-    
-    
-    car_uti
-      tmp4$flaeche.kap <- tmp4$flaeche.kap / 85 * kareb.ausbau
-    tmp4$flaeche.ina <- tmp4$flaeche.ina / 85 * kareb.ausbau  
-  
+
     
