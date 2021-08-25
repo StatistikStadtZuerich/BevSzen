@@ -12,7 +12,8 @@
 #-------------------------------------------------------------------
 
 #working directory
-    setwd("O:/Projekte/BevSzen/2020_sandkasten_bad-rok/2020phase2/")
+    library(here)
+    setwd(paste0(here(), "/2020phase2/"))
 
 #general (e.g. packages, colors)
     source("1_Code/0000_General/0000_general_phase2.r")
@@ -43,19 +44,6 @@
 #plot   
     year5 <- pro_male$year[pro_male$year %% 5 == 0]
 
-    # p190 <- ggplot(data = pro_male) + 
-    #     geom_vline(xintercept = year5, col = col_grey, linetype = "dashed") +
-    #     geom_hline(yintercept = 50, col = col_grey, linetype = "dashed") +      
-    #     geom_line(aes(x = year, y = pro_male), color = col_6[1]) + 
-    #     geom_point(aes(x = year, y = pro_male), color = col_6[1]) +       
-    #     labs(x = "year", y = "proportion male in %") +
-    #     scale_x_continuous(breaks = pretty_breaks()) +
-    #     scale_y_continuous(limits = c(0, 70), breaks = seq(0, 70, 10)) +       
-    #     neutral
-    #     
-    # ggsave(paste0(bir_res, "0190_sex-ratio_by-year.pdf"), 
-    #     plot = p190, width = 7, height = 4)  
-
     sszplot(pro_male,
             aes_x = "year", aes_y = "pro_male",
             i_x = year5, i_y = 50,
@@ -77,20 +65,6 @@
         summarize(pred_mean = mean(pro_male))
     
 #plot with mean
-    # p191 <- ggplot(data = pro_male) + 
-    #     geom_vline(xintercept = year5, col = col_grey, linetype = "dashed") +
-    #     geom_hline(yintercept = 50, col = col_grey, linetype = "dashed") +   
-    #     geom_hline(yintercept = pred_mean$pred_mean, col = col_6[1], linetype = "dotted") +          
-    #     geom_line(aes(x = year, y = pro_male), color = col_6[1]) + 
-    #     geom_point(aes(x = year, y = pro_male), color = col_6[1]) +       
-    #     labs(x = "year", y = "proportion male in %") +
-    #     scale_x_continuous(breaks = pretty_breaks()) +
-    #     scale_y_continuous(limits = c(0, 70), breaks = seq(0, 70, 10)) +      
-    #     neutral
-    #     
-    # ggsave(paste0(bir_res, "0191_sex-ratio_by-year_with-mean.pdf"), 
-    #     plot = p191, width = 7, height = 4)      
-    
     sszplot(pro_male,
             aes_x = "year", aes_y = "pro_male",
             i_x = year5, i_y = pred_mean$pred_mean,
