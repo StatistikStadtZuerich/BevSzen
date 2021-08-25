@@ -115,6 +115,7 @@
     
     sszplot(tfr_y, aes_x = "year", aes_y = "tfr_y",
             labs_y = "TFR", i_x = "5",
+            geom = c("line", "point"),
             name = "0100_TFR_by-year")
     
     
@@ -125,6 +126,7 @@
     
     sszplot(tfr_yo, aes_x = "year", aes_y = "tfr_yo", aes_col = "origin",
             labs_y = "TFR", i_x = "5",
+            geom = c("line", "point"),
             name = "0101_TFR_by-year-origin")        
     
 #TFR by year, age1
@@ -135,6 +137,7 @@
     
     sszplot(tfr_ya1, aes_x = "year", aes_y = "tfr_ya1", aes_col = "age_1",
             i_x = "5", labs_y = "TFR",
+            geom = c("line", "point"),
             name = "0102_TFR_by-year-age1")  
     
     
@@ -146,6 +149,7 @@
     
     sszplot(tfr_ya2, aes_x = "year", aes_y = "tfr_ya2", aes_col = "age_2",
             i_x = "5", labs_y = "TFR",
+            geom = c("line", "point"),
             name = "0103_TFR_by-year-age2")      
     
     
@@ -157,7 +161,9 @@
     
     sszplot(tfr_ya1o, aes_x = "year", aes_y = "tfr_ya1o", aes_col = "origin",
             grid = "age_1", labs_y = "TFR", i_x = "5",
-            name = "0104_TFR_by-year-age1-origin", width = 12) 
+            geom = c("line", "point"),
+            name = "0104_TFR_by-year-age1-origin",
+            width = 12) 
     
 #TFR by year, age2, origin  
     tfr_ya2o <- left_join(fer_yao, look_a2, by = "age") %>% 
@@ -167,7 +173,9 @@
         
     sszplot(tfr_ya2o, aes_x = "year", aes_y = "tfr_ya2o", aes_col = "origin",
             grid = c("","age_2"), labs_y = "TFR", i_x = "5",
-            name = "0105_TFR-by-year-age2", width = 16, height = 5) 
+            geom = c("line", "point"),
+            name = "0105_TFR-by-year-age2",
+            width = 16, height = 5) 
 
 #-------------------------------------------------------------------
 #fertility plots (before any corrections)
@@ -178,21 +186,20 @@
             aes_x = "age", aes_y = "fer_dyao", aes_col = "origin",
             wrap = "as.factor(year)", labs_y = "fertility rate (in % per year)",
             title = "as.character(x)",
-            geom = "line",
-            name = "0110_fertility_by-district-year-age-origin", width = 9, height = 6,
+            name = "0110_fertility_by-district-year-age-origin",
+            width = 9, height = 6,
             multi = uni_d, multif = "filter(district == x)") 
        
 #plot: fertility by year, age, origin
     sszplot(filter(fer_yao, year >= bir_base_begin),
             aes_x = "age", aes_y = "fer_yao", aes_col = "origin",
             wrap = "as.factor(year)", labs_y = "fertility rate (in % per year)",
-            geom = "line",
             name = "0111_fertility_by-year-age-origin")
     
 #plot: fertility by year, age
     sszplot(filter(fer_ya, year >= bir_base_begin),
             aes_x = "age", aes_y = "fer_ya", wrap = "as.factor(year)",
-            labs_y = "fertility rate (in % per year)", geom = "line",
+            labs_y = "fertility rate (in % per year)",
             name = "0112_fertility_by-year-age") 
     
     
@@ -232,42 +239,21 @@
             wrap = "as.factor(year)",
             labs_y = "fertility rate (in % per year)",
             title = "as.character(x)",
-            geom = "line", 
-            name = "0120_fertility_tail-correction", width = 13, height = 8,
+            name = "0120_fertility_tail-correction",
+            width = 13, height = 8,
             multi = uni_d, multif = "filter(district == x)") 
         
 #plot: cumulative population from the tails
-    
-    p121 <- function(x){
-        ggplot(data = filter(fer_tail, district == x)) +
-            geom_hline(yintercept = bir_thres_origin, col = col_grey) +  
-            geom_hline(yintercept = bir_thres_overall, col = col_grey, linetype = "dashed") +  
-            geom_hline(yintercept = bir_thres_const, col = col_grey, linetype = "dotted") +          
-            geom_line(aes(x = age, y = low_cum, color = origin)) +
-            geom_line(aes(x = age, y = up_cum, color = origin)) +        
-            facet_wrap( ~ as.factor(year)) +
-            scale_colour_manual(values = col_o) +          
-            labs(x = "age", y = "cumulative population from tails", color = "") +
-            ggtitle(as.character(x)) +
-            neutral}
- 
-    # fer_tail <- fer_tail %>%
-    #   pivot_longer(c(low_cum, up_cum), names_to = "low_up", values_to = "cumul")
-    #     p121 <- function(x) {
-    #       sszplot(filter(fer_tail, district == x),
-    #               aes_x = "age", aes_y = "cumul", aes_col = "origin",
-    #               wrap = "as.factor(year)",
-    #               i_y = c(bir_thres_origin, bir_thres_overall, bir_thres_const),
-    #               labs_y = "cumulative population from tails", fix_col = col_o,
-    #               title = as.character(x), geom = "line")
-    #     }
-    
-    pdf(paste0(bir_res, "0121_cumulative-population-from_tails.pdf"),
-        width = 13, height = 8)
-
-        lapply(uni_d, p121)
-    dev.off()    
-        
+    sszplot(fer_tail,
+            aes_x = "age", aes_y = "low_cum", aes_col = "origin",
+            wrap = "as.factor(year)",
+            i_y = c(bir_thres_origin, bir_thres_overall, bir_thres_const),
+            labs_y = "cumulative population from tails",
+            title = "as.character(x)",
+            multi = uni_d, multif = "filter(district == x)",
+            name = "0121_cumulative-population-from_tails",
+            width = 13, height = 8,
+            quotes = quote(geom_line(aes(x = age, y = up_cum, color = origin))))
     
 #-------------------------------------------------------------------
 #fit gam to corrected fertility rate
@@ -304,8 +290,8 @@
             wrap = "as.factor(year)",
             labs_y = "fertility rate (in % per year)",
             title = "as.character(x)",
-            geom = "line",
-            name = "0130_fertility_fit", width = 13, height = 8,
+            name = "0130_fertility_fit",
+            width = 13, height = 8,
             multi = uni_d, multif = "filter(district == x)")  
     
 #-------------------------------------------------------------------
@@ -341,8 +327,8 @@
             labs_y = "fertility rate (in % per year)",
             scale_y = c(0, bir_plot_lim),
             title = "as.character(x)",
-            geom = "line",
-            name = "0140_fertility-prediction_by-district", width = 12, height = 14,
+            name = "0140_fertility-prediction_by-district",
+            width = 12, height = 14,
             multi = uni_o, multif = "filter(origin == x)")  
         
 #-------------------------------------------------------------------
@@ -362,7 +348,8 @@
             scale_y = c(0, bir_plot_lim),
             title = paste0("as.character(paste0('", levels(uni_o)[uni_o == uni_o[1]], ": ', x))"),
             geom = "point",
-            name = "0141_fertility-prediction_by-district_along-year_Swiss", width = 11, height = 5,
+            name = "0141_fertility-prediction_by-district_along-year_Swiss",
+            width = 11, height = 5,
             multi = uni_d, multif = "filter(district == x)")  
     
 #plot: foreign
@@ -374,7 +361,8 @@
             scale_y = c(0, bir_plot_lim),
             title = paste0("as.character(paste0('", levels(uni_o)[uni_o == uni_o[2]], ": ', x))"),
             geom = "point",
-            name = "0142_fertility-prediction_by-district_along-year_foreign", width = 11, height = 5,
+            name = "0142_fertility-prediction_by-district_along-year_foreign",
+            width = 11, height = 5,
             multi = uni_d, multif = "filter(district == x)")     
 
 #-------------------------------------------------------------------
@@ -404,8 +392,8 @@
             grid = c("origin", "as.factor(year)"),
             labs_y = "fertility rate (in % per year)",
             title = "as.character(x)",
-            geom = "line",
-            name = "0150_fertility-prediction_before-after-fit", width = 10, height = 6,
+            name = "0150_fertility-prediction_before-after-fit",
+            width = 10, height = 6,
             multi = uni_d, multif = "filter(district ==x)") 
        
 #-------------------------------------------------------------------
@@ -445,8 +433,8 @@
             aes_x = "year", aes_y = "tfr", aes_col = "origin",
             i_x = c(bir_base_begin, szen_begin),
             wrap = "district", ncol = 4,
-            geom = "line",
-            name = "0160_TFR_by-district-origin", width = 12, height = 14)   
+            name = "0160_TFR_by-district-origin",
+            width = 12, height = 14)   
    
 #-------------------------------------------------------------------
 #TFR by age class 
@@ -465,9 +453,9 @@
             i_x = c(bir_base_begin, szen_begin),
             labs_col = "age",
             wrap = "district", ncol = 4,
-            geom = "line",
             title = "as.character(x)",
-            name = "0161_TFR_by-district-origin-age1", width = 12, height = 14,
+            name = "0161_TFR_by-district-origin-age1",
+            width = 12, height = 14,
             multi = uni_o, multif = "filter(origin == x)")      
      
 #-------------------------------------------------------------------
@@ -487,8 +475,8 @@
             i_x = c(bir_base_begin, szen_begin),
             labs_col = "age",
             wrap = "district", ncol = 4,
-            geom = "line",
             title = "as.character(x)",
-            name = "0162_TFR_by-district-origin-age2", width = 12, height = 14,
+            name = "0162_TFR_by-district-origin-age2",
+            width = 12, height = 14,
             multi = uni_o, multif = "filter(origin == x)")   
     

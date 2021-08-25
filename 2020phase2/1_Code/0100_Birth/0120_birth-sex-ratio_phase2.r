@@ -46,6 +46,7 @@
 
     sszplot(pro_male,
             aes_x = "year", aes_y = "pro_male",
+            geom = c("line", "point"),
             i_x = year5, i_y = 50,
             labs_x = "age", labs_y = "proportion male in %",
             scale_y = c(0, 70), breaks = seq(0, 70, 10),
@@ -67,6 +68,7 @@
 #plot with mean
     sszplot(pro_male,
             aes_x = "year", aes_y = "pro_male",
+            geom = c("line", "point"),
             i_x = year5, i_y = pred_mean$pred_mean,
             labs_x = "age", labs_y = "proportion male in %",
             scale_y = c(0, 70), breaks = seq(0, 70, 10),
