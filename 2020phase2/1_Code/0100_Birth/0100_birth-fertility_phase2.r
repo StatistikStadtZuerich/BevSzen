@@ -185,7 +185,6 @@
     sszplot(filter(fer_dyao, year >= bir_base_begin),
             aes_x = "age", aes_y = "fer_dyao", aes_col = "origin",
             wrap = "as.factor(year)", labs_y = "fertility rate (in % per year)",
-            title = "as.character(x)",
             name = "0110_fertility_by-district-year-age-origin",
             width = 9, height = 6,
             multi = uni_d, multif = "filter(district == x)") 
@@ -238,7 +237,6 @@
             aes_x = "age", aes_y = "fer", aes_col = "origin", aes_ltyp = "cat",
             wrap = "as.factor(year)",
             labs_y = "fertility rate (in % per year)",
-            title = "as.character(x)",
             name = "0120_fertility_tail-correction",
             width = 13, height = 8,
             multi = uni_d, multif = "filter(district == x)") 
@@ -249,8 +247,7 @@
             wrap = "as.factor(year)",
             i_y = c(bir_thres_origin, bir_thres_overall, bir_thres_const),
             labs_y = "cumulative population from tails",
-            title = "as.character(x)",
-            multi = uni_d, multif = "filter(district == x)",
+            multi = uni_d[1:2], multif = "filter(district == x)",
             name = "0121_cumulative-population-from_tails",
             width = 13, height = 8,
             quotes = quote(geom_line(aes(x = age, y = up_cum, color = origin))))
@@ -289,7 +286,6 @@
             aes_x = "age", aes_y = "fer", aes_col = "origin", aes_ltyp = "cat",
             wrap = "as.factor(year)",
             labs_y = "fertility rate (in % per year)",
-            title = "as.character(x)",
             name = "0130_fertility_fit",
             width = 13, height = 8,
             multi = uni_d, multif = "filter(district == x)")  
@@ -326,7 +322,6 @@
             wrap = "district",
             labs_y = "fertility rate (in % per year)",
             scale_y = c(0, bir_plot_lim),
-            title = "as.character(x)",
             name = "0140_fertility-prediction_by-district",
             width = 12, height = 14,
             multi = uni_o, multif = "filter(origin == x)")  
@@ -391,7 +386,6 @@
             aes_x = "age", aes_y = "fer", aes_col = "cat",
             grid = c("origin", "as.factor(year)"),
             labs_y = "fertility rate (in % per year)",
-            title = "as.character(x)",
             name = "0150_fertility-prediction_before-after-fit",
             width = 10, height = 6,
             multi = uni_d, multif = "filter(district ==x)") 
@@ -453,7 +447,6 @@
             i_x = c(bir_base_begin, szen_begin),
             labs_col = "age",
             wrap = "district", ncol = 4,
-            title = "as.character(x)",
             name = "0161_TFR_by-district-origin-age1",
             width = 12, height = 14,
             multi = uni_o, multif = "filter(origin == x)")      
@@ -475,7 +468,6 @@
             i_x = c(bir_base_begin, szen_begin),
             labs_col = "age",
             wrap = "district", ncol = 4,
-            title = "as.character(x)",
             name = "0162_TFR_by-district-origin-age2",
             width = 12, height = 14,
             multi = uni_o, multif = "filter(origin == x)")   
