@@ -12,7 +12,8 @@
 #-------------------------------------------------------------------
 
 #working directory
-    setwd("O:/Projekte/BevSzen/2020_sandkasten_bad-rok/2020phase2/")
+    library(here)
+    setwd(paste0(here(), "/2020phase2/"))
 
 #general (e.g. packages, colors)
     source("1_Code/0000_General/0000_general_phase2.r")
@@ -88,13 +89,3 @@
                 mis_age_thres_percent = ims_age_thres_percent,
                 mis_age_lower_thres = ims_age_lower_thres)    
  
-    
-    
-
-
-
-     
-     
-     
-     
-     
