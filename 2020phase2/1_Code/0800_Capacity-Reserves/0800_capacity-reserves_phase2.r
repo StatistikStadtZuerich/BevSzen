@@ -208,28 +208,168 @@
         #new reserves, usage proportion
         mutate(reserve_new = capacity - buildings, 
             usage_prop = pmax(0, pmin(100, 
-                if_else(usage == 0, 0, usage / reserve_new * 100) + car_pp)))
+                if_else(reserve_new == 0, 0, usage / reserve_new * 100) + car_pp)))
+    
+
+#plot: reserves (area)
+    p804 <- ggplot(data = usage_prop, 
+                aes(x = district, y = reserve_new, fill = owner)) +
+        geom_bar(stat = "identity", position = "dodge", width = 0.8) + 
+        scale_x_discrete(limits = rev(uni_d)) +
+        scale_y_continuous(breaks = pretty_breaks()) +        
+        scale_fill_manual(values = col_w) +  
+        coord_flip() +  
+        labs(x = "", y = "reserves (in ha)", fill = "") +        
+        neutral
+      
+    ggsave(paste0(car_res, "0804_reserves_by-district.pdf"), 
+        plot = p804, width = 8, height = 7)       
+    
+
+#plot: usage (proportion)
+    p805 <- ggplot(data = usage_prop, 
+                aes(x = district, y = usage_prop, fill = owner)) +
+        geom_bar(stat = "identity", position = "dodge", width = 0.8) + 
+        scale_x_discrete(limits = rev(uni_d)) +
+        scale_y_continuous(breaks = pretty_breaks()) +        
+        scale_fill_manual(values = col_w) +  
+        coord_flip() +  
+        labs(x = "", y = "usage proportion (in % of the reserves)", fill = "") +        
+        neutral    
+
+    ggsave(paste0(car_res, "0805_usage-proportion_by-district.pdf"), 
+        plot = p805, width = 8, height = 7) 
+        
+    
+
+#plot: usage (area)
+    p806 <- ggplot(data = usage_prop, 
+                aes(x = district, y = usage, fill = owner)) +
+        geom_bar(stat = "identity", position = "dodge", width = 0.8) + 
+        scale_x_discrete(limits = rev(uni_d)) +
+        scale_y_continuous(breaks = pretty_breaks()) +        
+        scale_fill_manual(values = col_w) +  
+        coord_flip() +  
+        labs(x = "", y = "usage area (in ha)", fill = "") +        
+        neutral 
+      
+    ggsave(paste0(car_res, "0806_usage-area_by-district.pdf"), 
+        plot = p806, width = 8, height = 7) 
+        
+            
     
     
 #-------------------------------------------------------------------
 #usage per year
 #-------------------------------------------------------------------
 
-#distribution of usage per year 
-    usage_y <- tibble(year = szen_begin:szen_end) %>% 
+#exp-distribution over years
+    exp_y <- tibble(year = szen_begin:szen_end) %>% 
         mutate(delta = year - date_end, 
-            exp = exp(car_lamda * delta),
-            exp_end = if_else(year <= car_y, exp, 0),
-            distr = exp_end / sum(exp_end))
-    # sum(usage_y$distr)
+            exp_y = exp(car_lamda * delta))
+
+#used reserves until a certain year (parameter: car_y)
+    exp_y_sum <- filter(exp_y, year <= car_y) %>% 
+        summarize(exp_y_sum = sum(exp_y))
     
-
-
-
-
-    
+    # tail(exp_y)
+    # sum(exp_y$exp_y)
     
     
+#usage: proportion of the reserves per year
+    usage_y_prop <- as_tibble(expand_grid(
+            district = uni_d, 
+            year = szen_begin:szen_end,
+            owner = uni_w, 
+            exp_y_sum = exp_y_sum$exp_y_sum)) %>% 
+        left_join(select(usage_prop, district, owner, reserve_new, usage_prop), 
+            by = c("district", "owner")) %>% 
+        left_join(select(exp_y, year, exp_y), by = "year") %>% 
+        mutate(usage_y_prop = usage_prop * exp_y / exp_y_sum)
     
+   # tail(usage_y_prop)
+    
+#check: sum until year 'car_y' 
+    # check if sum of the proportions per year equals the total proportion
+    check <- filter(usage_y_prop, year <= car_y) %>% 
+        group_by(district, owner) %>% 
+        summarize(usage_prop = max(usage_prop),
+            usage_prop_y_sum = sum(usage_y_prop)) %>% 
+        ungroup()
+    
+#the total sum (until year 'szen_end') 
+    #the total should not exceed 100 percent of the reserves
+    
+    total <- group_by(usage_y_prop, district, owner) %>% 
+            summarize(total = sum(usage_y_prop)) %>% 
+        ungroup() %>% 
+        filter(total > 100) %>% 
+        mutate(diff = total - 100) %>% 
+        left_join(usage_y_prop, by = c("district", "owner")) %>% 
+        group_by(district, owner) %>% 
+            arrange(district, owner, desc(year)) %>% 
+            mutate(usage_cumu = cumsum(usage_y_prop),
+                usage_corr = if_else(usage_cumu < diff, 0, usage_y_prop)) %>% 
+        ungroup() %>% 
+        select(district, owner, year, usage_corr) %>% 
+        right_join(usage_y_prop, by = c("district", "owner", "year")) %>% 
+        arrange(district, owner, year) %>% 
+        mutate(usage_y_prop_corr = if_else(is.na(usage_corr), usage_y_prop, usage_corr),
+            usage_area = reserve_new * usage_y_prop_corr) %>% 
+        select(district, year, owner, reserve_new, usage_y_prop_corr, usage_area) %>% 
+        rename(reserve = reserve_new, usage_prop = usage_y_prop_corr)
+    
+    
+#plot: usage (proportion)
+    p807 <- ggplot(data = total) + 
+        geom_line(aes(x = year, y = usage_prop, color = owner)) + 
+        facet_wrap(~district, ncol = 4) +      
+        scale_colour_manual(values = col_w) +  
+        scale_x_continuous(breaks = pretty_breaks()) + 
+        labs(x = "", y = "usage proportion (in % of the reserves per year)", color = "") +  
+        expand_limits(y = 0) +         
+        neutral +
+        theme(panel.spacing = unit(1.5, "lines"))      
+    
+    ggsave(paste0(car_res, "0807_usage-proportion_by-district-year.pdf"), 
+        plot = p807, width = 12, height = 14) 
+    
+    
+#plot: usage (area)
+    p808 <- ggplot(data = total) + 
+        geom_line(aes(x = year, y = usage_area, color = owner)) + 
+        facet_wrap(~district, ncol = 4) +      
+        scale_colour_manual(values = col_w) +  
+        scale_x_continuous(breaks = pretty_breaks()) + 
+        labs(x = "", y = "usage area (in ha per year)", color = "") +  
+        expand_limits(y = 0) +         
+        neutral +
+        theme(panel.spacing = unit(1.5, "lines"))
+    
+    ggsave(paste0(car_res, "0808_usage-area_by-district-year.pdf"), 
+        plot = p808, width = 12, height = 14) 
+    
+    
+#-------------------------------------------------------------------
+#export the results
+#-------------------------------------------------------------------
 
+#usage (area in ha)  
+    car_ex_data <- mutate(total, usage_ha = round(usage_area, round_area)) %>% 
+        select(district, year, owner, usage_ha) %>% 
+        arrange(district, year, owner)
+      
+#export
+    write_csv(car_ex_data, paste0(car_exp, "usage_area.csv"))    
+
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
     
