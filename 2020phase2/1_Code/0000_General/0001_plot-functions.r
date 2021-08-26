@@ -39,6 +39,7 @@
 # quotes: this argument can be used to hand over any quoted ggplot arguments
 #         (e.g. additional geoms)
 #         if used, make sure that an eventually colliding parameter is set to ""
+# angle:  angle of text on y axis (in degrees)
 
 ## caveat: all parameters have to be added to the recursive function call at the very end!
 
@@ -51,10 +52,11 @@ sszplot <- function(data, geom = c("line"),
                     title = NULL,
                     name = NULL, file_type = "pdf", width = 7, height = 4,
                     multi = NULL, multif = NULL,
-                    quotes = NULL){
+                    quotes = NULL, angle = NULL){
   
   stopifnot(!is.null(data) && !is.null(aes_x))
   stopifnot((!is.null(multi) && !is.null(multif)) || is.null(multi))
+  stopifnot(!geom == "" || !is.null(quotes))
   
   #-------------------------------------------------------------------
   #### prep work ####
@@ -86,23 +88,35 @@ sszplot <- function(data, geom = c("line"),
   
   
   ## colours
-  # if aes_col is set, selects as many colors as needed by grouping variable aes_x
-  # from the predefined color palette col_6
-  # if not, selects entry from predefined colour palette with given index fix_col (default 1)
-  col_time <- c(rep(col_grey, length(uniy_bir_base)),
+  # special palettes are defined: a default with changed order and one specially
+  # for time specific plots, where the colour depends on a time attribute
+  # (usually year). Colours are then "rainbow" for the scenario years and grey 
+  # for all past years. This must be calculated dynamically
+    col_palette <- col_6[c(1,3,4,5,6,2)]
+    time_unit <- str_extract(aes_col, "year|month|week|day")
+    if (!is.na(time_unit)) {
+      ntimes <- select(data, time_unit) %>% unique %>% nrow
+      col_time <- c(rep(col_grey, ntimes - length(uniy_szen)),
                 colorRampPalette(col_6[1:5])(length(uniy_szen)))
- 
+    }
+
+      # if aes_col is set, selects as many colors as needed by grouping variable aes_x
+  # from the predefined color palette col_6
+  # if not, selects entry from predefined colour palette (but in adapted order)
+  # with given index fix_col (default 1) 
   # no colour handling if function is in multipage mode 
   if (is.null(multi)) {
     if (is.null(aes_col))
-      fix_col <- col_6[fix_col] else
+      fix_col <- col_palette[fix_col] else
         if (identical(aes_col, "origin"))
           fix_col <- col_o else
         if (grepl("year", aes_col))
           fix_col <- col_time else
         if (identical(aes_col, "sex"))
           fix_col <- col_s else
-            fix_col <- colorRampPalette(col_6)(count(unique(data[aes_col]))$n)
+        if (identical(aes_col, "region"))
+          fix_col <- col_r else
+        fix_col <- col_palette[1:count(unique(data[aes_col]))$n]
   }
   
   
@@ -181,12 +195,14 @@ sszplot <- function(data, geom = c("line"),
   }
   
   # add continuous y scale if scale_y is set
-  # can be either pretty_breaks or defined by limits
+  # can be either pretty_breaks, log10 or defined by limits
   if (!is.null(scale_y)){
     if (identical(scale_y, "pretty"))
       res <- res + scale_y_continuous(breaks = pretty_breaks()) else
-        res <- res + scale_y_continuous(limits = scale_y,
-                                        breaks = if(!is.null(breaks)) breaks else pretty_breaks())
+    if (identical(scale_y, "log"))
+      res <- res + scale_y_continuous(trans = 'log10') else
+    res <- res + scale_y_continuous(limits = scale_y,
+                                    breaks = if(!is.null(breaks)) breaks else pretty_breaks())
   }
   
   
@@ -196,27 +212,44 @@ sszplot <- function(data, geom = c("line"),
       scale_colour_manual(values = fix_col)
   }
   
-  # add title if title is set
+  # add title if title is set. If title is not set but mode is multipage,
+  # a default value is created: the name of the x argument to the function
   if (!is.null(title)){
     res <- res +
       ggtitle(as.character(title))
-  }
+  } else
+    if (!is.null(multi))
+      title <- "as.character(x)" 
   
   # add facet grid or wrap if either grid or wrap is set
-  if (!is.null(grid)){
+  if (!is.null(grid)) {
+    if (grid[2] %in% colnames(data))
+      res <- res +
+       facet_grid(as.formula(paste(grid[1], "~", grid[2])),
+                 cols = ncol,
+                 labeller = eval(str2lang(paste0("labeller(", grid[2], " = label_both)")))) else
+       res <- res +
+         facet_grid(as.formula(paste(grid[1], "~", grid[2])),
+                    cols = ncol)
+
+  } else
+    if (!is.null(wrap)) {
     res <- res +
-      facet_grid(as.formula(paste(grid[1], "~", grid[2])), cols = ncol)
-  } else if (!is.null(wrap)){
-    res <- res +
-      facet_wrap(as.formula(paste("~", wrap)), ncol = ncol)
+      facet_wrap(as.formula(paste("~", wrap)),
+                 ncol = ncol)
   }
-  
+
+  # change text angle
+  if (!is.null(angle))
+    res <- res +
+      theme(axis.text.x = element_text(angle = angle, vjust = 0.5, hjust = 1))
+    
   # add quoted arguments
   if (!is.null(quotes))
     res <- res + 
       eval(quotes)
   
-  # plot to file if name is set, otherwise to graphics device
+  ## plot to file if name is set, otherwise to graphics device
   # (file type per default pdf)
   if (!is.null(multi)) {
           
@@ -234,7 +267,8 @@ sszplot <- function(data, geom = c("line"),
        scale_x = scale_x, scale_y = scale_y, fix_col = fix_col, breaks = breaks,
        grid = grid, wrap = wrap, ncol = ncol,
        title = eval(str2expression(title)),
-       quotes = quotes)
+       quotes = quotes,
+       angle = angle)
     }
     )
     if (!is.null(name))
