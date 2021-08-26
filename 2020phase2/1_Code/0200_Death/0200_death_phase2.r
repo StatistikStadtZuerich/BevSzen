@@ -12,7 +12,8 @@
 #-------------------------------------------------------------------
 
 #working directory
-    setwd("O:/Projekte/BevSzen/2020_sandkasten_bad-rok/2020phase2/")
+    library(here)
+    setwd(paste0(here(), "/2020phase2/"))
 
 #general (e.g. packages, colors)
     source("1_Code/0000_General/0000_general_phase2.r")
@@ -127,36 +128,22 @@
     year_5 <- sort(unique(year_past[year_past %% 5 == 0]))
 
 #focus: difference in mortality by sex
-    p200 <- ggplot(data = filter(mor_yasr, year %in% year_5)) +
-        geom_line(aes(x = age, y = mor_yasr, color = sex)) +
-        scale_x_continuous(breaks = pretty_breaks()) +
-        scale_y_continuous(trans = 'log10') +
-        scale_colour_manual(values = col_s) +
-        labs(x = "age", y = "mortality rate (in % per year)", color = "") +
-        facet_grid(region ~ year) +
-        neutral
-
-    ggsave(paste0(dea_res, "0200_mortality_by-year-age-sex-region_focus-age-sex.pdf"),
-        plot = p200, width = 12, height = 7)
-
+    sszplot(filter(mor_yasr, year %in% year_5),
+            aes_x = "age", aes_y = "mor_yasr", aes_col = "sex",
+            labs_y = "mortality rate (in % per year)",
+            scale_y = "log",
+            grid = c("region", "year"),
+            name = "0200_mortality_by-year-age-sex-region_focus-age-sex",
+            width = 12, height = 7)
 
 #focus: difference in mortality by region
-    p201 <- ggplot(data = filter(mor_yasr, year %in% year_5)) +
-        geom_line(aes(x = age, y = mor_yasr, color = region)) +
-        scale_x_continuous(breaks = pretty_breaks()) +
-        scale_y_continuous(trans = 'log10') +
-        scale_colour_manual(values = col_r) +
-        labs(x = "age", y = "mortality rate (in % per year)", color = "") +
-        facet_grid(sex ~ year) +
-        neutral
-
-    ggsave(paste0(dea_res, "0201_mortality_by-year-age-sex-region_focus-age-region.pdf"),
-        plot = p201, width = 12, height = 7)
-
-    
-
-    
-
+    sszplot(filter(mor_yasr, year %in% year_5),
+            aes_x = "age", aes_y = "mor_yasr", aes_col = "region",
+            labs_y = "mortality rate (in % per year)",
+            scale_y = "log",
+            grid = c("sex", "year"),
+            name = "0201_mortality_by-year-age-sex-region_focus-age-region",
+            width = 12, height = 7)
 
 #-------------------------------------------------------------------
 #mortality: year plots
@@ -166,32 +153,25 @@
     age_select <- c(0, 20, 40, 50, 60, 70, 80)
 
 #focus: difference in mortality by sex
-    p202 <- ggplot(data = filter(mor_yasr, age %in% age_select)) +
-        geom_line(aes(x = year, y = mor_yasr, color = sex)) +
-        scale_x_continuous(breaks = pretty_breaks()) +
-        scale_y_continuous(trans = 'log10') +
-        scale_colour_manual(values = col_s) +
-        labs(x = "year", y = "mortality rate (in % per year)", color = "") +
-        facet_grid(region ~ age, labeller = labeller(age = label_both)) +
-        neutral + theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust = 1))
-
-    ggsave(paste0(dea_res, "0202_mortality_by-year-age-sex-region_focus-year-sex.pdf"),
-        plot = p202, width = 14, height = 7)
-
+    sszplot(filter(mor_yasr, age %in% age_select),
+            aes_x = "year", aes_y = "mor_yasr", aes_col = "sex",
+            labs_y = "mortality rate (in % per year)",
+            scale_y = "log",
+            grid = c("region", "age"),
+            name = "0202_mortality_by-year-age-sex-region_focus-year-sex",
+            width = 14, height = 7, 
+            angle = 90)
+    
 
 #focus: difference in mortality by region
-    p203 <- ggplot(data = filter(mor_yasr, age %in% age_select)) +
-        geom_line(aes(x = year, y = mor_yasr, color = region)) +
-        scale_x_continuous(breaks = pretty_breaks()) +
-        scale_y_continuous(trans = 'log10') +
-        scale_colour_manual(values = col_r) +
-        labs(x = "year", y = "mortality rate (in % per year)", color = "") +
-        facet_grid(sex ~ age, labeller = labeller(age = label_both)) +
-        neutral + theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust = 1))
-
-    ggsave(paste0(dea_res, "0203_mortality_by-year-age-sex-region_focus-year-region.pdf"),
-        plot = p203, width = 14, height = 7)
-
+    sszplot(filter(mor_yasr, age %in% age_select),
+            aes_x = "year", aes_y = "mor_yasr", aes_col = "region",
+            labs_y = "mortality rate (in % per year)",
+            scale_y = "log",
+            grid = c("sex", "age"),
+            name = "0203_mortality_by-year-age-sex-region_focus-year-region",
+            width = 14, height = 7, 
+            angle = 90)
     
 #-------------------------------------------------------------------
 #life expectancy: based on deaths, births, population
@@ -316,18 +296,12 @@
         gather(`rate`, `basic`, key = "method", value = "life")
     
 #plot
-    p204 <- ggplot(data = le_methods) +
-        geom_line(aes(x = year, y = life, color = method)) +
-        scale_x_continuous(breaks = pretty_breaks()) +
-        scale_colour_manual(values = col_6[c(1,3)]) +
-        labs(x = "year", y = "life expectancy at birth", color = "") +
-        facet_grid(. ~ sex) +
-        neutral
-
-    ggsave(paste0(dea_res, "0204_life-expectancy-at-birth_by-year-method.pdf"),
-        plot = p204, width = 9, height = 5)
-    
-    
+    sszplot(le_methods,
+            aes_x = "year", aes_y = "life", aes_col = "method",
+            labs_y = "life expectancy at birth",
+            grid = c(".", "sex"),
+            name = "0204_life-expectancy-at-birth_by-year-method",
+            width = 9, height = 5)    
 
 #-------------------------------------------------------------------
 #plot: life expectancy
@@ -339,35 +313,22 @@
     
     
 #focus: differences by sex
-
-    p205 <- ggplot(data = le_ysr) +
-        geom_vline(xintercept = year_all_5, color = col_grey) +
-        geom_line(aes(x = year, y = le_ysr, color = sex)) +
-        scale_x_continuous(breaks = pretty_breaks()) +
-        scale_colour_manual(values = col_s) +
-        labs(x = "year", y = "life expectancy at birth", color = "") +
-        facet_grid(. ~ region) +
-        neutral
-
-    ggsave(paste0(dea_res, "0205_life-expectancy-at-birth_by-year-sex-region_focus-sex.pdf"),
-        plot = p205, width = 10, height = 6)
+    sszplot(le_ysr,
+            aes_x = "year", aes_y = "le_ysr", aes_col = "sex",
+            i_x = year_all_5,
+            labs_y = "life expectancy at birth",
+            grid = c(".", "region"),
+            name = "0205_life-expectancy-at-birth_by-year-sex-region_focus-sex",
+            width = 10, height = 6)
 
 #focus: differences by region
-
-    p206 <- ggplot(data = le_ysr) +
-        geom_vline(xintercept = year_all_5, color = col_grey) +      
-        geom_line(aes(x = year, y = le_ysr, color = region)) +
-        scale_x_continuous(breaks = pretty_breaks()) +
-        scale_colour_manual(values = col_r) +
-        labs(x = "year", y = "life expectancy at birth", color = "") +
-        facet_grid(. ~ sex) +
-        neutral
-
-    ggsave(paste0(dea_res, "0206_life-expectancy-at-birth_by-year-sex-region_focus-region.pdf"),
-        plot = p206, width = 10, height = 6)
-    
-    
-    
+    sszplot(le_ysr,
+            aes_x = "year", aes_y = "le_ysr", aes_col = "region",
+            i_x = year_all_5,
+            labs_y = "life expectancy at birth",
+            grid = c(".", "sex"),
+            name = "0206_life-expectancy-at-birth_by-year-sex-region_focus-region",
+            width = 10, height = 6)    
     
 #-------------------------------------------------------------------
 #mortality over base years (including tail correction)
@@ -410,19 +371,13 @@
         left_join(mor_asr_temp, by = c("age_tail", "sex", "region"))
 
 #plot
-    p207 <- ggplot(data = mor_asr) +
-        geom_line(aes(x = age, y = mor_asr, color = region)) +
-        scale_x_continuous(breaks = pretty_breaks()) +
-        scale_y_continuous(trans = 'log10') +
-        scale_colour_manual(values = col_r) +
-        labs(x = "age", y = "mortality rate (in % per year)", color = "") +
-        facet_grid(sex ~ .) +
-        neutral
-
-    ggsave(paste0(dea_res, "0207_mortality_by-age-sex-region_tails-corrected.pdf"),
-        plot = p207, width = 8, height = 7)
-
-    
+    sszplot(mor_asr,
+            aes_x = "age", aes_y = "mor_asr", aes_col = "region",
+            labs_y = "mortality rate (in % per year)",
+            scale_y = "log",
+            grid = c("sex", "."),
+            name = "0207_mortality_by-age-sex-region_tails-corrected",
+            width = 8, height = 7)     
     
 
 #-------------------------------------------------------------------
@@ -448,19 +403,13 @@
                 fit_lev[1], fit_lev[2]), levels = fit_lev))
 
     #plot
-        p208 <- ggplot(data = plot_dat_fit) +
-            geom_line(aes(x = age, y = mor, color = region, linetype = cat)) +
-            scale_x_continuous(breaks = pretty_breaks()) +
-            scale_y_continuous(trans = 'log10') +
-            scale_colour_manual(values = col_r) +
-            labs(x = "age", y = "mortality rate (in % per year)", color = "", linetype = "") +
-            facet_grid(sex ~ .) +
-            neutral
-
-    ggsave(paste0(dea_res, "0208_mortality_by-age-sex-region_fitted.pdf"),
-        plot = p208, width = 8, height = 7)
-
-      
+    sszplot(plot_dat_fit,
+            aes_x = "age", aes_y = "mor", aes_col = "region", aes_ltyp = "cat",
+            labs_y = "mortality rate (in % per year)",
+            scale_y = "log",
+            grid = c("sex", "."),
+            name = "0208_mortality_by-age-sex-region_fitted",
+            width = 8, height = 7)       
 
 #-------------------------------------------------------------------
 #ratio Zurich / Switzerland
@@ -476,20 +425,13 @@
         # mutate(ratio = if_else((age <= (dea_lower + 10)) | (age >= dea_upper), 1, ratio))
     
 #plot
-    p209 <- ggplot(data = ratio_as) +
-        geom_hline(yintercept = 1, col = col_grey) +
-        geom_vline(xintercept = c(dea_lower, dea_upper), col = col_grey, linetype = 2) +      
-        geom_line(aes(x = age, y = ratio, color = sex)) +
-        scale_x_continuous(breaks = pretty_breaks()) +
-        expand_limits(y = 0) +
-        scale_colour_manual(values = col_s) +
-        labs(x = "age", y = "mortality ratio (Zurich / Switzerland)", color = "") +
-        neutral
-
-    ggsave(paste0(dea_res, "0209_ratio-Zurich-Switzerland_by-age-sex.pdf"),
-        plot = p209, width = 10, height = 5)
-    
-
+    sszplot(ratio_as,
+            aes_x = "age", aes_y = "ratio", aes_col = "sex",
+            i_x = c(dea_lower, dea_upper), i_y = 1,
+            labs_y = "mortality ratio (Zurich / Switzerland)",
+            scale_y = c(0, NA),
+            name = "0209_ratio-Zurich-Switzerland_by-age-sex",
+            width = 10, height = 5)  
     
   
 #-------------------------------------------------------------------
@@ -509,24 +451,14 @@
     mor_zh_yas_past_future <- select(mor_zh_yas, year, age, sex, mor_yas) %>%
         bind_rows(mor_zh_yas_future)
 
-#colors
-    col_time <- c(rep(col_grey, length((date_start+1):date_end)),
-        colorRampPalette(col_6[1:5])(length(szen_begin:szen_end)))
-    # plot(1:length(col_time), 1:length(col_time), col = col_time, pch = 16, cex = 2)
-
 #plot
-    p210 <- ggplot(data = mor_zh_yas_past_future) +
-        geom_line(aes(x = age, y = mor_yas, color = as.factor(year))) +
-        scale_x_continuous(breaks = pretty_breaks()) +
-        scale_y_continuous(trans = 'log10') +
-        scale_colour_manual(values = col_time) +
-        labs(x = "age", y = "mortality rate (in % per year)", color = "") +
-        facet_grid(sex ~ .) +
-        neutral
-
-    ggsave(paste0(dea_res, "0210_mortality-prediction_by-year-age-sex.pdf"),
-        plot = p210, width = 12, height = 8)
-
+    sszplot(mor_zh_yas_past_future,
+            aes_x = "age", aes_y = "mor_yas", aes_col = "as.factor(year)",
+            labs_y = "mortality rate (in % per year)",
+            scale_y = "log",
+            grid = c("sex", "."),
+            name = "0210_mortality-prediction_by-year-age-sex",
+            width = 12, height = 8)  
 
 #-------------------------------------------------------------------
 #export mortality rates
@@ -564,32 +496,19 @@
 #plots
 
     #focus: differences by sex
-
-        p211 <- ggplot(data = le_ysr_model) +
-            geom_line(aes(x = year, y = le_ysr, color = sex)) +
-            scale_x_continuous(breaks = pretty_breaks()) +
-            scale_colour_manual(values = col_s) +
-            labs(x = "year", y = "life expectancy at birth", color = "") +
-            facet_grid(. ~ region) +
-            neutral
-
-        ggsave(paste0(dea_res, "0211_life-expectancy-at-birth_by-year-sex-region_focus-sex_model.pdf"),
-            plot = p211, width = 10, height = 6)
-
+        sszplot(le_ysr_model,
+                aes_x = "year", aes_y = "le_ysr", aes_col = "sex",
+                labs_y = "life expectancy at birth",
+                grid = c(".", "region"),
+                name = "0211_life-expectancy-at-birth_by-year-sex-region_focus-sex_model",
+                width = 10, height = 6) 
 
     #focus: differences by region
-
-        p212 <- ggplot(data = le_ysr_model) +
-            geom_line(aes(x = year, y = le_ysr, color = region)) +
-            scale_x_continuous(breaks = pretty_breaks()) +
-            scale_colour_manual(values = col_r) +
-            labs(x = "year", y = "life expectancy at birth", color = "") +
-            facet_grid(. ~ sex) +
-            neutral
-
-        ggsave(paste0(dea_res, "0212_life-expectancy-at-birth_by-year-sex-region_focus-region_model.pdf"),
-            plot = p212, width = 10, height = 6)
-
-
+        sszplot(le_ysr_model,
+                aes_x = "year", aes_y = "le_ysr", aes_col = "region",
+                labs_y = "life expectancy at birth",
+                grid = c(".", "sex"),
+                name = "0212_life-expectancy-at-birth_by-year-sex-region_focus-region_model",
+                width = 10, height = 6) 
          
     
