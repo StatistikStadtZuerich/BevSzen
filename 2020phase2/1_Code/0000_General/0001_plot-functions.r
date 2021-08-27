@@ -116,27 +116,27 @@ sszplot <- function(data,
   ## building of the plot is only needed if we are not in multipage mode
   if (is.null(multi)) {  
     ## colours
-    # special palettes are defined: a default with changed order and one specially
+    # special palettes are defined: a default with changed order and one especially
     # for time specific plots, where the colour depends on a time attribute
     # (usually year). Colours are then "rainbow" for the scenario years and grey 
     # for all past years. This must be calculated dynamically
-      col_palette <- col_6[c(1,3,4,5,6,2)]
-      if (aes_col %in% c("year","month","week","day")) {
-          alltimes <- select(data, all_of(aes_col)) %>% unique %>% nrow
-          oldtimes <- select(data, all_of(aes_col)) %>% filter(. < szen_begin) %>% unique %>% nrow
-          col_time <- c(rep(col_grey, oldtimes),
-                        colorRampPalette(col_6[1:5])(alltimes - oldtimes))
-      }
-  
   
     # if aes_col is set, selects as many colors as needed by grouping variable aes_x
     # from the predefined color palette col_6
     # if not, selects entry from predefined colour palette (but in adapted order)
     # with given index fix_col (default 1) 
-    # no colour handling if function is in multipage mode 
+    
+    col_palette <- col_6[c(1,3,4,5,6,2)]
+    
     if (is.null(aes_col))
       fix_col <- col_palette[fix_col]
     else {
+      if (aes_col %in% c("year","month","week","day")) {
+        alltimes <- select(data, all_of(aes_col)) %>% unique %>% nrow
+        oldtimes <- select(data, all_of(aes_col)) %>% filter(. < szen_begin) %>% unique %>% nrow
+        col_time <- c(rep(col_grey, oldtimes),
+                      colorRampPalette(col_6[1:5])(alltimes - oldtimes))
+      }
       if (identical(aes_col, "origin"))
         fix_col <- col_o else
       if (aes_col %in% c("year","month","week","day"))
