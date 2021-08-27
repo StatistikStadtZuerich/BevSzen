@@ -13,7 +13,7 @@
 #       if "", then geom must be defined in quotes parameter (see below)
 # aes_x: the grouping variable for x
 # aes_y: the grouping variable for y
-# aes_col: the grouping variable for colour
+# aes_col: the grouping variable for colour. Is converted to a factor if it is continuous
 # aes_ltyp: the grouping variable for linetype
 # aes_alpha: the alpha value for a geom
 # labs_x, labs_y, labs_col, labs_ltyp, labs_alpha: labels for the respective variables
@@ -113,199 +113,206 @@ sszplot <- function(data,
   ## theme  -- this does not work yet (no effect; should apply a default line colour)
   theme_ssz <- theme(line = element_line(colour = col_6[1]))
   
-  
-  ## colours
-  # special palettes are defined: a default with changed order and one specially
-  # for time specific plots, where the colour depends on a time attribute
-  # (usually year). Colours are then "rainbow" for the scenario years and grey 
-  # for all past years. This must be calculated dynamically
-    col_palette <- col_6[c(1,3,4,5,6,2)]
-    if (!is.null(aes_col)) {
-      time_unit <- str_extract(aes_col, "year|month|week|day")
-      if (!is.na(time_unit)) {
-        ntimes <- select(data, time_unit) %>% unique %>% nrow
-        col_time <- c(rep(col_grey, ntimes - length(uniy_szen)),
-                  colorRampPalette(col_6[1:5])(length(uniy_szen)))
+  ## building of the plot is only needed if we are not in multipage mode
+  if (is.null(multi)) {  
+    ## colours
+    # special palettes are defined: a default with changed order and one specially
+    # for time specific plots, where the colour depends on a time attribute
+    # (usually year). Colours are then "rainbow" for the scenario years and grey 
+    # for all past years. This must be calculated dynamically
+      col_palette <- col_6[c(1,3,4,5,6,2)]
+      if (aes_col %in% c("year","month","week","day")) {
+          alltimes <- select(data, all_of(aes_col)) %>% unique %>% nrow
+          oldtimes <- select(data, all_of(aes_col)) %>% filter(. < szen_begin) %>% unique %>% nrow
+          col_time <- c(rep(col_grey, oldtimes),
+                        colorRampPalette(col_6[1:5])(alltimes - oldtimes))
       }
-    }
-
-      # if aes_col is set, selects as many colors as needed by grouping variable aes_x
-  # from the predefined color palette col_6
-  # if not, selects entry from predefined colour palette (but in adapted order)
-  # with given index fix_col (default 1) 
-  # no colour handling if function is in multipage mode 
-  if (is.null(multi)) {
+  
+  
+    # if aes_col is set, selects as many colors as needed by grouping variable aes_x
+    # from the predefined color palette col_6
+    # if not, selects entry from predefined colour palette (but in adapted order)
+    # with given index fix_col (default 1) 
+    # no colour handling if function is in multipage mode 
     if (is.null(aes_col))
-      fix_col <- col_palette[fix_col] else
-        if (identical(aes_col, "origin"))
-          fix_col <- col_o else
-        if (grepl("year", aes_col))
-          fix_col <- col_time else
-        if (identical(aes_col, "sex"))
-          fix_col <- col_s else
-        if (identical(aes_col, "region"))
-          fix_col <- col_r else
-        fix_col <- col_palette[1:count(unique(data[aes_col]))$n]
-  }
-  
-  
-  ## aesthetics stuff
-  
-  # Need to use aes_string to build it up and then make the class "uneval"
-  aest <- aes_string(x = aes_x, y = aes_y)
-  if(!is.null(aes_col))
-    aest <- c(aest, aes_string(colour = aes_col))
-  if (!is.null(aes_ltyp))
-    aest <- c(aest, aes_string(linetype = aes_ltyp))
-  if (!is.null(aes_alpha))
-    aest <- c(aest, aes_string(alpha = aes_alpha))
-  class(aest) <- "uneval"
-  
-  # set axis labels to aes_x and aes_y if they are not explicitly given
-  if (is.null(labs_x)) labs_x <- aes_x
-  if (is.null(labs_y)) labs_y <- aes_y
-
-  #-------------------------------------------------------------------   
-  #### build the plot ####
-  #-------------------------------------------------------------------
-  # default plot      
-  res <- ggplot(data) +
-    neutral
-  # # add aesthetics except ifgeom is "": then it is expected that the aesthetic
-  # # are handed to the function in a quoted geom statement,
-  # # i.e. quotes = quote(geom_line(x = ...)).
-  if (!identical(geom, ""))
-    res <- res + aest
-
-    # add vertical lines at i_x if i_x is set
-  if (!is.null(i_x)){
-    if (identical(i_x,"5"))
-      i_x <- data$year[data$year %% 5 == 0]
-    
-    res <- res + 
-      geom_vline(xintercept = i_x,
-                 col = col_grey,
-                 linetype = "dashed")
-  }
-  
-  # add horizontal lines at i_y if i_y is set
-  if (!is.null(i_y)){
-    for (i in 1:length(i_y))
-      res <- res + 
-        geom_hline(yintercept = i_y[i],
-                   col = col_grey,
-                   linetype = i)
-  }
-  
-  # add geom; if none was specified, uses line chart as default
-  # distinction dependent upon the colour grouping variable: if that is empty,
-  # colour can be set inside geom (fixed value). Unfortunately, this is currently
-  # implemented with a cumbersome duplication for all geoms
-  if(!is.null(aes_col)) {
-    if("line" %in% geom) res <- res + geom_line()
-    if("point" %in% geom) res <- res + geom_point()
-  } else {
-    if("line" %in% geom) res <- res + geom_line(colour = fix_col)
-    if("point" %in% geom) res <- res + geom_point(colour = fix_col)
-  }
-  
-  # add labels if labs_x and _y are set (labs_x is same as aes_x per default;
-  # if you want none, then you need to use labs_x = "")
-  if (is.null(labs_col)) labs_col = ""
-  if (is.null(labs_ltyp)) labs_ltyp = ""
-  if (is.null(labs_x)) labs_x = ""
-  if (is.null(labs_y)) labs_y = ""
-  if (is.null(labs_alpha)) labs_alpha = ""
-  
-  res <- res + labs(x = labs_x,
-                    y = labs_y,
-                    colour = labs_col,
-                    linetype = labs_col,
-                    alpha = labs_alpha)
-  
-  # add continuous x scale with pretty breaks if scale_x is set
-  if (!is.null(scale_x)){
-    if (startsWith(scale_x, "cont")) {
-      if (endsWith(scale_x, "pretty"))
-        res <- res +
-          scale_x_continuous(breaks = pretty_breaks())
+      fix_col <- col_palette[fix_col]
+    else {
+      if (identical(aes_col, "origin"))
+        fix_col <- col_o else
+      if (aes_col %in% c("year","month","week","day"))
+        fix_col <- col_time else
+      if (identical(aes_col, "sex"))
+        fix_col <- col_s else
+      if (identical(aes_col, "region"))
+        fix_col <- col_r else
+      fix_col <- col_palette[1:count(unique(data[aes_col]))$n]
+        
+      # if aes_col is a continuous variable, it has to be converted to a factor (discrete scale)
+      if (is.numeric(eval(str2lang(paste0("data$", aes_col)))))
+        aes_col <- as.factor(eval(str2lang(paste0("data$", aes_col))))
     }
-    # preparation if a non-continuous non-pretty scale should be needed
-    else if (startsWith(scale_x, "disc")) {}
-  }
-  
-  # add continuous y scale if scale_y is set
-  # can be either pretty_breaks, log10 or defined by limits
-  if (!is.null(scale_y)){
-    if (identical(scale_y, "pretty"))
-      res <- res + scale_y_continuous(breaks = pretty_breaks()) else
-    if (identical(scale_y, "log"))
-      res <- res + scale_y_continuous(trans = 'log10') else
-    res <- res + scale_y_continuous(limits = scale_y,
-                                    breaks = if(!is.null(breaks)) breaks else pretty_breaks())
-  }
-  
-  
-  # add colour scale with fix_col if fix_col is set
-  if (!is.null(fix_col)){
-    res <- res +
-      scale_colour_manual(values = fix_col)
-  }
-  
-  # add title if title is set. If title is not set but mode is multipage,
-  # a default value is created: the name of the x argument to the function
-  if (!is.null(title)){
-    res <- res +
-      ggtitle(as.character(title))
-  } else
-    if (!is.null(multi))
-      title <- "as.character(x)" 
-  
-  # add facet grid or wrap if either grid or wrap is set
-  if (!is.null(grid)) {
-    if (grid[2] %in% colnames(data))
-      gridlab = str2lang(paste0("labeller(", grid[2], " = label_both)"))
-    else
-      gridlab = "label_value"
+    
+    ## aesthetics stuff
       
+    # Need to use aes_string to build it up and then make the class "uneval"
+    aest <- aes_string(x = aes_x, y = aes_y)
+    if(!is.null(aes_col))
+      aest <- c(aest, aes_string(colour = aes_col))
+    if (!is.null(aes_ltyp))
+      aest <- c(aest, aes_string(linetype = aes_ltyp))
+    if (!is.null(aes_alpha))
+      aest <- c(aest, aes_string(alpha = aes_alpha))
+    class(aest) <- "uneval"
+    
+    # set axis labels to aes_x and aes_y if they are not explicitly given
+    if (is.null(labs_x)) labs_x <- aes_x
+    if (is.null(labs_y)) labs_y <- aes_y
+  
+    #-------------------------------------------------------------------   
+    #### build the plot ####
+    #-------------------------------------------------------------------
+    # default plot      
+    res <- ggplot(data) +
+      neutral
+    # # add aesthetics except ifgeom is "": then it is expected that the aesthetic
+    # # are handed to the function in a quoted geom statement,
+    # # i.e. quotes = quote(geom_line(x = ...)).
+    if (!identical(geom, ""))
+      res <- res + aest
+  
+      # add vertical lines at i_x if i_x is set
+    if (!is.null(i_x)){
+      if (identical(i_x,"5"))
+        i_x <- data$year[data$year %% 5 == 0]
+      
+      res <- res + 
+        geom_vline(xintercept = i_x,
+                   col = col_grey,
+                   linetype = "dashed")
+    }
+    
+    # add horizontal lines at i_y if i_y is set
+    if (!is.null(i_y)){
+      for (i in 1:length(i_y))
+        res <- res + 
+          geom_hline(yintercept = i_y[i],
+                     col = col_grey,
+                     linetype = i)
+    }
+    
+    # add geom; if none was specified, uses line chart as default
+    # distinction dependent upon the colour grouping variable: if that is empty,
+    # colour can be set inside geom (fixed value). Unfortunately, this is currently
+    # implemented with a cumbersome duplication for all geoms
+    if(!is.null(aes_col)) {
+      if("line" %in% geom) res <- res + geom_line()
+      if("point" %in% geom) res <- res + geom_point()
+    } else {
+      if("line" %in% geom) res <- res + geom_line(colour = fix_col)
+      if("point" %in% geom) res <- res + geom_point(colour = fix_col)
+    }
+    
+    # add labels if labs_x and _y are set (labs_x is same as aes_x per default;
+    # if you want none, then you need to use labs_x = "")
+    if (is.null(labs_col)) labs_col = ""
+    if (is.null(labs_ltyp)) labs_ltyp = ""
+    if (is.null(labs_x)) labs_x = ""
+    if (is.null(labs_y)) labs_y = ""
+    if (is.null(labs_alpha)) labs_alpha = ""
+    
+    res <- res + labs(x = labs_x,
+                      y = labs_y,
+                      colour = labs_col,
+                      linetype = labs_col,
+                      alpha = labs_alpha)
+    
+    # add continuous x scale with pretty breaks if scale_x is set
+    if (!is.null(scale_x)){
+      if (startsWith(scale_x, "cont")) {
+        if (endsWith(scale_x, "pretty"))
+          res <- res +
+            scale_x_continuous(breaks = pretty_breaks())
+      }
+      # preparation if a non-continuous non-pretty scale should be needed
+      else if (startsWith(scale_x, "disc")) {}
+    }
+    
+    # add continuous y scale if scale_y is set
+    # can be either pretty_breaks, log10 or defined by limits
+    if (!is.null(scale_y)){
+      if (identical(scale_y, "pretty"))
+        res <- res + scale_y_continuous(breaks = pretty_breaks()) else
+      if (identical(scale_y, "log"))
+        res <- res + scale_y_continuous(trans = 'log10') else
+      res <- res + scale_y_continuous(limits = scale_y,
+                                      breaks = if(!is.null(breaks)) breaks else pretty_breaks())
+    }
+    
+    
+    # add colour scale with fix_col if fix_col is set
+    if (!is.null(fix_col)){
+      res <- res +
+        scale_colour_manual(values = fix_col)
+    }
+    
+    # add title if title is set. If title is not set but mode is multipage,
+    # a default value is created: the name of the x argument to the function
+    if (!is.null(title))
+      res <- res +
+        ggtitle(as.character(title))
+    
+    # add facet grid or wrap if either grid or wrap is set
+    if (!is.null(grid)) {
+      if (grid[2] %in% colnames(data))
+        gridlab = str2lang(paste0("labeller(", grid[2], " = label_both)"))
+      else
+        gridlab = "label_value"
+        
       res <- res +
        facet_grid(as.formula(paste(grid[1], "~", grid[2])),
                  cols = ncol,
                  scale = gridscale,
                  labeller = eval(gridlab)) 
-      #else
-       # res <- res +
-       #   facet_grid(as.formula(paste(grid[1], "~", grid[2])),
-       #              cols = ncol,
-       #              scale = gridscale)
-
-  } else
-    if (!is.null(wrap)) {
-    res <- res +
-      facet_wrap(as.formula(paste("~", wrap)),
-                 ncol = ncol)
+  
+    } else
+      if (!is.null(wrap)) {
+      res <- res +
+        facet_wrap(as.formula(paste("~", wrap)),
+                   ncol = ncol)
+    }
+  
+    # change text angle
+    if (!is.null(angle))
+      res <- res +
+        theme(axis.text.x = element_text(angle = angle, vjust = 0.5, hjust = 1))
+      
+    # add quoted arguments
+    if (!is.null(quotes))
+      res <- res + 
+        eval(quotes)
+    
+    # in case alpha is used as aesthetics argument, make sure the respective labs are not transparent
+    if (!is.null(aes_alpha))
+      res <- res + 
+        guides(alpha = "none")
   }
 
-  # change text angle
-  if (!is.null(angle))
-    res <- res +
-      theme(axis.text.x = element_text(angle = angle, vjust = 0.5, hjust = 1))
-    
-  # add quoted arguments
-  if (!is.null(quotes))
-    res <- res + 
-      eval(quotes)
-  
+  #------------------------------------------------------------------- 
+  # handle plot output and recursive function call in case of multipage
+  #------------------------------------------------------------------- 
   ## plot to file if name is set, otherwise to graphics device
   # (file type per default pdf)
   if (!is.null(multi)) {
-          
-  # if multiple similar plots have to be generated with one plot per page (via lapply):
-  # data term is built on the fly from original data parameter together with multif:
-  # data %>% <multif>, e.g. data %>% filter(district == x)
+
+    if (is.null(title))
+      title <- "as.character(x)"
+    
     if (!is.null(name))
       pdf(target, width = width, height = height)
-       
+    
+    # if multiple similar plots have to be generated with one plot per page (via lapply):
+    # data term is built on the fly from original data parameter together with multif:
+    # data %>% <multif>, e.g. data %>% filter(district == x)      
     lapply(multi, function(x) {
       sszplot(data = eval(str2lang(paste("data %>% ", multif))),
               geom = geom,
