@@ -84,15 +84,11 @@
     tail(proc)
     
 #plot
-    p700 <- ggplot(data = proc) + 
-        geom_line(aes(x = year, y = prop_nat), color = col_6[1]) +  
-        scale_x_continuous(breaks = pretty_breaks()) +       
-        labs(x = "year", y = "proportion in % (naturalization on citizenship change)") +  
-        neutral
-
-    ggsave(paste0(nat_res, "0700_naturalization-on-citizenship-change.pdf"), 
-        plot = p700, width = 8, height = 6)  
-
+    sszplot(proc,
+            aes_x = "year", aes_y = "prop_nat",
+            labs_y = "proportion in % (naturalization on citizenship change)",
+            name = "0700_naturalization-on-citizenship-change",
+            width = 8, height = 6)
 
 #-------------------------------------------------------------------
 #naturalization and population
@@ -121,17 +117,12 @@
         ungroup() %>% 
         mutate(nat_as = if_else(pop == 0, NA_real_, round(nat / pop * 100, round_rate))) 
     
-    p701 <- ggplot(data = nat_as) + 
-        geom_line(aes(x = age, y = nat_as, color = sex)) +  
-        scale_colour_manual(values = col_s) +  
-        scale_x_continuous(breaks = pretty_breaks()) +        
-        labs(x = "age", y = "naturalization rate (in % per year)", color = "") +  
-        expand_limits(y = 0) +         
-        neutral       
-    
-    ggsave(paste0(nat_res, "0701_rate_as.pdf"), 
-        plot = p701, width = 8, height = 6)  
-    
+    sszplot(nat_as,
+            aes_x = "age", aes_y = "nat_as", aes_col = "sex",
+            labs_y = "naturalization rate (in % per year)",
+            scale_y = c(0, NA),
+            name = "0701_rate_as",
+            width = 8, height = 6)    
   
 #rate by ys
     nat_ys <- group_by(nat_pop, year, sex) %>% 
@@ -140,17 +131,12 @@
         ungroup() %>% 
         mutate(nat_ys = if_else(pop == 0, NA_real_, round(nat / pop * 100, round_rate))) 
     
-    p702 <- ggplot(data = nat_ys) + 
-        geom_line(aes(x = year, y = nat_ys, color = sex)) +  
-        scale_colour_manual(values = col_s) +  
-        scale_x_continuous(breaks = pretty_breaks()) +        
-        labs(x = "year", y = "naturalization rate (in % per year)", color = "") +  
-        expand_limits(y = 0) +         
-        neutral       
-    
-    ggsave(paste0(nat_res, "0702_rate_ys.pdf"), 
-        plot = p702, width = 8, height = 6)      
-       
+    sszplot(nat_ys,
+            aes_x = "year", aes_y = "nat_ys", aes_col = "sex",
+            labs_y = "naturalization rate (in % per year)",
+            scale_y = c(0, NA),
+            name = "0702_rate_ys",
+            width = 8, height = 6)  
     
 #rate by yas
     nat_yas <- group_by(nat_pop, year, age, sex) %>% 
@@ -161,38 +147,25 @@
     
     
     #years (subjectively, but last year in the plot)
-        year_plot <- seq(date_end, (date_start+1), by = -4)   
+    year_plot <- seq(date_end, (date_start+1), by = -4)   
 
-    p703 <- ggplot(data = filter(nat_yas, year %in% year_plot)) + 
-        geom_line(aes(x = age, y = nat_yas, color = sex)) +  
-        facet_wrap(~year, ncol = 3) +      
-        scale_colour_manual(values = col_s) +  
-        scale_x_continuous(breaks = pretty_breaks()) +        
-        labs(x = "age", y = "naturalization rate (in % per year)", color = "") +  
-        expand_limits(y = 0) +         
-        neutral       
-    
-    ggsave(paste0(nat_res, "0703_rate_yas_focus-age.pdf"), 
-        plot = p703, width = 10, height = 10)        
-    
+    sszplot(filter(nat_yas, year %in% year_plot),
+            aes_x = "age", aes_y = "nat_yas", aes_col = "sex",
+            labs_y = "naturalization rate (in % per year)",
+            wrap = "year", ncol = 3,
+            name = "0703_rate_yas_focus-age",
+            width = 10, height = 10)     
     
 
     #age (subjectively selected)
-        age_plot <- seq(0, 70, by = 10)     
+    age_plot <- seq(0, 70, by = 10)     
     
-    p704 <- ggplot(data = filter(nat_yas, age %in% age_plot)) + 
-        geom_line(aes(x = year, y = nat_yas, color = sex)) +  
-        facet_wrap(~age, ncol = 2) +      
-        scale_colour_manual(values = col_s) +  
-        scale_x_continuous(breaks = pretty_breaks()) +        
-        labs(x = "year", y = "naturalization rate (in % per year)", color = "") +  
-        expand_limits(y = 0) +         
-        neutral       
-    
-    ggsave(paste0(nat_res, "0704_rate_yas_focus-years.pdf"), 
-        plot = p704, width = 8, height = 10)       
-    
-  
+    sszplot(filter(nat_yas, age %in% age_plot),
+            aes_x = "year", aes_y = "nat_yas", aes_col = "sex",
+            labs_y = "naturalization rate (in % per year)",
+            wrap = "age", ncol = 2,
+            name = "0704_rate_yas_focus-years",
+            width = 8, height = 10)   
 
 #rate by das
     nat_das <- group_by(nat_pop, district, age, sex) %>% 
@@ -201,19 +174,13 @@
         ungroup() %>% 
         mutate(nat_das = if_else(pop == 0, NA_real_, round(nat / pop * 100, round_rate))) 
     
-    p705 <- ggplot(data = nat_das) + 
-        geom_line(aes(x = age, y = nat_das, color = sex)) + 
-        facet_wrap(~district, ncol = 4) +      
-        scale_colour_manual(values = col_s) +  
-        scale_x_continuous(breaks = pretty_breaks()) + 
-        scale_y_continuous(limits = c(0, 25)) +
-        labs(x = "age", y = "naturalization rate (in % per year)", color = "") +  
-        expand_limits(y = 0) +         
-        neutral       
-    
-    ggsave(paste0(nat_res, "0705_rate_das.pdf"), 
-        plot = p705, width = 12, height = 14)      
-    
+    sszplot(nat_das,
+            aes_x = "age", aes_y = "nat_das", aes_col = "sex",
+            labs_y = "naturalization rate (in % per year)",
+            scale_y = c(0, 25),
+            wrap = "district", ncol = 4,
+            name = "0705_rate_das",
+            width = 12, height = 14)     
     
 #rate by dys
     nat_dys <- group_by(nat_pop, district, year, sex) %>% 
@@ -222,18 +189,12 @@
         ungroup() %>% 
         mutate(nat_dys = if_else(pop == 0, NA_real_, round(nat / pop * 100, round_rate))) 
     
-    p706 <- ggplot(data = nat_dys) + 
-        geom_line(aes(x = year, y = nat_dys, color = sex)) + 
-        facet_wrap(~district, ncol = 4) +      
-        scale_colour_manual(values = col_s) +  
-        scale_x_continuous(breaks = pretty_breaks()) + 
-        labs(x = "year", y = "naturalization rate (in % per year)", color = "") +  
-        expand_limits(y = 0) +         
-        neutral       
-    
-    ggsave(paste0(nat_res, "0706_rate_dys.pdf"), 
-        plot = p706, width = 12, height = 14)     
-
+    sszplot(nat_dys,
+            aes_x = "year", aes_y = "nat_dys", aes_col = "sex",
+            labs_y = "naturalization rate (in % per year)",
+            wrap = "district", ncol = 4,
+            name = "0706_rate_dys",
+            width = 12, height = 14)
         
 #-------------------------------------------------------------------
 #base years
@@ -279,26 +240,14 @@
     
     
 #plot 
-    p707 <- function(x){
-        ggplot(data = filter(smooth_plot, (district == x))) + 
-            geom_line(aes(x = age, y = count, color = cat, linetype = smooth, alpha = smooth)) +  
-            facet_grid(cat ~  sex, scales = "free_y") +
-            scale_colour_manual(values = col_6[1:2]) + 
-            scale_alpha_manual(values = c(0.3, 1)) +
-            scale_x_continuous(breaks = pretty_breaks()) +               
-            labs(x = "age", y = "quantity per year (naturalization), quantity (population)", 
-                color = "", linetype = "", alpha = "") + 
-            guides(alpha = FALSE) +
-            ggtitle(as.character(x)) +
-            neutral}
-
-    pdf(paste0(nat_res, "0707_processes_das_smooth.pdf"),
-        width = 15, height = 8)
-
-        lapply(uni_d, p707)
-
-    dev.off()   
-    
+    sszplot(smooth_plot,
+            aes_x = "age", aes_y = "count", aes_col = "cat", aes_ltyp = "smooth", aes_alpha = "smooth",
+            labs_y = "quantity per year (naturalization), quantity (population)",
+            grid = c("cat", "sex"), gridscale = "free_y",
+            name = "0707_processes_das_smooth",
+            width = 15, height = 8,
+            multi = uni_d, multif = "filter(district == x)",
+            quotes = quote(scale_alpha_manual(values = c(0.3, 1))))    
  
 #-------------------------------------------------------------------
 #das: naturalization rate
@@ -321,26 +270,14 @@
         select(district, age, sex, cat, count) 
     
 #plot 
-    p708 <- function(x){
-        ggplot(data = filter(rate_plot, (district == x))) + 
-            geom_line(aes(x = age, y = count, linetype = cat, alpha = cat), color = col_6[1]) +  
-            facet_grid(. ~  sex) +
-            scale_alpha_manual(values = c(0.3, 1)) +
-            scale_x_continuous(breaks = pretty_breaks()) +               
-            labs(x = "age", y = "naturalization rate (in % per year)", 
-                color = "", linetype = "", alpha = "") + 
-            guides(alpha = FALSE) +
-            ggtitle(as.character(x)) +
-            neutral}
-
-    pdf(paste0(nat_res, "0708_rate_das.pdf"),
-        width = 12, height = 5)
-
-        lapply(uni_d, p708)
-
-    dev.off()   
-        
-    
+    sszplot(rate_plot,
+            aes_x = "age", aes_y = "count", aes_ltyp = "cat", aes_alpha = "cat",
+            labs_y = "naturalization rate (in % per year)",
+            grid = c(".", "sex"),
+            name = "0708_rate_das",
+            width = 12, height = 5,
+            multi = uni_d, multif = "filter(district == x)",
+            quotes = quote(scale_alpha_manual(values = c(0.3, 1))))   
      
     
 #-------------------------------------------------------------------
@@ -388,40 +325,26 @@
 #plots
     
     #years (subjectively, but last year in the plot)
-        year_plot <- seq(nat_base_end, nat_base_begin, by = -4)    
-  
-    p709 <- ggplot(data = filter(smooth_plot_ya, year %in% year_plot)) +
-        geom_line(aes(x = age, y = count, color = cat, linetype = smooth, alpha = smooth)) +
-        facet_grid(cat ~  year, scales = "free_y") +
-        scale_colour_manual(values = col_6[1:2]) +
-        scale_alpha_manual(values = c(0.3, 1)) +
-        scale_x_continuous(breaks = pretty_breaks()) +
-        labs(x = "age", y = "quantity per year (naturalization), quantity (population)",
-            color = "", linetype = "", alpha = "") +
-        guides(alpha = FALSE) +
-        neutral        
-        
-    ggsave(paste0(nat_res, "0709_processes_ya_smooth_focus-age.pdf"), 
-        plot = p709, width = 15, height = 8)            
-        
+    year_plot <- seq(nat_base_end, nat_base_begin, by = -4)    
+    
+    sszplot(filter(smooth_plot_ya, year %in% year_plot),
+            aes_x = "age", aes_y = "count", aes_col = "cat", aes_ltyp = "smooth", aes_alpha = "smooth",
+            labs_y = "quantity per year (naturalization), quantity (population)",
+            grid = c("cat", "year"), gridscale = "free_y",
+            name = "0709_processes_ya_smooth_focus-age",
+            width = 15, height = 8,
+            quotes = quote(scale_alpha_manual(values = c(0.3, 1))))        
 
     #age (subjectively selected)
-        age_plot <- seq(0, 100, by = 20)   
-        
-    p710 <- ggplot(data = filter(smooth_plot_ya, age %in% age_plot)) +
-        geom_line(aes(x = year, y = count, color = cat, linetype = smooth, alpha = smooth)) +
-        facet_grid(cat ~  age, scales = "free_y") +
-        scale_colour_manual(values = col_6[1:2]) +
-        scale_alpha_manual(values = c(0.3, 1)) +
-        scale_x_continuous(breaks = pretty_breaks()) +
-        labs(x = "year", y = "quantity per year (naturalization), quantity (population)",
-            color = "", linetype = "", alpha = "") +
-        guides(alpha = FALSE) +
-        neutral        
-        
-    ggsave(paste0(nat_res, "0710_processes_ya_smooth_focus-years.pdf"), 
-        plot = p710, width = 15, height = 8)             
-        
+    age_plot <- seq(0, 100, by = 20)
+    
+    sszplot(filter(smooth_plot_ya, age %in% age_plot),
+            aes_x = "year", aes_y = "count", aes_col = "cat", aes_ltyp = "smooth", aes_alpha = "smooth",
+            labs_y = "quantity per year (naturalization), quantity (population)",
+            grid = c("cat", "age"), gridscale = "free_y",
+            name = "0710_processes_ya_smooth_focus-years",
+            width = 15, height = 8,
+            quotes = quote(scale_alpha_manual(values = c(0.3, 1))))          
         
  
 #-------------------------------------------------------------------
@@ -447,36 +370,26 @@
 #plots
     
     #years (subjectively, but last year in the plot)
-        year_plot <- seq(nat_base_end, nat_base_begin, by = -2)    
-  
-    p711 <- ggplot(data = filter(rate_ya_plot, year %in% year_plot)) +
-        geom_line(aes(x = age, y = count, linetype = cat, alpha = cat), color = col_6[1]) +
-        facet_wrap(~year, ncol = 3) +     
-        scale_alpha_manual(values = c(0.3, 1)) +
-        scale_x_continuous(breaks = pretty_breaks()) +
-        labs(x = "age", y = "naturalization rate (in % per year)",
-            color = "", linetype = "", alpha = "") +
-        guides(alpha = FALSE) +
-        neutral        
-        
-    ggsave(paste0(nat_res, "0711_rate_ya_focus-age.pdf"), 
-        plot = p711, width = 12, height = 7)            
+    year_plot <- seq(nat_base_end, nat_base_begin, by = -2)
+    
+    sszplot(filter(rate_ya_plot, year %in% year_plot),
+            aes_x = "age", aes_y = "count", aes_ltyp = "cat", aes_alpha = "cat",
+            labs_y = "naturalization rate (in % per year)",
+            wrap = "year", ncol = 3,
+            name = "0711_rate_ya_focus-age",
+            width = 15, height = 8,
+            quotes = quote(scale_alpha_manual(values = c(0.3, 1))))
 
     #age (subjectively selected)
-        age_plot <- seq(0, 100, by = 20)   
-        
-    p712 <- ggplot(data = filter(rate_ya_plot, age %in% age_plot)) +
-        geom_line(aes(x = year, y = count, linetype = cat, alpha = cat), color = col_6[1]) +
-        facet_grid(.~age) +   
-        scale_alpha_manual(values = c(0.3, 1)) +
-        scale_x_continuous(breaks = pretty_breaks()) +
-        labs(x = "year", y = "naturalization rate (in % per year)",
-            color = "", linetype = "", alpha = "") +
-        guides(alpha = FALSE) +
-        neutral        
-        
-    ggsave(paste0(nat_res, "0712_rate_ya_focus-years.pdf"), 
-        plot = p712, width = 15, height = 6)             
+    age_plot <- seq(0, 100, by = 20)   
+
+    sszplot(filter(rate_ya_plot, age %in% age_plot),
+            aes_x = "year", aes_y = "count", aes_ltyp = "cat", aes_alpha = "cat",
+            labs_y = "naturalization rate (in % per year)",
+            grid = c(".", "age"),
+            name = "0712_rate_ya_focus-years",
+            width = 15, height = 6,
+            quotes = quote(scale_alpha_manual(values = c(0.3, 1))))
         
         
 #-------------------------------------------------------------------
