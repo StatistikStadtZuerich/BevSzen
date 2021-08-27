@@ -15,16 +15,19 @@
 # aes_y: the grouping variable for y
 # aes_col: the grouping variable for colour
 # aes_ltyp: the grouping variable for linetype
-# labs_x, labs_y, labs_col, labs_ltyp: labels for the respective variables
+# aes_alpha: the alpha value for a geom
+# labs_x, labs_y, labs_col, labs_ltyp, labs_alpha: labels for the respective variables
 # i_x: vector of vertical intercepts on x axis
 # i_y: vector of horizontal intercepts on y axis
 # scale_x: set the x scale. Default ist pretty_breaks for continuous scale
-# scale_y: set the y scale. Default is none. Choose "pretty" for pretty_breaks,
-#   a vector for limits (default with pretty_breaks)
+# scale_y: set the y scale. Default is none. "pretty" for pretty_breaks, "log"
+#          for a log10 transformation, a vector for limits.
+#          Achieve "expand_limits(y = 0)" with c(0, NA)
 # breaks: vector with breaks for scale if desired.
 # fix_col: desired length of a colour vector selected from predefined colours
 #          is ignored (and therefore unnecessary) if aes_col is set
 # grid: if set, creates a facet grid with grid[1] on LHS and grid[2] on RHs of formula
+# gridscale: use to define the scale attribute in facet_grid
 # wrap: if set, creates a facet wrap with this value on RHs of formula
 # ncol: argument cols for facet_grid, ncol for facet_wrap
 # title: title for the whole chart, as object or string (esp. in case of multipage plots)
@@ -43,16 +46,37 @@
 
 ## caveat: all parameters have to be added to the recursive function call at the very end!
 
-sszplot <- function(data, geom = c("line"),
-                    aes_x, aes_y, aes_col = NULL, aes_ltyp = NULL,
-                    labs_x = NULL, labs_y = NULL, labs_col = NULL, labs_ltyp = NULL,
-                    i_x = NULL, i_y = NULL,
-                    scale_x = "cont_pretty", scale_y = NULL, fix_col = 1, breaks = NULL,
-                    grid = NULL, wrap = NULL, ncol = NULL,
+sszplot <- function(data,
+                    geom = c("line"),
+                    aes_x,
+                    aes_y,
+                    aes_col = NULL,
+                    aes_ltyp = NULL,
+                    aes_alpha = NULL,
+                    labs_x = NULL,
+                    labs_y = NULL,
+                    labs_col = NULL,
+                    labs_ltyp = NULL,
+                    labs_alpha = NULL,
+                    i_x = NULL,
+                    i_y = NULL,
+                    scale_x = "cont_pretty",
+                    scale_y = NULL,
+                    fix_col = 1,
+                    breaks = NULL,
+                    grid = NULL,
+                    wrap = NULL,
+                    ncol = NULL,
+                    gridscale = NULL,
                     title = NULL,
-                    name = NULL, file_type = "pdf", width = 7, height = 4,
-                    multi = NULL, multif = NULL,
-                    quotes = NULL, angle = NULL){
+                    name = NULL,
+                    file_type = "pdf",
+                    width = 7,
+                    height = 4,
+                    multi = NULL,
+                    multif = NULL,
+                    quotes = NULL,
+                    angle = NULL){
   
   stopifnot(!is.null(data) && !is.null(aes_x))
   stopifnot((!is.null(multi) && !is.null(multif)) || is.null(multi))
@@ -68,10 +92,12 @@ sszplot <- function(data, geom = c("line"),
   ## creates the folder first if missing
   
   # determine output path from file name (for saving)
-  current_file <- regmatches(this.path(), regexpr("[a-zA-Z0-9._-]+$", this.path()))
+  current_file <- regmatches(this.path(),
+                             regexpr("[a-zA-Z0-9._-]+$", this.path()))
   
   # reduce to the nnnn_xyz part of the file name (e.g. 0100_birth)
-  sub_path <- regmatches(current_file, regexpr("[0-9]{4}_[a-zA-Z0-9]+", current_file))
+  sub_path <- regmatches(current_file,
+                         regexpr("[0-9]{4}_[a-zA-Z0-9]+", current_file))
   
   # handle folder hierarchy only on first two of nnnn (e.g. 0110_birth is converted to 0100_birth)
   sub_path <- sub("[0-9]{2}_", "00_", sub_path)
@@ -79,7 +105,8 @@ sszplot <- function(data, geom = c("line"),
   # create target path and create corresponding folder if not existing yet
   target <- paste(res_path, sub_path, sep = "/")
   if (!file.exists(paste(getwd(), target, sep = "/")))
-    dir.create(paste(getwd(), target, sep = "/"), recursive = TRUE)
+    dir.create(paste(getwd(), target, sep = "/"),
+               recursive = TRUE)
   target <- paste(target, paste0(name, ".", file_type), sep = "/")
  
   
@@ -93,11 +120,13 @@ sszplot <- function(data, geom = c("line"),
   # (usually year). Colours are then "rainbow" for the scenario years and grey 
   # for all past years. This must be calculated dynamically
     col_palette <- col_6[c(1,3,4,5,6,2)]
-    time_unit <- str_extract(aes_col, "year|month|week|day")
-    if (!is.na(time_unit)) {
-      ntimes <- select(data, time_unit) %>% unique %>% nrow
-      col_time <- c(rep(col_grey, ntimes - length(uniy_szen)),
-                colorRampPalette(col_6[1:5])(length(uniy_szen)))
+    if (!is.null(aes_col)) {
+      time_unit <- str_extract(aes_col, "year|month|week|day")
+      if (!is.na(time_unit)) {
+        ntimes <- select(data, time_unit) %>% unique %>% nrow
+        col_time <- c(rep(col_grey, ntimes - length(uniy_szen)),
+                  colorRampPalette(col_6[1:5])(length(uniy_szen)))
+      }
     }
 
       # if aes_col is set, selects as many colors as needed by grouping variable aes_x
@@ -128,6 +157,8 @@ sszplot <- function(data, geom = c("line"),
     aest <- c(aest, aes_string(colour = aes_col))
   if (!is.null(aes_ltyp))
     aest <- c(aest, aes_string(linetype = aes_ltyp))
+  if (!is.null(aes_alpha))
+    aest <- c(aest, aes_string(alpha = aes_alpha))
   class(aest) <- "uneval"
   
   # set axis labels to aes_x and aes_y if they are not explicitly given
@@ -152,14 +183,18 @@ sszplot <- function(data, geom = c("line"),
       i_x <- data$year[data$year %% 5 == 0]
     
     res <- res + 
-      geom_vline(xintercept = i_x, col = col_grey, linetype = "dashed")
+      geom_vline(xintercept = i_x,
+                 col = col_grey,
+                 linetype = "dashed")
   }
   
   # add horizontal lines at i_y if i_y is set
   if (!is.null(i_y)){
     for (i in 1:length(i_y))
       res <- res + 
-        geom_hline(yintercept = i_y[i], col = col_grey, linetype = i)
+        geom_hline(yintercept = i_y[i],
+                   col = col_grey,
+                   linetype = i)
   }
   
   # add geom; if none was specified, uses line chart as default
@@ -180,8 +215,13 @@ sszplot <- function(data, geom = c("line"),
   if (is.null(labs_ltyp)) labs_ltyp = ""
   if (is.null(labs_x)) labs_x = ""
   if (is.null(labs_y)) labs_y = ""
+  if (is.null(labs_alpha)) labs_alpha = ""
   
-  res <- res + labs(x = labs_x, y = labs_y, colour = labs_col, linetype = labs_col)
+  res <- res + labs(x = labs_x,
+                    y = labs_y,
+                    colour = labs_col,
+                    linetype = labs_col,
+                    alpha = labs_alpha)
   
   # add continuous x scale with pretty breaks if scale_x is set
   if (!is.null(scale_x)){
@@ -224,13 +264,20 @@ sszplot <- function(data, geom = c("line"),
   # add facet grid or wrap if either grid or wrap is set
   if (!is.null(grid)) {
     if (grid[2] %in% colnames(data))
+      gridlab = str2lang(paste0("labeller(", grid[2], " = label_both)"))
+    else
+      gridlab = "label_value"
+      
       res <- res +
        facet_grid(as.formula(paste(grid[1], "~", grid[2])),
                  cols = ncol,
-                 labeller = eval(str2lang(paste0("labeller(", grid[2], " = label_both)")))) else
-       res <- res +
-         facet_grid(as.formula(paste(grid[1], "~", grid[2])),
-                    cols = ncol)
+                 scale = gridscale,
+                 labeller = eval(gridlab)) 
+      #else
+       # res <- res +
+       #   facet_grid(as.formula(paste(grid[1], "~", grid[2])),
+       #              cols = ncol,
+       #              scale = gridscale)
 
   } else
     if (!is.null(wrap)) {
@@ -260,15 +307,31 @@ sszplot <- function(data, geom = c("line"),
       pdf(target, width = width, height = height)
        
     lapply(multi, function(x) {
-      sszplot(data = eval(str2lang(paste("data %>% ", multif))), geom = geom,
-       aes_x = aes_x, aes_y = aes_y, aes_col = aes_col, aes_ltyp = aes_ltyp,
-       labs_x = labs_x, labs_y = labs_y, labs_col = labs_col, labs_ltyp = labs_ltyp,
-       i_x = i_x, i_y = i_y,
-       scale_x = scale_x, scale_y = scale_y, fix_col = fix_col, breaks = breaks,
-       grid = grid, wrap = wrap, ncol = ncol,
-       title = eval(str2expression(title)),
-       quotes = quotes,
-       angle = angle)
+      sszplot(data = eval(str2lang(paste("data %>% ", multif))),
+              geom = geom,
+              aes_x = aes_x,
+              aes_y = aes_y,
+              aes_col = aes_col,
+              aes_ltyp = aes_ltyp,
+              aes_alpha = aes_alpha,
+              labs_x = labs_x,
+              labs_y = labs_y,
+              labs_col = labs_col,
+              labs_ltyp = labs_ltyp,
+              labs_alpha = labs_alpha,
+              i_x = i_x,
+              i_y = i_y,
+              scale_x = scale_x,
+              scale_y = scale_y,
+              fix_col = fix_col,
+              breaks = breaks,
+              grid = grid,
+              wrap = wrap,
+              ncol = ncol,
+              gridscale = gridscale,
+              title = eval(str2expression(title)),
+              quotes = quotes,
+              angle = angle)
     }
     )
     if (!is.null(name))
@@ -276,17 +339,16 @@ sszplot <- function(data, geom = c("line"),
   }
   else {
   if (!is.null(name))
-    ggsave(target, plot = res, width = width, height = height)
+    ggsave(target,
+           plot = res,
+           width = width,
+           height = height)
   else 
     print(res)
   }
   
-  
 
-  
   #TODO:
-  #     other geoms?
-  #     different scales for x?
   #     simple long format function?
   #     parameter for colour palette if not default
   
