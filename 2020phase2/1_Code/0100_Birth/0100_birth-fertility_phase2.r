@@ -318,7 +318,7 @@
   
 #plot
     sszplot(fer_pred, 
-            aes_x = "age", aes_y = "fer_all", aes_col = "as.factor(year)",
+            aes_x = "age", aes_y = "fer_all", aes_col = "year",
             wrap = "district",
             labs_y = "fertility rate (in % per year)",
             scale_y = c(0, bir_plot_lim),
@@ -384,7 +384,7 @@
 #plot
     sszplot(sel_dat,
             aes_x = "age", aes_y = "fer", aes_col = "cat",
-            grid = c("origin", "as.factor(year)"),
+            grid = c("origin", "year"),
             labs_y = "fertility rate (in % per year)",
             name = "0150_fertility-prediction_before-after-fit",
             width = 10, height = 6,

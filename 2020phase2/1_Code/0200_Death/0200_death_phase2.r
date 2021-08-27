@@ -453,7 +453,7 @@
 
 #plot
     sszplot(mor_zh_yas_past_future,
-            aes_x = "age", aes_y = "mor_yas", aes_col = "as.factor(year)",
+            aes_x = "age", aes_y = "mor_yas", aes_col = "year",
             labs_y = "mortality rate (in % per year)",
             scale_y = "log",
             grid = c("sex", "."),
