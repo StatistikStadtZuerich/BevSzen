@@ -418,42 +418,23 @@
 #plots
     
     #years (subjectively, but last year in the plot)
-        year_plot <- seq(nat_base_begin, szen_end, by = 10)   
-        
-    #colors
-        col_time <- c(rep(col_grey, length(nat_base_begin:nat_base_end)),
-            colorRampPalette(col_6[1:5])(length(szen_begin:szen_end)))
-        # plot(1:length(col_time), 1:length(col_time), col = col_time, pch = 16, cex = 2)
-           
-
-    p713 <- ggplot(data = rate_ya_past_pred) +
-            geom_line(aes(x = age, y = rate_ya, color = as.factor(year))) +
-            scale_colour_manual(values = col_time) +
-            scale_x_continuous(breaks = pretty_breaks()) +           
-            labs(x = "age", y = "naturalization rate (in % per year)", color = "") +
-            neutral
-    
-    ggsave(paste0(nat_res, "0713_rate_ya_past-future_focus-age.pdf"), 
-        plot = p713, width = 10, height = 7)   
-    
+    year_plot <- seq(nat_base_begin, szen_end, by = 10)
+ 
+    sszplot(rate_ya_past_pred,
+            aes_x = "age", aes_y = "rate_ya", aes_col = "year",
+            labs_y = "naturalization rate (in % per year)",
+            name = "0713_rate_ya_past-future_focus-age",
+            width = 10, height = 7)  
           
     #age (subjectively selected)
-        age_plot <- seq(0, 100, by = 10)   
-        
-    p714 <- ggplot(data = filter(rate_ya_past_pred, age %in% age_plot)) +
-        geom_line(aes(x = year, y = rate_ya), color = col_6[1]) +
-        facet_wrap(~age, ncol = 5) +   
-        scale_alpha_manual(values = c(0.3, 1)) +
-        scale_x_continuous(breaks = pretty_breaks()) +
-        labs(x = "year", y = "naturalization rate (in % per year)",
-            color = "", linetype = "", alpha = "") +
-        guides(alpha = FALSE) +
-        neutral        
-        
-    ggsave(paste0(nat_res, "0714_rate_ya_past-future_focus-years.pdf"), 
-        plot = p714, width = 15, height = 10)             
+    age_plot <- seq(0, 100, by = 10)
               
-      
+    sszplot(filter(rate_ya_past_pred, age %in% age_plot),
+            aes_x = "year", aes_y = "rate_ya",
+            labs_y = "naturalization rate (in % per year)",
+            wrap = "age", ncol = 5,
+            name = "0714_rate_ya_past-future_focus-years",
+            width = 10, height = 7)        
 
 #-------------------------------------------------------------------
 #a: smooth processes (preparation for the trend factor calculation)
@@ -495,13 +476,18 @@
         scale_x_continuous(breaks = pretty_breaks()) +
         labs(x = "age", y = "quantity per year (naturalization), quantity (population)",
             color = "", linetype = "", alpha = "") +
-        guides(alpha = FALSE) +
         neutral        
         
     ggsave(paste0(nat_res, "0715_processes_a_smooth.pdf"), 
         plot = p715, width = 10, height = 8)            
             
-    
+    sszplot(smooth_plot_a,
+            aes_x = "age", aes_y = "count", aes_col = "cat", aes_ltyp = "smooth", aes_alpha = "smooth",
+            labs_y = "quantity per year (naturalization), quantity (population)",
+            grid = c("cat", ".") , gridscale = "free_y",
+            name = "0715_processes_a_smooth",
+            width = 10, height = 8,
+            quotes = quote(scale_alpha_manual(values = c(0.3, 1))))
  
 #-------------------------------------------------------------------
 #a: rate
@@ -522,19 +508,12 @@
         select(age, cat, count)     
    
 #plots
-    p716 <- ggplot(data = rate_a_plot) +
-        geom_line(aes(x = age, y = count, linetype = cat, alpha = cat), color = col_6[1]) +
-        scale_alpha_manual(values = c(0.3, 1)) +
-        scale_x_continuous(breaks = pretty_breaks()) +
-        labs(x = "age", y = "naturalization rate (in % per year)",
-            color = "", linetype = "", alpha = "") +
-        guides(alpha = FALSE) +
-        neutral        
-        
-    ggsave(paste0(nat_res, "0716_rate_a.pdf"), 
-        plot = p716, width = 12, height = 7)     
-    
-    
+    sszplot(rate_a_plot,
+            aes_x = "age", aes_y = "count", aes_ltyp = "cat", aes_alpha = "cat",
+            labs_y = "naturalization rate (in % per year)",
+            name = "0716_rate_a",
+            width = 12, height = 7,
+            quotes = quote(scale_alpha_manual(values = c(0.3, 1))))    
  
 #-------------------------------------------------------------------
 #trend factor ('rate ya' to 'rate a')
@@ -551,43 +530,25 @@
 #trend factor (has to be at least 0, otherwise 'denaturalization')
     tf_ya <- left_join(prep_rate_ya, prep_rate_a, by = "age") %>% 
         mutate(tf_ya = pmax(0, if_else(rate_a <= nat_factor_thres, nat_factor_value, rate_ya / rate_a)))
-    
-    #colors
-        col_time <- colorRampPalette(col_6[1:5])(length(szen_begin:szen_end))
-        # plot(1:length(col_time), 1:length(col_time), col = col_time, pch = 16, cex = 2)
-           
 
-    p717 <- ggplot(data = tf_ya) +
-        geom_hline(yintercept = 1, col = col_grey, linetype = "dashed") +          
-        geom_line(aes(x = age, y = tf_ya, color = as.factor(year))) +
-        scale_colour_manual(values = col_time) +
-        scale_x_continuous(breaks = pretty_breaks()) +   
-        scale_y_continuous(limits = c(0, 2)) +          
-        labs(x = "age", y = "trend factor", color = "") +
-        neutral
-    
-    ggsave(paste0(nat_res, "0717_trend-factor_focus-age.pdf"), 
-        plot = p717, width = 10, height = 7)   
-    
+    sszplot(tf_ya,
+            aes_x = "age", aes_y = "tf_ya", aes_col = "year",
+            i_y = 1,
+            labs_y = "trend factor",
+            scale_y = c(0, 2),
+            name = "0717_trend-factor_focus-age",
+            width = 10, height = 8)    
           
     #age (subjectively selected)
-        age_plot <- seq(0, 100, by = 10)   
-        
-    p718 <- ggplot(data = filter(tf_ya, age %in% age_plot)) +
-        geom_hline(yintercept = 1, col = col_grey, linetype = "dashed") +         
-        geom_line(aes(x = year, y = tf_ya), color = col_6[1]) +
-        facet_wrap(~age, ncol = 4) +   
-        scale_alpha_manual(values = c(0.3, 1)) +
-        scale_x_continuous(breaks = pretty_breaks()) +
-        labs(x = "year", y = "trend factor",
-            color = "", linetype = "", alpha = "") +
-        guides(alpha = FALSE) +
-        neutral        
-        
-    ggsave(paste0(nat_res, "0718_trend-factor_focus-years.pdf"), 
-        plot = p718, width = 15, height = 10)        
+    age_plot <- seq(0, 100, by = 10)
     
-    
+    sszplot(filter(tf_ya, age %in% age_plot),
+            aes_x = "year", aes_y = "tf_ya",
+            i_y = 1,
+            labs_y = "trend factor",
+            wrap = "age", ncol = 4,
+            name = "0718_trend-factor_focus-years",
+            width = 10, height = 8)      
     
 #-------------------------------------------------------------------
 #future rate (dyas)
@@ -620,27 +581,17 @@
 #plot 
     
     #base years (subjectively)
-        year_plot <- seq(szen_begin, szen_end, by = 7)       
+    year_plot <- seq(szen_begin, szen_end, by = 7)       
       
     #plot 
-        p719 <- function(x){
-            ggplot(data = filter(plot_pred_smooth, (district == x) & (year %in% year_plot))) + 
-                geom_line(aes(x = age, y = count, linetype = cat, alpha = cat), color = col_6[1]) +  
-                facet_grid(sex ~  year) +
-                scale_alpha_manual(values = c(0.3, 1)) +
-                scale_x_continuous(breaks = pretty_breaks()) +               
-                labs(x = "age", y = "naturalization rate (in % per year)", color = "", linetype = "", alpha = "") + 
-                guides(alpha = FALSE) +
-                ggtitle(as.character(x)) +
-                neutral}
-    
-        pdf(paste0(nat_res, "0719_prediction_dyao_smooth.pdf"),
-            width = 15, height = 8)
-    
-            lapply(uni_d, p719)
-    
-        dev.off()   
-            
+      sszplot(filter(plot_pred_smooth, year %in% year_plot),
+              aes_x = "age", aes_y = "count", aes_ltyp = "cat", aes_alpha = "cat",
+              labs_y = "naturalization rate (in % per year)",
+              grid = c("sex", "year"),
+              name = "0719_prediction_dyao_smooth",
+              width = 15, height = 8,
+              multi = uni_d, multif = "filter(district == x)",
+              quotes = quote(scale_alpha_manual(values = c(0.3, 1))))             
         
 #-------------------------------------------------------------------
 #past and rate (dyas)
@@ -675,26 +626,14 @@
     # plot(1:length(col_time), 1:length(col_time), col = col_time, pch = 16, cex = 2)
        
 #plot: focus age distribution
-    p720 <- function(x){
-        ggplot(data = filter(rate_dyas_past_future, district == x)) +
-            geom_line(aes(x = age, y = rate_dyas, color = as.factor(year))) +
-            facet_grid(. ~ sex) +
-            scale_colour_manual(values = col_time) +
-            scale_x_continuous(breaks = pretty_breaks()) +  
-            labs(x = "age", y = "naturalization rate (in % per year)", color = "") +
-            ggtitle(as.character(x)) +
-            neutral}
+      sszplot(rate_dyas_past_future,
+              aes_x = "age", aes_y = "rate_dyas", aes_col = "year",
+              labs_y = "naturalization rate (in % per year)",
+              grid = c(".", "sex"),
+              name = "0720_rate_dyao_past-future",
+              width = 14, height = 7,
+              multi = uni_d, multif = "filter(district == x)")   
 
-      pdf(paste0(nat_res, "0720_rate_dyao_past-future.pdf"),
-          width = 14, height = 7)
-          
-          lapply(uni_d, p720)
-      
-      dev.off()   
-                 
-
-
-    
 #plot levels
     time_lev <- c("past", "future")
 
@@ -704,66 +643,32 @@
         time_lev[1], time_lev[2]), levels = time_lev))
 
 #plot: focus age distribution
-    #test: x <- uni_d[3]
     #WHY this plot: it is recommendable to look precisely at the age plots over years
     #therefore, a plot that focuses on certain years
 
     #years
-        year_temp <- (date_start+1):szen_end
-        year_plot <- seq(min(year_temp), max(year_temp), by = 8)
+    year_plot <- seq(date_start+1, szen_end, by = 7)
 
-    #colors
-        col_years_plot <- colorRampPalette(col_6[1:5])(length(year_plot))
-
-    p721 <- function(x){
-        ggplot(data = filter(plot_a_past_pred, (district == x) & (year %in% year_plot))) +
-            geom_line(aes(x = age, y = rate_dyas, color = as.factor(year), size = time, alpha = time)) +
-            facet_grid(. ~ sex) +
-            scale_colour_manual(values = col_years_plot) +
-            scale_size_manual(values = c(0.2, 1.2)) +
-            scale_alpha_manual(values = c(0.4, 1)) +
-            labs(x = "age", y = "naturalization rate (in % per year)", color = "year", size = "") +
-            guides(alpha = FALSE) +
-            ggtitle(as.character(x)) +
-            neutral}
-
-
-    pdf(paste0(nat_res, "0721_rate_dyao_past-future_focus-age.pdf"),
-        width = 14, height = 7)
-        
-        lapply(uni_d, p721)
-    
-    dev.off()   
-    
-    
+    sszplot(filter(plot_a_past_pred, year %in% year_plot),
+            aes_x = "age", aes_y = "rate_dyas", aes_col = "year",
+            labs_y = "naturalization rate (in % per year)", labs_col = "year",
+            grid = c(".", "sex"),
+            name = "0721_rate_dyao_past-future_focus-age",
+            width = 14, height = 7,
+            multi = uni_d, multif = "filter(district == x)")
 
 #plot: focus years
 
     #age (subjectively selected)
-        age_plot_pred <- seq(0, 60, by = 20)
-
-    #colors
-        col_age_pred <- colorRampPalette(col_6[1:5])(length(age_plot_pred))
-
-    p722 <- function(x){
-        ggplot(data = filter(plot_a_past_pred, (district == x) & (age %in% age_plot_pred))) +
-            geom_vline(xintercept = c(nat_base_begin, nat_base_end), color = col_grey, linetype = 1) +
-            geom_line(aes(x = year, y = rate_dyas, color = as.factor(age))) +
-            facet_grid(. ~ sex) +
-            scale_colour_manual(values = col_age_pred) +
-            labs(x = "year", y = "naturalization rate (in % per year)", color = "age") +
-            ggtitle(as.character(x)) +
-            neutral}
-
-                   
-    pdf(paste0(nat_res, "0722_rate_dyao_past-future_focus-years.pdf"),
-        width = 14, height = 6)
+    age_plot_pred <- seq(0, 60, by = 20)
         
-        lapply(uni_d, p722)
-    
-    dev.off()   
-        
-    
+    sszplot(filter(plot_a_past_pred, age %in% age_plot_pred),
+            aes_x = "year", aes_y = "rate_dyas", aes_col = "age",
+            labs_y = "naturalization rate (in % per year)", labs_col = "age",
+            grid = c(".", "sex"),
+            name = "0722_rate_dyao_past-future_focus-years",
+            width = 14, height = 6,
+            multi = uni_d, multif = "filter(district == x)")    
 
 #-------------------------------------------------------------------
 #export the results
@@ -775,8 +680,7 @@
         arrange(district, year, age, sex)
       
 #export
-    write_csv(nat_ex_data, paste0(nat_exp, "naturalization_future.csv"))    
-
+    write_csv(nat_ex_data, paste0(nat_exp, "naturalization_future.csv"))
 
 
     
