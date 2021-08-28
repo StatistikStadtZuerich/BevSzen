@@ -108,10 +108,7 @@ sszplot <- function(data,
     dir.create(paste(getwd(), target, sep = "/"),
                recursive = TRUE)
   target <- paste(target, paste0(name, ".", file_type), sep = "/")
- 
-  
-  ## theme  -- this does not work yet (no effect; should apply a default line colour)
-  theme_ssz <- theme(line = element_line(colour = col_6[1]))
+
   
   ## building of the plot is only needed if we are not in multipage mode
   if (is.null(multi)) {  
@@ -263,8 +260,9 @@ sszplot <- function(data,
     
     # add facet grid or wrap if either grid or wrap is set
     if (!is.null(grid)) {
-      if (grid[2] %in% colnames(data))
-        gridlab = str2lang(paste0("labeller(", grid[2], " = label_both)"))
+      # labeller for columnns should be 'label_both', but not if category is year/district/sex/region
+      if (grid[2] %in% colnames(data) && !grid[2] %in% c("year", "district", "sex", "region"))
+          gridlab = str2lang(paste0("labeller(", grid[2], " = label_both)"))
       else
         gridlab = "label_value"
         
@@ -274,11 +272,17 @@ sszplot <- function(data,
                  scale = gridscale,
                  labeller = eval(gridlab)) 
   
-    } else
-      if (!is.null(wrap)) {
+    } else if (!is.null(wrap)) {
+      # labeller for columnns should be 'label_both', but not if category is year/district/sex/region
+      if (wrap %in% colnames(data) && !wrap %in% c("year", "district", "sex", "region"))
+        gridlab = str2lang(paste0("labeller(", wrap, " = label_both)"))
+      else
+        gridlab = "label_value"
+      
       res <- res +
         facet_wrap(as.formula(paste("~", wrap)),
-                   ncol = ncol)
+                   ncol = ncol,
+                   labeller = eval(gridlab))
     }
   
     # change text angle
@@ -355,8 +359,8 @@ sszplot <- function(data,
   }
   
 
-  #TODO:
+  # TODO:
   #     simple long format function?
-  #     parameter for colour palette if not default
+  #     parameter for colour palette if not default ?
   
 }
