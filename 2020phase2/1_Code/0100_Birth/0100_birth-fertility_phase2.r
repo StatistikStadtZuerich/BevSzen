@@ -160,7 +160,7 @@
         ungroup()
     
     sszplot(tfr_ya1o, aes_x = "year", aes_y = "tfr_ya1o", aes_col = "origin",
-            grid = "age_1", labs_y = "TFR", i_x = "5",
+            grid = c("age_1", "."), labs_y = "TFR", i_x = "5",
             geom = c("line", "point"),
             name = "0104_TFR_by-year-age1-origin",
             width = 12) 
@@ -172,7 +172,8 @@
         ungroup()
         
     sszplot(tfr_ya2o, aes_x = "year", aes_y = "tfr_ya2o", aes_col = "origin",
-            grid = c("","age_2"), labs_y = "TFR", i_x = "5",
+            wrap = "age_2", ncol = nlevels(tfr_ya2o$age_2),
+            labs_y = "TFR", i_x = "5",
             geom = c("line", "point"),
             name = "0105_TFR-by-year-age2",
             width = 16, height = 5) 
