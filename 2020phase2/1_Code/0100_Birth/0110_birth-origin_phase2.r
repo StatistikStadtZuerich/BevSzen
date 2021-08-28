@@ -73,7 +73,7 @@
             aes_x = "year", aes_y = "cha_yo", aes_col = "origin",
             geom = c("line", "point"),
             i_x = year5,
-            labs_x = "year", labs_y = "origin change in %",
+            labs_y = "origin change in %",
             name = "0170_origin-change_by-year-origin")
     
 #change by year, age1, origin
@@ -88,7 +88,7 @@
             aes_x = "year", aes_y = "cha_ya1o", aes_col = "origin",
             geom = c("line", "point"),
             i_x = year5,
-            labs_x = "year", labs_y = "origin change in %",
+            labs_y = "origin change in %",
             wrap = "age_1",
             name = "0171_origin-change_by-year-age1-origin",
             width = 12)
@@ -106,7 +106,7 @@
             aes_x = "year", aes_y = "cha_ya2o", aes_col = "origin",
             geom = c("line", "point"),
             i_x = year5,
-            labs_x = "year", labs_y = "origin change in %",
+            labs_y = "origin change in %",
             wrap = "age_2", ncol = nlevels(cha_ya2o$age_2),
             name = "0172_origin-change_by-year-age2-origin",
             width = 12)
@@ -124,7 +124,7 @@
             aes_x = "year", aes_y = "cha_dyo", aes_col = "origin",
             geom = c("line", "point"),
             i_x = year5,
-            labs_x = "age", labs_y = "origin change in %",
+            labs_y = "origin change in %",
             wrap = "district", ncol = 4,
             name = "0173_origin-change_by-district-year-origin",
             width = 12, height = 14)
@@ -142,7 +142,7 @@
             aes_x = "year", aes_y = "cha_dya1f", aes_col = "age_1",
             geom = c("line", "point"),
             i_x = year5,
-            labs_x = "age", labs_y = "origin change in %", labs_col = "age",
+            labs_y = "origin change in %", labs_col = "age",
             wrap = "district", ncol = 4,
             name = "0174_origin-change_by-district-year-age1-foreign",
             width = 12, height = 14)
@@ -177,7 +177,7 @@
     sszplot(cha_pred,
         aes_x = "year", aes_y = "cha_all", aes_col = "origin",
         i_x = c(bir_cha_base_begin, bir_cha_base_end),
-        labs_x = "age", labs_y = "origin change in %",
+        labs_y = "origin change in %",
         wrap = "district", ncol = 4,
         name = "0175_origin-change_by-district-year-origin_past-future",
         width = 12, height = 14)
