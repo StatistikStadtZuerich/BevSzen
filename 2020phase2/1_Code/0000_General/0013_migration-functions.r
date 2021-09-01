@@ -104,16 +104,13 @@
             year_past_5 <- sort(unique(year_past[year_past %% 5 == 0]))
 
         #plot
-            p00 <- ggplot(data = mis_rate_dy) +
-                geom_vline(xintercept = year_past_5, color = col_grey) +
-                geom_line(aes(x = year, y = mis_rate_dy), color = col_6[1]) +
-                facet_wrap(~district, ncol = 4) +
-                labs(x = "year", y = paste0(mig_name, "* rate (in % per year)")) +
-                neutral
-
-            ggsave(paste0(graph_path, mig_number, "00_", mig_name, "-star-rate_by-district-year.pdf"),
-                plot = p00, width = 12, height = 14)
-
+            sszplot(mis_rate_dy,
+                    aes_x = "year", aes_y = "mis_rate_dy",
+                    i_x = year_past_5,
+                    wrap = "district", ncol = 4,
+                    labs_y = paste0(mig_name, "* rate (in % per year)"),
+                    name = paste0(mig_number, "00_", mig_name, "-star-rate_by-district-year"),
+                    width = 12, height = 14)
 
         #-------------------------------------------------------------------
         #prediction: future migration* rate (per year and district)
@@ -146,35 +143,27 @@
                 time_lev <- c("past", "future")
 
             #plot data
-                plot_dat_mis_pred <- select(mis_past_pred, district, year, rate_all) %>%
-                    mutate(time = factor(if_else(year <= mis_base_end,
-                        time_lev[1], time_lev[2]), levels = time_lev))
-
-            p01 <- ggplot(data = plot_dat_mis_pred) +
-                geom_vline(xintercept = c(mis_base_begin, mis_base_end), color = col_grey, linetype = 1) +
-                geom_line(aes(x = year, y = rate_all, linetype = time), color = col_6[1]) +
-                facet_wrap(~district, ncol = 4) +
-                labs(x = "year", y = paste0(mig_name, "* rate (in % per year)"), linetype = "") +
-                neutral
-
-            ggsave(paste0(graph_path, mig_number, "01_", mig_name, "-star-rate_by-district-year_predicition.pdf"),
-                plot = p01, width = 12, height = 14)
-
+            sszplot(plot_dat_mis_pred,
+                    aes_x = "year", aes_y = "rate_all", aes_ltyp = "time",
+                    i_x = c(mis_base_begin, mis_base_end),
+                    wrap = "district", ncol = 4,
+                    labs_y = paste0(mig_name, "* rate (in % per year)"),
+                    name = paste0(mig_number, "01_", mig_name, "-star-rate_by-district-year_predicition"),
+                    width = 12, height = 14)
 
         #plot (more detailed: regression and limits)
-            p02 <- ggplot(data = mis_past_pred) +
-                geom_vline(xintercept = c(mis_base_begin, mis_base_end), color = col_grey, linetype = 1) +
-                geom_point(aes(x = year, y = mis_rate_dy), color = col_6[1]) +
-                geom_line(aes(x = year, y = pred), linetype = 2, color = col_6[1]) +
-                geom_line(aes(x = year, y = pred_mean), col = col_6[1], linetype = 3) +
-                geom_line(aes(x = year, y = pred_roll), col = col_6[1]) +
-                facet_wrap(~district, ncol = 4) +
-                labs(x = "year", y = paste0(mig_name, "* rate (in % per year)")) +
-                neutral
-
-            ggsave(paste0(graph_path, mig_number, "02_", mig_name, "-star-rate_by-district-year_predicition-details.pdf"),
-                plot = p02, width = 12, height = 14)
-
+            sszplot(mis_past_pred,
+                    aes_x = "year", aes_y = "mis_rate_dy",
+                    geom = "point",
+                    i_x = c(mis_base_begin, mis_base_end),
+                    wrap = "district", ncol = 4,
+                    labs_y = paste0(mig_name, "* rate (in % per year)"),
+                    name = paste0(mig_number, "02_", mig_name, "-star-rate_by-district-year_predicition-details"),
+                    width = 12, height = 14,
+                    quotes = c(quote(geom_line(aes(x = year, y = pred), linetype = 2)), 
+                               quote(geom_line(aes(x = year, y = pred_mean), linetype = 3)),
+                               quote(geom_line(aes(x = year, y = pred_roll)))))
+                    
         #export preparation
             ex_mig_rate_dy <- mutate(mis_past_pred,
                     rate = round(rate_all, round_rate)) %>%
@@ -279,17 +268,13 @@
             year_past_5 <- sort(unique(year_past[year_past %% 5 == 0]))
 
         #plot
-            p03 <- ggplot(data = mis_dyso) +
-                geom_vline(xintercept = year_past_5, color = col_grey) +
-                geom_line(aes(x = year, y = mis_prop_dyso, color = sex, linetype = origin)) +
-                facet_wrap(~district, ncol = 4) +
-                scale_colour_manual(values = col_s) +
-                labs(x = "year", y = paste0("proportion in % (per district and year, in ", mig_name, "*)"), color = "", linetype = "") +
-                neutral
-
-            ggsave(paste0(graph_path, mig_number, "03_", mig_name, "_proportion-sex-origin_by-district-year.pdf"),
-                plot = p03, width = 12, height = 14)
-
+            sszplot(mis_dyso,
+                    aes_x = "year", aes_y = "mis_prop_dyso", aes_col = "sex", aes_ltyp = "origin",
+                    i_x = year_past_5,
+                    wrap = "district", ncol = 4,
+                    labs_y = paste0("proportion in % (per district and year, in ", mig_name, "*)"),
+                    name = paste0(mig_number, "03_", mig_name, "_proportion-sex-origin_by-district-year"),
+                    width = 12, height = 14)
 
 
         #-------------------------------------------------------------------
@@ -332,17 +317,13 @@
                 mutate(prop_all = if_else(year <= mis_so_base_end, mis_prop_dyso, pred_roll_stand))
 
         #plot
-            p04 <- ggplot(data = mis_so_past_pred) +
-                geom_vline(xintercept = c(mis_so_base_begin, mis_so_base_end), color = col_grey, linetype = 1) +
-                geom_line(aes(x = year, y = prop_all, color = sex, linetype = origin)) +
-                facet_wrap(~district, ncol = 4) +
-                scale_colour_manual(values = col_s) +
-                labs(x = "year", y = paste0("proportion in % (per district and year, in ", mig_name, "*)"), color = "", linetype = "") +
-                neutral
-
-            ggsave(paste0(graph_path, mig_number, "04_", mig_name, "_proportion-sex-origin_by-district-year_prediction.pdf"),
-                plot = p04, width = 12, height = 14)
-
+            sszplot(mis_so_past_pred,
+                    aes_x = "year", aes_y = "prop_all", aes_col = "sex", aes_ltyp = "origin",
+                    i_x = c(mis_so_base_begin, mis_so_base_end),
+                    wrap = "district", ncol = 4,
+                    labs_y = paste0("proportion in % (per district and year, in ", mig_name, "*)"),
+                    name = paste0(mig_number, "04_", mig_name, "_proportion-sex-origin_by-district-year_prediction"),
+                    width = 12, height = 14)
 
         #export preparation
             ex_mig_prop_dy <- mutate(mis_so_past_pred,
@@ -445,31 +426,23 @@
             year_past_5 <- sort(unique(year_past[year_past %% 5 == 0]))
 
         #plot
-            p10 <- ggplot(data = mis_dyso) +
-                geom_vline(xintercept = year_past_5, color = col_grey) +
-                geom_line(aes(x = year, y = mis_dyso, color = sex, linetype = origin)) +
-                facet_wrap(~district, ncol = 4) +
-                scale_colour_manual(values = col_s) +
-                labs(x = "year", y = paste0(mig_name, "* per year"), color = "", linetype = "") +
-                neutral
-
-            ggsave(paste0(graph_path, mig_number, "10_", mig_name, "-star_per-district-year-sex-origin.pdf"),
-                plot = p10, width = 12, height = 14)
-
+            sszplot(mis_dyso,
+                    aes_x = "year", aes_y = "mis_dyso", aes_col = "sex", aes_ltyp = "origin",
+                    i_x = year_past_5,
+                    wrap = "district", ncol = 4,
+                    labs_y = paste0(mig_name, "* per year"),
+                    name = paste0(mig_number, "10_", mig_name, "_star_per-district-year-sex-origin"),
+                    width = 12, height = 14)
+            
 
         #plot
-            p11 <- ggplot(data = mis_dyso) +
-                geom_vline(xintercept = year_past_5, color = col_grey) +
-                geom_line(aes(x = year, y = mis_dyso, color = sex, linetype = origin)) +
-                facet_wrap(~district, ncol = 4, scales = "free") +
-                scale_colour_manual(values = col_s) +
-                labs(x = "year", y = paste0(mig_name, "* per year"), color = "", linetype = "") +
-                neutral
-
-            ggsave(paste0(graph_path, mig_number, "11_", mig_name, "-star_per-district-year-sex-origin_free-scales.pdf"),
-                plot = p11, width = 12, height = 14)
-
-
+            sszplot(mis_dyso,
+                    aes_x = "year", aes_y = "mis_dyso", aes_col = "sex", aes_ltyp = "origin",
+                    i_x = year_past_5,
+                    wrap = "district", ncol = 4, gridscale = "free",
+                    labs_y = paste0(mig_name, "* per year"),
+                    name = paste0(mig_number, "11_", mig_name, "_star_per-district-year-sex-origin_free-scales"),
+                    width = 12, height = 14)
 
         #-------------------------------------------------------------------
         #age proportion: per district, year, sex, origin
@@ -497,56 +470,29 @@
             #years (subjectively selected)
                 #WHY with rev? To have the last year in the plot
                 years_plot <- rev(seq(date_end, date_start, by = -8))
-
-            #colors
-                col_years <- colorRampPalette(col_6[1:5])(length(years_plot))
-
-            p12 <- function(x){
-                ggplot(data = filter(mis_dyaso, (district == x) & (year %in% years_plot))) +
-                    geom_line(aes(x = age, y = mis_prop_a, color = as.factor(year))) +
-                    facet_grid(sex ~ origin) +
-                    scale_colour_manual(values = col_years) +
-                    labs(x = "age", y = "proportion in %", color = "year") +
-                    ggtitle(as.character(x)) +
-                    neutral}
-
-            pdf(paste0(graph_path, mig_number, "12_", mig_name,
-                    "-star_age-proportion_per-district-year-sex-origin_focus-age.pdf"),
-                width = 11, height = 8)
-
-                # lapply(uni_d, p12) #when this code is within a function: pdf cannot be opened
-                for(i in 1:length(uni_d)){plot(p12(uni_d[i]))}
-
-            dev.off()
-
+            
+            sszplot(filter(mis_dyaso, year %in% years_plot),
+                    aes_x = "age", aes_y = "mis_prop_a", aes_col = "year",
+                    grid = c("sex", "origin"),
+                    labs_y = "proportion in %", labs_col = "year",
+                    name = paste0(mig_number, "12_", mig_name, "star_age-proportion_per-district-year-sex-origin_focus-age"),
+                    width = 11, height = 8,
+                    multi = uni_d, multif = "filter(district == x)")
+            
 
         #plot: focus years
 
             #age (subjectively selected)
                 age_plot <- seq(0, 60, by = 20)
 
-            #colors
-                col_age <- colorRampPalette(col_6[1:5])(length(age_plot))
-
-
-            p13 <- function(x){
-                ggplot(data = filter(mis_dyaso, (district == x) & (age %in% age_plot))) +
-                    geom_line(aes(x = year, y = mis_prop_a, color = as.factor(age))) +
-                    facet_grid(sex ~ origin) +
-                    scale_colour_manual(values = col_age) +
-                    labs(x = "year", y = "proportion in %", color = "age") +
-                    ggtitle(as.character(x)) +
-                    neutral}
-
-            pdf(paste0(graph_path, mig_number, "13_", mig_name,
-                    "-star_age-proportion_per-district-year-sex-origin_focus-years.pdf"),
-                width = 11, height = 8)
-
-                for(i in 1:length(uni_d)){plot(p13(uni_d[i]))}
-
-            dev.off()
-
-
+            sszplot(filter(mis_dyaso, age %in% age_plot),
+                    aes_x = "year", aes_y = "mis_prop_a", aes_col = "age",
+                    grid = c("sex", "origin"),
+                    labs_y = "proportion in %", labs_col = "age",
+                    name = paste0(mig_number, "13_", mig_name, "star_age-proportion_per-district-year-sex-origin_focus-years"),
+                    width = 11, height = 8,
+                    multi = uni_d, multif = "filter(district == x)")
+            
 
         #-------------------------------------------------------------------
         #moving average over years (by district, age, sex, origin)
