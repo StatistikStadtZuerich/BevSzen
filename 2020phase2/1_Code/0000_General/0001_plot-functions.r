@@ -42,6 +42,8 @@
 # quotes: this argument can be used to hand over any quoted ggplot arguments
 #         (e.g. additional geoms)
 #         if used, make sure that an eventually colliding parameter is set to ""
+#         can be used for a single quote ("quote(call)") or multiple in form
+#         of a list ("c(quote(call1)), quote(call2))")
 # angle:  angle of text on y axis (in degrees)
 
 ## caveat: all parameters have to be added to the recursive function call at the very end!
@@ -111,13 +113,14 @@ sszplot <- function(data,
 
   
   ## building of the plot is only needed if we are not in multipage mode
-  if (is.null(multi)) {  
+  if (is.null(multi)) {
     ## colours
     # special palettes are defined: a default with changed order and one especially
     # for time specific plots, where the colour depends on a time attribute
     # (usually year). Colours are then "rainbow" for the scenario years and grey 
-    # for all past years. This must be calculated dynamically
-  
+    # for all past years (except when only past years are shown).
+    # This must be calculated dynamically
+    
     # if aes_col is set, selects as many colors as needed by grouping variable aes_x
     # from the predefined color palette col_6
     # if not, selects entry from predefined colour palette (but in adapted order)
@@ -131,26 +134,32 @@ sszplot <- function(data,
       if (aes_col %in% c("year","month","week","day")) {
         alltimes <- select(data, all_of(aes_col)) %>% unique %>% nrow
         oldtimes <- select(data, all_of(aes_col)) %>% filter(. < szen_begin) %>% unique %>% nrow
-        col_time <- c(rep(col_grey, oldtimes),
-                      colorRampPalette(col_6[1:5])(alltimes - oldtimes))
+        maxtime <- select(data, all_of(aes_col)) %>% max()
+        if (maxtime > szen_begin) {
+          col_time <- c(rep(col_grey, oldtimes),
+                        colorRampPalette(col_6[1:5])(alltimes - oldtimes))
+        } else {
+          col_time <- colorRampPalette(col_6[1:5])(alltimes)
+        }
+          
       }
       if (identical(aes_col, "origin"))
         fix_col <- col_o else
-      if (aes_col %in% c("year","month","week","day"))
-        fix_col <- col_time else
-      if (identical(aes_col, "sex"))
-        fix_col <- col_s else
-      if (identical(aes_col, "region"))
-        fix_col <- col_r else
-      fix_col <- col_palette[1:count(unique(data[aes_col]))$n]
-        
-      # if aes_col is a continuous variable, it has to be converted to a factor (discrete scale)
-      if (is.numeric(eval(str2lang(paste0("data$", aes_col)))))
-        aes_col <- as.factor(eval(str2lang(paste0("data$", aes_col))))
+          if (aes_col %in% c("year","month","week","day"))
+            fix_col <- col_time else
+              if (identical(aes_col, "sex"))
+                fix_col <- col_s else
+                  if (identical(aes_col, "region"))
+                    fix_col <- col_r else
+                      fix_col <- col_palette[1:count(unique(data[aes_col]))$n]
+                    
+                    # if aes_col is a continuous variable, it has to be converted to a factor (discrete scale)
+                    if (is.numeric(eval(str2lang(paste0("data$", aes_col)))))
+                      aes_col <- as.factor(eval(str2lang(paste0("data$", aes_col))))
     }
     
     ## aesthetics stuff
-      
+    
     # Need to use aes_string to build it up and then make the class "uneval"
     aest <- aes_string(x = aes_x, y = aes_y)
     if(!is.null(aes_col))
@@ -164,7 +173,7 @@ sszplot <- function(data,
     # set axis labels to aes_x and aes_y if they are not explicitly given
     if (is.null(labs_x)) labs_x <- aes_x
     if (is.null(labs_y)) labs_y <- aes_y
-  
+    
     #-------------------------------------------------------------------   
     #### build the plot ####
     #-------------------------------------------------------------------
@@ -176,8 +185,8 @@ sszplot <- function(data,
     # # i.e. quotes = quote(geom_line(x = ...)).
     if (!identical(geom, ""))
       res <- res + aest
-  
-      # add vertical lines at i_x if i_x is set
+    
+    # add vertical lines at i_x if i_x is set
     if (!is.null(i_x)){
       if (identical(i_x,"5"))
         i_x <- data$year[data$year %% 5 == 0]
@@ -239,10 +248,10 @@ sszplot <- function(data,
     if (!is.null(scale_y)){
       if (identical(scale_y, "pretty"))
         res <- res + scale_y_continuous(breaks = pretty_breaks()) else
-      if (identical(scale_y, "log"))
-        res <- res + scale_y_continuous(trans = 'log10') else
-      res <- res + scale_y_continuous(limits = scale_y,
-                                      breaks = if(!is.null(breaks)) breaks else pretty_breaks())
+          if (identical(scale_y, "log"))
+            res <- res + scale_y_continuous(trans = 'log10') else
+              res <- res + scale_y_continuous(limits = scale_y,
+                                              breaks = if(!is.null(breaks)) breaks else pretty_breaks())
     }
     
     
@@ -256,22 +265,22 @@ sszplot <- function(data,
     # a default value is created: the name of the x argument to the function
     if (!is.null(title))
       res <- res +
-        ggtitle(as.character(title))
+      ggtitle(as.character(title))
     
     # add facet grid or wrap if either grid or wrap is set
     if (!is.null(grid)) {
       # labeller for columnns should be 'label_both', but not if category is year/district/sex/region
       if (grid[2] %in% colnames(data) && !grid[2] %in% c("year", "district", "sex", "region"))
-          gridlab = str2lang(paste0("labeller(", grid[2], " = label_both)"))
+        gridlab = str2lang(paste0("labeller(", grid[2], " = label_both)"))
       else
         gridlab = "label_value"
-        
+      
       res <- res +
-       facet_grid(as.formula(paste(grid[1], "~", grid[2])),
-                 cols = ncol,
-                 scale = gridscale,
-                 labeller = eval(gridlab)) 
-  
+        facet_grid(as.formula(paste(grid[1], "~", grid[2])),
+                   cols = ncol,
+                   scale = gridscale,
+                   labeller = eval(gridlab)) 
+      
     } else if (!is.null(wrap)) {
       # labeller for columnns should be 'label_both', but not if category is year/district/sex/region
       if (wrap %in% colnames(data) && !wrap %in% c("year", "district", "sex", "region"))
@@ -282,23 +291,33 @@ sszplot <- function(data,
       res <- res +
         facet_wrap(as.formula(paste("~", wrap)),
                    ncol = ncol,
+                   scale = gridscale,
                    labeller = eval(gridlab))
     }
-  
+    
     # change text angle
     if (!is.null(angle))
       res <- res +
-        theme(axis.text.x = element_text(angle = angle, vjust = 0.5, hjust = 1))
-      
-    # add quoted arguments
-    if (!is.null(quotes))
-      res <- res + 
-        eval(quotes)
+      theme(axis.text.x = element_text(angle = angle, vjust = 0.5, hjust = 1))
+    
+    # add quoted arguments. The argument may contain a single quote or a list of quotes.
+    # they must be handled separately
+    if (!is.null(quotes)) {
+      if (is.call(quotes))
+        res <- res + 
+          eval(quotes)
+      else {
+        for (i in 1:length(quotes)) {
+          res <- res +
+            eval(quotes[[i]])
+        }
+      }
+    }
     
     # in case alpha is used as aesthetics argument, make sure the respective labs are not transparent
     if (!is.null(aes_alpha))
       res <- res + 
-        guides(alpha = "none")
+      guides(alpha = "none")
   }
 
   #------------------------------------------------------------------- 
