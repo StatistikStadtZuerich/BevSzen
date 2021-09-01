@@ -248,7 +248,7 @@
             wrap = "as.factor(year)",
             i_y = c(bir_thres_origin, bir_thres_overall, bir_thres_const),
             labs_y = "cumulative population from tails",
-            multi = uni_d[1:2], multif = "filter(district == x)",
+            multi = uni_d, multif = "filter(district == x)",
             name = "0121_cumulative-population-from_tails",
             width = 13, height = 8,
             quotes = quote(geom_line(aes(x = age, y = up_cum, color = origin))))
