@@ -36,7 +36,7 @@
                     district = factor(distr, uni_d)) %>% 
                 select(district, year, age, sex, origin, mig) %>%
                 group_by(district, year, age, sex, origin) %>%
-                    summarize(mig = sum(mig)) %>%
+                summarize(mig = sum(mig)) %>%
                 ungroup()
 
         #relocation
@@ -47,34 +47,34 @@
                 rename(year = EreignisDatJahr, age = AlterVCd, dis = mig_district, rel = AnzUmzuWir) %>% 
                 left_join(look_dis, c("dis" = "QuarCd")) %>% 
                 mutate(sex = factor(if_else(SexCd == 1, uni_s[1], uni_s[2]), uni_s),
-                    origin = factor(if_else(HerkunftCd == 1, uni_o[1], uni_o[2]), uni_o),
-                    district = factor(distr, uni_d)) %>%
+                       origin = factor(if_else(HerkunftCd == 1, uni_o[1], uni_o[2]), uni_o),
+                       district = factor(distr, uni_d)) %>%
                 select(district, year, age, sex, origin, rel) %>%
                 group_by(district, year, age, sex, origin) %>%
-                    summarize(rel = sum(rel)) %>%
+                summarize(rel = sum(rel)) %>%
                 ungroup()
             
         #migration* (i.e. migration to a certain district, 'migration star' = mis)
             mis <- bind_rows(rename(mig, mis = mig),
                 rename(rel, mis = rel)) %>%
                 group_by(district, year, age, sex, origin) %>%
-                    summarize(mis = sum(mis)) %>%
+                summarize(mis = sum(mis)) %>%
                 ungroup()
 
         #population
             #year: begin of year population
 
             pop <- read_csv(pop_od) %>%
-                rename(age = AlterVCd, pop = AnzBestWir) %>%
-                left_join(look_dis, by = "QuarCd") %>%
-                mutate(year = StichtagDatJahr + 1,
-                    sex = factor(if_else(SexCd == 1, uni_s[1], uni_s[2]), uni_s),
-                    origin = factor(if_else(HerkunftCd == 1, uni_o[1], uni_o[2]), uni_o),
-                    district = factor(distr, uni_d)) %>%
-                select(district, year, age, sex, origin, pop) %>%
-                group_by(district, year, age, sex, origin) %>%
-                    summarize(pop = sum(pop)) %>%
-                ungroup()
+              rename(age = AlterVCd, pop = AnzBestWir) %>%
+              left_join(look_dis, by = "QuarCd") %>%
+              mutate(year = StichtagDatJahr + 1,
+                     sex = factor(if_else(SexCd == 1, uni_s[1], uni_s[2]), uni_s),
+                     origin = factor(if_else(HerkunftCd == 1, uni_o[1], uni_o[2]), uni_o),
+                     district = factor(distr, uni_d)) %>%
+              select(district, year, age, sex, origin, pop) %>%
+              group_by(district, year, age, sex, origin) %>%
+              summarize(pop = sum(pop)) %>%
+              ungroup()
 
 
         #-------------------------------------------------------------------
@@ -83,22 +83,21 @@
 
         #mis and pop: aggregate
             mis_dy <- group_by(mis, district, year) %>%
-                    summarize(mis = sum(mis)) %>%
-                ungroup()
+              summarize(mis = sum(mis)) %>%
+              ungroup()
 
             pop_dy <- group_by(pop, district, year) %>%
-                    summarize(pop = sum(pop)) %>%
-                ungroup()
+              summarize(pop = sum(pop)) %>%
+              ungroup()
 
         #migration* rate (based on all possible cases)
-            mis_rate_dy <- as_tibble(expand_grid(
-                district = uni_d,
-                year = (date_start+1):date_end)) %>%
-                left_join(pop_dy, by = c("district", "year")) %>%
-                left_join(mis_dy, by = c("district", "year")) %>%
-                replace_na(list(pop = 0, ims = 0)) %>%
-                mutate(mis_rate_dy = if_else(pop == 0, NA_real_, round(mis / pop * 100, round_rate)))
-
+            mis_rate_dy <- as_tibble(expand_grid(district = uni_d,
+                                                 year = (date_start + 1):date_end)) %>%
+              left_join(pop_dy, by = c("district", "year")) %>%
+              left_join(mis_dy, by = c("district", "year")) %>%
+              replace_na(list(pop = 0, ims = 0)) %>%
+              mutate(mis_rate_dy = if_else(pop == 0, NA_real_, round(mis / pop * 100, round_rate)))
+            
         #years of the past (for plot)
             year_past <- (date_start+1):date_end
             year_past_5 <- sort(unique(year_past[year_past %% 5 == 0]))
@@ -129,18 +128,17 @@
                       lower_thres = mis_rate_lower_thres, upper_thres = NA)
 
         #past and prediction
-            mis_past_pred <- as_tibble(expand_grid(
-                district = uni_d,
-                year = (date_start+1):szen_end)) %>%
-                left_join(select(mis_rate_dy, district, year, mis_rate_dy),
-                    by = c("district", "year")) %>%
-                left_join(mis_pred, by = c("district", "year")) %>%
-                mutate(rate_all = if_else(year <= mis_base_end, mis_rate_dy, pred_roll))
-
+            mis_past_pred <- as_tibble(expand_grid(district = uni_d,
+                                                   year = (date_start + 1):szen_end)) %>%
+              left_join(select(mis_rate_dy, district, year, mis_rate_dy),
+                        by = c("district", "year")) %>%
+              left_join(mis_pred, by = c("district", "year")) %>%
+              mutate(rate_all = if_else(year <= mis_base_end, mis_rate_dy, pred_roll))
+            
         #plot
 
             #levels
-                time_lev <- c("past", "future")
+            time_lev <- c("past", "future")
 
             #plot data
             sszplot(plot_dat_mis_pred,
@@ -166,19 +164,17 @@
                     
         #export preparation
             ex_mig_rate_dy <- mutate(mis_past_pred,
-                    rate = round(rate_all, round_rate)) %>%
-                filter(year >= szen_begin) %>%
-                select(district, year, rate) %>%
-                arrange(district, year)
+                                     rate = round(rate_all, round_rate)) %>%
+              filter(year >= szen_begin) %>%
+              select(district, year, rate) %>%
+              arrange(district, year)
 
         #export the data
             write_csv(ex_mig_rate_dy, ex_path)
 
         #output (to get an idea of the exported output)
             return(list(ex_mig_rate_dy))
-
-                }
-
+   }
 
 
 
@@ -209,7 +205,7 @@
                     district = factor(distr, uni_d)) %>%
                 select(district, year, age, sex, origin, mig) %>%
                 group_by(district, year, age, sex, origin) %>%
-                    summarize(mig = sum(mig)) %>%
+                summarize(mig = sum(mig)) %>%
                 ungroup()
 
         #relocation
@@ -339,9 +335,7 @@
 
         #output (to get an idea of the exported output)
             return(list(ex_mig_prop_dy))
-
-                }
-
+    }
 
 
 
@@ -465,23 +459,20 @@
 
 
         #plot: focus age distribution
-            #test: x <- uni_d[2]
-
             #years (subjectively selected)
                 #WHY with rev? To have the last year in the plot
-                years_plot <- rev(seq(date_end, date_start, by = -8))
+            years_plot <- rev(seq(date_end, date_start, by = -8))
             
             sszplot(filter(mis_dyaso, year %in% years_plot),
                     aes_x = "age", aes_y = "mis_prop_a", aes_col = "year",
                     grid = c("sex", "origin"),
                     labs_y = "proportion in %", labs_col = "year",
-                    name = paste0(mig_number, "12_", mig_name, "star_age-proportion_per-district-year-sex-origin_focus-age"),
+                    name = paste0(mig_number, "12_", mig_name, "_star_age-proportion_per-district-year-sex-origin_focus-age"),
                     width = 11, height = 8,
                     multi = uni_d, multif = "filter(district == x)")
             
 
         #plot: focus years
-
             #age (subjectively selected)
                 age_plot <- seq(0, 60, by = 20)
 
@@ -489,7 +480,7 @@
                     aes_x = "year", aes_y = "mis_prop_a", aes_col = "age",
                     grid = c("sex", "origin"),
                     labs_y = "proportion in %", labs_col = "age",
-                    name = paste0(mig_number, "13_", mig_name, "star_age-proportion_per-district-year-sex-origin_focus-years"),
+                    name = paste0(mig_number, "13_", mig_name, "_star_age-proportion_per-district-year-sex-origin_focus-years"),
                     width = 11, height = 8,
                     multi = uni_d, multif = "filter(district == x)")
             
@@ -515,52 +506,29 @@
 
 
         #plot: focus age distribution
-            #test: x <- uni_d[3]
-
             #years (subjectively selected)
                 years_not_NA <- sort(unique(mis_ma$year[!is.na(mis_ma$mis_roll)]))
                 years_plot_ma <- seq(min(years_not_NA), max(years_not_NA), by = 6)
 
-            p14 <- function(x){
-                ggplot(data = filter(mis_ma_plot, (district == x) & (year %in% years_plot_ma))) +
-                    geom_line(aes(x = age, y = mis, color = cat)) +
-                    facet_grid(as.factor(year) ~ origin*sex) +
-                    scale_colour_manual(values = col_6[1:2]) +
-                    labs(x = "age", y = paste0(mig_name, "* per year"), color = "") +
-                    ggtitle(as.character(x)) +
-                    neutral}
-
-            pdf(paste0(graph_path, mig_number, "14_", mig_name,
-                    "-star_moving-average-over-year_focus-age.pdf"),
-                width = 11, height = 8)
-
-                for(i in 1:length(uni_d)){plot(p14(uni_d[i]))}
-
-            dev.off()
-
+            sszplot(filter(mis_ma_plot, year %in% years_plot_ma),
+                    aes_x = "age", aes_y = "mis", aes_col = "cat",
+                    grid = c("as.factor(year)", "origin*sex"),
+                    labs_y = paste0(mig_name, "* per year"),
+                    name = paste0(mig_number, "14_", mig_name, "_star_moving-average-over-year_focus-age"),
+                    width = 11, height = 8,
+                    multi = uni_d, multif = "filter(district == x)")
 
         #plot: focus years
-
             #age (subjectively selected)
                 age_plot_ma <- seq(0, 60, by = 20)
 
-            p15 <- function(x){
-                ggplot(data = filter(mis_ma_plot, (district == x) & (age %in% age_plot_ma))) +
-                    geom_line(aes(x = year, y = mis, color = cat)) +
-                    facet_grid(as.factor(age) ~ origin*sex) +
-                    scale_colour_manual(values = col_age) +
-                    labs(x = "year", y = paste0(mig_name, "* per year"), color = "") +
-                    ggtitle(as.character(x)) +
-                    neutral}
-
-            pdf(paste0(graph_path, mig_number, "15_", mig_name,
-                    "-star_moving-average-over-year_focus-years.pdf"),
-                width = 11, height = 8)
-
-                for(i in 1:length(uni_d)){plot(p15(uni_d[i]))}
-
-            dev.off()
-
+            sszplot(filter(mis_ma_plot, age %in% age_plot_ma),
+                    aes_x = "year", aes_y = "mis", aes_col = "cat",
+                    grid = c("as.factor(age)", "origin*sex"),
+                    labs_y = paste0(mig_name, "* per year"),
+                    name = paste0(mig_number, "15_", mig_name, "_star_moving-average-over-year_focus-years"),
+                    width = 11, height = 8,
+                    multi = uni_d, multif = "filter(district == x)")
 
 
         #-------------------------------------------------------------------
@@ -583,60 +551,30 @@
 
 
         #plot: focus age distribution
-            #test: x <- uni_d[3]
-
             #years
                 #WHY like this with rev? To have the last year with data in the plot
                 years_plot_ma_prop <- rev(seq(max(years_not_NA), min(years_not_NA), by = -6))
 
-            #colors
-                col_years_ma_prop <- colorRampPalette(col_6[1:5])(length(years_plot_ma_prop))
-
-            p16 <- function(x){
-                ggplot(data = filter(mis_age_prop_ma, (district == x) & (year %in% years_plot_ma_prop))) +
-                    geom_line(aes(x = age, y = prop_a_ma, color = as.factor(year))) +
-                    facet_grid(sex ~ origin) +
-                    scale_colour_manual(values = col_years_ma_prop) +
-                    labs(x = "age", y = "proportion in %", color = "year") +
-                    ggtitle(as.character(x)) +
-                    neutral}
-
-
-            pdf(paste0(graph_path, mig_number, "16_", mig_name,
-                    "-star_age-proportion_after-moving-average_focus-age.pdf"),
-                width = 11, height = 8)
-
-                for(i in 1:length(uni_d)){plot(p16(uni_d[i]))}
-
-            dev.off()
-
+            sszplot(filter(mis_age_prop_ma, year %in% years_plot_ma_prop),
+                    aes_x = "age", aes_y = "prop_a_ma", aes_col = "year",
+                    grid = c("sex", "origin"),
+                    labs_y = "proportion in %",
+                    name = paste0(mig_number, "16_", mig_name, "_star_age-proportion_after-moving-average_focus-age"),
+                    width = 11, height = 8,
+                    multi = uni_d, multif = "filter(district == x)")
 
         #plot: focus years
-
             #age (subjectively selected)
                 age_plot_ma_prop <- seq(0, 60, by = 20)
 
-            #colors
-                col_age_ma_prop <- colorRampPalette(col_6[1:5])(length(age_plot_ma_prop))
-
-            p17 <- function(x){
-                ggplot(data = filter(mis_age_prop_ma, (district == x) & (age %in% age_plot_ma_prop))) +
-                    geom_line(aes(x = year, y = prop_a_ma, color = as.factor(age))) +
-                    facet_grid(sex ~ origin) +
-                    scale_colour_manual(values = col_age_ma_prop) +
-                    labs(x = "year", y = "proportion in %", color = "age") +
-                    ggtitle(as.character(x)) +
-                    neutral}
-
-            pdf(paste0(graph_path, mig_number, "17_", mig_name,
-                    "-star_age-proportion_after-moving-average_focus-years.pdf"),
-                width = 11, height = 8)
-
-                for(i in 1:length(uni_d)){plot(p17(uni_d[i]))}
-
-            dev.off()
-
-
+            sszplot(filter(mis_age_prop_ma, age %in% age_plot_ma_prop),
+                    aes_x = "year", aes_y = "prop_a_ma", aes_col = "age",
+                    grid = c("sex", "origin"),
+                    labs_y = "proportion in %", labs_col = "age",
+                    name = paste0(mig_number, "17_", mig_name, "_star_age-proportion_after-moving-average_focus-years"),
+                    width = 11, height = 8,
+                    multi = uni_d, multif = "filter(district == x)")
+            
         #-------------------------------------------------------------------
         #fit gam to age proportion
         #-------------------------------------------------------------------
@@ -668,28 +606,17 @@
                 select(district, year, age, sex, origin, cat, prop)
 
         #plot: focus age distribution
-            #test: x <- uni_d[3]
-
             #years (subjectively selected)
                 years_plot_fit <- seq(min(years_not_NA), max(years_not_NA), by = 6)
-
-            p18 <- function(x){
-                ggplot(data = filter(mis_fit_plot, (district == x) & (year %in% years_plot_fit))) +
-                    geom_line(aes(x = age, y = prop, color = cat)) +
-                    facet_grid(as.factor(year) ~ origin*sex) +
-                    scale_colour_manual(values = col_6[1:2]) +
-                    labs(x = "age", y = "proportion in %", color = "") +
-                    ggtitle(as.character(x)) +
-                    neutral}
-
-            pdf(paste0(graph_path, mig_number, "18_", mig_name,
-                    "-star_proportion_with-gam_focus-age.pdf"),
-                width = 11, height = 8)
-
-                for(i in 1:length(uni_d)){plot(p18(uni_d[i]))}
-
-            dev.off()
-
+            
+            sszplot(filter(mis_fit_plot, year %in% years_plot_fit),
+                    aes_x = "age", aes_y = "prop", aes_col = "cat",
+                    grid = c("as.factor(year)", "origin*sex"),
+                    labs_y = "proportion in %",
+                    name = paste0(mig_number, "18_", mig_name, "_star_proportion_with-gam_focus-age"),
+                    width = 11, height = 8,
+                    multi = uni_d, multif = "filter(district == x)")
+            
         #-------------------------------------------------------------------
         #Constrained regression
         #-------------------------------------------------------------------
@@ -747,35 +674,13 @@
         #export the data
             write_csv(ex_mig_prop_a_dyso, ex_path)
 
-
-
-        #colors
-            col_time <- c(rep(col_grey, length((date_start+1):date_end)),
-                colorRampPalette(col_6[1:5])(length(szen_begin:szen_end)))
-            # plot(1:length(col_time), 1:length(col_time), col = col_time, pch = 16, cex = 2)
-
-
-        #plot: focus age distribution
-            #test: x <- uni_d[3]
-
-            p19 <- function(x){
-                ggplot(data = filter(mis_a_past_pred, district == x)) +
-                    geom_line(aes(x = age, y = prop_a, color = as.factor(year))) +
-                    facet_grid(origin ~ sex) +
-                    scale_colour_manual(values = col_time) +
-                    labs(x = "age", y = "proportion in %", color = "") +
-                    ggtitle(as.character(x)) +
-                    neutral}
-
-            pdf(paste0(graph_path, mig_number, "19_", mig_name,
-                    "-star_age-proportion_by-district-year-sex-origin_past-future.pdf"),
-                width = 11, height = 8)
-
-                for(i in 1:length(uni_d)){plot(p19(uni_d[i]))}
-
-            dev.off()
-
-
+            sszplot(mis_a_past_pred,
+                    aes_x = "age", aes_y = "prop_a", aes_col = "year",
+                    grid = c("origin", "sex"),
+                    labs_y = "proportion in %",
+                    name = paste0(mig_number, "19_", mig_name, "_star_age-proportion_by-district-year-sex-origin_past-future"),
+                    width = 11, height = 8,
+                    multi = uni_d, multif = "filter(district == x)")
 
 
         #plot levels
@@ -787,70 +692,36 @@
                 time_lev[1], time_lev[2]), levels = time_lev))
 
         #plot: focus age distribution
-            #test: x <- uni_d[3]
             #WHY this plot: it is recommendable to look precisely at the age plots over years
             #therefore, a plot that focuses on certain years
 
             #years
-                year_temp <- (date_start + 1):szen_end
-                year_plot <- seq(min(year_temp), max(year_temp), by = 8)
+            year_plot <- seq(date_start + 1, szen_end, by = 8)
 
-            #colors
-                col_years_plot <- colorRampPalette(col_6[1:5])(length(year_plot))
-
-            p20 <- function(x){
-                ggplot(data = filter(plot_a_past_pred, (district == x) & (year %in% year_plot))) +
-                    geom_line(aes(x = age, y = prop_a, color = as.factor(year), size = time, alpha = time)) +
-                    facet_grid(sex ~ origin) +
-                    scale_colour_manual(values = col_years_plot) +
-                    scale_size_manual(values = c(0.2, 1.2)) +
-                    scale_alpha_manual(values = c(0.4, 1)) +
-                    labs(x = "age", y = "proportion in %", color = "year", size = "") +
-                    guides(alpha = FALSE) +
-                    ggtitle(as.character(x)) +
-                    neutral}
-
-            pdf(paste0(graph_path, mig_number, "20_", mig_name,
-                    "-star_age-proportion_by-district-year-sex-origin_past-future_focus-age.pdf"),
-                width = 11, height = 8)
-
-                for(i in 1:length(uni_d)){plot(p20(uni_d[i]))}
-
-            dev.off()
-
+            sszplot(filter(plot_a_past_pred, year %in% year_plot),
+                    aes_x = "age", aes_y = "prop_a", aes_col = "year",
+                    grid = c("sex", "origin"),
+                    labs_y = "proportion in %", labs_col = "year",
+                    fix_size = 1,
+                    name = paste0(mig_number, "20_", mig_name, "_star_age-proportion_by-district-year-sex-origin_past-future_focus-age"),
+                    width = 11, height = 8,
+                    multi = uni_d, multif = "filter(district == x)")
 
         #plot: focus years
 
             #age (subjectively selected)
-                age_plot_pred <- seq(0, 60, by = 20)
+            age_plot_pred <- seq(0, 60, by = 20)
 
-            #colors
-                col_age_pred <- colorRampPalette(col_6[1:5])(length(age_plot_pred))
-
-            p21 <- function(x){
-                ggplot(data = filter(plot_a_past_pred, (district == x) & (age %in% age_plot_ma_prop))) +
-                    geom_vline(xintercept = c(mis_age_base_begin, mis_age_base_end), color = col_grey, linetype = 1) +
-                    geom_line(aes(x = year, y = prop_a, color = as.factor(age))) +
-                    facet_grid(sex ~ origin) +
-                    scale_colour_manual(values = col_age_pred) +
-                    labs(x = "year", y = "proportion in %", color = "age") +
-                    ggtitle(as.character(x)) +
-                    neutral}
-
-
-            pdf(paste0(graph_path, mig_number, "21_", mig_name,
-                    "-star_age-proportion_by-district-year-sex-origin_past-future_focus-years.pdf"),
-                width = 11, height = 8)
-
-                for(i in 1:length(uni_d)){plot(p21(uni_d[i]))}
-
-            dev.off()
-
+            sszplot(filter(plot_a_past_pred, age %in% age_plot_ma_prop),
+                    aes_x = "year", aes_y = "prop_a", aes_col = "age",
+                    grid = c("sex", "origin"),
+                    labs_y = "proportion in %", labs_col = "age",
+                    name = paste0(mig_number, "21_", mig_name, "_star_age-proportion_by-district-year-sex-origin_past-future_focus-years"),
+                    width = 11, height = 8,
+                    multi = uni_d, multif = "filter(district == x)")
+            
         #output (to get an idea of the exported output)
             return(list(ex_mig_prop_a_dyso))
-
-                }
-
-
+    }
     
     
