@@ -4,19 +4,21 @@
 # Kind of a ggplot wrapper to obtain similar and uniform plots
 # with less code
 #
-#rok/bad, July 2021
+#bad/rok, July 2021
 #-------------------------------------------------------------------
 # 
 # @params:
 # data: main tibble
 # geom: a char vector with the names of the desired geom. Default is geom_line.
 #       if "", then geom must be defined in quotes parameter (see below)
-# aes_x: the grouping variable for x
-# aes_y: the grouping variable for y
-# aes_col: the grouping variable for colour. Is converted to a factor if it is continuous
-# aes_ltyp: the grouping variable for linetype
-# aes_alpha: the alpha value for a geom
-# labs_x, labs_y, labs_col, labs_ltyp, labs_alpha: labels for the respective variables
+# aes_x: the grouping variable for x as string
+# aes_y: the grouping variable for y as string
+# aes_col: the grouping variable for colour as string. Is converted to a factor if it is continuous
+# aes_ltyp: the grouping variable for linetype as string
+# aes_alpha: the alpha value for a geom as string
+# aes_size: the size value for a geom as string
+# labs_x, labs_y, labs_col, labs_ltyp, labs_alpha, labs_size:
+#         labels for the respective variables
 # i_x: vector of vertical intercepts on x axis
 # i_y: vector of horizontal intercepts on y axis
 # scale_x: set the x scale. Default ist pretty_breaks for continuous scale
@@ -26,6 +28,8 @@
 # breaks: vector with breaks for scale if desired.
 # fix_col: desired length of a colour vector selected from predefined colours
 #          is ignored (and therefore unnecessary) if aes_col is set
+# fix_size: desired size of geom (i.e. of line or points)
+#          is ignored (and therefore unnecessary) if aes_size is set
 # grid: if set, creates a facet grid with grid[1] on LHS and grid[2] on RHs of formula
 # gridscale: use to define the scale attribute in facet_grid
 # wrap: if set, creates a facet wrap with this value on RHs of formula
@@ -55,16 +59,19 @@ sszplot <- function(data,
                     aes_col = NULL,
                     aes_ltyp = NULL,
                     aes_alpha = NULL,
+                    aes_size = NULL,
                     labs_x = NULL,
                     labs_y = NULL,
                     labs_col = NULL,
                     labs_ltyp = NULL,
                     labs_alpha = NULL,
+                    labs_size = NULL,
                     i_x = NULL,
                     i_y = NULL,
                     scale_x = "cont_pretty",
                     scale_y = NULL,
                     fix_col = 1,
+                    fix_size = NULL,
                     breaks = NULL,
                     grid = NULL,
                     wrap = NULL,
@@ -79,7 +86,8 @@ sszplot <- function(data,
                     multif = NULL,
                     quotes = NULL,
                     angle = NULL){
-  
+ 
+  # some elementary checks (but not too sophisticated) 
   stopifnot(!is.null(data) && !is.null(aes_x))
   stopifnot((!is.null(multi) && !is.null(multif)) || is.null(multi))
   stopifnot(!geom == "" || !is.null(quotes))
@@ -168,6 +176,8 @@ sszplot <- function(data,
       aest <- c(aest, aes_string(linetype = aes_ltyp))
     if (!is.null(aes_alpha))
       aest <- c(aest, aes_string(alpha = aes_alpha))
+    if (!is.null(aes_size))
+      aest <-c(aest, aes_string(size = aes_size))
     class(aest) <- "uneval"
     
     # set axis labels to aes_x and aes_y if they are not explicitly given
@@ -208,15 +218,23 @@ sszplot <- function(data,
     
     # add geom; if none was specified, uses line chart as default
     # distinction dependent upon the colour grouping variable: if that is empty,
-    # colour can be set inside geom (fixed value). Unfortunately, this is currently
-    # implemented with a cumbersome duplication for all geoms
-    if(!is.null(aes_col)) {
-      if("line" %in% geom) res <- res + geom_line()
-      if("point" %in% geom) res <- res + geom_point()
-    } else {
-      if("line" %in% geom) res <- res + geom_line(colour = fix_col)
-      if("point" %in% geom) res <- res + geom_point(colour = fix_col)
-    }
+    # colour can be set inside geom (fixed value). Same is true for size:
+    # if aes_size is not set, the fix_size will be taken into account
+    if (!is.null(aes_size)) fix_size <- NULL
+    if (is.null(fix_size))
+      fix_size <- ""
+    else
+      fix_size <- paste("size = ", fix_size)
+    
+    geomfix <- ""
+    if(is.null(aes_col)) geomfix <- paste0("colour = fix_col",
+                                         if_else(nchar(fix_size) == 0, "", ","))
+    if(is.null(aes_size)) geomfix <- paste0(geomfix, fix_size)
+    
+    
+    if("line" %in% geom) res <- res + eval(str2expression(paste0("geom_line(", geomfix, ")")))
+    if("point" %in% geom) res <- res + eval(str2expression(paste0("geom_line(", geomfix, ")")))   
+    
     
     # add labels if labs_x and _y are set (labs_x is same as aes_x per default;
     # if you want none, then you need to use labs_x = "")
@@ -225,6 +243,7 @@ sszplot <- function(data,
     if (is.null(labs_x)) labs_x = ""
     if (is.null(labs_y)) labs_y = ""
     if (is.null(labs_alpha)) labs_alpha = ""
+    if (is.null(labs_size)) labs_size = ""
     
     res <- res + labs(x = labs_x,
                       y = labs_y,
@@ -344,16 +363,19 @@ sszplot <- function(data,
               aes_col = aes_col,
               aes_ltyp = aes_ltyp,
               aes_alpha = aes_alpha,
+              aes_size = aes_size,
               labs_x = labs_x,
               labs_y = labs_y,
               labs_col = labs_col,
               labs_ltyp = labs_ltyp,
               labs_alpha = labs_alpha,
+              labs_size = labs_size,
               i_x = i_x,
               i_y = i_y,
               scale_x = scale_x,
               scale_y = scale_y,
               fix_col = fix_col,
+              fix_size = fix_size,
               breaks = breaks,
               grid = grid,
               wrap = wrap,
