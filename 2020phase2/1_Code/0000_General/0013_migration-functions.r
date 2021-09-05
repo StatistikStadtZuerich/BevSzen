@@ -141,6 +141,10 @@
             time_lev <- c("past", "future")
 
             #plot data
+            plot_dat_mis_pred <- select(mis_past_pred, district, year, rate_all) %>%
+            mutate(time = factor(if_else(year <= mis_base_end,
+                                         time_lev[1], time_lev[2]), levels = time_lev))
+            
             sszplot(plot_dat_mis_pred,
                     aes_x = "year", aes_y = "rate_all", aes_ltyp = "time",
                     i_x = c(mis_base_begin, mis_base_end),
