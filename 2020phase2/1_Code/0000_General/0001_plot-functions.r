@@ -289,8 +289,12 @@ sszplot <- function(data,
     # add facet grid or wrap if either grid or wrap is set
     if (!is.null(grid)) {
       # labeller for columnns should be 'label_both', but not if category is year/district/sex/region
-      if (grid[2] %in% colnames(data) && !grid[2] %in% c("year", "district", "sex", "region"))
+      if (grid[2] %in% colnames(data) &&
+          !grid[2] %in% c("year", "district", "sex", "region", "origin"))
         gridlab = str2lang(paste0("labeller(", grid[2], " = label_both)"))
+      else if (grid[1] %in% colnames(data) &&
+               !grid[1] %in% c("year", "district", "sex", "region", "origin"))
+        gridlab = str2lang(paste0("labeller(", grid[1], " = label_both)"))
       else
         gridlab = "label_value"
       
