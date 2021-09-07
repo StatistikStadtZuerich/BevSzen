@@ -97,26 +97,13 @@
             
             
             #plot: focus sex
-                p00 <- function(x){
-                    ggplot(data = filter(rel_prop_daso, origin == x)) +
-                        geom_line(aes(x = age, y = rel_prop_daso, color = sex)) +
-                        facet_wrap(~district, ncol = 4) +
-                        scale_colour_manual(values = col_s) +
-                        labs(x = "age", y = paste0("proportion in % (relocation on ", mig_name, "*)"), color = "") +
-                        ggtitle(as.character(x)) +
-                        neutral}
-                
-                
-                pdf(paste0(graph_path, rem_number, "00_proportion-daso_focus-sex.pdf"),
-                    width = 12, height = 14)
-
-                    # lapply(uni_d, p00) #when this code is within a function: pdf cannot be opened
-                    for(i in 1:length(uni_o)){plot(p00(uni_o[i]))}
-
-                dev.off()
-
-
-
+                sszplot(rel_prop_daso,
+                        aes_x = "age", aes_y = "rel_prop_daso", aes_col = "sex",
+                        wrap = "district", ncol = 4,
+                        labs_y = paste0("proportion in % (relocation on ", mig_name, "*)"),
+                        name = paste0(rem_number, "00_proportion-daso_focus-sex"),
+                        width = 12, height = 14,
+                        multi = uni_o, multif = "filter(origin == x)")
 
             #-------------------------------------------------------------------
             #differences by origin (sum over years and sex)
@@ -134,16 +121,12 @@
                     mutate(rel_prop_dao = if_else(mis == 0, NA_real_, round(rel / mis * 100, round_prop)))
             
             #plot
-                p01 <- ggplot(data = rel_prop_dao) +
-                    geom_line(aes(x = age, y = rel_prop_dao, color = origin)) +
-                    facet_wrap(~district, ncol = 4) +
-                    scale_colour_manual(values = col_o) +
-                    labs(x = "age", y = paste0("proportion in % (relocation on ", mig_name, "*)"), color = "") +
-                    neutral
-
-                ggsave(paste0(graph_path, rem_number, "01_proportion-dao_focus-origin.pdf"),
-                    plot = p01, width = 11, height = 10)
-
+                sszplot(rel_prop_dao,
+                        aes_x = "age", aes_y = "rel_prop_dao", aes_col = "origin",
+                        wrap = "district", ncol = 4,
+                        labs_y = paste0("proportion in % (relocation on ", mig_name, "*)"),
+                        name = paste0(rem_number, "01_proportion-dso_focus-original"),
+                        width = 11, height = 10)
             
             #-------------------------------------------------------------------
             #Which base years?
@@ -162,17 +145,12 @@
             
             
                 #plot
-                    p02 <- ggplot(data = rel_prop_yo) +
-                        geom_line(aes(x = year, y = rel_prop_yo, color = origin)) +
-                        scale_colour_manual(values = col_o) +
-                        scale_x_continuous(breaks = pretty_breaks()) +
-                        labs(x = "year", y = paste0("proportion in % (relocation on ", mig_name, "*)"), color = "") +
-                        expand_limits(y = 0) +
-                        neutral
-
-                    ggsave(paste0(graph_path, rem_number, "02_proportion-yo.pdf"),
-                        plot = p02, width = 8, height = 6)
-            
+                    sszplot(rel_prop_yo,
+                            aes_x = "year", aes_y = "rel_prop_yo", aes_col = "origin",
+                            labs_y = paste0("proportion in % (relocation on ", mig_name, "*)"),
+                            name = paste0(rem_number, "02_proportion-yo"),
+                            width = 8, height = 6,
+                            quotes = quote(expand_limits(y = 0)))
             
             #year, age, origin
             
@@ -189,18 +167,12 @@
                     age_plot <- seq(0, 80, by = 10)
             
                 #plot
-                    p03 <- ggplot(data = filter(rel_prop_yao, age_num %in% age_plot)) +
-                        geom_line(aes(x = year, y = rel_prop_yao, color = origin)) +
-                        facet_grid(age ~ ., labeller = labeller(age = label_both)) +
-                        scale_colour_manual(values = col_o) +
-                        scale_x_continuous(breaks = pretty_breaks()) +
-                        labs(x = "year", y = paste0("proportion in % (relocation on ", mig_name, "*)"), color = "") +
-                        neutral
-
-                    ggsave(paste0(graph_path, rem_number, "03_proportion-yao.pdf"),
-                        plot = p03, width = 11, height = 14)
-
-
+                    sszplot(rel_prop_yao %>% filter(age_num %in% age_plot),
+                            aes_x = "year", aes_y = "rel_prop_yao", aes_col = "origin",
+                            grid = c("age", "."),
+                            labs_y = paste0("proportion in % (relocation on ", mig_name, "*)"),
+                            name = paste0(rem_number, "03_proportion-yao"),
+                            width = 11, height = 14)
           
           #-------------------------------------------------------------------
           #aggregate over sex
@@ -228,26 +200,13 @@
               #years (subjectively, but last year in the plot)
                   year_plot <- seq(date_end, date_start, by = -8)
           
-              p04 <- function(x){
-                  ggplot(data = filter(process_plot, (district == x) & (year %in% year_plot))) +
-                      geom_line(aes(x = age, y = count, color = cat)) +
-                      facet_grid(year ~ origin) +
-                      scale_colour_manual(values = col_6[1:2]) +
-                      scale_x_continuous(breaks = pretty_breaks()) +
-                      labs(x = "age", y = "quantity per year", color = "") +
-                      ggtitle(as.character(x)) +
-                      neutral}
-          
-
-              pdf(paste0(graph_path, rem_number, "04_processes_dyao_focus-age.pdf"),
-                  width = 12, height = 8)
-
-                  for(i in 1:length(uni_d)){plot(p04(uni_d[i]))}
-
-              dev.off()
-
-
-          
+              sszplot(process_plot %>% filter(year %in% year_plot),
+                      aes_x = "age", aes_y = "count", aes_col = "cat",
+                      grid = c("year", "origin"),
+                      labs_y = "quantity per year",
+                      name = paste0(rem_number, "04_processes_dyao_focus-age"),
+                      width = 11, height = 14,
+                      multi = uni_d, multif = "filter(district == x)")
           
           #plot: focus years
           
@@ -257,27 +216,14 @@
               #with age as factor
                   process_plot_age <- rename(process_plot, age_num = age) %>%
                       mutate(age = as.factor(age_num))
-          
-          
-              p05 <- function(x){
-                  ggplot(data = filter(process_plot_age, (district == x) & (age_num %in% age_plot))) +
-                      geom_line(aes(x = year, y = count, color = cat)) +
-                      facet_grid(age ~ origin, labeller = labeller(age = label_both)) +
-                      scale_colour_manual(values = col_6[1:2]) +
-                      scale_x_continuous(breaks = pretty_breaks()) +
-                      labs(x = "year", y = "quantity per year", color = "") +
-                      ggtitle(as.character(x)) +
-                      neutral}
-          
-
-              pdf(paste0(graph_path, rem_number, "05_processes_dyao_focus-years.pdf"),
-                  width = 12, height = 8)
-
-                  for(i in 1:length(uni_d)){plot(p05(uni_d[i]))}
-
-              dev.off()
               
-            
+              sszplot(process_plot_age %>% filter(age_num %in% age_plot),
+                      aes_x = "year", aes_y = "count", aes_col = "cat",
+                      grid = c("age", "origin"),
+                      labs_y = "quantity per year",
+                      name = paste0(rem_number, "05_processes_dyao_focus-years"),
+                      width = 12, height = 8,
+                      multi = uni_d, multif = "filter(district == x)")            
             
             #-------------------------------------------------------------------
             #maximum age, base years
