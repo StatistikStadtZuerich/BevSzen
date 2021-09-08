@@ -278,27 +278,14 @@
                     year_plot <- seq(rem_base_end, rem_base_begin, by = -7)
 
                 #plot
-                    p06 <- function(x){
-                        ggplot(data = filter(smooth_plot, (district == x) & (year %in% year_plot))) +
-                            geom_line(aes(x = age, y = count, color = cat, linetype = smooth, alpha = smooth)) +
-                            facet_grid(origin ~  year) +
-                            scale_colour_manual(values = col_6[1:2]) +
-                            scale_alpha_manual(values = c(0.3, 1)) +
-                            scale_x_continuous(breaks = pretty_breaks()) +
-                            labs(x = "age", y = "quantity per year", color = "", linetype = "", alpha = "") +
-                            guides(alpha = FALSE) +
-                            ggtitle(as.character(x)) +
-                            neutral}
-
-                    pdf(paste0(graph_path, rem_number, "06_processes_dyao_smooth_focus-age.pdf"),
-                        width = 15, height = 8)
-
-                        for(i in 1:length(uni_d)){plot(p06(uni_d[i]))}
-
-                    dev.off()
-                    
-
-
+                    sszplot(smooth_plot %>% filter(year %in% year_plot),
+                            aes_x = "age", aes_y = "count", aes_col = "cat", aes_ltyp = "smooth", aes_alpha = "smooth",
+                            grid = c("origin", "year"),
+                            labs_y = "quantity per year",
+                            name = paste0(rem_number, "06_processes_dyao_smooth_focus-age"),
+                            quotes = quote(scale_alpha_manual(values = c(0.3, 1))),
+                            width = 15, height = 8,
+                            multi = uni_d, multif = "filter(district == x)") 
 
             #plot: focus years
 
@@ -306,27 +293,14 @@
                     age_plot <- seq(0, 60, by = 20)
 
                 #plot
-                    p07 <- function(x){
-                        ggplot(data = filter(smooth_plot, (district == x) & (age %in% age_plot))) +
-                            geom_line(aes(x = year, y = count, color = cat, linetype = smooth, alpha = smooth)) +
-                            facet_grid(origin ~  age) +
-                            scale_colour_manual(values = col_6[1:2]) +
-                            scale_alpha_manual(values = c(0.3, 1)) +
-                            scale_x_continuous(breaks = pretty_breaks()) +
-                            labs(x = "year", y = "quantity per year", color = "", linetype = "", alpha = "") +
-                            guides(alpha = FALSE) +
-                            ggtitle(as.character(x)) +
-                            neutral}
-
-                    
-                    pdf(paste0(graph_path, rem_number, "07_processes_dyao_smooth_focus-years.pdf"),
-                        width = 15, height = 8)
-
-                        for(i in 1:length(uni_d)){plot(p07(uni_d[i]))}
-
-                    dev.off()
-                    
-
+                    sszplot(smooth_plot %>% filter(age %in% age_plot),
+                            aes_x = "year", aes_y = "count", aes_col = "cat", aes_ltyp = "smooth", aes_alpha = "smooth",
+                            grid = c("origin", "age"),
+                            labs_y = "quantity per year",
+                            name = paste0(rem_number, "07_processes_dyao_smooth_focus-years"),
+                            quotes = quote(scale_alpha_manual(values = c(0.3, 1))),
+                            width = 15, height = 8,
+                            multi = uni_d, multif = "filter(district == x)") 
             
             #-------------------------------------------------------------------
             #dyao: proportion after smoothing
@@ -359,7 +333,14 @@
 
                         dev.off()
                         
-            
+                        sszplot(prop_dyao_smooth,
+                                aes_x = "age", aes_y = "rel_prop_dyao", aes_col = "origin",
+                                wrap = "district", ncol = 4,
+                                labs_y = paste0("proportion in % (relocation on ", mig_name, "*)"),
+                                # name = paste0(rem_number, "08_proportion_dyao_smooth_focus-age"),
+                                quotes = quote(scale_alpha_manual(values = c(0.3, 1))),
+                                width = 15, height = 8,
+                                multi = year_plot, multif = "filter(year == x)")            
             
             #plot: focus year
             
