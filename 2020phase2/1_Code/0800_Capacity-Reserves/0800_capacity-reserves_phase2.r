@@ -196,7 +196,7 @@
         mutate(area = without + (with - without) * car_plot/100) %>% 
         select(district, owner, cat, area)    
     
-#conversion from total to living area
+#conversion from total to living area (e.g. elevators, stairs)
     living <- mutate(pcon, living = area / ((100 + car_sc)/100)) %>% 
         select(-area)
     
