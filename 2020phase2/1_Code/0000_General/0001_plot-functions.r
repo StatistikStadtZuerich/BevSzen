@@ -151,19 +151,24 @@ sszplot <- function(data,
         }
           
       }
+
       if (identical(aes_col, "origin"))
-        fix_col <- col_o else
-          if (aes_col %in% c("year","month","week","day"))
-            fix_col <- col_time else
-              if (identical(aes_col, "sex"))
-                fix_col <- col_s else
-                  if (identical(aes_col, "region"))
-                    fix_col <- col_r else
-                      fix_col <- col_palette[1:count(unique(data[aes_col]))$n]
+        fix_col <- col_o
+      else
+        if (aes_col %in% c("year", "month", "week", "day"))
+          fix_col <- col_time
+      else
+        if (identical(aes_col, "sex"))
+          fix_col <- col_s
+      else
+        if (identical(aes_col, "region"))
+          fix_col <- col_r
+      else
+        fix_col <- col_palette[1:count(unique(data[aes_col]))$n]
                     
-                    # if aes_col is a continuous variable, it has to be converted to a factor (discrete scale)
-                    if (is.numeric(eval(str2lang(paste0("data$", aes_col)))))
-                      aes_col <- as.factor(eval(str2lang(paste0("data$", aes_col))))
+      # if aes_col is a continuous variable, it has to be converted to a factor (discrete scale)
+      if (is.numeric(eval(str2lang(paste0("data$", aes_col)))))
+        aes_col <- as.factor(eval(str2lang(paste0("data$", aes_col))))
     }
     
     ## aesthetics stuff
