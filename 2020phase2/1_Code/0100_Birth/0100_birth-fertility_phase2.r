@@ -188,7 +188,7 @@
             wrap = "as.factor(year)", labs_y = "fertility rate (in % per year)",
             name = "0110_fertility_by-district-year-age-origin",
             width = 9, height = 6,
-            multi = uni_d, multif = "filter(district == x)") 
+            multi = uni_d) 
        
 #plot: fertility by year, age, origin
     sszplot(filter(fer_yao, year >= bir_base_begin),
@@ -240,7 +240,7 @@
             labs_y = "fertility rate (in % per year)",
             name = "0120_fertility_tail-correction",
             width = 13, height = 8,
-            multi = uni_d, multif = "filter(district == x)") 
+            multi = uni_d) 
         
 #plot: cumulative population from the tails
     sszplot(fer_tail,
@@ -248,7 +248,7 @@
             wrap = "as.factor(year)",
             i_y = c(bir_thres_origin, bir_thres_overall, bir_thres_const),
             labs_y = "cumulative population from tails",
-            multi = uni_d, multif = "filter(district == x)",
+            multi = uni_d,
             name = "0121_cumulative-population-from_tails",
             width = 13, height = 8,
             quotes = quote(geom_line(aes(x = age, y = up_cum, color = origin))))
@@ -289,7 +289,7 @@
             labs_y = "fertility rate (in % per year)",
             name = "0130_fertility_fit",
             width = 13, height = 8,
-            multi = uni_d, multif = "filter(district == x)")  
+            multi = uni_d)  
     
 #-------------------------------------------------------------------
 #prediction
@@ -325,7 +325,7 @@
             scale_y = c(0, bir_plot_lim),
             name = "0140_fertility-prediction_by-district",
             width = 12, height = 14,
-            multi = uni_o, multif = "filter(origin == x)")  
+            multi = uni_o)  
         
 #-------------------------------------------------------------------
 #plot the precitions: along year, for selected age
@@ -338,7 +338,7 @@
 #plot: Swiss
     age_dat <- filter(fer_pred, (origin == uni_o[1]) & (age %in% sel_age))    
     sszplot(age_dat,
-            aes_x = "year", aes_y = "fer_fit", fix_col = 1,
+            aes_x = "year", aes_y = "fer_fit",
             labs_y = "fertility rate (in % per year)",
             wrap = "age", ncol = 4,
             scale_y = c(0, bir_plot_lim),
@@ -346,12 +346,12 @@
             geom = "point",
             name = "0141_fertility-prediction_by-district_along-year_Swiss",
             width = 11, height = 5,
-            multi = uni_d, multif = "filter(district == x)")  
+            multi = uni_d)  
     
 #plot: foreign
     age_dat <- filter(fer_pred, (origin == uni_o[2]) & (age %in% sel_age))    
     sszplot(age_dat,
-            aes_x = "year", aes_y = "fer_fit", fix_col = 1,
+            aes_x = "year", aes_y = "fer_fit",
             labs_y = "fertility rate (in % per year)",
             wrap = "age", ncol = 4,
             scale_y = c(0, bir_plot_lim),
@@ -359,7 +359,7 @@
             geom = "point",
             name = "0142_fertility-prediction_by-district_along-year_foreign",
             width = 11, height = 5,
-            multi = uni_d, multif = "filter(district == x)")     
+            multi = uni_d)     
 
 #-------------------------------------------------------------------
 #fit gam to future fertility rates
@@ -389,7 +389,7 @@
             labs_y = "fertility rate (in % per year)",
             name = "0150_fertility-prediction_before-after-fit",
             width = 10, height = 6,
-            multi = uni_d, multif = "filter(district ==x)") 
+            multi = uni_d) 
        
 #-------------------------------------------------------------------
 #export fertility rates
@@ -450,7 +450,7 @@
             wrap = "district", ncol = 4,
             name = "0161_TFR_by-district-origin-age1",
             width = 12, height = 14,
-            multi = uni_o, multif = "filter(origin == x)")      
+            multi = uni_o)      
      
 #-------------------------------------------------------------------
 #TFR by age class (more detailled)
@@ -471,5 +471,5 @@
             wrap = "district", ncol = 4,
             name = "0162_TFR_by-district-origin-age2",
             width = 12, height = 14,
-            multi = uni_o, multif = "filter(origin == x)")   
+            multi = uni_o)   
     

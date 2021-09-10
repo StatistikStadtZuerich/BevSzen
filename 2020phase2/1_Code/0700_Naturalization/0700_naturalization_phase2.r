@@ -246,7 +246,7 @@
             grid = c("cat", "sex"), gridscale = "free_y",
             name = "0707_processes_das_smooth",
             width = 15, height = 8,
-            multi = uni_d, multif = "filter(district == x)",
+            multi = uni_d,
             quotes = quote(scale_alpha_manual(values = c(0.3, 1))))    
  
 #-------------------------------------------------------------------
@@ -276,7 +276,7 @@
             grid = c(".", "sex"),
             name = "0708_rate_das",
             width = 12, height = 5,
-            multi = uni_d, multif = "filter(district == x)",
+            multi = uni_d,
             quotes = quote(scale_alpha_manual(values = c(0.3, 1))))   
      
     
@@ -590,7 +590,7 @@
               grid = c("sex", "year"),
               name = "0719_prediction_dyao_smooth",
               width = 15, height = 8,
-              multi = uni_d, multif = "filter(district == x)",
+              multi = uni_d,
               quotes = quote(scale_alpha_manual(values = c(0.3, 1))))             
         
 #-------------------------------------------------------------------
@@ -632,7 +632,7 @@
               grid = c(".", "sex"),
               name = "0720_rate_dyao_past-future",
               width = 14, height = 7,
-              multi = uni_d, multif = "filter(district == x)")   
+              multi = uni_d)   
 
 #plot levels
     time_lev <- c("past", "future")
@@ -655,7 +655,7 @@
             grid = c(".", "sex"),
             name = "0721_rate_dyao_past-future_focus-age",
             width = 14, height = 7,
-            multi = uni_d, multif = "filter(district == x)")
+            multi = uni_d)
 
 #plot: focus years
 
@@ -668,7 +668,7 @@
             grid = c(".", "sex"),
             name = "0722_rate_dyao_past-future_focus-years",
             width = 14, height = 6,
-            multi = uni_d, multif = "filter(district == x)")    
+            multi = uni_d)    
 
 #-------------------------------------------------------------------
 #export the results

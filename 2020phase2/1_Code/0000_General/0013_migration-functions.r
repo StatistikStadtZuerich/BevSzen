@@ -473,7 +473,7 @@
                     labs_y = "proportion in %", labs_col = "year",
                     name = paste0(mig_number, "12_", mig_name, "_star_age-proportion_per-district-year-sex-origin_focus-age"),
                     width = 11, height = 8,
-                    multi = uni_d, multif = "filter(district == x)")
+                    multi = uni_d)
             
 
         #plot: focus years
@@ -486,7 +486,7 @@
                     labs_y = "proportion in %", labs_col = "age",
                     name = paste0(mig_number, "13_", mig_name, "_star_age-proportion_per-district-year-sex-origin_focus-years"),
                     width = 11, height = 8,
-                    multi = uni_d, multif = "filter(district == x)")
+                    multi = uni_d)
             
 
         #-------------------------------------------------------------------
@@ -520,7 +520,7 @@
                     labs_y = paste0(mig_name, "* per year"),
                     name = paste0(mig_number, "14_", mig_name, "_star_moving-average-over-year_focus-age"),
                     width = 11, height = 8,
-                    multi = uni_d, multif = "filter(district == x)")
+                    multi = uni_d)
 
         #plot: focus years
             #age (subjectively selected)
@@ -532,7 +532,7 @@
                     labs_y = paste0(mig_name, "* per year"),
                     name = paste0(mig_number, "15_", mig_name, "_star_moving-average-over-year_focus-years"),
                     width = 11, height = 8,
-                    multi = uni_d, multif = "filter(district == x)")
+                    multi = uni_d)
 
 
         #-------------------------------------------------------------------
@@ -565,7 +565,7 @@
                     labs_y = "proportion in %",
                     name = paste0(mig_number, "16_", mig_name, "_star_age-proportion_after-moving-average_focus-age"),
                     width = 11, height = 8,
-                    multi = uni_d, multif = "filter(district == x)")
+                    multi = uni_d)
 
         #plot: focus years
             #age (subjectively selected)
@@ -577,7 +577,7 @@
                     labs_y = "proportion in %", labs_col = "age",
                     name = paste0(mig_number, "17_", mig_name, "_star_age-proportion_after-moving-average_focus-years"),
                     width = 11, height = 8,
-                    multi = uni_d, multif = "filter(district == x)")
+                    multi = uni_d)
             
         #-------------------------------------------------------------------
         #fit gam to age proportion
@@ -619,7 +619,7 @@
                     labs_y = "proportion in %",
                     name = paste0(mig_number, "18_", mig_name, "_star_proportion_with-gam_focus-age"),
                     width = 11, height = 8,
-                    multi = uni_d, multif = "filter(district == x)")
+                    multi = uni_d)
             
         #-------------------------------------------------------------------
         #Constrained regression
@@ -684,7 +684,7 @@
                     labs_y = "proportion in %",
                     name = paste0(mig_number, "19_", mig_name, "_star_age-proportion_by-district-year-sex-origin_past-future"),
                     width = 11, height = 8,
-                    multi = uni_d, multif = "filter(district == x)")
+                    multi = uni_d)
 
 
         #plot levels
@@ -709,7 +709,7 @@
                     fix_size = 1,
                     name = paste0(mig_number, "20_", mig_name, "_star_age-proportion_by-district-year-sex-origin_past-future_focus-age"),
                     width = 11, height = 8,
-                    multi = uni_d, multif = "filter(district == x)")
+                    multi = uni_d)
 
         #plot: focus years
 
@@ -722,7 +722,7 @@
                     labs_y = "proportion in %", labs_col = "age",
                     name = paste0(mig_number, "21_", mig_name, "_star_age-proportion_by-district-year-sex-origin_past-future_focus-years"),
                     width = 11, height = 8,
-                    multi = uni_d, multif = "filter(district == x)")
+                    multi = uni_d)
             
         #output (to get an idea of the exported output)
             return(list(ex_mig_prop_a_dyso))
