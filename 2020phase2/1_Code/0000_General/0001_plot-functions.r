@@ -1,11 +1,11 @@
-#-------------------------------------------------------------------
+#------------------------------------------------------------------------------#
 #generic plot function
 #
 # Kind of a ggplot wrapper to obtain similar and uniform plots
 # with less code
 #
 #bad/rok, July 2021
-#-------------------------------------------------------------------
+#------------------------------------------------------------------------------#
 #
 # @params:
 # data: main tibble
@@ -104,10 +104,9 @@ sszplot <- function(data,
   stopifnot(!is.null(data) && !is.null(aes_x))
   stopifnot(!geom == "" || !is.null(quotes))
 
-
-  #-------------------------------------------------------------------
+  #------------------------------------------------------------------#
   #### prep work ####
-  #-------------------------------------------------------------------
+  #------------------------------------------------------------------#
 
   ## checks location of current file and saves plots in folder
   ## "3_Results/(first part of this file name)/[name].[file_type]", where
@@ -120,9 +119,10 @@ sszplot <- function(data,
 
   # reduce to the nnnn_xyz part of the file name (e.g. 0100_birth)
   sub_path <- regmatches(current_file,
-                         regexpr("[0-9]{4}_[a-zA-Z0-9]+", current_file))
+                         regexpr("[0-9]{4}_[a-zA-Z0-9-]+", current_file))
 
-  # handle folder hierarchy only on first two of nnnn (e.g. 0110_birth is converted to 0100_birth)
+  # handle folder hierarchy only on first two of nnnn
+  # (e.g. 0110_birth is converted to 0100_birth)
   sub_path <- sub("[0-9]{2}_", "00_", sub_path)
 
   # create target path and create corresponding folder if not existing yet
@@ -132,8 +132,9 @@ sszplot <- function(data,
                recursive = TRUE)
   target <- paste(target, paste0(name, ".", file_type), sep = "/")
 
-
+  #----------------------------------------------------------------------------#
   ## building of the plot is only needed if we are not in multipage mode
+  #----------------------------------------------------------------------------#
   if (is.null(multi)) {
     ## colours
     # special palettes are defined: a default with changed order and one especially
@@ -158,9 +159,15 @@ sszplot <- function(data,
         fix_col <- col_o
       else
         if (aes_col %in% c("year", "month", "week", "day")) {
-          alltimes <- select(data, all_of(aes_col)) %>% unique %>% nrow
-          oldtimes <- select(data, all_of(aes_col)) %>% filter(. < szen_begin) %>% unique %>% nrow
-          maxtime <- select(data, all_of(aes_col)) %>% max()
+          alltimes <- select(data, all_of(aes_col)) %>%
+            unique %>%
+            nrow
+          oldtimes <- select(data, all_of(aes_col)) %>%
+            filter(. < szen_begin) %>%
+            unique %>%
+            nrow
+          maxtime <- select(data, all_of(aes_col)) %>%
+            max()
 
           if (maxtime > szen_begin)
             col_time <- c(rep(col_grey, oldtimes),
@@ -202,9 +209,10 @@ sszplot <- function(data,
     if (is.null(labs_x)) labs_x <- aes_x
     if (is.null(labs_y)) labs_y <- aes_y
 
-    #-------------------------------------------------------------------
+    #--------------------------------------------------------------------------#
     #### build the plot ####
-    #-------------------------------------------------------------------
+    #--------------------------------------------------------------------------#
+
     # default plot
     res <- ggplot(data) +
       neutral
@@ -266,8 +274,10 @@ sszplot <- function(data,
     if (is.null(aes_size)) geomfix <- paste0(geomfix, fix_size)
 
 
-    if ("line" %in% geom)  res <- res + eval(str2expression(paste0("geom_line(", geomfix, ")")))
-    if ("point" %in% geom) res <- res + eval(str2expression(paste0("geom_point(", geomfix, ")")))
+    if ("line" %in% geom)
+      res <- res + eval(str2expression(paste0("geom_line(", geomfix, ")")))
+    if ("point" %in% geom)
+      res <- res + eval(str2expression(paste0("geom_point(", geomfix, ")")))
 
 
     # add labels if labs_x and _y are set (labs_x is same as aes_x per default;
@@ -302,11 +312,16 @@ sszplot <- function(data,
     # can be either pretty_breaks, log10 or defined by limits
     if (!is.null(scale_y)) {
       if (identical(scale_y, "pretty"))
-        res <- res + scale_y_continuous(breaks = pretty_breaks()) else
-          if (identical(scale_y, "log"))
-            res <- res + scale_y_continuous(trans = "log10") else
-              res <- res + scale_y_continuous(limits = scale_y,
-                                              breaks = if (!is.null(breaks)) breaks else pretty_breaks())
+        res <- res + scale_y_continuous(breaks = pretty_breaks())
+      else
+        if (identical(scale_y, "log"))
+          res <- res + scale_y_continuous(trans = "log10")
+        else
+          res <- res + scale_y_continuous(limits = scale_y,
+                                          breaks = if (!is.null(breaks))
+                                                      breaks
+                                                   else
+                                                      pretty_breaks())
     }
 
 
@@ -343,7 +358,8 @@ sszplot <- function(data,
 
     } else if (!is.null(wrap)) {
       # labeller for columnns should be 'label_both', but not if category is year/district/sex/region
-      if (wrap %in% colnames(data) && !wrap %in% c("year", "district", "sex", "region"))
+      if (wrap %in% colnames(data) &&
+          !wrap %in% c("year", "district", "sex", "region"))
         gridlab <- str2lang(paste0("labeller(", wrap, " = label_both)"))
       else
         gridlab <- "label_value"
@@ -360,8 +376,8 @@ sszplot <- function(data,
       res <- res +
       theme(axis.text.x = element_text(angle = angle, vjust = 0.5, hjust = 1))
 
-    # add quoted arguments. The argument may contain a single quote or a list of quotes.
-    # they must be handled separately
+    # add quoted arguments. The argument may contain a single quote or
+    # a list of quotes. They must be handled separately
     if (!is.null(quotes)) {
       if (is.call(quotes))
         res <- res +
@@ -454,6 +470,5 @@ sszplot <- function(data,
 
   # TODO:
   #     simple long format function?
-  #     parameter for colour palette if not default ?
 
 }
