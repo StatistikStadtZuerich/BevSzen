@@ -7,19 +7,18 @@
 #-------------------------------------------------------------------
 
 
-#-------------------------------------------------------------------
-#paths, general
-#-------------------------------------------------------------------
-
-#working directory
-    library(here)
-    setwd(paste0(here(), "/2020phase2/"))
-
-#general (e.g. packages, colors)
-    source("1_Code/0000_General/0000_general_phase2.r")
-
-#death: result path (for images)
-    dea_res <- "3_Results/0200_Death/"
+if (!exists("para")) {
+  #-------------------------------------------------------------------
+  #paths, general
+  #-------------------------------------------------------------------
+  
+  #working directory
+  library(here)
+  setwd(paste0(here(), "/2020phase2/"))
+  
+  #general (e.g. packages, colors)
+  source("1_Code/0000_General/0000_general_phase2.r")
+}
     
 #death: export path (for future rates)
     dea_exp <- "2_Data/4_Rates/" 

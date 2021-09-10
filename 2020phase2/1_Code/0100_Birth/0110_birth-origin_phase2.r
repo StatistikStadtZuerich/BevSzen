@@ -7,19 +7,18 @@
 #-------------------------------------------------------------------
 
 
-#-------------------------------------------------------------------
-#paths, general
-#-------------------------------------------------------------------
-
-#working directory
-    library(here)
-    setwd(paste0(here(), "/2020phase2/"))
-
-#general (e.g. packages, colors)
-    source("1_Code/0000_General/0000_general_phase2.r")
-
-#birth: result path (for images)
-    bir_res <- "3_Results/0100_Birth/"
+if (!exists("para")) {
+  #-------------------------------------------------------------------
+  #paths, general
+  #-------------------------------------------------------------------
+  
+  #working directory
+  library(here)
+  setwd(paste0(here(), "/2020phase2/"))
+  
+  #general (e.g. packages, colors)
+  source("1_Code/0000_General/0000_general_phase2.r")
+}
     
 #birth: export path (for future rates)
     bir_exp <- "2_Data/4_Rates/"  

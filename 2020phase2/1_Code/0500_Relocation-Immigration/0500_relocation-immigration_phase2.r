@@ -9,19 +9,18 @@
 
 
 
-
-
-#-------------------------------------------------------------------
-#paths, general
-#-------------------------------------------------------------------
-
-#working directory
-    library(here)
-    setwd(paste0(here(), "/2020phase2/"))
-
-#general (e.g. packages, colors)
-    source("1_Code/0000_General/0000_general_phase2.r")
-
+if (!exists("para")) {
+  #-------------------------------------------------------------------
+  #paths, general
+  #-------------------------------------------------------------------
+  
+  #working directory
+      library(here)
+      setwd(paste0(here(), "/2020phase2/"))
+  
+  #general (e.g. packages, colors)
+      source("1_Code/0000_General/0000_general_phase2.r")
+}
 
 #-------------------------------------------------------------------
 #proportion of relocation (based on immigration*)
@@ -51,10 +50,3 @@
                 rem_lower_thres = rei_lower_thres,
                 rem_upper_thres = rei_upper_thres,
                 rem_pred_span = rei_pred_span)                
-                
-                
-
-      
-
-
- 
