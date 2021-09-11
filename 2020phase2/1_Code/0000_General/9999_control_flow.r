@@ -19,7 +19,7 @@
 ## TODO: some log
 
 run_pops <- function(modules = c("all")) {
-  setwd(paste0(getwd(), "/2020phase2"))
+  setwd(paste0(here::here(), "/2020phase2"))
   code <- "1_Code/"
   term <- "_phase2.r"
 
