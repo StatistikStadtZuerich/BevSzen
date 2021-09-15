@@ -125,7 +125,9 @@
          
 #property owner
     text_w <- c("cooperative housing", "private housing")
-    uni_w <- factor(text_w, levels = text_w)       
+    uni_w <- factor(text_w, levels = text_w) 
+    
+    
           
    
      
@@ -245,7 +247,8 @@
     # on the open data platform the data consist both of naturalization and denaturalization
     nat_od <- "https://data.stadt-zuerich.ch/dataset/bev_brw_jahr_alter_geschlecht_herkunft_quartier_od5707/download/BEV570OD5707.csv"    
     
-    
+#living space (spa)
+    spa_od <- "https://data.stadt-zuerich.ch/dataset/bau_best_whg_geb_gebmwhg_wfl_pers_statzone_jahr_od6981/download/BAU698OD6981.csv"
     
 #wait for other data sets, since open data team will change to final URLs    
     
