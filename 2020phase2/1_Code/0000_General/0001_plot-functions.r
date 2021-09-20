@@ -7,7 +7,7 @@
 #bad/rok, July 2021
 #------------------------------------------------------------------------------#
 #
-# @params:
+# @params: test
 # data: main tibble
 # geom: a char vector with the names of the desired geom. Default is geom_line.
 #       if "", then geom must be defined in quotes parameter (see below)
