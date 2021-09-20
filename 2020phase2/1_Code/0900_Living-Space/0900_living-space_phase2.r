@@ -44,7 +44,7 @@
 #-------------------------------------------------------------------
       
 #livings space (y)
-    #WHY? e.g. to support the base year decision
+    #WHY? e.g. to support the base year decision 
     
     spa_y <- group_by(spa_dat, year) %>% 
             summarize(area = sum_NA(area),
@@ -224,17 +224,18 @@
 #-------------------------------------------------------------------
 #prediction: Escher Wyss, by owner
 #-------------------------------------------------------------------
-       
+   
+        
 #WHY a diffent approach for the Escher Wyss district, private housing?
-    #the living space over time differs substantially from the other districts
-    #(increase until 2013, then decrease)
-    #reason: few apartments in 2008 then very intense construction activity
-    #numbers: less than 1500 apartments in 2008
-    #more than 3100 apartments in 2017
-    #after construction some apartments were finished, yet no one lived there yet
-    #for a certain moment the empty apartments increase the living space (based on buildings)
-    #due to the high ratio of new buildings (compared to existing buildings) the living space was increased
-    #this will not happen again in future (due to the higher amount of buildings)
+    # the living space over time differs substantially from the other districts
+    # (increase until 2013, then decrease)
+    # reason: few apartments in 2008 then very intense construction activity
+    # numbers: less than 1500 apartments in 2008
+    # more than 3100 apartments in 2017
+    # after construction some apartments were finished, yet no one lived there yet
+    # for a certain moment the empty apartments increase the living space (based on buildings)
+    # due to the high ratio of new buildings (compared to existing buildings) the living space was increased
+    # this will not happen again in future (due to the higher amount of buildings)
     
 #WHY with owner?
     #con_reg function needs groups (so far)
