@@ -64,21 +64,21 @@
 #living space by year and owner
 #-------------------------------------------------------------------
       
-#livings space (yo)
+#livings space (yw)
     
-    spa_yo <- group_by(spa_dat, year, owner) %>% 
+    spa_yw <- group_by(spa_dat, year, owner) %>% 
             summarize(area = sum_NA(area),
                 people = sum_NA(people)) %>% 
         ungroup() %>% 
-        mutate(spa_yo = round(area / people, round_area))  
+        mutate(spa_yw = round(area / people, round_area))  
     
-    tail(spa_yo)
+    tail(spa_yw)
     
-    sszplot(spa_yo,
-            aes_x = "year", aes_y = "spa_yo", aes_col = "owner",
+    sszplot(spa_yw,
+            aes_x = "year", aes_y = "spa_yw", aes_col = "owner",
             labs_y = "living space (m² per person)",
             scale_y = c(0, NA),
-            name = "0901_living-space_yo",
+            name = "0901_living-space_yw",
             width = 8, height = 5)   
     
 
@@ -86,62 +86,62 @@
 #living space (and area, apartments, people) by district, year and owner
 #-------------------------------------------------------------------
       
-#livings space (dyo)
-    spa_dyo <- group_by(spa_dat, district, year, owner) %>% 
+#livings space (dyw)
+    spa_dyw <- group_by(spa_dat, district, year, owner) %>% 
             summarize(area = sum_NA(area),
                 area_ha = area/10000,
                 apartments = sum_NA(apartments),
                 people = sum_NA(people)) %>% 
         ungroup() %>% 
-        mutate(spa_dyo = round(area / people, round_area)) 
+        mutate(spa_dyw = round(area / people, round_area)) 
     
 #look at certain data points    
     
-    # test_c <- filter(spa_dyo, (year == 2020) & (owner == "cooperative housing") & (apartments < 500))
+    # test_c <- filter(spa_dyw, (year == 2020) & (owner == "cooperative housing") & (apartments < 500))
     # as.data.frame(test_c)
     # 
-    # test_p <- filter(spa_dyo, (year == 2020) & (owner == "private housing")) %>% 
+    # test_p <- filter(spa_dyw, (year == 2020) & (owner == "private housing")) %>% 
     #      arrange(apartments)
     # 
-    # ew <- filter(spa_dyo, (district == "Escher Wyss") & (owner == "private housing")) %>% 
+    # ew <- filter(spa_dyw, (district == "Escher Wyss") & (owner == "private housing")) %>% 
     #      arrange(year)
     
     
     
 #plot: living space    
-    sszplot(spa_dyo,
-            aes_x = "year", aes_y = "spa_dyo", aes_col = "owner",
+    sszplot(spa_dyw,
+            aes_x = "year", aes_y = "spa_dyw", aes_col = "owner",
             labs_y = "living space (m² per person)",            
             wrap = "district", ncol = 4,
             scale_y = c(0, NA),            
-            name = "0902_living-space_dyo",
+            name = "0902_living-space_dyw",
             width = 12, height = 14)      
     
 #plot: area    
-    sszplot(spa_dyo,
+    sszplot(spa_dyw,
             aes_x = "year", aes_y = "area_ha", aes_col = "owner",
             labs_y = "living area (in ha)",            
             wrap = "district", ncol = 4,
             scale_y = c(0, NA),            
-            name = "0903_area_dyo",
+            name = "0903_area_dyw",
             width = 12, height = 14)   
     
 #plot: apartments    
-    sszplot(spa_dyo,
+    sszplot(spa_dyw,
             aes_x = "year", aes_y = "apartments", aes_col = "owner",
             labs_y = "apartments",            
             wrap = "district", ncol = 4,
             scale_y = c(0, NA),            
-            name = "0904_apartments_dyo",
+            name = "0904_apartments_dyw",
             width = 12, height = 14)   
    
 #plot: people    
-    sszplot(spa_dyo,
+    sszplot(spa_dyw,
             aes_x = "year", aes_y = "people", aes_col = "owner",
             labs_y = "people",            
             wrap = "district", ncol = 4,
             scale_y = c(0, NA),            
-            name = "0905_people_dyo",
+            name = "0905_people_dyw",
             width = 12, height = 14)   
    
     
@@ -151,12 +151,12 @@
 #-------------------------------------------------------------------
         
 #base years 
-    spa_yo_base <- filter(spa_yo, 
+    spa_yw_base <- filter(spa_yw, 
             (year >= spa_base_begin) & (year <= spa_base_end)) %>% 
-        select(year, owner, spa_yo)
+        select(year, owner, spa_yw)
     
 #prediction (no living space below zero)   
-    spa_yo_pred <- con_reg(data = spa_yo_base, x = "year", y = "spa_yo",
+    spa_yw_pred <- con_reg(data = spa_yw_base, x = "year", y = "spa_yw",
               group_cols = "owner",
               window = spa_window_thres, base_t0 = spa_base_begin,
               szen_t0 = szen_begin, szen_t1 = szen_end,
@@ -164,21 +164,21 @@
               lower_thres = 0)   
     
 #past and prediction
-    spa_yo_past_pred <- as_tibble(expand_grid(
-            year = (min(spa_yo$year)):szen_end,
+    spa_yw_past_pred <- as_tibble(expand_grid(
+            year = (min(spa_yw$year)):szen_end,
             owner = uni_w)) %>% 
-        left_join(select(spa_yo, year, owner, spa_yo), by = c("year", "owner")) %>%     
-        left_join(select(spa_yo_pred, year, owner, pred_roll),
+        left_join(select(spa_yw, year, owner, spa_yw), by = c("year", "owner")) %>%     
+        left_join(select(spa_yw_pred, year, owner, pred_roll),
             by = c("year", "owner")) %>% 
-        mutate(spa_yo_all = if_else(year < szen_begin, spa_yo, pred_roll))    
+        mutate(spa_yw_all = if_else(year < szen_begin, spa_yw, pred_roll))    
     
 #plot
-    sszplot(spa_yo_past_pred,
-            aes_x = "year", aes_y = "spa_yo_all", aes_col = "owner",
+    sszplot(spa_yw_past_pred,
+            aes_x = "year", aes_y = "spa_yw_all", aes_col = "owner",
             labs_y = "living space (m² per person)",
             i_x = c(spa_base_begin, spa_base_end), 
             scale_y = c(0, NA),               
-            name = "0906_living-space_prediction_yo",
+            name = "0906_living-space_prediction_yw",
             width = 10, height = 7)      
     
     
@@ -187,12 +187,12 @@
 #-------------------------------------------------------------------
         
 #base years 
-    spa_dyo_base <- filter(spa_dyo, 
+    spa_dyw_base <- filter(spa_dyw, 
             (year >= spa_base_begin) & (year <= spa_base_end)) %>% 
-        select(district, year, owner, spa_dyo)    
+        select(district, year, owner, spa_dyw)    
     
 #prediction (no living space below zero)   
-    spa_dyo_pred <- con_reg(data = spa_dyo_base, x = "year", y = "spa_dyo",
+    spa_dyw_pred <- con_reg(data = spa_dyw_base, x = "year", y = "spa_dyw",
               group_cols = c("district", "owner"),
               window = spa_window_thres, base_t0 = spa_base_begin,
               szen_t0 = szen_begin, szen_t1 = szen_end,
@@ -200,23 +200,23 @@
               lower_thres = 0)   
     
 #past and prediction
-    spa_dyo_past_pred <- as_tibble(expand_grid(
+    spa_dyw_past_pred <- as_tibble(expand_grid(
             district = uni_d,
-            year = (min(spa_dyo$year)):szen_end,
+            year = (min(spa_dyw$year)):szen_end,
             owner = uni_w)) %>% 
-        left_join(spa_dyo, by = c("district", "year", "owner")) %>%     
-        left_join(select(spa_dyo_pred, district, year, owner, pred_roll),
+        left_join(spa_dyw, by = c("district", "year", "owner")) %>%     
+        left_join(select(spa_dyw_pred, district, year, owner, pred_roll),
             by = c("district", "year", "owner")) %>% 
-        mutate(spa_dyo_all = if_else(year < szen_begin, spa_dyo, pred_roll))      
+        mutate(spa_dyw_all = if_else(year < szen_begin, spa_dyw, pred_roll))      
     
 #plot   
-    sszplot(spa_dyo_past_pred,
-            aes_x = "year", aes_y = "spa_dyo_all", aes_col = "owner",
+    sszplot(spa_dyw_past_pred,
+            aes_x = "year", aes_y = "spa_dyw_all", aes_col = "owner",
             labs_y = "living space (m² per person)",            
             wrap = "district", ncol = 4,
             i_x = c(spa_base_begin, spa_base_end),           
             scale_y = c(0, NA),            
-            name = "0907_living-space_precition_dyo",
+            name = "0907_living-space_precition_dyw",
             width = 12, height = 14)     
     
     
@@ -241,15 +241,15 @@
     #con_reg function needs groups (so far)
      
 #Escher Wyss (district number: 52)
-    spa_dyo_52 <- filter(spa_dyo, district == "Escher Wyss") %>% 
-        select(year, owner, spa_dyo)
+    spa_dyw_52 <- filter(spa_dyw, district == "Escher Wyss") %>% 
+        select(year, owner, spa_dyw)
     
 #base years 
-    spa_dyo_base_52 <- filter(spa_dyo_52, 
+    spa_dyw_base_52 <- filter(spa_dyw_52, 
             (year >= spa_base_begin_52p) & (year <= spa_base_end))
     
 #prediction (no living space below zero)   
-    spa_dyo_pred_52 <- con_reg(data = spa_dyo_base_52, x = "year", y = "spa_dyo",
+    spa_dyw_pred_52 <- con_reg(data = spa_dyw_base_52, x = "year", y = "spa_dyw",
               group_cols = "owner",  
               window = spa_window_thres, base_t0 = spa_base_begin_52p,
               szen_t0 = szen_begin, szen_t1 = szen_end,
@@ -257,22 +257,22 @@
               lower_thres = 0) 
     
 #past and prediction
-    spa_yo_past_pred_52 <- as_tibble(expand_grid(
-            year = (min(spa_yo$year)):szen_end,
+    spa_yw_past_pred_52 <- as_tibble(expand_grid(
+            year = (min(spa_yw$year)):szen_end,
             owner = uni_w)) %>% 
-        left_join(select(spa_dyo_52, year, owner, spa_dyo), by = c("year", "owner")) %>%     
-        left_join(select(spa_dyo_pred_52, year, owner, pred_roll),
+        left_join(select(spa_dyw_52, year, owner, spa_dyw), by = c("year", "owner")) %>%     
+        left_join(select(spa_dyw_pred_52, year, owner, pred_roll),
             by = c("year", "owner")) %>% 
-        mutate(spa_dyo_all = if_else(year < szen_begin, spa_dyo, pred_roll), 
+        mutate(spa_dyw_all = if_else(year < szen_begin, spa_dyw, pred_roll), 
             district = uni_d[uni_d == "Escher Wyss"])
     
 #plot
-    sszplot(spa_yo_past_pred_52,
-            aes_x = "year", aes_y = "spa_dyo_all", aes_col = "owner",
+    sszplot(spa_yw_past_pred_52,
+            aes_x = "year", aes_y = "spa_dyw_all", aes_col = "owner",
             labs_y = "living space (m² per person)",
             i_x = c(spa_base_begin_52p, spa_base_end), 
             scale_y = c(0, NA),               
-            name = "0908_living-space_prediction_52yo",
+            name = "0908_living-space_prediction_52yw",
             width = 10, height = 7)  
     
     
@@ -281,17 +281,17 @@
 #-------------------------------------------------------------------
 
 #district, year, owner
-    spa_prep_dyo <- select(spa_dyo_past_pred, district, year, owner, spa_dyo_all) %>%  
-        rename(spa_dyo = spa_dyo_all)
+    spa_prep_dyw <- select(spa_dyw_past_pred, district, year, owner, spa_dyw_all) %>%  
+        rename(spa_dyw = spa_dyw_all)
 
 #year, owner
-    spa_prep_yo <- select(spa_yo_past_pred, year, owner, spa_yo_all) %>%  
-        rename(spa_yo = spa_yo_all)
+    spa_prep_yw <- select(spa_yw_past_pred, year, owner, spa_yw_all) %>%  
+        rename(spa_yw = spa_yw_all)
     
 #Escher Wyss (only future: values of the past already contained in 'spa_prep_dyo')
-    spa_prep_52p <- select(spa_yo_past_pred_52, district, year, owner, spa_dyo_all) %>%  
+    spa_prep_52p <- select(spa_yw_past_pred_52, district, year, owner, spa_dyw_all) %>%  
         filter((owner == uni_w[2]) & (year >= szen_begin)) %>% 
-        rename(spa_52p = spa_dyo_all)
+        rename(spa_52p = spa_dyw_all)
     
     
 #apartment threshold (mean over base years)
@@ -303,7 +303,7 @@
             district = uni_d,
             year = spa_base_begin:spa_base_end,
             owner = uni_w)) %>% 
-        left_join(select(spa_dyo, district, year, owner, apartments), 
+        left_join(select(spa_dyw, district, year, owner, apartments), 
             by = c("district", "year", "owner")) %>% 
         replace_na(list(apartments = 0)) %>% 
         group_by(district, owner) %>% 
@@ -311,13 +311,13 @@
         ungroup()
         
 #combine the data sets
-    spa_comb <- spa_prep_dyo %>% 
-        left_join(spa_prep_yo, by = c("year", "owner")) %>% 
+    spa_comb <- spa_prep_dyw %>% 
+        left_join(spa_prep_yw, by = c("year", "owner")) %>% 
         left_join(spa_prep_52p, by = c("district", "year", "owner")) %>% 
         left_join(spa_apart_thres, by = c("district", "owner")) %>% 
-        mutate(spa = if_else(year < szen_begin, spa_dyo, 
+        mutate(spa = if_else(year < szen_begin, spa_dyw, 
             if_else((district == "Escher Wyss") & (owner == uni_w[2]), spa_52p, 
-                if_else(apart_thres < spa_apart, spa_yo, spa_dyo))))
+                if_else(apart_thres < spa_apart, spa_yw, spa_dyw))))
    
 #plot: past and prediction
     sszplot(spa_comb,
@@ -326,15 +326,15 @@
             wrap = "district", ncol = 4,
             i_x = c(spa_base_begin, spa_base_end),           
             scale_y = c(0, NA),            
-            name = "0909_living-space_precition_dyo_different-datasets",
+            name = "0909_living-space_precition_dyw_different-datasets",
             width = 12, height = 14) 
     
 #plot both (i.e. per district, and entire city)
     
-    names_before <- c("spa_dyo", "spa_yo", "spa")
+    names_before <- c("spa_dyw", "spa_yw", "spa")
     names_plot <- c("by district", "entire city", "prediction")
     
-    spa_both <- select(spa_comb, district, year, owner, spa_dyo, spa_yo, spa) %>% 
+    spa_both <- select(spa_comb, district, year, owner, spa_dyw, spa_yw, spa) %>% 
         pivot_longer(cols = names_before, names_to = "category", values_to = "spa") %>% 
         mutate(cat = factor(case_when(category ==  names_before[1] ~ names_plot[1], 
                                             category  ==  names_before[2] ~ names_plot[2],
@@ -347,7 +347,7 @@
             labs_y = "living space (m² per person)",
             i_x = c(spa_base_begin, spa_base_end),           
             scale_y = c(0, NA),             
-            name = "0910_living-space_dyo-yo",
+            name = "0910_living-space_dyw-yw",
             width = 8, height = 4,
             multi = uni_d)     
     
@@ -357,8 +357,8 @@
 #-------------------------------------------------------------------
 
 #export data   
-    spa_ex_data <- mutate(spa_comb, spa_dya = round(spa, round_area)) %>% 
-        select(district, year, owner, spa_dya) %>%
+    spa_ex_data <- mutate(spa_comb, spa_dyw = round(spa, round_area)) %>% 
+        select(district, year, owner, spa_dyw) %>%
         filter(year >= szen_begin) %>% 
         arrange(district, year, owner)
       
