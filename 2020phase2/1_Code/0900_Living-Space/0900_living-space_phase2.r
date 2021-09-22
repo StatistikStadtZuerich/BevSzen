@@ -226,7 +226,7 @@
 #-------------------------------------------------------------------
    
         
-#WHY a diffent approach for the Escher Wyss district, private housing?
+#WHY a different approach for the Escher Wyss district, private housing?
     # the living space over time differs substantially from the other districts
     # (increase until 2013, then decrease)
     # reason: few apartments in 2008 then very intense construction activity
@@ -292,7 +292,6 @@
     spa_prep_52p <- select(spa_yw_past_pred_52, district, year, owner, spa_dyw_all) %>%  
         filter((owner == uni_w[2]) & (year >= szen_begin)) %>% 
         rename(spa_52p = spa_dyw_all)
-    
     
 #apartment threshold (mean over base years)
     
