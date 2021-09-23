@@ -109,23 +109,17 @@ sszplot <- function(data,
   #------------------------------------------------------------------#
 
   ## checks location of current file and saves plots in folder
-  ## "3_Results/(first part of this file name)/[name].[file_type]", where
-  ## (first part of this file name) means e.g. 0100_birth.
-  ## creates the folder first if missing
+  ## "[res_path]/(current folder name)/[name].[file_type]", where
+  ## (current folder name) means e.g. 0100_birth.
+  ## creates the folder first if it is missing (for saving)
 
-  # determine output path from file name (for saving)
-  current_file <- regmatches(this.path(),
-                             regexpr("[a-zA-Z0-9._-]+$", this.path()))
-
-  # reduce to the nnnn_xyz part of the file name (e.g. 0100_birth)
+  # determine path to location of current file
+  current_file <- normalizePath(this.dir(), winslash = "/")
+  # reduce to the last part of the path
   sub_path <- regmatches(current_file,
-                         regexpr("[0-9]{4}_[a-zA-Z0-9-]+", current_file))
+                         regexpr("\\w*$", current_file))
 
-  # handle folder hierarchy only on first two of nnnn
-  # (e.g. 0110_birth is converted to 0100_birth)
-  sub_path <- sub("[0-9]{2}_", "00_", sub_path)
-
-  # create target path and create corresponding folder if not existing yet
+  # create target path and create corresponding folder if not yet existing
   target <- paste(res_path, sub_path, sep = "/")
   if (!file.exists(paste(getwd(), target, sep = "/")))
     dir.create(paste(getwd(), target, sep = "/"),
@@ -155,9 +149,6 @@ sszplot <- function(data,
               fix_col <- col_palette[1],
               fix_col <- col_palette[fix_col])
     else {
-      if (identical(aes_col, "origin"))
-        fix_col <- col_o
-      else
         if (aes_col %in% c("year", "month", "week", "day")) {
           alltimes <- select(data, all_of(aes_col)) %>%
             unique %>%
@@ -178,11 +169,20 @@ sszplot <- function(data,
           fix_col <- col_time
         }
       else
+        if (identical(aes_col, "origin"))
+        fix_col <- col_o
+      else
         if (identical(aes_col, "sex"))
           fix_col <- col_s
       else
         if (identical(aes_col, "region"))
           fix_col <- col_r
+      else
+        if (identical(aes_col, "owner"))
+          fix_col <- col_w
+      else
+        if (identical(aes_col, "residence"))
+          fix_col <- col_e
       else
         fix_col <- col_palette[1:count(unique(data[aes_col]))$n]
 
