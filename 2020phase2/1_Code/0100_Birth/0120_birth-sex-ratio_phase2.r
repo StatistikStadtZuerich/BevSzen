@@ -35,8 +35,8 @@ if (!exists("para")) {
         mutate(sex = factor(if_else(SexCd == 1, uni_s[1], uni_s[2]), uni_s)) %>% 
         select(year, sex, bir) %>%     
         group_by(year, sex) %>% 
-            summarize(bir = sum(bir)) %>% 
-        ungroup() %>% 
+            summarize(bir = sum(bir),
+                      .groups = "drop") %>% 
         spread(key = sex, value = bir) %>% 
         mutate(pro_male = round(male / (male + female) * 100, round_rate))
     
@@ -61,7 +61,7 @@ if (!exists("para")) {
     #however, a simple model is used: mean only
     
 #mean
-    pred_mean <- filter(pro_male, (year >= bir_sex_ratio_begin) & (year <= bir_sex_ratio_end)) %>% 
+    pred_mean <- filter(pro_male, (year >= bir_sex_ratio_begin) & (year <= bir_sex_ratio_end)) %>%
         summarize(pred_mean = mean(pro_male))
     
 #plot with mean
@@ -71,9 +71,7 @@ if (!exists("para")) {
             i_x = year5, i_y = pred_mean$pred_mean,
             labs_y = "proportion male in %",
             scale_y = c(0, 70), breaks = seq(0, 70, 10),
-            name = "0191_sex-ratio_by-year_with-mean")  
-    
-     
+            name = "0191_sex-ratio_by-year_with-mean")
 
 #-------------------------------------------------------------------
 #export the results

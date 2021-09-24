@@ -41,8 +41,8 @@ if (!exists("para")) {
             district = factor(distr, uni_d)) %>% 
         select(district, year, age, origin, bir) %>%     
         group_by(district, year, age, origin) %>% 
-            summarize(bir = sum(bir)) %>% 
-        ungroup() 
+            summarize(bir = sum(bir), 
+                      .groups = "drop") 
   
     
 #population
@@ -58,8 +58,8 @@ if (!exists("para")) {
             district = factor(distr, uni_d)) %>%   
         select(district, year, age, origin, pop) %>%    
         group_by(district, year, age, origin) %>% 
-            summarize(pop = sum(pop)) %>% 
-        ungroup()  
+            summarize(pop = sum(pop),
+                      .groups = "drop")
     
 
 #-------------------------------------------------------------------
@@ -81,20 +81,20 @@ if (!exists("para")) {
         left_join(look_a2, by = "age")    
     
 #fertility by year, age
-    fer_ya <- group_by(cas, age, year) %>% 
-            summarize(pop = sum(pop), 
-                      bir = sum(bir)) %>% 
-        ungroup() %>% 
-        mutate(fer_ya = if_else(pop == 0, NA_real_, round(bir / pop * 100, round_rate))) %>% 
-        select(age, year, fer_ya)      
+    fer_ya <- group_by(cas, age, year) %>%
+      summarize(pop = sum(pop),
+                bir = sum(bir),
+                .groups = "drop") %>%
+      mutate(fer_ya = if_else(pop == 0, NA_real_, round(bir / pop * 100, round_rate))) %>%
+      select(age, year, fer_ya)      
     
 #fertility by year, age, origin
-    fer_yao <- group_by(cas, year, age, origin) %>% 
-            summarize(pop = sum(pop), 
-                      bir = sum(bir)) %>% 
-        ungroup() %>% 
-        mutate(fer_yao = if_else(pop == 0, NA_real_, round(bir / pop * 100, round_rate))) %>% 
-        select(year, age, origin, fer_yao)    
+    fer_yao <- group_by(cas, year, age, origin) %>%
+      summarize(pop = sum(pop),
+                bir = sum(bir),
+                .groups = "drop") %>%
+      mutate(fer_yao = if_else(pop == 0, NA_real_, round(bir / pop * 100, round_rate))) %>%
+      select(year, age, origin, fer_yao)    
     
 #fertility by district, year, age, origin
     #is already aggregated by district, year, age, origin
@@ -108,9 +108,9 @@ if (!exists("para")) {
 #WHY? plots to define the base period for fertility prediction    
     
 #TFR by year
-    tfr_y <- group_by(fer_ya, year) %>% 
-            summarize(tfr_y = sum_NA(fer_ya / 100)) %>% 
-        ungroup()  
+    tfr_y <- group_by(fer_ya, year) %>%
+      summarize(tfr_y = sum_NA(fer_ya / 100),
+                .groups = "drop")  
     
     sszplot(tfr_y, aes_x = "year", aes_y = "tfr_y",
             labs_y = "TFR", i_x = "5",
@@ -119,9 +119,9 @@ if (!exists("para")) {
     
     
 #TFR by year, origin
-    tfr_yo <- group_by(fer_yao, year, origin) %>% 
-            summarize(tfr_yo = sum_NA(fer_yao / 100)) %>% 
-        ungroup()    
+    tfr_yo <- group_by(fer_yao, year, origin) %>%
+      summarize(tfr_yo = sum_NA(fer_yao / 100),
+                .groups = "drop")   
     
     sszplot(tfr_yo, aes_x = "year", aes_y = "tfr_yo", aes_col = "origin",
             labs_y = "TFR", i_x = "5",
@@ -129,10 +129,10 @@ if (!exists("para")) {
             name = "0101_TFR_by-year-origin")        
     
 #TFR by year, age1
-    tfr_ya1 <- left_join(fer_ya, look_a1, by = "age") %>% 
-        group_by(year, age_1) %>% 
-            summarize(tfr_ya1 = sum_NA(fer_ya / 100)) %>% 
-        ungroup()
+    tfr_ya1 <- left_join(fer_ya, look_a1, by = "age") %>%
+      group_by(year, age_1) %>%
+      summarize(tfr_ya1 = sum_NA(fer_ya / 100),
+                .groups = "drop")
     
     sszplot(tfr_ya1, aes_x = "year", aes_y = "tfr_ya1", aes_col = "age_1",
             i_x = "5", labs_y = "TFR",
@@ -141,10 +141,10 @@ if (!exists("para")) {
     
     
 #TFR by year, age2   
-    tfr_ya2 <- left_join(fer_ya, look_a2, by = "age") %>% 
-        group_by(year, age_2) %>% 
-            summarize(tfr_ya2 = sum_NA(fer_ya / 100)) %>% 
-        ungroup()
+    tfr_ya2 <- left_join(fer_ya, look_a2, by = "age") %>%
+      group_by(year, age_2) %>%
+      summarize(tfr_ya2 = sum_NA(fer_ya / 100),
+                .groups = "drop")
     
     sszplot(tfr_ya2, aes_x = "year", aes_y = "tfr_ya2", aes_col = "age_2",
             i_x = "5", labs_y = "TFR",
@@ -153,10 +153,10 @@ if (!exists("para")) {
     
     
 #TFR by year, age1, origin  
-    tfr_ya1o <- left_join(fer_yao, look_a1, by = "age") %>% 
-        group_by(year, age_1, origin) %>% 
-            summarize(tfr_ya1o = sum_NA(fer_yao / 100)) %>% 
-        ungroup()
+    tfr_ya1o <- left_join(fer_yao, look_a1, by = "age") %>%
+      group_by(year, age_1, origin) %>%
+      summarize(tfr_ya1o = sum_NA(fer_yao / 100),
+                .groups = "drop")
     
     sszplot(tfr_ya1o, aes_x = "year", aes_y = "tfr_ya1o", aes_col = "origin",
             grid = c("age_1", "."), labs_y = "TFR", i_x = "5",
@@ -165,10 +165,10 @@ if (!exists("para")) {
             width = 12) 
     
 #TFR by year, age2, origin  
-    tfr_ya2o <- left_join(fer_yao, look_a2, by = "age") %>% 
-        group_by(year, age_2, origin) %>% 
-            summarize(tfr_ya2o = sum_NA(fer_yao / 100)) %>% 
-        ungroup()
+    tfr_ya2o <- left_join(fer_yao, look_a2, by = "age") %>%
+      group_by(year, age_2, origin) %>%
+      summarize(tfr_ya2o = sum_NA(fer_yao / 100),
+                .groups = "drop")
         
     sszplot(tfr_ya2o, aes_x = "year", aes_y = "tfr_ya2o", aes_col = "origin",
             wrap = "age_2", ncol = nlevels(tfr_ya2o$age_2),
@@ -345,9 +345,12 @@ if (!exists("para")) {
             geom = "point",
             name = "0141_fertility-prediction_by-district_along-year_Swiss",
             width = 11, height = 5,
-            multi = uni_d)  
+            multi = uni_d,
+            quotes = c(quote(geom_line(aes(x = year, y = pred), linetype = 2)),
+                       quote(geom_line(aes(x = year, y = pred_mean), linetype = 3)),
+                       quote(geom_line(aes(x = year, y = pred_roll), linetype = 1))))
     
-#plot: foreign
+  #plot: foreign
     age_dat <- filter(fer_pred, (origin == uni_o[2]) & (age %in% sel_age))    
     sszplot(age_dat,
             aes_x = "year", aes_y = "fer_fit",
@@ -358,7 +361,10 @@ if (!exists("para")) {
             geom = "point",
             name = "0142_fertility-prediction_by-district_along-year_foreign",
             width = 11, height = 5,
-            multi = uni_d)     
+            multi = uni_d,
+            quotes = c(quote(geom_line(aes(x = year, y = pred), linetype = 2)),
+                       quote(geom_line(aes(x = year, y = pred_mean), linetype = 3)),
+                       quote(geom_line(aes(x = year, y = pred_roll), linetype = 1))))     
 
 #-------------------------------------------------------------------
 #fit gam to future fertility rates
@@ -417,10 +423,10 @@ if (!exists("para")) {
     write_csv(fer_ex_past, paste0(bir_exp, "birth_fertility_past.csv"))
 
 #TFR
-    tfr_dyo <- bind_rows(fer_ex_past, fer_ex) %>% 
-        group_by(district, year, origin) %>% 
-            summarize(tfr = sum_NA(fer/100)) %>% 
-        ungroup()
+    tfr_dyo <- bind_rows(fer_ex_past, fer_ex) %>%
+      group_by(district, year, origin) %>%
+      summarize(tfr = sum_NA(fer / 100),
+                .groups = "drop")
     
 #plot
     sszplot(tfr_dyo,
@@ -438,8 +444,8 @@ if (!exists("para")) {
     tfr_a1 <- bind_rows(fer_ex_past, fer_ex) %>% 
         left_join(look_a1, by = "age") %>%      
         group_by(district, year, origin, age_1) %>% 
-            summarize(tfr = sum_NA(fer / 100)) %>% 
-        ungroup()
+            summarize(tfr = sum_NA(fer / 100), 
+        .groups = "drop")
     
 #plot
     sszplot(tfr_a1,
@@ -459,8 +465,8 @@ if (!exists("para")) {
     tfr_a2 <- bind_rows(fer_ex_past, fer_ex) %>% 
         left_join(look_a2, by = "age") %>%        
         group_by(district, year, origin, age_2) %>% 
-            summarize(tfr = sum_NA(fer / 100)) %>% 
-        ungroup()
+            summarize(tfr = sum_NA(fer / 100), 
+        .groups = "drop")
     
 #plot
     sszplot(tfr_a2,
