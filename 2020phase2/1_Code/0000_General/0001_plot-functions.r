@@ -117,7 +117,7 @@ sszplot <- function(data,
   current_file <- normalizePath(this.dir(), winslash = "/")
   # reduce to the last part of the path
   sub_path <- regmatches(current_file,
-                         regexpr("\\w*$", current_file))
+                         regexpr("[^\\/]*$", current_file))
 
   # create target path and create corresponding folder if not yet existing
   target <- paste(res_path, sub_path, sep = "/")
