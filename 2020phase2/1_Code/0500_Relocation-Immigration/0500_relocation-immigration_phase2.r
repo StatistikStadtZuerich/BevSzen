@@ -19,7 +19,7 @@ if (!exists("para")) {
       setwd(paste0(here(), "/2020phase2/"))
   
   #general (e.g. packages, colors)
-      source("1_Code/0000_General/0000_general_phase2.r")
+      source(paste0(code_path, "/0000_General/0000_general_phase2.r"))
 }
 
 #-------------------------------------------------------------------
@@ -33,8 +33,7 @@ if (!exists("para")) {
                 mig_district = "QuarCd", 
                 mig_name = "immigration",
                 rem_number = "05", 
-                graph_path = "3_Results/0500_Relocation-Immigration/",
-                ex_path = "2_Data/4_Rates/relocation_immigration_future.csv",
+                ex_path = paste0(exp_path, "/relocation_immigration_future.csv"),
                 rem_base_begin = rei_base_begin, 
                 rem_base_end = rei_base_end, 
                 rem_age_max = rei_age_max,                

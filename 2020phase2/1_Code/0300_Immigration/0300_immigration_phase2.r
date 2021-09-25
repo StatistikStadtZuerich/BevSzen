@@ -17,7 +17,7 @@ if (!exists("para")) {
     setwd(paste0(here(), "/2020phase2/"))
     
     #general (e.g. packages, colors)
-    source("1_Code/0000_General/0000_general_phase2.r")
+    source(paste0(code_path, "/0000_General/0000_general_phase2.r"))
 }
 
 #-------------------------------------------------------------------
@@ -32,8 +32,7 @@ if (!exists("para")) {
                 mig_district = "QuarCd", 
                 mig_name = "immigration",
                 mig_number = "03", 
-                graph_path = "3_Results/0300_Immigration/",
-                ex_path = "2_Data/4_Rates/immigration-star_rate-dy_future.csv",
+                ex_path = paste0(exp_path, "/immigration-star_rate-dy_future.csv"),
                 mis_base_begin = ims_base_begin, 
                 mis_base_end = ims_base_end,
                 mis_rate_window_thres = ims_rate_window_thres,
@@ -54,8 +53,7 @@ if (!exists("para")) {
                 mig_district = "QuarCd",                 
                 mig_name = "immigration",
                 mig_number = "03", 
-                graph_path = "3_Results/0300_Immigration/",
-                ex_path = "2_Data/4_Rates/immigration-star_prop-so-dy_future.csv",
+                ex_path = paste0(exp_path, "/immigration-star_prop-so-dy_future.csv"),
                 mis_so_base_begin = ims_so_base_begin,
                 mis_so_base_end = ims_so_base_end,
                 mis_so_window_thres = ims_so_window_thres,
@@ -63,8 +61,6 @@ if (!exists("para")) {
                 mis_so_thres_percent = ims_so_thres_percent,
                 mis_so_lower_thres = ims_so_lower_thres)
     
-
-
      
 #-------------------------------------------------------------------
 #immigration*: proportion of age (per district, year, sex, origin) 
@@ -77,8 +73,7 @@ system.time(
                 mig_district = "QuarCd",                 
                 mig_name = "immigration",
                 mig_number = "03", 
-                graph_path = "3_Results/0300_Immigration/",
-                ex_path = "2_Data/4_Rates/immigration-star_prop-a-dyso_future.csv",
+                ex_path = paste0(exp_path, "/immigration-star_prop-a-dyso_future.csv"),
                 mis_age_min = ims_age_min,
                 mis_age_max = ims_age_max, 
                 mis_age_window_years = ims_age_window_years, 

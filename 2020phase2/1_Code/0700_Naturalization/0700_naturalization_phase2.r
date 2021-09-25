@@ -17,14 +17,14 @@ if (!exists("para")) {
   setwd(paste0(here(), "/2020phase2/"))
   
   #general (e.g. packages, colors)
-  source("1_Code/0000_General/0000_general_phase2.r")
+  source(paste0(code_path, "/0000_General/0000_general_phase2.r"))
 }
 
 #result path (for images)
     nat_res <- "3_Results/0700_Naturalization/"
     
 #export path (for future rates)
-    nat_exp <- "2_Data/4_Rates/" 
+    nat_exp <- exp_path 
     
 
 
@@ -470,19 +470,6 @@ if (!exists("para")) {
         
     
 #plots
-    p715 <- ggplot(data = smooth_plot_a) +
-        geom_line(aes(x = age, y = count, color = cat, linetype = smooth, alpha = smooth)) +
-        facet_grid(cat ~  ., scales = "free_y") +
-        scale_colour_manual(values = col_6[1:2]) +
-        scale_alpha_manual(values = c(0.3, 1)) +
-        scale_x_continuous(breaks = pretty_breaks()) +
-        labs(x = "age", y = "quantity per year (naturalization), quantity (population)",
-            color = "", linetype = "", alpha = "") +
-        neutral        
-        
-    ggsave(paste0(nat_res, "0715_processes_a_smooth.pdf"), 
-        plot = p715, width = 10, height = 8)            
-            
     sszplot(smooth_plot_a,
             aes_x = "age", aes_y = "count", aes_col = "cat", aes_ltyp = "smooth", aes_alpha = "smooth",
             labs_y = "quantity per year (naturalization), quantity (population)",
@@ -618,14 +605,7 @@ if (!exists("para")) {
         left_join(select(rate_dyas_future, district, year, age, sex, rate_smoothed), 
             by = c("district", "year", "age", "sex")) %>% 
         replace_na(list(rate_past = 0, rate_smoothed = 0)) %>%       
-        mutate(rate_dyas = if_else(year < szen_begin, rate_past, rate_smoothed))    
-    
-    
-    
-#colors
-    col_time <- c(rep(col_grey, length((date_start+1):date_end)),
-        colorRampPalette(col_6[1:5])(length(szen_begin:szen_end)))
-    # plot(1:length(col_time), 1:length(col_time), col = col_time, pch = 16, cex = 2)
+        mutate(rate_dyas = if_else(year < szen_begin, rate_past, rate_smoothed))
        
 #plot: focus age distribution
       sszplot(rate_dyas_past_future,
@@ -682,7 +662,7 @@ if (!exists("para")) {
         arrange(district, year, age, sex)
       
 #export
-    write_csv(nat_ex_data, paste0(nat_exp, "naturalization_future.csv"))
+    write_csv(nat_ex_data, paste0(nat_exp, "/naturalization_future.csv"))
 
 
     

@@ -12,7 +12,7 @@
 #migration rate per district and year (immigration, emigration)
       
    mig_rate_dy <- function(mig_path, mig_vari, mig_district,
-                          mig_name, mig_number, graph_path, ex_path, 
+                          mig_name, mig_number, ex_path, 
                           mis_base_begin, mis_base_end, 
                           mis_rate_window_thres, mis_rate_prop_trend, 
                           mis_rate_thres_percent, mis_rate_lower_thres){
@@ -185,7 +185,7 @@
 #in migration (immigration, emigration): proportion of sex and origin, by distict and year
 
     mig_prop_so_dy <- function(mig_path, mig_vari, mig_district,
-                              mig_name, mig_number, graph_path, ex_path,
+                              mig_name, mig_number, ex_path,
                               mis_so_base_begin, mis_so_base_end,
                               mis_so_window_thres, mis_so_prop_trend,
                               mis_so_thres_percent, mis_so_lower_thres, ...){
@@ -346,7 +346,7 @@
 #in migration (immigration, emigration): age proportion (by distict, year, sex, origin)
 
     mig_prop_a_dyso <- function(mig_path, mig_vari, mig_district,
-                              mig_name, mig_number, graph_path, ex_path,
+                              mig_name, mig_number, ex_path,
                               mis_age_min, mis_age_max,
                               mis_age_window_years,
                               mis_age_base_begin, mis_age_base_end,

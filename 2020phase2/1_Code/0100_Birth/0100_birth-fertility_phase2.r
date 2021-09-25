@@ -17,11 +17,11 @@ if (!exists("para")) {
   setwd(paste0(here(), "/2020phase2/"))
   
   #general (e.g. packages, colors)
-  source("1_Code/0000_General/0000_general_phase2.r")
+  source(paste0(code_path, "/0000_General/0000_general_phase2.r"))
 }
     
 #birth: export path (for future fertility rates)
-    bir_exp <- "2_Data/4_Rates/"  
+    bir_exp <- exp_path  
 
 
     
@@ -407,7 +407,7 @@ if (!exists("para")) {
         arrange(district, year, age, origin)
 
 #export
-    write_csv(fer_ex, paste0(bir_exp, "birth_fertility_future.csv"))
+    write_csv(fer_ex, paste0(bir_exp, "/birth_fertility_future.csv"))
    
     
 #-------------------------------------------------------------------
@@ -420,7 +420,7 @@ if (!exists("para")) {
         arrange(district, year, age, origin)
 
 #export the data of the past (for model evaluation later on)    
-    write_csv(fer_ex_past, paste0(bir_exp, "birth_fertility_past.csv"))
+    write_csv(fer_ex_past, paste0(bir_exp, "/birth_fertility_past.csv"))
 
 #TFR
     tfr_dyo <- bind_rows(fer_ex_past, fer_ex) %>%

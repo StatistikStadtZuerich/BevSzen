@@ -17,11 +17,11 @@ if (!exists("para")) {
     setwd(paste0(here(), "/2020phase2/"))
     
     #general (e.g. packages, colors)
-    source("1_Code/0000_General/0000_general_phase2.r")
+    source(paste0(code_path, "/0000_General/0000_general_phase2.r"))
 }
     
 #birth: export path (for future rates)
-    bir_exp <- "2_Data/4_Rates/"  
+    bir_exp <- exp_path  
 
 
     
@@ -82,7 +82,7 @@ if (!exists("para")) {
         pro_male = round(pred_mean$pred_mean, round_rate))     
         
 #export
-    write_csv(pro_male_pred, paste0(bir_exp, "birth_sex-ratio_future.csv"))    
+    write_csv(pro_male_pred, paste0(bir_exp, "/birth_sex-ratio_future.csv"))    
 
 
     

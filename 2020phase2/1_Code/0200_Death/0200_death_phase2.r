@@ -17,11 +17,11 @@ if (!exists("para")) {
   setwd(paste0(here(), "/2020phase2/"))
   
   #general (e.g. packages, colors)
-  source("1_Code/0000_General/0000_general_phase2.r")
+  source(paste0(code_path, "/0000_General/0000_general_phase2.r"))
 }
     
 #death: export path (for future rates)
-    dea_exp <- "2_Data/4_Rates/" 
+    dea_exp <- exp_path
     
 
 #-------------------------------------------------------------------
@@ -470,7 +470,7 @@ if (!exists("para")) {
         arrange(year, age, sex)
 
 #export
-    write_csv(dea_ex, paste0(dea_exp, "mortality_future.csv"))
+    write_csv(dea_ex, paste0(dea_exp, "/mortality_future.csv"))
        
    
 #-------------------------------------------------------------------

@@ -12,7 +12,7 @@
 #proportion of relocation based on migration*
       
    rel_prop <- function(mig_path, mig_vari, mig_district,
-                          mig_name, rem_number, graph_path, ex_path, 
+                          mig_name, rem_number, ex_path, 
                           rem_base_begin, rem_base_end, rem_age_max,
                           rem_mis_span_dyao,rem_rel_span_dyao,
                           rem_mis_span_dao, rem_rel_span_dao,

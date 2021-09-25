@@ -17,7 +17,7 @@ if (!exists("para")) {
     setwd(paste0(here(), "/2020phase2/"))
     
     #general (e.g. packages, colors)
-    source("1_Code/0000_General/0000_general_phase2.r")
+    source(paste0(code_path, "/0000_General/0000_general_phase2.r"))
 }
     
 #-------------------------------------------------------------------
@@ -32,8 +32,7 @@ if (!exists("para")) {
                 mig_district = "QuarBisherCd",                  
                 mig_name = "emigration",
                 mig_number = "04", 
-                graph_path = "3_Results/0400_Emigration/",
-                ex_path = "2_Data/4_Rates/emigration-star_rate-dy_future.csv",
+                ex_path = paste0(exp_path, "/emigration-star_rate-dy_future.csv"),
                 mis_base_begin = ems_base_begin, 
                 mis_base_end = ems_base_end,
                 mis_rate_window_thres = ems_rate_window_thres,
@@ -55,8 +54,7 @@ if (!exists("para")) {
                 mig_district = "QuarBisherCd",                  
                 mig_name = "emigration",
                 mig_number = "04", 
-                graph_path = "3_Results/0400_Emigration/",
-                ex_path = "2_Data/4_Rates/emigration-star_prop-so-dy_future.csv",
+                ex_path = paste0(exp_path, "/emigration-star_prop-so-dy_future.csv"),
                 mis_so_base_begin = ems_so_base_begin,
                 mis_so_base_end = ems_so_base_end,
                 mis_so_window_thres = ems_so_window_thres,
@@ -77,8 +75,7 @@ if (!exists("para")) {
                 mig_district = "QuarBisherCd",                  
                 mig_name = "emigration",
                 mig_number = "04", 
-                graph_path = "3_Results/0400_Emigration/",
-                ex_path = "2_Data/4_Rates/emigration-star_prop-a-dyso_future.csv",
+                ex_path = paste0(exp_path, "/emigration-star_prop-a-dyso_future.csv"),
                 mis_age_min = ems_age_min,
                 mis_age_max = ems_age_max, 
                 mis_age_window_years = ems_age_window_years, 
