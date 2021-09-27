@@ -66,7 +66,6 @@
 #-------------------------------------------------------------------
       
 #allocation (yw)
-    
     aca_yw <- group_by(aca_dat, year, owner) %>% 
             summarize(apartments = sum_NA(apartments),
                 people = sum_NA(people)) %>% 
@@ -97,7 +96,7 @@
       
 #look at certain data points    
     
-    # test_c <- filter(aca_dyw, (year == 2020) & (owner == "cooperative housing") & (apartments < 500)) %>% 
+    # test_c <- filter(aca_dyw, (year == 2020) & (owner == "cooperative housing") & (apartments < 500)) %>%
     #     arrange(apartments)
     # as.data.frame(test_c)
     # 
