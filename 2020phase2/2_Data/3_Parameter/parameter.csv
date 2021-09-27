@@ -1,4 +1,4 @@
-category;parameter;parameter_old;value;unit;relevance;description;lower;center;upper
+﻿category;parameter;parameter_old;value;unit;relevance;description;lower;center;upper
 time;date_start;daten.beginn;1993;year;no parameter (strictly speaking);begin of data;1993;1993;1993
 time;date_end;daten.ende;2020;year;no parameter (strictly speaking);end of data;2020;2020;2020
 time;szen_begin;szen.beginn;2021;year;no parameter (strictly speaking);future: begin;2021;2021;2021
@@ -33,12 +33,15 @@ time;nat_base_begin;no parameter in previous model;2011;year;low;base period (no
 time;nat_base_end;no parameter in previous model;2020;year;low;base period (not the future) for naturalization, end;2020;2020;2020
 time;spa_base_begin;no parameter in previous model;2011;year;low;base period (not the future) for living space, begin;2011;2011;2011
 time;spa_base_end;no parameter in previous model;2020;year;low;base period (not the future) for living space, end;2020;2020;2020
-time;spa_base_begin_52p;no parameter in previous model;2015;year;low;"base period (not the future) for living space, begin, district 'Escher Wyss' (since empty apartments increased the mean living space values; before 2015)";2015;2015;2015
+time;spa_base_begin_52p;no parameter in previous model;2015;year;low;"base period (not the future) for living space, begin, district 'Escher Wyss' (district ID = 52; since empty apartments increased the mean living space values; before 2015)";2015;2015;2015
+time;aca_base_begin;no parameter in previous model;2011;year;low;base period (not the future) for allocation, begin;2011;2011;2011
+time;aca_base_end;no parameter in previous model;2020;year;low;base period (not the future) for allocation, end;2020;2020;2020
 age;age_min;no parameter in previous model;0;years (age);low;minimum age in the model ;0;0;0
 age;age_max;no parameter in previous model;120;years (age);low;maximum age in the model (should be clearly higher than maximum age in the population);120;120;120
 general;round_rate;no parameter in previous model;4;digits (rate in percent per year);no parameter;rounding of rates (digits, rate in percent per year);4;4;4
 general;round_prop;no parameter in previous model;4;digits (proportion in percent);no parameter;rounding of proportion (digits, proportion in percent);4;4;4
 general;round_area;no parameter in previous model;4;digits (area);no parameter;rounding of area (e.g. ha in the capacity and reserve module);4;4;4
+general;round_aca;no parameter in previous model;4;digits (area);no parameter;rounding of allocation (people per apartment);4;4;4
 birth;bir_age_begin;geb.alter.beginn;15;year;no parameter (strictly speaking);fertility rate: fertile age (fixed expression): begin;15;15;15
 birth;bir_age_end;geb.alter.ende;49;year;no parameter (strictly speaking);fertility rate: fertile age (fixed expression): end;49;49;49
 birth;bir_thres_origin;geb.anz.rate.heimat;100;persons;low;"age distribution of women: if there are less woman than this threshold in the tails (cumulative measure), then the rate based on origin (but not district) is used.
@@ -152,6 +155,10 @@ capacity and reserves;car_y;kareb.ina.jahr;2044;year;low;Reference year of the u
 capacity and reserves;car_lamda;kareb.ina.lambda;-0.04;per year;high;"lambda value of an exponential function exp(lambda * time since start of scenario); proportion of utilization per year";-0.04;-0.04;-0.04
 living space;spa_apart;wf.anzwohn;500;apartments;low;"Amount of apartments per district and owner; if less apartments, then the value of the entire city (by owner) is used";500;500;500
 living space;spa_prop_trend;wf.anteil.trend;20;percent;low;"living space: trend in addition to the mean; 20% means, 20% of the difference between trend and mean is added to the mean.";20;20;20
-living space;spa_thres_percent;wf.grenze.prozent;20;percent;low;"living space: It is not realistic that the proportion of age changes dramatically (i.e. tenfold increase). Therefore, this threshold regulates the range of potential proportions (change in percent of mean; e.g. +/- 20%).";20;20;20
+living space;spa_thres_percent;wf.grenze.prozent;20;percent;low;"living space: It is not realistic that the living space changes dramatically (i.e. tenfold increase). Therefore, this threshold regulates the range of potential changes (change in percent of mean; e.g. +/- 20%).";20;20;20
 living space;spa_window_thres;wf.window.szen;7;years;low;living space: filter over years (to smooth a potential break in the curve due to range of future proportions;7;7;7
-living space;spa_prop_trend_52p;wf.anteil.trend;0;percent;low;"living space in the Escher Wyss district: trend in addition to the mean; 20% means, 20% of the difference between trend and mean is added to the mean.";0;0;0
+living space;spa_prop_trend_52p;wf.anteil.trend;0;percent;low;"living space in the Escher Wyss district (district-ID = 52): trend in addition to the mean; 20% means, 20% of the difference between trend and mean is added to the mean.";0;0;0
+allocation;aca_apart;bq.anzwohn;500;apartments;low;"Amount of apartments per district and owner; if less apartments, then the value of the entire city (by owner) is used";500;500;500
+allocation;aca_prop_trend;bq.anteil.trend;20;percent;low;"allocation: trend in addition to the mean; 20% means, 20% of the difference between trend and mean is added to the mean.";20;20;20
+allocation;aca_thres_percent;bq.grenze.prozent;20;percent;low;"allocation: It is not realistic that the allocation values change dramatically (i.e. tenfold ncrease). Therefore, this threshold regulates the range of potential changes (change in percent of mean; e.g. +/- 20%).";20;20;20
+allocation;aca_window_thres;bq.window.szen;7;years;low;allocation: filter over years (to smooth a potential break in the curve due to range of future proportions;7;7;7
