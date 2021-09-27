@@ -36,6 +36,7 @@ time;spa_base_end;no parameter in previous model;2020;year;low;base period (not 
 time;spa_base_begin_52p;no parameter in previous model;2015;year;low;"base period (not the future) for living space, begin, district 'Escher Wyss' (district ID = 52; since empty apartments increased the mean living space values; before 2015)";2015;2015;2015
 time;aca_base_begin;no parameter in previous model;2011;year;low;base period (not the future) for allocation, begin;2011;2011;2011
 time;aca_base_end;no parameter in previous model;2020;year;low;base period (not the future) for allocation, end;2020;2020;2020
+time;aca_base_begin_52p;no parameter in previous model;2015;year;low;"base period (not the future) for allocation, begin, district 'Escher Wyss' (district ID = 52; since empty apartments decreased the mean allocation values; before 2015)";2015;2015;2015
 age;age_min;no parameter in previous model;0;years (age);low;minimum age in the model ;0;0;0
 age;age_max;no parameter in previous model;120;years (age);low;maximum age in the model (should be clearly higher than maximum age in the population);120;120;120
 general;round_rate;no parameter in previous model;4;digits (rate in percent per year);no parameter;rounding of rates (digits, rate in percent per year);4;4;4
@@ -157,8 +158,9 @@ living space;spa_apart;wf.anzwohn;500;apartments;low;"Amount of apartments per d
 living space;spa_prop_trend;wf.anteil.trend;20;percent;low;"living space: trend in addition to the mean; 20% means, 20% of the difference between trend and mean is added to the mean.";20;20;20
 living space;spa_thres_percent;wf.grenze.prozent;20;percent;low;"living space: It is not realistic that the living space changes dramatically (i.e. tenfold increase). Therefore, this threshold regulates the range of potential changes (change in percent of mean; e.g. +/- 20%).";20;20;20
 living space;spa_window_thres;wf.window.szen;7;years;low;living space: filter over years (to smooth a potential break in the curve due to range of future proportions;7;7;7
-living space;spa_prop_trend_52p;wf.anteil.trend;0;percent;low;"living space in the Escher Wyss district (district-ID = 52): trend in addition to the mean; 20% means, 20% of the difference between trend and mean is added to the mean.";0;0;0
+living space;spa_prop_trend_52p;no parameter in previous model;0;percent;low;"living space in the Escher Wyss district (district-ID = 52): trend in addition to the mean; 20% means, 20% of the difference between trend and mean is added to the mean.";0;0;0
 allocation;aca_apart;bq.anzwohn;500;apartments;low;"Amount of apartments per district and owner; if less apartments, then the value of the entire city (by owner) is used";500;500;500
 allocation;aca_prop_trend;bq.anteil.trend;20;percent;low;"allocation: trend in addition to the mean; 20% means, 20% of the difference between trend and mean is added to the mean.";20;20;20
 allocation;aca_thres_percent;bq.grenze.prozent;20;percent;low;"allocation: It is not realistic that the allocation values change dramatically (i.e. tenfold ncrease). Therefore, this threshold regulates the range of potential changes (change in percent of mean; e.g. +/- 20%).";20;20;20
 allocation;aca_window_thres;bq.window.szen;7;years;low;allocation: filter over years (to smooth a potential break in the curve due to range of future proportions;7;7;7
+allocation;aca_prop_trend_52p;no parameter in previous model;0;percent;low;"allocation in the Escher Wyss district (district-ID = 52): trend in addition to the mean; 20% means, 20% of the difference between trend and mean is added to the mean.";0;0;0
