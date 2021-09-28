@@ -92,8 +92,8 @@
             grid = c("cat", "owner"), gridscale = "free_y",
             labs_x = "year of data delivery", labs_y = "area (in ha)",
             scale_y = c(0, NA),
-            # name = "0801_entire-city_by-owner",
-            width = 8, height = 10)    
+            name = "0801_entire-city_by-owner",
+            width = 10, height = 8)    
     
 #-------------------------------------------------------------------
 #plot (by district, all owner categories)
@@ -104,27 +104,15 @@
             summarize(ha = sum(ha), .groups = "drop")
     
 #plot  
-    p802 <- function(x){
-        ggplot(data = filter(car_dyep, district == x), 
-            aes(x = year, y = ha, color = residence, linetype = plot)) + 
-        geom_line() +  
-        geom_point() +
-        facet_wrap(~cat, scales = "free", ncol = 2) +
-        scale_y_continuous(breaks = pretty_breaks()) +  
-        scale_colour_manual(values = col_e) +        
-        labs(x = "year of data delivery", y = "area (in ha)", 
-            color = "", linetype = "") + 
-        expand_limits(y = 0) +
-        ggtitle(as.character(x)) +        
-        neutral + theme(panel.spacing.x = unit(1, "lines"))}    
-      
-    pdf(paste0(car_res, "0802_districts.pdf"),
-        width = 10, height = 8)
-
-        lapply(uni_d, p802)
-
-    dev.off()   
-          
+    sszplot(car_dyep,
+            aes_x = "year", aes_y = "ha", aes_col = "residence", aes_ltyp = "plot",
+            geom = c("line", "point"),
+            wrap = "cat", gridscale = "free", ncol = 2,
+            labs_x = "year of data delivery", labs_y = "area (in ha)",
+            scale_y = c(0, NA),
+            name = "0802_districts",
+            width = 10, height = 8,
+            multi = uni_d)           
       
     
 #-------------------------------------------------------------------
@@ -133,31 +121,18 @@
        
 #aggregate (district, year, residence, plot, owner)
     car_dyepw <- group_by(car_dat, district, year, residence, plot, owner, cat) %>% 
-            summarize(ha = sum(ha)) %>% 
-        ungroup()
+            summarize(ha = sum(ha), .groups = "drop")
     
 #plot    
-    p803 <- function(x){
-        ggplot(data = filter(car_dyepw, district == x), 
-            aes(x = year, y = ha, color = residence, linetype = plot)) + 
-        geom_line() +  
-        geom_point() +
-        facet_grid(cat ~ owner, scales = "free_y") +
-        scale_y_continuous(breaks = pretty_breaks()) +  
-        scale_colour_manual(values = col_e) +        
-        labs(x = "year of data delivery", y = "area (in ha)", 
-            color = "", linetype = "") + 
-        expand_limits(y = 0) +          
-        ggtitle(as.character(x)) +        
-        neutral + theme(panel.spacing.x = unit(1, "lines"))}     
-    
-    pdf(paste0(car_res, "0803_districts_by-owner.pdf"),
-        width = 10, height = 8)
-
-        lapply(uni_d, p803)
-
-    dev.off()  
-    
+    sszplot(car_dyepw,
+            aes_x = "year", aes_y = "ha", aes_col = "residence", aes_ltyp = "plot",
+            geom = c("line", "point"),
+            grid = c("cat", "owner"), gridscale = "free_y",
+            labs_x = "year of data delivery", labs_y = "area (in ha)",
+            scale_y = c(0, NA),
+            name = "0803_districts_by-owner",
+            width = 10, height = 8,
+            multi = uni_d)
     
 #-------------------------------------------------------------------
 #combine information (with the parameters)
@@ -212,7 +187,15 @@
         neutral
       
     ggsave(paste0(car_res, "0804_reserves_by-district.pdf"), 
-        plot = p804, width = 8, height = 7)       
+        plot = p804, width = 8, height = 7)
+    
+    sszplot(usage_prop,
+            aes_x = "district", aes_y = "reserve_new", aes_fill = "owner",
+            geom = "col",
+            labs_y = "reserves (in ha)", labs_x = "",
+            scale_x = rev(uni_d),
+            name = "0804_reserves_by-district",
+            width = 8, height = 7)
     
 
 #plot: usage (proportion)
