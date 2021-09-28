@@ -33,7 +33,7 @@
 #          is ignored (and therefore unnecessary) if aes_size is set
 # grid: if set, creates a facet grid with grid[1] on LHS
 #       and grid[2] on RHs of formula
-# gridscale: use to define the scale attribute in facet_grid
+# gridscale: use to define the scale attribute in facet_grid/facet_wrap
 # wrap: if set, creates a facet wrap with this value on RHs of formula
 # ncol: argument cols for facet_grid, ncol for facet_wrap
 # title: title for the whole chart, as object or string
@@ -232,6 +232,7 @@ sszplot <- function(data,
         }
       }
     }
+    
     # add aesthetics except if geom is "": then it is expected that the aesthetic
     # are handed to the function in a quoted geom statement,
     # i.e. quotes = quote(geom_line(x = ...)).
@@ -317,14 +318,16 @@ sszplot <- function(data,
         if (identical(scale_y, "log"))
           res <- res + scale_y_continuous(trans = "log10")
         else
-          res <- res + scale_y_continuous(limits = scale_y,
-                                          breaks = if (!is.null(breaks))
-                                                      breaks
-                                                   else
-                                                      pretty_breaks())
+          res <- res + scale_y_continuous(breaks = ifelse(!is.null(breaks),
+                                                          breaks,
+                                                          pretty_breaks()))
+        # if scale_y contains a numeric vector we expect an expand_limits request
+        # (limits inside scale_... functions lead to out of bounds values and
+        # cause missing values and warnings/errors)
+        if (length(scale_y) == 2 && is.numeric(scale_y))
+          res <- res + expand_limits(y = scale_y)
     }
-
-
+    
     # add colour scale with fix_col if aes_col is set
     # (if colour is no grouping variable, fix_col is already applied in the geom statement)
     if (!is.null(aes_col))
@@ -341,11 +344,9 @@ sszplot <- function(data,
     # add facet grid or wrap if either grid or wrap is set
     if (!is.null(grid)) {
       # labeller for columnns should be 'label_both', but not if category is year/district/sex/region
-      if (grid[2] %in% colnames(data) &&
-          !grid[2] %in% c("year", "district", "sex", "region", "origin"))
+      if (grid[2] %in% colnames(data) && !grid[2] %in% c("year", "district", "sex", "region", "origin"))
         gridlab <- str2lang(paste0("labeller(", grid[2], " = label_both)"))
-      else if (grid[1] %in% colnames(data) &&
-               !grid[1] %in% c("year", "district", "sex", "region", "origin"))
+      else if (grid[1] %in% colnames(data) && !grid[1] %in% c("year", "district", "sex", "region", "origin"))
         gridlab <- str2lang(paste0("labeller(", grid[1], " = label_both)"))
       else
         gridlab <- "label_value"
@@ -371,10 +372,10 @@ sszplot <- function(data,
                    labeller = eval(gridlab))
     }
 
-    # change text angle
+    # change text angle -> this should be done in separate theme definition
     if (!is.null(angle))
       res <- res +
-      theme(axis.text.x = element_text(angle = angle, vjust = 0.5, hjust = 1))
+        theme(axis.text.x = element_text(angle = angle, vjust = 0.5, hjust = 1))
 
     # add quoted arguments. The argument may contain a single quote or
     # a list of quotes. They must be handled separately
@@ -452,7 +453,7 @@ sszplot <- function(data,
               quotes = quotes,
               quotes_top = quotes_top,
               angle = angle)
-    }
+      }
     )
     if (!is.null(name))
       dev.off()
