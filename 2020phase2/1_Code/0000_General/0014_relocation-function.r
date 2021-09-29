@@ -43,8 +43,8 @@
                         district = factor(distr, uni_d)) %>%
                     select(district, year, age, sex, origin, mig) %>%
                     group_by(district, year, age, sex, origin) %>%
-                        summarize(mig = sum(mig)) %>%
-                    ungroup()
+                        summarize(mig = sum(mig),
+                                  .groups = "drop")
                 
             #relocation
                 #only migration to a certain district
@@ -58,15 +58,15 @@
                         district = factor(distr, uni_d)) %>%
                     select(district, year, age, sex, origin, rel) %>%
                     group_by(district, year, age, sex, origin) %>%
-                        summarize(rel = sum(rel)) %>%
-                    ungroup()
+                        summarize(rel = sum(rel),
+                                  .groups = "drop")
                 
             #migration* (i.e. migration to a certain district, 'migration star' = mis)
                 mis <- bind_rows(rename(mig, mis = mig),
                     rename(rel, mis = rel)) %>%
                     group_by(district, year, age, sex, origin) %>%
-                        summarize(mis = sum(mis)) %>%
-                    ungroup()                
+                        summarize(mis = sum(mis),
+                                  .groups = "drop")
                                       
             #migration* (immigration* or emigration*) and relocation (based on all possible cases)
                 mis_rel <- as_tibble(expand_grid(
@@ -90,11 +90,10 @@
             
             #proportion by daso
                 rel_prop_daso <- group_by(mis_rel, district, age, sex, origin) %>%
-                        summarize(mis = sum(mis),
-                            rel = sum(rel)) %>%
-                    ungroup() %>%
-                    mutate(rel_prop_daso = if_else(mis == 0, NA_real_, round(rel / mis * 100, round_prop)))
-            
+                   summarize(mis = sum(mis),
+                            rel = sum(rel),
+                            .groups = "drop") %>%
+                   mutate(rel_prop_daso = if_else(mis == 0, NA_real_, round(rel / mis * 100, round_prop)))
             
             #plot: focus sex
                 sszplot(rel_prop_daso,
@@ -115,10 +114,10 @@
             
             #proportion by dao
                 rel_prop_dao <- group_by(mis_rel, district, age, origin) %>%
-                        summarize(mis = sum(mis),
-                            rel = sum(rel)) %>%
-                    ungroup() %>%
-                    mutate(rel_prop_dao = if_else(mis == 0, NA_real_, round(rel / mis * 100, round_prop)))
+                   summarize(mis = sum(mis),
+                            rel = sum(rel),
+                            .groups = "drop") %>%
+                   mutate(rel_prop_dao = if_else(mis == 0, NA_real_, round(rel / mis * 100, round_prop)))
             
             #plot
                 sszplot(rel_prop_dao,
@@ -137,13 +136,12 @@
                 #WHY? simplest plot to determine the base years
             
                 #proportion by yo
-                    rel_prop_yo <- group_by(mis_rel, year, origin) %>%
-                            summarize(mis = sum(mis),
-                                rel = sum(rel)) %>%
-                        ungroup() %>%
-                        mutate(rel_prop_yo = if_else(mis == 0, NA_real_, round(rel / mis * 100, round_prop)))
-            
-            
+                rel_prop_yo <- group_by(mis_rel, year, origin) %>%
+                   summarize(mis = sum(mis),
+                             rel = sum(rel),
+                             .groups = "drop") %>%
+                   mutate(rel_prop_yo = if_else(mis == 0, NA_real_, round(rel / mis * 100, round_prop)))
+
                 #plot
                     sszplot(rel_prop_yo,
                             aes_x = "year", aes_y = "rel_prop_yo", aes_col = "origin",
@@ -156,12 +154,12 @@
             
                 #proportion by yao
                     rel_prop_yao <- group_by(mis_rel, year, age, origin) %>%
-                            summarize(mis = sum(mis),
-                                rel = sum(rel)) %>%
-                        ungroup() %>%
-                        rename(age_num = age) %>%
-                        mutate(rel_prop_yao = if_else(mis == 0, NA_real_, round(rel / mis * 100, round_prop)),
-                            age = as.factor(age_num))
+                       summarize(mis = sum(mis),
+                                 rel = sum(rel),
+                                 .groups = "drop") %>%
+                       rename(age_num = age) %>%
+                       mutate(rel_prop_yao = if_else(mis == 0, NA_real_, round(rel / mis * 100, round_prop)),
+                              age = as.factor(age_num))
             
                 #age (subjectively selected)
                     age_plot <- seq(0, 80, by = 10)
@@ -181,10 +179,10 @@
           #This plot is the starting point (before smoothing, age corrections)
           
           #aggregate over sex
-              rem_dyao <- group_by(mis_rel, district, year, age, origin) %>%
-                      summarize(mis = sum(mis),
-                          rel = sum(rel)) %>%
-                  ungroup()
+               rem_dyao <- group_by(mis_rel, district, year, age, origin) %>%
+                 summarize(mis = sum(mis),
+                           rel = sum(rel),
+                           .groups = "drop")
           
           #plot preparation
               process_lev <- c("relocation", paste0(mig_name, "*"))
@@ -234,13 +232,13 @@
             #and can be explaned (e.g. the mean amount of relocations from people as of age x)
             
             #aggregate
-                dyao_amax_ybase <- filter(rem_dyao, (year >= rem_base_begin) & (year <= rem_base_end)) %>%
-                    mutate(age_new = pmin(rem_age_max, age)) %>%
-                    group_by(district, year, age_new, origin) %>%
-                        summarize(mis = mean(mis),
-                            rel = mean(rel)) %>%
-                    ungroup() %>%
-                    rename(age = age_new)
+              dyao_amax_ybase <- filter(rem_dyao, (year >= rem_base_begin) & (year <= rem_base_end)) %>%
+                 mutate(age_new = pmin(rem_age_max, age)) %>%
+                 group_by(district, year, age_new, origin) %>%
+                 summarize(mis = mean(mis),
+                           rel = mean(rel),
+                           .groups = "drop") %>%
+                 rename(age = age_new)
             
 
             #-------------------------------------------------------------------
@@ -345,17 +343,23 @@
           #-------------------------------------------------------------------
           
           #aggregate
-              dao <- group_by(dyao_amax_ybase, district, age, origin) %>% 
-                      summarize(mis = mean(mis),
-                          rel = mean(rel)) %>% 
-                  ungroup()
+               dao <- group_by(dyao_amax_ybase, district, age, origin) %>%
+                  summarize(mis = mean(mis),
+                            rel = mean(rel),
+                            .groups = "drop")
           
           #smoothing (direction: age)
               dao_smooth <- group_by(dao, district, origin) %>%
-                      arrange(age) %>%
-                      mutate(mis_a = pmax(0, predict(loess(mis ~ age, span = rem_mis_span_dao, degree = 1, na.action = na.aggregate))),
-                          rel_a = pmax(0, predict(loess(rel ~ age, span = rem_rel_span_dao, degree = 1, na.action = na.aggregate)))) %>%
-                  ungroup()
+                 arrange(age) %>%
+                 mutate(mis_a = pmax(0, predict(loess(mis ~ age,
+                                                           span = rem_mis_span_dao,
+                                                           degree = 1,
+                                                           na.action = na.aggregate))),
+                        rel_a = pmax(0, predict(loess(rel ~ age,
+                                                        span = rem_rel_span_dao, 
+                                                        degree = 1,
+                                                        na.action = na.aggregate)))) %>%
+                 ungroup()
           
           #plot preparation
               temp_initial <- gather(dao_smooth, `rel`, `mis`, key = category, value = count) %>%
