@@ -158,6 +158,10 @@ uni_w <- factor(text_w, levels = text_w)
 # project status
 uni_t <- factor(pro_category, levels = pro_category)
 
+# indicator (new or removed apartments)
+text_i <- c("new", "removed")
+uni_i <- factor(text_i, levels = text_i)
+
 
 #-------------------------------------------------------------------
 # categories (t = text) and associated lookup tables
@@ -227,6 +231,11 @@ col_e <- col_6[c(4, 3, 2)]
 # color for project status
 col_t <- col_6
 # plot(1:6, 1:6, col = col_t, pch = 16, cex = 3)
+
+# color for indicator (new or removed projects)
+col_i <- col_6[c(1, 6)]
+# plot(1:2, 1:2, col = col_i, pch = 16, cex = 3)
+
 
 # color for year (base period)
 col_y_base <- colorRampPalette(col_6)(length(uniy_bir_base))
