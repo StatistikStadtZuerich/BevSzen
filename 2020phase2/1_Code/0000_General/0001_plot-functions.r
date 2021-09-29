@@ -146,9 +146,9 @@ sszplot <- function(data,
     # with given index fix_col (default 1)
 
     col_palette <- col_6[c(1, 3, 4, 5, 6, 2)]
-    def_col <- ifelse(is.null(aes_fill),
-                      aes_col,
-                      aes_fill)
+    def_col <- if (!is.null(aes_col)) aes_col
+                else if (!is.null(aes_fill)) aes_fill
+                else NULL
 
     if (is.null(def_col))
       ifelse(fix_col > length(col_palette),
