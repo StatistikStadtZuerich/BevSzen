@@ -50,10 +50,13 @@ run_pops <- function(modules = c("all")) {
     source(paste0(code, "0700_Naturalization/0700_naturalization", term))
   
   if (modules %in% c("all", "live", "capacity")) {}
-    # source(paste0(code, "0800_Capacity-Reserves/0800_capacity-reserves", term))
+    source(paste0(code, "0800_Capacity-Reserves/0800_capacity-reserves", term))
     
   if (modules %in% c("all", "live", "living"))  {}
     # source(paste0(code, "0900_Living-Space/0900_Living-Space", term))
+
+  if (modules %in% c("all", "live", "alloc"))  {}
+    # source(paste0(code, "1000_Allocation/1000_allocation", term))
 }
 
 system.time(run_pops())
