@@ -61,8 +61,10 @@ if (!exists("para")) {
     #however, a simple model is used: mean only
     
 #mean
-    pred_mean <- filter(pro_male, (year >= bir_sex_ratio_begin) & (year <= bir_sex_ratio_end)) %>%
-        summarize(pred_mean = mean(pro_male))
+    pred_mean <- pro_male %>% 
+        filter(year >= bir_sex_ratio_begin & year <= bir_sex_ratio_end) %>%
+        summarize(pred_mean = mean(pro_male),
+                  .groups = "drop")
     
 #plot with mean
     sszplot(pro_male,
