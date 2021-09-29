@@ -112,7 +112,8 @@ look_car <- tibble(initial = car_initial, category = car_category)
 # project status
 pro_initial <- c("projektiert", "eingereicht", "bewilligt", "Bau begonnen", "fertiggestellt", "sistiert")
 pro_category <- c("scheduled", "submitted", "approved", "construction started", "completed", "on hold")
-look_pro <- tibble(code = as.double(1:6), initial = pro_initial, category = pro_category)
+look_pro <- tibble(code = as.double(1:6), initial = pro_initial, category = pro_category) %>% 
+    mutate(status = factor(category, levels = pro_category))
 
 
 
