@@ -99,7 +99,7 @@ if (!exists("para")) {
       group_by(year, age_2, origin) %>%
       summarize(change = sum(change),
                 total = sum(total),
-      .groups = "drop") %>%
+                .groups = "drop") %>%
       mutate(cha_ya2o = if_else(total == 0, NA_real_, round(change / total * 100, round_rate))) %>%
       rename(age = age_2)
     

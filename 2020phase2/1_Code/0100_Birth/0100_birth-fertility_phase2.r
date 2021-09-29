@@ -132,9 +132,10 @@ if (!exists("para")) {
     tfr_ya1 <- left_join(fer_ya, look_a1, by = "age") %>%
       group_by(year, age_1) %>%
       summarize(tfr_ya1 = sum_NA(fer_ya / 100),
-                .groups = "drop")
+                .groups = "drop") %>%
+      rename(age = age_1)
     
-    sszplot(tfr_ya1, aes_x = "year", aes_y = "tfr_ya1", aes_col = "age_1",
+    sszplot(tfr_ya1, aes_x = "year", aes_y = "tfr_ya1", aes_col = "age",
             i_x = "5", labs_y = "TFR",
             geom = c("line", "point"),
             name = "0102_TFR_by-year-age1")  
@@ -144,9 +145,10 @@ if (!exists("para")) {
     tfr_ya2 <- left_join(fer_ya, look_a2, by = "age") %>%
       group_by(year, age_2) %>%
       summarize(tfr_ya2 = sum_NA(fer_ya / 100),
-                .groups = "drop")
+                .groups = "drop") %>%
+      rename(age = age_2)
     
-    sszplot(tfr_ya2, aes_x = "year", aes_y = "tfr_ya2", aes_col = "age_2",
+    sszplot(tfr_ya2, aes_x = "year", aes_y = "tfr_ya2", aes_col = "age",
             i_x = "5", labs_y = "TFR",
             geom = c("line", "point"),
             name = "0103_TFR_by-year-age2")      
@@ -156,10 +158,11 @@ if (!exists("para")) {
     tfr_ya1o <- left_join(fer_yao, look_a1, by = "age") %>%
       group_by(year, age_1, origin) %>%
       summarize(tfr_ya1o = sum_NA(fer_yao / 100),
-                .groups = "drop")
+                .groups = "drop") %>%
+      rename(age = age_1)
     
     sszplot(tfr_ya1o, aes_x = "year", aes_y = "tfr_ya1o", aes_col = "origin",
-            grid = c("age_1", "."), labs_y = "TFR", i_x = "5",
+            grid = c("age", "."), labs_y = "TFR", i_x = "5",
             geom = c("line", "point"),
             name = "0104_TFR_by-year-age1-origin",
             width = 12) 
@@ -168,10 +171,11 @@ if (!exists("para")) {
     tfr_ya2o <- left_join(fer_yao, look_a2, by = "age") %>%
       group_by(year, age_2, origin) %>%
       summarize(tfr_ya2o = sum_NA(fer_yao / 100),
-                .groups = "drop")
+                .groups = "drop") %>%
+      rename(age = age_2)
         
     sszplot(tfr_ya2o, aes_x = "year", aes_y = "tfr_ya2o", aes_col = "origin",
-            wrap = "age_2", ncol = nlevels(tfr_ya2o$age_2),
+            wrap = "age", ncol = nlevels(tfr_ya2o$age),
             labs_y = "TFR", i_x = "5",
             geom = c("line", "point"),
             name = "0105_TFR-by-year-age2",
@@ -443,13 +447,14 @@ if (!exists("para")) {
 #TFR by age class
     tfr_a1 <- bind_rows(fer_ex_past, fer_ex) %>% 
         left_join(look_a1, by = "age") %>%      
-        group_by(district, year, origin, age_1) %>% 
-            summarize(tfr = sum_NA(fer / 100), 
-        .groups = "drop")
+        group_by(district, year, origin, age_1) %>%
+        summarize(tfr = sum_NA(fer / 100), 
+            .groups = "drop") %>%
+        rename(age = age_1)
     
 #plot
     sszplot(tfr_a1,
-            aes_x = "year", aes_y = "tfr", aes_col = "age_1",
+            aes_x = "year", aes_y = "tfr", aes_col = "age",
             i_x = c(bir_base_begin, szen_begin),
             labs_col = "age",
             wrap = "district", ncol = 4,
@@ -466,11 +471,12 @@ if (!exists("para")) {
         left_join(look_a2, by = "age") %>%        
         group_by(district, year, origin, age_2) %>% 
             summarize(tfr = sum_NA(fer / 100), 
-        .groups = "drop")
+                      .groups = "drop") %>%
+            rename(age = age_2)
     
 #plot
     sszplot(tfr_a2,
-            aes_x = "year", aes_y = "tfr", aes_col = "age_2",
+            aes_x = "year", aes_y = "tfr", aes_col = "age",
             i_x = c(bir_base_begin, szen_begin),
             labs_col = "age",
             wrap = "district", ncol = 4,

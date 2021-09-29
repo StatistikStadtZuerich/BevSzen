@@ -36,8 +36,8 @@
                     district = factor(distr, uni_d)) %>% 
                 select(district, year, age, sex, origin, mig) %>%
                 group_by(district, year, age, sex, origin) %>%
-                summarize(mig = sum(mig)) %>%
-                ungroup()
+                summarize(mig = sum(mig),
+                          .groups = "drop")
 
         #relocation
             #only migration to a certain district
@@ -51,15 +51,15 @@
                        district = factor(distr, uni_d)) %>%
                 select(district, year, age, sex, origin, rel) %>%
                 group_by(district, year, age, sex, origin) %>%
-                summarize(rel = sum(rel)) %>%
-                ungroup()
+                summarize(rel = sum(rel),
+                          .groups = "drop")
             
         #migration* (i.e. migration to a certain district, 'migration star' = mis)
             mis <- bind_rows(rename(mig, mis = mig),
                 rename(rel, mis = rel)) %>%
                 group_by(district, year, age, sex, origin) %>%
-                summarize(mis = sum(mis)) %>%
-                ungroup()
+                summarize(mis = sum(mis),
+                          .groups = "drop")
 
         #population
             #year: begin of year population
@@ -73,9 +73,8 @@
                      district = factor(distr, uni_d)) %>%
               select(district, year, age, sex, origin, pop) %>%
               group_by(district, year, age, sex, origin) %>%
-              summarize(pop = sum(pop)) %>%
-              ungroup()
-
+              summarize(pop = sum(pop),
+                        .groups = "drop")
 
         #-------------------------------------------------------------------
         #migration* rate (per district and year)
@@ -83,12 +82,12 @@
 
         #mis and pop: aggregate
             mis_dy <- group_by(mis, district, year) %>%
-              summarize(mis = sum(mis)) %>%
-              ungroup()
+              summarize(mis = sum(mis),
+                        .groups = "drop")
 
             pop_dy <- group_by(pop, district, year) %>%
-              summarize(pop = sum(pop)) %>%
-              ungroup()
+              summarize(pop = sum(pop),
+                        .groups = "drop")
 
         #migration* rate (based on all possible cases)
             mis_rate_dy <- as_tibble(expand_grid(district = uni_d,
@@ -209,8 +208,8 @@
                     district = factor(distr, uni_d)) %>%
                 select(district, year, age, sex, origin, mig) %>%
                 group_by(district, year, age, sex, origin) %>%
-                summarize(mig = sum(mig)) %>%
-                ungroup()
+                summarize(mig = sum(mig),
+                          .groups = "drop")
 
         #relocation
             #only migration to a certain district
@@ -224,16 +223,16 @@
                     district = factor(distr, uni_d)) %>%
                 select(district, year, age, sex, origin, rel) %>%
                 group_by(district, year, age, sex, origin) %>%
-                    summarize(rel = sum(rel)) %>%
-                ungroup()
+                    summarize(rel = sum(rel),
+                              .groups = "drop")
 
 
         #migration* (i.e. migration to a certain district, 'migration star' = mis)
             mis <- bind_rows(rename(mig, mis = mig),
                 rename(rel, mis = rel)) %>%
                 group_by(district, year, age, sex, origin) %>%
-                    summarize(mis = sum(mis)) %>%
-                ungroup()
+                    summarize(mis = sum(mis),
+                              .groups = "drop")
 
         #-------------------------------------------------------------------
         #migration: distribution of sex and origin
@@ -241,8 +240,8 @@
 
         #ims and pop: aggregate
               mis_dy <- group_by(mis, district, year) %>%
-                      summarize(mis = sum(mis)) %>%
-                  ungroup()
+                      summarize(mis = sum(mis),
+                                .groups = "drop")
 
         #possible cases
             cas_dyso <- as_tibble(expand_grid(
@@ -255,8 +254,8 @@
             #comment: a proportion not a rate
 
             mis_dyso <- group_by(mis, district, year, sex, origin) %>%
-                    summarize(mis_dyso = sum(mis)) %>%
-                ungroup() %>%
+                    summarize(mis_dyso = sum(mis),
+                              .groups = "drop") %>%
                 left_join(rename(mis_dy, mis_dy = mis),
                     by = c("district", "year")) %>%
                 right_join(cas_dyso, by = c("district", "year", "sex", "origin")) %>%
@@ -300,8 +299,8 @@
 
         #standardize proportions per district/year to 100 percent
             mis_so_pred_stand <- group_by(mis_so_pred, district, year) %>%
-                    summarize(pred_roll_sum = sum_NA(pred_roll)) %>%
-                ungroup() %>%
+                    summarize(pred_roll_sum = sum_NA(pred_roll),
+                              .groups = "drop") %>%
                 right_join(mis_so_pred, by = c("district", "year")) %>%
                 mutate(pred_roll_stand = if_else(pred_roll_sum == 0, NA_real_, round(pred_roll / pred_roll_sum * 100, round_prop)))
 
@@ -372,8 +371,8 @@
                     district = factor(distr, uni_d)) %>%
                 select(district, year, age, sex, origin, mig) %>%
                 group_by(district, year, age, sex, origin) %>%
-                    summarize(mig = sum(mig)) %>%
-                ungroup()
+                    summarize(mig = sum(mig),
+                              .groups = "drop")
 
         #relocation
             #only migration to a certain district
@@ -387,17 +386,15 @@
                     district = factor(distr, uni_d)) %>%
                 select(district, year, age, sex, origin, rel) %>%
                 group_by(district, year, age, sex, origin) %>%
-                    summarize(rel = sum(rel)) %>%
-                ungroup()
-
+                    summarize(rel = sum(rel),
+                              .groups = "drop")
 
         #migration* (i.e. migration to a certain district, 'migration star' = mis)
             mis <- bind_rows(rename(mig, mis = mig),
                 rename(rel, mis = rel)) %>%
                 group_by(district, year, age, sex, origin) %>%
-                    summarize(mis = sum(mis)) %>%
-                ungroup()
-
+                    summarize(mis = sum(mis),
+                              .groups = "drop")
 
         #-------------------------------------------------------------------
         #immigration*: per district, year, sex, origin
@@ -414,8 +411,8 @@
 
         #migration*: dyso
             mis_dyso <- group_by(mis, district, year, sex, origin) %>%
-                    summarize(mis_dyso = sum(mis)) %>%
-                ungroup() %>%
+                    summarize(mis_dyso = sum(mis),
+                              .groups = "drop") %>%
                 right_join(cas_dyso, by = c("district", "year", "sex", "origin")) %>%
                 replace_na(list(mis_dyso = 0))
 
@@ -546,8 +543,8 @@
 
         #age proportion
             mis_age_prop_ma <- group_by(mis_ma_prep, district, year, sex, origin) %>%
-                        summarize(mis_dyso = sum(mis_dyaso)) %>%
-                    ungroup() %>%
+                        summarize(mis_dyso = sum(mis_dyaso),
+                                  .groups = "drop") %>%
                 right_join(mis_ma_prep, by = c("district", "year", "sex", "origin")) %>%
                 mutate(prop_a_ma = if_else(mis_dyso == 0, NA_real_, round(mis_dyaso / mis_dyso * 100, round_prop))) %>%
                 select(district, year, age, sex, origin, prop_a_ma) %>%
@@ -650,8 +647,8 @@
 
         #standardize the sum of the proportions to 100 percent
             prop_stand <- group_by(prop_pred_begin, district, year, sex, origin) %>%
-                    summarize(pred_roll_sum = sum_NA(pred_roll)) %>%
-                ungroup() %>%
+                    summarize(pred_roll_sum = sum_NA(pred_roll),
+                              .groups = "drop") %>%
                 right_join(prop_pred_begin, by = c("district", "year", "sex", "origin")) %>%
                 mutate(pred_roll_stand = if_else(pred_roll_sum == 0, NA_real_, round(pred_roll / pred_roll_sum * 100, round_prop)))
 
