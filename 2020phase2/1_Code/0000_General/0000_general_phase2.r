@@ -109,6 +109,11 @@ car_initial <- c("Kapazitaet", "Bestand", "Reserve", "Inanspruchnahme")
 car_category <- c("capacity", "buildings", "reserve", "usage")
 look_car <- tibble(initial = car_initial, category = car_category)
 
+# project status
+pro_initial <- c("projektiert", "eingereicht", "bewilligt", "Bau begonnen", "fertiggestellt", "sistiert")
+pro_category <- c("scheduled", "submitted", "approved", "construction started", "completed", "on hold")
+look_pro <- tibble(code = as.double(1:6), initial = pro_initial, category = pro_category)
+
 
 
 #-------------------------------------------------------------------
@@ -149,8 +154,8 @@ uni_p <- factor(text_p, levels = text_p)
 text_w <- c("cooperative housing", "private housing")
 uni_w <- factor(text_w, levels = text_w)
 
-
-
+# project status
+uni_t <- factor(pro_category, levels = pro_category)
 
 
 #-------------------------------------------------------------------
@@ -217,6 +222,10 @@ col_w <- col_6[c(2, 5)]
 # color for residence portion
 col_e <- col_6[c(4, 3, 2)]
 # plot(1:3, 1:3, col = col_e, pch = 16, cex = 3)
+
+# color for project status
+col_t <- col_6
+# plot(1:6, 1:6, col = col_t, pch = 16, cex = 3)
 
 # color for year (base period)
 col_y_base <- colorRampPalette(col_6)(length(uniy_bir_base))
