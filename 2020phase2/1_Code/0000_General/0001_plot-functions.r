@@ -377,12 +377,15 @@ sszplot <- function(data,
 
 # Facets --------------------------------------------------------------------------------------
 
+    # define which predictors should be excluced from label_both labeller
+    ex_both <- c("year", "district", "sex", "region", "origin", "cat")
+
     # add facet grid or wrap if either grid or wrap is set
     if (!is.null(grid)) {
-      # labeller for columnns should be 'label_both', but not if category is year/district/sex/region
-      if (grid[2] %in% colnames(data) && !grid[2] %in% c("year", "district", "sex", "region", "origin"))
+      # labeller for columnns should be 'label_both', except the ones in ex_both
+      if (grid[2] %in% colnames(data) && !grid[2] %in% ex_both)
         gridlab <- str2lang(paste0("labeller(", grid[2], " = label_both)"))
-      else if (grid[1] %in% colnames(data) && !grid[1] %in% c("year", "district", "sex", "region", "origin"))
+      else if (grid[1] %in% colnames(data) && !grid[1] %in% ex_both)
         gridlab <- str2lang(paste0("labeller(", grid[1], " = label_both)"))
       else
         gridlab <- "label_value"
@@ -394,9 +397,8 @@ sszplot <- function(data,
                    labeller = eval(gridlab))
 
     } else if (!is.null(wrap)) {
-      # labeller for columnns should be 'label_both', but not if category is year/district/sex/region
-      if (wrap %in% colnames(data) &&
-          !wrap %in% c("year", "district", "sex", "region"))
+      # labeller for columnns should be 'label_both', except the ones in ex_both
+      if (wrap %in% colnames(data) && !wrap %in% ex_both)
         gridlab <- str2lang(paste0("labeller(", wrap, " = label_both)"))
       else
         gridlab <- "label_value"
