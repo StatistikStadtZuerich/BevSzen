@@ -7,17 +7,19 @@
 #-------------------------------------------------------------------
 
 
-if (!exists("para")) {
+
   #-------------------------------------------------------------------
   #paths, general
   #-------------------------------------------------------------------
+  #this is only a temporary solution. No hardcoded values in production
+if (!exists("para")) {
   
   #working directory
   library(here)
   setwd(paste0(here(), "/2020phase2/"))
   
   #general (e.g. packages, colors)
-  source(paste0(code_path, "/0000_General/0000_general_phase2.r"))
+  source("1_Code/0000_General/0000_general_phase2.r")
 }
     
 #birth: export path (for future fertility rates)
