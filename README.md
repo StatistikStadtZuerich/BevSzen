@@ -1,6 +1,4 @@
 # BevSzen
 population scenarios for the city of Zurich
 
-This code is used to generate various population development scenarios for the city of Zurich, Switzerland. The underlying models are based on official population and residential statistics as well as capacity and construction reserve calculations.
-
-Author: Statistik Stadt Zürich
+This was ther original Repo for the initial development phase. Repo was transferred to StatistikStadtZuerich on 1st October 2021 and is not active anymore under this account.
