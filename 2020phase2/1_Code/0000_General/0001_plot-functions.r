@@ -190,6 +190,9 @@ sszplot <- function(data,
         if (identical(def_col, "residence"))
           fix_col <- col_e
       else
+        if (identical(def_col, "indicator"))
+            fix_col <- col_i      
+      else
         fix_col <- col_palette[1:count(unique(data[def_col]))$n]
 
       # if aes_col/aes_fill is a continuous variable, it has to be converted to a factor (discrete scale)
@@ -225,7 +228,10 @@ sszplot <- function(data,
     }
 
 # aesthetics ----------------------------------------------------------------------------------
-   
+    # for column plots, x values should be discrete (factors)
+    if ( ("col" %in% geom) && is.numeric(eval(str2lang(paste0("data$", aes_x)))))
+      aes_x = paste0("as.factor(", aes_x, ")")
+      
      # Need to use aes_string to build it up and then make the class "uneval"
     aest <- aes_string(x = aes_x, y = aes_y)
     if (!is.null(aes_col))
@@ -295,9 +301,9 @@ sszplot <- function(data,
         geomfix <- paste0(geomfix, ", position = 'dodge'")
       res <- res + eval(str2expression(paste0("geom_col(", geomfix, ")")))
       
-      if (length(unique(data[[aes_x]])) > 9)
+      if (length(unique(data[[aes_x]])) > 15)
         res <- res + coord_flip()
-    }
+      }
 
 # Labels --------------------------------------------------------------------------------------
     
@@ -337,9 +343,9 @@ sszplot <- function(data,
       else if (is.factor(data[[aes_x]])) {
         res <- res + 
           scale_x_discrete(limits = if (!is.null(scale_x))
-                                        limits = scale_x
+                                      scale_x
                                     else
-                                        NULL)
+                                      NULL)
       }
     }
     
