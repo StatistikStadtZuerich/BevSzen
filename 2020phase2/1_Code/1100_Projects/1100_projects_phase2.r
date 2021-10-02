@@ -10,30 +10,27 @@
 #-------------------------------------------------------------------
 #paths, general
 #-------------------------------------------------------------------
-
+if (!exists("para")) {
 #working directory
     library(here)
     setwd(paste0(here(), "/2020phase2/"))
 
 #general (e.g. packages, colors)
     source("1_Code/0000_General/0000_general_phase2.r")
-
+}
 #result path (for images)
     pro_res <- "3_Results/1100_Projects/"
     
 #export path (for future rates)
-    pro_exp <- "2_Data/4_Rates/" 
+    pro_exp <- exp_path
     
-
+    #temporary path (since data not on open data yet)    
+    pro_path <- "2_Data/1_Input/BEV347OD3470.csv"
 
 #-------------------------------------------------------------------
 #import, data preparation
 #-------------------------------------------------------------------
   
-#temporary path (since data not on open data yet)    
-    pro_path <- "2_Data/1_Input/BEV347OD3470.csv"
-        
-    
 #indicator 
     
     
@@ -51,17 +48,14 @@
         select(district, year, owner, status, indicator, apartments)  
     
 #with all possible cases
-    pro_all <- as_tibble(expand_grid(
-            district = uni_d, 
-            year = min(pro_dat$year):max(pro_dat$year),
-            owner = uni_w,
-            status = uni_t,
-            indicator = uni_i)) %>% 
-        left_join(pro_dat, by = c("district", "year", "owner", "status", "indicator")) %>% 
-        replace_na(list(apartments = 0))    
- 
-      
-      
+    pro_all <- as_tibble(expand_grid(district = uni_d,
+                                     year = min(pro_dat$year):max(pro_dat$year),
+                                     owner = uni_w,
+                                     status = uni_t,
+                                     indicator = uni_i)) %>%
+      left_join(pro_dat,
+                by = c("district", "year", "owner", "status", "indicator")) %>%
+      replace_na(list(apartments = 0))
       
 #-------------------------------------------------------------------
 #indicators (new/removed apartments) by year
@@ -69,22 +63,16 @@
       
 #by year
     pro_y <- group_by(pro_all, year, indicator) %>% 
-            summarize(apartments = sum_NA(apartments)) %>% 
-        ungroup()
+            summarize(apartments = sum_NA(apartments),
+                      .groups = "drop")
     
 #plot    
-    p1100 <- ggplot(data = pro_y, 
-                aes(x = as.factor(year), y = apartments, fill = indicator)) +
-        geom_bar(stat = "identity", position = "dodge", width = 0.8) + 
-        labs(x = "", y = "apartments", fill = "") +       
-        scale_y_continuous(breaks = pretty_breaks()) +        
-        scale_fill_manual(values = col_i) + 
-        neutral
-      
-    ggsave(paste0(pro_res, "1100_projects_by-year.pdf"), 
-        plot = p1100, width = 7, height = 5)      
-    
-    
+    sszplot(pro_y,
+            aes_x = "year", aes_y = "apartments", aes_fill = "indicator",
+            geom = "col",
+            labs_x = "",
+            name = "1100_projects_by-year",
+            width = 7, height = 4)   
     
 #-------------------------------------------------------------------
 #indicators by year and status
@@ -108,6 +96,12 @@
     ggsave(paste0(pro_res, "1101_projects_by-year-status.pdf"), 
         plot = p1101, width = 6, height = 12)       
     
+    sszplot(pro_yt,
+            aes_x = "year", aes_y = "apartments", aes_fill = "indicator",
+            geom = "col",
+            labs_x = "",
+            name = "1101_projects_by-year-status",
+            width = 7, height = 4)
     
 #-------------------------------------------------------------------
 #indicators by year and owner
