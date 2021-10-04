@@ -64,7 +64,7 @@
       
       
 #-------------------------------------------------------------------
-#indicators (new/removed apartments) by year
+#indicators (new/removed apartments) by year 
 #-------------------------------------------------------------------
       
 #by year
@@ -212,7 +212,7 @@
 #export the results
 #-------------------------------------------------------------------
 
-#export data   
+#export data     
     pro_ex_data <- arrange(pro_all, district, year, owner, status, indicator)
       
 #export
