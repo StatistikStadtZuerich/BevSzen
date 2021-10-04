@@ -10,19 +10,17 @@
 #-------------------------------------------------------------------
 #paths, general
 #-------------------------------------------------------------------
-
+if (!exists("para")) {
 #working directory
     library(here)
     setwd(paste0(here(), "/2020phase2/"))
 
 #general (e.g. packages, colors)
     source("1_Code/0000_General/0000_general_phase2.r")
+}
 
-#result path (for images)
-    aca_res <- "3_Results/1000_Allocation/"
-    
 #export path (for future rates)
-    aca_exp <- "2_Data/4_Rates/" 
+    aca_exp <- exp_path 
     
 
 

@@ -17,11 +17,8 @@ if (!exists("para")) {
   setwd(paste0(here(), "/2020phase2/"))
   
   #general (e.g. packages, colors)
-  source(paste0(code_path, "/0000_General/0000_general_phase2.r"))
+  source("1_Code/0000_General/0000_general_phase2.r")
 }
-
-#result path (for images)
-    nat_res <- "3_Results/0700_Naturalization/"
     
 #export path (for future rates)
     nat_exp <- exp_path 
@@ -45,8 +42,8 @@ if (!exists("para")) {
 #naturalization
     nat <- filter(nat_denat, (origin_prev == uni_o[2]) & (origin == uni_o[1])) %>% 
         group_by(district, year, age, sex) %>% 
-            summarize(nat = sum(nat)) %>% 
-        ungroup() 
+            summarize(nat = sum(nat),
+                      .groups = "drop")
         
 #population (foreign population only)   
     #year: begin of year population
@@ -60,9 +57,8 @@ if (!exists("para")) {
             district = factor(distr, uni_d)) %>%     
         select(district, year, age, sex, pop) %>%     
         group_by(district, year, age, sex) %>% 
-            summarize(pop = sum(pop)) %>% 
-        ungroup() 
-   
+            summarize(pop = sum(pop),
+                      .groups = "drop")
      
 #-------------------------------------------------------------------
 #naturalization vs. denaturalization
@@ -76,8 +72,8 @@ if (!exists("para")) {
         mutate(proc = factor(if_else(origin_prev == uni_o[2], 
             processes[1], processes[2]), levels = processes)) %>% 
         group_by(year, proc) %>% 
-            summarize(count = sum(nat)) %>% 
-        ungroup() %>% 
+            summarize(count = sum(nat),
+                      .groups = "drop") %>%
         spread(key = proc, value = count) %>% 
         replace_na(list(nat = 0, denat = 0)) %>% 
         mutate(total = nat + denat,
@@ -115,8 +111,8 @@ if (!exists("para")) {
 #rate by as
     nat_as <- group_by(nat_pop, age, sex) %>% 
             summarize(pop = sum(pop), 
-                nat = sum(nat)) %>% 
-        ungroup() %>% 
+                nat = sum(nat),
+                .groups = "drop") %>%
         mutate(nat_as = if_else(pop == 0, NA_real_, round(nat / pop * 100, round_rate))) 
     
     sszplot(nat_as,
@@ -129,8 +125,8 @@ if (!exists("para")) {
 #rate by ys
     nat_ys <- group_by(nat_pop, year, sex) %>% 
             summarize(pop = sum(pop), 
-                nat = sum(nat)) %>% 
-        ungroup() %>% 
+                nat = sum(nat),
+                .groups = "drop") %>%
         mutate(nat_ys = if_else(pop == 0, NA_real_, round(nat / pop * 100, round_rate))) 
     
     sszplot(nat_ys,
@@ -143,8 +139,8 @@ if (!exists("para")) {
 #rate by yas
     nat_yas <- group_by(nat_pop, year, age, sex) %>% 
             summarize(pop = sum(pop), 
-                nat = sum(nat)) %>% 
-        ungroup() %>% 
+                nat = sum(nat),
+                .groups = "drop") %>%
         mutate(nat_yas = if_else(pop == 0, NA_real_, round(nat / pop * 100, round_rate))) 
     
     
@@ -172,8 +168,8 @@ if (!exists("para")) {
 #rate by das
     nat_das <- group_by(nat_pop, district, age, sex) %>% 
             summarize(pop = sum(pop), 
-                nat = sum(nat)) %>% 
-        ungroup() %>% 
+                nat = sum(nat),
+                .groups = "drop") %>%
         mutate(nat_das = if_else(pop == 0, NA_real_, round(nat / pop * 100, round_rate))) 
     
     sszplot(nat_das,
@@ -187,8 +183,8 @@ if (!exists("para")) {
 #rate by dys
     nat_dys <- group_by(nat_pop, district, year, sex) %>% 
             summarize(pop = sum(pop), 
-                nat = sum(nat)) %>% 
-        ungroup() %>% 
+                nat = sum(nat),
+                .groups = "drop") %>%
         mutate(nat_dys = if_else(pop == 0, NA_real_, round(nat / pop * 100, round_rate))) 
     
     sszplot(nat_dys,
@@ -207,9 +203,8 @@ if (!exists("para")) {
         (year >= nat_base_begin) & (year <= nat_base_end)) %>% 
         group_by(district, age, sex) %>% 
             summarize(nat = mean(nat),
-                pop = mean(pop)) %>% 
-        ungroup()
-
+                pop = mean(pop),
+                .groups = "drop")
 
 #-------------------------------------------------------------------
 #das: smoothing (nat and pop)
@@ -296,17 +291,25 @@ if (!exists("para")) {
     
 
 #smooth processes (base years only)
-    nat_ya <- filter(nat_pop, (year >= nat_base_begin) & (year <= nat_base_end)) %>% 
-        group_by(year, age) %>%
-            summarize(pop = sum(pop),
-                nat = sum(nat)) %>%
-        ungroup() %>% 
-            group_by(year) %>%
-                arrange(age) %>% 
-                mutate(pop_a = pmax(0, predict(loess(pop ~ age, span = nat_pop_span_ya, degree = 1, na.action = na.aggregate))),
-                    nat_a = pmax(0, predict(loess(nat ~ age, span = nat_nat_span_ya, degree = 1, na.action = na.aggregate)))) %>% 
-        ungroup()   
-        
+    nat_ya <-
+      filter(nat_pop, (year >= nat_base_begin) &
+               (year <= nat_base_end)) %>%
+      group_by(year, age) %>%
+      summarize(pop = sum(pop),
+                nat = sum(nat),
+                .groups = "drop") %>%
+      group_by(year) %>%
+      arrange(age) %>%
+      mutate(pop_a = pmax(0, predict(loess(pop ~ age,
+                                      span = nat_pop_span_ya,
+                                      degree = 1,
+                                      na.action = na.aggregate))),
+             nat_a = pmax(0, predict(loess(nat ~ age,
+                                      span = nat_nat_span_ya,
+                                      degree = 1,
+                                      na.action = na.aggregate)))) %>%
+      ungroup()
+    
     
 #plot preparation
     temp_initial_ya <- gather(nat_ya, `nat`, `pop`, key = category, value = count) %>% 
@@ -446,11 +449,17 @@ if (!exists("para")) {
     nat_a <- filter(nat_pop, (year >= nat_base_begin) & (year <= nat_base_end)) %>% 
         group_by(age) %>%
             summarize(pop = mean(pop),
-                nat = mean(nat)) %>%
-        ungroup() %>% 
+                nat = mean(nat),
+                .groups = "drop") %>%
         arrange(age) %>% 
-        mutate(pop_a = pmax(0, predict(loess(pop ~ age, span = nat_pop_span_a, degree = 1, na.action = na.aggregate))),
-            nat_a = pmax(0, predict(loess(nat ~ age, span = nat_pop_span_a, degree = 1, na.action = na.aggregate))))
+        mutate(pop_a = pmax(0, predict(loess(pop ~ age,
+                                             span = nat_pop_span_a,
+                                             degree = 1,
+                                             na.action = na.aggregate))),
+               nat_a = pmax(0, predict(loess(nat ~ age,
+                                             span = nat_pop_span_a,
+                                             degree = 1,
+                                             na.action = na.aggregate))))
 
 
 #plot preparation
@@ -589,8 +598,8 @@ if (!exists("para")) {
 #past    
     rate_dyas_past <- group_by(nat_pop, district, year, age, sex) %>% 
             summarize(pop = sum(pop), 
-                nat = sum(nat)) %>% 
-        ungroup() %>% 
+                nat = sum(nat),
+                .groups = "drop") %>%
         mutate(rate_past = pmin(100, if_else(pop == 0, NA_real_, round(nat / pop * 100, round_rate)))) 
         
         

@@ -17,7 +17,7 @@ if (!exists("para")) {
   setwd(paste0(here(), "/2020phase2/"))
   
   #general (e.g. packages, colors)
-  source(paste0(code_path, "/0000_General/0000_general_phase2.r"))
+  source("1_Code/0000_General/0000_general_phase2.r")
 }
     
 #birth: export path (for future rates)
@@ -99,7 +99,7 @@ if (!exists("para")) {
       group_by(year, age_2, origin) %>%
       summarize(change = sum(change),
                 total = sum(total),
-      .groups = "drop") %>%
+                .groups = "drop") %>%
       mutate(cha_ya2o = if_else(total == 0, NA_real_, round(change / total * 100, round_rate))) %>%
       rename(age = age_2)
     

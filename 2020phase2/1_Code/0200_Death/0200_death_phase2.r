@@ -17,7 +17,7 @@ if (!exists("para")) {
   setwd(paste0(here(), "/2020phase2/"))
   
   #general (e.g. packages, colors)
-  source(paste0(code_path, "/0000_General/0000_general_phase2.r"))
+  source("1_Code/0000_General/0000_general_phase2.r")
 }
     
 #death: export path (for future rates)
@@ -33,8 +33,8 @@ if (!exists("para")) {
         rename(year = EreignisDatJahr, age = AlterVCd, dea = AnzSterWir) %>% 
         mutate(sex = factor(if_else(SexCd == 1, uni_s[1], uni_s[2]), uni_s)) %>%    
         group_by(year, age, sex) %>% 
-            summarize(dea = sum(dea)) %>% 
-        ungroup()   
+            summarize(dea = sum(dea),
+                      .groups = "drop")
     
 #birth (needed to calculate life expectancy)  
     bir <- read_csv(bir_od) %>% 
@@ -42,8 +42,8 @@ if (!exists("para")) {
         mutate(age = 0,
             sex = factor(if_else(SexCd == 1, uni_s[1], uni_s[2]), uni_s)) %>% 
         group_by(year, age, sex) %>% 
-            summarize(B = sum(bir)) %>% 
-        ungroup()       
+            summarize(B = sum(bir),
+                      .groups = "drop")
   
 #population
     #year: begin of year population
@@ -53,9 +53,8 @@ if (!exists("para")) {
         mutate(year = StichtagDatJahr + 1,
             sex = factor(if_else(SexCd == 1, uni_s[1], uni_s[2]), uni_s)) %>%
         group_by(year, age, sex) %>% 
-            summarize(pop = sum(pop)) %>% 
-        ungroup() 
-    
+            summarize(pop = sum(pop),
+                      .groups = "drop")
     
 #FSO data (used in the prediction)
     
@@ -181,14 +180,14 @@ if (!exists("para")) {
 #age capped
     pop_capped <- mutate(pop, age_capped = if_else(age >= dea_age_max_le, dea_age_max_le, age)) %>%
         group_by(year, age_capped, sex) %>%
-            summarize(pop = sum(pop)) %>%
-        ungroup() %>%
+            summarize(pop = sum(pop),
+                      .groups = "drop") %>%
         rename(age = age_capped)
     
     dea_capped <- mutate(dea, age_capped = if_else(age >= dea_age_max_le, dea_age_max_le, age)) %>%
         group_by(year, age_capped, sex) %>%
-            summarize(dx = sum(dea)) %>%
-        ungroup() %>%
+            summarize(dx = sum(dea),
+                      .groups = "drop") %>%
         rename(age = age_capped)
 
 #population at the end of the year
@@ -248,8 +247,8 @@ if (!exists("para")) {
         #life expectancy at certain age (e.g. birth)
         group_by(year, sex) %>%
             summarize(life_years = sum(Lx_[age >= age_at], na.rm = TRUE),
-                start_pop = min(lx[age == age_at], na.rm = TRUE)) %>%
-        ungroup() %>%
+                start_pop = min(lx[age == age_at], na.rm = TRUE),
+                .groups = "drop") %>%
         mutate(life = age_at + life_years / start_pop) %>%
         select(year, sex, life)
     
@@ -339,8 +338,8 @@ if (!exists("para")) {
             if_else(age >= dea_upper, dea_upper, age))) %>% 
             group_by(age_tail, sex, region) %>% 
                 summarize(dea = sum(dea),
-                    pop = sum(pop)) %>% 
-            ungroup() %>%        
+                    pop = sum(pop),
+                    .groups = "drop") %>%
             mutate(mor_asr = if_else(pop == 0, NA_real_, round(dea / pop * 100, round_rate)))        
     
     
@@ -350,12 +349,12 @@ if (!exists("para")) {
             if_else(age >= dea_upper, dea_upper, age))) %>% 
             #over tails
             group_by(year, age_tail, sex, region) %>%             
-                summarize(mor_asr = median(mor_yas)) %>%  
-            ungroup() %>% 
+                summarize(mor_asr = median(mor_yas),
+                          .groups = "drop") %>%
             #over years (why not in tail-correction? if the median is changed to another function)
             group_by(age_tail, sex, region) %>% 
-                summarize(mor_asr = median(mor_asr)) %>% 
-            ungroup()        
+                summarize(mor_asr = median(mor_asr),
+                          .groups = "drop")
     
 #both (Zurich and Switzerland), all cases
     mor_asr_temp <- select(mor_zh_asr, age_tail, sex, region, mor_asr) %>%

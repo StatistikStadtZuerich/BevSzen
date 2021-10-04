@@ -17,7 +17,7 @@ if (!exists("para")) {
     setwd(paste0(here(), "/2020phase2/"))
     
     #general (e.g. packages, colors)
-    source(paste0(code_path, "/0000_General/0000_general_phase2.r"))
+    source("1_Code/0000_General/0000_general_phase2.r")
 }
     
 #birth: export path (for future rates)
@@ -61,8 +61,10 @@ if (!exists("para")) {
     #however, a simple model is used: mean only
     
 #mean
-    pred_mean <- filter(pro_male, (year >= bir_sex_ratio_begin) & (year <= bir_sex_ratio_end)) %>%
-        summarize(pred_mean = mean(pro_male))
+    pred_mean <- pro_male %>% 
+        filter(year >= bir_sex_ratio_begin & year <= bir_sex_ratio_end) %>%
+        summarize(pred_mean = mean(pro_male),
+                  .groups = "drop")
     
 #plot with mean
     sszplot(pro_male,
