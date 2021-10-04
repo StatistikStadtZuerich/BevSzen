@@ -471,6 +471,7 @@ sszplot <- function(data,
     if (is.null(multif)) {
       if (identical(multi, uni_d)) multif <- "filter(district == x)"
       if (identical(multi, uni_o)) multif <- "filter(origin == x)"
+      if (identical(multi, uni_w)) multif <- "filter(owner == x)"
     }
     stopifnot(!is.null(multi) && !is.null(multif))
 
