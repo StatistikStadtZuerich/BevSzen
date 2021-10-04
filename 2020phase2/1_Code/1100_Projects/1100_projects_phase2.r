@@ -55,7 +55,7 @@ if (!exists("para")) {
       replace_na(list(apartments = 0))
 
 #-------------------------------------------------------------------
-#indicators (new/removed apartments) by year
+#indicators (new/removed apartments) by year 
 #-------------------------------------------------------------------
 
 #by year
@@ -165,6 +165,7 @@ if (!exists("para")) {
 #-------------------------------------------------------------------
 #export the results
 #-------------------------------------------------------------------
+
 
 #export data
     pro_ex_data <- arrange(pro_all, district, year, owner, status, indicator)
