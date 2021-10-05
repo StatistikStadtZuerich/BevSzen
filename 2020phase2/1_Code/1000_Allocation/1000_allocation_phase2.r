@@ -341,6 +341,6 @@ if (!exists("para")) {
         arrange(district, year, owner)
       
 #export
-    write_csv(aca_ex_data, paste0(aca_exp, "allocation_future.csv"))    
+    write_csv(aca_ex_data, paste0(aca_exp, "/allocation_future.csv"))    
 
     
