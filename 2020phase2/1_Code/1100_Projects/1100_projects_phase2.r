@@ -58,14 +58,7 @@
                 by = c("district", "year", "owner", "status", "indicator")) %>%
       replace_na(list(apartments = 0))
     
-
-    
-    
-    
-    
-    
-    
-    
+   
 #-------------------------------------------------------------------
 #indicators (new/removed apartments) by year 
 #-------------------------------------------------------------------
@@ -175,17 +168,55 @@
             multi = uni_w)
 
     
-   
+
 #-------------------------------------------------------------------
-#indicators by district, year, and owner
+#not all projects realized
 #-------------------------------------------------------------------
+ 
+#not realized 
+    pro_not <- left_join(pro_all, look_not, 
+                         by = "status") %>% 
+        mutate(realized = apartments * (100 - not_realized) / 100)
+
+    
+#-------------------------------------------------------------------
+#delayed
+#-------------------------------------------------------------------
+
+#lambda: linear model
+    data_points <- tibble(year = c(pro_begin, pro_end),
+                          lambda = c(pro_lambda_begin, pro_lambda_end)) 
+    
+    lm_ <- lm(lambda ~ year, data = data_points)
+    
+    lambda_y <- tibble(year = pro_begin:pro_end) %>% 
+        add_predictions(lm_) %>% 
+        rename(lambda = pred)
+    
+#delay (1 to 3 years)
+    delay <- as_tibble(expand_grid(year = pro_begin:pro_end,
+                                   delta = 1:3)) %>% 
+        left_join(lambda_y, by = "year") %>% 
+        mutate(y = exp(-lambda * delta)) %>% 
+        group_by(year) %>% 
+            mutate(ynorm = y / sum(y) * 100) %>% 
+        ungroup()
+    
+#plot    
+    
+    
+#pivot
+    delay_pivot <- select(delay, year, delta, ynorm) %>% 
+        pivot_wider(id_cols = year, names_from = delta, values_from = ynorm)
     
     
     
+#with projects    
+    pro_not
+ 
     
     
     
-     
     
 # #-------------------------------------------------------------------
 # #export the results
