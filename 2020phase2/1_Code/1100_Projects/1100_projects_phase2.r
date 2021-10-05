@@ -10,26 +10,30 @@
 #-------------------------------------------------------------------
 #paths, general
 #-------------------------------------------------------------------
-if (!exists("para")) {
-#working directory
-    library(here)
-    setwd(paste0(here(), "/2020phase2/"))
 
-#general (e.g. packages, colors)
-    source("1_Code/0000_General/0000_general_phase2.r")
-}
+#general parameters and functions already imported?
+    if(!exists("para")) {
+      
+      #working directory
+          library(here)
+          setwd(paste0(here(), "/2020phase2/"))
+          
+      #general (e.g. packages, colors)
+          source("1_Code/0000_General/0000_general_phase2.r")
+          
+    }
+    
 
 #export path (for future rates)
     pro_exp <- exp_path
 
-    #temporary path (since data not on open data yet)
+#temporary path (since data not on open data yet)
     pro_path <- "2_Data/1_Input/BEV347OD3470.csv"
 
+    
 #-------------------------------------------------------------------
 #import, data preparation
 #-------------------------------------------------------------------
-
-#indicator
 
 #projects: data
     pro_dat <- read_csv(pro_path) %>%
@@ -53,7 +57,15 @@ if (!exists("para")) {
       left_join(pro_dat,
                 by = c("district", "year", "owner", "status", "indicator")) %>%
       replace_na(list(apartments = 0))
+    
 
+    
+    
+    
+    
+    
+    
+    
 #-------------------------------------------------------------------
 #indicators (new/removed apartments) by year 
 #-------------------------------------------------------------------
@@ -162,13 +174,26 @@ if (!exists("para")) {
             width = 10, height = 11,
             multi = uni_w)
 
+    
+   
 #-------------------------------------------------------------------
-#export the results
+#indicators by district, year, and owner
 #-------------------------------------------------------------------
-
-
-#export data
-    pro_ex_data <- arrange(pro_all, district, year, owner, status, indicator)
-
-#export
-    write_csv(pro_ex_data, paste0(pro_exp, "/projects_future.csv"))
+    
+    
+    
+    
+    
+    
+     
+    
+# #-------------------------------------------------------------------
+# #export the results
+# #-------------------------------------------------------------------
+# 
+# 
+# #export data
+#     pro_ex_data <- arrange(pro_all, district, year, owner, status, indicator)
+# 
+# #export
+#     write_csv(pro_ex_data, paste0(pro_exp, "/projects_future.csv"))
