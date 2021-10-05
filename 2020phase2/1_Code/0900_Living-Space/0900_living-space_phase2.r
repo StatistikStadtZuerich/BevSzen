@@ -359,6 +359,6 @@ if (!exists("para")) {
         arrange(district, year, owner)
       
 #export
-    write_csv(spa_ex_data, paste0(spa_exp, "living-space_future.csv"))    
+    write_csv(spa_ex_data, paste0(spa_exp, "/living-space_future.csv"))    
 
     
