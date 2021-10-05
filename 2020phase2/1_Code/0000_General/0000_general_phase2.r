@@ -26,6 +26,7 @@ library(scales) # for pretty axis breaks
 library(rlang) # for functions: symbols, quasiquotation (!!, !!!, :=)
 library(gtools) # invalid function (to check for NA, NULL, NaN), e.g. in constrained regression
 library(this.path) # to extract the current file name
+library(modelr) #add_predictions
 
 
 #-------------------------------------------------------------------
@@ -115,6 +116,11 @@ pro_category <- c("scheduled", "submitted", "approved", "construction started", 
 look_pro <- tibble(code = as.double(1:6), initial = pro_initial, category = pro_category) %>% 
     mutate(status = factor(category, levels = pro_category))
 
+# projects not realized
+look_not <- tibble(status = factor(pro_category, levels = pro_category),
+                   not_realized = c(pro_not_scheduled, pro_not_submitted, 
+                                    pro_not_approved, pro_not_started,
+                                    pro_not_completed, pro_not_onhold))
 
 
 #-------------------------------------------------------------------
