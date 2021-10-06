@@ -23,7 +23,6 @@
           
     }
     
-
 #export path (for future rates)
     pro_exp <- exp_path
 
@@ -54,9 +53,8 @@
                                      owner = uni_w,
                                      status = uni_t,
                                      indicator = uni_i)) %>%
-      left_join(pro_dat,
-                by = c("district", "year", "owner", "status", "indicator")) %>%
-      replace_na(list(apartments = 0))
+        left_join(pro_dat, by = c("district", "year", "owner", "status", "indicator")) %>%
+        replace_na(list(apartments = 0))
     
    
 #-------------------------------------------------------------------
@@ -193,38 +191,93 @@
         add_predictions(lm_) %>% 
         rename(lambda = pred)
     
+    
 #delay (1 to 3 years)
     delay <- as_tibble(expand_grid(year = pro_begin:pro_end,
                                    delta = 1:3)) %>% 
         left_join(lambda_y, by = "year") %>% 
-        mutate(y = exp(-lambda * delta)) %>% 
+        mutate(y = exp(lambda * delta),
+            delay = delta - 1,
+            delayText = if_else(delay == 1, paste0(delay, " year"), 
+                paste0(delay, " years"))) %>% 
         group_by(year) %>% 
             mutate(ynorm = y / sum(y) * 100) %>% 
         ungroup()
     
-#plot    
+#plot
+    sszplot(delay,
+            aes_x = "year", aes_y = "ynorm", aes_fill = "delayText",
+            geom = "col",
+            labs_x = "", labs_y = "percent (of the apartments)",
+            name = "1106_projects_delay-by-year",
+            width = 7, height = 4.5)    
+    
+
+    
+#projects and delay
+    pro_delay <- as_tibble(expand_grid(district = uni_d,
+                            year = pro_begin:pro_end,
+                            owner = uni_w,
+                            status = pro_category,
+                            indicator = uni_i,
+                            delay = as.double(0:2))) %>% 
+        left_join(select(pro_not, c(district, year, owner, status, indicator, realized)), 
+                         by = c("district", "year", "owner", "status", "indicator")) %>% 
+        left_join(select(delay, year, delay, ynorm),
+                  by = c("year", "delay")) %>% 
+        mutate(year_new = year + delay,
+               realized_new = realized * ynorm / 100) %>% 
+        group_by(district, year_new, owner, status, indicator) %>% 
+            summarize(apartments = sum(realized_new),
+                      .groups = "drop") %>% 
+        rename(year = year_new)
+    
+#control
+     sum(pro_not$realized)   
+     sum(pro_delay$apartments)        
+
+     
+
+#-------------------------------------------------------------------
+#export the results
+#-------------------------------------------------------------------
+
+#export data
+    pro_ex_data <- arrange(pro_delay, district, year, owner, status, indicator)
+
+#export
+    write_csv(pro_ex_data, paste0(pro_exp, "/projects_future.csv"))
     
     
-#pivot
-    delay_pivot <- select(delay, year, delta, ynorm) %>% 
-        pivot_wider(id_cols = year, names_from = delta, values_from = ynorm)
+#-------------------------------------------------------------------
+#initial vs. 'not realized'/'delayed'
+#-------------------------------------------------------------------
+
+#after corrections
+    text_corr <- c("initial", "not realized, delayed")
+    uni_corr <- factor(text_corr, levels = text_corr)
     
+    pro_y_nd <- group_by(pro_delay, year, indicator) %>%
+            summarize(apartments = sum_NA(apartments),
+                      .groups = "drop") %>% 
+        mutate(corr = uni_corr[2])
+
+#with initial    
+    pro_y_both <- mutate(pro_y, corr = uni_corr[1]) %>% 
+        bind_rows(pro_y_nd)
     
-    
-#with projects    
-    pro_not
+#check (difference, since parameter for 'not realized')
+    check <- group_by(pro_y_both, corr) %>% 
+        summarize(apartments = sum(apartments),
+                  .group = "drop")
  
+#plot
+    sszplot(pro_y_both,
+            aes_x = "year", aes_y = "apartments", aes_fill = "corr",
+            geom = "col",
+            labs_x = "",
+            grid = c(".", "indicator"),            
+            name = "1107_projects-not-realized-delayed_by-year",
+            width = 12, height = 5)
+        
     
-    
-    
-    
-# #-------------------------------------------------------------------
-# #export the results
-# #-------------------------------------------------------------------
-# 
-# 
-# #export data
-#     pro_ex_data <- arrange(pro_all, district, year, owner, status, indicator)
-# 
-# #export
-#     write_csv(pro_ex_data, paste0(pro_exp, "/projects_future.csv"))
