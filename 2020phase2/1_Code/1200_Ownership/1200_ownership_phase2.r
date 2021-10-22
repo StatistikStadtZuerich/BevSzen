@@ -77,12 +77,12 @@
        
 #base years
     #WHY not in previous pipe? previous tibble will be used later for plotting
-    own_base <- filter(own_cat, (year >= own_begin) & (year <= own_end))
+    own_base <- filter(own_cat, (year >= own_base_begin) & (year <= own_base_end))
     
 #prediction  
     own_pred <- con_reg(data = own_base, x = "year", y = "prop",
               group_cols = "district",
-              window = own_window_thres, base_t0 = own_begin,
+              window = own_window_thres, base_t0 = own_base_begin,
               szen_t0 = szen_begin, szen_t1 = szen_end,
               prop_trend = own_prop_trend, thres_percent = own_thres_percent,
               lower_thres = own_lower_thres, upper_thres = own_upper_thres)  
