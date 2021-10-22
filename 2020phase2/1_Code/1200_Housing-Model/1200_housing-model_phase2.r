@@ -28,7 +28,27 @@
 #import, data preparation
 #-------------------------------------------------------------------
 
-#projects
+#projects (apartments)
     pro_dat <- read_csv(paste0(exp_path, "/projects_future.csv"))
+    
+#allocation (persons per apartment)
+    aca_dat <- read_csv(paste0(exp_path, "/allocation_future.csv"))     
+      
+    
+    
+    
+#capacity, reserves (m2 usage)  
+    car_dat <- read_csv(paste0(exp_path, "/usage_area.csv"))    
+    
+#living space (m2 per person)   
+    spa_dat <- read_csv(paste0(exp_path, "/living-space_future.csv"))    
+ 
+
+    
+#-------------------------------------------------------------------
+#import, data preparation
+#-------------------------------------------------------------------
+    
+    
     
 
