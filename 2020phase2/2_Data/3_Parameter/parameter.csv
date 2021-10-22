@@ -176,7 +176,7 @@ projects;pro_not_approved;map.nicht3 (bewilligt);0;percent;low;Percentage of pro
 projects;pro_not_started;map.nicht4 (Bau begonnen);0;percent;low;Percentage of projects (i.e. apartments) that are not realized: ;0;0;0
 projects;pro_not_completed;map.nicht5 (fertiggestellt);0;percent;low;Percentage of projects (i.e. apartments) that are not realized: ;0;0;0
 projects;pro_not_onhold;map.nicht6 (sistiert);20;percent;low;Percentage of projects (i.e. apartments) that are not realized: ;20;20;20
-ownership;own_prop_trend;ea.anteil.trend;50;percent;low;"ownership: trend in addition to the mean; 20% means, 20% of the difference between trend and mean is added to the mean.";50;50;50
+ownership;own_prop_trend;ea.anteil.trend;20;percent;low;"ownership: trend in addition to the mean; 20% means, 20% of the difference between trend and mean is added to the mean.";50;50;50
 ownership;own_thres_percent;ea.grenze.prozent;20;percent;low;"ownership: It is not realistic that the proportion changes dramatically (i.e. tenfold increase). Therefore, this threshold regulates the range of potential proportions (change in percent of mean; e.g. +/- 20%).";20;20;20
 ownership;own_window_thres;ea.window.szen;7;years;low;ownership: filter over years (to smooth a potential break in the curve due to range of future proportions;7;7;7
 ownership;own_lower_thres;no parameter in previous model;0;percent;no parameter;ownership: lower threshold for the proportions (here: the proportions should not be negative), NA if there is no lower threshold;0;0;0
