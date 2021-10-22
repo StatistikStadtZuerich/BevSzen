@@ -30,11 +30,11 @@
   
 #ownership: data
     own_dat <- read_csv(spa_od) %>% 
-        rename(year = StichtagDatJahr, area = Wohnungsfl, apartments = AnzWhg, people = PersInGeb) %>% 
+        rename(year = StichtagDatJahr, apartments = AnzWhg, people = PersInGeb) %>% 
         left_join(look_dis, by = "QuarCd") %>% 
         mutate(owner = factor(if_else(EigentumCd== 1, uni_w[1], uni_w[2]), uni_w),
             district = factor(distr, uni_d)) %>% 
-        select(year, district, owner, area, apartments, people) %>% 
+        select(year, district, owner, apartments, people) %>% 
         group_by(district, year, owner) %>% 
             summarize(apartments = sum_NA(apartments),
                 people = sum_NA(people)) %>% 
