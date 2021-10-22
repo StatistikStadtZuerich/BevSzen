@@ -239,7 +239,7 @@
      
 
 #-------------------------------------------------------------------
-#export the results
+#export the results (projects: new/removed, by category)
 #-------------------------------------------------------------------
 
 #export data
