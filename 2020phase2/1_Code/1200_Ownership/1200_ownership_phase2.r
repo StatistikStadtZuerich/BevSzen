@@ -102,7 +102,7 @@
             aes_x = "year", aes_y = "own_all", 
             labs_y = "proportion of cooperative housing (in %)",            
             wrap = "district", ncol = 4,
-            i_x = c(own_begin, own_end), 
+            i_x = c(own_base_begin, own_base_end), 
             scale_y = c(0, NA),            
             name = "1201_proportion-cooperative-housing_prediction",
             width = 12, height = 14)          
