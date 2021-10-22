@@ -1,4 +1,4 @@
-﻿category;parameter;parameter_old;value;unit;relevance;description;lower;center;upper
+category;parameter;parameter_old;value;unit;relevance;description;lower;center;upper
 time;date_start;daten.beginn;1993;year;no parameter (strictly speaking);begin of data;1993;1993;1993
 time;date_end;daten.ende;2020;year;no parameter (strictly speaking);end of data;2020;2020;2020
 time;szen_begin;szen.beginn;2021;year;no parameter (strictly speaking);future: begin;2021;2021;2021
@@ -39,6 +39,8 @@ time;aca_base_end;no parameter in previous model;2020;year;low;base period (not 
 time;aca_base_begin_52p;no parameter in previous model;2015;year;low;"base period (not the future) for allocation, begin, district 'Escher Wyss' (district ID = 52; since empty apartments decreased the mean allocation values; before 2015)";2015;2015;2015
 time;pro_begin;map.wohnbau.beginn;2021;year;low;"first year (of consolidated project list; reasonable: first scenario year)";2021;2021;2021
 time;pro_end;map.wohnbau.ende;2031;year;low;last year (of consolidated project list);2028;2028;2028
+time;own_begin;no parameter in previous model;2015;year;low;base period (not the future) for ownership calculation, begin;2015;2015;2015
+time;own_end;no parameter in previous model;2020;year;low;base period (not the future) for ownership calculation, end;2020;2020;2020
 age;age_min;no parameter in previous model;0;years (age);low;minimum age in the model ;0;0;0
 age;age_max;no parameter in previous model;120;years (age);low;maximum age in the model (should be clearly higher than maximum age in the population);120;120;120
 general;round_rate;no parameter in previous model;4;digits (rate in percent per year);no parameter;rounding of rates (digits, rate in percent per year);4;4;4
@@ -174,3 +176,8 @@ projects;pro_not_approved;map.nicht3 (bewilligt);0;percent;low;Percentage of pro
 projects;pro_not_started;map.nicht4 (Bau begonnen);0;percent;low;Percentage of projects (i.e. apartments) that are not realized: ;0;0;0
 projects;pro_not_completed;map.nicht5 (fertiggestellt);0;percent;low;Percentage of projects (i.e. apartments) that are not realized: ;0;0;0
 projects;pro_not_onhold;map.nicht6 (sistiert);20;percent;low;Percentage of projects (i.e. apartments) that are not realized: ;20;20;20
+ownership;own_prop_trend;ea.anteil.trend;50;percent;low;"ownership: trend in addition to the mean; 20% means, 20% of the difference between trend and mean is added to the mean.";50;50;50
+ownership;own_thres_percent;ea.grenze.prozent;20;percent;low;"ownership: It is not realistic that the proportion changes dramatically (i.e. tenfold increase). Therefore, this threshold regulates the range of potential proportions (change in percent of mean; e.g. +/- 20%).";20;20;20
+ownership;own_window_thres;ea.window.szen;7;years;low;ownership: filter over years (to smooth a potential break in the curve due to range of future proportions;7;7;7
+ownership;own_lower_thres;no parameter in previous model;0;percent;no parameter;ownership: lower threshold for the proportions (here: the proportions should not be negative), NA if there is no lower threshold;0;0;0
+ownership;own_upper_thres;no parameter in previous model;100;percent;no parameter;ownership: lower threshold for the proportions (here: the proportions should not be more than 100 percent), NA if there is no lower threshold;100;100;100
