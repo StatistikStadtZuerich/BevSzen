@@ -39,8 +39,8 @@ time;aca_base_end;no parameter in previous model;2020;year;low;base period (not 
 time;aca_base_begin_52p;no parameter in previous model;2015;year;low;"base period (not the future) for allocation, begin, district 'Escher Wyss' (district ID = 52; since empty apartments decreased the mean allocation values; before 2015)";2015;2015;2015
 time;pro_begin;map.wohnbau.beginn;2021;year;low;"first year (of consolidated project list; reasonable: first scenario year)";2021;2021;2021
 time;pro_end;map.wohnbau.ende;2031;year;low;last year (of consolidated project list);2028;2028;2028
-time;own_begin;no parameter in previous model;2015;year;low;base period (not the future) for ownership calculation, begin;2015;2015;2015
-time;own_end;no parameter in previous model;2020;year;low;base period (not the future) for ownership calculation, end;2020;2020;2020
+time;own_base_begin;no parameter in previous model;2015;year;low;base period (not the future) for ownership calculation, begin;2015;2015;2015
+time;own_base_end;no parameter in previous model;2020;year;low;base period (not the future) for ownership calculation, end;2020;2020;2020
 age;age_min;no parameter in previous model;0;years (age);low;minimum age in the model ;0;0;0
 age;age_max;no parameter in previous model;120;years (age);low;maximum age in the model (should be clearly higher than maximum age in the population);120;120;120
 general;round_rate;no parameter in previous model;4;digits (rate in percent per year);no parameter;rounding of rates (digits, rate in percent per year);4;4;4
