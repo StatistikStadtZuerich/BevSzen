@@ -8,20 +8,23 @@
 
 
 
-  #-------------------------------------------------------------------
-  #paths, general
-  #-------------------------------------------------------------------
-  #this is only a temporary solution. No hardcoded values in production
-if (!exists("para")) {
-  
-  #working directory
-  library(here)
-  setwd(paste0(here(), "/2020phase2/"))
-  
-  #general (e.g. packages, colors)
-  source("1_Code/0000_General/0000_general_phase2.r")
-}
-    
+#-------------------------------------------------------------------
+#paths, general
+#-------------------------------------------------------------------
+
+#general functions already available?
+    if (!exists("para")) {
+      
+        #working directory
+            library(here)
+            setwd(paste0(here(), "/2020phase2/"))
+        
+        #general (e.g. packages, colors)
+            source("1_Code/0000_General/0000_general_phase2.r")
+            
+    }
+
+
 #birth: export path (for future fertility rates)
     bir_exp <- exp_path  
 
