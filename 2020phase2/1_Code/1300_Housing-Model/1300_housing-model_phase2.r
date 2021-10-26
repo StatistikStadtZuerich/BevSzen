@@ -41,26 +41,21 @@
     spa_dat <- read_csv(paste0(exp_path, "/living-space_future.csv"))    
  
 #ownership
-    own_dat <- read_csv(paste0(exp_path, "/ownership_future.csv")) 
+    own_dat <- read_csv(paste0(exp_path, "/ownership_past_future.csv")) 
     
-# #people (also per ownership category)
-#     pop_dyw <- read_csv(spa_od) %>% 
-#         rename(year = StichtagDatJahr, apartments = AnzWhg, people = PersInGeb) %>% 
-#         filter(year == date_end) %>% 
-#         left_join(look_dis, by = "QuarCd") %>% 
-#         mutate(owner = factor(if_else(EigentumCd== 1, uni_w[1], uni_w[2]), uni_w),
-#             district = factor(distr, uni_d)) %>% 
-#         select(year, district, owner, apartments, people) %>% 
-#         group_by(district, year, owner) %>% 
-#             summarize(apartments = sum_NA(apartments),
-#                 people = sum_NA(people)) %>% 
-#         ungroup() 
-#         
-    
+#population    
+    pop <- read_csv(pop_od) %>%   
+        rename(year = StichtagDatJahr, pop = AnzBestWir) %>%  
+        left_join(look_dis, by = "QuarCd") %>% 
+        mutate(district = factor(distr, uni_d)) %>%      
+        select(district, year, pop) %>%    
+        group_by(district, year) %>% 
+            summarize(pop = sum(pop),
+                      .groups = "drop")          
+          
 
-    
 #-------------------------------------------------------------------
-#projects and allocation
+#projects and allocation (from apartments to people; future)
 #-------------------------------------------------------------------
 
 #calculate amount of people 
@@ -71,17 +66,52 @@
     
     
 #-------------------------------------------------------------------
-#capacity/reserves and living space
+#capacity/reserves and living space (from m2 to people; future)
 #-------------------------------------------------------------------
 
-#calculate amount of people    
+#combine: calculate amount of people    
     #units: ha * 10,000 m2/ha / (m2/person) = person    
     
     car_aca <- left_join(car_dat, spa_dat, 
             by = c("district", "year", "owner")) %>% 
         mutate(people = usage_ha * 10000 / spa_dyw)
     
+
+#-------------------------------------------------------------------
+#combine: population by ownership (past)
+#-------------------------------------------------------------------
+
+#left join on ownership (since shorter data set) 
+    pop_w <- left_join(own_dat, pop, by = c("district", "year")) %>% 
+        mutate(cooperative = pop * prop / 100, 
+               other = pop * (1 - prop / 100)) %>% 
+        select(-c(prop, pop)) %>% 
+        pivot_longer(c(cooperative, other), 
+            names_to = "owner_text", values_to = "people") %>% 
+        mutate(owner = factor(if_else(owner_text == "cooperative", 
+            uni_w[1], uni_w[2]), levels = uni_w)) %>% 
+        select(district, year, owner, people)
+    
+#last year of data
+    pop_last <- filter(pop_w, year == date_end)
+ 
+    
+#-------------------------------------------------------------------
+#combine: projects and capacity
+#-------------------------------------------------------------------
+
+
     
     
     
     
+    
+    
+    
+    
+    
+    
+    
+    
+    
+      
