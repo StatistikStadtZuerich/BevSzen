@@ -112,14 +112,18 @@
 #export the results
 #-------------------------------------------------------------------
 
+#data of past and future
+    #WHY? to calculate population (by ownership) in the past
+    #since the people in the open data dataset (with ownership)
+    #is only people in apartments
+    
 #export data   
-    own_ex_data <- mutate(own_pred, prop = round(pred_roll, round_prop)) %>% 
+    own_ex_data <- mutate(own_past_pred, prop = round(own_all, round_prop)) %>% 
         select(district, year, prop) %>%
-        filter(year >= szen_begin) %>% 
         arrange(district, year)
       
 #export
-    write_csv(own_ex_data, paste0(exp_path, "/ownership_future.csv"))       
+    write_csv(own_ex_data, paste0(exp_path, "/ownership_past_future.csv"))       
     
     
     
