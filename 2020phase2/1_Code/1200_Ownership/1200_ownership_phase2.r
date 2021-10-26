@@ -76,7 +76,7 @@
         select(district, year, prop)    
        
 #base years
-    #WHY not in previous pipe? previous tibble will be used later for plotting
+    #WHY not in previous pipe? The previous tibble will be used later for plotting
     own_base <- filter(own_cat, (year >= own_base_begin) & (year <= own_base_end))
     
 #prediction  
@@ -85,7 +85,10 @@
               window = own_window_thres, base_t0 = own_base_begin,
               szen_t0 = szen_begin, szen_t1 = szen_end,
               prop_trend = own_prop_trend, thres_percent = own_thres_percent,
-              lower_thres = own_lower_thres, upper_thres = own_upper_thres)  
+              lower_thres = own_lower_thres, upper_thres = own_upper_thres)
+    
+# https://tidyr.tidyverse.org/reference/expand.html 
+    # test <- expand(own_base, year, district)
     
 #past and prediction
     own_past_pred <- as_tibble(expand_grid(
@@ -95,7 +98,6 @@
         left_join(select(own_pred, district, year, pred_roll),
             by = c("district", "year")) %>% 
         mutate(own_all = if_else(year < szen_begin, prop, pred_roll))    
-    
     
 #plot   
     sszplot(own_past_pred,
