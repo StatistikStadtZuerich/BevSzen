@@ -29,7 +29,10 @@
 #-------------------------------------------------------------------
 
 #projects (apartments)
-    pro_dat <- read_csv(paste0(exp_path, "/projects_future.csv"))
+    pro_dat <- read_csv(paste0(exp_path, "/projects_future.csv")) %>% 
+        group_by(district, year, owner, indicator) %>% 
+            summarize(apartments = sum(apartments)) %>% 
+        ungroup()
     
 #allocation (persons per apartment)
     aca_dat <- read_csv(paste0(exp_path, "/allocation_future.csv"))     
@@ -62,10 +65,19 @@
 #calculate amount of people 
     pro_aca <- left_join(pro_dat, aca_dat, 
             by = c("district", "year", "owner")) %>% 
-        mutate(people = apartments * aca_dyw)
+        mutate(people = apartments * aca_dyw) 
+        
+#new apartments
+    pro_new <- filter(pro_aca, indicator == uni_i[1]) %>%
+        select(district, year, owner, people) %>%     
+        rename(people_new = people)     
     
-    
-    
+#removed apartments
+    pro_removed <- filter(pro_aca, indicator == uni_i[2]) %>%
+        mutate(people_removed = -people) %>% 
+        select(district, year, owner, people_removed)     
+  
+ 
 #-------------------------------------------------------------------
 #capacity/reserves and living space (from m2 to people; future)
 #-------------------------------------------------------------------
@@ -73,9 +85,11 @@
 #combine: calculate amount of people    
     #units: ha * 10,000 m2/ha / (m2/person) = person    
     
-    car_aca <- left_join(car_dat, spa_dat, 
+    car_spa <- left_join(car_dat, spa_dat, 
             by = c("district", "year", "owner")) %>% 
-        mutate(people = usage_ha * 10000 / spa_dyw)
+        mutate(people = usage_ha * 10000 / spa_dyw) %>% 
+        select(district, year, owner, people) %>% 
+        rename(people_car = people)
     
 
 #-------------------------------------------------------------------
@@ -94,25 +108,24 @@
         select(district, year, owner, people)
     
 #last year of data
-    pop_last <- filter(pop_w, year == date_end)
+    pop_last <- filter(pop_w, year == date_end) %>% 
+        rename(people_pop = people)
  
     
 #-------------------------------------------------------------------
 #combine: projects and capacity
 #-------------------------------------------------------------------
 
+#combine
+    pro_car <- as_tibble(expand_grid(
+            district = uni_d,
+            year = date_end:szen_end,
+            owner = uni_w)) %>% 
+        left_join(pop_last, by = c("district", "year", "owner")) %>% 
+        left_join(pro_new, by = c("district", "year", "owner")) %>%       
+        left_join(pro_removed, by = c("district", "year", "owner")) %>%       
+        left_join(car_spa, by = c("district", "year", "owner"))                 
 
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
+
+
       
