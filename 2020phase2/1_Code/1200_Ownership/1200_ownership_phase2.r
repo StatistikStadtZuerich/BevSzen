@@ -86,10 +86,22 @@
               szen_t0 = szen_begin, szen_t1 = szen_end,
               prop_trend = own_prop_trend, thres_percent = own_thres_percent,
               lower_thres = own_lower_thres, upper_thres = own_upper_thres)
-    
+   
 # https://tidyr.tidyverse.org/reference/expand.html 
-    # test <- expand(own_base, year, district)
+     # test <- expand(own_base, year, district)
     
+    
+# fruits <- tibble(
+#   type   = c("apple", "orange", "apple", "orange", "orange", "orange"),
+#   year   = c(2010, 2010, 2012, 2010, 2010, 2012),
+#   size  =  factor(
+#     c("XS", "S",  "M", "S", "S", "M"),
+#     levels = c("XS", "S", "M", "L")
+#   ),
+#   weights = rnorm(6, as.numeric(size) + 2)
+# )    
+# fruits %>% expand(type, size)    
+
 #past and prediction
     own_past_pred <- as_tibble(expand_grid(
             district = uni_d,
