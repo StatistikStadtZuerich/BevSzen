@@ -87,10 +87,10 @@
               prop_trend = own_prop_trend, thres_percent = own_thres_percent,
               lower_thres = own_lower_thres, upper_thres = own_upper_thres)
    
-# https://tidyr.tidyverse.org/reference/expand.html 
-     # test <- expand(own_base, year, district)
-    
-    
+# # https://tidyr.tidyverse.org/reference/expand.html 
+#      test <- expand(own_base, year, district)
+#      head(as.data.frame(test), 200)
+#      
 # fruits <- tibble(
 #   type   = c("apple", "orange", "apple", "orange", "orange", "orange"),
 #   year   = c(2010, 2010, 2012, 2010, 2010, 2012),
@@ -99,8 +99,10 @@
 #     levels = c("XS", "S", "M", "L")
 #   ),
 #   weights = rnorm(6, as.numeric(size) + 2)
-# )    
-# fruits %>% expand(type, size)    
+# )
+# 
+# 
+# fruits %>% expand(type, size)
 
 #past and prediction
     own_past_pred <- as_tibble(expand_grid(
