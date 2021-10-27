@@ -104,6 +104,11 @@
 # 
 # fruits %>% expand(type, size)
 
+# reason of undesired expand behaviour: tibble is still grouped (line 51)
+# after ungrouping, problem disappears:
+  own_base %>% ungroup() %>% expand(year, district)
+    
+
 #past and prediction
     own_past_pred <- as_tibble(expand_grid(
             district = uni_d,
