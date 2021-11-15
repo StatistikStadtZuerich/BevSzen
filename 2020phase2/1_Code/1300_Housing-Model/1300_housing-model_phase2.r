@@ -28,26 +28,28 @@
 #import, data preparation
 #-------------------------------------------------------------------
 
-#projects (apartments)
-    pro_dat <- read_csv(paste0(exp_path, "/projects_future.csv")) %>% 
-        group_by(district, year, owner, indicator) %>% 
-            summarize(apartments = sum(apartments)) %>% 
-        ungroup()
+#projects (apartments, dyw)
+    pro_dat <- read_csv(paste0(exp_path, "/projects_future.csv"))
     
-#allocation (persons per apartment)
+#allocation (persons per apartment, dyw)
     aca_dat <- read_csv(paste0(exp_path, "/allocation_future.csv"))     
       
-#capacity/reserves (m2 usage)  
+#capacity/reserves (m2, dyw)  
     car_dat <- read_csv(paste0(exp_path, "/usage_area.csv"))    
     
-#living space (m2 per person)   
+#living space (m2 per person, dyw)   
     spa_dat <- read_csv(paste0(exp_path, "/living-space_future.csv"))    
  
-#ownership
+#ownership (% cooperative housing)
     own_dat <- read_csv(paste0(exp_path, "/ownership_past_future.csv")) %>% 
         unique()
     
-#population    
+#population   
+    #why population not from the housing open data  file?
+    #there only people in apartments (and not in care centers etc)
+    #the population number in the housing open data is below the total 
+    #amount of people in Zurich
+    
     pop <- read_csv(pop_od) %>%   
         rename(year = StichtagDatJahr, pop = AnzBestWir) %>%  
         left_join(look_dis, by = "QuarCd") %>% 
@@ -87,15 +89,16 @@
     
     car_spa <- left_join(car_dat, spa_dat, 
             by = c("district", "year", "owner")) %>% 
-        mutate(people = usage_ha * 10000 / spa_dyw) %>% 
-        select(district, year, owner, people) %>% 
-        rename(people_car = people)
+        mutate(people_car = usage_ha * 10000 / spa_dyw) %>% 
+        select(district, year, owner, people_car)
     
 
 #-------------------------------------------------------------------
-#combine: population by ownership (past)
+#population by ownership (past)
 #-------------------------------------------------------------------
 
+    
+    
 #left join on ownership (since shorter data set) 
     pop_w <- left_join(own_dat, pop, by = c("district", "year")) %>% 
         mutate(cooperative = pop * prop / 100, 
