@@ -23,8 +23,6 @@
           
     }
     
-#export path (for future rates)
-    pro_exp <- exp_path
 
 #temporary path (since data not on open data yet)
     pro_path <- "2_Data/1_Input/BEV347OD3470.csv"
@@ -246,7 +244,8 @@
     pro_ex_data <- arrange(pro_delay, district, year, owner, status, indicator)
 
 #export
-    write_csv(pro_ex_data, paste0(pro_exp, "/projects_future.csv"))
+    write_csv(pro_ex_data, paste0(exp_path, "/projects_future.csv"))
+    
     
     
 #-------------------------------------------------------------------
