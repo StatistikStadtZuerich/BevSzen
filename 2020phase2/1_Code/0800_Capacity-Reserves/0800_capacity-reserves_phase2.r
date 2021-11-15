@@ -23,10 +23,7 @@
             
     }
 
-#export path (for future rates)
-    car_exp <- exp_path
-    
-    #temporary path (since data not on open data yet)
+#temporary path (since data not on open data yet)
     car_path <- "2_Data/1_Input/KaReB.csv"
 
     
@@ -288,4 +285,4 @@
         arrange(district, year, owner)
       
 #export
-    write_csv(car_ex_data, paste0(car_exp, "/usage_area.csv"))
+    write_csv(car_ex_data, paste0(exp_path, "/usage_area.csv"))
