@@ -10,14 +10,18 @@
 #-------------------------------------------------------------------
 #paths, general
 #-------------------------------------------------------------------
-if (!exists("para")) {
-#working directory
-    library(here)
-    setwd(paste0(here(), "/2020phase2/"))
 
-#general (e.g. packages, colors)
-    source("1_Code/0000_General/0000_general_phase2.r")
-}
+#general functions already available?
+    if (!exists("para")) {
+      
+        #working directory
+            library(here)
+            setwd(paste0(here(), "/2020phase2/"))
+        
+        #general (e.g. packages, colors)
+            source("1_Code/0000_General/0000_general_phase2.r")
+            
+    }
 
 #export path (for future rates)
     car_exp <- exp_path
@@ -25,6 +29,7 @@ if (!exists("para")) {
     #temporary path (since data not on open data yet)
     car_path <- "2_Data/1_Input/KaReB.csv"
 
+    
 #-------------------------------------------------------------------
 #import and data preparation
 #-------------------------------------------------------------------
