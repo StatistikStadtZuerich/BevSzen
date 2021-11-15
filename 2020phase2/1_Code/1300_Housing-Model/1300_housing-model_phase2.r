@@ -67,18 +67,10 @@
 #calculate amount of people 
     pro_aca <- left_join(pro_dat, aca_dat, 
             by = c("district", "year", "owner")) %>% 
-        mutate(people = apartments * aca_dyw) 
-        
-#new apartments
-    pro_new <- filter(pro_aca, indicator == uni_i[1]) %>%
-        select(district, year, owner, people) %>%     
-        rename(people_new = people)     
-    
-#removed apartments
-    pro_removed <- filter(pro_aca, indicator == uni_i[2]) %>%
-        mutate(people_removed = -people) %>% 
-        select(district, year, owner, people_removed)     
-  
+        mutate(people = apartments * aca_dyw) %>% 
+        select(district, year, owner, indicator, people) %>% 
+        pivot_wider(names_from = indicator, values_from = people)
+
  
 #-------------------------------------------------------------------
 #capacity/reserves and living space (from m2 to people; future)
@@ -89,30 +81,28 @@
     
     car_spa <- left_join(car_dat, spa_dat, 
             by = c("district", "year", "owner")) %>% 
-        mutate(people_car = usage_ha * 10000 / spa_dyw) %>% 
-        select(district, year, owner, people_car)
+        mutate(car = usage_ha * 10000 / spa_dyw) %>% 
+        select(district, year, owner, car)
     
 
 #-------------------------------------------------------------------
 #population by ownership (past)
 #-------------------------------------------------------------------
 
-    
-    
 #left join on ownership (since shorter data set) 
     pop_w <- left_join(own_dat, pop, by = c("district", "year")) %>% 
         mutate(cooperative = pop * prop / 100, 
                other = pop * (1 - prop / 100)) %>% 
         select(-c(prop, pop)) %>% 
         pivot_longer(c(cooperative, other), 
-            names_to = "owner_text", values_to = "people") %>% 
+            names_to = "owner_text", values_to = "pop") %>% 
         mutate(owner = factor(if_else(owner_text == "cooperative", 
             uni_w[1], uni_w[2]), levels = uni_w)) %>% 
-        select(district, year, owner, people)
+        select(district, year, owner, pop)
     
 #last year of data
-    pop_last <- filter(pop_w, year == date_end) %>% 
-        rename(people_pop = people)
+    pop_last <- filter(pop_w, year == date_end)
+    
  
     
 #-------------------------------------------------------------------
@@ -125,8 +115,7 @@
             year = date_end:szen_end,
             owner = uni_w)) %>% 
         left_join(pop_last, by = c("district", "year", "owner")) %>% 
-        left_join(pro_new, by = c("district", "year", "owner")) %>%       
-        left_join(pro_removed, by = c("district", "year", "owner")) %>%       
+        left_join(pro_aca, by = c("district", "year", "owner")) %>%       
         left_join(car_spa, by = c("district", "year", "owner"))                 
 
 
