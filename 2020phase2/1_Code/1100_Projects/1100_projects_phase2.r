@@ -215,7 +215,6 @@
             width = 7, height = 4.5)    
     
 
-    
 #projects and delay
     pro_delay <- as_tibble(expand_grid(district = uni_d,
                             year = pro_begin:pro_end,
@@ -238,19 +237,6 @@
      sum(pro_not$realized)   
      sum(pro_delay$apartments)        
 
-     
-
-#-------------------------------------------------------------------
-#export the results (projects: new/removed, by category)
-#-------------------------------------------------------------------
-
-#export data
-    pro_ex_data <- arrange(pro_delay, district, year, owner, status, indicator)
-
-#export
-    write_csv(pro_ex_data, paste0(exp_path, "/projects_future.csv"))
-    
-    
     
 #-------------------------------------------------------------------
 #initial vs. 'not realized'/'delayed'
@@ -282,5 +268,30 @@
             grid = c(".", "indicator"),            
             name = "1107_projects-not-realized-delayed_by-year",
             width = 12, height = 5)
+     
+    
+#-------------------------------------------------------------------
+#summarize (status not needed anymore)
+#-------------------------------------------------------------------
+
+    pro_sum <- pro_delay %>% 
+        group_by(district, year, owner, indicator) %>% 
+            summarize(apartments = sum(apartments)) %>% 
+        ungroup()    
+    
+
+#-------------------------------------------------------------------
+#export the results (projects: new/removed, by category)
+#-------------------------------------------------------------------
+
+#export data
+    pro_ex_data <- arrange(pro_sum, district, year, owner, indicator)
+
+#export
+    write_csv(pro_ex_data, paste0(exp_path, "/projects_future.csv"))
+    
         
+    
+    
+       
     
