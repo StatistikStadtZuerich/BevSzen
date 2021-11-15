@@ -23,10 +23,6 @@
             
     }
 
-#export path (for future rates)
-    spa_exp <- exp_path 
-    
-
 
 #-------------------------------------------------------------------
 #import, data preparation
@@ -364,6 +360,6 @@
         arrange(district, year, owner)
       
 #export
-    write_csv(spa_ex_data, paste0(spa_exp, "/living-space_future.csv"))    
+    write_csv(spa_ex_data, paste0(exp_path, "/living-space_future.csv"))    
 
     
