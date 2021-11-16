@@ -116,7 +116,12 @@
             owner = uni_w)) %>% 
         left_join(pop_last, by = c("district", "year", "owner")) %>% 
         left_join(pro_aca, by = c("district", "year", "owner")) %>%       
-        left_join(car_spa, by = c("district", "year", "owner"))                 
+        left_join(car_spa, by = c("district", "year", "owner")) %>% 
+        select(district, owner, year, pop, new, removed, car) %>% 
+        arrange(district, owner, year)
+    
+    
+    
 
 
 
