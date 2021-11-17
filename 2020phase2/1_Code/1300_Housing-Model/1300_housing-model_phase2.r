@@ -44,6 +44,8 @@
     own_dat <- read_csv(paste0(exp_path, "/ownership_past_future.csv")) %>% 
         unique()
     
+    tail(own_dat)
+    
 #population   
     #why population not from the housing open data  file?
     #there only people in apartments (and not in care centers etc)
@@ -71,7 +73,7 @@
         select(district, year, owner, indicator, people) %>% 
         pivot_wider(names_from = indicator, values_from = people)
 
- 
+
 #-------------------------------------------------------------------
 #capacity/reserves and living space (from m2 to people; future)
 #-------------------------------------------------------------------
@@ -83,8 +85,8 @@
             by = c("district", "year", "owner")) %>% 
         mutate(car = usage_ha * 10000 / spa_dyw) %>% 
         select(district, year, owner, car)
-    
 
+ 
 #-------------------------------------------------------------------
 #population by ownership (past)
 #-------------------------------------------------------------------
@@ -104,7 +106,30 @@
     pop_last <- filter(pop_w, year == date_end)
     
  
+#-------------------------------------------------------------------
+#combine: capacity/reserves and ownership prediction
+#-------------------------------------------------------------------
+   
+#proportion cooperative housing according to capacity/reserves
     
+  
+#capacity/reserves contains only people due to additional (!) usage of reserves
+#therefore, also the current population values are used    
+    
+    
+    car_spa
+    
+    tail(own_dat) 
+    
+    
+pop_last
+      
+    
+    
+    
+    
+    
+      
 #-------------------------------------------------------------------
 #combine: projects and capacity
 #-------------------------------------------------------------------
@@ -120,6 +145,10 @@
         select(district, owner, year, pop, new, removed, car) %>% 
         arrange(district, owner, year)
     
+    
+    
+    test <- filter(pro_car, (district == "Affoltern") & (owner == "cooperative housing")) %>% 
+        select(-c(district, owner))
     
     
 
