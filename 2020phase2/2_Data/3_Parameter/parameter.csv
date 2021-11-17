@@ -46,6 +46,7 @@ age;age_max;no parameter in previous model;120;years (age);low;maximum age in th
 general;round_rate;no parameter in previous model;4;digits (rate in percent per year);no parameter;rounding of rates (digits, rate in percent per year);4;4;4
 general;round_prop;no parameter in previous model;4;digits (proportion in percent);no parameter;rounding of proportion (digits, proportion in percent);4;4;4
 general;round_area;no parameter in previous model;4;digits (area);no parameter;rounding of area (e.g. ha in the capacity and reserve module);4;4;4
+general;round_people;no parameter in previous model;0;digits (area);no parameter;rounding of people;0;0;0
 general;round_aca;no parameter in previous model;4;digits (area);no parameter;rounding of allocation (people per apartment);4;4;4
 birth;bir_age_begin;geb.alter.beginn;15;year;no parameter (strictly speaking);fertility rate: fertile age (fixed expression): begin;15;15;15
 birth;bir_age_end;geb.alter.ende;49;year;no parameter (strictly speaking);fertility rate: fertile age (fixed expression): end;49;49;49
@@ -181,3 +182,4 @@ ownership;own_thres_percent;ea.grenze.prozent;20;percent;low;"ownership: It is n
 ownership;own_window_thres;ea.window.szen;7;years;low;ownership: filter over years (to smooth a potential break in the curve due to range of future proportions;7;7;7
 ownership;own_lower_thres;no parameter in previous model;0;percent;no parameter;ownership: lower threshold for the proportions (here: the proportions should not be negative), NA if there is no lower threshold;0;0;0
 ownership;own_upper_thres;no parameter in previous model;100;percent;no parameter;ownership: lower threshold for the proportions (here: the proportions should not be more than 100 percent), NA if there is no lower threshold;100;100;100
+housing model;car_coop;similar to wohn.modell.typ;20;percent;low;Percentage of cooperative housing can be used from capacity/reserves (car_coop = 100), or from the trends in the districts (car_coop = 0) or a mixture of both data sources. ;20;20;20
