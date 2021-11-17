@@ -218,13 +218,15 @@
     
     x$new[2] <- 1000
      i <- 2
-    
-    # for (i in 2:nrow(x)){
-      
-    for (i in 2:10){   
-        #new colums
+     
+            #new colums
             x$project <- NA
             x$corr <- NA
+    
+    for (i in 2:nrow(x)){
+      
+    # for (i in 2:15){   
+ 
       
         #project list (cannot be negative)
             x$project[i] <- max(0, x$pop[i-1] + x$new[i] - x$removed[i])
@@ -241,7 +243,7 @@
             usage <- diff(x$car[i:nrow(x)])
             proportion <- usage/sum(usage)
             index <- (i+1):nrow(x) 
-            x$car[index] <- x$car[index] - x$corr[i] * proportion
+            x$car[index] <- pmax(0, x$car[index] - x$corr[i] * proportion)
 
     }
 
