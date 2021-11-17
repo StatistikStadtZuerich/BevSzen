@@ -110,19 +110,24 @@
 #combine: capacity/reserves and ownership prediction
 #-------------------------------------------------------------------
    
-#proportion cooperative housing according to capacity/reserves
+#proportion of cooperative housing according to capacity/reserves
+#capacity/reserves contains only people due to additional (!) yearly (!) usage of reserves
+#therefore, add the cumulative values to the past population    
+
+    pop_total <- car_spa %>% 
+        arrange(district, owner, year) %>%       
+        group_by(district, owner) %>% 
+            mutate(cumulative = cumsum(car)) %>% 
+        ungroup() %>% 
+        left_join(select(pop_last, district, owner, pop), 
+                  by = c("district", "owner")) %>% 
+        mutate(total = pop + cumulative)
     
-  
-#capacity/reserves contains only people due to additional (!) usage of reserves
-#therefore, also the current population values are used    
     
     
-    car_spa
+
     
-    tail(own_dat) 
-    
-    
-pop_last
+tail(pop_w)
       
     
     
