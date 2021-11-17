@@ -54,6 +54,7 @@
       select(year, residence, plot, district, owner, cat, ha)
 
     
+    
 #-------------------------------------------------------------------
 #plot (entire city, all owner categories)
 #-------------------------------------------------------------------
@@ -71,7 +72,7 @@
             scale_y = c(0, NA),
             name = "0800_entire-city",
             width = 10, height = 8)
-
+  
 
 #-------------------------------------------------------------------
 #plot (entire city, by owner)
@@ -91,6 +92,7 @@
             name = "0801_entire-city_by-owner",
             width = 10, height = 8)
 
+    
 #-------------------------------------------------------------------
 #plot (by district, all owner categories)
 #-------------------------------------------------------------------
@@ -129,6 +131,7 @@
             name = "0803_districts_by-owner",
             width = 10, height = 8,
             multi = uni_d)
+    
     
 #-------------------------------------------------------------------
 #combine information (with the parameters)
@@ -169,8 +172,7 @@
         mutate(reserve_new = capacity - buildings,
             usage_prop = pmax(0, pmin(100,
                 if_else(reserve_new == 0, 0, usage / reserve_new * 100) + car_pp)))
-
-
+    
 #plot: reserves (area)
     sszplot(usage_prop,
             aes_x = "district", aes_y = "reserve_new", aes_fill = "owner",
@@ -179,6 +181,12 @@
             scale_x = rev(uni_d),
             name = "0804_reserves_by-district",
             width = 8, height = 7)
+    
+#check: reserves and usage in the entire city (city area approx. 8800 ha)    
+    entire_city <- usage_prop %>% 
+        summarize(reserve_new = sum(reserve_new),
+                  usage = sum(usage)) %>% 
+        mutate(prop = usage / reserve_new * 100)
 
 
 #plot: usage (proportion)
@@ -224,6 +232,15 @@
             by = c("district", "owner")) %>%
         left_join(select(exp_y, year, exp_y), by = "year") %>%
         mutate(usage_y_prop = usage_prop * exp_y / exp_y_sum)
+    
+#check: usage (ha) per year
+  check_usage_y <- usage_y_prop %>%
+      mutate(usage_new = reserve_new * usage_y_prop / 100) %>%
+      group_by(year) %>%
+      summarize(usage_sum = sum(usage_new))
+  
+#check: total usage (hab)
+  sum(check_usage_y$usage_sum)
 
 #check: sum until year 'car_y'
     # check if sum of the proportions per year equals the total proportion
@@ -251,11 +268,17 @@
         right_join(usage_y_prop, by = c("district", "owner", "year")) %>%
         arrange(district, owner, year) %>%
         mutate(usage_y_prop_corr = if_else(is.na(usage_corr), usage_y_prop, usage_corr),
-            usage_area = reserve_new * usage_y_prop_corr) %>%
+            usage_area = reserve_new * usage_y_prop_corr / 100) %>%
         select(district, year, owner, reserve_new, usage_y_prop_corr, usage_area) %>%
         rename(reserve = reserve_new, usage_prop = usage_y_prop_corr)
 
-
+#check total    
+    check_total <- total %>% 
+        group_by(year) %>% 
+        summarize(usage_area = sum(usage_area))
+    sum(check_total$usage_area)
+    
+    
 #plot: usage (proportion)
     sszplot(total,
             aes_x = "year", aes_y = "usage_prop", aes_col = "owner",
@@ -274,6 +297,7 @@
             scale_y = c(0, NA),
             name = "0808_usage-area_by-district-year",
             width = 12, height = 14)
+
     
 #-------------------------------------------------------------------
 #export the results
