@@ -43,7 +43,6 @@
 #ownership (% cooperative housing)
     own_dat <- read_csv(paste0(exp_path, "/ownership_past_future.csv")) %>% 
         unique()
-    
     tail(own_dat)
     
 #population   
@@ -85,14 +84,15 @@
             by = c("district", "year", "owner")) %>% 
         mutate(car = usage_ha * 10000 / spa_dyw) %>% 
         select(district, year, owner, car)
-
+    
  
 #-------------------------------------------------------------------
 #population by ownership (past)
 #-------------------------------------------------------------------
 
-#left join on ownership (since shorter data set) 
+#left join on ownership (since this data set begins later) 
     pop_w <- left_join(own_dat, pop, by = c("district", "year")) %>% 
+        filter(year <= date_end) %>% 
         mutate(cooperative = pop * prop / 100, 
                other = pop * (1 - prop / 100)) %>% 
         select(-c(prop, pop)) %>% 
@@ -121,17 +121,33 @@
         ungroup() %>% 
         left_join(select(pop_last, district, owner, pop), 
                   by = c("district", "owner")) %>% 
-        mutate(total = pop + cumulative)
-    
+        mutate(total = pop + cumulative) %>% 
+        select(district, year, owner, total) %>% 
+        rename(pop = total)
     
     
 
     
-tail(pop_w)
-      
+#with past (for plot)
+    #why? for plotting
+    #why a plot? to check if capacity/reserves population values are...  
+    #...meaningful in comparison to the past
     
+    pop_with_past <-  bind_rows(pop_w, pop_total) %>% 
+        rename(distr = district) %>% 
+        mutate(district = factor(distr, uni_d)) %>% 
+        select(district, year, owner, pop)
+   
+#plot   
+    sszplot(pop_with_past,
+            aes_x = "year", aes_y = "pop", aes_col = "owner",
+            labs_y = "people",            
+            wrap = "district", ncol = 4,
+            scale_y = c(0, NA),            
+            name = "1300_people_capacity-reserves",
+            width = 12, height = 14)          
     
-    
+
     
     
       
