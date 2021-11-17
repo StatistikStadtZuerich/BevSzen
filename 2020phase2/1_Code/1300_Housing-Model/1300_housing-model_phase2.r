@@ -172,16 +172,31 @@
             i_x = c(NA, date_end),               
             name = "1301_proportion-cooperative-housing_data-sources",
             width = 12, height = 14)      
+ 
+#new proportion of cooperative housing; apply the parameter (% from capacity/reserves)    
+    new_prop <- prop_coop %>% 
+        mutate(prop = prop_car * car_coop/100 + prop_trend * (1 - car_coop / 100)) %>% 
+        filter(year >= szen_begin) %>% 
+        select(district, year, prop)
     
-
+#apply the new proportion
+    new_pop_car <- pop_total %>% 
+        group_by(district, year) %>% 
+        summarize(pop = sum(pop)) %>% 
+        left_join(new_prop, by = c("district", "year")) %>% 
+        mutate(pop_cooperative = pop * prop / 100,
+               pop_private = pop * (1 - prop / 100)) %>% 
+        select(-c(pop, prop)) %>% 
+        pivot_longer(cols = c("pop_cooperative", "pop_private"), 
+                     names_prefix = "pop_", 
+                     names_to = "category", values_to = "car") %>% 
+        mutate(owner = if_else(category == "cooperative", uni_w[1], uni_w[2])) %>% 
+        select(district, year, owner, car)
     
     
-    
-    
-    
-      
+ 
 #-------------------------------------------------------------------
-#combine: projects and capacity
+#combine: projects and capacity (with new proportion of cooperative housing)
 #-------------------------------------------------------------------
 
 #combine
@@ -191,17 +206,46 @@
             owner = uni_w)) %>% 
         left_join(pop_last, by = c("district", "year", "owner")) %>% 
         left_join(pro_aca, by = c("district", "year", "owner")) %>%       
-        left_join(car_spa, by = c("district", "year", "owner")) %>% 
+        left_join(new_pop_car, by = c("district", "year", "owner")) %>% 
+        replace_na(list(new = 0, removed = 0)) %>% 
         select(district, owner, year, pop, new, removed, car) %>% 
         arrange(district, owner, year)
     
+    tail(pro_car)
     
-    
-    test <- filter(pro_car, (district == "Affoltern") & (owner == "cooperative housing")) %>% 
+    x <- filter(pro_car, (district == "Affoltern") & (owner == "cooperative housing")) %>% 
         select(-c(district, owner))
     
+    x$new[2] <- 1000
+     i <- 2
     
+    # for (i in 2:nrow(x)){
+      
+    for (i in 2:10){   
+        #new colums
+            x$project <- NA
+            x$corr <- NA
+      
+        #project list (cannot be negative)
+            x$project[i] <- max(0, x$pop[i-1] + x$new[i] - x$removed[i])
+    
+        #select the larger value of projects and capacity/reserves
+            #if projects larger: known projects will be realized
+            #if capacity/reserves larger: not all future buildings in the project list
+            x$pop[i] <- max(x$project[i], x$car[i])
+            
+        #correction of the reserves (if too much used due to the project list)
+            x$corr[i] <- max(0, x$project[i] - x$car[i])    
+            
+        #correction (proportional to the usage)
+            usage <- diff(x$car[i:nrow(x)])
+            proportion <- usage/sum(usage)
+            index <- (i+1):nrow(x) 
+            x$car[index] <- x$car[index] - x$corr[i] * proportion
 
+    }
 
-
+    
+    
+as.data.frame(x)
       
