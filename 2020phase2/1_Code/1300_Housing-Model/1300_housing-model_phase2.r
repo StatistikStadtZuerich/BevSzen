@@ -125,9 +125,6 @@
         select(district, year, owner, total) %>% 
         rename(pop = total)
     
-    
-
-    
 #with past (for plot)
     #why? for plotting
     #why a plot? to check if capacity/reserves population values are...  
@@ -143,11 +140,43 @@
             aes_x = "year", aes_y = "pop", aes_col = "owner",
             labs_y = "people",            
             wrap = "district", ncol = 4,
-            scale_y = c(0, NA),            
+            scale_y = c(0, NA), 
+            i_x = c(NA, date_end),               
             name = "1300_people_capacity-reserves",
             width = 12, height = 14)          
     
+#proportion cooperative housing (according to capacity/reserves vs. district trends)
+    prop_coop <- pop_with_past %>% 
+        mutate(simple = if_else(owner == uni_w[1], "cooperative", "private")) %>% 
+        select(-owner) %>% 
+        pivot_wider(names_from = simple, values_from = pop) %>% 
+        mutate(prop_car = cooperative / (cooperative + private) * 100) %>% 
+        select(district, year, prop_car) %>% 
+        left_join(own_dat, by = c("district", "year")) %>% 
+        rename(prop_trend = prop)
+    
+#plot preparation
+    prop_coop_plot <- prop_coop %>% 
+        pivot_longer(cols = c("prop_car", "prop_trend"), 
+                     names_prefix = "prop_", 
+                     names_to = "category", values_to = "prop") %>% 
+        mutate(cat = if_else(category == "car", 
+                             "capacity/reserves", "district trends"))
+        
+#plot   
+    sszplot(prop_coop_plot,
+            aes_x = "year", aes_y = "prop", aes_col = "cat",
+            labs_y = "proportion of cooperative housing (in %)",            
+            wrap = "district", ncol = 4,
+            scale_y = c(0, NA), 
+            i_x = c(NA, date_end),               
+            name = "1301_proportion-cooperative-housing_data-sources",
+            width = 12, height = 14)      
+    
 
+    
+    
+    
     
     
       
