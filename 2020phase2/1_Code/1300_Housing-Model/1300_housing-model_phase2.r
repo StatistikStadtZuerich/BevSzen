@@ -211,43 +211,69 @@
         select(district, owner, year, pop, new, removed, car) %>% 
         arrange(district, owner, year)
     
-    tail(pro_car)
     
-    x <- filter(pro_car, (district == "Affoltern") & (owner == "cooperative housing")) %>% 
-        select(-c(district, owner))
-    
-    x$new[2] <- 1000
-     i <- 2
-     
-            #new colums
-            x$project <- NA
-            x$corr <- NA
-    
-    for (i in 2:nrow(x)){
-      
-    # for (i in 2:15){   
+#function: consider projects and reserves
  
-      
-        #project list (cannot be negative)
-            x$project[i] <- max(0, x$pop[i-1] + x$new[i] - x$removed[i])
-    
-        #select the larger value of projects and capacity/reserves
-            #if projects larger: known projects will be realized
-            #if capacity/reserves larger: not all future buildings in the project list
-            x$pop[i] <- max(x$project[i], x$car[i])
-            
-        #correction of the reserves (if too much used due to the project list)
-            x$corr[i] <- max(0, x$project[i] - x$car[i])    
-            
-        #correction (proportional to the usage)
-            usage <- diff(x$car[i:nrow(x)])
-            proportion <- usage/sum(usage)
-            index <- (i+1):nrow(x) 
-            x$car[index] <- pmax(0, x$car[index] - x$corr[i] * proportion)
+      #x <- filter(pro_car, (district == "Affoltern") & (owner == "cooperative housing"))
 
-    }
+      #consider projects and reserves
+          project_reserves <- function(x,...){
 
+          #new colums
+                x$project <- NA
+                x$corr <- NA
+        
+          #loop from second year (i.e. first year in the future) to the last prediction year
+                for (i in 2:nrow(x)){
+          
+                    #project list (the result can not be negative)
+                        x$project[i] <- max(0, x$pop[i-1] + x$new[i] - x$removed[i])
+                
+                    #select the larger value of projects and capacity/reserves
+                        #if projects larger: known projects will be realized
+                        #if capacity/reserves larger: not all future buildings in the project list
+                        x$pop[i] <- max(x$project[i], x$car[i])
+                        
+                    #correction of the reserves (if too much used due to the project list)
+                        x$corr[i] <- max(0, x$project[i] - x$car[i])    
+                        
+                    #correction (proportional to the usage)
+                        if(i < nrow(x)){
+                            index1 <- i:nrow(x)
+                            index2 <- (i+1):nrow(x)
+                            x$usage <- 0
+                            x$mult <- 0
+                            x$usage[index2] <- diff(x$car[index1])
+                            sum_usage <- sum(x$usage)
+                            if(sum_usage > 0){x$mult[index2] <- x$usage[index2] / sum_usage} #correct only, if reserves left
+                            x$dif <- x$corr[i] * x$mult
+                            x$correction <- pmin(x$usage, x$dif) #the correction per year cannot be larger than the usage per year
+                            x$car <- pmax(0, x$car - x$correction) #better be safe: no negative population limit values
+                        }
+
+                #end of the loop over years          
+                }                        
+                            
+         
+                #output
+                    y <- select(x, district, year, owner, pop) %>%
+                        filter(year >= szen_begin)
+                    print(y)
+  
+        #end of the function
+        }      
+
+    # project_reserves(x)          
+          
+          
+          
+          
+        
+#consider projects and reserves (apply the function)
+    splitted <- pro_car %>% 
+        group_split(district, owner) 
+    pro_res <- bind_rows(lapply(splitted, project_reserves))
     
-    
-as.data.frame(x)
-      
+          
+
+            
