@@ -266,14 +266,80 @@
     # project_reserves(x)          
           
           
-          
-          
-        
 #consider projects and reserves (apply the function)
     splitted <- pro_car %>% 
         group_split(district, owner) 
     pro_res <- bind_rows(lapply(splitted, project_reserves))
     
-          
+  
+#-------------------------------------------------------------------
+#plots
+#-------------------------------------------------------------------
+    
+#with the past    
+    pop_fut_past <- bind_rows(pop_w, pro_res) %>%    
+        rename(distr = district) %>%  
+        mutate(district = factor(distr, uni_d)) %>% 
+        select(district, year, owner, pop)
+    
+#plot   
+    sszplot(pop_fut_past,
+            aes_x = "year", aes_y = "pop", aes_col = "owner",
+            labs_y = "people",            
+            wrap = "district", ncol = 4,
+            scale_y = c(0, NA), 
+            i_x = c(NA, date_end),               
+            name = "1302_population_district-owner",
+            width = 12, height = 14)     
+    
+#by district (without owner)  
+    pop_d <- pop_fut_past %>% 
+        group_by(district, year) %>% 
+            summarize(pop = sum(pop)) %>% 
+        ungroup()
+    
+#plot   
+    sszplot(pop_d,
+            aes_x = "year", aes_y = "pop", 
+            labs_y = "people",            
+            wrap = "district", ncol = 4,
+            scale_y = c(0, NA), 
+            i_x = c(NA, date_end),               
+            name = "1303_population_district",
+            width = 12, height = 14)      
+    
+#all (entire city)  
+    pop_all <- pop_fut_past %>% 
+        group_by(year) %>% 
+            summarize(pop = sum(pop)) %>% 
+        ungroup()
+        
+    sszplot(pop_all,
+            aes_x = "year", aes_y = "pop", 
+            labs_y = "people",            
+            scale_y = c(0, NA), 
+            i_x = c(NA, date_end),               
+            name = "1304_population",
+            width = 7, height = 5)      
+        
+#-------------------------------------------------------------------
+#export the results
+#-------------------------------------------------------------------
 
-            
+#per district  
+    ex_data_d <- arrange(pop_d, district, year)
+    write_csv(ex_data_d, paste0(exp_path, "/housing-model_population_d.csv"))       
+   
+
+#entire city (to compare with past publications) 
+    ex_data_all <- arrange(pop_all, year)
+    write_csv(ex_data_all, paste0(exp_path, "/housing-model_population_all.csv"))       
+    
+    
+    
+        
+    
+    
+    
+    
+    
