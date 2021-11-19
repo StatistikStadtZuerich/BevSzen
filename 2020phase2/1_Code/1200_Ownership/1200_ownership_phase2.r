@@ -40,8 +40,7 @@
                 people = sum_NA(people)) %>% 
         ungroup()     
     
-    
-    
+
     
 #-------------------------------------------------------------------
 #proportion of cooperative housing
@@ -73,7 +72,9 @@
      
 #category: people
     own_cat <- filter(own_prop, category == "people") %>% 
-        select(district, year, prop)    
+        select(district, year, prop) %>% 
+        ungroup()
+    tail(own_cat)
        
 #base years
     #WHY not in previous pipe? The previous tibble will be used later for plotting
@@ -86,28 +87,6 @@
               szen_t0 = szen_begin, szen_t1 = szen_end,
               prop_trend = own_prop_trend, thres_percent = own_thres_percent,
               lower_thres = own_lower_thres, upper_thres = own_upper_thres)
-   
-# # https://tidyr.tidyverse.org/reference/expand.html 
-#      test <- expand(own_base, year, district)
-#      head(as.data.frame(test), 200)
-#      
-# fruits <- tibble(
-#   type   = c("apple", "orange", "apple", "orange", "orange", "orange"),
-#   year   = c(2010, 2010, 2012, 2010, 2010, 2012),
-#   size  =  factor(
-#     c("XS", "S",  "M", "S", "S", "M"),
-#     levels = c("XS", "S", "M", "L")
-#   ),
-#   weights = rnorm(6, as.numeric(size) + 2)
-# )
-# 
-# 
-# fruits %>% expand(type, size)
-
-# reason of undesired expand behaviour: tibble is still grouped (line 51)
-# after ungrouping, problem disappears:
-  own_base %>% ungroup() %>% expand(year, district)
-    
 
 #past and prediction
     own_past_pred <- as_tibble(expand_grid(
