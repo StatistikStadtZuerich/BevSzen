@@ -211,7 +211,7 @@
 #smoothing (direction: age, result should not be below zero)
     nat_pop_das_smooth <- group_by(nat_pop_das, district, sex) %>%
             arrange(age) %>% 
-            mutate(pop_a = pmax(0, predict(loess(pop ~ age, span = nat_pop_span_das, degree = 1, na.action = na.aggregate))),
+            mutate(pop_a = pmax(0, predict(loess(pop ~ age, span = 0.1, degree = 1, na.action = na.aggregate))),
                 nat_a = pmax(0, predict(loess(nat ~ age, span = nat_nat_span_das, degree = 1, na.action = na.aggregate)))) %>% 
         ungroup()   
     
