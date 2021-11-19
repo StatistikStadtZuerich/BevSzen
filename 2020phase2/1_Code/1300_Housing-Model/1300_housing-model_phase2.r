@@ -41,8 +41,7 @@
     spa_dat <- read_csv(paste0(exp_path, "/living-space_future.csv"))    
  
 #ownership (% cooperative housing)
-    own_dat <- read_csv(paste0(exp_path, "/ownership_past_future.csv")) %>% 
-        unique()
+    own_dat <- read_csv(paste0(exp_path, "/ownership_past_future.csv"))
     tail(own_dat)
     
 #population   
