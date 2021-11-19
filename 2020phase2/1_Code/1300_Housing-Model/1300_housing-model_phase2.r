@@ -72,6 +72,9 @@
         select(district, year, owner, indicator, people) %>% 
         pivot_wider(names_from = indicator, values_from = people)
 
+#if additional information is available on new projects (e.g. amount of people)
+    #this could be incorporated here
+    
 
 #-------------------------------------------------------------------
 #capacity/reserves and living space (from m2 to people; future)
@@ -84,6 +87,7 @@
             by = c("district", "year", "owner")) %>% 
         mutate(car = usage_ha * 10000 / spa_dyw) %>% 
         select(district, year, owner, car)
+    tail(car_spa)
     
  
 #-------------------------------------------------------------------
