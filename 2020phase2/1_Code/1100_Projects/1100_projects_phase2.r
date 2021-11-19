@@ -163,7 +163,7 @@
             geom = "col",
             labs_x = "", angle = 90,
             wrap = "district", ncol = 4,
-            name = "1105_projects_by-district-year",
+            name = "1105_projects_by-district-year-owner",
             width = 10, height = 11,
             multi = uni_w)
 
