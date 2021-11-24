@@ -261,6 +261,7 @@
             width = 13, height = 8,
             quotes = quote(geom_line(aes(x = age, y = up_cum, color = origin))))
     
+    
 #-------------------------------------------------------------------
 #fit gam to corrected fertility rate
 #-------------------------------------------------------------------
@@ -290,7 +291,7 @@
             fit_lev[1], fit_lev[2]), levels = fit_lev)) %>% 
         select(district, year, age, origin, cat, fer)  
     
-# #plot: 
+#plot: 
     sszplot(fit_dat, 
             aes_x = "age", aes_y = "fer", aes_col = "origin", aes_ltyp = "cat",
             wrap = "as.factor(year)",
@@ -336,7 +337,7 @@
             multi = uni_o)  
         
 #-------------------------------------------------------------------
-#plot the precitions: along year, for selected age
+#plot the predictions: along year, for selected age
 #-------------------------------------------------------------------
      
 #selected age
@@ -359,7 +360,8 @@
                        quote(geom_line(aes(x = year, y = pred_mean), linetype = 3)),
                        quote(geom_line(aes(x = year, y = pred_roll), linetype = 1))))
     
-  #plot: foreign
+    
+#plot: foreign
     age_dat <- filter(fer_pred, (origin == uni_o[2]) & (age %in% sel_age))    
     sszplot(age_dat,
             aes_x = "year", aes_y = "fer_fit",
@@ -373,7 +375,8 @@
             multi = uni_d,
             quotes = c(quote(geom_line(aes(x = year, y = pred), linetype = 2)),
                        quote(geom_line(aes(x = year, y = pred_mean), linetype = 3)),
-                       quote(geom_line(aes(x = year, y = pred_roll), linetype = 1))))     
+                       quote(geom_line(aes(x = year, y = pred_roll), linetype = 1)))) 
+    
 
 #-------------------------------------------------------------------
 #fit gam to future fertility rates
