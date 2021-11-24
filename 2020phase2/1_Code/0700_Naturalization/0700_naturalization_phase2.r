@@ -6,18 +6,23 @@
 #rok/bad, July 2021
 #-------------------------------------------------------------------
 
-#general parameters and functions already imported?
-    if(!exists("para")) {
+
+#-------------------------------------------------------------------
+#paths, general
+#-------------------------------------------------------------------
+
+#general functions already available?
+    if (!exists("para")) {
       
-      #working directory
-          library(here)
-          setwd(paste0(here(), "/2020phase2/"))
-          
-      #general (e.g. packages, colors)
-          source("1_Code/0000_General/0000_general_phase2.r")
-          
+        #working directory
+            library(here)
+            setwd(paste0(here(), "/2020phase2/"))
+        
+        #general (e.g. packages, colors)
+            source("1_Code/0000_General/0000_general_phase2.r")
+            
     }
-    
+
 #export path (for future rates)
     nat_exp <- exp_path 
     
