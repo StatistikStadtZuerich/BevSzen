@@ -182,4 +182,6 @@ ownership;own_thres_percent;ea.grenze.prozent;20;percent;low;"ownership: It is n
 ownership;own_window_thres;ea.window.szen;7;years;low;ownership: filter over years (to smooth a potential break in the curve due to range of future proportions;7;7;7
 ownership;own_lower_thres;no parameter in previous model;0;percent;no parameter;ownership: lower threshold for the proportions (here: the proportions should not be negative), NA if there is no lower threshold;0;0;0
 ownership;own_upper_thres;no parameter in previous model;100;percent;no parameter;ownership: lower threshold for the proportions (here: the proportions should not be more than 100 percent), NA if there is no lower threshold;100;100;100
-housing model;car_coop;similar to wohn.modell.typ;20;percent;low;Percentage of cooperative housing can be used from capacity/reserves (car_coop = 100), or from the trends in the districts (car_coop = 0) or a mixture of both data sources. ;20;20;20
+housing model;car_coop;similar to wohn.modell.typ;20;percent;low;Percentage of cooperative housing can be used from capacity/reserves (car_coop = 100), or from the trends in the districts (car_coop = 0) or a mixture of both data sources. In other words: car_coop = percentage used from capacity/reserves.;20;20;20
+housing model;empty_coop;similar to wohn.modell.anteil.leerwhg;0;percent;low;Percentage of empty apartments (cooperative housing);0;0;0
+housing model;empty_private;similar to wohn.modell.anteil.leerwhg;0;percent;low;Percentage of empty apartments (private housing);0;0;0
