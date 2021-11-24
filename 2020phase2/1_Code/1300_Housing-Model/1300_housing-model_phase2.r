@@ -272,9 +272,31 @@
 #consider projects and reserves (apply the function)
     splitted <- pro_car %>% 
         group_split(district, owner) 
-    pro_res <- bind_rows(lapply(splitted, project_reserves))
+    pro_res_all <- bind_rows(lapply(splitted, project_reserves))
     
   
+#-------------------------------------------------------------------
+#apply the parameter of empty apartments
+#-------------------------------------------------------------------
+
+#prediction: back from people to apartments to apply the parameter
+    # pro_res <- left_join(pro_res_all, aca_dat, 
+    #                         by = c("district", "year", "owner")) %>% 
+    #     mutate(apartments = pop / aca_dyw, 
+    #            empty_prop = if_else(owner == uni_w[1], empty_coop, empty_private), 
+    #            empty_apart = apartments * empty_prop / 100, 
+    #            diff_people = empty_apart * aca_dyw, 
+    #            pop_new = pop - diff_people)
+    
+   
+#parameter can be applied directly to the population
+    pro_res <- pro_res_all %>% 
+        mutate(empty_prop = if_else(owner == uni_w[1], empty_coop, empty_private), 
+               pop_new = pop * (100 - empty_prop) / 100) %>% 
+        select(district, year, owner, pop_new) %>% 
+        rename(pop = pop_new)
+    
+
 #-------------------------------------------------------------------
 #plots
 #-------------------------------------------------------------------
