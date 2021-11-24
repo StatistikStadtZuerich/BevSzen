@@ -124,7 +124,7 @@
                         aes_x = "age", aes_y = "rel_prop_dao", aes_col = "origin",
                         wrap = "district", ncol = 4,
                         labs_y = paste0("proportion in % (relocation on ", mig_name, "*)"),
-                        name = paste0(rem_number, "01_proportion-dso_focus-original"),
+                        name = paste0(rem_number, "01_proportion-dao_focus-origin"),
                         width = 11, height = 10)
             
             #-------------------------------------------------------------------
