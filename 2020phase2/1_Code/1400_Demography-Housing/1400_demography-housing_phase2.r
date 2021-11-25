@@ -46,11 +46,13 @@
     
 #birth: fertility rate
     fer <- read_csv(paste0(exp_path, "/birth_fertility_future.csv")) %>% 
-        mutate(sex = uni_s[2])
+        mutate(sex = uni_s[2],
+               origin = factor(origin, levels = uni_o))
     
 #birth: origin change    
-    cha <- read_csv(paste0(exp_path, "/birth_origin-change_future.csv"))
-        
+    cha <- read_csv(paste0(exp_path, "/birth_origin-change_future.csv")) %>% 
+        mutate(origin = factor(origin, levels = uni_o))
+               
 #birth: proportion male 
     pro_male <- read_csv(paste0(exp_path, "/birth_sex-ratio_future.csv"))
        
@@ -101,19 +103,60 @@
 #loop over years
     for (iyear in future){
       
-        #iyear <- 2021  
-            if(iyear == min(future)){popu <- pop_last}
+        #iyear <- 2021
       
-        #births
-            bir <- left_join()
-      fer
+        #population at the begin of the year
+            if(iyear == min(future)){popu <- select(pop_last, -year)}
       
-      
-      
-      
-      
-      
-      
+        #births (fertility rate * women in the population)
+            bir <- fer %>% 
+                filter(year == iyear) %>% 
+                left_join(popu, by = c("district", "age", "sex", "origin")) %>% 
+                replace_na(list(fer = 0, pop = 0)) %>%               
+                mutate(birth = pop * fer / 100) %>% 
+                group_by(district, year, origin) %>% 
+                    summarize(birth = sum(birth)) %>% 
+                ungroup()
+            
+                #sum(bir$birth)
+
+        #births: origin changes (from mother to baby) and sex (of the baby)
+            bir_so <- cha %>% 
+                filter(year == iyear) %>% 
+                select(-year) %>% 
+                right_join(bir, by = c("district", "origin")) %>% 
+                mutate(change = birth * cha / 100, 
+                       keep = birth - change) %>% 
+                select(district, origin, year, change, keep) %>% 
+                pivot_longer(cols = c("change", "keep"), 
+                             names_to = "category", values_to = "birth") %>%
+                mutate(new_origin = case_when(category == "keep" ~ origin,
+                                              origin == uni_o[1] ~ uni_o[2],
+                                              TRUE ~ uni_o[1])) %>% 
+                select(district, year, new_origin, birth) %>% 
+                rename(origin = new_origin) %>% 
+                group_by(district, year, origin) %>% 
+                    summarize(birth = sum(birth)) %>% 
+                ungroup() %>% 
+                left_join(filter(pro_male, year == iyear), by = "year") %>% 
+                mutate(male = birth * pro_male / 100,
+                       female = birth - male) %>% 
+                select(-c(birth, pro_male)) %>% 
+                pivot_longer(cols = uni_s, 
+                             names_to = "sex", values_to = "birth") %>% 
+                mutate(age = 0, 
+                       sex = factor(sex, levels = uni_s)) %>% 
+                select(district, year, age, sex, origin, birth) %>% 
+                arrange(district, sex, origin)
+            
+                #sum(bir$birth)            
+                #sum(bir_so$birth)                       
+                       
+                                   
+  
+            
+                 
+#end of loop over years      
     }     
     
     
