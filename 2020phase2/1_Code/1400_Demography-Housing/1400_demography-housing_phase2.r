@@ -302,18 +302,14 @@
                                           (1 - less_ims / 100) * differ,
                                           (1 - more_ims / 100) * differ),
                        new_ims = ims + differ_ims,
-                       new_ems = ems - differ_ems)
-                       
+                       new_ems = ems - differ_ems,
+                       factor_ims = new_ims / ims,
+                       factor_ems = new_ems / ems,
+                       check = pop_bir_dea + new_ims - new_ems - pop_limit)
             
-            
-   
-                       
-           
-                       # corr_ims = (ims + differ_ims) / ims)
-            
- 
+
                 # sum(bal$differ)
-            
+                # sum(abs(bal$check))            
                        
                        
                        
