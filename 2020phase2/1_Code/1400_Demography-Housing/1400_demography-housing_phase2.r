@@ -302,7 +302,7 @@
                                           (1 - less_ims / 100) * differ,
                                           (1 - more_ims / 100) * differ),
                        new_ims = ims + differ_ims,
-                       new_ems = ems + differ_ems)
+                       new_ems = ems - differ_ems)
                        
             
             
