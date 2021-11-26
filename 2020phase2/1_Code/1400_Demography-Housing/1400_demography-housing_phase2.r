@@ -125,7 +125,8 @@
 
 #housing model
     hou <- read_csv(paste0(exp_path, "/housing-model_population_d.csv")) %>% 
-        mutate(district = factor(district, levels = uni_d))   
+        mutate(district = factor(district, levels = uni_d)) %>% 
+        rename(pop_limit = pop)
     
    
 #-------------------------------------------------------------------
@@ -267,9 +268,25 @@
                 left_join(dea, by = c("district", "year", "age", "sex", "origin")) %>%                      
                 left_join(ims, by = c("district", "year", "age", "sex", "origin")) %>%                      
                 left_join(ems, by = c("district", "year", "age", "sex", "origin")) %>% 
-                replace_na(list(pop = 0, birth = 0, death = 0, ims = 0, ems = 0))              
+                replace_na(list(pop = 0, birth = 0, death = 0, ims = 0, ems = 0)) %>% 
+                #not more than the entire population can die...
+                mutate(death_real = pmin(death, pop),
+                       pop_birth_death = pop + birth - death_real)
             
 
+            # sum(demo$pop)
+            # sum(bir$birth) - sum(dea$death)            
+            # sum(demo$pop_birth_death)            
+            # sum(demo$pop) + sum(bir$birth) - sum(dea$death)
+  
+  
+            tail(demo)
+            
+            
+            filter(hou, year == iyear)
+            
+            
+            
                  
 #end of loop over years      
     }     
