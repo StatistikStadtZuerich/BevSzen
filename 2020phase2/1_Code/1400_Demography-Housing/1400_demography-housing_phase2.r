@@ -294,15 +294,21 @@
                 #pop + birth - death + immigration* - emigration*
                 mutate(pop_theo = pop_bir_dea + ims - ems) %>%               
                 left_join(hou, by = c("district", "year")) %>% 
-                mutate(differ = pop_limit - pop_theo,
-                       differ_ims = prop_ims / 100 * differ,
-                       corr_ims = (ims + differ_ims) / ims)
+                mutate(differ = pop_limit - pop_theo, 
+                       corr_ims = if_else(differ < 0, 
+                                          less_ims / 100 * differ,
+                                          more_ims / 100 * differ),
+                       corr_ems = if_else(differ < 0, 
+                                          (1 - less_ims / 100) * differ,
+                                          (1 - more_ims / 100) * differ))
             
             
+   
+                       
+           
+                       # corr_ims = (ims + differ_ims) / ims)
             
-                # prop_less_ims
-                # prop_more_ims
-            
+ 
                 # sum(bal$differ)
             
                        
