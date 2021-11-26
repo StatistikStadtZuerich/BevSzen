@@ -295,12 +295,15 @@
                 mutate(pop_theo = pop_bir_dea + ims - ems) %>%               
                 left_join(hou, by = c("district", "year")) %>% 
                 mutate(differ = pop_limit - pop_theo, 
-                       corr_ims = if_else(differ < 0, 
+                       differ_ims = if_else(differ < 0, 
                                           less_ims / 100 * differ,
                                           more_ims / 100 * differ),
-                       corr_ems = if_else(differ < 0, 
+                       differ_ems = if_else(differ < 0, 
                                           (1 - less_ims / 100) * differ,
-                                          (1 - more_ims / 100) * differ))
+                                          (1 - more_ims / 100) * differ),
+                       new_ims = ims + differ_ims,
+                       new_ems = ems + differ_ems)
+                       
             
             
    
