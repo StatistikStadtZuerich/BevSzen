@@ -257,7 +257,7 @@
             
         #combine the demographic processes
             
-            demo <- as_tibble(expand_grid(
+            dem <- as_tibble(expand_grid(
                         district = uni_d, 
                         year = iyear,
                         age = (-1):age_max,
@@ -271,21 +271,60 @@
                 replace_na(list(pop = 0, birth = 0, death = 0, ims = 0, ems = 0)) %>% 
                 #not more than the entire population can die...
                 mutate(death_real = pmin(death, pop),
-                       pop_birth_death = pop + birth - death_real)
+                       pop_bir_dea = pop + birth - death_real)
+            
+            # sum(dem$pop)
+            # sum(bir$birth) - sum(dea$death)
+            # sum(dem$pop_bir_dea)
+            # sum(dem$pop) + sum(bir$birth) - sum(dea$death)
+
+            
+        #balance (on district level)
+            #if not enough space: decrease immigration, increase emigration
+            #if space left: increase immigration, decrease emigration
+            
+            bal <- dem %>% 
+                group_by(district, year) %>% 
+                    summarize(
+                        pop_bir_dea = sum(pop_bir_dea),
+                        ims = sum(ims),
+                        ems = sum(ems)) %>% 
+                ungroup() %>% 
+                #theoretical population:
+                #pop + birth - death + immigration* - emigration*
+                mutate(pop_theo = pop_bir_dea + ims - ems) %>%               
+                left_join(hou, by = c("district", "year")) %>% 
+                mutate(differ = pop_limit - pop_theo,
+                       differ_ims = prop_ims / 100 * differ,
+                       corr_ims = (ims + differ_ims) / ims)
+            
+            
+            
+                # prop_less_ims
+                # prop_more_ims
+            
+                # sum(bal$differ)
+            
+                       
+                       
+                       
+            
+            
+            
+            
+            
+            
+            
+            
+            
             
 
-            # sum(demo$pop)
-            # sum(bir$birth) - sum(dea$death)            
-            # sum(demo$pop_birth_death)            
-            # sum(demo$pop) + sum(bir$birth) - sum(dea$death)
-  
-  
-            tail(demo)
             
             
-            filter(hou, year == iyear)
+
             
-            
+ 
+
             
                  
 #end of loop over years      
