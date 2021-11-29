@@ -294,6 +294,11 @@
                 #pop + birth - death + immigration* - emigration*
                 mutate(pop_theo = pop_bir_dea + ims - ems) %>%               
                 left_join(hou, by = c("district", "year")) %>% 
+              
+                #tests if correction (ims3, ems3 are right)
+                # mutate(ims = if_else(district == "Kreis 1", 5, ims)) %>%
+                # mutate(ems = if_else(district == "Leimbach", 50, ems)) %>%
+              
                 mutate(differ = pop_limit - pop_theo, 
                        differ_ims = if_else(differ < 0, 
                                           less_ims / 100 * differ,
@@ -303,14 +308,36 @@
                                           (1 - more_ims / 100) * differ),
                        new_ims = ims + differ_ims,
                        new_ems = ems - differ_ems,
-                       factor_ims = new_ims / ims,
-                       factor_ems = new_ems / ems,
-                       check = pop_bir_dea + new_ims - new_ems - pop_limit)
+                       #immigration* and emigration* cannot be negative
+                       new_ims2 = pmax(0, new_ims),
+                       new_ems2 = pmax(0, new_ems),
+                       #case: not enough space
+                           #if the decrease of immigration* is not enough to reach
+                           #the pop limit (since immigration* is already decreased to zero), 
+                           #then emigration* is increased
+                       new_ems3 = if_else(new_ims < 0, new_ems2 + abs(new_ims),
+                                          new_ems2),
+                       #case: too much space
+                           #if the decrease of emigration* is not enough to reach
+                           #the pop limit (since emigration* is already decreased to zero), 
+                           #then immigration* is increased
+                       new_ims3 = if_else(new_ems < 0, new_ims2 + abs(new_ems),
+                                          new_ims2),           
+                       factor_ims = new_ims3 / ims,
+                       factor_ems = new_ems3 / ems,
+                       check = pop_bir_dea + new_ims3 - new_ems3 - pop_limit)
             
-
                 # sum(bal$differ)
                 # sum(abs(bal$check))            
-                       
+                                   
+            #check: enough immigration* and/or emigration* for proper correction?
+                check <- bal %>% 
+                    filter((new_ims < 0) | (new_ems < 0))
+            
+     
+            select(ba, district, year, factor_ims, factor_ems)
+
+
                        
                        
             
