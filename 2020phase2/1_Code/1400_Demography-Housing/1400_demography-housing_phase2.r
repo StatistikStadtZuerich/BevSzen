@@ -152,30 +152,30 @@
                 filter(year == iyear) %>% 
                 left_join(popu, by = c("district", "age", "sex", "origin")) %>% 
                 replace_na(list(fer = 0, pop = 0)) %>%               
-                mutate(birth = pop * fer / 100) %>% 
+                mutate(bir = pop * fer / 100) %>% 
                 group_by(district, year, origin) %>% 
-                    summarize(birth = sum(birth)) %>% 
+                    summarize(bir = sum(bir)) %>% 
                 ungroup()
             
-                #sum(bir_do$birth)
+                #sum(bir_do$bir)
 
         #births: origin changes (from mother to baby)
             bir_do_new <- cha %>% 
                 filter(year == iyear) %>% 
                 select(-year) %>% 
                 right_join(bir_do, by = c("district", "origin")) %>% 
-                mutate(change = birth * cha / 100, 
-                       keep = birth - change) %>% 
+                mutate(change = bir * cha / 100, 
+                       keep = bir - change) %>% 
                 select(district, origin, year, change, keep) %>% 
                 pivot_longer(cols = c("change", "keep"), 
-                             names_to = "category", values_to = "birth") %>%
+                             names_to = "category", values_to = "bir") %>%
                 mutate(new_origin = case_when(category == "keep" ~ origin,
                                               origin == uni_o[1] ~ uni_o[2],
                                               TRUE ~ uni_o[1])) %>% 
-                select(district, year, new_origin, birth) %>% 
+                select(district, year, new_origin, bir) %>% 
                 rename(origin = new_origin) %>% 
                 group_by(district, year, origin) %>% 
-                    summarize(birth = sum(birth)) %>% 
+                    summarize(bir = sum(bir)) %>% 
                 ungroup()
             
         #births: with variable 'sex'
@@ -186,29 +186,29 @@
             
             bir <- bir_do_new %>%            
                 left_join(filter(pro_male, year == iyear), by = "year") %>% 
-                mutate(male = birth * pro_male / 100,
-                       female = birth - male) %>% 
-                select(-c(birth, pro_male)) %>% 
+                mutate(male = bir * pro_male / 100,
+                       female = bir - male) %>% 
+                select(-c(bir, pro_male)) %>% 
                 pivot_longer(cols = uni_s, 
-                             names_to = "sex", values_to = "birth") %>% 
+                             names_to = "sex", values_to = "bir") %>% 
                 mutate(age = -1, 
                        sex = factor(sex, levels = uni_s)) %>% 
-                select(district, year, age, sex, origin, birth) %>% 
+                select(district, year, age, sex, origin, bir) %>% 
                 arrange(district, sex, origin)
             
-                #sum(bir_do$birth)   
-                #sum(bir_do_new$birth)             
-                #sum(bir$birth)                       
+                #sum(bir_do$bir)   
+                #sum(bir_do_new$bir)             
+                #sum(bir$bir)                       
                        
         #deaths (mortality rate * population)
             dea <- mor %>% 
                 filter(year == iyear) %>% 
                 right_join(popu, by = c("age", "sex")) %>%  
                 replace_na(list(mor = 0, pop = 0)) %>%               
-                mutate(death = pop * mor / 100) %>% 
-                select(district, year, age, sex, origin, death)
+                mutate(dea = pop * mor / 100) %>% 
+                select(district, year, age, sex, origin, dea)
 
-                #sum(dea$death)                                           
+                #sum(dea$dea)                                           
   
         #immigration*
             ims <- popu %>% 
@@ -268,15 +268,16 @@
                 left_join(dea, by = c("district", "year", "age", "sex", "origin")) %>%                      
                 left_join(ims, by = c("district", "year", "age", "sex", "origin")) %>%                      
                 left_join(ems, by = c("district", "year", "age", "sex", "origin")) %>% 
-                replace_na(list(pop = 0, birth = 0, death = 0, ims = 0, ems = 0)) %>% 
+                replace_na(list(pop = 0, bir = 0, dea = 0, ims = 0, ems = 0)) %>% 
                 #not more than the entire population can die...
-                mutate(death_real = pmin(death, pop),
-                       pop_bir_dea = pop + birth - death_real)
+                #therefore, calcualate effective deaths
+                mutate(dea_eff = pmin(dea, pop),
+                       pop_bir_dea = pop + bir - dea_eff)
             
             # sum(dem$pop)
-            # sum(bir$birth) - sum(dea$death)
+            # sum(bir$bir) - sum(dea$dea)
             # sum(dem$pop_bir_dea)
-            # sum(dem$pop) + sum(bir$birth) - sum(dea$death)
+            # sum(dem$pop) + sum(bir$bir) - sum(dea$dea)
 
             
         #balance (on district level)
@@ -334,23 +335,79 @@
                 check <- bal %>% 
                     filter((new_ims < 0) | (new_ems < 0))
             
-     
-            select(ba, district, year, factor_ims, factor_ems)
+        #apply the correction factors to the immigration* and emigration* by 
+        #district, age, sex, origin (same factor by district)   
+            dem_factor <- bal %>% 
+                select(district, year, factor_ims, factor_ems) %>% 
+                right_join(dem, by = c("district", "year")) %>% 
+                mutate(ims_eff = ims * factor_ims, 
+                       ems_eff = ems * factor_ems,
+                       pop_end_year = pmax(0, pop_bir_dea + ims_eff - ems_eff)) %>% 
+                select(district, year, age, sex, origin, 
+                       bir, dea_eff, ims_eff, pop_end_year)
+            
+         #sum(dem_factor$pop_end_year)
+            
+         #with naturalization (only on end-year-population)
+            
+            #the naturalization rate of all new born babies of zero is correct
+            #WHY? the origin changes at birth has already been calculated in the model
+            
+            pop_nat <- nat %>%    
+                filter(year == iyear) %>%  
+                right_join(select(dem_factor, district, year, age, sex, 
+                                  origin, pop_end_year), 
+                           by = c("district", "year", "age", "sex", "origin")) %>% 
+                replace_na(list(rate_nat = 0))  %>% 
+                arrange(district, year, age, sex, origin) %>% 
+                mutate(Swiss = if_else(origin == uni_o[1], pop_end_year,
+                                       pop_end_year * rate_nat / 100),
+                       foreign = if_else(origin == uni_o[1], 0,
+                                       pop_end_year * (1 - rate_nat / 100))) %>% 
+                select(-c(origin, pop_end_year)) %>% 
+                pivot_longer(cols = uni_o, 
+                             names_to = "origin", values_to = "pop_end_year") %>% 
+                mutate(origin = factor(origin, levels = uni_o)) %>% 
+                select(district, year, age, sex, origin, pop_end_year)
+            
+          #determine immigration from immigration*       
+              # dem_factor
+            
+
+            
+   
 
 
-                       
-                       
-            
-            
-            
-            
-            
-            
-            
-            
+         
+                # #relocation, immigration
+                #     rei <- read_csv(paste0(exp_path, "/relocation_immigration_future.csv")) %>% 
+                #         mutate(district = factor(district, levels = uni_d),
+                #             origin = factor(origin, levels = uni_o))         
+                # 
+                #     
+
+
+
+
+
+          #determine emigration from emigration*       
+  
+    
+    
+    
+           
+              # #relocation, emigration
+              #     ree <- read_csv(paste0(exp_path, "/relocation_emigration_future.csv")) %>% 
+              #         mutate(district = factor(district, levels = uni_d),
+              #             origin = factor(origin, levels = uni_o))           
+              #                    
+              #             
+              #             
             
             
 
+            
+dem_factor
             
             
 
