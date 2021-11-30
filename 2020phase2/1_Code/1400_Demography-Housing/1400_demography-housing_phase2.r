@@ -406,14 +406,10 @@
         
               
 
-          #output at the end of this year  
-              out_pop <- pop_nat %>% 
-                  filter(age >= 0)
+          # #output at the end of this year  
+          #     out_pop <- pop_nat %>% 
+          #         filter(age >= 0)
               
-          pop_nat    
-          
-                      
-
 
 
             
