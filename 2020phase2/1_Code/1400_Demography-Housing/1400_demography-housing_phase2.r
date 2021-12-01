@@ -139,8 +139,19 @@
 #years in the future
     future <- szen_begin:szen_end
     
-#output
-    out <- NULL
+#outputs
+    out_pop <- NULL
+    out_bir <- NULL
+    out_dea <- NULL
+    out_ims <- NULL
+    out_ems <- NULL
+    out_imm <- NULL
+    ou__emi <- NULL
+    out_rei <- NULL
+    out_ree <- NULL
+    out_nat <- NULL
+    
+    
     
 #loop over years
     for (iyear in future){
