@@ -140,26 +140,18 @@
     future <- szen_begin:szen_end
     
 #outputs
-    out_pop <- NULL
     out_bir <- NULL
-    out_dea <- NULL
-    out_ims <- NULL
-    out_ems <- NULL
-    out_imm <- NULL
-    ou__emi <- NULL
-    out_rei <- NULL
-    out_ree <- NULL
-    out_nat <- NULL
-    
-    
-    
+    out_dem <- NULL
+    out_pop <- NULL
+
 #loop over years
-    for (iyear in future){
+    for (iyear in future[1:3]){
       
         #iyear <- 2021
       
-        #population at the begin of the year
-            if(iyear == min(future)){popu <- select(pop_last, -year)}
+        #population at the begin of the year = population at the end of the previous year
+            if(iyear == min(future)){popu <- select(pop_last, -year)} else {
+                popu <- select(pop_end_year, -year)}
       
         #births (fertility rate * women in the population)
             bir_do <- fer %>% 
@@ -416,15 +408,26 @@
               tail(pop_end_year)
         
               
+          #outputs: birth (separate, since no age variable)
+              out_bir <- bir %>% 
+                  select(-age) %>% 
+                  bind_rows(out_bir)
 
-          # #output at the end of this year  
-          #     out_pop <- pop_nat %>% 
-          #         filter(age >= 0)
+          #outputs: demographic processes
+              out_dem <- dem_factor %>% 
+                  select(district, year, age, sex, origin, 
+                         dea_eff, ims_eff, ems_eff) %>% 
+                  filter(age >= 0) %>% 
+                  rename(dea = dea_eff, ims = ims_eff, ems = ems_eff) %>% 
+                  left_join(imm, by = c("district", "year", "age", "sex", "origin")) %>% 
+                  rename(rei = rel) %>% 
+                  left_join(emi, by = c("district", "year", "age", "sex", "origin")) %>%              
+                  rename(ree = rel) 
               
-
-
-            
- 
+          #outputs: end of year population
+              out_pop <- pop_end_year %>% 
+                  bind_rows(out_pop)
+              
 
             
                  
