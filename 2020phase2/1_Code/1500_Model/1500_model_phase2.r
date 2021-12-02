@@ -8,10 +8,24 @@
 
 
 #-------------------------------------------------------------------
-#paths, general
+#paths, parameters
 #-------------------------------------------------------------------
 
+#packages
+    library(tidyverse)
 
+#working directory
+    library(here)
+    setwd(paste0(here(), "/2020phase2/"))
+    
+#import parameter
+    para <- read_delim(paste0(data_path, "/3_Parameter/parameter.csv"), ";") %>%
+        select(parameter, lower, middle, upper)    
+
+
+# function to source all the code files in the correct order
+
+run_pops <- function(modules = c("all"))
 
 
 

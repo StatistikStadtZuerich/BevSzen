@@ -1,9 +1,9 @@
 #-------------------------------------------------------------------
-# General: packages, functions, levels, colors
+#General: packages, functions, levels, colors
 #
 #
 #
-# rok/bad, February 2021
+#rok/bad, February 2021
 #-------------------------------------------------------------------
 
 
@@ -51,17 +51,9 @@
 #path for documentation
     docu_path <- "5_Documentation"
 
-#working directory
-    library(here)
-    setwd(paste0(here(), "/2020phase2/"))
 
-#import parameter
-    para <- read_delim(paste0(data_path, "/3_Parameter/parameter.csv"), ";") %>%
-        select(parameter, lower, center, upper)
 
-#assign values to parameters
-    for (ipara in 1:nrow(para)) {
-        assign(para$parameter[ipara], para$value[ipara])}
+
 
 
 #-------------------------------------------------------------------
@@ -70,8 +62,6 @@
 
 #functions
     sum_NA <- function(x){sum(x, na.rm = TRUE)}
-    
-
 
 
 #-------------------------------------------------------------------
