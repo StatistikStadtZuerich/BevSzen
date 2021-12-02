@@ -57,7 +57,7 @@
 
 #import parameter
     para <- read_delim(paste0(data_path, "/3_Parameter/parameter.csv"), ";") %>%
-        select(parameter, value)
+        select(parameter, lower, center, upper)
 
 #assign values to parameters
     for (ipara in 1:nrow(para)) {
