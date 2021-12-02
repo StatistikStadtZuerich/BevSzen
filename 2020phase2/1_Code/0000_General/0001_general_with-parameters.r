@@ -1,6 +1,6 @@
 #-------------------------------------------------------------------
 #General: levels, colors, functions
-#(with dependence on parameters, i.e. selected scenario)
+#(with dependence on parameters, i.e. scenarios)
 #
 #
 #rok/bad, December 2021

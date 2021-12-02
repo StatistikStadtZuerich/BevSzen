@@ -1,6 +1,6 @@
 #-------------------------------------------------------------------
 #General: packages, functions, levels, colors 
-#(without dependence on parameters)
+#(without dependence on parameters, i.e. scenarios)
 #
 #
 #rok/bad, December 2021
