@@ -30,29 +30,20 @@
 
 
 #-------------------------------------------------------------------
-#parameter
+#paths, import parameters
 #-------------------------------------------------------------------
 
 #path for code
     code_path <- "1_Code/"
 
 #path for data
-    data_path <- "2_Data"
-
-#path for results (graphics)
-    res_path <- "3_Results"
-
-#path for exports (rates)
-    exp_path <- paste0(data_path, "/4_Rates")
-    
-#path for outputs (future: population and demographic processes)
-    out_path <- paste0(data_path, "/5_Outputs")    
+    data_path <- "2_Data/"
 
 #path for documentation
     docu_path <- "5_Documentation"
 
 #import parameter
-    para <- read_delim(paste0(data_path, "/3_Parameter/parameter.csv"), ";") %>%
+    para <- read_delim(paste0(data_path, "3_Parameter/parameter.csv"), ";") %>%
         select(parameter, lower, middle, upper)    
 
     
@@ -79,7 +70,7 @@
 #districts (34 numbers)
 #used to transfer the open data files (with 34 districts) to 31 regions
 
-    look_dis <- read_csv2(paste0(data_path, "/2_Lookup/lookupDistrict.csv")) %>%
+    look_dis <- read_csv2(paste0(data_path, "2_Lookup/lookupDistrict.csv")) %>%
         select(QuarCd, distr)
 
 #regions (31 regions)
@@ -269,12 +260,12 @@
 #-------------------------------------------------------------------
 
 #plot functions
-    source(paste0(code_path, "/0000_General/0001_plot-functions.r"))
+    source(paste0(code_path, "0000_General/0001_plot-functions.r"))
 
 #constrained regression
-    source(paste0(code_path, "/0000_General/0011_constrained-regression.r"))
+    source(paste0(code_path, "0000_General/0011_constrained-regression.r"))
 
 #life expectancy
-    source(paste0(code_path, "/0000_General/0012_life-expectancy.r"))
+    source(paste0(code_path, "0000_General/0012_life-expectancy.r"))
 
 

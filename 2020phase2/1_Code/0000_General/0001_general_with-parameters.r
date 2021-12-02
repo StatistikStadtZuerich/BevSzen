@@ -7,6 +7,24 @@
 #-------------------------------------------------------------------
 
 
+
+#-------------------------------------------------------------------
+#paths
+#-------------------------------------------------------------------
+
+#path for results (graphics)
+    if (exists("i_scen")) {res_path <- paste0("3_Results/", i_scen, "/")} else 
+        {res_path <- "3_Results/"}
+    
+#path for exports (rates)
+    if (exists("i_scen")) {exp_path <- paste0(data_path, "4_Rates/", i_scen, "/")} else 
+        {exp_path <- paste0(data_path, "4_Rates/")}    
+    
+#path for outputs (future: population and demographic processes)
+    if (exists("i_scen")) {out_path <- paste0(data_path, "5_Outputs/", i_scen, "/")} else 
+        {out_path <- paste0(data_path, "5_Outputs/")}    
+
+
 #-------------------------------------------------------------------
 #unique levels
 #-------------------------------------------------------------------
@@ -48,10 +66,10 @@
 #-------------------------------------------------------------------
 
 #migration functions
-    source(paste0(code_path, "/0000_General/0013_migration-functions.r"))
+    source(paste0(code_path, "0000_General/0013_migration-functions.r"))
 
 #relocation functions
-    source(paste0(code_path, "/0000_General/0014_relocation-function.r"))
+    source(paste0(code_path, "0000_General/0014_relocation-function.r"))
     
     
     

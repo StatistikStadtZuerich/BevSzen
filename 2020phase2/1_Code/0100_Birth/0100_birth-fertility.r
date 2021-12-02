@@ -25,11 +25,6 @@
     }
 
 
-#birth: export path (for future fertility rates)
-    bir_exp <- exp_path  
-
-
-    
 #-------------------------------------------------------------------
 #import and data preparation
 #-------------------------------------------------------------------
@@ -419,7 +414,7 @@
         arrange(district, year, age, origin)
 
 #export
-    write_csv(fer_ex, paste0(bir_exp, "/birth_fertility_future.csv"))
+    write_csv(fer_ex, paste0(exp_path, "/birth_fertility_future.csv"))
    
     
 #-------------------------------------------------------------------
@@ -432,7 +427,7 @@
         arrange(district, year, age, origin)
 
 #export the data of the past (for model evaluation later on)    
-    write_csv(fer_ex_past, paste0(bir_exp, "/birth_fertility_past.csv"))
+    write_csv(fer_ex_past, paste0(exp_path, "/birth_fertility_past.csv"))
 
 #TFR
     tfr_dyo <- bind_rows(fer_ex_past, fer_ex) %>%

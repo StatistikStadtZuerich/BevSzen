@@ -24,11 +24,6 @@
     }
 
     
-#birth: export path (for future rates)
-    bir_exp <- exp_path  
-
-
-    
 #-------------------------------------------------------------------
 #import, proportion male
 #-------------------------------------------------------------------
@@ -88,7 +83,7 @@
         pro_male = round(pred_mean$pred_mean, round_rate))     
         
 #export
-    write_csv(pro_male_pred, paste0(bir_exp, "/birth_sex-ratio_future.csv"))    
+    write_csv(pro_male_pred, paste0(exp_path, "/birth_sex-ratio_future.csv"))    
 
 
     

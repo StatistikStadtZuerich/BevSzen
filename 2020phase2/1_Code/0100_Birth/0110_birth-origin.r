@@ -22,8 +22,6 @@
             
     }
     
-#birth: export path (for future rates)
-    bir_exp <- exp_path 
 
 #-------------------------------------------------------------------
 #import and data preparation
@@ -197,7 +195,7 @@
         arrange(district, year, origin)
 
 #export
-    write_csv(cha_ex, paste0(bir_exp, "/birth_origin-change_future.csv"))
+    write_csv(cha_ex, paste0(exp_path, "/birth_origin-change_future.csv"))
    
         
     
