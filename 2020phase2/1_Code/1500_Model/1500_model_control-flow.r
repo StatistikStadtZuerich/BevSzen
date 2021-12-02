@@ -45,6 +45,7 @@
         
         #different scenarios
             for (i_scen in scenarios){
+                #i_scen <- "middle"
                 
                 #assign values to parameters
                     for (i_para in 1:nrow(para)) {
