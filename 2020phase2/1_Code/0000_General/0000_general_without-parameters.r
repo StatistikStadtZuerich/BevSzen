@@ -1,9 +1,9 @@
 #-------------------------------------------------------------------
-#General: packages, functions, levels, colors
+#General: packages, functions, levels, colors 
+#(without dependence on parameters)
 #
 #
-#
-#rok/bad, February 2021
+#rok/bad, December 2021
 #-------------------------------------------------------------------
 
 
@@ -12,7 +12,7 @@
 # packages
 #-------------------------------------------------------------------
 
-# packages
+#packages
     library(tidyverse)
     library(dvmisc) # for expand_grid
     library(gridExtra) # for ggplot on multiple pages
@@ -51,11 +51,11 @@
 #path for documentation
     docu_path <- "5_Documentation"
 
+#import parameter
+    para <- read_delim(paste0(data_path, "/3_Parameter/parameter.csv"), ";") %>%
+        select(parameter, lower, middle, upper)    
 
-
-
-
-
+    
 #-------------------------------------------------------------------
 #general functions
 #-------------------------------------------------------------------
@@ -114,12 +114,6 @@
 #districts
     text_d <- unique(look_dis$distr)
     uni_d <- factor(text_d, levels = text_d)
-
-#year: base period
-    uniy_bir_base <- bir_base_begin:bir_base_end
-
-#year: future
-    uniy_szen <- szen_begin:szen_end
 
 #sex
     text_s <- c("male", "female")
@@ -180,8 +174,6 @@
 
 
 
-
-
 #-------------------------------------------------------------------
 #colors, graphics
 #-------------------------------------------------------------------
@@ -224,18 +216,6 @@
 #color for indicator (new or removed projects)
     col_i <- col_6[c(1, 6)]
     # plot(1:2, 1:2, col = col_i, pch = 16, cex = 3)
-
-
-#color for year (base period)
-    col_y_base <- colorRampPalette(col_6)(length(uniy_bir_base))
-
-
-#colour for time distributions
-    col_time <- c(
-      rep(col_grey, length(uniy_bir_base)),
-      colorRampPalette(col_6[1:5])(length(uniy_szen))
-    )
-
 
 #themes: neutral design for ggplot
     neutral <- theme_bw() + theme(
@@ -291,10 +271,10 @@
 
 
 #-------------------------------------------------------------------
-# specific functions
+#specific functions
 #-------------------------------------------------------------------
 
-#plot function
+#plot functions
     source(paste0(code_path, "/0000_General/0001_plot-functions.r"))
 
 #constrained regression
@@ -303,11 +283,4 @@
 #life expectancy
     source(paste0(code_path, "/0000_General/0012_life-expectancy.r"))
 
-#migration functions
-    source(paste0(code_path, "/0000_General/0013_migration-functions.r"))
 
-#relocation functions
-    source(paste0(code_path, "/0000_General/0014_relocation-function.r"))
-    
-    
-    
