@@ -23,10 +23,6 @@
             
     }
 
-    
-#death: export path (for future rates)
-    dea_exp <- exp_path
-    
 
 #-------------------------------------------------------------------
 #import and data preparation
@@ -473,7 +469,7 @@
         arrange(year, age, sex)
 
 #export
-    write_csv(dea_ex, paste0(dea_exp, "/mortality_future.csv"))
+    write_csv(dea_ex, paste0(exp_path, "/mortality_future.csv"))
        
    
 #-------------------------------------------------------------------

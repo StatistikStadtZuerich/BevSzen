@@ -30,13 +30,18 @@
         #modules
             # all 
                 # dem (demography-modules), 
-                    # bir (birth), dea (death), 
-                    # ims (immigration*), ems (emigration*)
-                    # rei (relocation-immigration), ree (relocation-emigration)
+                    # bir (birth)
+                    # dea (death) 
+                    # ims (immigration*)
+                    # ems (emigration*)
+                    # rei (relocation-immigration)
+                    # ree (relocation-emigration)
                     # nat (naturalization)
                 # hom (housing-modules)
-                    # car (capacity-reserves), pro (projects)
-                    # spa (living space), aca (allocation)
+                    # car (capacity-reserves)
+                    # pro (projects)
+                    # spa (living space)
+                    # aca (allocation)
                     # own (ownership)
                     # hou (housing model)
                 # deh (demography and housing model)
@@ -63,11 +68,18 @@
 
             #birth
                 if (modules %in% c("all", "dem", "bir")) {
-                     source(paste0(code_path, "0100_Birth/0100_birth-fertility.r"))
-                    # source(paste0(code_path, "0100_Birth/0110_birth-origin.r"))
-                    # source(paste0(code_path, "0100_Birth/0120_birth-sex-ratio.r"))
+                    source(paste0(code_path, "0100_Birth/0100_birth-fertility.r"))
+                    source(paste0(code_path, "0100_Birth/0110_birth-origin.r"))
+                    source(paste0(code_path, "0100_Birth/0120_birth-sex-ratio.r"))
                 }
                 
+            #Death
+                if (modules %in% c("all", "dem", "dea")) {
+                    source(paste0(code_path, "0200_Death/0200_death.r"))
+                }
+                                    
+                    
+                    
             #end: different scenarios                    
                 }
     
@@ -77,7 +89,7 @@
 #execute the function
     run_scen(
         scenarios = c("middle"),
-        modules = c("bir"))            
+        modules = c("dea"))            
             
         
 
