@@ -143,11 +143,11 @@
     out_bir <- NULL
     out_dem <- NULL
     out_pop <- NULL
-
+    
 #loop over years
-    for (iyear in future[1:3]){
+    for (iyear in future){
       
-        #iyear <- 2021
+        #iyear <- 2022
       
         #population at the begin of the year = population at the end of the previous year
             if(iyear == min(future)){popu <- select(pop_last, -year)} else {
@@ -373,7 +373,10 @@
                 pivot_longer(cols = uni_o, 
                              names_to = "origin", values_to = "pop_end_year") %>% 
                 mutate(origin = factor(origin, levels = uni_o)) %>% 
-                select(district, year, age, sex, origin, pop_end_year)
+                select(district, year, age, sex, origin, pop_end_year) %>% 
+                group_by(district, year, age, sex, origin) %>% 
+                    summarize(pop_end_year = sum(pop_end_year)) %>% 
+                ungroup()
             
           #determine immigration from immigration*   
               imm <- dem_factor %>% 
@@ -435,9 +438,27 @@
     }     
     
     
-  
+#-------------------------------------------------------------------
+#export the results
+#-------------------------------------------------------------------
+
     
+out_bir    
+out_dem    
+out_pop   
+
+
     
+#per district  
+    ex_data_d <- arrange(pop_d, district, year)
+    write_csv(ex_data_d, paste0(exp_path, "/housing-model_population_d.csv"))       
+   
+
+#entire city (to compare with past publications) 
+    ex_data_all <- arrange(pop_all, year)
+    write_csv(ex_data_all, paste0(exp_path, "/housing-model_population_all.csv"))       
+    
+        
     
                         
                     
