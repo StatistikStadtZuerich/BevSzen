@@ -19,6 +19,17 @@
 
     
 #-------------------------------------------------------------------
+#lookup tables
+#-------------------------------------------------------------------
+    
+#projects not realized
+    look_not <- tibble(status = factor(pro_category, levels = pro_category),
+                       not_realized = c(pro_not_scheduled, pro_not_submitted, 
+                                        pro_not_approved, pro_not_started,
+                                        pro_not_completed, pro_not_onhold))
+    
+    
+#-------------------------------------------------------------------
 #colors
 #-------------------------------------------------------------------
 
