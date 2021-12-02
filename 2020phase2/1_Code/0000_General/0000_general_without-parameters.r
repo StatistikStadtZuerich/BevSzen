@@ -34,7 +34,7 @@
 #-------------------------------------------------------------------
 
 #path for code
-    code_path <- "1_Code"
+    code_path <- "1_Code/"
 
 #path for data
     data_path <- "2_Data"
