@@ -425,33 +425,50 @@
                   left_join(imm, by = c("district", "year", "age", "sex", "origin")) %>% 
                   rename(rei = rel) %>% 
                   left_join(emi, by = c("district", "year", "age", "sex", "origin")) %>%              
-                  rename(ree = rel) 
+                  rename(ree = rel) %>% 
+                  bind_rows(out_dem)
               
           #outputs: end of year population
               out_pop <- pop_end_year %>% 
                   bind_rows(out_pop)
               
-
-            
-                 
 #end of loop over years      
     }     
     
-    
+
 #-------------------------------------------------------------------
 #export the results
 #-------------------------------------------------------------------
 
+#births
+    ex_bir <- out_bir %>% 
+        arrange(district, year, sex, origin)
     
-out_bir    
-out_dem    
-out_pop   
+    write_csv(ex_bir, paste0(out_path, "/births_future.csv")) 
+
+#demographic processes
+    ex_dem <- out_dem %>% 
+        arrange(district, year, age, sex, origin) 
+    
+    write_csv(ex_dem, paste0(out_path, "/demographic-processes_future.csv")) 
+      
+#population (end of year)
+    ex_pop <- out_pop %>% 
+        arrange(district, year, age, sex, origin) 
+    
+    write_csv(ex_pop, paste0(out_path, "/population_future.csv")) 
+      
+
+
+
+    
+
 
 
     
 #per district  
     ex_data_d <- arrange(pop_d, district, year)
-    write_csv(ex_data_d, paste0(exp_path, "/housing-model_population_d.csv"))       
+      
    
 
 #entire city (to compare with past publications) 
