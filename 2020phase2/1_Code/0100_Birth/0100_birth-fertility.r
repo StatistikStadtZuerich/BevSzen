@@ -416,6 +416,11 @@
 #export
     write_csv(fer_ex, paste0(exp_path, "/birth_fertility_future.csv"))
    
+#log info 
+    log_print("result: future fertility rates")     
+    log_print(fer_ex)
+    
+    
     
 #-------------------------------------------------------------------
 #TFR (total fertility rate) 
@@ -428,7 +433,7 @@
 
 #export the data of the past (for model evaluation later on)    
     write_csv(fer_ex_past, paste0(exp_path, "/birth_fertility_past.csv"))
-
+        
 #TFR
     tfr_dyo <- bind_rows(fer_ex_past, fer_ex) %>%
       group_by(district, year, origin) %>%

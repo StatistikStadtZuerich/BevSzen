@@ -38,6 +38,9 @@
 
 #path for data
     data_path <- "2_Data/"
+    
+#log file
+    log_file <- "2_Data/6_Log/log.txt"
 
 #path for documentation
     docu_path <- "5_Documentation"
@@ -54,6 +57,9 @@
 #functions
     sum_NA <- function(x){sum(x, na.rm = TRUE)}
 
+#cat to log file    
+    cat_log <- function(...){cat(..., 
+        file = log_file, sep = "\n", append = TRUE)}    
 
 #-------------------------------------------------------------------
 #options

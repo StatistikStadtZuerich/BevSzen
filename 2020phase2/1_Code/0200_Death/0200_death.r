@@ -467,11 +467,15 @@
         filter(year >= szen_begin) %>%       
         select(year, age, sex, mor) %>% 
         arrange(year, age, sex)
-
+    
 #export
     write_csv(dea_ex, paste0(exp_path, "/mortality_future.csv"))
-       
-   
+      
+#log info 
+    log_print("result: future mortality rates")     
+    log_print(dea_ex)
+
+    
 #-------------------------------------------------------------------
 #Zurich: life expectancy (including the model data)
 #-------------------------------------------------------------------

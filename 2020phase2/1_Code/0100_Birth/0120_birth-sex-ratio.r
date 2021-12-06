@@ -85,6 +85,5 @@
 #export
     write_csv(pro_male_pred, paste0(exp_path, "/birth_sex-ratio_future.csv"))    
 
-
     
     

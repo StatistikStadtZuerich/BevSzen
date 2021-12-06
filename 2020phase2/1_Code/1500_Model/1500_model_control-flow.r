@@ -17,8 +17,10 @@
     
 #general functions without dependence on parameters    
     source("1_Code/0000_General/0000_general_without-parameters.r")    
-    
 
+
+
+ 
 #-------------------------------------------------------------------
 #source the code files
 #-------------------------------------------------------------------
@@ -50,6 +52,7 @@
     
     run_scen <- function(scenarios, modules){
         
+ 
         #different scenarios
             for (i_scen in scenarios){
                 #i_scen <- "middle"
@@ -67,17 +70,27 @@
                 
                 #general functions (with dependence on parameters)
                     source(paste0(code_path, "/0000_General/0001_general_with-parameters.r"))
-
+                    
                 #birth
                     if (modules %in% c("all", "dem", "bir")) {
+                        
+                        t0 <- Sys.time()
                         source(paste0(code_path, "0100_Birth/0100_birth-fertility.r"))
+                        cat_log(paste0("fertility rate: ", Sys.time() - t0))
+  
                         source(paste0(code_path, "0100_Birth/0110_birth-origin.r"))
                         source(paste0(code_path, "0100_Birth/0120_birth-sex-ratio.r"))
+                        
+                    log_print("birth module completed") 
+                    
                     }
                     
                 #death
                     if (modules %in% c("all", "dem", "dea")) {
                         source(paste0(code_path, "0200_Death/0200_death.r"))
+                        
+                    log_print("death module completed") 
+                    
                     }
                                         
                 #immigration*
@@ -135,18 +148,20 @@
                         source(paste0(code_path, "1300_Housing-Model/1300_housing-model.r"))
                     }                       
                                              
-                                     
-                        
             #end: different scenarios                    
-                }
-    
+            }
+        
+        #close the log file
+            log_close()                      
+                                   
         #end of scenario function             
             }
-            
+           
+
 #execute the function
     run_scen(
-        scenarios = c("middle"),
-        modules = c("rei", "ree", "nat", "hom"))            
+        scenarios = c("lower"),
+        modules = c("bir", "dea"))            
             
         
 
