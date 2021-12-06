@@ -27,8 +27,13 @@
     
 #function for different scenarios and modules
 
-    #possible values    
-        #scenarios: lower, middle, upper
+    #possible values 
+    
+        #scenarios
+            #lower
+            #middle
+            #upper
+    
         #modules
             # all 
                 # dem (demography-modules), 
@@ -141,8 +146,13 @@
                 #housing model
                     if (modules %in% c("all", "hom", "hou")) {
                         source(paste0(code_path, "1300_Housing-Model/1300_housing-model.r"))
-                    }                       
-                                             
+                    }       
+                    
+                #demography and housing model
+                    if (modules %in% c("all", "deh")) {
+                        source(paste0(code_path, "1400_Demography-Housing/1400_demography-housing.r"))
+                    }                      
+                    
             #end: different scenarios                    
             }
         
@@ -152,8 +162,8 @@
 
 #execute the function
     run_scen(
-        scenarios = c("lower"),
-        modules = c("dem"))            
+        scenarios = c("lower", "middle", "upper"),
+        modules = c("pro"))            
             
         
 
