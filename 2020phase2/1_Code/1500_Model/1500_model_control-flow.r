@@ -163,7 +163,7 @@
 #execute the function
     run_scen(
         scenarios = c("lower", "middle", "upper"),
-        modules = c("pro"))            
+        modules = c("all"))            
             
         
 
