@@ -419,11 +419,6 @@
 #export
     write_csv(fer_ex, paste0(exp_path, "/birth_fertility_future.csv"))
    
-#log info 
-    log_print("result: future fertility rates")     
-    log_print(fer_ex)
-    
-    
     
 #-------------------------------------------------------------------
 #TFR (total fertility rate) 
