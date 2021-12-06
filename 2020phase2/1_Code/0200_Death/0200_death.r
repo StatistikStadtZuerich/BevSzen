@@ -23,6 +23,9 @@
             
     }
 
+#start time
+    t0 <- Sys.time() 
+
 
 #-------------------------------------------------------------------
 #import and data preparation
@@ -470,11 +473,6 @@
     
 #export
     write_csv(dea_ex, paste0(exp_path, "/mortality_future.csv"))
-      
-#log info 
-    log_print("result: future mortality rates")     
-    log_print(dea_ex)
-
     
 #-------------------------------------------------------------------
 #Zurich: life expectancy (including the model data)
@@ -512,5 +510,14 @@
                 grid = c(".", "sex"),
                 name = "0212_life-expectancy-at-birth_by-year-sex-region_focus-region_model",
                 width = 10, height = 6) 
+        
+        
+#log info    
+    cat_log(paste0("mortality rate: ", 
+        capture.output(Sys.time() - t0)))
+        
+        
+        
+        
          
     

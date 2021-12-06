@@ -24,7 +24,10 @@
             
     }
 
+#start time
+    t0 <- Sys.time() 
 
+    
 #-------------------------------------------------------------------
 #import and data preparation
 #-------------------------------------------------------------------
@@ -491,4 +494,12 @@
             name = "0162_TFR_by-district-origin-age2",
             width = 12, height = 14,
             multi = uni_o)   
+    
+#log info    
+    cat_log(paste0("fertility rate: ", 
+        capture.output(Sys.time() - t0)))	    
+    
+    
+    
+    
     

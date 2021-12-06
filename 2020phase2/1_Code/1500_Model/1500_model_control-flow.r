@@ -52,10 +52,14 @@
     
     run_scen <- function(scenarios, modules){
         
+        #start with a new log file (delete the previous file)
+            file.remove(log_file)
  
         #different scenarios
             for (i_scen in scenarios){
                 #i_scen <- "middle"
+                
+                    cat_log(paste0("------ scenario ", i_scen, " ------"))
                 
                 #assign values to parameters 
                     #to global environment
@@ -73,24 +77,14 @@
                     
                 #birth
                     if (modules %in% c("all", "dem", "bir")) {
-                        
-                        t0 <- Sys.time()
                         source(paste0(code_path, "0100_Birth/0100_birth-fertility.r"))
-                        cat_log(paste0("fertility rate: ", Sys.time() - t0))
-  
                         source(paste0(code_path, "0100_Birth/0110_birth-origin.r"))
                         source(paste0(code_path, "0100_Birth/0120_birth-sex-ratio.r"))
-                        
-                    log_print("birth module completed") 
-                    
                     }
-                    
+
                 #death
                     if (modules %in% c("all", "dem", "dea")) {
                         source(paste0(code_path, "0200_Death/0200_death.r"))
-                        
-                    log_print("death module completed") 
-                    
                     }
                                         
                 #immigration*
@@ -151,9 +145,6 @@
             #end: different scenarios                    
             }
         
-        #close the log file
-            log_close()                      
-                                   
         #end of scenario function             
             }
            
@@ -161,7 +152,7 @@
 #execute the function
     run_scen(
         scenarios = c("lower"),
-        modules = c("bir", "dea"))            
+        modules = c("dea"))            
             
         
 

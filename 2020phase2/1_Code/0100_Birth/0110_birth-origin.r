@@ -21,6 +21,9 @@
             source("1_Code/0000_General/0000_general_phase2.r")
             
     }
+
+#start time
+    t0 <- Sys.time() 
     
 
 #-------------------------------------------------------------------
@@ -197,3 +200,6 @@
 #export
     write_csv(cha_ex, paste0(exp_path, "/birth_origin-change_future.csv"))
    
+#log info    
+    cat_log(paste0("origin change at birth: ", 
+        capture.output(Sys.time() - t0)))    
