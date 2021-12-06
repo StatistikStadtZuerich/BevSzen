@@ -26,6 +26,8 @@
 #temporary path (since data not on open data yet)
     car_path <- "2_Data/1_Input/KaReB.csv"
 
+#start time
+    t0 <- Sys.time() 
     
 #-------------------------------------------------------------------
 #import and data preparation
@@ -310,3 +312,9 @@
       
 #export
     write_csv(car_ex_data, paste0(exp_path, "/usage_area.csv"))
+    
+#log info    
+    cat_log(paste0("capacity and reserves: ", 
+        capture.output(Sys.time() - t0)))    
+    
+    

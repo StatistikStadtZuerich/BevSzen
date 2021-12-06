@@ -24,6 +24,8 @@
             
     }
 
+#start time
+    t0 <- Sys.time() 
 
 #-------------------------------------------------------------------
 #proportion of relocation (based on immigration*)
@@ -53,6 +55,9 @@
                 rem_upper_thres = ree_upper_thres,
                 rem_pred_span = ree_pred_span)                
                 
-                
+#log info    
+    cat_log(paste0("relocation and emigration: ", 
+        capture.output(Sys.time() - t0)))    
+                    
 
  

@@ -27,6 +27,9 @@
 #temporary path (since data not on open data yet)
     pro_path <- "2_Data/1_Input/BEV347OD3470.csv"
 
+#start time
+    t0 <- Sys.time()     
+    
     
 #-------------------------------------------------------------------
 #import, data preparation
@@ -290,6 +293,10 @@
 #export
     write_csv(pro_ex_data, paste0(exp_path, "/projects_future.csv"))
     
+#log info    
+    cat_log(paste0("projects: ", 
+        capture.output(Sys.time() - t0)))
+
         
     
     

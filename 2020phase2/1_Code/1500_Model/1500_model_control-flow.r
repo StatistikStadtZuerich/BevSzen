@@ -59,6 +59,7 @@
             for (i_scen in scenarios){
                 #i_scen <- "middle"
                 
+                #scenario in the log file
                     cat_log(paste0("------ scenario ", i_scen, " ------"))
                 
                 #assign values to parameters 
@@ -152,7 +153,7 @@
 #execute the function
     run_scen(
         scenarios = c("lower"),
-        modules = c("dea"))            
+        modules = c("dem"))            
             
         
 

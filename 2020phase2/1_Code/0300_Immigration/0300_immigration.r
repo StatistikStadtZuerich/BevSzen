@@ -23,6 +23,10 @@
             
     }
 
+#start time
+    t0 <- Sys.time() 
+
+
 #-------------------------------------------------------------------
 #immigration*: rate per district and year
 #-------------------------------------------------------------------
@@ -68,7 +72,7 @@
 #-------------------------------------------------------------------
 #immigration*: proportion of age (per district, year, sex, origin) 
 #-------------------------------------------------------------------
-system.time(
+
 #prediction: proportion of age (duration: approx. 15 minutes)
     ims_prop_a_dyso <- mig_prop_a_dyso(            
                 mig_path = imm_od,
@@ -86,4 +90,9 @@ system.time(
                 mis_age_prop_trend = ims_age_prop_trend,
                 mis_age_thres_percent = ims_age_thres_percent,
                 mis_age_lower_thres = ims_age_lower_thres)    
-) 
+
+#log info    
+    cat_log(paste0("immigration* rate: ", 
+        capture.output(Sys.time() - t0)))
+    
+    

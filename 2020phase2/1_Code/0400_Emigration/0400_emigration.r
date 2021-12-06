@@ -24,6 +24,8 @@
             
     }
 
+#start time
+    t0 <- Sys.time() 
     
 #-------------------------------------------------------------------
 #emigration*: rate per district and year
@@ -89,5 +91,11 @@
                 mis_age_window_thres = ems_age_window_thres,
                 mis_age_prop_trend = ems_age_prop_trend,
                 mis_age_thres_percent = ems_age_thres_percent,
-                mis_age_lower_thres = ems_age_lower_thres)       
+                mis_age_lower_thres = ems_age_lower_thres)    
+    
+#log info    
+    cat_log(paste0("emigration* rate: ", 
+        capture.output(Sys.time() - t0)))
+    
+    
     

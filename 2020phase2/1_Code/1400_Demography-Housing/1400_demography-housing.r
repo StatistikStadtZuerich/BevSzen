@@ -23,6 +23,8 @@
             
     }
 
+#start time
+    t0 <- Sys.time() 
     
 #-------------------------------------------------------------------
 #import, data preparation
@@ -458,6 +460,10 @@
     
     write_csv(ex_pop, paste0(out_path, "/population_future.csv")) 
       
+#log info    
+    cat_log(paste0("demography and housing: ", 
+        capture.output(Sys.time() - t0)))
+
 
 
                         

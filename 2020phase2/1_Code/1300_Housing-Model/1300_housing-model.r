@@ -23,6 +23,8 @@
             
     }
 
+#start time
+    t0 <- Sys.time() 
     
 #-------------------------------------------------------------------
 #import, data preparation
@@ -361,7 +363,9 @@
     ex_data_all <- arrange(pop_all, year)
     write_csv(ex_data_all, paste0(exp_path, "/housing-model_population_all.csv"))       
     
-    
+#log info    
+    cat_log(paste0("housing model: ", 
+        capture.output(Sys.time() - t0)))    
     
         
     

@@ -23,10 +23,8 @@
             
     }
 
-#export path (for future rates)
-    nat_exp <- exp_path 
-    
-
+#start time
+    t0 <- Sys.time() 
 
 #-------------------------------------------------------------------
 #import and data preparation
@@ -674,7 +672,10 @@
         arrange(district, year, age, sex)
       
 #export
-    write_csv(nat_ex_data, paste0(nat_exp, "/naturalization_future.csv"))
+    write_csv(nat_ex_data, paste0(exp_path, "/naturalization_future.csv"))
 
+#log info    
+    cat_log(paste0("naturalization rate: ", 
+        capture.output(Sys.time() - t0)))
 
     
