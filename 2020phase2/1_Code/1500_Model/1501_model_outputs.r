@@ -62,9 +62,56 @@
             summarize(bir = sum(bir)) %>% 
         ungroup()
     
+#deaths
+    dea <- read_csv(dea_od) %>%
+        rename(year = EreignisDatJahr, age = AlterVCd, dea = AnzSterWir) %>% 
+        mutate(sex = factor(if_else(SexCd == 1, uni_s[1], uni_s[2]), uni_s)) %>%    
+        group_by(year, age, sex) %>% 
+            summarize(dea = sum(dea)) %>% 
+        ungroup()
+    
+#immigration
+    imm <- read_csv(imm_od) %>% 
+        rename(year = EreignisDatJahr, age = AlterVCd, imm = AnzZuzuWir) %>%    
+        left_join(look_dis, by = "QuarCd") %>% 
+        mutate(sex = factor(if_else(SexCd == 1, uni_s[1], uni_s[2]), uni_s), 
+            origin = factor(if_else(HerkunftCd == 1, uni_o[1], uni_o[2]), uni_o),
+            district = factor(distr, uni_d)) %>% 
+        select(district, year, age, sex, origin, imm) %>%       
+        group_by(district, year, age, sex, origin) %>% 
+            summarize(imm = sum(imm)) %>% 
+        ungroup()      
+    
+    
+#emigration
+    emi <- read_csv(emi_od) %>% 
+        rename(year = EreignisDatJahr, age = AlterVCd, emi = AnzWezuWir) %>%    
+        left_join(look_dis, by = "QuarCd") %>% 
+        mutate(sex = factor(if_else(SexCd == 1, uni_s[1], uni_s[2]), uni_s), 
+            origin = factor(if_else(HerkunftCd == 1, uni_o[1], uni_o[2]), uni_o),
+            district = factor(distr, uni_d)) %>% 
+        select(district, year, age, sex, origin, emi) %>%       
+        group_by(district, year, age, sex, origin) %>% 
+            summarize(emi = sum(emi)) %>% 
+        ungroup()      
+        
+#relocation
+    rel <- read_csv(rel_od) %>% 
+        rename(year = EreignisDatJahr, age = AlterVCd, rel = AnzUmzuWir) %>% 
+        left_join(look_dis, by = "QuarCd") %>% 
+        rename(distr_after = distr) %>% 
+        left_join(look_dis, by = c("QuarBisherCd" = "QuarCd")) %>% 
+        rename(distr_before = distr) %>%     
+        mutate(sex = factor(if_else(SexCd == 1, uni_s[1], uni_s[2]), uni_s), 
+            origin = factor(if_else(HerkunftCd == 1, uni_o[1], uni_o[2]), uni_o),
+            district_before = factor(distr_before, uni_d),
+            district_after = factor(distr_after, uni_d)) %>% 
+        select(district_before, district_after, year, age, sex, origin, rel) %>%      
+        group_by(district_before, district_after, year, age, sex, origin) %>% 
+            summarize(rel = sum(rel)) %>% 
+        ungroup() 
 
-
-
+    
 
                     
 
