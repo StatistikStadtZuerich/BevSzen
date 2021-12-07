@@ -18,11 +18,19 @@
             library(here)
             setwd(paste0(here(), "/2020phase2/"))
         
-        #general (e.g. packages, colors)
+        #general functions (without dependence on parameters)
             source("1_Code/0000_General/0000_general_without-parameters.r")
             
-    }
+        #parameters (depend on scenario)
+            i_scen <- "middle"
+            for(i_para in 1:nrow(para)){
+                assign(para$parameter[i_para], para[[i_scen]][i_para],
+                       envir = .GlobalEnv)}
 
+        #general functions (with dependence on parameters)
+            source(paste0(code_path, "/0000_General/0001_general_with-parameters.r"))
+    
+    }
 
 #temporary path (since data not on open data yet)
     pro_path <- "2_Data/1_Input/BEV347OD3470.csv"
