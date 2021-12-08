@@ -39,7 +39,7 @@
  
 #population
     #in contrast to rate calculations: population at the end of the year 
-    pop <- read_csv(pop_od) %>% 
+    pop_past <- read_csv(pop_od) %>% 
         rename(year = StichtagDatJahr, age = AlterVCd, pop = AnzBestWir) %>% 
         left_join(look_dis, by = "QuarCd") %>% 
         mutate(district = factor(distr, uni_d),
@@ -48,10 +48,11 @@
         select(district, year, age, sex, origin, pop) %>%       
         group_by(district, year, age, sex, origin) %>% 
             summarize(pop = sum(pop)) %>% 
-        ungroup() 
+        ungroup() %>% 
+        mutate(scenario = uni_c[1])
 
 #births    
-    bir <- read_csv(bir_od) %>% 
+    bir_past <- read_csv(bir_od) %>% 
         rename(year = EreignisDatJahr, bir = AnzGebuWir) %>% 
         left_join(look_dis, by = "QuarCd") %>% 
         mutate(district = factor(distr, uni_d),
@@ -63,7 +64,7 @@
         ungroup()
     
 #deaths
-    dea <- read_csv(dea_od) %>%
+    dea_past <- read_csv(dea_od) %>%
         rename(year = EreignisDatJahr, age = AlterVCd, dea = AnzSterWir) %>% 
         mutate(sex = factor(if_else(SexCd == 1, uni_s[1], uni_s[2]), uni_s)) %>%    
         group_by(year, age, sex) %>% 
@@ -71,7 +72,7 @@
         ungroup()
     
 #immigration
-    imm <- read_csv(imm_od) %>% 
+    imm_past <- read_csv(imm_od) %>% 
         rename(year = EreignisDatJahr, age = AlterVCd, imm = AnzZuzuWir) %>%    
         left_join(look_dis, by = "QuarCd") %>% 
         mutate(sex = factor(if_else(SexCd == 1, uni_s[1], uni_s[2]), uni_s), 
@@ -84,7 +85,7 @@
     
     
 #emigration
-    emi <- read_csv(emi_od) %>% 
+    emi_past <- read_csv(emi_od) %>% 
         rename(year = EreignisDatJahr, age = AlterVCd, emi = AnzWezuWir) %>%    
         left_join(look_dis, by = "QuarCd") %>% 
         mutate(sex = factor(if_else(SexCd == 1, uni_s[1], uni_s[2]), uni_s), 
@@ -96,7 +97,7 @@
         ungroup()      
         
 #relocation
-    rel <- read_csv(rel_od) %>% 
+    rel_past <- read_csv(rel_od) %>% 
         rename(year = EreignisDatJahr, age = AlterVCd, rel = AnzUmzuWir) %>% 
         left_join(look_dis, by = "QuarCd") %>% 
         rename(distr_after = distr) %>% 
@@ -111,8 +112,74 @@
             summarize(rel = sum(rel)) %>% 
         ungroup() 
 
+#naturalization
+    nat_past <- read_csv(nat_od) %>% 
+        filter((HerkunftBisherCd == 2) & (HerkunftCd == 1)) %>% 
+        rename(year = EreignisDatJahr, age = AlterVCd, nat = AnzEinbWir) %>%          
+        left_join(look_dis, by = "QuarCd") %>%       
+        mutate(sex = factor(if_else(SexCd == 1, uni_s[1], uni_s[2]), uni_s),
+            district = factor(distr, uni_d)) %>% 
+        select(district, year, age, sex, nat) %>% 
+        arrange(district, year, age, sex)
+
+#processes (past)
+    
+    
+    
+    
+#-------------------------------------------------------------------
+#data import: future
+#-------------------------------------------------------------------
+ 
+#population (lower, middle, upper scenario)                
+    pop_lower <- read_csv(paste0(data_path, "5_Outputs/lower/population_future.csv")) %>% 
+        mutate(scenario = uni_c[2])
+    
+    pop_middle <- read_csv(paste0(data_path, "5_Outputs/middle/population_future.csv")) %>% 
+        mutate(scenario = uni_c[3])
+        
+    pop_upper <- read_csv(paste0(data_path, "5_Outputs/upper/population_future.csv")) %>% 
+        mutate(scenario = uni_c[4])
+     
+    
+#-------------------------------------------------------------------
+#data: past and future
+#-------------------------------------------------------------------
+     
+#population    
+    pop <- pop_past %>% 
+        bind_rows(pop_lower) %>%     
+        bind_rows(pop_middle) %>% 
+        bind_rows(pop_upper)
+    
+#yc
+    pop_yc <- pop %>% 
+        group_by(year, scenario) %>% 
+            summarize(pop = sum(pop)) %>% 
+        ungroup() %>% 
+        filter(year <= 2040)
+    
+    sszplot(pop_yc, aes_x = "year", aes_y = "pop", aes_col = "scenario",
+            labs_y = "population",
+            scale_y = c(0, NA), 
+            geom = c("line", "point"),
+            name = "1500_pop_yc")        
+    
+    
+    pop_yc %>% 
+        filter((scenario == "middle") & (year >= 2040))
+    
+  
+     
+    temp <- pop %>% 
+        filter(year == 2050) %>% 
+        group_by(year, scenario, age) %>% 
+            summarize(pop = sum(pop)) %>% 
+        ungroup() %>% 
+        pivot_wider(names_from = scenario, values_from = pop)
+    as.data.frame(temp)
+    
+    
+    
     
 
-                    
-
-    

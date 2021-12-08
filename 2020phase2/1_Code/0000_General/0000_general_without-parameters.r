@@ -42,14 +42,11 @@
 #log file
     log_file <- "2_Data/6_Log/log.txt"
 
-#path for documentation
-    docu_path <- "5_Documentation"
-
 #import parameter
     para <- read_delim(paste0(data_path, "3_Parameter/parameter.csv"), ";") %>%
         select(parameter, lower, middle, upper)    
 
-    
+
 #-------------------------------------------------------------------
 #general functions
 #-------------------------------------------------------------------
@@ -138,7 +135,11 @@
     text_i <- c("new", "removed")
     uni_i <- factor(text_i, levels = text_i)
 
-
+#past and scenarios
+    text_c <- c("past", "lower", "middle", "upper")
+    uni_c <- factor(text_c, levels = text_c)    
+    
+    
 #-------------------------------------------------------------------
 #categories (t = text) and associated lookup tables
 #-------------------------------------------------------------------
