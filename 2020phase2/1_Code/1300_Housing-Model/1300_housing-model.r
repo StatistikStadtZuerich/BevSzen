@@ -287,6 +287,7 @@
                 x$usage <- c(0, diff(x$car))
                 x$pro <- x$new - x$removed
                 x$maxi <- pmax(x$usage, x$pro)
+                x$corr <- pmax(0, x$pro - x$usage)
                 
                 
             
