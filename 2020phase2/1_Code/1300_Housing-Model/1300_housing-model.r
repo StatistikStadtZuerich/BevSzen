@@ -283,6 +283,13 @@
           project_reserves <- function(x,...){
 
           #new colums
+                x$car[1] <- x$pop[1]
+                x$usage <- c(0, diff(x$car))
+                x$pro <- x$new - x$removed
+                x$maxi <- pmax(x$usage, x$pro)
+                
+                
+            
                 x$project <- NA
                 x$corr <- NA
         
@@ -291,8 +298,13 @@
                 
     #oooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooo    
                 as.data.frame(x)
+                
                 plot(x$year, x$pop, type = "o")
-                i <- 3
+                plot(x$year, x$car, type = "o")
+          
+                
+                
+                i <- 4
                 
                 
               
@@ -300,7 +312,7 @@
       #oooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooo    
                   
           
-                    #project list (the result can not be negative)
+                    #use the information from the project list (the result can not be negative)
                         x$project[i] <- max(0, x$pop[i-1] + x$new[i] - x$removed[i])
                 
                     #select the larger value of projects and capacity/reserves
@@ -311,20 +323,24 @@
                     #correction of the reserves (if too much used due to the project list)
                         x$corr[i] <- max(0, x$project[i] - x$car[i])  
                         
-                    #correction (proportional to the capacity)
-                        #WHY not proportional to the usage?
-                        #if the future capacity is also calculated based on ownership trends,
-                        #then the usage could be negative
-                        #a down-correction proportional to a negative usage does not make sense
-                        
-                        if(i < nrow(x)){
-                            index <- (i+1):nrow(x)
-                            x$subtract <- 0
-                            x$subtract[index] <- x$car[index]/sum(x$car[index])*x$corr[i]
-                            x$car[index] <- pmax(0, x$car[index] - x$subtract[index]) #no negative population limit values
-                        }    
                         
                         
+                        
+                        
+                        
+                    # #correction (proportional to the capacity)
+                    #     #WHY not proportional to the usage?
+                    #     #if the future capacity is also calculated based on ownership trends,
+                    #     #then the usage could be negative
+                    #     #a down-correction proportional to a negative usage does not make sense
+                    #     
+                    #     if(i < nrow(x)){
+                    #         index <- (i+1):nrow(x)
+                    #         x$subtract <- 0
+                    #         x$subtract[index] <- x$car[index]/sum(x$car[index])*x$corr[i]
+                    #         x$car[index] <- pmax(0, x$car[index] - x$subtract[index]) #no negative population limit values
+                    #     }    
+                    #     
                         
                         
                     # #correction (proportional to the usage)
