@@ -228,12 +228,9 @@
     
 #function: consider projects and reserves
 
-    #oooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooo    
-      x <- filter(pro_car, (district == "Albisrieden") & (owner == "cooperative housing"))
+      # x <- filter(pro_car, (district == "Albisrieden") & (owner == "cooperative housing"))
       # plot(x$year, x$car, type = "o")
-    #oooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooo    
-      
-      
+
       #consider projects and reserves
           project_reserves <- function(x,...){
 
@@ -246,27 +243,6 @@
                   
           #loop from second year (i.e. first year in the future) to the last prediction year
                 # for (i in 2:nrow(x)){
-                
-    #oooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooo    
-                as.data.frame(x)
-                
-
-                plot(x$year, x$car, type = "o")
-                
-                plot(x$year, x$pop, type = "o")                
-                abline(h = car_max, col = "red")
-                
-                
-                plot(x$year, x$car, type = "o")          
-                points(x$year, x$car-x$subtract, type = "o", col = "red")                  
-                
-                i <- 31
-                
-                
-              
-                for (i in 2:30){
-      #oooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooo    
-                  
           
                     #use the information from the project list (the result can not be negative)
                         x$project[i] <- max(0, x$pop[i-1] + x$new[i] - x$removed[i])
@@ -300,8 +276,6 @@
                             x$car[index] <- pmax(0, x$car[index] - x$subtract[index]) 
                         }
 
-                        
-
                 #end of the loop over years          
                 }                        
             
@@ -309,19 +283,16 @@
                 #if does the population exceeds the used reserves? 
                 #trust the capacity/reserves or the project list?
                     
-                
-                x$pop_trust 
-                car_trust
-                
-                car_max    
-                
-                        
-         
-                #output
-                    y <- select(x, district, year, owner, pop) %>%
-                        filter(year >= szen_begin)
-                    print(y)
-  
+                y <- x %>% 
+                    mutate(upper_limit_car = pmin(pop, car_max),
+                           diff_to_limit = pop - upper_limit_car,
+                           to_subtract = car_trust / 100 * diff_to_limit,
+                           pop_new = pop - to_subtract) %>% 
+                    select(x, district, year, owner, pop_new) %>%
+                    rename(pop = pop_new) %>% 
+                    filter(year >= szen_begin)                  
+                print(y)                                    
+                                    
         #end of the function
         }      
 
