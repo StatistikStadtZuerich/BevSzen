@@ -236,20 +236,16 @@
 #death (dea)
     dea_od <- "https://data.stadt-zuerich.ch/dataset/bev_todesfaelle_jahr_alter_geschlecht_herkunft_quartier_od5703/download/BEV570OD5703.csv"
 
-
 #death (dea, data of the Federal Statistical Office FSO)
     dea_fso_od <- "https://data.stadt-zuerich.ch/dataset/bfs_bev_sterberaten_jahr_alter_geschlecht_herkunft_od5708/download/BEV570OD5708.csv"
-
 
 #immigration (imm)
     #migration in the City of Zurich; across the city border
     imm_od <- "https://data.stadt-zuerich.ch/dataset/bev_zuz_jahr_quartier_alter_geschlecht_herkunft_od5704/download/BEV570OD5704.csv"
 
-
 #emigration (emi)
     #migration out of the City of Zurich; across the city border
     emi_od <- "https://data.stadt-zuerich.ch/dataset/bev_wegz_jahr_quartier_alter_geschlecht_herkunft_od5705/download/BEV570OD5705.csv"
-
 
 #relocation (rel)
     #migration within the City of Zurich; inside the city border
@@ -262,7 +258,9 @@
 #living space (spa)
     spa_od <- "https://data.stadt-zuerich.ch/dataset/bau_best_whg_geb_gebmwhg_wfl_pers_statzone_jahr_od6981/download/BAU698OD6981.csv"
 
-
+#population scenarios on open data (sce)    
+    sce_od <- "https://data.stadt-zuerich.ch/dataset/bev_szenarien_od3440/download/BEV344OD3440.csv"    
+    
 
 #-------------------------------------------------------------------
 #specific functions

@@ -126,7 +126,12 @@
     
     
     
-#previous population scenarios    
+#previous published population scenarios    
+    sce <- read_csv(sce_od)
+        
+    
+    sce1 <- sce
+        
     
     
     
