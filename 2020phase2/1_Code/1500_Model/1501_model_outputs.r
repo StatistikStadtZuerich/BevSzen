@@ -127,6 +127,10 @@
     
     
     
+    
+    
+    
+    
 #-------------------------------------------------------------------
 #data import: future
 #-------------------------------------------------------------------
@@ -156,8 +160,7 @@
     pop_yc <- pop %>% 
         group_by(year, scenario) %>% 
             summarize(pop = sum(pop)) %>% 
-        ungroup() %>% 
-        filter(year <= 2040)
+        ungroup()
     
     sszplot(pop_yc, aes_x = "year", aes_y = "pop", aes_col = "scenario",
             labs_y = "population",
@@ -165,21 +168,7 @@
             geom = c("line", "point"),
             name = "1500_pop_yc")        
     
-    
-    pop_yc %>% 
-        filter((scenario == "middle") & (year >= 2040))
-    
-  
-     
-    temp <- pop %>% 
-        filter(year == 2050) %>% 
-        group_by(year, scenario, age) %>% 
-            summarize(pop = sum(pop)) %>% 
-        ungroup() %>% 
-        pivot_wider(names_from = scenario, values_from = pop)
-    as.data.frame(temp)
-    
-    
+
     
     
 
