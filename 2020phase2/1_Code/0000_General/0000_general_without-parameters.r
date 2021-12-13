@@ -53,6 +53,7 @@
 
 #functions
     sum_NA <- function(x){sum(x, na.rm = TRUE)}
+    max_NA <- function(x){max(x, na.rm = TRUE)}    
 
 #cat to log file    
     cat_log <- function(...){cat(..., 
