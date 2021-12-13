@@ -126,11 +126,29 @@
     
     
     
-#previous published population scenarios    
-    sce <- read_csv(sce_od)
-        
+#previous published population scenarios
+    #age: only age groups available
+    #therefore, first evaluations without age
     
-    sce1 <- sce
+    look_dis_temp <- mutate(look_dis, QuarSort = as.numeric(QuarCd)) %>% 
+        select(QuarSort, distr)
+    
+    sce <- read_csv(sce_od) %>% 
+        rename(year = StichtagDatJahr, pop = AnzBestWir) %>% 
+        left_join(look_dis_temp, by = "QuarSort") %>% 
+        mutate(sex = factor(if_else(SexSort == 1, uni_s[1], uni_s[2]), uni_s), 
+            origin = factor(if_else(HeimatRegionSort == 1, uni_o[1], uni_o[2]), uni_o),
+            district = factor(distr, uni_d),
+            scenario = case_when(VersionArtSort == 1 ~ uni_c[2],
+                VersionArtSort== 2 ~ uni_c[3],
+                TRUE ~ uni_c[4])) %>% 
+        select(district, year, sex, origin, scenario, pop) %>%
+        group_by(district, year, sex, origin, scenario) %>%
+            summarize(pop = sum(pop)) %>%
+        ungroup()
+
+
+        
         
     
     
