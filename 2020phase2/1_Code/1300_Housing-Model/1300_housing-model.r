@@ -242,7 +242,7 @@
                   x$corr <- NA                  
                   
           #loop from second year (i.e. first year in the future) to the last prediction year
-                # for (i in 2:nrow(x)){
+                for (i in 2:nrow(x)){
           
                     #use the information from the project list (the result can not be negative)
                         x$project[i] <- max(0, x$pop[i-1] + x$new[i] - x$removed[i])
@@ -288,7 +288,7 @@
                            diff_to_limit = pop - upper_limit_car,
                            to_subtract = car_trust / 100 * diff_to_limit,
                            pop_new = pop - to_subtract) %>% 
-                    select(x, district, year, owner, pop_new) %>%
+                    select(district, year, owner, pop_new) %>%
                     rename(pop = pop_new) %>% 
                     filter(year >= szen_begin)                  
                 print(y)                                    
