@@ -130,11 +130,15 @@
     #age: only age groups available
     #therefore, first evaluations without age
     
-    look_dis_temp <- mutate(look_dis, QuarSort = as.numeric(QuarCd)) %>% 
-        select(QuarSort, distr)
+    look_dis_temp <- look_dis %>% 
+        mutate(Quar_num = as.numeric(QuarCd),
+               QuarSort = if_else(Quar_num < 20, 10, Quar_num)) %>% 
+        select(QuarSort, distr) %>% 
+        distinct()
     
     sce <- read_csv(sce_od) %>% 
         rename(year = StichtagDatJahr, pop = AnzBestWir) %>% 
+        filter(year >= szen_begin) %>% 
         left_join(look_dis_temp, by = "QuarSort") %>% 
         mutate(sex = factor(if_else(SexSort == 1, uni_s[1], uni_s[2]), uni_s), 
             origin = factor(if_else(HeimatRegionSort == 1, uni_o[1], uni_o[2]), uni_o),
@@ -148,11 +152,6 @@
         ungroup()
 
 
-        
-        
-    
-    
-    
     
 #-------------------------------------------------------------------
 #data import: future
@@ -170,7 +169,7 @@
      
     
 #-------------------------------------------------------------------
-#data: past and future
+#population: past and future
 #-------------------------------------------------------------------
      
 #population    
@@ -192,6 +191,30 @@
             name = "1500_pop_yc")        
     
 
-    
-    
+#-------------------------------------------------------------------
+#new and previous scenarios
+#-------------------------------------------------------------------
 
+#preparation
+    new_prev <- factor(c("new", "previous"))
+    
+    pop_yc_new <- pop_yc %>% 
+        mutate(cat = new_prev[1])
+    
+    pop_yc_prev <- sce %>% 
+        group_by(year, scenario) %>% 
+            summarize(pop = sum(pop)) %>% 
+        ungroup() %>% 
+        mutate(cat = new_prev[2])
+
+    pop_yc_new_prev <- pop_yc_new %>% 
+        bind_rows(pop_yc_prev)
+    
+    sszplot(pop_yc_new_prev, aes_x = "year", aes_y = "pop", 
+            aes_col = "scenario", aes_ltyp = "cat",
+            labs_y = "population",
+            scale_y = c(0, NA), 
+            geom = "line",
+            name = "1501_pop_yc_new_prev")       
+    
+    

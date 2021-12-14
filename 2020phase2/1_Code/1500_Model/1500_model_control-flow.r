@@ -52,6 +52,7 @@
                     # own (ownership)
                     # hou (housing model)
                 # deh (demography and housing model)
+                # out (model outputs)        
 
     
     
@@ -151,7 +152,12 @@
                 #demography and housing model
                     if (modules %in% c("all", "deh")) {
                         source(paste0(code_path, "1400_Demography-Housing/1400_demography-housing.r"))
-                    }                      
+                    }      
+                    
+                #model outputs
+                    if (modules %in% c("all", "out")) {
+                        source(paste0(code_path, "1500_Model/1501_model_outputs.r"))
+                    }                       
                     
             #end: different scenarios                    
             }
@@ -161,11 +167,13 @@
            
 
 #execute the function
-    run_scen(
-        scenarios = c("lower", "middle", "upper"),
-        modules = c("all"))
+    # run_scen(
+    #     scenarios = c("lower", "middle", "upper"),
+    #     modules = c("all"))
             
-        
+    run_scen(
+        scenarios = "middle",
+        modules = "out")        
 
 
                     
