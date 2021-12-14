@@ -283,15 +283,20 @@
                 #if does the population exceeds the used reserves? 
                 #trust the capacity/reserves or the project list?
                     
-                y <- x %>% 
+                y <- x %>%
                     mutate(upper_limit_car = pmin(pop, car_max),
                            diff_to_limit = pop - upper_limit_car,
                            to_subtract = car_trust / 100 * diff_to_limit,
-                           pop_new = pop - to_subtract) %>% 
+                           pop_new = pop - to_subtract) %>%
                     select(district, year, owner, pop_new) %>%
-                    rename(pop = pop_new) %>% 
-                    filter(year >= szen_begin)                  
-                print(y)                                    
+                    rename(pop = pop_new) %>%
+                    filter(year >= szen_begin)
+                print(y)
+                
+                # y <- x %>% 
+                #     select(district, year, owner, pop) %>%
+                #     filter(year >= szen_begin)                  
+                # print(y)                   
                                     
         #end of the function
         }      
