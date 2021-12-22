@@ -305,9 +305,14 @@
           
           
 #consider projects and reserves (apply the function)
-    splitted <- pro_car %>% 
-        group_split(district, owner) 
-    pro_res_all <- bind_rows(lapply(splitted, project_reserves))
+    # splitted <- pro_car %>% 
+    #     group_split(district, owner) 
+    # pro_res_all <- bind_rows(lapply(splitted, project_reserves))
+    
+    pro_res_all <- pro_car %>% 
+      group_split(district, owner) %>%
+      map(project_reserves) %>%
+      bind_rows()
     
   
 #-------------------------------------------------------------------
