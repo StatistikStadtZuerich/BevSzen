@@ -172,10 +172,8 @@
     #     modules = c("all"))
             
     run_scen(
-        scenarios = "middle",
-        modules = c("out"))        
+        scenarios = c("lower", "middle", "upper"),
+        modules = c("deh", "out"))        
 
-
-                    
 
     
