@@ -158,7 +158,7 @@
 #loop over years
     for (iyear in future){
       
-        #iyear <- 2022
+        #iyear <- 2021
       
         #population at the begin of the year = population at the end of the previous year
             if(iyear == min(future)){popu <- select(pop_last, -year)} else {
@@ -170,7 +170,7 @@
                 left_join(popu, by = c("district", "age", "sex", "origin")) %>% 
                 replace_na(list(fer = 0, pop = 0)) %>%               
                 mutate(bir = pop * fer / 100) %>% 
-                group_by(district, year, origin) %>% 
+                group_by(district, origin) %>% 
                     summarize(bir = sum(bir)) %>% 
                 ungroup()
             
@@ -183,15 +183,15 @@
                 right_join(bir_do, by = c("district", "origin")) %>% 
                 mutate(change = bir * cha / 100, 
                        keep = bir - change) %>% 
-                select(district, origin, year, change, keep) %>% 
+                select(district, origin, change, keep) %>% 
                 pivot_longer(cols = c("change", "keep"), 
                              names_to = "category", values_to = "bir") %>%
                 mutate(new_origin = case_when(category == "keep" ~ origin,
                                               origin == uni_o[1] ~ uni_o[2],
                                               TRUE ~ uni_o[1])) %>% 
-                select(district, year, new_origin, bir) %>% 
+                select(district, new_origin, bir) %>% 
                 rename(origin = new_origin) %>% 
-                group_by(district, year, origin) %>% 
+                group_by(district, origin) %>% 
                     summarize(bir = sum(bir)) %>% 
                 ungroup()
             
@@ -201,16 +201,18 @@
             #the newborn babies are one year younger than the population at age zero
             #ageing of the population is executed at the very end of the code
             
-            bir <- bir_do_new %>%            
-                left_join(filter(pro_male, year == iyear), by = "year") %>% 
-                mutate(male = bir * pro_male / 100,
+            pro_male_value <- filter(pro_male, year == iyear)
+            
+            bir <- bir_do_new %>%  
+                mutate(pro_male = pro_male_value$pro_male,
+                       male = bir * pro_male / 100,
                        female = bir - male) %>% 
                 select(-c(bir, pro_male)) %>% 
                 pivot_longer(cols = uni_s, 
                              names_to = "sex", values_to = "bir") %>% 
                 mutate(age = -1, 
                        sex = factor(sex, levels = uni_s)) %>% 
-                select(district, year, age, sex, origin, bir) %>% 
+                select(district, age, sex, origin, bir) %>% 
                 arrange(district, sex, origin)
             
                 #sum(bir_do$bir)   
@@ -223,7 +225,7 @@
                 right_join(popu, by = c("age", "sex")) %>%  
                 replace_na(list(mor = 0, pop = 0)) %>%               
                 mutate(dea = pop * mor / 100) %>% 
-                select(district, year, age, sex, origin, dea)
+                select(district, age, sex, origin, dea)
 
                 #sum(dea$dea)                                           
   
@@ -233,7 +235,8 @@
                     summarize(pop = sum(pop)) %>% 
                 ungroup() %>% 
                 left_join(filter(ims_rate, year == iyear), by = "district") %>% 
-                mutate(ims_d = pop * rate / 100) %>% 
+                mutate(ims_d = pop * rate / 100) %>%
+                #here: keep the year in order to join the right year below
                 select(-c(pop, rate)) %>%               
                 #until here: immigration* by district (31 rows)
                 left_join(ims_prop_so, by = c("district", "year")) %>% 
@@ -242,7 +245,7 @@
                 #until here: immigration* by district, sex, origin (31*2*2 = 124 rows)              
                 left_join(ims_prop_a, by = c("district", "year", "sex", "origin")) %>% 
                 mutate(ims = ims_dso * prop / 100) %>%             
-                select(district, year, age, sex, origin, ims)            
+                select(district, age, sex, origin, ims)            
                 #result: immigration* by district, age, sex, origin (31*121*2*2 = 15004 rows)             
             
 
@@ -256,6 +259,7 @@
                 ungroup() %>% 
                 left_join(filter(ems_rate, year == iyear), by = "district") %>% 
                 mutate(ems_d = pop * rate / 100) %>% 
+                #here: keep the year in order to join the right year below              
                 select(-c(pop, rate)) %>%               
                 #until here: emigration* by district (31 rows)
                 left_join(ems_prop_so, by = c("district", "year")) %>% 
@@ -264,7 +268,7 @@
                 #until here: emigration* by district, sex, origin (31*2*2 = 124 rows)              
                 left_join(ems_prop_a, by = c("district", "year", "sex", "origin")) %>% 
                 mutate(ems = ems_dso * prop / 100) %>%             
-                select(district, year, age, sex, origin, ems)            
+                select(district, age, sex, origin, ems)            
                 #result: emigration* by district, age, sex, origin (31*121*2*2 = 15004 rows)             
             
 
@@ -275,15 +279,14 @@
             
             dem <- as_tibble(expand_grid(
                         district = uni_d, 
-                        year = iyear,
                         age = (-1):age_max,
                         sex = uni_s,
                         origin = uni_o)) %>% 
                 left_join(popu, by = c("district", "age", "sex", "origin")) %>% 
-                left_join(bir, by = c("district", "year", "age", "sex", "origin")) %>%                        
-                left_join(dea, by = c("district", "year", "age", "sex", "origin")) %>%                      
-                left_join(ims, by = c("district", "year", "age", "sex", "origin")) %>%                      
-                left_join(ems, by = c("district", "year", "age", "sex", "origin")) %>% 
+                left_join(bir, by = c("district", "age", "sex", "origin")) %>%                        
+                left_join(dea, by = c("district", "age", "sex", "origin")) %>%                      
+                left_join(ims, by = c("district", "age", "sex", "origin")) %>%                      
+                left_join(ems, by = c("district", "age", "sex", "origin")) %>% 
                 replace_na(list(pop = 0, bir = 0, dea = 0, ims = 0, ems = 0)) %>% 
                 #not more than the entire population can die...
                 #therefore, calcualate effective deaths
@@ -300,8 +303,12 @@
             #if not enough space: decrease immigration, increase emigration
             #if space left: increase immigration, decrease emigration
             
+            hou_year <- hou %>% 
+                filter(year == iyear) %>% 
+                select(-year)
+            
             bal <- dem %>% 
-                group_by(district, year) %>% 
+                group_by(district) %>% 
                     summarize(
                         pop_bir_dea = sum(pop_bir_dea),
                         ims = sum(ims),
@@ -310,7 +317,7 @@
                 #theoretical population:
                 #pop + birth - death + immigration* - emigration*
                 mutate(pop_theo = pop_bir_dea + ims - ems) %>%               
-                left_join(hou, by = c("district", "year")) %>% 
+                left_join(hou_year, by = "district") %>% 
               
                 #tests if correction (ims3, ems3 are right)
                 # mutate(ims = if_else(district == "Kreis 1", 5, ims)) %>%
