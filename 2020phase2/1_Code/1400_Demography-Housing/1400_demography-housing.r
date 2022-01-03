@@ -361,12 +361,12 @@
         #apply the correction factors to the immigration* and emigration* by 
         #district, age, sex, origin (same factor by district)   
             dem_factor <- bal %>% 
-                select(district, year, factor_ims, factor_ems) %>% 
-                right_join(dem, by = c("district", "year")) %>% 
+                select(district, factor_ims, factor_ems) %>% 
+                right_join(dem, by = "district") %>% 
                 mutate(ims_eff = ims * factor_ims, 
                        ems_eff = ems * factor_ems,
                        pop_end_year = pmax(0, pop_bir_dea + ims_eff - ems_eff)) %>% 
-                select(district, year, age, sex, origin, 
+                select(district, age, sex, origin, 
                        bir, dea_eff, ims_eff, ems_eff, pop_end_year)
             
          #sum(dem_factor$pop_end_year)
@@ -378,11 +378,12 @@
             
             pop_nat <- nat %>%    
                 filter(year == iyear) %>%  
-                right_join(select(dem_factor, district, year, age, sex, 
+                select(-year) %>% 
+                right_join(select(dem_factor, district, age, sex, 
                                   origin, pop_end_year), 
-                           by = c("district", "year", "age", "sex", "origin")) %>% 
+                           by = c("district", "age", "sex", "origin")) %>% 
                 replace_na(list(rate_nat = 0))  %>% 
-                arrange(district, year, age, sex, origin) %>% 
+                arrange(district, age, sex, origin) %>% 
                 mutate(Swiss = if_else(origin == uni_o[1], pop_end_year,
                                        pop_end_year * rate_nat / 100),
                        foreign = if_else(origin == uni_o[1], 0,
@@ -391,59 +392,71 @@
                 pivot_longer(cols = uni_o, 
                              names_to = "origin", values_to = "pop_end_year") %>% 
                 mutate(origin = factor(origin, levels = uni_o)) %>% 
-                select(district, year, age, sex, origin, pop_end_year) %>% 
-                group_by(district, year, age, sex, origin) %>% 
+                select(district, age, sex, origin, pop_end_year) %>% 
+                group_by(district, age, sex, origin) %>% 
                     summarize(pop_end_year = sum(pop_end_year)) %>% 
                 ungroup()
             
-          #determine immigration from immigration*   
+          #determine immigration and relocation from immigration*  
+              rei_year <- rei %>% 
+                  filter(year == iyear) %>% 
+                  select(-year)
+            
               imm <- dem_factor %>% 
                   filter(age >= 0) %>% 
-                  select(district, year, age, sex, origin, ims_eff) %>% 
-                  left_join(rei, by = c("district", "year", "age", "origin")) %>% 
+                  select(district, age, sex, origin, ims_eff) %>% 
+                  left_join(rei_year, by = c("district", "age", "origin")) %>%
                   mutate(rel = ims_eff * prop_rel_dyao / 100, 
                          imm = ims_eff - rel) %>% 
-                  select(district, year, age, sex, origin, imm, rel)
+                  select(district, age, sex, origin, imm, rel)
                   
                   # sum(imm$imm)
                   # sum(imm$rel)
               
-          #determine emgration from emigration*   
+          #determine emgration and relocation from emigration* 
+              ree_year <- ree %>% 
+                  filter(year == iyear) %>% 
+                  select(-year)              
+              
               emi <- dem_factor %>% 
                   filter(age >= 0) %>% 
-                  select(district, year, age, sex, origin, ems_eff) %>% 
-                  left_join(ree, by = c("district", "year", "age", "origin")) %>% 
+                  select(district, age, sex, origin, ems_eff) %>% 
+                  left_join(ree_year, by = c("district", "age", "origin")) %>% 
                   mutate(rel = ems_eff * prop_rel_dyao / 100, 
                          emi = ems_eff - rel) %>% 
-                  select(district, year, age, sex, origin, emi, rel)
+                  select(district, age, sex, origin, emi, rel)
                   
                   # sum(emi$emi)
                   # sum(emi$rel)
                     
-          #age plus 1
+          #age plus 1, and with variable 'year'
               pop_end_year <- pop_nat %>% 
-                  mutate(age_new = age + 1) %>% 
-                  select(district, year, age_new, sex, origin, pop_end_year) %>% 
-                  rename(age = age_new, pop = pop_end_year) %>% 
+                  mutate(age = age + 1,
+                      year = iyear) %>% 
+                  select(district, year, age, sex, origin, pop_end_year) %>% 
+                  rename(pop = pop_end_year) %>% 
                   filter(age <= age_max)
               tail(pop_end_year)
-        
               
-          #outputs: birth (separate, since no age variable)
+          #outputs: birth (separate, since no age variable), with variable 'year'
               out_bir <- bir %>% 
-                  select(-age) %>% 
+                  mutate(year = iyear) %>% 
+                  select(district, year, sex, origin, bir) %>% 
                   bind_rows(out_bir)
 
-          #outputs: demographic processes
+          #outputs: demographic processes, with variable 'year'
               out_dem <- dem_factor %>% 
-                  select(district, year, age, sex, origin, 
+                  select(district, age, sex, origin, 
                          dea_eff, ims_eff, ems_eff) %>% 
                   filter(age >= 0) %>% 
                   rename(dea = dea_eff, ims = ims_eff, ems = ems_eff) %>% 
-                  left_join(imm, by = c("district", "year", "age", "sex", "origin")) %>% 
+                  left_join(imm, by = c("district", "age", "sex", "origin")) %>% 
                   rename(rei = rel) %>% 
-                  left_join(emi, by = c("district", "year", "age", "sex", "origin")) %>%              
-                  rename(ree = rel) %>% 
+                  left_join(emi, by = c("district", "age", "sex", "origin")) %>% 
+                  rename(ree = rel) %>%                 
+                  mutate(year = iyear) %>%                  
+                  select(district, year, age, sex, origin, 
+                         dea, ims, imm, rei, ems, emi, ree)                  
                   bind_rows(out_dem)
               
           #outputs: end of year population
@@ -459,22 +472,19 @@
 #-------------------------------------------------------------------
 
 #births
-    ex_bir <- out_bir %>% 
-        arrange(district, year, sex, origin)
-    
-    write_csv(ex_bir, paste0(out_path, "/births_future.csv")) 
+    out_bir %>% 
+    arrange(district, year, sex, origin) %>% 
+    write_csv(paste0(out_path, "/births_future.csv")) 
 
 #demographic processes
-    ex_dem <- out_dem %>% 
-        arrange(district, year, age, sex, origin) 
-    
-    write_csv(ex_dem, paste0(out_path, "/demographic-processes_future.csv")) 
+    out_dem %>% 
+    arrange(district, year, age, sex, origin) %>% 
+    write_csv(paste0(out_path, "/demographic-processes_future.csv")) 
       
 #population (end of year)
-    ex_pop <- out_pop %>% 
-        arrange(district, year, age, sex, origin) 
-    
-    write_csv(ex_pop, paste0(out_path, "/population_future.csv")) 
+    out_pop %>% 
+    arrange(district, year, age, sex, origin) %>% 
+    write_csv(paste0(out_path, "/population_future.csv")) 
       
 #log info    
     cat_log(paste0("demography and housing: ", 
