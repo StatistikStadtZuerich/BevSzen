@@ -61,7 +61,8 @@
         select(district, year, sex, origin, bir) %>%     
         group_by(district, year, sex, origin) %>% 
             summarize(bir = sum(bir)) %>% 
-        ungroup()
+        ungroup() %>% 
+        mutate(scenario = uni_c[1])
     
 #deaths
     dea_past <- read_csv(dea_od) %>%
@@ -154,10 +155,10 @@
 
     
 #-------------------------------------------------------------------
-#data import: future
+#data import: future (lower, middle, upper scenario)  
 #-------------------------------------------------------------------
  
-#population (lower, middle, upper scenario)                
+#population               
     pop_lower <- read_csv(paste0(data_path, "5_Outputs/lower/population_future.csv")) %>% 
         mutate(scenario = uni_c[2])
     
@@ -166,7 +167,32 @@
         
     pop_upper <- read_csv(paste0(data_path, "5_Outputs/upper/population_future.csv")) %>% 
         mutate(scenario = uni_c[4])
-     
+    
+#births    
+    bir_lower <- read_csv(paste0(data_path, "5_Outputs/lower/births_future.csv")) %>% 
+        mutate(scenario = uni_c[2])
+    
+    bir_middle <- read_csv(paste0(data_path, "5_Outputs/middle/births_future.csv")) %>% 
+        mutate(scenario = uni_c[3])
+        
+    bir_upper <- read_csv(paste0(data_path, "5_Outputs/upper/births_future.csv")) %>% 
+        mutate(scenario = uni_c[4])
+        
+#demographic processes
+    dem_lower <- read_csv(paste0(data_path, "5_Outputs/lower/demographic-processes_future.csv")) %>% 
+        mutate(scenario = uni_c[2])    
+    
+    dem_middle <- read_csv(paste0(data_path, "5_Outputs/middle/demographic-processes_future.csv")) %>% 
+        mutate(scenario = uni_c[3])
+        
+    dem_upper <- read_csv(paste0(data_path, "5_Outputs/upper/demographic-processes_future.csv")) %>% 
+        mutate(scenario = uni_c[4])
+            
+    dem_future <- dem_lower %>% 
+        bind_rows(dem_middle) %>% 
+        bind_rows(dem_upper)    
+    
+    
     
 #-------------------------------------------------------------------
 #population: past and future
@@ -187,7 +213,7 @@
     sszplot(pop_yc, aes_x = "year", aes_y = "pop", aes_col = "scenario",
             labs_y = "population",
             scale_y = c(0, NA), 
-            geom = c("line", "point"),
+            geom = "line",
             name = "1500_pop_yc")        
     
 
@@ -217,4 +243,43 @@
             geom = "line",
             name = "1501_pop_yc_new_prev")       
     
+   
+#-------------------------------------------------------------------
+#births
+#-------------------------------------------------------------------
     
+#births    
+    bir <- bir_past %>% 
+        bind_rows(bir_lower) %>%     
+        bind_rows(bir_middle) %>% 
+        bind_rows(bir_upper) %>% 
+        mutate(origin = factor(origin, levels = uni_o))
+    
+#yc
+    bir_yc <- bir %>% 
+        group_by(year, scenario) %>% 
+            summarize(bir = sum(bir)) %>% 
+        ungroup()
+    
+    sszplot(bir_yc, aes_x = "year", aes_y = "bir", aes_col = "scenario",
+            labs_y = "births per year",
+            scale_y = c(0, NA), 
+            geom = "line",
+            name = "1510_bir_yc")        
+    
+#yoc
+    bir_yoc <- bir %>% 
+        group_by(year, origin, scenario) %>% 
+            summarize(bir = sum(bir)) %>% 
+        ungroup()    
+    
+    sszplot(bir_yoc, aes_x = "year", aes_y = "bir", aes_col = "scenario",
+            labs_y = "births per year",
+            grid = c(".", "origin"),
+            scale_y = c(0, NA), 
+            geom = "line",
+            name = "1511_bir_yoc")        
+        
+    
+    
+     
