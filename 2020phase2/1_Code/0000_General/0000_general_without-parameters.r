@@ -145,7 +145,7 @@
 #categories (t = text) and associated lookup tables
 #-------------------------------------------------------------------
 
-# age category 1
+#age category 1
     age_1 <- c(30, 40)
     age_1t <- c("15-29", "30-39", "40-49")
     
@@ -166,6 +166,38 @@
         )
       ), levels = age_2t))
 
+    
+#age category 3
+    age_3 <- seq(0, 90, by = 10)
+    
+    age_3t <- c("0-9", "10-19", "20-29", "30-39", "40-49",
+                "50-59", "60-69", "70-79", "80-89", "90+")
+    
+    look_a3 <- tibble(age = 0:120) %>%
+      mutate(age_3 = factor(case_when(
+        age < age_3[2] ~ age_3t[1],        
+        age < age_3[3] ~ age_3t[2], 
+        age < age_3[4] ~ age_3t[3],         
+        age < age_3[5] ~ age_3t[4], 
+        age < age_3[6] ~ age_3t[5],    
+        age < age_3[7] ~ age_3t[6], 
+        age < age_3[8] ~ age_3t[7],         
+        age < age_3[9] ~ age_3t[8], 
+        age < age_3[10] ~ age_3t[9],  
+        TRUE  ~ age_3t[10]), levels = age_3t))
+    
+#age category 4
+    age_4 <- seq(0, 80, by = 20)
+    
+    age_4t <- c("0-19", "20-39", "40-59", "60-79", "80+")
+    
+    look_a4 <- tibble(age = 0:120) %>%
+      mutate(age_4 = factor(case_when(
+        age < age_4[2] ~ age_4t[1],        
+        age < age_4[3] ~ age_4t[2], 
+        age < age_4[4] ~ age_4t[3],         
+        age < age_4[5] ~ age_4t[4], 
+        TRUE  ~ age_4t[5]), levels = age_4t))
 
 
 #-------------------------------------------------------------------
