@@ -456,7 +456,7 @@
                   rename(ree = rel) %>%                 
                   mutate(year = iyear) %>%                  
                   select(district, year, age, sex, origin, 
-                         dea, ims, imm, rei, ems, emi, ree)                  
+                         dea, ims, imm, rei, ems, emi, ree) %>%                  
                   bind_rows(out_dem)
               
           #outputs: end of year population
