@@ -70,7 +70,8 @@
         mutate(sex = factor(if_else(SexCd == 1, uni_s[1], uni_s[2]), uni_s)) %>%    
         group_by(year, age, sex) %>% 
             summarize(dea = sum(dea)) %>% 
-        ungroup()
+        ungroup() %>% 
+        mutate(scenario = uni_c[1])
     
 #immigration
     imm_past <- read_csv(imm_od) %>% 
@@ -82,8 +83,8 @@
         select(district, year, age, sex, origin, imm) %>%       
         group_by(district, year, age, sex, origin) %>% 
             summarize(imm = sum(imm)) %>% 
-        ungroup()      
-    
+        ungroup() %>% 
+        mutate(scenario = uni_c[1])     
     
 #emigration
     emi_past <- read_csv(emi_od) %>% 
@@ -95,7 +96,8 @@
         select(district, year, age, sex, origin, emi) %>%       
         group_by(district, year, age, sex, origin) %>% 
             summarize(emi = sum(emi)) %>% 
-        ungroup()      
+        ungroup() %>% 
+        mutate(scenario = uni_c[1])    
         
 #relocation
     rel_past <- read_csv(rel_od) %>% 
@@ -111,7 +113,8 @@
         select(district_before, district_after, year, age, sex, origin, rel) %>%      
         group_by(district_before, district_after, year, age, sex, origin) %>% 
             summarize(rel = sum(rel)) %>% 
-        ungroup() 
+        ungroup() %>% 
+        mutate(scenario = uni_c[1])
 
 #naturalization
     nat_past <- read_csv(nat_od) %>% 
@@ -122,10 +125,6 @@
             district = factor(distr, uni_d)) %>% 
         select(district, year, age, sex, nat) %>% 
         arrange(district, year, age, sex)
-
-#processes (past)
-    
-    
     
 #previous published population scenarios
     #age: only age groups available
@@ -195,10 +194,10 @@
     
     
 #-------------------------------------------------------------------
-#population: past and future
+#population
 #-------------------------------------------------------------------
      
-#population    
+#past and future     
     pop <- pop_past %>% 
         bind_rows(pop_lower) %>%     
         bind_rows(pop_middle) %>% 
@@ -218,7 +217,7 @@
     
 
 #-------------------------------------------------------------------
-#new and previous scenarios
+#population: new and previous scenarios
 #-------------------------------------------------------------------
 
 #preparation
@@ -245,10 +244,10 @@
     
    
 #-------------------------------------------------------------------
-#births
+#birth
 #-------------------------------------------------------------------
     
-#births    
+#past and future    
     bir <- bir_past %>% 
         bind_rows(bir_lower) %>%     
         bind_rows(bir_middle) %>% 
@@ -281,5 +280,226 @@
             name = "1511_bir_yoc")        
         
     
+#-------------------------------------------------------------------
+#death
+#-------------------------------------------------------------------
+        
+#past and future  
+    dea <- dem_future %>% 
+        select(year, age, sex, scenario, dea) %>% 
+        group_by(year, age, sex, scenario) %>% 
+            summarize(dea = sum(dea)) %>% 
+        ungroup() %>% 
+        bind_rows(dea_past) %>% 
+        left_join(look_a3, by = "age") %>% 
+        mutate(sex = factor(sex, levels = uni_s))
     
-     
+#yc
+    dea_yc <- dea %>% 
+        group_by(year, scenario) %>% 
+            summarize(dea = sum(dea)) %>% 
+        ungroup()
+    
+    sszplot(dea_yc, aes_x = "year", aes_y = "dea", aes_col = "scenario",
+            labs_y = "deaths per year",
+            scale_y = c(0, NA), 
+            geom = "line",
+            name = "1520_dea_yc")        
+    
+#yac
+    dea_yac <- dea %>% 
+        group_by(year, age_3, scenario) %>% 
+            summarize(dea = sum(dea)) %>% 
+        ungroup()   
+    
+    sszplot(dea_yac, aes_x = "year", aes_y = "dea", aes_col = "scenario",
+            labs_y = "deaths per year",
+            wrap = "age_3", ncol = 5,
+            scale_y = c(0, NA), 
+            geom = "line",
+            width = 12, height = 6,
+            name = "1521_dea_yac")  
+    
+#ys
+    dea_ys <- dea %>% 
+        filter(scenario %in% uni_c[c(1, 3)]) %>% 
+        group_by(year, sex) %>% 
+            summarize(dea = sum(dea)) %>% 
+        ungroup()
+    
+    sszplot(dea_ys, aes_x = "year", aes_y = "dea", aes_col = "sex",
+            labs_y = "deaths per year",
+            scale_y = c(0, NA), 
+            geom = "line",
+            name = "1522_dea_ys")      
+    
+#yas
+    dea_yas <- dea %>% 
+        filter(scenario %in% uni_c[c(1, 3)]) %>%       
+        group_by(year, age_3, sex) %>% 
+            summarize(dea = sum(dea)) %>% 
+        ungroup()   
+    
+    sszplot(dea_yas, aes_x = "year", aes_y = "dea", aes_col = "sex",
+            labs_y = "deaths per year",
+            wrap = "age_3", ncol = 5,
+            scale_y = c(0, NA), 
+            geom = "line",
+            i_x = szen_begin,
+            width = 12, height = 6,
+            name = "1523_dea_yas")      
+ 
+       
+#-------------------------------------------------------------------
+#immigration
+#-------------------------------------------------------------------
+   
+#past and future  
+    imm <- dem_future %>% 
+        select(district, year, age, sex, origin, scenario, imm) %>% 
+        bind_rows(imm_past) %>% 
+        left_join(look_a3, by = "age") %>% 
+        mutate(origin = factor(origin, levels = uni_o))
+    
+#yc
+    imm_yc <- imm %>% 
+        group_by(year, scenario) %>% 
+            summarize(imm = sum(imm)) %>% 
+        ungroup()
+    
+    sszplot(imm_yc, aes_x = "year", aes_y = "imm", aes_col = "scenario",
+            labs_y = "immigration per year",
+            scale_y = c(0, NA), 
+            geom = "line",
+            name = "1530_imm_yc")        
+        
+#ya
+    imm_ya <- imm %>% 
+        filter(scenario %in% uni_c[c(1, 3)]) %>%       
+        group_by(year, age_3) %>% 
+            summarize(imm = sum(imm)) %>% 
+        ungroup()       
+    
+    sszplot(imm_ya, aes_x = "year", aes_y = "imm",
+            labs_y = "immigration per year",
+            wrap = "age_3", ncol = 5,
+            scale_y = c(0, NA), 
+            geom = "line",
+            i_x = szen_begin,
+            width = 12, height = 6,
+            name = "1531_imm_ya")        
+    
+#yao
+    imm_yao <- imm %>% 
+        filter(scenario %in% uni_c[c(1, 3)]) %>%       
+        group_by(year, age_3, origin) %>% 
+            summarize(imm = sum(imm)) %>% 
+        ungroup()       
+    
+    sszplot(imm_yao, aes_x = "year", aes_y = "imm", aes_col = "origin",
+            labs_y = "immigration per year",
+            wrap = "age_3", ncol = 5,
+            scale_y = c(0, NA), 
+            geom = "line",
+            i_x = szen_begin,
+            width = 12, height = 6,
+            name = "1532_imm_yao")        
+        
+       
+#-------------------------------------------------------------------
+#emigration
+#-------------------------------------------------------------------
+   
+#past and future  
+    emi <- dem_future %>% 
+        select(district, year, age, sex, origin, scenario, emi) %>% 
+        bind_rows(emi_past) %>% 
+        left_join(look_a3, by = "age") %>% 
+        mutate(origin = factor(origin, levels = uni_o))
+    
+#yc
+    emi_yc <- emi %>% 
+        group_by(year, scenario) %>% 
+            summarize(emi = sum(emi)) %>% 
+        ungroup()
+    
+    sszplot(emi_yc, aes_x = "year", aes_y = "emi", aes_col = "scenario",
+            labs_y = "emigration per year",
+            scale_y = c(0, NA), 
+            geom = "line",
+            name = "1540_emi_yc")        
+        
+#ya
+    emi_ya <- emi %>% 
+        filter(scenario %in% uni_c[c(1, 3)]) %>%       
+        group_by(year, age_3) %>% 
+            summarize(emi = sum(emi)) %>% 
+        ungroup()       
+    
+    sszplot(emi_ya, aes_x = "year", aes_y = "emi",
+            labs_y = "emigration per year",
+            wrap = "age_3", ncol = 5,
+            scale_y = c(0, NA), 
+            geom = "line",
+            i_x = szen_begin,
+            width = 12, height = 6,
+            name = "1541_emi_ya")        
+    
+#yao
+    emi_yao <- emi %>% 
+        filter(scenario %in% uni_c[c(1, 3)]) %>%       
+        group_by(year, age_3, origin) %>% 
+            summarize(emi = sum(emi)) %>% 
+        ungroup()       
+    
+    sszplot(emi_yao, aes_x = "year", aes_y = "emi", aes_col = "origin",
+            labs_y = "emigration per year",
+            wrap = "age_3", ncol = 5,
+            scale_y = c(0, NA), 
+            geom = "line",
+            i_x = szen_begin,
+            width = 12, height = 6,
+            name = "1542_emi_yao")          
+  
+      
+#-------------------------------------------------------------------
+#net migration
+#-------------------------------------------------------------------
+ 
+#calculate net migration     
+    net <- as_tibble(expand_grid(
+        district = uni_d, 
+        year = date_start:szen_end,
+        age = age_min:age_max,
+        sex = uni_s,
+        origin = uni_o,
+        scenario = uni_c)) %>% 
+        left_join(look_a3, by = "age") %>%       
+        left_join(imm, by = c("district", "year", "age", 
+                              "sex", "origin", "scenario", "age_3")) %>% 
+        left_join(emi, by = c("district", "year", "age", 
+                              "sex", "origin", "scenario", "age_3")) %>%      
+        replace_na(list(imm = 0, emi = 0))  %>% 
+        mutate(net = if_else( 
+          ((year < szen_begin) & (scenario != uni_c[1])) | 
+          ((year >= szen_begin) & (scenario == uni_c[1])), NA_real_, imm - emi))
+    
+#yc
+    net_yc <- net %>% 
+        group_by(year, scenario) %>% 
+            summarize(net = sum(net)) %>% 
+        ungroup()
+    
+    sszplot(net_yc, aes_x = "year", aes_y = "net", aes_col = "scenario",
+            labs_y = "net migration per year",
+            scale_y = c(0, NA),
+            i_y = 0,
+            geom = "line",
+            name = "1550_net_yc") 
+    
+    
+    
+    
+    
+
+         
