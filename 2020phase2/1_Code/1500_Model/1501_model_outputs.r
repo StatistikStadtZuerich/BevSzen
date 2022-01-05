@@ -202,10 +202,10 @@
         bind_rows(pop_lower) %>%     
         bind_rows(pop_middle) %>% 
         bind_rows(pop_upper) %>% 
-        mutate(sex = factor(sex, levels = uni_s), 
-               origin = factor(origin, levels = uni_o))
+        mutate(district = factor(district, uni_d), 
+            sex = factor(sex, levels = uni_s), 
+            origin = factor(origin, levels = uni_o))
     
-  
 #yc
     pop_yc <- pop %>% 
         group_by(year, scenario) %>% 
@@ -236,6 +236,72 @@
             name = "1501_pop_yas")
     
    
+#dy
+    pop_dy <- pop %>% 
+        filter(scenario %in% uni_c[c(1, 3)]) %>%      
+        group_by(district, year) %>% 
+            summarize(pop = sum(pop)) %>% 
+        ungroup()
+    
+    sszplot(pop_dy, aes_x = "year", aes_y = "pop",
+            wrap = "district", ncol = 4,
+            labs_y = "population",
+            scale_y = c(0, NA), 
+            i_x = szen_begin,
+            width = 10, height = 14,
+            name = "1502_pop_dy")       
+    
+#dyo
+    pop_dyo <- pop %>% 
+        filter(scenario %in% uni_c[c(1, 3)]) %>%      
+        group_by(district, year, origin) %>% 
+            summarize(pop = sum(pop)) %>% 
+        ungroup()
+    
+    sszplot(pop_dyo, aes_x = "year", aes_y = "pop", aes_col = "origin",
+            wrap = "district", ncol = 4,
+            labs_y = "population",
+            scale_y = c(0, NA), 
+            i_x = szen_begin,
+            width = 10, height = 14,
+            name = "1503_pop_dyo")       
+        
+#dyo: foreign population (proportion)  
+    pop_dyo_prop <- pop_dyo %>% 
+        pivot_wider(names_from = "origin", values_from = "pop") %>% 
+        mutate(foreign_prop = foreign / (Swiss + foreign) * 100)      
+      
+    sszplot(pop_dyo_prop, aes_x = "year", aes_y = "foreign_prop",
+            wrap = "district", ncol = 4,
+            labs_y = "foreign population in %",
+            scale_y = c(0, NA), 
+            i_x = szen_begin,
+            width = 10, height = 14,
+            name = "1504_pop_dyo_foreign-population")
+    
+    
+#yoc 
+    pop_yoc <- pop %>% 
+        group_by(year, origin, scenario) %>% 
+            summarize(pop = sum(pop)) %>% 
+        ungroup()
+    
+    sszplot(pop_yoc, aes_x = "year", aes_y = "pop", aes_col = "scenario",
+            labs_y = "population",
+            grid = c(".", "origin"),
+            scale_y = c(0, NA), 
+            name = "1505_pop_yoc") 
+    
+#yoc: foreign population (proportion)     
+    pop_yoc_prop <- pop_yoc %>% 
+        pivot_wider(names_from = "origin", values_from = "pop") %>% 
+        mutate(foreign_prop = foreign / (Swiss + foreign) * 100)      
+      
+    sszplot(pop_yoc_prop, aes_x = "year", aes_y = "foreign_prop", aes_col = "scenario",
+            labs_y = "foreign population in %",
+            scale_y = c(0, NA), 
+            name = "1505_pop_yoc_foreign-population") 
+    
     
 
 #-------------------------------------------------------------------
