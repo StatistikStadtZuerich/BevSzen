@@ -201,8 +201,11 @@
     pop <- pop_past %>% 
         bind_rows(pop_lower) %>%     
         bind_rows(pop_middle) %>% 
-        bind_rows(pop_upper)
+        bind_rows(pop_upper) %>% 
+        mutate(sex = factor(sex, levels = uni_s), 
+               origin = factor(origin, levels = uni_o))
     
+  
 #yc
     pop_yc <- pop %>% 
         group_by(year, scenario) %>% 
@@ -212,8 +215,27 @@
     sszplot(pop_yc, aes_x = "year", aes_y = "pop", aes_col = "scenario",
             labs_y = "population",
             scale_y = c(0, NA), 
-            geom = "line",
             name = "1500_pop_yc")        
+    
+#yas (selected years)
+    y_sel <- c(date_end, rev(seq(szen_end, szen_begin, by = -10)))
+    
+    pop_yas <- pop %>% 
+        filter((scenario %in% uni_c[c(1, 3)]) &
+                 (year %in% y_sel)) %>% 
+        group_by(year, age, sex) %>% 
+            summarize(pop = sum(pop)) %>% 
+        ungroup() %>% 
+        mutate(pop_pyramid = if_else(sex == uni_s[1], -pop, pop),
+               year_factor = as.factor(year))
+    
+    sszplot(pop_yas, aes_x = "age", aes_y = "pop_pyramid", aes_col = "year_factor",
+            aes_ltyp = "sex",
+            labs_y = "population",
+            i_y = 0,
+            name = "1501_pop_yas")
+    
+   
     
 
 #-------------------------------------------------------------------
@@ -239,8 +261,7 @@
             aes_col = "scenario", aes_ltyp = "cat",
             labs_y = "population",
             scale_y = c(0, NA), 
-            geom = "line",
-            name = "1501_pop_yc_new_prev")       
+            name = "1509_pop_yc_new_prev")       
     
    
 #-------------------------------------------------------------------
@@ -263,7 +284,6 @@
     sszplot(bir_yc, aes_x = "year", aes_y = "bir", aes_col = "scenario",
             labs_y = "births per year",
             scale_y = c(0, NA), 
-            geom = "line",
             name = "1510_bir_yc")        
     
 #yoc
@@ -276,7 +296,6 @@
             labs_y = "births per year",
             grid = c(".", "origin"),
             scale_y = c(0, NA), 
-            geom = "line",
             name = "1511_bir_yoc")        
         
     
@@ -303,7 +322,6 @@
     sszplot(dea_yc, aes_x = "year", aes_y = "dea", aes_col = "scenario",
             labs_y = "deaths per year",
             scale_y = c(0, NA), 
-            geom = "line",
             name = "1520_dea_yc")        
     
 #yac
@@ -316,7 +334,6 @@
             labs_y = "deaths per year",
             wrap = "age_3", ncol = 5,
             scale_y = c(0, NA), 
-            geom = "line",
             width = 12, height = 6,
             name = "1521_dea_yac")  
     
@@ -344,7 +361,6 @@
             labs_y = "deaths per year",
             wrap = "age_3", ncol = 5,
             scale_y = c(0, NA), 
-            geom = "line",
             i_x = szen_begin,
             width = 12, height = 6,
             name = "1523_dea_yas")      
@@ -370,7 +386,6 @@
     sszplot(imm_yc, aes_x = "year", aes_y = "imm", aes_col = "scenario",
             labs_y = "immigration per year",
             scale_y = c(0, NA), 
-            geom = "line",
             name = "1530_imm_yc")        
         
 #ya
@@ -384,7 +399,6 @@
             labs_y = "immigration per year",
             wrap = "age_3", ncol = 5,
             scale_y = c(0, NA), 
-            geom = "line",
             i_x = szen_begin,
             width = 12, height = 6,
             name = "1531_imm_ya")        
@@ -400,7 +414,6 @@
             labs_y = "immigration per year",
             wrap = "age_3", ncol = 5,
             scale_y = c(0, NA), 
-            geom = "line",
             i_x = szen_begin,
             width = 12, height = 6,
             name = "1532_imm_yao")        
@@ -426,7 +439,6 @@
     sszplot(emi_yc, aes_x = "year", aes_y = "emi", aes_col = "scenario",
             labs_y = "emigration per year",
             scale_y = c(0, NA), 
-            geom = "line",
             name = "1540_emi_yc")        
         
 #ya
@@ -440,7 +452,6 @@
             labs_y = "emigration per year",
             wrap = "age_3", ncol = 5,
             scale_y = c(0, NA), 
-            geom = "line",
             i_x = szen_begin,
             width = 12, height = 6,
             name = "1541_emi_ya")        
@@ -456,7 +467,6 @@
             labs_y = "emigration per year",
             wrap = "age_3", ncol = 5,
             scale_y = c(0, NA), 
-            geom = "line",
             i_x = szen_begin,
             width = 12, height = 6,
             name = "1542_emi_yao")          
@@ -494,7 +504,6 @@
             labs_y = "net migration per year",
             scale_y = c(0, NA),
             i_y = 0,
-            geom = "line",
             name = "1550_net_yc") 
     
     
