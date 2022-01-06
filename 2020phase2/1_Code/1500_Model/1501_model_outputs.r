@@ -205,7 +205,12 @@
         mutate(district = factor(district, uni_d), 
             sex = factor(sex, levels = uni_s), 
             origin = factor(origin, levels = uni_o))
-    
+
+#selected years (e.g. for population pyramids)      
+    y_sel1 <- c(date_end, 2040)
+    y_sel2 <- c(date_end, rev(seq(szen_end, szen_begin, by = -10))) 
+      
+
 #yc
     pop_yc <- pop %>% 
         group_by(year, scenario) %>% 
@@ -217,12 +222,10 @@
             scale_y = c(0, NA), 
             name = "1500_pop_yc")        
     
-#yas (selected years)
-    y_sel <- c(date_end, rev(seq(szen_end, szen_begin, by = -10)))
-    
+#yas
     pop_yas <- pop %>% 
         filter((scenario %in% uni_c[c(1, 3)]) &
-                 (year %in% y_sel)) %>% 
+                 (year %in% y_sel1)) %>% 
         group_by(year, age, sex) %>% 
             summarize(pop = sum(pop)) %>% 
         ungroup() %>% 
@@ -233,9 +236,12 @@
             aes_ltyp = "sex",
             labs_y = "population",
             i_y = 0,
+            quotes = c(
+                quote(coord_flip()),
+                quote(scale_linetype_manual(values = c(1, 1)))
+                ),            
             name = "1501_pop_yas")
     
-   
 #dy
     pop_dy <- pop %>% 
         filter(scenario %in% uni_c[c(1, 3)]) %>%      
@@ -300,9 +306,33 @@
     sszplot(pop_yoc_prop, aes_x = "year", aes_y = "foreign_prop", aes_col = "scenario",
             labs_y = "foreign population in %",
             scale_y = c(0, NA), 
-            name = "1505_pop_yoc_foreign-population") 
+            name = "1506_pop_yoc_foreign-population") 
     
     
+#dyas
+    pop_dyas <- pop %>% 
+        filter((scenario %in% uni_c[c(1, 3)]) &
+                 (year %in% y_sel1)) %>% 
+        group_by(district, year, age, sex) %>% 
+            summarize(pop = sum(pop)) %>% 
+        ungroup() %>% 
+        mutate(pop_pyramid = if_else(sex == uni_s[1], -pop, pop),
+               year_factor = as.factor(year))
+   
+    sszplot(pop_dyas, aes_x = "age", aes_y = "pop_pyramid", aes_col = "year_factor",
+            aes_ltyp = "sex",
+            labs_y = "population",
+            i_y = 0,
+            width = 14, height = 18,
+            quotes = c(
+                quote(facet_wrap(~district, ncol = 4, scales="free_x")),
+                quote(coord_flip()),
+                quote(scale_linetype_manual(values = c(1, 1)))
+                ),
+            name = "1507_pop_dyas")    
+   
+    
+                    
 
 #-------------------------------------------------------------------
 #population: new and previous scenarios
@@ -327,7 +357,7 @@
             aes_col = "scenario", aes_ltyp = "cat",
             labs_y = "population",
             scale_y = c(0, NA), 
-            name = "1509_pop_yc_new_prev")       
+            name = "1519_pop_yc_new_prev")       
     
    
 #-------------------------------------------------------------------
@@ -350,7 +380,7 @@
     sszplot(bir_yc, aes_x = "year", aes_y = "bir", aes_col = "scenario",
             labs_y = "births per year",
             scale_y = c(0, NA), 
-            name = "1510_bir_yc")        
+            name = "1520_bir_yc")        
     
 #yoc
     bir_yoc <- bir %>% 
@@ -362,7 +392,7 @@
             labs_y = "births per year",
             grid = c(".", "origin"),
             scale_y = c(0, NA), 
-            name = "1511_bir_yoc")        
+            name = "1521_bir_yoc")        
         
     
 #-------------------------------------------------------------------
@@ -388,7 +418,7 @@
     sszplot(dea_yc, aes_x = "year", aes_y = "dea", aes_col = "scenario",
             labs_y = "deaths per year",
             scale_y = c(0, NA), 
-            name = "1520_dea_yc")        
+            name = "1530_dea_yc")        
     
 #yac
     dea_yac <- dea %>% 
@@ -401,7 +431,7 @@
             wrap = "age_3", ncol = 5,
             scale_y = c(0, NA), 
             width = 12, height = 6,
-            name = "1521_dea_yac")  
+            name = "1531_dea_yac")  
     
 #ys
     dea_ys <- dea %>% 
@@ -414,7 +444,7 @@
             labs_y = "deaths per year",
             scale_y = c(0, NA), 
             geom = "line",
-            name = "1522_dea_ys")      
+            name = "1532_dea_ys")      
     
 #yas
     dea_yas <- dea %>% 
@@ -429,7 +459,7 @@
             scale_y = c(0, NA), 
             i_x = szen_begin,
             width = 12, height = 6,
-            name = "1523_dea_yas")      
+            name = "1533_dea_yas")      
  
        
 #-------------------------------------------------------------------
@@ -452,7 +482,7 @@
     sszplot(imm_yc, aes_x = "year", aes_y = "imm", aes_col = "scenario",
             labs_y = "immigration per year",
             scale_y = c(0, NA), 
-            name = "1530_imm_yc")        
+            name = "1540_imm_yc")        
         
 #ya
     imm_ya <- imm %>% 
@@ -467,7 +497,7 @@
             scale_y = c(0, NA), 
             i_x = szen_begin,
             width = 12, height = 6,
-            name = "1531_imm_ya")        
+            name = "1541_imm_ya")        
     
 #yao
     imm_yao <- imm %>% 
@@ -482,7 +512,7 @@
             scale_y = c(0, NA), 
             i_x = szen_begin,
             width = 12, height = 6,
-            name = "1532_imm_yao")        
+            name = "1542_imm_yao")        
         
        
 #-------------------------------------------------------------------
@@ -505,7 +535,7 @@
     sszplot(emi_yc, aes_x = "year", aes_y = "emi", aes_col = "scenario",
             labs_y = "emigration per year",
             scale_y = c(0, NA), 
-            name = "1540_emi_yc")        
+            name = "1550_emi_yc")        
         
 #ya
     emi_ya <- emi %>% 
@@ -520,7 +550,7 @@
             scale_y = c(0, NA), 
             i_x = szen_begin,
             width = 12, height = 6,
-            name = "1541_emi_ya")        
+            name = "1551_emi_ya")        
     
 #yao
     emi_yao <- emi %>% 
@@ -535,7 +565,7 @@
             scale_y = c(0, NA), 
             i_x = szen_begin,
             width = 12, height = 6,
-            name = "1542_emi_yao")          
+            name = "1552_emi_yao")          
   
       
 #-------------------------------------------------------------------
@@ -570,11 +600,14 @@
             labs_y = "net migration per year",
             scale_y = c(0, NA),
             i_y = 0,
-            name = "1550_net_yc") 
+            name = "1560_net_yc") 
     
     
     
-    
+#-------------------------------------------------------------------
+#naturalization
+#-------------------------------------------------------------------
+     
     
 
          

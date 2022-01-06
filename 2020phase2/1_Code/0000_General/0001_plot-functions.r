@@ -53,7 +53,7 @@
 #         can be used for a single quote ("quote(call)") or multiple in form
 #         of a list ("c(quote(call1)), quote(call2))")
 # quotes_top: same as quotes but is inserted at the very top of
-#             the plot building statementd
+#             the plot building statement
 # angle:  angle of text on y axis (in degrees)
 
 ## nota bene:
