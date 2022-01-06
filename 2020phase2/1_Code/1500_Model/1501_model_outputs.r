@@ -124,7 +124,8 @@
         mutate(sex = factor(if_else(SexCd == 1, uni_s[1], uni_s[2]), uni_s),
             district = factor(distr, uni_d)) %>% 
         select(district, year, age, sex, nat) %>% 
-        arrange(district, year, age, sex)
+        arrange(district, year, age, sex) %>% 
+        mutate(scenario = uni_c[1])
     
 #previous published population scenarios
     #age: only age groups available
@@ -191,6 +192,19 @@
         bind_rows(dem_middle) %>% 
         bind_rows(dem_upper)    
     
+#naturalization    
+    nat_lower <- read_csv(paste0(data_path, "5_Outputs/lower/naturalization_future.csv")) %>% 
+        mutate(scenario = uni_c[2])
+    
+    nat_middle <- read_csv(paste0(data_path, "5_Outputs/middle/naturalization_future.csv")) %>% 
+        mutate(scenario = uni_c[3])
+        
+    nat_upper <- read_csv(paste0(data_path, "5_Outputs/upper/naturalization_future.csv")) %>% 
+        mutate(scenario = uni_c[4])    
+    
+    nat_future <- nat_lower %>% 
+        bind_rows(nat_middle) %>% 
+        bind_rows(nat_upper)     
     
     
 #-------------------------------------------------------------------
@@ -613,22 +627,69 @@
 #-------------------------------------------------------------------
      
 #past and future  
-    nat <- dem_future %>% 
-        select(district, year, age, sex, origin, scenario, emi) %>% 
+    nat <- nat_future %>% 
         bind_rows(nat_past) %>% 
         left_join(look_a3, by = "age") %>% 
-        mutate(origin = factor(origin, levels = uni_o))
+        mutate(district = factor(district, levels = uni_d),
+          sex = factor(sex, levels = uni_s))
     
 #yc
-    emi_yc <- emi %>% 
+    nat_yc <- nat %>% 
         group_by(year, scenario) %>% 
-            summarize(emi = sum(emi)) %>% 
+            summarize(nat = sum(nat)) %>% 
         ungroup()
     
-    sszplot(emi_yc, aes_x = "year", aes_y = "emi", aes_col = "scenario",
-            labs_y = "emigration per year",
+    sszplot(nat_yc, aes_x = "year", aes_y = "nat", aes_col = "scenario",
+            labs_y = "naturalizations per year",
             scale_y = c(0, NA), 
-            name = "1550_emi_yc")        
+            name = "1570_nat_yc")        
+    
             
-
-         
+#-------------------------------------------------------------------
+#relocation
+#-------------------------------------------------------------------
+  
+#categories
+    uni_cat <- c("data", "from immigration*", "from emigration*")
+    
+#past: no district
+    #WHY? since for future data only one district available
+    #one district does not make sense for relocation
+    #(the district comes from immigration* and emigration*)
+    rel_past_yaso <- rel_past %>% 
+        select(year, age, sex, origin, scenario, rel) %>% 
+        group_by(year, age, sex, origin, scenario) %>% 
+            summarize(rel = sum(rel)) %>% 
+        ungroup() %>% 
+        mutate(cat = factor(uni_cat[1], levels = uni_cat))
+    
+#future: no district
+    rel_future_yaso <- dem_future %>%     
+        select(year, age, sex, origin, scenario, rei, ree) %>% 
+        group_by(year, age, sex, origin, scenario) %>% 
+            summarize(rei = sum(rei),
+                      ree = sum(ree)) %>% 
+        ungroup() %>% 
+        pivot_longer(cols = c("rei", "ree"), values_to = "rel", 
+                              names_to = "category") %>% 
+        mutate(cat = factor(if_else(category == "rei", 
+                             uni_cat[2], uni_cat[3]), levels = uni_cat)) %>% 
+        select(year, age, sex, origin, scenario, rel, cat)
+    
+#past and future
+    rel <- rel_past_yaso %>% 
+        bind_rows(rel_future_yaso)
+    
+#yct (t: cat)    
+    rel_yct <- rel %>% 
+        group_by(year, scenario, cat) %>% 
+            summarize(rel = sum(rel)) %>% 
+        ungroup()
+    
+    sszplot(rel_yct, aes_x = "year", aes_y = "rel", aes_col = "scenario",
+            aes_ltyp = "cat",
+            labs_y = "relocations per year",
+            scale_y = c(0, NA), 
+            quotes = quote(scale_linetype_manual(values=c("dashed", "solid", "dotted"))),
+            name = "1580_rel_yct")          
+    
