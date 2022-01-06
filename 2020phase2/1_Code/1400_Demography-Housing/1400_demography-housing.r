@@ -154,6 +154,7 @@
     out_bir <- NULL
     out_dem <- NULL
     out_pop <- NULL
+    out_nat <- NULL
     
 #loop over years
     for (iyear in future){
@@ -376,7 +377,7 @@
             #the naturalization rate of all new born babies of zero is correct
             #WHY? the origin changes at birth has already been calculated in the model
             
-            pop_nat <- nat %>%    
+            pop_nat_temp <- nat %>%    
                 filter(year == iyear) %>%  
                 select(-year) %>% 
                 right_join(select(dem_factor, district, age, sex, 
@@ -387,7 +388,12 @@
                 mutate(Swiss = if_else(origin == uni_o[1], pop_end_year,
                                        pop_end_year * rate_nat / 100),
                        foreign = if_else(origin == uni_o[1], 0,
-                                       pop_end_year * (1 - rate_nat / 100))) %>% 
+                                       pop_end_year * (1 - rate_nat / 100))) 
+            
+            #WHY split the pipe here? to calculate the future amount of naturalizations
+            #count, not only rates
+            
+            pop_nat <- pop_nat_temp %>% 
                 select(-c(origin, pop_end_year)) %>% 
                 pivot_longer(cols = uni_o, 
                              names_to = "origin", values_to = "pop_end_year") %>% 
@@ -395,6 +401,12 @@
                 select(district, age, sex, origin, pop_end_year) %>% 
                 group_by(district, age, sex, origin) %>% 
                     summarize(pop_end_year = sum(pop_end_year)) %>% 
+                ungroup()
+            
+            nat_count <- pop_nat_temp %>% 
+                filter((origin == uni_o[2]) & (age >= 0)) %>% 
+                group_by(district, age, sex) %>% 
+                    summarize(nat = sum(Swiss)) %>% 
                 ungroup()
             
           #determine immigration and relocation from immigration*  
@@ -413,7 +425,7 @@
                   # sum(imm$imm)
                   # sum(imm$rel)
               
-          #determine emgration and relocation from emigration* 
+          #determine emigration and relocation from emigration* 
               ree_year <- ree %>% 
                   filter(year == iyear) %>% 
                   select(-year)              
@@ -438,7 +450,7 @@
                   filter(age <= age_max)
               tail(pop_end_year)
               
-          #outputs: birth (separate, since no age variable), with variable 'year'
+          #outputs: birth (separate, since no 'age' variable), with variable 'year'
               out_bir <- bir %>% 
                   mutate(year = iyear) %>% 
                   select(district, year, sex, origin, bir) %>% 
@@ -463,6 +475,12 @@
               out_pop <- pop_end_year %>% 
                   bind_rows(out_pop)
               
+          #outputs: naturalization (separate, since no 'origin' variable), with variable 'year'
+              out_nat <- nat_count %>% 
+                  mutate(year = iyear) %>% 
+                  select(district, year, age, sex, nat) %>% 
+                  bind_rows(out_nat)              
+              
 #end of loop over years      
     }     
     
@@ -486,6 +504,11 @@
     arrange(district, year, age, sex, origin) %>% 
     write_csv(paste0(out_path, "/population_future.csv")) 
       
+#naturalization
+    out_nat %>% 
+    arrange(district, year, age, sex) %>% 
+    write_csv(paste0(out_path, "/naturalization_future.csv"))     
+    
 #log info    
     cat_log(paste0("demography and housing: ", 
         capture.output(Sys.time() - t0)))

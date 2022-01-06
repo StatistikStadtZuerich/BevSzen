@@ -232,16 +232,17 @@
         mutate(pop_pyramid = if_else(sex == uni_s[1], -pop, pop),
                year_factor = as.factor(year))
     
-    sszplot(pop_yas, aes_x = "age", aes_y = "pop_pyramid", aes_col = "year_factor",
-            aes_ltyp = "sex",
+    sszplot(pop_yas, aes_x = "age", aes_y = "pop_pyramid", aes_col = "sex",
+            aes_ltyp = "year_factor",             
             labs_y = "population",
             i_y = 0,
             quotes = c(
                 quote(coord_flip()),
-                quote(scale_linetype_manual(values = c(1, 1)))
-                ),            
+                quote(scale_linetype_manual(values=c("dotted", "solid")))
+                ), 
+            width = 6, height = 6,
             name = "1501_pop_yas")
-    
+  
 #dy
     pop_dy <- pop %>% 
         filter(scenario %in% uni_c[c(1, 3)]) %>%      
@@ -319,20 +320,23 @@
         mutate(pop_pyramid = if_else(sex == uni_s[1], -pop, pop),
                year_factor = as.factor(year))
    
-    sszplot(pop_dyas, aes_x = "age", aes_y = "pop_pyramid", aes_col = "year_factor",
-            aes_ltyp = "sex",
+    sszplot(pop_dyas, aes_x = "age", aes_y = "pop_pyramid", aes_col = "sex",
+            aes_ltyp = "year_factor",
             labs_y = "population",
             i_y = 0,
-            width = 14, height = 18,
+            width = 14, height = 28,
             quotes = c(
                 quote(facet_wrap(~district, ncol = 4, scales="free_x")),
                 quote(coord_flip()),
-                quote(scale_linetype_manual(values = c(1, 1)))
+                quote(scale_linetype_manual(values=c("dotted", "solid")))
                 ),
             name = "1507_pop_dyas")    
    
     
-                    
+
+    
+    
+              
 
 #-------------------------------------------------------------------
 #population: new and previous scenarios
@@ -608,6 +612,23 @@
 #naturalization
 #-------------------------------------------------------------------
      
+#past and future  
+    nat <- dem_future %>% 
+        select(district, year, age, sex, origin, scenario, emi) %>% 
+        bind_rows(nat_past) %>% 
+        left_join(look_a3, by = "age") %>% 
+        mutate(origin = factor(origin, levels = uni_o))
     
+#yc
+    emi_yc <- emi %>% 
+        group_by(year, scenario) %>% 
+            summarize(emi = sum(emi)) %>% 
+        ungroup()
+    
+    sszplot(emi_yc, aes_x = "year", aes_y = "emi", aes_col = "scenario",
+            labs_y = "emigration per year",
+            scale_y = c(0, NA), 
+            name = "1550_emi_yc")        
+            
 
          
