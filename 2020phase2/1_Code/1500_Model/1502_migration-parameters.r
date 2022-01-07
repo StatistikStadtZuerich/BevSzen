@@ -44,10 +44,10 @@
     past_10 <- (date_end-9):date_end
 
 #first 10 years of the prediction
-    future_10_fir <- szen_begin:(szen_begin+9)
+    future_10_1st <- szen_begin:(szen_begin+9)
 
 #second 10 years of the prediction
-    future_10_sec <- (szen_begin+10):(szen_begin+19)
+    future_10_2nd <- (szen_begin+10):(szen_begin+19)
             
     
 #-------------------------------------------------------------------
@@ -639,8 +639,8 @@
             ungroup()
          
     #of: first 10 years of the prediction 
-        of_future_10_fir <- of_future_prep %>% 
-            filter(year %in% future_10_fir) %>% 
+        of_future_10_1st <- of_future_prep %>% 
+            filter(year %in% future_10_1st) %>% 
             group_by(city) %>% 
                 summarize(ims_fir = mean(ims),
                           imm_fir = mean(imm),                      
@@ -650,8 +650,8 @@
              
  
     #of: second 10 years of the prediction 
-        of_future_10_sec <- of_future_prep %>% 
-            filter(year %in% future_10_sec) %>% 
+        of_future_10_2nd <- of_future_prep %>% 
+            filter(year %in% future_10_2nd) %>% 
             group_by(city) %>% 
                 summarize(ims_sec = mean(ims),
                           imm_sec = mean(imm),                      
@@ -661,8 +661,8 @@
              
     #calculate objective functions
         of_past_future  <- of_past_prep %>% 
-            left_join(of_future_10_fir, by = "city") %>% 
-            left_join(of_future_10_sec, by = "city") %>% 
+            left_join(of_future_10_1st, by = "city") %>% 
+            left_join(of_future_10_2nd, by = "city") %>% 
             pivot_longer(!city) %>% 
             mutate(process = substr(name, 1, 3),
                    time = substr(name, 5, 8)) %>% 
@@ -674,7 +674,7 @@
                    more_i = more_i)
         
     #function output            
-        return(of_past_future)    
+        return(list(of = of_past_future))    
     
 #end: function to generate immigration and emigration      
     }    
@@ -689,38 +689,18 @@
 
 
 #-------------------------------------------------------------------
-#dotty plots
+#model results for different parameter combinations (dotty plots)
 #-------------------------------------------------------------------
 
 #parameter ranges
-    ranges <- expand_grid(
+    ran <- as_tibble(expand_grid(
             less_i = seq(20, 80, by = 40),
-            more_i = seq(20, 80, by = 40))
+            more_i = seq(20, 80, by = 40)))
     
-    
-    
-    
-
-    
-    
-    
-    
-    
-    , 
-            
-            
-            
-            
-            year = date_start:date_end,
-            age = age_min:age_max,
-            sex = uni_s,    
-    
-    
-
-      
-
-    
-
+#model output
+    t0 <- Sys.time()    
+    mod_out <- mapply(imm_emi_fun, ran$less_i, ran$more_i)    
+    Sys.time() - t0     
 
     
     
@@ -728,6 +708,14 @@
     
     
     
-                   
+    
+    
+    
+    
+    
+    
+    
+    
+              
 
     
