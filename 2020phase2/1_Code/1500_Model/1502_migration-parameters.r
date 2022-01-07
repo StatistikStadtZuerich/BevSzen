@@ -689,33 +689,109 @@
 
 
 #-------------------------------------------------------------------
-#model results for different parameter combinations (dotty plots)
+#model results for different parameter combinations
 #-------------------------------------------------------------------
 
 #parameter ranges
     ran <- as_tibble(expand_grid(
-            less_i = seq(20, 80, by = 40),
-            more_i = seq(20, 80, by = 40)))
+            less_i = seq(5, 95, by = 30),
+            more_i = seq(5, 95, by = 30)))
     
-#model output
+    
+    # ran <- as_tibble(expand_grid(
+    #         less_i = seq(5, 95, by = 5),
+    #         more_i = seq(5, 95, by = 5))) 
+    # 1.5h
+    
+#model runs (duration: 7.5 seconds per run)
     t0 <- Sys.time()    
-    mod_out <- mapply(imm_emi_fun, ran$less_i, ran$more_i)    
+    mod_out <- bind_rows(mapply(imm_emi_fun, ran$less_i, ran$more_i))    
     Sys.time() - t0     
 
+#output (due to high model run duration)  
+    mod_out %>% 
+    write_csv(paste0(out_path, "/migration-parameters.csv"))     
+    
+    
+#-------------------------------------------------------------------
+#plots
+#-------------------------------------------------------------------
+
+#objective functions: categories
+    cat_of <- c(paste0("absolute difference\n(mean ",
+                       min(past_10), "/", max(past_10), " vs. mean ",
+                       min(future_10_1st), "/", max(future_10_1st), ")"),
+                paste0("absolute difference\n(mean ",
+                       min(past_10), "/", max(past_10), " vs. mean ",
+                       min(future_10_2nd), "/", max(future_10_2nd), ")"))
+
+#processes
+    uni_process <- c("ims", "ems", "imm", "emi")
+    
+#import
+    model_out <- read_csv(paste0(out_path, "/migration-parameters.csv")) %>% 
+        rename(less_ims = less_i, more_ims = more_i) %>% 
+        pivot_longer(cols = c("ae_fir", "ae_sec"), values_to = "of", names_to = "categories") %>%    
+        mutate(cat = factor(if_else(categories == "ae_fir", cat_of[1], cat_of[2]), levels = cat_of),
+               process = factor(process, levels = uni_process))
+    
+#plot (ims, ems)
+    model_out %>% 
+        filter(process %in% c("imm", "emi")) %>% 
+        ggplot() +
+        geom_raster(aes(less_i, more_i, fill = of)) +
+        facet_grid(. ~ process, scales = "free")
     
     
     
+       
+ 
     
     
     
-    
-    
-    
-    
-    
-    
-    
-    
-              
+#       
+
+#                 
+#                     
+# #dotty plot
+#     dotty <- mod_out %>% 
+#         rename(less_ims = less_i, more_ims = more_i) %>% 
+#         select(process, less_ims, more_ims, ae_fir, ae_sec) %>% 
+#         pivot_longer(cols = c("ae_fir", "ae_sec"), values_to = "of", names_to = "categories") %>% 
+#         pivot_longer(cols = c("less_ims", "more_ims"), values_to = "para", names_to = "para_names") %>% 
+#         mutate(cat = factor(if_else(categories == "ae_fir", cat_of[1], cat_of[2]), levels = cat_of), 
+#                process = factor(process, levels = uni_process),
+#                parameter = factor(para_names, levels = c("less_ims", "more_ims"))) %>% 
+#         select(parameter, process, cat, para, of)
+#     
+# #dotty: migration star
+#     dotty_s <- dotty %>% 
+#         filter(process %in% c("ims", "ems"))
+#     
+#     sszplot(dotty_s, aes_x = "para", aes_y = "of", aes_col = "process",
+#             geom = "point",
+#             labs_x = "parameter value",
+#             labs_y = "objective function",
+#             grid = c("cat", "parameter"),
+#             scale_y = c(0, NA), 
+#             width = 9, height = 7,
+#             name = "1590_dotty_migration-star")
+#             
+# 
+# #dotty: migration (no star)
+#     dotty_no_s <- dotty %>% 
+#         filter(process %in% c("imm", "emi"))
+#     
+#     sszplot(dotty_no_s, aes_x = "para", aes_y = "of", aes_col = "process",
+#             geom = "point",
+#             labs_x = "parameter value",
+#             labs_y = "objective function",
+#             grid = c("cat", "parameter"),
+#             scale_y = c(0, NA), 
+#             width = 9, height = 7,
+#             name = "1591_dotty_migration")
+            
+ 
+
 
     
