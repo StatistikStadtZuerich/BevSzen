@@ -35,6 +35,21 @@
 #start time
     t0 <- Sys.time() 
     
+    
+#-------------------------------------------------------------------
+#time spans (used for the objective functions)
+#-------------------------------------------------------------------
+         
+#last 10 years in the past    
+    past_10 <- (date_end-9):date_end
+
+#first 10 years of the prediction
+    future_10_fir <- szen_begin:(szen_begin+9)
+
+#second 10 years of the prediction
+    future_10_sec <- (szen_begin+10):(szen_begin+19)
+            
+    
 #-------------------------------------------------------------------
 #import, data preparation
 #-------------------------------------------------------------------
@@ -138,8 +153,8 @@
     hou <- read_csv(paste0(exp_path, "/housing-model_population_d.csv")) %>% 
         mutate(district = factor(district, levels = uni_d)) %>% 
         rename(pop_limit = pop)
-    
    
+        
 #-------------------------------------------------------------------
 #immigration: past
 #-------------------------------------------------------------------
@@ -200,31 +215,62 @@
             summarize(emi = sum(emi)) %>% 
         ungroup()     
     
-#relocation
-    #only migration from a certain district
-    #WHY? this is needed to calculate immigration* (i.e. migration to a certain district)
-    #WHY rename QuarCd to dis? That the code can be applied to emigration as well
-    
-    rel_past <- read_csv(rel_od) %>% 
-        rename(year = EreignisDatJahr, age = AlterVCd, dis = QuarCd, rel = AnzUmzuWir) %>% 
-        left_join(look_dis, c("dis" = "QuarBisherCd")) %>%     
+#relocation-emigration (ree)
+    ree_past <- read_csv(rel_od) %>% 
+        rename(year = EreignisDatJahr, age = AlterVCd, dis = QuarBisherCd, ree = AnzUmzuWir) %>% 
+        left_join(look_dis, c("dis" = "QuarCd")) %>%     
         mutate(sex = factor(if_else(SexCd == 1, uni_s[1], uni_s[2]), uni_s), 
             origin = factor(if_else(HerkunftCd == 1, uni_o[1], uni_o[2]), uni_o),
             district = factor(distr, uni_d)) %>%     
-        select(district, year, age, sex, origin, rel) %>%       
+        select(district, year, age, sex, origin, ree) %>%       
         group_by(district, year, age, sex, origin) %>% 
-            summarize(rel = sum(rel)) %>% 
+            summarize(ree = sum(ree)) %>% 
         ungroup()         
     
-#immigration* (i.e. migration to a certain district, 'immigration star' = ims)    
-    ims_past <- bind_rows(rename(imm_past, ims = imm), 
-        rename(rel_past, ims = rel)) %>% 
+#emigration* (i.e. migration to a certain district, 'immigration star' = ims)    
+    ems_past <- bind_rows(rename(emi_past, ems = emi), 
+        rename(ree_past, ems = ree)) %>% 
         group_by(district, year, age, sex, origin) %>% 
-            summarize(ims = sum(ims)) %>% 
+            summarize(ems = sum(ems)) %>% 
         ungroup()          
-            
+     
+    
+#all: past
+    all_past <- as_tibble(expand_grid(
+            district = uni_d, 
+            year = date_start:date_end,
+            age = age_min:age_max,
+            sex = uni_s,
+            origin = uni_o)) %>% 
+        left_join(ims_past, by = c("district", "year", "age", "sex", "origin")) %>% 
+        left_join(imm_past, by = c("district", "year", "age", "sex", "origin")) %>%         
+        left_join(ems_past, by = c("district", "year", "age", "sex", "origin")) %>%     
+        left_join(emi_past, by = c("district", "year", "age", "sex", "origin")) %>%     
+        replace_na(list(ims = 0, imm = 0, ems = 0, emi = 0))    
+
+
+#objective function: preparation (mean per year)
+    #WHY with variable 'city'?
+    #joins are easier (since no other variable remaining)
+    
+    of_past_prep <- all_past %>% 
+        filter(year %in% past_10) %>% 
+        mutate(city = "city") %>% 
+        group_by(city, year) %>% 
+            summarize(ims = sum(ims),
+                      imm = sum(imm),                      
+                      ems = sum(ems),                       
+                      emi = sum(emi)) %>% 
+        ungroup() %>% 
+        group_by(city) %>% 
+            summarize(ims_past = mean(ims),
+                      imm_past = mean(imm),                      
+                      ems_past = mean(ems),                         
+                      emi_past = mean(emi)) %>% 
+        ungroup()
     
     
+        
 #-------------------------------------------------------------------
 #Loop over years
 #-------------------------------------------------------------------
@@ -582,25 +628,106 @@
         #end of loop over years      
             }     
     
-        return(out_dem)    
+    #objective function (of): future preparation
+        of_future_prep <- out_dem %>% 
+            mutate(city = "city") %>% 
+            group_by(city, year) %>% 
+            summarize(ims = sum(ims),
+                        imm = sum(imm),                      
+                        ems = sum(ems),                       
+                        emi = sum(emi)) %>% 
+            ungroup()
+         
+    #of: first 10 years of the prediction 
+        of_future_10_fir <- of_future_prep %>% 
+            filter(year %in% future_10_fir) %>% 
+            group_by(city) %>% 
+                summarize(ims_fir = mean(ims),
+                          imm_fir = mean(imm),                      
+                          ems_fir = mean(ems),                         
+                          emi_fir = mean(emi)) %>% 
+            ungroup()
+             
+ 
+    #of: second 10 years of the prediction 
+        of_future_10_sec <- of_future_prep %>% 
+            filter(year %in% future_10_sec) %>% 
+            group_by(city) %>% 
+                summarize(ims_sec = mean(ims),
+                          imm_sec = mean(imm),                      
+                          ems_sec = mean(ems),                         
+                          emi_sec = mean(emi)) %>% 
+            ungroup()
+             
+    #calculate objective functions
+        of_past_future  <- of_past_prep %>% 
+            left_join(of_future_10_fir, by = "city") %>% 
+            left_join(of_future_10_sec, by = "city") %>% 
+            pivot_longer(!city) %>% 
+            mutate(process = substr(name, 1, 3),
+                   time = substr(name, 5, 8)) %>% 
+            select(-c(name, city)) %>% 
+            pivot_wider(names_from = time, values_from = value) %>% 
+            mutate(ae_fir = abs(fir - past),
+                   ae_sec = abs(sec - past),
+                   less_i = less_i,
+                   more_i = more_i)
+        
+    #function output            
+        return(of_past_future)    
     
 #end: function to generate immigration and emigration      
     }    
     
+    
+#test the function (duration: 7.5 seconds per run)
+    t0 <- Sys.time()
+    test <- imm_emi_fun(less_i = 70, more_i = 40, years_end = max(future_10_sec))
+    Sys.time() - t0   
+    
+
+
+
+#-------------------------------------------------------------------
+#dotty plots
+#-------------------------------------------------------------------
+
+#parameter ranges
+    ranges <- expand_grid(
+            less_i = seq(20, 80, by = 40),
+            more_i = seq(20, 80, by = 40))
+    
+    
+    
+    
 
     
-    test <- imm_emi_fun(less_i = 80, more_i = 40, years_end = 2030)
-          
-    tail(test)
     
+    
+    
+    
+    , 
+            
+            
+            
+            
+            year = date_start:date_end,
+            age = age_min:age_max,
+            sex = uni_s,    
+    
+    
+
       
+
     
 
-#-------------------------------------------------------------------
-#export the results
-#-------------------------------------------------------------------
 
-out_dem
-                    
+    
+    
+    
+    
+    
+    
+                   
 
     
