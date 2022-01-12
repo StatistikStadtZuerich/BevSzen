@@ -720,18 +720,18 @@
 #-------------------------------------------------------------------
 
 #objective functions: categories
-    cat_of <- c(paste0("absolute difference\n(mean ",
-                       min(past_10), "/", max(past_10), " vs. mean ",
-                       min(future_10_1st), "/", max(future_10_1st), ")"),
-                paste0("absolute difference\n(mean ",
-                       min(past_10), "/", max(past_10), " vs. mean ",
-                       min(future_10_2nd), "/", max(future_10_2nd), ")"))
+    cat_of <- c(paste0("difference\n(mean ",
+                       min(future_10_1st), "/", max(future_10_1st), " - mean ",
+                       min(past_10), "/", max(past_10), ")"),
+                paste0("difference\n(mean ",
+                       min(future_10_2nd), "/", max(future_10_2nd), " - mean ",
+                       min(past_10), "/", max(past_10), ")"))
 
 #processes
     uni_process <- c("ims", "ems", "imm", "emi")
     
 #import
-    model_out <- read_csv(paste0(out_path, "/migration-parameters.csv")) %>% 
+    model_output <- read_csv(paste0(out_path, "/migration-parameters.csv")) %>% 
         rename(less_ims = less_i, more_ims = more_i) %>% 
         pivot_longer(cols = c("ae_fir", "ae_sec"), values_to = "of", names_to = "categories") %>%    
         mutate(cat = factor(if_else(categories == "ae_fir", cat_of[1], cat_of[2]), levels = cat_of),
