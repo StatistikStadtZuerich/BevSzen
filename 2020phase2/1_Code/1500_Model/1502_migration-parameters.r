@@ -695,14 +695,14 @@
 #-------------------------------------------------------------------
 
 #parameter ranges
-    ran <- as_tibble(expand_grid(
-            less_i = seq(5, 95, by = 50),
-            more_i = seq(5, 95, by = 50)))
-    
-    
     # ran <- as_tibble(expand_grid(
-    #         less_i = seq(5, 95, by = 5),
-    #         more_i = seq(5, 95, by = 5))) 
+    #         less_i = seq(5, 95, by = 50),
+    #         more_i = seq(5, 95, by = 50)))
+    # 
+    
+    ran <- as_tibble(expand_grid(
+            less_i = seq(5, 95, by = 5),
+            more_i = seq(5, 95, by = 5)))
     # 1.5h
     
 #model runs (duration: 7.5 seconds per run)
@@ -733,67 +733,28 @@
 #import
     model_output <- read_csv(paste0(out_path, "/migration-parameters.csv")) %>% 
         rename(less_ims = less_i, more_ims = more_i) %>% 
-        pivot_longer(cols = c("ae_fir", "ae_sec"), values_to = "of", names_to = "categories") %>%    
-        mutate(cat = factor(if_else(categories == "ae_fir", cat_of[1], cat_of[2]), levels = cat_of),
+        select(process, di_fir, di_sec, less_ims, more_ims) %>% 
+        pivot_longer(cols = c("di_fir", "di_sec"), values_to = "of", names_to = "categories") %>%    
+        mutate(cat = factor(if_else(categories == "di_fir", cat_of[1], cat_of[2]), levels = cat_of),
                process = factor(process, levels = uni_process))
     
 #plot (ims, ems)
-    model_out %>% 
+    mig_plot <- model_output %>% 
         filter(process %in% c("imm", "emi")) %>% 
         ggplot() +
-        geom_raster(aes(less_i, more_i, fill = of)) +
-        facet_grid(. ~ process, scales = "free")
-    
-    
-    
-       
- 
-    
-    
-    
-#       
-
-#                 
-#                     
-# #dotty plot
-#     dotty <- mod_out %>% 
-#         rename(less_ims = less_i, more_ims = more_i) %>% 
-#         select(process, less_ims, more_ims, ae_fir, ae_sec) %>% 
-#         pivot_longer(cols = c("ae_fir", "ae_sec"), values_to = "of", names_to = "categories") %>% 
-#         pivot_longer(cols = c("less_ims", "more_ims"), values_to = "para", names_to = "para_names") %>% 
-#         mutate(cat = factor(if_else(categories == "ae_fir", cat_of[1], cat_of[2]), levels = cat_of), 
-#                process = factor(process, levels = uni_process),
-#                parameter = factor(para_names, levels = c("less_ims", "more_ims"))) %>% 
-#         select(parameter, process, cat, para, of)
-#     
-# #dotty: migration star
-#     dotty_s <- dotty %>% 
-#         filter(process %in% c("ims", "ems"))
-#     
-#     sszplot(dotty_s, aes_x = "para", aes_y = "of", aes_col = "process",
-#             geom = "point",
-#             labs_x = "parameter value",
-#             labs_y = "objective function",
-#             grid = c("cat", "parameter"),
-#             scale_y = c(0, NA), 
-#             width = 9, height = 7,
-#             name = "1590_dotty_migration-star")
-#             
-# 
-# #dotty: migration (no star)
-#     dotty_no_s <- dotty %>% 
-#         filter(process %in% c("imm", "emi"))
-#     
-#     sszplot(dotty_no_s, aes_x = "para", aes_y = "of", aes_col = "process",
-#             geom = "point",
-#             labs_x = "parameter value",
-#             labs_y = "objective function",
-#             grid = c("cat", "parameter"),
-#             scale_y = c(0, NA), 
-#             width = 9, height = 7,
-#             name = "1591_dotty_migration")
+            geom_raster(aes(less_ims, more_ims, fill = of)) +
+            scale_fill_gradientn(colours = col_6[4:2]) +
+            scale_x_continuous(breaks = seq(0, 100, by = 20)) +
+            scale_y_continuous(breaks = seq(0, 100, by = 20)) +      
+            facet_grid(cat ~ process, scales = "free") +
+            labs(fill = "objective function") + 
+            theme_bw() + theme(panel.grid.major = element_blank(),
+            panel.grid.minor = element_blank(),
+            strip.background = element_rect(colour="grey85"),
+            panel.border = element_rect(colour = "grey85"))   
             
- 
-
+     ggsave(paste0(res_path, "1500_Model/1590-migration-parameters.pdf"),
+            plot = mig_plot, width = 10, height = 7)
+       
 
     
