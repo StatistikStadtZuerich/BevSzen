@@ -696,8 +696,8 @@
 
 #parameter ranges
     ran <- as_tibble(expand_grid(
-            less_i = seq(5, 95, by = 30),
-            more_i = seq(5, 95, by = 30)))
+            less_i = seq(5, 95, by = 50),
+            more_i = seq(5, 95, by = 50)))
     
     
     # ran <- as_tibble(expand_grid(
@@ -710,7 +710,7 @@
     mod_out <- bind_rows(mapply(imm_emi_fun, ran$less_i, ran$more_i))    
     Sys.time() - t0     
 
-#output (due to high model run duration)  
+#output (due to high duration)  
     mod_out %>% 
     write_csv(paste0(out_path, "/migration-parameters.csv"))     
     
