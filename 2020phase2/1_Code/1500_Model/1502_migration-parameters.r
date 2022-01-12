@@ -670,6 +670,8 @@
             pivot_wider(names_from = time, values_from = value) %>% 
             mutate(ae_fir = abs(fir - past),
                    ae_sec = abs(sec - past),
+                   di_fir = fir - past,
+                   di_sec = sec - past,
                    less_i = less_i,
                    more_i = more_i)
         
