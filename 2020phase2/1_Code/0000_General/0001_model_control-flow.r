@@ -16,7 +16,7 @@
     setwd(paste0(here(), "/2020phase2/"))
     
 #general functions without dependence on parameters    
-    source("1_Code/0000_General/0000_general_without-parameters.r")    
+    source("1_Code/0000_General/0002_general_without-parameters.r")    
 
 
 
@@ -80,7 +80,7 @@
                     assign("i_scen", i_scen, envir = .GlobalEnv)
                 
                 #general functions (with dependence on parameters)
-                    source(paste0(code_path, "/0000_General/0001_general_with-parameters.r"))
+                    source(paste0(code_path, "/0000_General/0003_general_with-parameters.r"))
                     
                 #birth
                     if (modules %in% c("all", "dem", "bir")) {
