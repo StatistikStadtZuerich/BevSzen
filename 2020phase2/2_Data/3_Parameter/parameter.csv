@@ -170,7 +170,7 @@ allocation;aca_thres_percent;bq.grenze.prozent;20;20;20;percent;low;"allocation:
 allocation;aca_window_thres;bq.window.szen;7;7;7;years;low;allocation: filter over years (to smooth a potential break in the curve due to range of future proportions
 allocation;aca_prop_trend_52p;no parameter in previous model;0;0;0;percent;low;"allocation in the Escher Wyss district (district-ID = 52): trend in addition to the mean; 20% means, 20% of the difference between trend and mean is added to the mean."
 projects;pro_lambda_begin;map.lambda.beginn;2;2;2;per year;low;"the time delay of the projects (consolidated project list) is determined by means of an exponential function (with lambda); value at the beginning of the time period (of the consolidated project list)."
-projects;pro_lambda_end;map.lambda.ende;0.5;0.5;0.5;per year;low;"the time delay of the projects (consolidated project list) is determined by means of an exponential function (with lambda); value at the end of the time period (of the consolidated project list)."
+projects;pro_lambda_end;map.lambda.ende;0.05;0.05;0.05;per year;low;"the time delay of the projects (consolidated project list) is determined by means of an exponential function (with lambda); value at the end of the time period (of the consolidated project list)."
 projects;pro_not_scheduled;map.nicht1 (projektiert);10;80;10;percent;low;Percentage of projects (i.e. apartments) that are not realized: 
 projects;pro_not_submitted;map.nicht2 (eingereicht);0;0;0;percent;low;Percentage of projects (i.e. apartments) that are not realized: 
 projects;pro_not_approved;map.nicht3 (bewilligt);0;0;0;percent;low;Percentage of projects (i.e. apartments) that are not realized: 

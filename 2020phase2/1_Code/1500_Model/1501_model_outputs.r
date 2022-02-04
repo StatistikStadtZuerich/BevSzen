@@ -294,11 +294,11 @@
       
     sszplot(pop_dyo_prop, aes_x = "year", aes_y = "foreign_prop",
             wrap = "district", ncol = 4,
-            labs_y = "foreign population in %",
+            labs_y = "foreign proportion in %",
             scale_y = c(0, NA), 
             i_x = szen_begin,
             width = 10, height = 14,
-            name = "1504_pop_dyo_foreign-population")
+            name = "1504_pop_dyo_foreign")
     
     
 #yoc 
@@ -319,9 +319,9 @@
         mutate(foreign_prop = foreign / (Swiss + foreign) * 100)      
       
     sszplot(pop_yoc_prop, aes_x = "year", aes_y = "foreign_prop", aes_col = "scenario",
-            labs_y = "foreign population in %",
+            labs_y = "foreign proportion in %",
             scale_y = c(0, NA), 
-            name = "1506_pop_yoc_foreign-population") 
+            name = "1506_pop_yoc_foreign") 
     
     
 #dyas
@@ -387,7 +387,9 @@
         bind_rows(bir_lower) %>%     
         bind_rows(bir_middle) %>% 
         bind_rows(bir_upper) %>% 
-        mutate(origin = factor(origin, levels = uni_o))
+        mutate(district = factor(district, uni_d), 
+            sex = factor(sex, levels = uni_s), 
+            origin = factor(origin, levels = uni_o))    
     
 #yc
     bir_yc <- bir %>% 
@@ -412,6 +414,34 @@
             scale_y = c(0, NA), 
             name = "1521_bir_yoc")        
         
+#dyo
+    bir_dyo <- bir %>% 
+        filter(scenario %in% uni_c[c(1, 3)]) %>%      
+        group_by(district, year, origin) %>% 
+            summarize(bir = sum(bir)) %>% 
+        ungroup()
+    
+    sszplot(bir_dyo, aes_x = "year", aes_y = "bir", aes_col = "origin",
+            wrap = "district", ncol = 4,
+            labs_y = "births per year",
+            scale_y = c(0, NA), 
+            i_x = szen_begin,
+            width = 10, height = 14,
+            name = "1522_bir_dyo")       
+            
+#dyo: foreign population (proportion)  
+    bir_dyo_prop <- bir_dyo %>% 
+        pivot_wider(names_from = "origin", values_from = "bir") %>% 
+        mutate(foreign_prop = foreign / (Swiss + foreign) * 100)      
+      
+    sszplot(bir_dyo_prop, aes_x = "year", aes_y = "foreign_prop",
+            wrap = "district", ncol = 4,
+            labs_y = "foreign proportion in %",
+            scale_y = c(0, NA), 
+            i_x = szen_begin,
+            width = 10, height = 14,
+            name = "1523_bir_dyo_foreign")
+    
     
 #-------------------------------------------------------------------
 #death
@@ -489,8 +519,10 @@
         select(district, year, age, sex, origin, scenario, imm) %>% 
         bind_rows(imm_past) %>% 
         left_join(look_a3, by = "age") %>% 
-        mutate(origin = factor(origin, levels = uni_o))
-    
+        mutate(district = factor(district, uni_d), 
+            sex = factor(sex, levels = uni_s), 
+            origin = factor(origin, levels = uni_o))
+
 #yc
     imm_yc <- imm %>% 
         group_by(year, scenario) %>% 
@@ -532,6 +564,36 @@
             width = 12, height = 6,
             name = "1542_imm_yao")        
         
+#dyo
+    imm_dyo <- imm %>% 
+        filter(scenario %in% uni_c[c(1, 3)]) %>%      
+        group_by(district, year, origin) %>% 
+            summarize(imm = sum(imm)) %>% 
+        ungroup()
+    
+    sszplot(imm_dyo, aes_x = "year", aes_y = "imm", aes_col = "origin",
+            wrap = "district", ncol = 4,
+            labs_y = "immigration per year",
+            scale_y = c(0, NA), 
+            gridscale = "free_y",            
+            i_x = szen_begin,
+            width = 10, height = 14,
+            name = "1543_imm_dyo")   
+    
+#dyo: foreign population (proportion)  
+    imm_dyo_prop <- imm_dyo %>% 
+        pivot_wider(names_from = "origin", values_from = "imm") %>% 
+        mutate(foreign_prop = foreign / (Swiss + foreign) * 100)      
+      
+    sszplot(imm_dyo_prop, aes_x = "year", aes_y = "foreign_prop",
+            wrap = "district", ncol = 4,
+            labs_y = "foreign proportion in %",
+            scale_y = c(0, NA), 
+            i_x = szen_begin,
+            width = 10, height = 14,
+            name = "1544_imm_dyo_foreign")
+    
+     
        
 #-------------------------------------------------------------------
 #emigration
@@ -542,7 +604,10 @@
         select(district, year, age, sex, origin, scenario, emi) %>% 
         bind_rows(emi_past) %>% 
         left_join(look_a3, by = "age") %>% 
-        mutate(origin = factor(origin, levels = uni_o))
+        mutate(district = factor(district, uni_d), 
+            sex = factor(sex, levels = uni_s), 
+            origin = factor(origin, levels = uni_o))
+
     
 #yc
     emi_yc <- emi %>% 
@@ -585,7 +650,39 @@
             width = 12, height = 6,
             name = "1552_emi_yao")          
   
+#dyo
+    emi_dyo <- emi %>% 
+        filter(scenario %in% uni_c[c(1, 3)]) %>%      
+        group_by(district, year, origin) %>% 
+            summarize(emi = sum(emi)) %>% 
+        ungroup()
+    
+    sszplot(emi_dyo, aes_x = "year", aes_y = "emi", aes_col = "origin",
+            wrap = "district", ncol = 4,
+            labs_y = "emigration per year",
+            scale_y = c(0, NA), 
+            gridscale = "free_y",               
+            i_x = szen_begin,
+            width = 10, height = 14,
+            name = "1553_emi_dyo")   
       
+    
+#dyo: foreign population (proportion)  
+    emi_dyo_prop <- emi_dyo %>% 
+        pivot_wider(names_from = "origin", values_from = "emi") %>% 
+        mutate(foreign_prop = foreign / (Swiss + foreign) * 100)      
+      
+    sszplot(emi_dyo_prop, aes_x = "year", aes_y = "foreign_prop",
+            wrap = "district", ncol = 4,
+            labs_y = "foreign proportion in %",
+            scale_y = c(0, NA), 
+            i_x = szen_begin,
+            width = 10, height = 14,
+            name = "1553_emi_dyo_foreign")
+    
+    
+    
+    
 #-------------------------------------------------------------------
 #net migration
 #-------------------------------------------------------------------
@@ -620,6 +717,27 @@
             i_y = 0,
             name = "1560_net_yc") 
     
+#dyo
+    net_dyo <- net %>% 
+        filter(scenario %in% uni_c[c(1, 3)]) %>%      
+        group_by(district, year, origin) %>% 
+            summarize(net = sum_NA(net)) %>% 
+        ungroup()
+    
+    sszplot(net_dyo, aes_x = "year", aes_y = "net", aes_col = "origin",
+            wrap = "district", ncol = 4,
+            labs_y = "net migration per year",
+            scale_y = c(0, NA), 
+            i_x = szen_begin,
+            width = 10, height = 14,
+            name = "1561_net_dyo")   
+    
+#foreign proportion: not possible to calculate for net migration
+    #cannot be applied here
+    #e.g. low values in the denominator if negative and positive value
+
+  
+    
     
     
 #-------------------------------------------------------------------
@@ -631,7 +749,7 @@
         bind_rows(nat_past) %>% 
         left_join(look_a3, by = "age") %>% 
         mutate(district = factor(district, levels = uni_d),
-          sex = factor(sex, levels = uni_s))
+            sex = factor(sex, levels = uni_s))
     
 #yc
     nat_yc <- nat %>% 
@@ -643,6 +761,22 @@
             labs_y = "naturalizations per year",
             scale_y = c(0, NA), 
             name = "1570_nat_yc")        
+    
+#dy
+    nat_dy <- nat %>% 
+        filter(scenario %in% uni_c[c(1, 3)]) %>%      
+        group_by(district, year) %>% 
+            summarize(nat = sum(nat)) %>% 
+        ungroup()    
+    
+    sszplot(nat_dy, aes_x = "year", aes_y = "nat",
+            wrap = "district", ncol = 4,
+            labs_y = "naturalizations per year",
+            scale_y = c(0, NA), 
+            i_x = szen_begin,
+            width = 10, height = 14,
+            name = "1571_nat_dy")       
+    
     
             
 #-------------------------------------------------------------------
