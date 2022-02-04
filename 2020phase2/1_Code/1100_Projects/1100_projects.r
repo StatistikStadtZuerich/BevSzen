@@ -194,22 +194,29 @@
 #delayed
 #-------------------------------------------------------------------
 
-#lambda: linear model
+# pro_lambda_begin <- 2    
+# pro_lambda_end <- 0.05   
+
+#lambda: non-linear model
+    #WHY lambda positive? 
+    #to allow transformation before the regression
+    transfo <- 5
+    
     data_points <- tibble(year = c(pro_begin, pro_end),
-                          lambda = c(pro_lambda_begin, pro_lambda_end)) 
+                          lambda = c(pro_lambda_begin, pro_lambda_end)^(1/transfo)) 
     
     lm_ <- lm(lambda ~ year, data = data_points)
     
     lambda_y <- tibble(year = pro_begin:pro_end) %>% 
         add_predictions(lm_) %>% 
-        rename(lambda = pred)
-    
-    
-#delay (1 to 3 years)
+        mutate(lambda = pred^transfo) %>% 
+        select(year, lambda)
+
+#delay (1 to 6 years)
     delay <- as_tibble(expand_grid(year = pro_begin:pro_end,
-                                   delta = 1:3)) %>% 
+                                   delta = 1:6)) %>% 
         left_join(lambda_y, by = "year") %>% 
-        mutate(y = exp(lambda * delta),
+        mutate(y = exp((-1) * lambda * delta),
             delay = delta - 1,
             delayText = if_else(delay == 1, paste0(delay, " year"), 
                 paste0(delay, " years"))) %>% 
@@ -225,14 +232,13 @@
             name = "1106_projects_delay-by-year",
             width = 7, height = 4.5)    
     
-
 #projects and delay
     pro_delay <- as_tibble(expand_grid(district = uni_d,
                             year = pro_begin:pro_end,
                             owner = uni_w,
                             status = pro_category,
                             indicator = uni_i,
-                            delay = as.double(0:2))) %>% 
+                            delay = as.double(0:5))) %>% 
         left_join(select(pro_not, c(district, year, owner, status, indicator, realized)), 
                          by = c("district", "year", "owner", "status", "indicator")) %>% 
         left_join(select(delay, year, delay, ynorm),
