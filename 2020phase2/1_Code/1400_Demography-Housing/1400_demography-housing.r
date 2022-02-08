@@ -374,7 +374,7 @@
             #TEST------------------------------------------            
             test5 <- dem %>% 
                 group_by(district, origin) %>% 
-                    summarise_at(c("pop", "bir", "dea", "dea_eff", 
+                    summarize_at(c("pop", "bir", "dea", "dea_eff", 
                                    "ims", "ems", "pop_bir_dea"), 
                                  sum, na.rm = TRUE) %>% 
                 ungroup() %>% 
@@ -470,9 +470,10 @@
                 right_join(dem, by = "district") %>% 
                 mutate(ims_eff = ims * factor_ims, 
                        ems_eff = ems * factor_ems,
-                       pop_end_year = pmax(0, pop_bir_dea + ims_eff - ems_eff)) %>% 
+                       pop_temp = pop_bir_dea + ims_eff - ems_eff,
+                       pop_end_year = pmax(0, pop_temp)) %>% 
                 select(district, age, sex, origin, 
-                       bir, dea_eff, ims, ems, ims_eff, ems_eff, pop_end_year) %>% 
+                       bir, dea_eff, ims, ems, ims_eff, ems_eff, pop_bir_dea, pop_temp, pop_end_year) %>% 
                 rename(ims_initial = ims, ems_initial = ems)
             
             #TEST------------------------------------------ 
@@ -604,7 +605,6 @@
     
 #TEST------------------------------------------       
 
-    
 #ims, ems, mig
     test_ims_ems <- test_ims %>% 
         left_join(test_ems, by = c("year", "district", "origin")) %>% 
@@ -667,7 +667,7 @@
             expand_limits(y = 0)       
         
 
-#Plot factor    
+#plot factor    
     test_bal %>% 
         filter(district == "Wollishofen") %>% 
         select(year, factor_ims, factor_ems) %>%    
@@ -676,10 +676,123 @@
             geom_line(aes(x = year, y = value, color = name)) + 
             expand_limits(y = 0) +      
             geom_hline(yintercept = 1, linetype = "dashed")              
+ 
+#processes (after factor per district was applied to ims and ems)  
+    factor_app <- test_dem_factor %>%    
+        filter(district == "Wollishofen") %>%   
+        select(year, origin, ims_initial, ems_initial, ims_eff, ems_eff) %>% 
+        group_by(year, origin) %>% 
+            summarize_at(c("ims_initial", "ems_initial", "ims_eff", "ems_eff"), 
+                         sum, na.rm = TRUE) %>% 
+        ungroup() %>% 
+        mutate(ims_diff = ims_initial - ims_eff,
+               ems_diff = ems_initial - ems_eff,
+               mig_initial = ims_initial - ems_initial,
+               mig_eff = ims_eff - ems_eff, 
+               mig_diff = mig_initial - mig_eff) %>% 
+        pivot_longer(cols = c("ims_initial", "ems_initial", "mig_initial",
+                              "ims_eff", "ems_eff", "mig_eff",
+                              "ims_diff", "ems_diff", "mig_diff")) %>% 
+        mutate(process = factor(case_when(name %in% c("ims_initial", "ims_eff", "ims_diff") ~ "immigration",
+                                   name %in% c("ems_initial", "ems_eff", "ems_diff") ~ "emigration",
+                                   TRUE ~ "migration balance"), 
+                                levels = c("immigration", "emigration", "migration balance")),
+               ord = factor(case_when(name %in% c("ims_initial", "ems_initial", "mig_initial") ~ "initial",
+                                   name %in% c("ims_eff", "ems_eff", "mig_eff") ~ "final",
+                                   TRUE ~ "correction"),
+                            levels = c("initial", "final", "correction")))
+        
+        
+    factor_app %>% 
+        ggplot() +
+            geom_hline(yintercept = 0, color = "grey80") +  
+            geom_line(aes(x = year, y = value, color = ord)) + 
+            facet_grid(origin ~ process) + 
+            expand_limits(y = 0) + 
+            neutral
+  
+    factor_app %>% 
+        filter(process == "migration balance") %>% 
+        ggplot() +
+            geom_hline(yintercept = 0, color = "grey80") +  
+            geom_line(aes(x = year, y = value, color = ord)) + 
+            facet_grid(. ~ origin) + 
+            expand_limits(y = 0) + 
+            neutral
+    
+    factor_app %>% 
+        filter(process == "migration balance") %>% 
+        filter(ord != "correction") %>% 
+        ggplot() +
+            geom_hline(yintercept = 0, color = "grey80") +  
+            geom_line(aes(x = year, y = value, color = ord)) + 
+            facet_grid(process ~ origin) + 
+            expand_limits(y = 0) + 
+            neutral
+    
+    
+#population    
+    pop_app <- test_dem_factor %>%    
+        filter(district == "Wollishofen") %>%   
+        select(year, origin, ims_eff, ems_eff, pop_bir_dea, pop_temp, pop_end_year) %>% 
+        group_by(year, origin) %>% 
+            summarize_at(c("ims_eff", "ems_eff", "pop_bir_dea", "pop_temp", "pop_end_year"), 
+                         sum, na.rm = TRUE) %>% 
+        ungroup() %>% 
+        mutate(diff_pop = pop_temp - pop_end_year,
+               mig_eff = ims_eff - ems_eff,
+               diff_check = pop_end_year - pop_bir_dea,
+               check = mig_eff - diff_check)
+     
+    sum(abs(pop_app$diff_pop))
+    #pmax(0, x): not a problem
+    
+    sum(abs(pop_app$check))
+    #is ok
+    
+    pop_app %>% 
+        ggplot() +
+            geom_line(aes(x = year, y = pop_end_year, color = origin)) + 
+            expand_limits(y = 0) + 
+            neutral 
+    
+    pop_app %>% 
+        ggplot() +
+            geom_hline(yintercept = 0, color = "grey80") +        
+            geom_line(aes(x = year, y = mig_eff, color = origin)) + 
+            expand_limits(y = 0) + 
+            neutral        
+    
+    pop_temp <- pop_app %>% 
+        select(year, origin, ims_eff, ems_eff, mig_eff, pop_bir_dea, pop_end_year, diff_check) %>% 
+        pivot_longer(cols = c("ims_eff", "ems_eff", "mig_eff", "pop_bir_dea", "pop_end_year", "diff_check"))  
+    
+    pop_temp %>%     
+        ggplot() +
+            geom_hline(yintercept = 0, color = "grey80") +        
+            geom_line(aes(x = year, y = value, color = origin)) + 
+            facet_wrap(~name, ncol = 3) +
+            expand_limits(y = 0) + 
+            neutral        
+    
+    pop_temp %>%     
+        ggplot() +
+            geom_hline(yintercept = 0, color = "grey80") +        
+            geom_line(aes(x = year, y = value, color = origin)) + 
+            facet_wrap(~name, ncol = 3, scales = "free_y") +
+            expand_limits(y = 0) + 
+            neutral        
+    
+    
+    
+
     
     
     
     
+     
+    
+  
     # test_check <- NULL   
     # test_dem_factor <- NULL       
             
