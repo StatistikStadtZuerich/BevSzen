@@ -159,6 +159,7 @@
 #TEST------------------------------------------
     test_ims <- NULL
     test_ems <- NULL
+    test_dem <- NULL    
 #TEST------------------------------------------    
     
     
@@ -358,7 +359,6 @@
             
             #TEST------------------------------------------            
             test5 <- dem %>% 
-                filter(district == "Wollishofen") %>% 
                 group_by(district, origin) %>% 
                     summarise_at(c("pop", "bir", "dea", "dea_eff", 
                                    "ims", "ems", "pop_bir_dea"), 
@@ -366,12 +366,21 @@
                 ungroup() %>% 
                 mutate(year = iyear)           
             
-            
+            test_dem <- bind_rows(test_dem, test5)            
+            #TEST------------------------------------------               
             
             
         #balance (on district level)
             #if not enough space: decrease immigration, increase emigration
             #if space left: increase immigration, decrease emigration
+            
+            #TEST------------------------------------------               
+                ggplot(filter(hou, district == "Wollishofen")) +
+                    geom_line(aes(x = year, y = pop_limit)) +
+                    geom_vline(xintercept = szen_begin, color = "red") +
+                    expand_limits(y = 0)
+            #TEST------------------------------------------           
+                
             
             hou_year <- hou %>% 
                 filter(year == iyear) %>% 
