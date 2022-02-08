@@ -152,7 +152,7 @@
    
      
 #TEST------------------------------------------    
-    # future <- szen_begin:2035    
+    future <- szen_begin:2035
 #TEST------------------------------------------     
     
     
@@ -609,15 +609,13 @@
     test_ims_ems <- test_ims %>% 
         left_join(test_ems, by = c("year", "district", "origin")) %>% 
         mutate(mig = ims - ems) %>% 
-        pivot_longer(cols = c("ims", "ems", "mig"))
-    
-    test_ims_ems %>% 
+        pivot_longer(cols = c("ims", "ems", "mig")) %>% 
         filter(district == "Wollishofen") %>% 
         ggplot() +
             geom_line(aes(x = year, y = value, color = origin)) + 
             facet_wrap(~name, ncol = 3)
     
-#dem: pop   
+#dem: pop (result after correction with housing data) 
     test_dem %>% 
         filter(district == "Wollishofen") %>% 
         select(year, origin, pop) %>% 
@@ -635,14 +633,15 @@
             facet_wrap(~name, ncol = 3) +    
             expand_limits(y = 0)        
     
-#dem: bir, dea, dea_eff, ims, ems       
+#dem: bir, dea, dea_eff, ims, ems, mig      
     test_dem %>% 
         filter(district == "Wollishofen") %>% 
-        select(year, origin, bir, dea, dea_eff, ims, ems ) %>% 
-        pivot_longer(cols = c("bir", "dea", "dea_eff", "ims", "ems")) %>%       
+        mutate(mig = ims - ems) %>% 
+        select(year, origin, bir, dea, dea_eff, ims, ems, mig) %>% 
+        pivot_longer(cols = c("bir", "dea", "dea_eff", "ims", "ems", "mig")) %>%       
         ggplot() +
             geom_line(aes(x = year, y = value, color = origin)) + 
-            facet_wrap(~name, ncol = 5) +    
+            facet_wrap(~name, ncol = 6) +    
             expand_limits(y = 0)        
 
 #dem: difference bir - dea + ims - ems      
@@ -671,7 +670,14 @@
 #Plot factor    
     test_bal %>% 
         filter(district == "Wollishofen") %>% 
-        select(year, factor_ims, factor_ems)    
+        select(year, factor_ims, factor_ems) %>%    
+        pivot_longer(cols = c("factor_ims", "factor_ems")) %>% 
+        ggplot() +
+            geom_line(aes(x = year, y = value, color = name)) + 
+            expand_limits(y = 0) +      
+            geom_hline(yintercept = 1, linetype = "dashed")              
+    
+    
     
     
     # test_check <- NULL   
