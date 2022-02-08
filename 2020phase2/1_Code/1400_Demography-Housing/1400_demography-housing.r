@@ -149,18 +149,35 @@
     
 #years in the future
     future <- szen_begin:szen_end
+   
+     
+#TEST------------------------------------------    
+    future <- szen_begin:2035    
+#TEST------------------------------------------     
+    
+    
     
 #outputs
     out_bir <- NULL
     out_dem <- NULL
     out_pop <- NULL
     out_nat <- NULL
+   
     
+    
+     
 #TEST------------------------------------------
     test_ims <- NULL
     test_ems <- NULL
-    test_dem <- NULL    
+    test_dem <- NULL 
+    test_bal <- NULL
+    test_check <- NULL   
+    test_dem_factor <- NULL
+    t0test <- Sys.time() 
+        
 #TEST------------------------------------------    
+    
+    
     
     
 #loop over years
@@ -281,10 +298,7 @@
             test_ims <- bind_rows(test_ims, test2)
             #TEST------------------------------------------            
             
-            
-            
-            
-            
+  
             
         #emigration*
             ems <- popu %>% 
@@ -437,6 +451,13 @@
                 check <- bal %>% 
                     filter((new_ims < 0) | (new_ems < 0))
             
+                
+            #TEST------------------------------------------            
+            test_bal <- bind_rows(test_bal, bal)
+            test_check <- bind_rows(test_check, check)                
+            #TEST------------------------------------------            
+                            
+                
         #apply the correction factors to the immigration* and emigration* by 
         #district, age, sex, origin (same factor by district)   
             dem_factor <- bal %>% 
@@ -446,8 +467,13 @@
                        ems_eff = ems * factor_ems,
                        pop_end_year = pmax(0, pop_bir_dea + ims_eff - ems_eff)) %>% 
                 select(district, age, sex, origin, 
-                       bir, dea_eff, ims_eff, ems_eff, pop_end_year)
+                       bir, dea_eff, ims, ems, ims_eff, ems_eff, pop_end_year) %>% 
+                rename(ims_initial = ims, ems_initial = ems)
             
+            #TEST------------------------------------------            
+            test_dem_factor <- bind_rows(test_dem_factor, dem_factor)
+            #TEST------------------------------------------            
+                        
          #sum(dem_factor$pop_end_year)
             
          #with naturalization (only on end-year-population)
@@ -562,8 +588,76 @@
 #end of loop over years      
     }     
     
+#TEST------------------------------------------ 
+     Sys.time() -  t0test    
+#TEST------------------------------------------     
+   
+     
+    
+#TEST------------------------------------------       
 
     
+#ims, ems, mig
+    test_ims_ems <- test_ims %>% 
+        left_join(test_ems, by = c("year", "district", "origin")) %>% 
+        mutate(mig = ims - ems) %>% 
+        pivot_longer(cols = c("ims", "ems", "mig"))
+    
+    test_ims_ems %>% 
+        filter(district == "Wollishofen") %>% 
+        ggplot() +
+            geom_line(aes(x = year, y = value, color = origin)) + 
+            facet_wrap(~name, ncol = 3)
+    
+#dem: pop   
+    test_dem %>% 
+        filter(district == "Wollishofen") %>% 
+        select(year, origin, pop) %>% 
+        ggplot() +
+            geom_line(aes(x = year, y = pop, color = origin)) +
+            expand_limits(y = 0)    
+    
+#dem: bir, dea, dea_eff       
+    test_dem %>% 
+        filter(district == "Wollishofen") %>% 
+        select(year, origin, bir, dea, dea_eff) %>% 
+        pivot_longer(cols = c("bir", "dea", "dea_eff")) %>%       
+        ggplot() +
+            geom_line(aes(x = year, y = value, color = origin)) + 
+            facet_wrap(~name, ncol = 3) +    
+            expand_limits(y = 0)        
+    
+#dem: bir, dea, dea_eff, ims, ems       
+    test_dem %>% 
+        filter(district == "Wollishofen") %>% 
+        select(year, origin, bir, dea, dea_eff, ims, ems ) %>% 
+        pivot_longer(cols = c("bir", "dea", "dea_eff", "ims", "ems")) %>%       
+        ggplot() +
+            geom_line(aes(x = year, y = value, color = origin)) + 
+            facet_wrap(~name, ncol = 3) +    
+            expand_limits(y = 0)        
+
+#dem: balance      
+    test_dem %>% 
+        filter(district == "Wollishofen") %>% 
+        mutate(bal = bir - dea_eff + ims - ems) %>% 
+        ggplot() +
+            geom_line(aes(x = year, y = bal, color = origin)) + 
+            expand_limits(y = 0)          
+        
+
+    
+        
+      
+            
+    
+#TEST------------------------------------------       
+    
+  
+    
+    # test_bal <- NULL
+    # test_check <- NULL   
+    # test_dem_factor <- NULL        
     
     
     
