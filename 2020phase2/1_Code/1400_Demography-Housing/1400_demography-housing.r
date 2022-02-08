@@ -252,6 +252,25 @@
 
             # sum(ims$ims)
             
+            #TEST------------------------------------------
+            test1 <- ims_prop_so %>% 
+                filter(district == "Wollishofen")
+          
+            ggplot(test1) +
+                geom_line(aes(x = year, y = prop)) +
+                facet_grid(sex ~ origin)
+          
+            
+            ggplot(ims_prop_so) +
+                geom_line(aes(x = year, y = prop, color = origin)) +
+                facet_wrap(sex ~ origin)
+            
+            
+                        
+            
+            
+            
+
 
         #emigration*
             ems <- popu %>% 
