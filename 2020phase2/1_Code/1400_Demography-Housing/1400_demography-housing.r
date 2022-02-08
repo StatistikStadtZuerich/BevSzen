@@ -453,8 +453,13 @@
             
                 
             #TEST------------------------------------------            
-            test_bal <- bind_rows(test_bal, bal)
-            test_check <- bind_rows(test_check, check)                
+            bal_year <- bal %>% 
+                mutate(year = iyear) 
+            check_year <- check %>% 
+                mutate(year = iyear)               
+                
+            test_bal <- bind_rows(test_bal, bal_year)
+            test_check <- bind_rows(test_check, check_year)                
             #TEST------------------------------------------            
                             
                 
@@ -470,8 +475,11 @@
                        bir, dea_eff, ims, ems, ims_eff, ems_eff, pop_end_year) %>% 
                 rename(ims_initial = ims, ems_initial = ems)
             
-            #TEST------------------------------------------            
-            test_dem_factor <- bind_rows(test_dem_factor, dem_factor)
+            #TEST------------------------------------------ 
+            dem_factor_year <- dem_factor %>% 
+                mutate(year = iyear)             
+            
+            test_dem_factor <- bind_rows(test_dem_factor, dem_factor_year)
             #TEST------------------------------------------            
                         
          #sum(dem_factor$pop_end_year)
@@ -634,10 +642,10 @@
         pivot_longer(cols = c("bir", "dea", "dea_eff", "ims", "ems")) %>%       
         ggplot() +
             geom_line(aes(x = year, y = value, color = origin)) + 
-            facet_wrap(~name, ncol = 3) +    
+            facet_wrap(~name, ncol = 5) +    
             expand_limits(y = 0)        
 
-#dem: balance      
+#dem: difference bir - dea + ims - ems      
     test_dem %>% 
         filter(district == "Wollishofen") %>% 
         mutate(bal = bir - dea_eff + ims - ems) %>% 
@@ -645,19 +653,39 @@
             geom_line(aes(x = year, y = bal, color = origin)) + 
             expand_limits(y = 0)          
         
+#balance: ims, ems, new_ims, new_ems, new_ims3, new_ems3
+    test_bal %>% 
+        filter(district == "Wollishofen") %>% 
+        select(year, ims, ems, new_ims, new_ems, new_ims3, new_ems3) %>% 
+        pivot_longer(cols = c("ims", "ems", "new_ims", "new_ems", "new_ims3", "new_ems3")) %>% 
+        mutate(mig_cat = if_else(name %in% c("ims", "new_ims", "new_ims3"), "immigration", "emigration"),
+               number = case_when(name %in% c("ims", "ems") ~ "mig1",
+                                  name %in% c("new_ims", "new_ems") ~ "mig2",  
+                                  TRUE  ~ "mig3")) %>% 
+        ggplot() +
+            geom_line(aes(x = year, y = value, color = number)) + 
+            facet_wrap(~mig_cat, ncol = 2) +    
+            expand_limits(y = 0)       
+        
+
+#Plot factor    
+    test_bal %>% 
+        filter(district == "Wollishofen") %>% 
+        select(year, factor_ims, factor_ems)    
+    
+    
+    # test_check <- NULL   
+    # test_dem_factor <- NULL       
+            
+    
 
     
-        
-      
-            
     
 #TEST------------------------------------------       
     
   
     
-    # test_bal <- NULL
-    # test_check <- NULL   
-    # test_dem_factor <- NULL        
+       
     
     
     
