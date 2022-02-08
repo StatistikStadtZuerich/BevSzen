@@ -159,7 +159,7 @@
 #TEST------------------------------------------
     test_ims <- NULL
     test_ems <- NULL
-    
+#TEST------------------------------------------    
     
     
 #loop over years
@@ -274,10 +274,11 @@
             test2 <- ims %>% 
                 group_by(district, origin) %>% 
                     summarize(ims = sum(ims)) %>% 
-                ungroup()
+                ungroup() %>% 
+                mutate(year = iyear)
               
-            
-            
+            test_ims <- bind_rows(test_ims, test2)
+            #TEST------------------------------------------            
             
             
             
@@ -303,7 +304,28 @@
                 select(district, age, sex, origin, ems)            
                 #result: emigration* by district, age, sex, origin (31*121*2*2 = 15004 rows)             
             
+            
+            #TEST------------------------------------------   
+            test3 <- ems_prop_so %>% 
+                filter(district == "Wollishofen")
+          
+            ggplot(test3) +
+                geom_line(aes(x = year, y = prop)) +
+                facet_grid(sex ~ origin)
+          
+            ggplot(ems_prop_so) +
+                geom_line(aes(x = year, y = prop, color = sex, linetype = origin)) +
+                facet_wrap(~ district, ncol = 4)            
 
+            test4 <- ems %>% 
+                group_by(district, origin) %>% 
+                    summarize(ems = sum(ems)) %>% 
+                ungroup() %>% 
+                mutate(year = iyear)
+              
+            test_ems <- bind_rows(test_ems, test4)
+            #TEST------------------------------------------            
+            
             # sum(ems$ems)           
             
             
@@ -321,7 +343,7 @@
                 left_join(ems, by = c("district", "age", "sex", "origin")) %>% 
                 replace_na(list(pop = 0, bir = 0, dea = 0, ims = 0, ems = 0)) %>% 
                 #not more than the entire population can die...
-                #therefore, calcualate effective deaths
+                #therefore, calculate effective deaths
                 mutate(dea_eff = pmin(dea, pop),
                        pop_bir_dea = pop + bir - dea_eff)
             
@@ -330,6 +352,22 @@
             # sum(dem$pop_bir_dea)
             # sum(dem$pop) + sum(bir$bir) - sum(dea$dea)
 
+            # dem %>%
+            #     select(pop, bir, dea, dea_eff, ims, ems, pop_bir_dea) %>% 
+            #     summarize_all(list(sum))
+            
+            #TEST------------------------------------------            
+            test5 <- dem %>% 
+                filter(district == "Wollishofen") %>% 
+                group_by(district, origin) %>% 
+                    summarise_at(c("pop", "bir", "dea", "dea_eff", 
+                                   "ims", "ems", "pop_bir_dea"), 
+                                 sum, na.rm = TRUE) %>% 
+                ungroup() %>% 
+                mutate(year = iyear)           
+            
+            
+            
             
         #balance (on district level)
             #if not enough space: decrease immigration, increase emigration
@@ -516,6 +554,11 @@
     }     
     
 
+    
+    
+    
+    
+    
 #-------------------------------------------------------------------
 #export the results
 #-------------------------------------------------------------------
