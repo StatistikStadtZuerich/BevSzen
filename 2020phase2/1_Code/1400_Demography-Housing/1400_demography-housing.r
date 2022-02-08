@@ -156,6 +156,12 @@
     out_pop <- NULL
     out_nat <- NULL
     
+#TEST------------------------------------------
+    test_ims <- NULL
+    test_ems <- NULL
+    
+    
+    
 #loop over years
     for (iyear in future){
       
@@ -260,18 +266,24 @@
                 geom_line(aes(x = year, y = prop)) +
                 facet_grid(sex ~ origin)
           
-            
             ggplot(ims_prop_so) +
-                geom_line(aes(x = year, y = prop, color = origin)) +
-                facet_wrap(sex ~ origin)
-            
-            
-                        
-            
-            
+                geom_line(aes(x = year, y = prop, color = sex, linetype = origin)) +
+                facet_wrap(~ district, ncol = 4)
             
 
-
+            test2 <- ims %>% 
+                group_by(district, origin) %>% 
+                    summarize(ims = sum(ims)) %>% 
+                ungroup()
+              
+            
+            
+            
+            
+            
+            
+            
+            
         #emigration*
             ems <- popu %>% 
                 group_by(district) %>% 
