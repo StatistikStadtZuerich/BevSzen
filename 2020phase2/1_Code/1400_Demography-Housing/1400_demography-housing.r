@@ -784,20 +784,53 @@
             neutral        
     
     
+#the 'Wollishofen problem' is at birth/death
     
+    temp_bir <- out_bir %>% 
+        filter(district == "Wollishofen") %>%       
+        group_by(year, origin) %>% 
+            summarize(bir = sum(bir)) %>% 
+        ungroup()           
+    
+    temp_processes <- out_dem %>%    
+        filter(district == "Wollishofen") %>%   
+        select(year, origin, dea, ims, ems) %>% 
+        group_by(year, origin) %>% 
+            summarize_at(c("dea", "ims", "ems"), 
+                         sum, na.rm = TRUE) %>% 
+        ungroup() %>% 
+        left_join(temp_bir, by = c("year", "origin")) %>% 
+        mutate(nat = bir - dea, 
+               mig = ims - ems,
+               bal = nat + mig)
+    
+    temp_processes %>% 
+        pivot_longer(cols = c("bir", "dea",
+                              "ims", "ems", 
+                              "nat", "mig", "bal")) %>%   
+        ggplot() +
+            geom_hline(yintercept = 0, color = "grey80") +        
+            geom_line(aes(x = year, y = value, color = origin)) + 
+            facet_wrap(~name, ncol = 4) +
+            expand_limits(y = 0) + 
+            neutral  
 
     
+    temp_processes %>%
+        pivot_longer(cols = c("bir", "dea",
+                              "ims", "ems", 
+                              "nat", "mig", "bal")) %>%     
+        filter(name %in% c("bir", "dea", "nat", "mig", "bal")) %>%     
+        ggplot() +
+            geom_hline(yintercept = 0, color = "grey80") +        
+            geom_line(aes(x = year, y = value, color = origin)) + 
+            facet_wrap(~name, ncol = 5) +
+            expand_limits(y = 0) + 
+            neutral     
     
     
     
-     
     
-  
-    # test_check <- NULL   
-    # test_dem_factor <- NULL       
-            
-    
-
     
     
 #TEST------------------------------------------       
