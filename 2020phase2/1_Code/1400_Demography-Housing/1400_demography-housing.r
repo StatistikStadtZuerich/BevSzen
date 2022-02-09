@@ -149,13 +149,6 @@
     
 #years in the future
     future <- szen_begin:szen_end
-   
-     
-#TEST------------------------------------------    
-    future <- szen_begin:2035
-#TEST------------------------------------------     
-    
-    
     
 #outputs
     out_bir <- NULL
