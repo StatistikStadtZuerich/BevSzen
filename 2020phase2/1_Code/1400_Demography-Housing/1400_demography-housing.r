@@ -156,21 +156,6 @@
     out_pop <- NULL
     out_nat <- NULL
    
-    
-    
-     
-#TEST------------------------------------------
-    test_ims <- NULL
-    test_ems <- NULL
-    test_dem <- NULL 
-    test_bal <- NULL
-    test_check <- NULL   
-    test_dem_factor <- NULL
-    t0test <- Sys.time() 
-        
-#TEST------------------------------------------    
-    
-    
 #loop over years
     for (iyear in future){
       
@@ -267,30 +252,6 @@
 
             # sum(ims$ims)
             
-            #TEST------------------------------------------
-            test1 <- ims_prop_so %>% 
-                filter(district == "Wollishofen")
-          
-            ggplot(test1) +
-                geom_line(aes(x = year, y = prop)) +
-                facet_grid(sex ~ origin)
-          
-            ggplot(ims_prop_so) +
-                geom_line(aes(x = year, y = prop, color = sex, linetype = origin)) +
-                facet_wrap(~ district, ncol = 4)
-            
-
-            test2 <- ims %>% 
-                group_by(district, origin) %>% 
-                    summarize(ims = sum(ims)) %>% 
-                ungroup() %>% 
-                mutate(year = iyear)
-              
-            test_ims <- bind_rows(test_ims, test2)
-            #TEST------------------------------------------            
-            
-  
-            
         #emigration*
             ems <- popu %>% 
                 group_by(district) %>% 
@@ -309,28 +270,6 @@
                 mutate(ems = ems_dso * prop / 100) %>%             
                 select(district, age, sex, origin, ems)            
                 #result: emigration* by district, age, sex, origin (31*121*2*2 = 15004 rows)             
-            
-            
-            #TEST------------------------------------------   
-            test3 <- ems_prop_so %>% 
-                filter(district == "Wollishofen")
-          
-            ggplot(test3) +
-                geom_line(aes(x = year, y = prop)) +
-                facet_grid(sex ~ origin)
-          
-            ggplot(ems_prop_so) +
-                geom_line(aes(x = year, y = prop, color = sex, linetype = origin)) +
-                facet_wrap(~ district, ncol = 4)            
-
-            test4 <- ems %>% 
-                group_by(district, origin) %>% 
-                    summarize(ems = sum(ems)) %>% 
-                ungroup() %>% 
-                mutate(year = iyear)
-              
-            test_ems <- bind_rows(test_ems, test4)
-            #TEST------------------------------------------            
             
             # sum(ems$ems)           
             
@@ -362,30 +301,9 @@
             #     select(pop, bir, dea, dea_eff, ims, ems, pop_bir_dea) %>% 
             #     summarize_all(list(sum))
             
-            #TEST------------------------------------------            
-            test5 <- dem %>% 
-                group_by(district, origin) %>% 
-                    summarize_at(c("pop", "bir", "dea", "dea_eff", 
-                                   "ims", "ems", "pop_bir_dea"), 
-                                 sum, na.rm = TRUE) %>% 
-                ungroup() %>% 
-                mutate(year = iyear)           
-            
-            test_dem <- bind_rows(test_dem, test5)            
-            #TEST------------------------------------------               
-            
-            
         #balance (on district level)
             #if not enough space: decrease immigration, increase emigration
             #if space left: increase immigration, decrease emigration
-            
-            #TEST------------------------------------------               
-                ggplot(filter(hou, district == "Wollishofen")) +
-                    geom_line(aes(x = year, y = pop_limit)) +
-                    geom_vline(xintercept = szen_begin, color = "red") +
-                    expand_limits(y = 0)
-            #TEST------------------------------------------           
-                
             
             hou_year <- hou %>% 
                 filter(year == iyear) %>% 
@@ -442,18 +360,6 @@
                 check <- bal %>% 
                     filter((new_ims < 0) | (new_ems < 0))
             
-                
-            #TEST------------------------------------------            
-            bal_year <- bal %>% 
-                mutate(year = iyear) 
-            check_year <- check %>% 
-                mutate(year = iyear)               
-                
-            test_bal <- bind_rows(test_bal, bal_year)
-            test_check <- bind_rows(test_check, check_year)                
-            #TEST------------------------------------------            
-                            
-                
         #apply the correction factors to the immigration* and emigration* by 
         #district, age, sex, origin (same factor by district)   
             dem_factor <- bal %>% 
@@ -466,14 +372,7 @@
                 select(district, age, sex, origin, 
                        bir, dea_eff, ims, ems, ims_eff, ems_eff, pop_bir_dea, pop_temp, pop_end_year) %>% 
                 rename(ims_initial = ims, ems_initial = ems)
-            
-            #TEST------------------------------------------ 
-            dem_factor_year <- dem_factor %>% 
-                mutate(year = iyear)             
-            
-            test_dem_factor <- bind_rows(test_dem_factor, dem_factor_year)
-            #TEST------------------------------------------            
-                        
+        
          #sum(dem_factor$pop_end_year)
             
          #with naturalization (only on end-year-population)
@@ -588,256 +487,7 @@
 #end of loop over years      
     }     
     
-#TEST------------------------------------------ 
-     Sys.time() -  t0test    
-#TEST------------------------------------------     
-   
-     
-    
-#TEST------------------------------------------       
-
-#ims, ems, mig
-    test_ims %>% 
-        left_join(test_ems, by = c("year", "district", "origin")) %>% 
-        mutate(mig = ims - ems) %>% 
-        pivot_longer(cols = c("ims", "ems", "mig")) %>% 
-        filter(district == "Wollishofen") %>% 
-        ggplot() +
-            geom_line(aes(x = year, y = value, color = origin)) + 
-            facet_wrap(~name, ncol = 3) + 
-        neutral
-    
-#dem: pop (result after correction with housing data) 
-    test_dem %>% 
-        filter(district == "Wollishofen") %>% 
-        select(year, origin, pop) %>% 
-        ggplot() +
-            geom_line(aes(x = year, y = pop, color = origin)) +
-            expand_limits(y = 0) +
-            neutral
-    
-#dem: bir, dea, dea_eff, nat      
-    test_dem %>% 
-        filter(district == "Wollishofen") %>% 
-        mutate(nat = bir - dea_eff) %>% 
-        select(year, origin, bir, dea, dea_eff, nat) %>% 
-        pivot_longer(cols = c("bir", "dea", "dea_eff", "nat")) %>%       
-        ggplot() +
-            geom_hline(yintercept = 0, linetype = "dashed") +
-            geom_line(aes(x = year, y = value, color = origin)) + 
-            facet_wrap(~name, ncol = 4) +    
-            expand_limits(y = 0) +
-            neutral
-    
-#dem: bir, dea, dea_eff, ims, ems, mig      
-    test_dem %>% 
-        filter(district == "Wollishofen") %>% 
-        mutate(mig = ims - ems) %>% 
-        select(year, origin, bir, dea, dea_eff, ims, ems, mig) %>% 
-        pivot_longer(cols = c("bir", "dea", "dea_eff", "ims", "ems", "mig")) %>%       
-        ggplot() +
-            geom_line(aes(x = year, y = value, color = origin)) + 
-            facet_wrap(~name, ncol = 6) +    
-            expand_limits(y = 0) +
-            neutral
-
-#dem: difference bir - dea + ims - ems      
-    test_dem %>% 
-        filter(district == "Wollishofen") %>% 
-        mutate(bal = bir - dea_eff + ims - ems) %>% 
-        ggplot() +
-            geom_line(aes(x = year, y = bal, color = origin)) + 
-            expand_limits(y = 0) +
-            neutral
-        
-#balance: ims, ems, new_ims, new_ems, new_ims3, new_ems3
-    test_bal %>% 
-        filter(district == "Wollishofen") %>% 
-        select(year, ims, ems, new_ims, new_ems, new_ims3, new_ems3) %>% 
-        pivot_longer(cols = c("ims", "ems", "new_ims", "new_ems", "new_ims3", "new_ems3")) %>% 
-        mutate(mig_cat = if_else(name %in% c("ims", "new_ims", "new_ims3"), "immigration", "emigration"),
-               number = case_when(name %in% c("ims", "ems") ~ "mig1",
-                                  name %in% c("new_ims", "new_ems") ~ "mig2",  
-                                  TRUE  ~ "mig3")) %>% 
-        ggplot() +
-            geom_line(aes(x = year, y = value, color = number)) + 
-            facet_wrap(~mig_cat, ncol = 2) +    
-            expand_limits(y = 0) +
-            neutral
-        
-#plot factor    
-    test_bal %>% 
-        filter(district == "Wollishofen") %>% 
-        select(year, factor_ims, factor_ems) %>%    
-        pivot_longer(cols = c("factor_ims", "factor_ems")) %>% 
-        ggplot() +
-            geom_line(aes(x = year, y = value, color = name)) + 
-            expand_limits(y = 0) +      
-            geom_hline(yintercept = 1, linetype = "dashed") +
-            neutral             
  
-#processes (after factor per district was applied to ims and ems)  
-    factor_app <- test_dem_factor %>%    
-        filter(district == "Wollishofen") %>%   
-        select(year, origin, ims_initial, ems_initial, ims_eff, ems_eff) %>% 
-        group_by(year, origin) %>% 
-            summarize_at(c("ims_initial", "ems_initial", "ims_eff", "ems_eff"), 
-                         sum, na.rm = TRUE) %>% 
-        ungroup() %>% 
-        mutate(ims_diff = ims_initial - ims_eff,
-               ems_diff = ems_initial - ems_eff,
-               mig_initial = ims_initial - ems_initial,
-               mig_eff = ims_eff - ems_eff, 
-               mig_diff = mig_initial - mig_eff) %>% 
-        pivot_longer(cols = c("ims_initial", "ems_initial", "mig_initial",
-                              "ims_eff", "ems_eff", "mig_eff",
-                              "ims_diff", "ems_diff", "mig_diff")) %>% 
-        mutate(process = factor(case_when(name %in% c("ims_initial", "ims_eff", "ims_diff") ~ "immigration",
-                                   name %in% c("ems_initial", "ems_eff", "ems_diff") ~ "emigration",
-                                   TRUE ~ "migration balance"), 
-                                levels = c("immigration", "emigration", "migration balance")),
-               ord = factor(case_when(name %in% c("ims_initial", "ems_initial", "mig_initial") ~ "initial",
-                                   name %in% c("ims_eff", "ems_eff", "mig_eff") ~ "final",
-                                   TRUE ~ "correction"),
-                            levels = c("initial", "final", "correction")))
-    
-        
-        
-    factor_app %>% 
-        ggplot() +
-            geom_hline(yintercept = 0, color = "grey80") +  
-            geom_line(aes(x = year, y = value, color = ord)) + 
-            facet_grid(origin ~ process) + 
-            expand_limits(y = 0) + 
-            neutral
-  
-    factor_app %>% 
-        filter(process == "migration balance") %>% 
-        filter(ord != "correction") %>% 
-        ggplot() +
-            geom_hline(yintercept = 0, color = "grey80") +  
-            geom_line(aes(x = year, y = value, color = ord)) + 
-            facet_grid(process ~ origin) + 
-            expand_limits(y = 0) + 
-            neutral
-    
-    
-#population    
-    pop_app <- test_dem_factor %>%    
-        filter(district == "Wollishofen") %>%   
-        select(year, origin, ims_eff, ems_eff, pop_bir_dea, pop_temp, pop_end_year) %>% 
-        group_by(year, origin) %>% 
-            summarize_at(c("ims_eff", "ems_eff", "pop_bir_dea", "pop_temp", "pop_end_year"), 
-                         sum, na.rm = TRUE) %>% 
-        ungroup() %>% 
-        mutate(diff_pop = pop_temp - pop_end_year,
-               mig_eff = ims_eff - ems_eff,
-               diff_check = pop_end_year - pop_bir_dea,
-               check = mig_eff - diff_check)
-     
-    sum(abs(pop_app$diff_pop))
-    #pmax(0, x): not a problem
-    
-    sum(abs(pop_app$check))
-    #is ok
-    
-    pop_app %>% 
-        ggplot() +
-            geom_line(aes(x = year, y = pop_end_year, color = origin)) + 
-            expand_limits(y = 0) + 
-            neutral 
-    
-    pop_temp <- pop_app %>% 
-        select(year, origin, ims_eff, ems_eff, mig_eff, pop_bir_dea, pop_end_year, diff_check) %>% 
-        pivot_longer(cols = c("ims_eff", "ems_eff", "mig_eff", "pop_bir_dea", "pop_end_year", "diff_check"))  
-    
-    pop_temp %>%     
-        ggplot() +
-            geom_hline(yintercept = 0, color = "grey80") +        
-            geom_line(aes(x = year, y = value, color = origin)) + 
-            facet_wrap(~name, ncol = 3) +
-            expand_limits(y = 0) + 
-            neutral        
-    
-    pop_temp %>%     
-        ggplot() +
-            geom_hline(yintercept = 0, color = "grey80") +        
-            geom_line(aes(x = year, y = value, color = origin)) + 
-            facet_wrap(~name, ncol = 3, scales = "free_y") +
-            expand_limits(y = 0) + 
-            neutral        
-    
-    
-#the 'Wollishofen problem' is at birth/death
-    
-    temp_bir <- out_bir %>% 
-        filter(district == "Wollishofen") %>%       
-        group_by(year, origin) %>% 
-            summarize(bir = sum(bir)) %>% 
-        ungroup()           
-    
-    temp_processes <- out_dem %>%    
-        filter(district == "Wollishofen") %>%   
-        select(year, origin, dea, ims, ems) %>% 
-        group_by(year, origin) %>% 
-            summarize_at(c("dea", "ims", "ems"), 
-                         sum, na.rm = TRUE) %>% 
-        ungroup() %>% 
-        left_join(temp_bir, by = c("year", "origin")) %>% 
-        mutate(nat = bir - dea, 
-               mig = ims - ems,
-               bal = nat + mig)
-    
-    temp_processes %>% 
-        pivot_longer(cols = c("bir", "dea",
-                              "ims", "ems", 
-                              "nat", "mig", "bal")) %>%   
-        ggplot() +
-            geom_hline(yintercept = 0, color = "grey80") +        
-            geom_line(aes(x = year, y = value, color = origin)) + 
-            facet_wrap(~name, ncol = 4) +
-            expand_limits(y = 0) + 
-            neutral  
-
-    
-    temp_processes %>%
-        pivot_longer(cols = c("bir", "dea",
-                              "ims", "ems", 
-                              "nat", "mig", "bal")) %>%     
-        filter(name %in% c("bir", "dea", "nat", "mig", "bal")) %>%     
-        ggplot() +
-            geom_hline(yintercept = 0, color = "grey80") +        
-            geom_line(aes(x = year, y = value, color = origin)) + 
-            facet_wrap(~name, ncol = 5) +
-            expand_limits(y = 0) + 
-            neutral     
-    
-    
-    
-#test output: processes
-    temp_processes %>% 
-    arrange(origin, year) %>%       
-    write_csv(paste0(out_path, "/test_processes.csv"))     
-    
-#test output: processes
-    test_dem %>% 
-    filter(district == "Wollishofen") %>% 
-    arrange(origin, year) %>% 
-    write_csv(paste0(out_path, "/test_pop.csv"))     
-    
-        
-    
-    
-    
-#TEST------------------------------------------       
-    
-  
-    
-       
-    
-    
-    
-    
 #-------------------------------------------------------------------
 #export the results
 #-------------------------------------------------------------------
