@@ -178,8 +178,6 @@
 #TEST------------------------------------------    
     
     
-    
-    
 #loop over years
     for (iyear in future){
       
@@ -825,11 +823,14 @@
     
 #test output: processes
     temp_processes %>% 
+    arrange(origin, year) %>%       
     write_csv(paste0(out_path, "/test_processes.csv"))     
     
 #test output: processes
-    temp_processes %>% 
-    write_csv(paste0(out_path, "/test_processes.csv"))     
+    test_dem %>% 
+    filter(district == "Wollishofen") %>% 
+    arrange(origin, year) %>% 
+    write_csv(paste0(out_path, "/test_pop.csv"))     
     
         
     
