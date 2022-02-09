@@ -606,14 +606,15 @@
 #TEST------------------------------------------       
 
 #ims, ems, mig
-    test_ims_ems <- test_ims %>% 
+    test_ims %>% 
         left_join(test_ems, by = c("year", "district", "origin")) %>% 
         mutate(mig = ims - ems) %>% 
         pivot_longer(cols = c("ims", "ems", "mig")) %>% 
         filter(district == "Wollishofen") %>% 
         ggplot() +
             geom_line(aes(x = year, y = value, color = origin)) + 
-            facet_wrap(~name, ncol = 3)
+            facet_wrap(~name, ncol = 3) + 
+        neutral
     
 #dem: pop (result after correction with housing data) 
     test_dem %>% 
@@ -621,17 +622,20 @@
         select(year, origin, pop) %>% 
         ggplot() +
             geom_line(aes(x = year, y = pop, color = origin)) +
-            expand_limits(y = 0)    
+            expand_limits(y = 0) +
+            neutral
     
 #dem: bir, dea, dea_eff       
     test_dem %>% 
         filter(district == "Wollishofen") %>% 
-        select(year, origin, bir, dea, dea_eff) %>% 
-        pivot_longer(cols = c("bir", "dea", "dea_eff")) %>%       
+        mutate(nat = bir - dea_eff) %>% 
+        select(year, origin, bir, dea, dea_eff, nat) %>% 
+        pivot_longer(cols = c("bir", "dea", "dea_eff", "nat")) %>%       
         ggplot() +
             geom_line(aes(x = year, y = value, color = origin)) + 
-            facet_wrap(~name, ncol = 3) +    
-            expand_limits(y = 0)        
+            facet_wrap(~name, ncol = 4) +    
+            expand_limits(y = 0) +
+            neutral
     
 #dem: bir, dea, dea_eff, ims, ems, mig      
     test_dem %>% 
@@ -642,7 +646,8 @@
         ggplot() +
             geom_line(aes(x = year, y = value, color = origin)) + 
             facet_wrap(~name, ncol = 6) +    
-            expand_limits(y = 0)        
+            expand_limits(y = 0) +
+            neutral
 
 #dem: difference bir - dea + ims - ems      
     test_dem %>% 
@@ -650,7 +655,8 @@
         mutate(bal = bir - dea_eff + ims - ems) %>% 
         ggplot() +
             geom_line(aes(x = year, y = bal, color = origin)) + 
-            expand_limits(y = 0)          
+            expand_limits(y = 0) +
+            neutral
         
 #balance: ims, ems, new_ims, new_ems, new_ims3, new_ems3
     test_bal %>% 
@@ -664,9 +670,9 @@
         ggplot() +
             geom_line(aes(x = year, y = value, color = number)) + 
             facet_wrap(~mig_cat, ncol = 2) +    
-            expand_limits(y = 0)       
+            expand_limits(y = 0) +
+            neutral
         
-
 #plot factor    
     test_bal %>% 
         filter(district == "Wollishofen") %>% 
@@ -675,7 +681,8 @@
         ggplot() +
             geom_line(aes(x = year, y = value, color = name)) + 
             expand_limits(y = 0) +      
-            geom_hline(yintercept = 1, linetype = "dashed")              
+            geom_hline(yintercept = 1, linetype = "dashed") +
+            neutral             
  
 #processes (after factor per district was applied to ims and ems)  
     factor_app <- test_dem_factor %>%    
@@ -701,6 +708,7 @@
                                    name %in% c("ims_eff", "ems_eff", "mig_eff") ~ "final",
                                    TRUE ~ "correction"),
                             levels = c("initial", "final", "correction")))
+    
         
         
     factor_app %>% 
@@ -711,15 +719,6 @@
             expand_limits(y = 0) + 
             neutral
   
-    factor_app %>% 
-        filter(process == "migration balance") %>% 
-        ggplot() +
-            geom_hline(yintercept = 0, color = "grey80") +  
-            geom_line(aes(x = year, y = value, color = ord)) + 
-            facet_grid(. ~ origin) + 
-            expand_limits(y = 0) + 
-            neutral
-    
     factor_app %>% 
         filter(process == "migration balance") %>% 
         filter(ord != "correction") %>% 
@@ -755,13 +754,6 @@
             geom_line(aes(x = year, y = pop_end_year, color = origin)) + 
             expand_limits(y = 0) + 
             neutral 
-    
-    pop_app %>% 
-        ggplot() +
-            geom_hline(yintercept = 0, color = "grey80") +        
-            geom_line(aes(x = year, y = mig_eff, color = origin)) + 
-            expand_limits(y = 0) + 
-            neutral        
     
     pop_temp <- pop_app %>% 
         select(year, origin, ims_eff, ems_eff, mig_eff, pop_bir_dea, pop_end_year, diff_check) %>% 
@@ -827,6 +819,9 @@
             facet_wrap(~name, ncol = 5) +
             expand_limits(y = 0) + 
             neutral     
+    
+    
+    
     
     
     
