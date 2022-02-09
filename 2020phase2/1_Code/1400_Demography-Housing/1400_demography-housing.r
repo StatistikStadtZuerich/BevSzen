@@ -625,13 +625,14 @@
             expand_limits(y = 0) +
             neutral
     
-#dem: bir, dea, dea_eff       
+#dem: bir, dea, dea_eff, nat      
     test_dem %>% 
         filter(district == "Wollishofen") %>% 
         mutate(nat = bir - dea_eff) %>% 
         select(year, origin, bir, dea, dea_eff, nat) %>% 
         pivot_longer(cols = c("bir", "dea", "dea_eff", "nat")) %>%       
         ggplot() +
+            geom_hline(yintercept = 0, linetype = "dashed") +
             geom_line(aes(x = year, y = value, color = origin)) + 
             facet_wrap(~name, ncol = 4) +    
             expand_limits(y = 0) +
@@ -822,9 +823,15 @@
     
     
     
+#test output: processes
+    temp_processes %>% 
+    write_csv(paste0(out_path, "/test_processes.csv"))     
     
+#test output: processes
+    temp_processes %>% 
+    write_csv(paste0(out_path, "/test_processes.csv"))     
     
-    
+        
     
     
     
