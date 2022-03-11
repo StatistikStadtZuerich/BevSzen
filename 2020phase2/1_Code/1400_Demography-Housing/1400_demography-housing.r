@@ -44,7 +44,7 @@
     #in contrast to rate calculations: population at the end of the year 
     #WHY: the rates will be applied here to the population of the previous year
   
-    pop_import <- read_csv(pop_od) %>% 
+    pop_import <- read_csv(pop_od, lazy = FALSE) %>% 
         rename(year = StichtagDatJahr, age = AlterVCd, pop = AnzBestWir) %>% 
         left_join(look_dis, by = "QuarCd") %>% 
         mutate(district = factor(distr, uni_d),
@@ -66,68 +66,68 @@
         replace_na(list(pop = 0))           
     
 #birth: fertility rate
-    fer <- read_csv(paste0(exp_path, "/birth_fertility_future.csv")) %>% 
+    fer <- read_csv(paste0(exp_path, "/birth_fertility_future.csv"), lazy = FALSE) %>% 
         mutate(district = factor(district, levels = uni_d),
                sex = uni_s[2],
                origin = factor(origin, levels = uni_o)) %>% 
         select(district, year, age, sex, origin, fer)
     
 #birth: origin change    
-    cha <- read_csv(paste0(exp_path, "/birth_origin-change_future.csv")) %>% 
+    cha <- read_csv(paste0(exp_path, "/birth_origin-change_future.csv"), lazy = FALSE) %>% 
         mutate(district = factor(district, levels = uni_d),
             origin = factor(origin, levels = uni_o))
                
 #birth: proportion male 
-    pro_male <- read_csv(paste0(exp_path, "/birth_sex-ratio_future.csv"))
+    pro_male <- read_csv(paste0(exp_path, "/birth_sex-ratio_future.csv"), lazy = FALSE)
        
 #death: mortality rate
-    mor <- read_csv(paste0(exp_path, "/mortality_future.csv")) %>% 
+    mor <- read_csv(paste0(exp_path, "/mortality_future.csv"), lazy = FALSE) %>% 
         mutate(sex = factor(sex, levels = uni_s))
            
 #immigration*: immigration* rate
-    ims_rate <- read_csv(paste0(exp_path, "/immigration-star_rate-dy_future.csv")) %>% 
+    ims_rate <- read_csv(paste0(exp_path, "/immigration-star_rate-dy_future.csv"), lazy = FALSE) %>% 
         mutate(district = factor(district, levels = uni_d))      
              
 #immigration*: sex and origin proportion 
-    ims_prop_so <- read_csv(paste0(exp_path, "/immigration-star_prop-so-dy_future.csv")) %>% 
+    ims_prop_so <- read_csv(paste0(exp_path, "/immigration-star_prop-so-dy_future.csv"), lazy = FALSE) %>% 
         mutate(district = factor(district, levels = uni_d),
             sex = factor(sex, levels = uni_s),                 
             origin = factor(origin, levels = uni_o))     
     
 #immigration*: age proportion
-    ims_prop_a <- read_csv(paste0(exp_path, "/immigration-star_prop-a-dyso_future.csv")) %>% 
+    ims_prop_a <- read_csv(paste0(exp_path, "/immigration-star_prop-a-dyso_future.csv"), lazy = FALSE) %>% 
         mutate(district = factor(district, levels = uni_d),
             sex = factor(sex, levels = uni_s),                 
             origin = factor(origin, levels = uni_o))         
     
 #emigration*: emigration* rate
-    ems_rate <- read_csv(paste0(exp_path, "/emigration-star_rate-dy_future.csv")) %>% 
+    ems_rate <- read_csv(paste0(exp_path, "/emigration-star_rate-dy_future.csv"), lazy = FALSE) %>% 
         mutate(district = factor(district, levels = uni_d))        
              
 #emigration*: sex and origin proportion 
-    ems_prop_so <- read_csv(paste0(exp_path, "/emigration-star_prop-so-dy_future.csv")) %>% 
+    ems_prop_so <- read_csv(paste0(exp_path, "/emigration-star_prop-so-dy_future.csv"), lazy = FALSE) %>% 
         mutate(district = factor(district, levels = uni_d),
             sex = factor(sex, levels = uni_s),                 
             origin = factor(origin, levels = uni_o))     
     
 #emigration*: age proportion
-    ems_prop_a <- read_csv(paste0(exp_path, "/emigration-star_prop-a-dyso_future.csv")) %>%     
+    ems_prop_a <- read_csv(paste0(exp_path, "/emigration-star_prop-a-dyso_future.csv", lazy = FALSE)) %>%     
         mutate(district = factor(district, levels = uni_d),
             sex = factor(sex, levels = uni_s),                 
             origin = factor(origin, levels = uni_o))       
     
 #relocation, immigration
-    rei <- read_csv(paste0(exp_path, "/relocation_immigration_future.csv")) %>% 
+    rei <- read_csv(paste0(exp_path, "/relocation_immigration_future.csv"), lazy = FALSE) %>% 
         mutate(district = factor(district, levels = uni_d),
             origin = factor(origin, levels = uni_o))         
        
 #relocation, emigration
-    ree <- read_csv(paste0(exp_path, "/relocation_emigration_future.csv")) %>% 
+    ree <- read_csv(paste0(exp_path, "/relocation_emigration_future.csv"), lazy = FALSE) %>% 
         mutate(district = factor(district, levels = uni_d),
             origin = factor(origin, levels = uni_o))           
        
 #naturalization
-    nat <- read_csv(paste0(exp_path, "/naturalization_future.csv")) %>% 
+    nat <- read_csv(paste0(exp_path, "/naturalization_future.csv"), lazy = FALSE) %>% 
         mutate(district = factor(district, levels = uni_d),
             sex = factor(sex, levels = uni_s),                 
             origin = uni_o[2]) %>% 
@@ -135,7 +135,7 @@
         select(district, year, age, sex, origin, rate_nat)
 
 #housing model
-    hou <- read_csv(paste0(exp_path, "/housing-model_population_d.csv")) %>% 
+    hou <- read_csv(paste0(exp_path, "/housing-model_population_d.csv"), lazy = FALSE) %>% 
         mutate(district = factor(district, levels = uni_d)) %>% 
         rename(pop_limit = pop)
     
