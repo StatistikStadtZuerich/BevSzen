@@ -40,19 +40,19 @@
 #-------------------------------------------------------------------
 
 #projects (apartments, dyw)
-    pro_dat <- read_csv(paste0(exp_path, "/projects_future.csv"))
+    pro_dat <- read_csv(paste0(exp_path, "/projects_future.csv"), lazy = FALSE)
     
 #allocation (persons per apartment, dyw)
-    aca_dat <- read_csv(paste0(exp_path, "/allocation_future.csv"))     
+    aca_dat <- read_csv(paste0(exp_path, "/allocation_future.csv"), lazy = FALSE)     
       
 #capacity/reserves (m2, dyw)  
-    car_dat <- read_csv(paste0(exp_path, "/usage_area.csv")) 
+    car_dat <- read_csv(paste0(exp_path, "/usage_area.csv"), lazy = FALSE) 
     
 #living space (m2 per person, dyw)   
-    spa_dat <- read_csv(paste0(exp_path, "/living-space_future.csv"))    
+    spa_dat <- read_csv(paste0(exp_path, "/living-space_future.csv"), lazy = FALSE)    
  
 #ownership (% cooperative housing)
-    own_dat <- read_csv(paste0(exp_path, "/ownership_past_future.csv"))
+    own_dat <- read_csv(paste0(exp_path, "/ownership_past_future.csv"), lazy = FALSE)
     tail(own_dat)
     
 #population   
@@ -61,7 +61,7 @@
     #the population number in the housing open data is below the total 
     #amount of people in Zurich
     
-    pop <- read_csv(pop_od) %>%   
+    pop <- read_csv(pop_od, lazy = FALSE) %>%   
         rename(year = StichtagDatJahr, pop = AnzBestWir) %>%  
         left_join(look_dis, by = "QuarCd") %>% 
         mutate(district = factor(distr, uni_d)) %>%      

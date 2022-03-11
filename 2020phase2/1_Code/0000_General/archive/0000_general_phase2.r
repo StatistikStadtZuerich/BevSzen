@@ -79,7 +79,7 @@
 #districts (34 numbers)
 #used to transfer the open data files (with 34 districts) to 31 regions
 
-    look_dis <- read_csv2(paste0(data_path, "/2_Lookup/lookupDistrict.csv")) %>%
+    look_dis <- read_csv2(paste0(data_path, "/2_Lookup/lookupDistrict.csv"), lazy = FALSE) %>%
         select(QuarCd, distr)
 
 #regions (31 regions)
