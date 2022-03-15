@@ -111,7 +111,7 @@
             origin = factor(origin, levels = uni_o))     
     
 #emigration*: age proportion
-    ems_prop_a <- read_csv(paste0(exp_path, "/emigration-star_prop-a-dyso_future.csv"), lazy = FALSE)) %>%     
+    ems_prop_a <- read_csv(paste0(exp_path, "/emigration-star_prop-a-dyso_future.csv"), lazy = FALSE) %>%     
         mutate(district = factor(district, levels = uni_d),
             sex = factor(sex, levels = uni_s),                 
             origin = factor(origin, levels = uni_o))   
