@@ -52,7 +52,8 @@
                     # own (ownership)
                     # hou (housing model)
                 # deh (demography and housing model)
-                # out (model outputs)        
+                # out (model outputs) 
+            #alw (all without output: since 'out' needs lower/middle/upper scenario)
 
     
     
@@ -83,74 +84,74 @@
                     source(paste0(code_path, "/0000_General/0003_general_with-parameters.r"))
                     
                 #birth
-                    if (modules %in% c("all", "dem", "bir")) {
+                    if (modules %in% c("all", "alw", "dem", "bir")) {
                         source(paste0(code_path, "0100_Birth/0100_birth-fertility.r"))
                         source(paste0(code_path, "0100_Birth/0110_birth-origin.r"))
                         source(paste0(code_path, "0100_Birth/0120_birth-sex-ratio.r"))
                     }
 
                 #death
-                    if (modules %in% c("all", "dem", "dea")) {
+                    if (modules %in% c("all", "alw", "dem", "dea")) {
                         source(paste0(code_path, "0200_Death/0200_death.r"))
                     }
                                         
                 #immigration*
-                    if (modules %in% c("all", "dem", "ims")) {
+                    if (modules %in% c("all", "alw", "dem", "ims")) {
                         source(paste0(code_path, "0300_Immigration/0300_immigration.r"))
                     }
                                         
                 #emigration*
-                    if (modules %in% c("all", "dem", "ems")) {
+                    if (modules %in% c("all", "alw", "dem", "ems")) {
                         source(paste0(code_path, "0400_Emigration/0400_emigration.r"))
                     }   
                        
                 #relocation-immigration
-                    if (modules %in% c("all", "dem", "rei")) {
+                    if (modules %in% c("all", "alw", "dem", "rei")) {
                         source(paste0(code_path, "0500_Relocation-Immigration/0500_relocation-immigration.r"))
                     }                       
                         
                 #relocation-emigration
-                    if (modules %in% c("all", "dem", "ree")) {
+                    if (modules %in% c("all", "alw", "dem", "ree")) {
                         source(paste0(code_path, "0600_Relocation-Emigration/0600_relocation-emigration.r"))
                     }                       
                         
                 #naturalization
-                    if (modules %in% c("all", "dem", "nat")) {
+                    if (modules %in% c("all", "alw", "dem", "nat")) {
                         source(paste0(code_path, "0700_Naturalization/0700_naturalization.r"))
                     }   
                     
                 #capacity, reserves
-                    if (modules %in% c("all", "hom", "car")) {
+                    if (modules %in% c("all", "alw", "hom", "car")) {
                         source(paste0(code_path, "0800_Capacity-Reserves/0800_capacity-reserves.r"))
                     }                       
                     
                 #living space
-                    if (modules %in% c("all", "hom", "spa")) {
+                    if (modules %in% c("all", "alw", "hom", "spa")) {
                         source(paste0(code_path, "0900_Living-Space/0900_living-space.r"))
                     }                       
                                         
                 #allocation
-                    if (modules %in% c("all", "hom", "aca")) {
+                    if (modules %in% c("all", "alw", "hom", "aca")) {
                         source(paste0(code_path, "1000_Allocation/1000_allocation.r"))
                     }                       
                        
                 #projects
-                    if (modules %in% c("all", "hom", "pro")) {
+                    if (modules %in% c("all", "alw", "hom", "pro")) {
                         source(paste0(code_path, "1100_Projects/1100_projects.r"))
                     }                       
                        
                 #ownership
-                    if (modules %in% c("all", "hom", "own")) {
+                    if (modules %in% c("all", "alw", "hom", "own")) {
                         source(paste0(code_path, "1200_Ownership/1200_ownership.r"))
                     }                       
                                                                
                 #housing model
-                    if (modules %in% c("all", "hom", "hou")) {
+                    if (modules %in% c("all", "alw", "hom", "hou")) {
                         source(paste0(code_path, "1300_Housing-Model/1300_housing-model.r"))
                     }       
                     
                 #demography and housing model
-                    if (modules %in% c("all", "deh")) {
+                    if (modules %in% c("all", "alw", "deh")) {
                         source(paste0(code_path, "1400_Demography-Housing/1400_demography-housing.r"))
                     }      
                     
@@ -173,7 +174,7 @@
             
     run_scen(
         scenarios = c("lower", "middle", "upper"),
-        modules = c("all"))
+        modules = c("alw"))
 
     
     
