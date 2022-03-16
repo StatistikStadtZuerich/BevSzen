@@ -172,7 +172,7 @@
             
     run_scen(
         scenarios = c("lower", "middle", "upper"),
-        modules = c("alw"))
+        modules = c("out"))
 
     
     
