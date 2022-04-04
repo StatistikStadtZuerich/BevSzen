@@ -18,7 +18,7 @@
             setwd(paste0(here(), "/2020phase2/"))
         
         #general functions (without dependence on parameters)
-            source("1_Code/0000_General/0000_general_without-parameters.r")
+            source("1_Code/0000_General/0002_general_without-parameters.r")
             
         #parameters (depend on scenario)
             i_scen <- "middle"
@@ -27,7 +27,7 @@
                        envir = .GlobalEnv)}
 
         #general functions (with dependence on parameters)
-            source(paste0(code_path, "/0000_General/0001_general_with-parameters.r"))
+            source(paste0(code_path, "/0000_General/0003_general_with-parameters.r"))
     
     }
 
@@ -73,10 +73,10 @@
     
 #change by year, origin
     cha_yo <- group_by(cha, year, origin) %>%
-      summarize(change = sum(change),
+        summarize(change = sum(change),
                 total = sum(total),
                 .groups = "drop") %>%
-      mutate(cha_yo = if_else(total == 0, NA_real_, round(change / total * 100, round_rate)))
+        mutate(cha_yo = if_else(total == 0, NA_real_, round(change / total * 100, round_rate)))
     
     year5 <- cha_yo$year[cha_yo$year %% 5 == 0]    
     
@@ -89,12 +89,12 @@
     
 #change by year, age1, origin
     cha_ya1o <- left_join(cha, look_a1, by = "age") %>%
-      group_by(year, age_1, origin) %>%
-      summarize(change = sum(change),
+        group_by(year, age_1, origin) %>%
+        summarize(change = sum(change),
                 total = sum(total),
                 .groups = "drop") %>%
-      mutate(cha_ya1o = if_else(total == 0, NA_real_, round(change / total * 100, round_rate))) %>%
-      rename(age = age_1)
+        mutate(cha_ya1o = if_else(total == 0, NA_real_, round(change / total * 100, round_rate))) %>%
+        rename(age = age_1)
     
     sszplot(cha_ya1o,
             aes_x = "year", aes_y = "cha_ya1o", aes_col = "origin",
@@ -108,12 +108,12 @@
     
 #change by year, age2, origin
     cha_ya2o <- left_join(cha, look_a2, by = "age") %>%
-      group_by(year, age_2, origin) %>%
-      summarize(change = sum(change),
+        group_by(year, age_2, origin) %>%
+        summarize(change = sum(change),
                 total = sum(total),
                 .groups = "drop") %>%
-      mutate(cha_ya2o = if_else(total == 0, NA_real_, round(change / total * 100, round_rate))) %>%
-      rename(age = age_2)
+        mutate(cha_ya2o = if_else(total == 0, NA_real_, round(change / total * 100, round_rate))) %>%
+        rename(age = age_2)
     
     sszplot(cha_ya2o,
             aes_x = "year", aes_y = "cha_ya2o", aes_col = "origin",
@@ -125,13 +125,12 @@
             width = 12)
     
                 
-    
 #change by district, year, origin
     cha_dyo <- group_by(cha, district, year, origin) %>%
-      summarize(change = sum(change),
+        summarize(change = sum(change),
                 total = sum(total),
                 .groups = "drop") %>%
-      mutate(cha_dyo = if_else(total == 0, NA_real_, round(change / total * 100, round_rate)))    
+        mutate(cha_dyo = if_else(total == 0, NA_real_, round(change / total * 100, round_rate)))    
     
     sszplot(cha_dyo,
             aes_x = "year", aes_y = "cha_dyo", aes_col = "origin",
@@ -142,11 +141,12 @@
             name = "0173_origin-change_by-district-year-origin",
             width = 12, height = 14)
     
+
 #change by district, year, age1 (foreign only, since few cases for Swiss)
     cha_dya1f <- left_join(cha, look_a1, by = "age") %>%
-      filter(origin == "foreign") %>%
-      group_by(district, year, age_1) %>%
-      summarize(change = sum(change),
+        filter(origin == "foreign") %>%
+        group_by(district, year, age_1) %>%
+        summarize(change = sum(change),
                 total = sum(total),
                 .groups = "drop") %>% 
         mutate(cha_dya1f = if_else(total == 0, NA_real_, round(change / total * 100, round_rate)))        
@@ -175,7 +175,7 @@
     cha_pred <- con_reg(data = cha_base, x = "year", y = "cha_dyo", 
               group_cols = c("district", "origin"),
               window = bir_cha_window_thres, base_t0 = bir_cha_base_begin,
-              szen_t0 = szen_begin, szen_t1 = szen_end, 
+              scen_t0 = scen_begin, scen_t1 = scen_end, 
               prop_trend = bir_cha_prop_trend, thres_percent = bir_cha_thres_percent, 
               lower_thres = bir_cha_lower_thres, upper_thres = bir_cha_upper_thres) %>% 
         #with the input data (WHY? to assess the regression)
