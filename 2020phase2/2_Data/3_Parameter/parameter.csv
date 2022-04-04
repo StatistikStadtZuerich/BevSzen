@@ -1,46 +1,48 @@
 ﻿category;parameter;parameter_old;lower;middle;upper;unit;relevance;description
 time;date_start;daten.beginn;1993;1993;1993;year;no parameter (strictly speaking);begin of data
-time;date_end;daten.ende;2020;2020;2020;year;no parameter (strictly speaking);end of data
-time;szen_begin;szen.beginn;2021;2021;2021;year;no parameter (strictly speaking);future: begin
+time;date_end;daten.ende;2021;2021;2021;year;no parameter (strictly speaking);end of data
+time;scen_begin;szen.beginn;2022;2022;2022;year;no parameter (strictly speaking);future: begin
+time;scen_end;szen.ende;2050;2050;2050;year;no parameter (strictly speaking);future: end
+time;szen_begin;szen.beginn;2022;2022;2022;year;no parameter (strictly speaking);future: begin
 time;szen_end;szen.ende;2050;2050;2050;year;no parameter (strictly speaking);future: end
 time;bir_base_begin;geb.basis.beginn;2010;2010;2010;year;medium;base period (in the past) for birth rate, begin
-time;bir_base_end;geb.basis.ende;2020;2020;2020;year;medium;base period (in the past) for birth rate, end
+time;bir_base_end;geb.basis.ende;2021;2021;2021;year;medium;base period (in the past) for birth rate, end
 time;bir_cha_base_begin;no parameter in previous model;2007;2007;2007;year;low;base period (in the past) for origin change (mother-baby), begin
-time;bir_cha_base_end;no parameter in previous model;2020;2020;2020;year;low;base period (in the past) for origin change (mother-baby), end
+time;bir_cha_base_end;no parameter in previous model;2021;2021;2021;year;low;base period (in the past) for origin change (mother-baby), end
 time;bir_sex_ratio_begin;no parameter in previous model;1993;1993;1993;year;low;base period (in the past) for sex ration calculation, begin
-time;bir_sex_ratio_end;no parameter in previous model;2020;2020;2020;year;low;base period (in the past) for sex ration calculation, begin
+time;bir_sex_ratio_end;no parameter in previous model;2021;2021;2021;year;low;base period (in the past) for sex ration calculation, begin
 time;dea_fso_date_start;no parameter in previous model;1993;1993;1993;year;low;fso mortality data of the past: begin
 time;dea_fso_date_end;no parameter in previous model;2019;2019;2019;year;low;fso mortality data of the past: end
 time;dea_base_begin;tod.basis.beginn;2014;2014;2014;year;low;base period (in the past) for death rate, begin
-time;dea_base_end;tod.basis.ende;2020;2020;2020;year;low;base period (in the past) for death rate, end
+time;dea_base_end;tod.basis.ende;2021;2021;2021;year;low;base period (in the past) for death rate, end
 time;ims_base_begin;no parameter in previous model;2010;2010;2010;year;low;base period (not the future) for immigration* rate, begin
-time;ims_base_end;no parameter in previous model;2020;2020;2020;year;low;base period (not the future) for immigration* rate, end
+time;ims_base_end;no parameter in previous model;2021;2021;2021;year;low;base period (not the future) for immigration* rate, end
 time;ims_so_base_begin;no parameter in previous model;2010;2010;2010;year;low;base period (not the future) for proportion of sex and origin in immigration*, begin
-time;ims_so_base_end;no parameter in previous model;2020;2020;2020;year;low;base period (not the future)  for proportion of sex and origin in immigration*, end
+time;ims_so_base_end;no parameter in previous model;2021;2021;2021;year;low;base period (not the future)  for proportion of sex and origin in immigration*, end
 time;ims_age_base_begin;no parameter in previous model;2010;2010;2010;year;low;base period (not the future) for proportion of age in immigration*, begin
-time;ims_age_base_end;no parameter in previous model;2020;2020;2020;year;low;base period (not the future)  for proportion of age in immigration*, end
+time;ims_age_base_end;no parameter in previous model;2021;2021;2021;year;low;base period (not the future)  for proportion of age in immigration*, end
 time;ems_base_begin;no parameter in previous model;2010;2010;2010;year;low;base period (not the future) for emigration* rate, begin
-time;ems_base_end;no parameter in previous model;2020;2020;2020;year;low;base period (not the future) for emigration* rate, end
+time;ems_base_end;no parameter in previous model;2021;2021;2021;year;low;base period (not the future) for emigration* rate, end
 time;ems_so_base_begin;no parameter in previous model;2010;2010;2010;year;low;base period (not the future) for proportion of sex and origin in emigration*, begin
-time;ems_so_base_end;no parameter in previous model;2020;2020;2020;year;low;base period (not the future)  for proportion of sex and origin in emigration*, end
+time;ems_so_base_end;no parameter in previous model;2021;2021;2021;year;low;base period (not the future)  for proportion of sex and origin in emigration*, end
 time;ems_age_base_begin;no parameter in previous model;2010;2010;2010;year;low;base period (not the future) for proportion of age in emigration*, begin
-time;ems_age_base_end;no parameter in previous model;2020;2020;2020;year;low;base period (not the future)  for proportion of age in emigration*, end
+time;ems_age_base_end;no parameter in previous model;2021;2021;2021;year;low;base period (not the future)  for proportion of age in emigration*, end
 time;rei_base_begin;no parameter in previous model;2005;2005;2005;year;low;base period (not the future) for relocation based on immigration* (proportion), begin
 time;rei_base_end;no parameter in previous model;2019;2019;2019;year;low;base period (not the future) for relocation based on immigration* (proportion), end
 time;ree_base_begin;no parameter in previous model;2005;2005;2005;year;low;base period (not the future) for relocation based on emigration* (proportion), begin
 time;ree_base_end;no parameter in previous model;2019;2019;2019;year;low;base period (not the future) for relocation based on emigration* (proportion), end
 time;nat_base_begin;no parameter in previous model;2011;2011;2011;year;low;base period (not the future) for naturalization, begin
-time;nat_base_end;no parameter in previous model;2020;2020;2020;year;low;base period (not the future) for naturalization, end
+time;nat_base_end;no parameter in previous model;2021;2021;2021;year;low;base period (not the future) for naturalization, end
 time;spa_base_begin;no parameter in previous model;2011;2011;2011;year;low;base period (not the future) for living space, begin
-time;spa_base_end;no parameter in previous model;2020;2020;2020;year;low;base period (not the future) for living space, end
+time;spa_base_end;no parameter in previous model;2021;2021;2021;year;low;base period (not the future) for living space, end
 time;spa_base_begin_52p;no parameter in previous model;2015;2015;2015;year;low;"base period (not the future) for living space, begin, district 'Escher Wyss' (district ID = 52; since empty apartments increased the mean living space values; before 2015)"
 time;aca_base_begin;no parameter in previous model;2011;2011;2011;year;low;base period (not the future) for allocation, begin
-time;aca_base_end;no parameter in previous model;2020;2020;2020;year;low;base period (not the future) for allocation, end
+time;aca_base_end;no parameter in previous model;2021;2021;2021;year;low;base period (not the future) for allocation, end
 time;aca_base_begin_52p;no parameter in previous model;2015;2015;2015;year;low;"base period (not the future) for allocation, begin, district 'Escher Wyss' (district ID = 52; since empty apartments decreased the mean allocation values; before 2015)"
-time;pro_begin;map.wohnbau.beginn;2021;2021;2021;year;low;"first year (of consolidated project list; reasonable: first scenario year)"
-time;pro_end;map.wohnbau.ende;2028;2028;2028;year;low;last year (of consolidated project list)
+time;pro_begin;map.wohnbau.beginn;2022;2022;2022;year;low;"first year (of consolidated project list; reasonable: first scenario year)"
+time;pro_end;map.wohnbau.ende;2029;2029;2029;year;low;last year (of consolidated project list)
 time;own_base_begin;no parameter in previous model;2015;2015;2015;year;low;base period (not the future) for ownership calculation, begin
-time;own_base_end;no parameter in previous model;2020;2020;2020;year;low;base period (not the future) for ownership calculation, end
+time;own_base_end;no parameter in previous model;2021;2021;2021;year;low;base period (not the future) for ownership calculation, end
 age;age_min;no parameter in previous model;0;0;0;years (age);low;minimum age in the model 
 age;age_max;no parameter in previous model;120;120;120;years (age);low;maximum age in the model (should be clearly higher than maximum age in the population)
 general;round_rate;no parameter in previous model;4;4;4;digits (rate in percent per year);no parameter;rounding of rates (digits, rate in percent per year)
