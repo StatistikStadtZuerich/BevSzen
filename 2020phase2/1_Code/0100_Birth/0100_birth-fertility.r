@@ -281,7 +281,7 @@
 #smoothing with loess
     fer_fit <- arrange(fer_tail, district, year, origin, age) %>% 
         group_by(district, year, origin) %>% 
-            mutate(fer_fit = pmax(0, predict(loess(fer ~ age, span = 0.3, degree = 1, na.action = na.aggregate)))) %>% 
+            mutate(fer_fit = pmax(0, predict(loess(fer ~ age, span = bir_fer_span, degree = 1, na.action = na.aggregate)))) %>% 
         ungroup()
     
 #plot preparation
