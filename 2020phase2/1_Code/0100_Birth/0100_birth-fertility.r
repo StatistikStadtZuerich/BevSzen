@@ -20,7 +20,7 @@
             setwd(paste0(here(), "/2020phase2/"))
         
         #general functions (without dependence on parameters)
-            source("1_Code/0000_General/0000_general_without-parameters.r")
+            source("1_Code/0000_General/0002_general_without-parameters.r")
             
         #parameters (depend on scenario)
             i_scen <- "middle"
@@ -29,7 +29,7 @@
                        envir = .GlobalEnv)}
 
         #general functions (with dependence on parameters)
-            source(paste0(code_path, "/0000_General/0001_general_with-parameters.r"))
+            source(paste0(code_path, "/0000_General/0003_general_with-parameters.r"))
     
     }
 
@@ -140,6 +140,7 @@
             geom = c("line", "point"),
             name = "0101_TFR_by-year-origin")        
     
+    
 #TFR by year, age1
     tfr_ya1 <- left_join(fer_ya, look_a1, by = "age") %>%
       group_by(year, age_1) %>%
@@ -174,10 +175,11 @@
       rename(age = age_1)
     
     sszplot(tfr_ya1o, aes_x = "year", aes_y = "tfr_ya1o", aes_col = "origin",
-            grid = c("age", "."), labs_y = "TFR", i_x = "5",
+            wrap = "age", ncol = nlevels(tfr_ya1o$age),
+            labs_y = "TFR", i_x = "5",
             geom = c("line", "point"),
             name = "0104_TFR_by-year-age1-origin",
-            width = 12) 
+            width = 16, height = 5) 
     
 #TFR by year, age2, origin  
     tfr_ya2o <- left_join(fer_yao, look_a2, by = "age") %>%
@@ -193,6 +195,7 @@
             name = "0105_TFR-by-year-age2",
             width = 16, height = 5) 
 
+    
 #-------------------------------------------------------------------
 #fertility plots (before any corrections)
 #-------------------------------------------------------------------
@@ -202,20 +205,22 @@
             aes_x = "age", aes_y = "fer_dyao", aes_col = "origin",
             wrap = "as.factor(year)", labs_y = "fertility rate (in % per year)",
             name = "0110_fertility_by-district-year-age-origin",
-            width = 9, height = 6,
+            width = 11, height = 7,
             multi = uni_d) 
        
 #plot: fertility by year, age, origin
     sszplot(filter(fer_yao, year >= bir_base_begin),
             aes_x = "age", aes_y = "fer_yao", aes_col = "origin",
             wrap = "as.factor(year)", labs_y = "fertility rate (in % per year)",
-            name = "0111_fertility_by-year-age-origin")
+            name = "0111_fertility_by-year-age-origin",
+            width = 11, height = 7)
     
 #plot: fertility by year, age
     sszplot(filter(fer_ya, year >= bir_base_begin),
             aes_x = "age", aes_y = "fer_ya", wrap = "as.factor(year)",
             labs_y = "fertility rate (in % per year)",
-            name = "0112_fertility_by-year-age") 
+            name = "0112_fertility_by-year-age",
+            width = 11, height = 7)
     
     
 #-------------------------------------------------------------------
@@ -270,27 +275,17 @@
     
     
 #-------------------------------------------------------------------
-#fit gam to corrected fertility rate
+#smooth the corrected fertility rate
 #-------------------------------------------------------------------
      
-#with gam   
-    
-    # smoothing parameter see: https://stat.ethz.ch/R-manual/R-patched/library/mgcv/html/smooth.terms.html    
-        
-    # bs="tp". These are low rank isotropic smoothers of any number of covariates. 
-    # By isotropic is meant that rotation of the covariate coordinate system will not change the result of smoothing. 
-    # By low rank is meant that they have far fewer coefficients than there are data to smooth. 
-    # They are reduced rank versions of the thin plate splines and use the thin plate spline penalty. 
-    # They are the default smooth for s terms because there is a defined sense in which they are 
-    # the optimal smoother of any given basis dimension/rank (Wood, 2003). 
-       
+#smoothing with loess
     fer_fit <- arrange(fer_tail, district, year, origin, age) %>% 
         group_by(district, year, origin) %>% 
-            mutate(fer_fit = pmax(0, gam(fer ~ s(age, bs = "tp"))$fitted.values)) %>% 
+            mutate(fer_fit = pmax(0, predict(loess(fer ~ age, span = 0.3, degree = 1, na.action = na.aggregate)))) %>% 
         ungroup()
     
 #plot preparation
-    fit_lev <- c("corrected", "with gam")
+    fit_lev <- c("initial", "smoothed")
     
     fit_dat <- select(fer_fit, district, year, origin, age, fer, fer_fit) %>% 
         gather(`fer`, `fer_fit`, key = category, value = fer) %>% 
