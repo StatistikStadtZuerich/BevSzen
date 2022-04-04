@@ -312,7 +312,7 @@
     fer_pred <- con_reg(data = fer_fit, x = "year", y = "fer_fit", 
               group_cols = c("district", "age", "origin"),
               window = bir_window_thres, base_t0 = bir_base_begin,
-              szen_t0 = szen_begin, szen_t1 = szen_end, 
+              scen_t0 = scen_begin, scen_t1 = scen_end, 
               prop_trend = bir_prop_trend, thres_percent = bir_thres_percent, 
               lower_thres = bir_lower_thres, upper_thres = bir_upper_thres) %>% 
         #with the input data (WHY? to assess the regression)
@@ -338,6 +338,7 @@
             width = 12, height = 14,
             multi = uni_o)  
         
+    
 #-------------------------------------------------------------------
 #plot the predictions: along year, for selected age
 #-------------------------------------------------------------------
@@ -381,20 +382,23 @@
     
 
 #-------------------------------------------------------------------
-#fit gam to future fertility rates
+#smooth the future fertility rates
 #-------------------------------------------------------------------
     
-#with gam (only for prediction years)    
+#smoothed (only the prediction years)    
     pred_fit <- filter(fer_pred, year >= szen_begin) %>% 
         arrange(district, year, origin, age) %>%        
         group_by(district, year, origin) %>%    
-            mutate(pred_fit = pmax(0, gam(pred_roll ~ s(age, bs = "tp"))$fitted.values)) %>% 
+            mutate(pred_fit = pmax(0, predict(loess(pred_roll ~ age, 
+                span = 0.15, degree = 1, na.action = na.aggregate)))) %>% 
         ungroup()
+    
+    # bir_fer_span_pred
     
 #plot prediction for selected years
     sel_years <- uniy_szen[(uniy_szen %% 10) == 0]
     
-    sel_lev <- c("initial", "with gam")
+    sel_lev <- c("initial", "smoothed")
 
     sel_dat <- gather(pred_fit, `pred_roll`, `pred_fit`, key = category, value = fer) %>% 
         mutate(cat = factor(if_else(category == "pred_roll", 
