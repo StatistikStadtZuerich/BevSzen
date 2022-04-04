@@ -1,5 +1,5 @@
 #-------------------------------------------------------------------
-#Birth: Fertility Rate, phase 2
+#Birth: Fertility Rate
 #
 #
 #
