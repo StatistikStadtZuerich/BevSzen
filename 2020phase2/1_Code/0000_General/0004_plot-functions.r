@@ -4,7 +4,7 @@
 # Kind of a ggplot wrapper to obtain similar and uniform plots
 # with less code
 #
-#bad/rok, July 2021
+#bad/rok
 #------------------------------------------------------------------------------#
 #
 # @params: test
