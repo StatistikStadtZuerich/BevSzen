@@ -3,7 +3,7 @@
 #(with dependence on parameters, i.e. scenarios)
 #
 #
-#rok/bad, December 2021
+#rok/bad
 #-------------------------------------------------------------------
 
 
@@ -33,7 +33,7 @@
     uniy_bir_base <- bir_base_begin:bir_base_end
 
 #year: future
-    uniy_szen <- szen_begin:szen_end
+    uniy_szen <- scen_begin:scen_end
 
     
 #-------------------------------------------------------------------
