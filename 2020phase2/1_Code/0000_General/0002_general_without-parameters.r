@@ -3,7 +3,7 @@
 #(without dependence on parameters, i.e. scenarios)
 #
 #
-#rok/bad, December 2021
+#rok/bad
 #-------------------------------------------------------------------
 
 
