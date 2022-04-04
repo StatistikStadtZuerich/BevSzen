@@ -17,8 +17,8 @@
             group_cols <- vars$group_cols            
             window <- vars$window
             base_t0 <- vars$base_t0
-            szen_t0 <- vars$szen_t0
-            szen_t1 <- vars$szen_t1 
+            scen_t0 <- vars$scen_t0
+            scen_t1 <- vars$scen_t1 
             prop_trend <- vars$prop_trend
             thres_percent <- vars$thres_percent
             lower_thres <- vars$lower_thres
@@ -36,8 +36,8 @@
             
         #extend time span (WHY? we need enough values for the moving average window)
             half_window <- ceiling(window / 2)
-            t0 <- min(base_t0, szen_t0 - half_window)
-            t1 <- szen_t1 + half_window 
+            t0 <- min(base_t0, scen_t0 - half_window)
+            t1 <- scen_t1 + half_window 
             
         #prediction   
             predi <- expand(data, !!sym(x) := t0:t1, !!!syms(group_cols)) %>% 
@@ -67,7 +67,7 @@
                         mutate(pred_roll = rollmean(pred_limit, k = window, na.pad = TRUE)) %>%
                     ungroup() %>%
                 #restrict to prediction period (without additional x-values needed for smoothing)
-                    filter((!!sym(x) >= base_t0) & (!!sym(x) <= szen_t1))
+                    filter((!!sym(x) >= base_t0) & (!!sym(x) <= scen_t1))
                     
         #output    
             return(predi)
