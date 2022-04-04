@@ -390,10 +390,8 @@
         arrange(district, year, origin, age) %>%        
         group_by(district, year, origin) %>%    
             mutate(pred_fit = pmax(0, predict(loess(pred_roll ~ age, 
-                span = 0.15, degree = 1, na.action = na.aggregate)))) %>% 
+                span = bir_fer_span_pred, degree = 1, na.action = na.aggregate)))) %>% 
         ungroup()
-    
-    # bir_fer_span_pred
     
 #plot prediction for selected years
     sel_years <- uniy_szen[(uniy_szen %% 10) == 0]
@@ -443,17 +441,18 @@
 #TFR
     tfr_dyo <- bind_rows(fer_ex_past, fer_ex) %>%
       group_by(district, year, origin) %>%
-      summarize(tfr = sum_NA(fer / 100),
+      summarize(TFR = sum_NA(fer / 100),
                 .groups = "drop")
     
 #plot
     sszplot(tfr_dyo,
-            aes_x = "year", aes_y = "tfr", aes_col = "origin",
+            aes_x = "year", aes_y = "TFR", aes_col = "origin",
             i_x = c(bir_base_begin, szen_begin),
             wrap = "district", ncol = 4,
             name = "0160_TFR_by-district-origin",
             width = 12, height = 14)   
    
+    
 #-------------------------------------------------------------------
 #TFR by age class 
 #-------------------------------------------------------------------
@@ -462,13 +461,13 @@
     tfr_a1 <- bind_rows(fer_ex_past, fer_ex) %>% 
         left_join(look_a1, by = "age") %>%      
         group_by(district, year, origin, age_1) %>%
-        summarize(tfr = sum_NA(fer / 100), 
+        summarize(TFR = sum_NA(fer / 100), 
             .groups = "drop") %>%
         rename(age = age_1)
     
 #plot
     sszplot(tfr_a1,
-            aes_x = "year", aes_y = "tfr", aes_col = "age",
+            aes_x = "year", aes_y = "TFR", aes_col = "age",
             i_x = c(bir_base_begin, szen_begin),
             labs_col = "age",
             wrap = "district", ncol = 4,
@@ -484,13 +483,13 @@
     tfr_a2 <- bind_rows(fer_ex_past, fer_ex) %>% 
         left_join(look_a2, by = "age") %>%        
         group_by(district, year, origin, age_2) %>% 
-            summarize(tfr = sum_NA(fer / 100), 
+            summarize(TFR = sum_NA(fer / 100), 
                       .groups = "drop") %>%
             rename(age = age_2)
     
 #plot
     sszplot(tfr_a2,
-            aes_x = "year", aes_y = "tfr", aes_col = "age",
+            aes_x = "year", aes_y = "TFR", aes_col = "age",
             i_x = c(bir_base_begin, szen_begin),
             labs_col = "age",
             wrap = "district", ncol = 4,
