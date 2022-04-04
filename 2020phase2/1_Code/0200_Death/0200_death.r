@@ -1,9 +1,9 @@
 #-------------------------------------------------------------------
-#Death: Mortality Rate, phase 2
+#Death: Mortality Rate
 #
 #
 #
-#rok/bad, April 2021
+#rok/bad
 #-------------------------------------------------------------------
 
 
@@ -19,7 +19,7 @@
             setwd(paste0(here(), "/2020phase2/"))
         
         #general functions (without dependence on parameters)
-            source("1_Code/0000_General/0000_general_without-parameters.r")
+            source("1_Code/0000_General/0002_general_without-parameters.r")
             
         #parameters (depend on scenario)
             i_scen <- "middle"
@@ -28,7 +28,7 @@
                        envir = .GlobalEnv)}
 
         #general functions (with dependence on parameters)
-            source(paste0(code_path, "/0000_General/0001_general_with-parameters.r"))
+            source(paste0(code_path, "/0000_General/0003_general_with-parameters.r"))
     
     }
 
