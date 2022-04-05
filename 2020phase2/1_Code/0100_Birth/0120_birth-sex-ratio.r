@@ -86,6 +86,10 @@
             scale_y = c(0, 70), breaks = seq(0, 70, 10),
             name = "0191_sex-ratio_by-year_with-mean")
 
+    
+    
+#nice option: prediction dashed blue (instead of grey; in contrast to 50% value in previous plot)    
+
 #-------------------------------------------------------------------
 #export the results
 #-------------------------------------------------------------------
