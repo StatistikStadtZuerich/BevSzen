@@ -231,7 +231,7 @@ sszplot(tfr_ya2o,
   wrap = "age", ncol = nlevels(tfr_ya2o$age),
   labs_y = "TFR", i_x = "5",
   geom = c("line", "point"),
-  name = "0105_TFR-by-year-age2",
+  name = "0105_TFR_by-year-age2",
   width = 16, height = 5
 )
 
