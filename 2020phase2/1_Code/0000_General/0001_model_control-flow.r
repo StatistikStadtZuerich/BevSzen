@@ -34,23 +34,23 @@ source("1_Code/0000_General/0002_general_without-parameters.r")
 
 # modules
 # all
-# dem (demography-modules),
-# bir (birth)
-# dea (death)
-# ims (immigration*)
-# ems (emigration*)
-# rei (relocation-immigration)
-# ree (relocation-emigration)
-# nat (naturalization)
-# hom (housing-modules)
-# car (capacity-reserves)
-# spa (living space)
-# aca (allocation)
-# pro (projects)
-# own (ownership)
-# hou (housing model)
-# deh (demography and housing model)
-# out (model outputs)
+#   dem (demography-modules),
+#     bir (birth)
+#     dea (death)
+#     ims (immigration*)
+#     ems (emigration*)
+#     rei (relocation-immigration)
+#     ree (relocation-emigration)
+#     nat (naturalization)
+#   hom (housing-modules)
+#     car (capacity-reserves)
+#     spa (living space)
+#     aca (allocation)
+#     pro (projects)
+#     own (ownership)
+#   hou (housing model)
+#   deh (demography and housing model)
+#   out (model outputs)
 # alw (all without output: since 'out' needs lower/middle/upper scenario)
 
 
@@ -174,5 +174,5 @@ run_scen <- function(scenarios, modules) {
 
 run_scen(
   scenarios = c("lower", "middle", "upper"),
-  modules = c("out")
+  modules = c("bir")
 )
