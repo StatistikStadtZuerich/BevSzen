@@ -209,7 +209,7 @@ sszplot(filter(mor_yasr, age %in% age_select),
 # no function, since only used once
 
 # age capped
-pop_capped <- mutate(pop, age_capped = if_else(age >= age_max_le, age_max_le, age)) %>%
+pop_capped <- mutate(pop, age_capped = if_else(age >= dea_age_max_le, dea_age_max_le, age)) %>%
   group_by(year, age_capped, sex) %>%
   summarize(
     pop = sum(pop),
@@ -217,7 +217,7 @@ pop_capped <- mutate(pop, age_capped = if_else(age >= age_max_le, age_max_le, ag
   ) %>%
   rename(age = age_capped)
 
-dea_capped <- mutate(dea, age_capped = if_else(age >= age_max_le, age_max_le, age)) %>%
+dea_capped <- mutate(dea, age_capped = if_else(age >= dea_age_max_le, dea_age_max_le, age)) %>%
   group_by(year, age_capped, sex) %>%
   summarize(
     dx = sum(dea),
@@ -233,7 +233,7 @@ pop_end_year <- mutate(pop_capped, end_of_year = year - 1) %>%
 # mean population per year
 pop_mean <- as_tibble(expand_grid(
   year = (date_start + 1):date_end,
-  age = age_min:age_max_le,
+  age = age_min:dea_age_max_le,
   sex = uni_s
 )) %>%
   left_join(pop_capped, by = c("year", "age", "sex")) %>%
@@ -259,7 +259,7 @@ le <- mutate(pop_mean,
   # the last two age-values: qx should bei 1
   # why? otherwise after the lag, some people 'survive' the last age
   qx1 = pmin(1, if_else(age == 0, if_else(B > 0, dx / B, NA_real_),
-    if_else((age > 0) & (age < (age_max_le - 1)), 2 * mx / (2 + mx), 1)
+    if_else((age > 0) & (age < (dea_age_max_le - 1)), 2 * mx / (2 + mx), 1)
   )),
   # if there is no one at a certain age in the population (e.g. no 96 year old men),
   # then qx1 is NA. However, a value is need to multiply the subsequent survival probabilities
@@ -284,7 +284,7 @@ le <- mutate(pop_mean,
     lxp1 = lx - dx_,
     # person-years lived, Yusuf et al. (2014), eq 7.12, 7.14, 7.15
     Lx_ = if_else(age == 0, 0.3 * lx + 0.7 * lxp1,
-      if_else((age > 0) & (age < age_max_le), 0.5 * lx + 0.5 * lxp1, dx / mx)
+      if_else((age > 0) & (age < dea_age_max_le), 0.5 * lx + 0.5 * lxp1, dx / mx)
     )
   ) %>%
   # life expectancy at certain age (e.g. birth)
@@ -310,7 +310,7 @@ le <- mutate(pop_mean,
 le_ysr <- life_exp(
   data = mor_yasr, mor = "mor_yasr",
   age = "age", group_cols = c("year", "sex", "region"),
-  age_max = age_max_le, qx_NA = dea_qx_NA_le,
+  age_max = dea_age_max_le, qx_NA = dea_qx_NA_le,
   age_at = 0, radix = 100000
 ) %>%
   #' manual' correction
@@ -546,7 +546,7 @@ write_csv(dea_ex, paste0(exp_path, "/mortality_future.csv"))
 le_ys_ZH <- life_exp(
   data = mor_zh_yas_past_future, mor = "mor_yas",
   age = "age", group_cols = c("year", "sex"),
-  age_max = age_max_le, qx_NA = dea_qx_NA_le,
+  age_max = dea_age_max_le, qx_NA = dea_qx_NA_le,
   age_at = 0, radix = 100000
 ) %>%
   mutate(region = factor(text_r[1], uni_r)) %>%
