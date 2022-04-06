@@ -72,7 +72,8 @@ bir <- read_csv(bir_od) %>%
 # find out the relevant processes/variables
 
 # origin change: data preparation
-cha <- spread(bir, key = originb, value = bir) %>%
+cha <- bir %>%
+  pivot_wider(names_from = "originb", values_from = "bir") %>%
   replace_na(list(Swiss = 0, foreign = 0)) %>%
   mutate(
     change = if_else(origin == "Swiss", foreign, Swiss),
