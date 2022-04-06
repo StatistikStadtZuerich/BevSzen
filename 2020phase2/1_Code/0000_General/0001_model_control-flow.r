@@ -28,9 +28,9 @@ source("1_Code/0000_General/0002_general_without-parameters.r")
 # possible values
 
 # scenarios
-# lower
-# middle
-# upper
+#   lower
+#   middle
+#   upper
 
 # modules
 # all
@@ -174,5 +174,5 @@ run_scen <- function(scenarios, modules) {
 
 run_scen(
   scenarios = c("lower", "middle", "upper"),
-  modules = c("bir")
+  modules = c("dea")
 )
