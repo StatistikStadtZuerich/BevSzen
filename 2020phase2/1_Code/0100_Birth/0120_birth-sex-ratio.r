@@ -58,6 +58,7 @@ pro_male <- read_csv(bir_od) %>%
 # plot
 year5 <- pro_male$year[pro_male$year %% 5 == 0]
 
+#review# suggest to skip this plot (in favour of 0191)
 sszplot(pro_male,
   aes_x = "year", aes_y = "pro_male",
   geom = c("line", "point"),
@@ -88,14 +89,14 @@ pred_mean <- pro_male %>%
 sszplot(pro_male,
   aes_x = "year", aes_y = "pro_male",
   geom = c("line", "point"),
-  i_x = year5, i_y = pred_mean$pred_mean,
+  i_x = year5,
   labs_y = "proportion male in %",
   scale_y = c(0, 70), breaks = seq(0, 70, 10),
-  name = "0191_sex-ratio_by-year_with-mean"
+  name = "0191_sex-ratio_by-year_with-mean",
+  quotes = quote(geom_hline(yintercept = pred_mean$pred_mean,
+            col = col_6[1],
+            linetype = 2))
 )
-
-
-#should be changed: prediction dashed blue (instead of grey; in contrast to 50% value in previous plot)
 
 #-------------------------------------------------------------------
 # export the results
