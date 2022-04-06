@@ -174,13 +174,14 @@ cha_dya1f <- left_join(cha, look_a1, by = "age") %>%
     total = sum(total),
     .groups = "drop"
   ) %>%
-  mutate(cha_dya1f = if_else(total == 0, NA_real_, round(change / total * 100, round_rate)))
-
+  mutate(cha_dya1f = if_else(total == 0, NA_real_, round(change / total * 100, round_rate))) %>%
+  rename(age = age_1)
+#review#  to keep it analogous to other cases
 sszplot(cha_dya1f,
-  aes_x = "year", aes_y = "cha_dya1f", aes_col = "age_1",
+  aes_x = "year", aes_y = "cha_dya1f", aes_col = "age",
   geom = c("line", "point"),
   i_x = year5,
-  labs_y = "origin change in %", labs_col = "age",
+  labs_y = "origin change in %",
   wrap = "district", ncol = 4,
   name = "0174_origin-change_by-district-year-age1-foreign",
   width = 12, height = 14
