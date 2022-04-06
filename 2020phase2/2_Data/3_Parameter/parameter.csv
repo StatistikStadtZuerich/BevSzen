@@ -73,12 +73,11 @@ birth;bir_cha_lower_thres;no parameter in previous model;0;0;0;percent;low;origi
 birth;bir_cha_upper_thres;no parameter in previous model;100;100;100;percent;low;origin change (mother-baby): upper threshold for the rate (here: not more than 100 %), NA if there is no lower threshold
 death;dea_lower;tod.jung.alter.ende.schweiz, tod.jung.alter.ende.ausland;30;30;30;years (age);low;"Swiss: lower limit of age-dependent ratio (death rates of Zurich and entire Switzerland); comment: limit not included in range with age-dependence"
 death;dea_upper;tod.alt.alter.beginn.schweiz, tod.alt.alter.beginn.ausland;99;99;99;years (age);low;"Swiss: upper limit of age-dependent ratio (death rates of Zurich and entire Switzerland); comment: limit not included in range with age-dependence"
-death;dea_age_min;no parameter in previous model;0;0;0;years (age);low;minimum age in the model 
-death;dea_age_max;no parameter in previous model;120;120;120;years (age);low;maximum age in the model (should be clearly higher than maximum age in the population)
 death;dea_age_max_le;tod.alt.alter.ende;120;120;120;years (age);low;maximum age for the estimation of the life expectancy
 death;dea_fso_cat_past;no parameter in previous model;2;2;2;no unit;no parameter;Category in the FSO data: data of the past
 death;dea_fso_cat_future;no parameter in previous model;3;3;3;no unit;no parameter;Category in the FSO data: data of the future
 death;dea_qx_NA_le;no parameter in previous model;0.8;0.8;0.8;per year;low;if there is no one at a certain age in the population (e.g. no 96 year old men), then qx (probability to die between age x and x+1) is NA. However, a value is need to multiply the subsequent survival probabilities
+death;dea_mor_span;no parameter in previous model;0.2;0.2;0.2;no unit;low;"proportion of data points used in the loess regressions of mortality by age; groups: sex, region (City of Zurich, Switzerland)"
 immigration*;ims_rate_prop_trend;zuz.rate.anteil.trend;20;20;20;percent;low;"immigration rate*: trend in addition to the mean; 20% means, 20% of the difference between trend and mean is added to the mean."
 immigration*;ims_rate_thres_percent;zuz.rate.grenze.prozent;20;20;20;percent;low;"It is not realistic that the immigration* rates changes dramatically (i.e. tenfold increase). Therefore, this threshold regulates the range of potential rates (change in percent of mean; e.g. +/- 20%)."
 immigration*;ims_rate_window_thres;zuz.rate.window.grenz;13;13;13;years;low;filter over years (to smooth a potential break in the curve due to range of future immigration* rates: imm_rate_thres_percent).
