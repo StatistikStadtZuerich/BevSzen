@@ -581,3 +581,12 @@ cat_log(paste0(
   "fertility rate: ",
   capture.output(Sys.time() - t0)
 ))
+
+# cleanup -----------------------------------------------------------------
+
+# remove variables w/o further use
+rm(list = c("bir", "cas", "fer_dyao", "fer_ya", "fer_yao", "fer_tail", 
+            "fer_cor", "fer_fit", "fer_fit", "fit_dat", "fer_pred",
+            "pred_fit", "pop", "sel_dat", "tfr_a1", "tfr_a2",
+            "tfr_y", "tfr_ya1", "tfr_ya1o", "tfr_ya2", "tfr_ya2o",
+            "tfr_yo"))
