@@ -94,8 +94,8 @@ sszplot(pro_male,
   scale_y = c(0, 70), breaks = seq(0, 70, 10),
   name = "0191_sex-ratio_by-year_with-mean",
   quotes = quote(geom_hline(yintercept = pred_mean$pred_mean,
-            col = col_6[1],
-            linetype = 2))
+                            col = col_6[1],
+                            linetype = 2))
 )
 
 #-------------------------------------------------------------------
