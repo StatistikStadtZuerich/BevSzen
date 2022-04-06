@@ -455,8 +455,8 @@ sszplot(age_dat,
 pred_fit <- filter(fer_pred, year >= szen_begin) %>%
   arrange(district, year, origin, age) %>%
   group_by(district, year, origin) %>%
-  mutate(pred_fit = pmax(0, predict(loess(pred_roll ~ age,
-    span = bir_fer_span_pred, degree = 1, na.action = na.aggregate
+  mutate(pred_fit = pmax(0, predict(
+    loess(pred_roll ~ age, span = bir_fer_span_pred, degree = 1, na.action = na.aggregate
   )))) %>%
   ungroup()
 
@@ -465,7 +465,8 @@ sel_years <- uniy_szen[(uniy_szen %% 10) == 0]
 
 sel_lev <- c("initial", "smoothed")
 
-sel_dat <- gather(pred_fit, `pred_roll`, `pred_fit`, key = category, value = fer) %>%
+sel_dat <- pred_fit %>%
+  pivot_longer(c(pred_fit, pred_roll), names_to = "category", values_to = "fer") %>%
   mutate(cat = factor(if_else(category == "pred_roll",
     sel_lev[1], sel_lev[2]
   ), levels = sel_lev)) %>%
