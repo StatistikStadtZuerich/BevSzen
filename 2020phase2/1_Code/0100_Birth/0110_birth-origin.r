@@ -244,3 +244,9 @@ cat_log(paste0(
   "origin change at birth: ",
   capture.output(Sys.time() - t0)
 ))
+
+# cleanup -----------------------------------------------------------------
+
+# remove variables w/o further use
+rm(list = c("bir", "cha", "cha_yo", "cha_ya1o", "cha_ya2o",
+            "cha_dyo", "cha_dya1f", "cha_base", "cha_pred"))
