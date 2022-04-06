@@ -116,3 +116,8 @@ cat_log(paste0(
   "proportion male babies: ",
   capture.output(Sys.time() - t0)
 ))
+
+# cleanup -----------------------------------------------------------------
+
+# remove variables w/o further use
+rm(list = c("pro_male", "pro_male_pred", "year5", "pred_mean"))
