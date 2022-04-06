@@ -273,7 +273,7 @@ sszplot(filter(fer_ya, year >= bir_base_begin),
 
 # cumulative sums vs. thresholds
 # lowcum: cumulative sum from the lower tail of the age distribution
-# upcum: cumulative sum from the supper tail of the age distribution
+# upcum: cumulative sum from the upper tail of the age distribution
 
 fer_tail <- filter(fer_dyao, year >= bir_base_begin) %>%
   left_join(fer_yao, by = c("year", "age", "origin")) %>%
@@ -298,7 +298,7 @@ fer_tail <- filter(fer_dyao, year >= bir_base_begin) %>%
 cor_level <- c("initial", "corrected")
 
 fer_cor <- select(fer_tail, district, year, origin, age, fer_dyao, fer) %>%
-  gather(`fer_dyao`, `fer`, key = category, value = fer) %>%
+  pivot_longer(c(fer_dyao, fer), names_to = "category", values_to = "fer") %>%
   mutate(cat = factor(if_else(category == "fer_dyao",
     cor_level[1], cor_level[2]
   ), levels = cor_level)) %>%
