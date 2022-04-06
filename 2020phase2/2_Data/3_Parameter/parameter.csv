@@ -13,8 +13,8 @@ time;bir_sex_ratio_begin;no parameter in previous model;1993;1993;1993;year;low;
 time;bir_sex_ratio_end;no parameter in previous model;2021;2021;2021;year;low;base period (in the past) for sex ration calculation, begin
 time;dea_fso_date_start;no parameter in previous model;1993;1993;1993;year;low;fso mortality data of the past: begin
 time;dea_fso_date_end;no parameter in previous model;2020;2020;2020;year;low;fso mortality data of the past: end
-time;dea_base_begin;tod.basis.beginn;2014;2014;2014;year;low;base period (in the past) for death rate, begin
-time;dea_base_end;tod.basis.ende;2020;2020;2020;year;low;base period (in the past) for death rate, end
+time;dea_base_begin;tod.basis.beginn;2010;2010;2010;year;low;base period (in the past) for death rate, begin (data should be available for both Zurich and Switzerland)
+time;dea_base_end;tod.basis.ende;2020;2020;2020;year;low;base period (in the past) for death rate, end (data should be available for both Zurich and Switzerland)
 time;ims_base_begin;no parameter in previous model;2010;2010;2010;year;low;base period (not the future) for immigration* rate, begin
 time;ims_base_end;no parameter in previous model;2021;2021;2021;year;low;base period (not the future) for immigration* rate, end
 time;ims_so_base_begin;no parameter in previous model;2010;2010;2010;year;low;base period (not the future) for proportion of sex and origin in immigration*, begin
