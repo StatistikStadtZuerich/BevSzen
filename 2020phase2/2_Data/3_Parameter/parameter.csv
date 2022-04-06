@@ -52,10 +52,10 @@ general;round_people;no parameter in previous model;0;0;0;digits (area);no param
 general;round_aca;no parameter in previous model;4;4;4;digits (area);no parameter;rounding of allocation (people per apartment)
 birth;bir_age_begin;geb.alter.beginn;15;15;15;year;no parameter (strictly speaking);fertility rate: fertile age (fixed expression): begin
 birth;bir_age_end;geb.alter.ende;49;49;49;year;no parameter (strictly speaking);fertility rate: fertile age (fixed expression): end
-birth;bir_thres_origin;geb.anz.rate.heimat;100;100;100;persons;low;"age distribution of women (population): if there are less woman than this threshold in the tails (cumulative measure), then the rate based on origin (but not district) is used.
+birth;bir_thres_origin;geb.anz.rate.heimat;100;100;100;persons;low;"age distribution of women (population): if there are less women than this threshold in the tails (cumulative measure), then the rate based on origin (but not district) is used.
 "
 birth;bir_thres_overall;geb.anz.rate.stadt;50;50;50;persons;low;age distribution of women (population): if there are less woman than this threshold in the tails (cumulative measure), then the overall rate is used (e.g not the rate based on origin and district).
-birth;bir_thres_const;geb.anz.rate.const;25;25;25;persons;low;age distribution of women (population): if there are less woman than this threshold in the tails (cumulative measure), then a constant rate is used (e.g not the rate based on origin and district). The constant rate is set by the parameter bir_thres_value.
+birth;bir_thres_const;geb.anz.rate.const;25;25;25;persons;low;age distribution of women (population): if there are less women than this threshold in the tails (cumulative measure), then a constant rate is used (e.g not the rate based on origin and district). The constant rate is set by the parameter bir_thres_value.
 birth;bir_thres_value;geb.wert.rate.const;0;0;0;birth per woman and year in %;low;birth rate: if there are less women than a certain threshold (bir_thres_const)  a constant fertility rate is used. The values is chosen with this parameter.
 birth;bir_fer_span;no parameter in previous model;0.3;0.3;0.3;no unit;low;"proportion of data points used in the loess regressions of fertility by age; groups: district, year, origin"
 birth;bir_prop_trend;geb.anteil.trend;20;20;20;percent;high;"trend in addition to the mean; 20% means, 20% of the difference between trend and mean is added to the mean."
@@ -63,7 +63,7 @@ birth;bir_thres_percent;geb.grenze.prozent;20;20;20;percent;low;"It is not reali
 birth;bir_window_thres;geb.window.grenz;13;13;13;years;low;filter over years (to smooth a potential break in the curve due to range of future fertility rates: bir_thres_percent).
 birth;bir_lower_thres;no parameter in previous model;0;0;0;percent per year;low;lower threshold for the rate (e.g. the birth rate should not be negative), NA if there is no lower threshold
 birth;bir_upper_thres;no parameter in previous model;NA;NA;NA;percent per year;low;upper threshold for the rate, NA if there is no upper threshold
-birth;bir_plot_lim;no parameter in previous model;30;30;30;percent per year;no parameter;"the fertility rates of the past are compared with the precitions; the y-axis is limited (since the fertility rate of the past can be very large due to low population)"
+birth;bir_plot_lim;no parameter in previous model;30;30;30;percent per year;no parameter;"the fertility rates of the past are compared with the predictions; the y-axis is limited (since the fertility rate of the past can be very large due to low population)"
 birth;bir_fer_span_pred;no parameter in previous model;0.15;0.15;0.15;no unit;low;"after the prediction: proportion of data points used in the loess regressions of fertility by age; groups: district, year, origin"
 birth;bir_cha_trend;geb.heimat.anteil.trend;0;0;0;percent;low;"origin change (mother-baby): trend in addition to the mean; 20% means, 20% of the difference between trend and mean is added to the mean."
 birth;bir_cha_prop_trend;no parameter in previous model;20;20;20;percent;high;"origin change (mother-baby): trend in addition to the mean; 20% means, 20% of the difference between trend and mean is added to the mean."
