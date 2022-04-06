@@ -104,14 +104,14 @@ cas <- as_tibble(expand_grid(
   left_join(look_a2, by = "age")
 
 # fertility by year, age
-fer_ya <- group_by(cas, age, year) %>%
+fer_ya <- group_by(cas, year, age) %>%
   summarize(
     pop = sum(pop),
     bir = sum(bir),
     .groups = "drop"
   ) %>%
   mutate(fer_ya = if_else(pop == 0, NA_real_, round(bir / pop * 100, round_rate))) %>%
-  select(age, year, fer_ya)
+  select(year, age, fer_ya)
 
 # fertility by year, age, origin
 fer_yao <- group_by(cas, year, age, origin) %>%
