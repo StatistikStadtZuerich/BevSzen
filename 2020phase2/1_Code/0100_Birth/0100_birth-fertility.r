@@ -65,6 +65,7 @@ bir <- read_csv(bir_od) %>%
 # population
 # year: begin of year population
 # age: only women at 'fertile age'
+#review# include reason for +1 (StichtagDatJahr + 1,)
 
 pop <- read_csv(pop_od) %>%
   rename(age = AlterVCd, pop = AnzBestWir) %>%
