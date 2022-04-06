@@ -66,7 +66,6 @@ bir <- read_csv(bir_od) %>%
 
 # population
 # year: begin of year population
-
 pop <- read_csv(pop_od) %>%
   rename(age = AlterVCd, pop = AnzBestWir) %>%
   mutate(
@@ -80,9 +79,7 @@ pop <- read_csv(pop_od) %>%
   )
 
 # FSO data (used in the prediction)
-
 # rate is converted to percent
-
 mor_fso <- read_csv(dea_fso_od) %>%
   rename(year = EreignisDatJahr, age = AlterVCd) %>%
   filter(HerkunftCd == 0) %>%
@@ -92,10 +89,6 @@ mor_fso <- read_csv(dea_fso_od) %>%
     mor_yas = RateSterSta * 100
   ) %>%
   select(year, age, sex, region, KategorieCd, mor_yas)
-
-# fso: maximum age in the data of the past?
-# temp <- filter(mor_fso, (year %in% dea_fso_date_start:dea_fso_date_end) & (KategorieCd == 2))
-# max(temp$age)
 
 
 #-------------------------------------------------------------------
@@ -122,7 +115,6 @@ mor_fso_yas_past <- filter(mor_fso, KategorieCd == dea_fso_cat_past) %>%
 # FSO, future
 # category: data of the future
 # WHY filter on year? there are also predictions for years in the past
-
 mor_fso_yas_future <- filter(mor_fso, (KategorieCd == dea_fso_cat_future) & (year >= scen_begin) & (year <= scen_end)) %>%
   select(year, age, sex, region, mor_yas)
 
@@ -441,7 +433,7 @@ sszplot(mor_asr,
 
 
 #-------------------------------------------------------------------
-# fit: gam
+# smoothing with loess
 #-------------------------------------------------------------------
 
 # fit
@@ -449,13 +441,14 @@ sszplot(mor_asr,
 mor_fit <- select(mor_asr, age, sex, region, mor_asr) %>%
   arrange(sex, region, age) %>%
   group_by(sex, region) %>%
-  mutate(mor_fit = pmax(0, exp(gam(log(mor_asr) ~ s(age, bs = "tp"))$fitted.values))) %>%
+  mutate(mor_fit = pmax(0, exp(predict(loess(log(mor_asr) ~ age, span = dea_mor_span, degree = 1, na.action = na.aggregate))))) %>% 
   ungroup()
+
 
 # plot
 
 # fit: levels
-fit_lev <- c("before", "with gam")
+fit_lev <- c("initial", "smoothed")
 
 # plot data
 plot_dat_fit <- gather(mor_fit, `mor_asr`, `mor_fit`, key = category, value = mor) %>%
@@ -537,6 +530,7 @@ dea_ex <- mutate(mor_zh_yas_past_future, mor = round(mor_yas, round_rate)) %>%
 
 # export
 write_csv(dea_ex, paste0(exp_path, "/mortality_future.csv"))
+
 
 #-------------------------------------------------------------------
 # Zurich: life expectancy (including the model data)
