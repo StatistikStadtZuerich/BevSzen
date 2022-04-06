@@ -334,14 +334,15 @@ sszplot(fer_tail,
 # smoothing with loess
 fer_fit <- arrange(fer_tail, district, year, origin, age) %>%
   group_by(district, year, origin) %>%
-  mutate(fer_fit = pmax(0, predict(loess(fer ~ age, span = bir_fer_span, degree = 1, na.action = na.aggregate)))) %>%
+  mutate(fer_fit = pmax(0, predict(
+    loess(fer ~ age, span = bir_fer_span, degree = 1, na.action = na.aggregate)))) %>%
   ungroup()
 
 # plot preparation
 fit_lev <- c("initial", "smoothed")
 
 fit_dat <- select(fer_fit, district, year, origin, age, fer, fer_fit) %>%
-  gather(`fer`, `fer_fit`, key = category, value = fer) %>%
+  pivot_longer(c(fer, fer_fit), names_to = "category", values_to = "fer") %>%
   mutate(cat = factor(if_else(category == "fer",
     fit_lev[1], fit_lev[2]
   ), levels = fit_lev)) %>%
