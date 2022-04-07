@@ -74,7 +74,7 @@ mig_rate_dy <- function(mig_path, mig_vari, mig_district,
     )
 
   # population
-  # year: begin of year population
+  # year: begin of year population (therefore, StichtagDatJahr + 1)
 
   pop <- read_csv(pop_od) %>%
     rename(age = AlterVCd, pop = AnzBestWir) %>%
@@ -148,7 +148,7 @@ mig_rate_dy <- function(mig_path, mig_vari, mig_district,
     data = mis_base, x = "year", y = "mis_rate_dy",
     group_cols = "district",
     window = mis_rate_window_thres, base_t0 = mis_base_begin,
-    szen_t0 = szen_begin, szen_t1 = szen_end,
+    scen_t0 = scen_begin, scen_t1 = scen_end,
     prop_trend = mis_rate_prop_trend, thres_percent = mis_rate_thres_percent,
     lower_thres = mis_rate_lower_thres, upper_thres = NA
   )
@@ -213,6 +213,19 @@ mig_rate_dy <- function(mig_path, mig_vari, mig_district,
 
   # output (to get an idea of the exported output)
   return(list(ex_mig_rate_dy))
+  
+  
+  #-------------------------------------------------------------------
+  # cleanup
+  #-------------------------------------------------------------------
+  
+  # remove variables without further use
+  rm(list = c(
+    "mig", "rel", "mis", "pop", "mis_dy", "pop_dy", "mis_rate_dy", 
+    "year_past", "year_past_5",
+    "mis_base", "mis_pred", "mis_past_pred"
+  ))
+    
 }
 
 
@@ -351,12 +364,12 @@ mig_prop_so_dy <- function(mig_path, mig_vari, mig_district,
     data = mis_so_base, x = "year", y = "mis_prop_dyso",
     group_cols = c("district", "sex", "origin"),
     window = mis_so_window_thres, base_t0 = mis_so_base_begin,
-    szen_t0 = szen_begin, szen_t1 = szen_end,
+    scen_t0 = scen_begin, scen_t1 = scen_end,
     prop_trend = mis_so_prop_trend, thres_percent = mis_so_thres_percent,
     lower_thres = mis_so_lower_thres, upper_thres = NA
   )
 
-  # standardize proportions per district/year to 100 percent
+  # standardize proportions per district and year to 100 percent
   mis_so_pred_stand <- group_by(mis_so_pred, district, year) %>%
     summarize(
       pred_roll_sum = sum_NA(pred_roll),
@@ -399,10 +412,20 @@ mig_prop_so_dy <- function(mig_path, mig_vari, mig_district,
   # export the data
   write_csv(ex_mig_prop_dy, ex_path)
 
-
-
   # output (to get an idea of the exported output)
   return(list(ex_mig_prop_dy))
+  
+  #-------------------------------------------------------------------
+  # cleanup
+  #-------------------------------------------------------------------
+  
+  # remove variables without further use
+  rm(list = c(
+    "mig", "rel", "mis", "mis_dy", "cas_dyso", "mis_dyso",
+    "year_past", "year_past_5", "mis_so_base", "mis_so_pred",
+    "mis_so_pred_stand", "mis_so_past_pred"
+  ))
+  
 }
 
 
