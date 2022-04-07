@@ -176,7 +176,8 @@ cha_dya1f <- left_join(cha, look_a1, by = "age") %>%
   ) %>%
   mutate(cha_dya1f = if_else(total == 0, NA_real_, round(change / total * 100, round_rate))) %>%
   rename(age = age_1)
-#review#  to keep it analogous to other cases
+
+
 sszplot(cha_dya1f,
   aes_x = "year", aes_y = "cha_dya1f", aes_col = "age",
   geom = c("line", "point"),
@@ -245,8 +246,13 @@ cat_log(paste0(
   capture.output(Sys.time() - t0)
 ))
 
-# cleanup -----------------------------------------------------------------
 
-# remove variables w/o further use
-rm(list = c("bir", "cha", "cha_yo", "cha_ya1o", "cha_ya2o",
-            "cha_dyo", "cha_dya1f", "cha_base", "cha_pred"))
+#-------------------------------------------------------------------
+# cleanup
+#-------------------------------------------------------------------
+
+# remove variables without further use
+rm(list = c(
+  "bir", "cha", "cha_yo", "cha_ya1o", "cha_ya2o",
+  "cha_dyo", "cha_dya1f", "cha_base", "cha_pred"
+))
