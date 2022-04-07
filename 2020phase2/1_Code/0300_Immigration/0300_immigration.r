@@ -77,30 +77,12 @@
                 mis_so_thres_percent = ims_so_thres_percent,
                 mis_so_lower_thres = ims_so_lower_thres)
     
-    
-                mig_path <- imm_od
-                mig_vari <- "AnzZuzuWir"
-                mig_district <- "QuarCd"                
-                mig_name <- "immigration"
-                mig_number <- "03"
-                ex_path <- paste0(exp_path, "/immigration-star_prop-so-dy_future.csv")
-                mis_so_base_begin <- ims_so_base_begin
-                mis_so_base_end <- ims_so_base_end
-                mis_so_window_thres <- ims_so_window_thres
-                mis_so_prop_trend <- ims_so_prop_trend
-                mis_so_thres_percent <- ims_so_thres_percent
-                mis_so_lower_thres <- ims_so_lower_thres  
-    
-    
-    
-
-    
      
 #-------------------------------------------------------------------
 #immigration*: proportion of age (per district, year, sex, origin) 
 #-------------------------------------------------------------------
 
-#prediction: proportion of age (duration: approx. 15 minutes)
+#prediction: proportion of age (duration: approx. 8 minutes)
     ims_prop_a_dyso <- mig_prop_a_dyso(            
                 mig_path = imm_od,
                 mig_vari = "AnzZuzuWir",
@@ -110,6 +92,7 @@
                 ex_path = paste0(exp_path, "/immigration-star_prop-a-dyso_future.csv"),
                 mis_age_min = ims_age_min,
                 mis_age_max = ims_age_max, 
+                mis_span = ims_span,
                 mis_age_window_years = ims_age_window_years, 
                 mis_age_base_begin = ims_age_base_begin,
                 mis_age_base_end = ims_age_base_end,
@@ -117,7 +100,7 @@
                 mis_age_prop_trend = ims_age_prop_trend,
                 mis_age_thres_percent = ims_age_thres_percent,
                 mis_age_lower_thres = ims_age_lower_thres)    
-
+    
 #log info    
     cat_log(paste0("immigration* rate: ", 
         capture.output(Sys.time() - t0)))
