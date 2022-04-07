@@ -20,7 +20,7 @@
             setwd(paste0(here(), "/2020phase2/"))
         
         #general functions (without dependence on parameters)
-            source("1_Code/0000_General/0000_general_without-parameters.r")
+            source("1_Code/0000_General/0002_general_without-parameters.r")
             
         #parameters (depend on scenario)
             i_scen <- "middle"
@@ -29,7 +29,7 @@
                        envir = .GlobalEnv)}
 
         #general functions (with dependence on parameters)
-            source(paste0(code_path, "/0000_General/0001_general_with-parameters.r"))
+            source(paste0(code_path, "/0000_General/0003_general_with-parameters.r"))
     
     }
 
@@ -84,7 +84,7 @@
 #emigration*: proportion of age (per district, year, sex, origin) 
 #-------------------------------------------------------------------
 
-#prediction: proportion of age (duration: approx. 15 minutes)
+#prediction: proportion of age (duration: approx. 8 minutes)
     ems_prop_a_dyso <- mig_prop_a_dyso(            
                 mig_path = emi_od,
                 mig_vari = "AnzWezuWir", 
@@ -92,8 +92,9 @@
                 mig_name = "emigration",
                 mig_number = "04", 
                 ex_path = paste0(exp_path, "/emigration-star_prop-a-dyso_future.csv"),
-                mis_age_min = ems_age_min,
-                mis_age_max = ems_age_max, 
+                mis_age_min = age_min,
+                mis_age_max = age_max, 
+                mis_span = ems_span,
                 mis_age_window_years = ems_age_window_years, 
                 mis_age_base_begin = ems_age_base_begin,
                 mis_age_base_end = ems_age_base_end,
