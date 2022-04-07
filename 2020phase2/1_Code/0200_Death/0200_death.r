@@ -1,9 +1,9 @@
 #-------------------------------------------------------------------
-#Death: Mortality Rate, phase 2
+#Death: Mortality Rate
 #
 #
 #
-#rok/bad, April 2021
+#rok/bad
 #-------------------------------------------------------------------
 
 
@@ -19,7 +19,7 @@
             setwd(paste0(here(), "/2020phase2/"))
         
         #general functions (without dependence on parameters)
-            source("1_Code/0000_General/0000_general_without-parameters.r")
+            source("1_Code/0000_General/0002_general_without-parameters.r")
             
         #parameters (depend on scenario)
             i_scen <- "middle"
@@ -28,7 +28,7 @@
                        envir = .GlobalEnv)}
 
         #general functions (with dependence on parameters)
-            source(paste0(code_path, "/0000_General/0001_general_with-parameters.r"))
+            source(paste0(code_path, "/0000_General/0003_general_with-parameters.r"))
     
     }
 
@@ -92,7 +92,7 @@
 #Zurich (calculation based on all possible cases)
     mor_zh_yas <- as_tibble(expand_grid(
         year = (date_start+1):date_end,
-        age = dea_age_min:dea_age_max,
+        age = age_min:age_max,
         sex = uni_s,
         region = factor(text_r[1], uni_r))) %>%
         left_join(pop, by = c("year", "age", "sex")) %>%
@@ -109,7 +109,7 @@
     #category: data of the future
     #WHY filter on year? there are also predictions for years in the past
 
-    mor_fso_yas_future <- filter(mor_fso, (KategorieCd == dea_fso_cat_future) & (year >= szen_begin) & (year <= szen_end)) %>%
+    mor_fso_yas_future <- filter(mor_fso, (KategorieCd == dea_fso_cat_future) & (year >= scen_begin) & (year <= scen_end)) %>%
         select(year, age, sex, region, mor_yas)
 
 #FSO, past and future
@@ -123,7 +123,7 @@
 #with all possible cases
     mor_yasr <- as_tibble(expand_grid(
         year = (date_start+1):szen_end,
-        age = dea_age_min:dea_age_max,
+        age = age_min:age_max,
         sex = uni_s,
         region = uni_r)) %>%
         left_join(mor_yasr_zh_fso, by = c("year", "age", "sex", "region"))
@@ -190,13 +190,13 @@
 #no function, since only used once
     
 #age capped
-    pop_capped <- mutate(pop, age_capped = if_else(age >= dea_age_max_le, dea_age_max_le, age)) %>%
+    pop_capped <- mutate(pop, age_capped = if_else(age >= age_max_le, age_max_le, age)) %>%
         group_by(year, age_capped, sex) %>%
             summarize(pop = sum(pop),
                       .groups = "drop") %>%
         rename(age = age_capped)
     
-    dea_capped <- mutate(dea, age_capped = if_else(age >= dea_age_max_le, dea_age_max_le, age)) %>%
+    dea_capped <- mutate(dea, age_capped = if_else(age >= age_max_le, age_max_le, age)) %>%
         group_by(year, age_capped, sex) %>%
             summarize(dx = sum(dea),
                       .groups = "drop") %>%
@@ -210,7 +210,7 @@
 #mean population per year
     pop_mean <- as_tibble(expand_grid(
         year = (date_start+1):date_end,
-        age = dea_age_min:dea_age_max_le,
+        age = age_min:age_max_le,
         sex = uni_s)) %>%
         left_join(pop_capped, by = c("year", "age", "sex")) %>%
         left_join(pop_end_year, by = c("year", "age", "sex")) %>%
@@ -235,7 +235,7 @@
         #the last two age-values: qx should bei 1
         #why? otherwise after the lag, some people 'survive' the last age        
         qx1 = pmin(1, if_else(age == 0, if_else(B > 0, dx / B, NA_real_),
-                if_else((age > 0) & (age < (dea_age_max_le-1)), 2 * mx / (2 + mx), 1))),
+                if_else((age > 0) & (age < (age_max_le-1)), 2 * mx / (2 + mx), 1))),
         #if there is no one at a certain age in the population (e.g. no 96 year old men), 
         #then qx1 is NA. However, a value is need to multiply the subsequent survival probabilities        
         qx = if_else(is.na(qx1), dea_qx_NA_le, qx1),
@@ -255,7 +255,7 @@
             lxp1 = lx - dx_,
             #person-years lived, Yusuf et al. (2014), eq 7.12, 7.14, 7.15
             Lx_ = if_else(age == 0, 0.3 * lx + 0.7 * lxp1,
-                if_else((age > 0) & (age < dea_age_max_le), 0.5 * lx + 0.5 * lxp1, dx / mx))) %>%
+                if_else((age > 0) & (age < age_max_le), 0.5 * lx + 0.5 * lxp1, dx / mx))) %>%
         #life expectancy at certain age (e.g. birth)
         group_by(year, sex) %>%
             summarize(life_years = sum(Lx_[age >= age_at], na.rm = TRUE),
@@ -276,14 +276,14 @@
 #life expectancy    
     le_ysr <- life_exp(data = mor_yasr, mor = "mor_yasr", 
         age = "age", group_cols = c("year", "sex", "region"), 
-        age_max = dea_age_max_le, qx_NA = dea_qx_NA_le, 
+        age_max = age_max_le, qx_NA = dea_qx_NA_le, 
         age_at = 0, radix = 100000) %>% 
         #'manual' correction
         #Zurich: missing values in the future
         #Switzerland: latest values not available yet
         mutate(le_ysr = if_else((region == "Zurich") & (year > date_end), NA_real_, 
             if_else((region == "Switzerland") & !(year %in% 
-                c(dea_fso_date_start:dea_fso_date_end, szen_begin:szen_end)), NA_real_, life_exp))) %>% 
+                c(dea_fso_date_start:dea_fso_date_end, scen_begin:scen_end)), NA_real_, life_exp))) %>% 
         select(-life_exp)
 
     # temp <- filter(le_ysr, (year == 2018) & (sex == "male") & (region == "Zurich"))
@@ -373,7 +373,7 @@
         bind_rows(mor_ch_asr)
 
     mor_asr <- as_tibble(expand_grid(
-        age = as.double(dea_age_min:dea_age_max),
+        age = as.double(age_min:age_max),
         sex = uni_s,
         region = factor(text_r, uni_r))) %>% 
         mutate(age_tail = if_else(age <= dea_lower, dea_lower, 
@@ -421,6 +421,7 @@
             name = "0208_mortality_by-age-sex-region_fitted",
             width = 8, height = 7)       
 
+    
 #-------------------------------------------------------------------
 #ratio Zurich / Switzerland
 #-------------------------------------------------------------------
@@ -490,7 +491,7 @@
 #ZH: life expectancy    
     le_ys_ZH <- life_exp(data = mor_zh_yas_past_future, mor = "mor_yas", 
             age = "age", group_cols = c("year", "sex"), 
-            age_max = dea_age_max_le, qx_NA = dea_qx_NA_le, 
+            age_max = age_max_le, qx_NA = dea_qx_NA_le, 
             age_at = 0, radix = 100000) %>% 
         mutate(region = factor(text_r[1], uni_r)) %>% 
         rename(le_ysr = life_exp) %>% 

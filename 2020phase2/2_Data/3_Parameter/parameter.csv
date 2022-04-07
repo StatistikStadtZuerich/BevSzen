@@ -1,46 +1,48 @@
-﻿category;parameter;parameter_old;lower;middle;upper;unit;relevance;description
+category;parameter;parameter_old;lower;middle;upper;unit;relevance;description
 time;date_start;daten.beginn;1993;1993;1993;year;no parameter (strictly speaking);begin of data
-time;date_end;daten.ende;2020;2020;2020;year;no parameter (strictly speaking);end of data
-time;szen_begin;szen.beginn;2021;2021;2021;year;no parameter (strictly speaking);future: begin
+time;date_end;daten.ende;2021;2021;2021;year;no parameter (strictly speaking);end of data
+time;scen_begin;szen.beginn;2022;2022;2022;year;no parameter (strictly speaking);future: begin
+time;scen_end;szen.ende;2050;2050;2050;year;no parameter (strictly speaking);future: end
+time;szen_begin;szen.beginn;2022;2022;2022;year;no parameter (strictly speaking);future: begin
 time;szen_end;szen.ende;2050;2050;2050;year;no parameter (strictly speaking);future: end
 time;bir_base_begin;geb.basis.beginn;2010;2010;2010;year;medium;base period (in the past) for birth rate, begin
-time;bir_base_end;geb.basis.ende;2020;2020;2020;year;medium;base period (in the past) for birth rate, end
+time;bir_base_end;geb.basis.ende;2021;2021;2021;year;medium;base period (in the past) for birth rate, end
 time;bir_cha_base_begin;no parameter in previous model;2007;2007;2007;year;low;base period (in the past) for origin change (mother-baby), begin
-time;bir_cha_base_end;no parameter in previous model;2020;2020;2020;year;low;base period (in the past) for origin change (mother-baby), end
+time;bir_cha_base_end;no parameter in previous model;2021;2021;2021;year;low;base period (in the past) for origin change (mother-baby), end
 time;bir_sex_ratio_begin;no parameter in previous model;1993;1993;1993;year;low;base period (in the past) for sex ration calculation, begin
-time;bir_sex_ratio_end;no parameter in previous model;2020;2020;2020;year;low;base period (in the past) for sex ration calculation, begin
+time;bir_sex_ratio_end;no parameter in previous model;2021;2021;2021;year;low;base period (in the past) for sex ration calculation, begin
 time;dea_fso_date_start;no parameter in previous model;1993;1993;1993;year;low;fso mortality data of the past: begin
 time;dea_fso_date_end;no parameter in previous model;2019;2019;2019;year;low;fso mortality data of the past: end
 time;dea_base_begin;tod.basis.beginn;2014;2014;2014;year;low;base period (in the past) for death rate, begin
-time;dea_base_end;tod.basis.ende;2020;2020;2020;year;low;base period (in the past) for death rate, end
+time;dea_base_end;tod.basis.ende;2021;2021;2021;year;low;base period (in the past) for death rate, end
 time;ims_base_begin;no parameter in previous model;2010;2010;2010;year;low;base period (not the future) for immigration* rate, begin
-time;ims_base_end;no parameter in previous model;2020;2020;2020;year;low;base period (not the future) for immigration* rate, end
+time;ims_base_end;no parameter in previous model;2021;2021;2021;year;low;base period (not the future) for immigration* rate, end
 time;ims_so_base_begin;no parameter in previous model;2010;2010;2010;year;low;base period (not the future) for proportion of sex and origin in immigration*, begin
-time;ims_so_base_end;no parameter in previous model;2020;2020;2020;year;low;base period (not the future)  for proportion of sex and origin in immigration*, end
+time;ims_so_base_end;no parameter in previous model;2021;2021;2021;year;low;base period (not the future)  for proportion of sex and origin in immigration*, end
 time;ims_age_base_begin;no parameter in previous model;2010;2010;2010;year;low;base period (not the future) for proportion of age in immigration*, begin
-time;ims_age_base_end;no parameter in previous model;2020;2020;2020;year;low;base period (not the future)  for proportion of age in immigration*, end
+time;ims_age_base_end;no parameter in previous model;2021;2021;2021;year;low;base period (not the future)  for proportion of age in immigration*, end
 time;ems_base_begin;no parameter in previous model;2010;2010;2010;year;low;base period (not the future) for emigration* rate, begin
-time;ems_base_end;no parameter in previous model;2020;2020;2020;year;low;base period (not the future) for emigration* rate, end
+time;ems_base_end;no parameter in previous model;2021;2021;2021;year;low;base period (not the future) for emigration* rate, end
 time;ems_so_base_begin;no parameter in previous model;2010;2010;2010;year;low;base period (not the future) for proportion of sex and origin in emigration*, begin
-time;ems_so_base_end;no parameter in previous model;2020;2020;2020;year;low;base period (not the future)  for proportion of sex and origin in emigration*, end
+time;ems_so_base_end;no parameter in previous model;2021;2021;2021;year;low;base period (not the future)  for proportion of sex and origin in emigration*, end
 time;ems_age_base_begin;no parameter in previous model;2010;2010;2010;year;low;base period (not the future) for proportion of age in emigration*, begin
-time;ems_age_base_end;no parameter in previous model;2020;2020;2020;year;low;base period (not the future)  for proportion of age in emigration*, end
+time;ems_age_base_end;no parameter in previous model;2021;2021;2021;year;low;base period (not the future)  for proportion of age in emigration*, end
 time;rei_base_begin;no parameter in previous model;2005;2005;2005;year;low;base period (not the future) for relocation based on immigration* (proportion), begin
 time;rei_base_end;no parameter in previous model;2019;2019;2019;year;low;base period (not the future) for relocation based on immigration* (proportion), end
 time;ree_base_begin;no parameter in previous model;2005;2005;2005;year;low;base period (not the future) for relocation based on emigration* (proportion), begin
 time;ree_base_end;no parameter in previous model;2019;2019;2019;year;low;base period (not the future) for relocation based on emigration* (proportion), end
 time;nat_base_begin;no parameter in previous model;2011;2011;2011;year;low;base period (not the future) for naturalization, begin
-time;nat_base_end;no parameter in previous model;2020;2020;2020;year;low;base period (not the future) for naturalization, end
+time;nat_base_end;no parameter in previous model;2021;2021;2021;year;low;base period (not the future) for naturalization, end
 time;spa_base_begin;no parameter in previous model;2011;2011;2011;year;low;base period (not the future) for living space, begin
-time;spa_base_end;no parameter in previous model;2020;2020;2020;year;low;base period (not the future) for living space, end
+time;spa_base_end;no parameter in previous model;2021;2021;2021;year;low;base period (not the future) for living space, end
 time;spa_base_begin_52p;no parameter in previous model;2015;2015;2015;year;low;"base period (not the future) for living space, begin, district 'Escher Wyss' (district ID = 52; since empty apartments increased the mean living space values; before 2015)"
 time;aca_base_begin;no parameter in previous model;2011;2011;2011;year;low;base period (not the future) for allocation, begin
-time;aca_base_end;no parameter in previous model;2020;2020;2020;year;low;base period (not the future) for allocation, end
+time;aca_base_end;no parameter in previous model;2021;2021;2021;year;low;base period (not the future) for allocation, end
 time;aca_base_begin_52p;no parameter in previous model;2015;2015;2015;year;low;"base period (not the future) for allocation, begin, district 'Escher Wyss' (district ID = 52; since empty apartments decreased the mean allocation values; before 2015)"
-time;pro_begin;map.wohnbau.beginn;2021;2021;2021;year;low;"first year (of consolidated project list; reasonable: first scenario year)"
-time;pro_end;map.wohnbau.ende;2028;2028;2028;year;low;last year (of consolidated project list)
+time;pro_begin;map.wohnbau.beginn;2022;2022;2022;year;low;"first year (of consolidated project list; reasonable: first scenario year)"
+time;pro_end;map.wohnbau.ende;2029;2029;2029;year;low;last year (of consolidated project list)
 time;own_base_begin;no parameter in previous model;2015;2015;2015;year;low;base period (not the future) for ownership calculation, begin
-time;own_base_end;no parameter in previous model;2020;2020;2020;year;low;base period (not the future) for ownership calculation, end
+time;own_base_end;no parameter in previous model;2021;2021;2021;year;low;base period (not the future) for ownership calculation, end
 age;age_min;no parameter in previous model;0;0;0;years (age);low;minimum age in the model 
 age;age_max;no parameter in previous model;120;120;120;years (age);low;maximum age in the model (should be clearly higher than maximum age in the population)
 general;round_rate;no parameter in previous model;4;4;4;digits (rate in percent per year);no parameter;rounding of rates (digits, rate in percent per year)
@@ -50,23 +52,25 @@ general;round_people;no parameter in previous model;0;0;0;digits (area);no param
 general;round_aca;no parameter in previous model;4;4;4;digits (area);no parameter;rounding of allocation (people per apartment)
 birth;bir_age_begin;geb.alter.beginn;15;15;15;year;no parameter (strictly speaking);fertility rate: fertile age (fixed expression): begin
 birth;bir_age_end;geb.alter.ende;49;49;49;year;no parameter (strictly speaking);fertility rate: fertile age (fixed expression): end
-birth;bir_thres_origin;geb.anz.rate.heimat;100;100;100;persons;low;"age distribution of women: if there are less woman than this threshold in the tails (cumulative measure), then the rate based on origin (but not district) is used.
+birth;bir_thres_origin;geb.anz.rate.heimat;100;100;100;persons;low;"age distribution of women (population): if there are less women than this threshold in the tails (cumulative measure), then the rate based on origin (but not district) is used.
 "
-birth;bir_thres_overall;geb.anz.rate.stadt;50;50;50;persons;low;age distribution of women: if there are less woman than this threshold in the tails (cumulative measure), then the overall rate is used (e.g not the rate based on origin and district).
-birth;bir_thres_const;geb.anz.rate.const;25;25;25;persons;low;age distribution of women: if there are less woman than this threshold in the tails (cumulative measure), then a constant rate is used (e.g not the rate based on origin and district). The constant rate is set by the parameter bir_thres_value.
+birth;bir_thres_overall;geb.anz.rate.stadt;50;50;50;persons;low;age distribution of women (population): if there are less woman than this threshold in the tails (cumulative measure), then the overall rate is used (e.g not the rate based on origin and district).
+birth;bir_thres_const;geb.anz.rate.const;25;25;25;persons;low;age distribution of women (population): if there are less women than this threshold in the tails (cumulative measure), then a constant rate is used (e.g not the rate based on origin and district). The constant rate is set by the parameter bir_thres_value.
 birth;bir_thres_value;geb.wert.rate.const;0;0;0;birth per woman and year in %;low;birth rate: if there are less women than a certain threshold (bir_thres_const)  a constant fertility rate is used. The values is chosen with this parameter.
+birth;bir_fer_span;no parameter in previous model;0.3;0.3;0.3;no unit;low;"proportion of data points used in the loess regressions of fertility by age; groups: district, year, origin"
 birth;bir_prop_trend;geb.anteil.trend;20;20;20;percent;high;"trend in addition to the mean; 20% means, 20% of the difference between trend and mean is added to the mean."
 birth;bir_thres_percent;geb.grenze.prozent;20;20;20;percent;low;"It is not realistic that the fertility rate changes dramatically (i.e. tenfold increase). Therefore, this threshold regulates the range of potential future fertility rates (change in percent of mean; e.g. +/- 20%)."
 birth;bir_window_thres;geb.window.grenz;13;13;13;years;low;filter over years (to smooth a potential break in the curve due to range of future fertility rates: bir_thres_percent).
-birth;bir_lower_thres;no parameter in previous model;0;0;0;percent;no parameter;lower threshold for the rate (e.g. the birth rate should not be negative), NA if there is no lower threshold
-birth;bir_upper_thres;no parameter in previous model;NA;NA;NA;percent;no parameter;upper threshold for the rate, NA if there is no upper threshold
-birth;bir_plot_lim;no parameter in previous model;30;30;30;births per woman and year in %;no parameter;"the fertility rates of the past are compared with the precitions; the y-axis is limited (since the fertility rate of the past can be very large due to low population)"
-birth;bir_cha_trend;geb.heimat.anteil.trend;0;0;0;percent;low;"trend in addition to the mean; 20% means, 20% of the difference between trend and mean is added to the mean."
+birth;bir_lower_thres;no parameter in previous model;0;0;0;percent per year;low;lower threshold for the rate (e.g. the birth rate should not be negative), NA if there is no lower threshold
+birth;bir_upper_thres;no parameter in previous model;NA;NA;NA;percent per year;low;upper threshold for the rate, NA if there is no upper threshold
+birth;bir_plot_lim;no parameter in previous model;30;30;30;percent per year;no parameter;"the fertility rates of the past are compared with the predictions; the y-axis is limited (since the fertility rate of the past can be very large due to low population)"
+birth;bir_fer_span_pred;no parameter in previous model;0.15;0.15;0.15;no unit;low;"after the prediction: proportion of data points used in the loess regressions of fertility by age; groups: district, year, origin"
+birth;bir_cha_trend;geb.heimat.anteil.trend;0;0;0;percent;low;"origin change (mother-baby): trend in addition to the mean; 20% means, 20% of the difference between trend and mean is added to the mean."
 birth;bir_cha_prop_trend;no parameter in previous model;20;20;20;percent;high;"origin change (mother-baby): trend in addition to the mean; 20% means, 20% of the difference between trend and mean is added to the mean."
 birth;bir_cha_thres_percent;no parameter in previous model;20;20;20;percent;low;"origin change (mother-baby): It is not realistic that the fertility rate changes dramatically (i.e. tenfold increase). Therefore, this threshold regulates the range of potential future fertility rates (change in percent of mean; e.g. +/- 20%)."
 birth;bir_cha_window_thres;no parameter in previous model;13;13;13;years;low;origin change (mother-baby): filter over years (to smooth a potential break in the curve due to range of future fertility rates: bir_thres_percent).
-birth;bir_cha_lower_thres;no parameter in previous model;0;0;0;percent;no parameter;lower threshold for the rate (here: the rate should not be negative), NA if there is no lower threshold
-birth;bir_cha_upper_thres;no parameter in previous model;100;100;100;percent;no parameter;upper threshold for the rate (here: not more than 100 %), NA if there is no lower threshold
+birth;bir_cha_lower_thres;no parameter in previous model;0;0;0;percent;low;origin change (mother-baby): lower threshold for the rate (here: the rate should not be negative), NA if there is no lower threshold
+birth;bir_cha_upper_thres;no parameter in previous model;100;100;100;percent;low;origin change (mother-baby): upper threshold for the rate (here: not more than 100 %), NA if there is no lower threshold
 death;dea_lower;tod.jung.alter.ende.schweiz, tod.jung.alter.ende.ausland;30;30;30;years (age);low;"Swiss: lower limit of age-dependent ratio (death rates of Zurich and entire Switzerland); comment: limit not included in range with age-dependence"
 death;dea_upper;tod.alt.alter.beginn.schweiz, tod.alt.alter.beginn.ausland;99;99;99;years (age);low;"Swiss: upper limit of age-dependent ratio (death rates of Zurich and entire Switzerland); comment: limit not included in range with age-dependence"
 death;dea_age_min;no parameter in previous model;0;0;0;years (age);low;minimum age in the model 
