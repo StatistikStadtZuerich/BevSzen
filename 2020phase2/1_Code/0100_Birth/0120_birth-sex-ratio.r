@@ -58,7 +58,6 @@ pro_male <- read_csv(bir_od) %>%
 # plot
 year5 <- pro_male$year[pro_male$year %% 5 == 0]
 
-#review# suggest to skip this plot (in favour of 0191)
 sszplot(pro_male,
   aes_x = "year", aes_y = "pro_male",
   geom = c("line", "point"),
@@ -67,6 +66,7 @@ sszplot(pro_male,
   scale_y = c(0, 70), breaks = seq(0, 70, 10),
   name = "0190_sex-ratio_by-year"
 )
+
 
 #-------------------------------------------------------------------
 # prediction
@@ -117,7 +117,9 @@ cat_log(paste0(
   capture.output(Sys.time() - t0)
 ))
 
-# cleanup -----------------------------------------------------------------
+#-------------------------------------------------------------------
+# cleanup
+#-------------------------------------------------------------------
 
-# remove variables w/o further use
+# remove variables without further use
 rm(list = c("pro_male", "pro_male_pred", "year5", "pred_mean"))
