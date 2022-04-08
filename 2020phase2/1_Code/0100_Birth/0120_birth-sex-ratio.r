@@ -103,7 +103,7 @@ sszplot(pro_male,
 
 # proportion male: prediction
 pro_male_pred <- tibble(
-  year = szen_begin:szen_end,
+  year = scen_begin:scen_end,
   pro_male = round(pred_mean$pred_mean, round_rate)
 )
 

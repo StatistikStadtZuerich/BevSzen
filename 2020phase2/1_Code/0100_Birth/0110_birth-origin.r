@@ -230,7 +230,7 @@ sszplot(cha_pred,
 
 # prepare the export data
 cha_ex <- mutate(cha_pred, cha = round(cha_all, round_rate)) %>%
-  filter(year >= szen_begin) %>%
+  filter(year >= scen_begin) %>%
   select(district, year, origin, cha) %>%
   arrange(district, year, origin)
 

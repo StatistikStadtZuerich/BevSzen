@@ -3,8 +3,6 @@ time;date_start;daten.beginn;1993;1993;1993;year;no parameter (strictly speaking
 time;date_end;daten.ende;2021;2021;2021;year;no parameter (strictly speaking);end of data
 time;scen_begin;szen.beginn;2022;2022;2022;year;no parameter (strictly speaking);future: begin
 time;scen_end;szen.ende;2050;2050;2050;year;no parameter (strictly speaking);future: end
-time;szen_begin;szen.beginn;2022;2022;2022;year;no parameter (strictly speaking);future: begin
-time;szen_end;szen.ende;2050;2050;2050;year;no parameter (strictly speaking);future: end
 time;bir_base_begin;geb.basis.beginn;2010;2010;2010;year;medium;base period (in the past) for birth rate, begin
 time;bir_base_end;geb.basis.ende;2021;2021;2021;year;medium;base period (in the past) for birth rate, end
 time;bir_cha_base_begin;no parameter in previous model;2007;2007;2007;year;low;base period (in the past) for origin change (mother-baby), begin

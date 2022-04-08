@@ -42,7 +42,7 @@ if (exists("i_scen")) {
 uniy_bir_base <- bir_base_begin:bir_base_end
 
 # year: future
-uniy_szen <- scen_begin:scen_end
+uniy_scen <- scen_begin:scen_end
 
 
 #-------------------------------------------------------------------
@@ -70,7 +70,7 @@ col_y_base <- colorRampPalette(col_6)(length(uniy_bir_base))
 # colour for time distributions
 col_time <- c(
   rep(col_grey, length(uniy_bir_base)),
-  colorRampPalette(col_6[1:5])(length(uniy_szen))
+  colorRampPalette(col_6[1:5])(length(uniy_scen))
 )
 
 
