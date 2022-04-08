@@ -173,6 +173,14 @@ run_scen <- function(scenarios, modules) {
 #     modules = c("alw"))
 
 run_scen(
-  scenarios = c("middle"),
-  modules = c("ims")
+  scenarios = c("lower", "middle", "upper"),
+  modules = c("bir")
 )
+
+
+
+
+#     bir (birth)
+#     dea (death)
+#     ims (immigration*)
+#     ems (emigration*)
