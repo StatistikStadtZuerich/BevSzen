@@ -94,15 +94,16 @@
                 ex_path = paste0(exp_path, "/emigration-star_prop-a-dyso_future.csv"),
                 mis_age_min = age_min,
                 mis_age_max = age_max, 
-                mis_span = ems_span,
-                mis_age_window_years = ems_age_window_years, 
+                mis_span_y = ems_span_y,
+                mis_span_a = ems_span_a,                 
                 mis_age_base_begin = ems_age_base_begin,
                 mis_age_base_end = ems_age_base_end,
                 mis_age_window_thres = ems_age_window_thres,
                 mis_age_prop_trend = ems_age_prop_trend,
                 mis_age_thres_percent = ems_age_thres_percent,
                 mis_age_lower_thres = ems_age_lower_thres)    
-    
+  
+      
 #log info    
     cat_log(paste0("emigration* rate: ", 
         capture.output(Sys.time() - t0)))
