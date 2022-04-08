@@ -598,15 +598,12 @@ mig_prop_a_dyso <- function(mig_path, mig_vari, mig_district,
   # smoothing migration* with LOESS over years (by district, age, sex, origin)
   #-------------------------------------------------------------------
 
-  t0 <- Sys.time()
-  
   mis_smooth <- mis_dyaso %>%
     arrange(district, age, sex, origin, year) %>%
     group_by(district, age, sex, origin) %>%
     mutate(mis_smooth = pmax(0, predict(loess(mis_dyaso ~ year, span = mis_span_y, degree = 1, na.action = na.aggregate)))) %>%
     ungroup()
-  
-  Sys.time() - t0
+
   
   # plot preparation
   fit_lev <- c("initial", "smoothed")  
@@ -691,15 +688,10 @@ mig_prop_a_dyso <- function(mig_path, mig_vari, mig_district,
   # smoothing proportion by age with LOESS (by district, year, sex, origin)
   #-------------------------------------------------------------------
 
-  t0 <- Sys.time()
-
   prop_fit <- arrange(mis_age_prop_smooth, district, year, sex, origin, age) %>%
     group_by(district, year, sex, origin) %>%
     mutate(prop_fit = pmax(0, predict(loess(prop_a_smooth ~ age, span = mis_span_a, degree = 1, na.action = na.aggregate)))) %>%
     ungroup()
-
-  t1 <- Sys.time()
-  duration <- t1 - t0  
 
   
   # plot preparation

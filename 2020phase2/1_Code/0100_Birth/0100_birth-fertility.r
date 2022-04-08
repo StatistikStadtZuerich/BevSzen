@@ -549,7 +549,7 @@ sszplot(tfr_a1,
 )
 
 #-------------------------------------------------------------------
-# TFR by age class (more detailled)
+# TFR by age class (more detailed)
 #-------------------------------------------------------------------
 
 # TFR by age class

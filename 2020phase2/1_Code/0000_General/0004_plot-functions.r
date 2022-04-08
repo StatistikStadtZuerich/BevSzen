@@ -169,13 +169,13 @@ sszplot <- function(data,
           unique() %>%
           nrow()
         oldtimes <- select(data, all_of(def_col)) %>%
-          filter(. < szen_begin) %>%
+          filter(. < scen_begin) %>%
           unique() %>%
           nrow()
         maxtime <- select(data, all_of(def_col)) %>%
           max()
 
-        if (maxtime > szen_begin) {
+        if (maxtime > scen_begin) {
           col_time <- c(
             rep(col_grey, oldtimes),
             colorRampPalette(col_6[1:5])(alltimes - oldtimes)
