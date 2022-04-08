@@ -599,14 +599,14 @@ mig_prop_a_dyso <- function(mig_path, mig_vari, mig_district,
   #-------------------------------------------------------------------
 
   t0 <- Sys.time()
-
+  
   mis_smooth <- mis_dyaso %>%
     arrange(district, age, sex, origin, year) %>%
     group_by(district, age, sex, origin) %>%
-    mutate(mis_smooth = pmax(0, predict(loess(mis_dyaso ~ year, span = 0.3, degree = 1, na.action = na.aggregate)))) %>%
+    mutate(mis_smooth = pmax(0, predict(loess(mis_dyaso ~ year, span = mis_span_y, degree = 1, na.action = na.aggregate)))) %>%
     ungroup()
-
-  t0 - Sys.time()
+  
+  Sys.time() - t0
   
   # plot preparation
   fit_lev <- c("initial", "smoothed")  
@@ -620,25 +620,24 @@ mig_prop_a_dyso <- function(mig_path, mig_vari, mig_district,
 
 
   # plot: focus age distribution
-
   sszplot(filter(mis_smooth_plot, year %in% year_past_5),
     aes_x = "age", aes_y = "mis", aes_col = "cat",
     grid = c("as.factor(year)", "origin*sex"),
     labs_y = paste0(mig_name, "* per year"),
-    # name = paste0(mig_number, "14_", mig_name, "_star_moving-average-over-year_focus-age"),
+    name = paste0(mig_number, "14_", mig_name, "_star_smoothed-over-year_focus-age"),
     width = 11, height = 8,
     multi = uni_d
   )
 
   # plot: focus years
   # age (subjectively selected)
-  age_plot_ma <- seq(0, 60, by = 20)
+  age_plot_smooth <- seq(0, 60, by = 20)
 
-  sszplot(filter(mis_smooth_plot, age %in% age_plot_ma),
+  sszplot(filter(mis_smooth_plot, age %in% age_plot_smooth),
     aes_x = "year", aes_y = "mis", aes_col = "cat",
     grid = c("as.factor(age)", "origin*sex"),
     labs_y = paste0(mig_name, "* per year"),
-    # name = paste0(mig_number, "15_", mig_name, "_star_moving-average-over-year_focus-years"),
+    name = paste0(mig_number, "15_", mig_name, "_star_smoothed-over-year_focus-years"),
     width = 11, height = 8,
     multi = uni_d
   )
@@ -666,12 +665,11 @@ mig_prop_a_dyso <- function(mig_path, mig_vari, mig_district,
 
 
   # plot: focus age distribution
-
   sszplot(filter(mis_age_prop_smooth, year %in% year_past_5),
     aes_x = "age", aes_y = "prop_a_smooth", aes_col = "year",
     grid = c("sex", "origin"),
     labs_y = "proportion in %",
-    name = paste0(mig_number, "16_", mig_name, "_star_age-proportion_after-moving-average_focus-age"),
+    name = paste0(mig_number, "16_", mig_name, "_star_age-proportion_after-smoothing_focus-age"),
     width = 11, height = 8,
     multi = uni_d
   )
@@ -684,20 +682,20 @@ mig_prop_a_dyso <- function(mig_path, mig_vari, mig_district,
     aes_x = "year", aes_y = "prop_a_smooth", aes_col = "age",
     grid = c("sex", "origin"),
     labs_y = "proportion in %", labs_col = "age",
-    # name = paste0(mig_number, "17_", mig_name, "_star_age-proportion_after-moving-average_focus-years"),
+    name = paste0(mig_number, "17_", mig_name, "_star_age-proportion_after-smoothing_focus-years"),
     width = 11, height = 8,
     multi = uni_d
   )
 
   #-------------------------------------------------------------------
-  # smoothing with LOESS (age proportion)
+  # smoothing proportion by age with LOESS (by district, year, sex, origin)
   #-------------------------------------------------------------------
 
   t0 <- Sys.time()
 
   prop_fit <- arrange(mis_age_prop_smooth, district, year, sex, origin, age) %>%
     group_by(district, year, sex, origin) %>%
-    mutate(prop_fit = pmax(0, predict(loess(prop_a_smooth ~ age, span = ims_span, degree = 1, na.action = na.aggregate)))) %>%
+    mutate(prop_fit = pmax(0, predict(loess(prop_a_smooth ~ age, span = mis_span_a, degree = 1, na.action = na.aggregate)))) %>%
     ungroup()
 
   t1 <- Sys.time()
@@ -720,7 +718,7 @@ mig_prop_a_dyso <- function(mig_path, mig_vari, mig_district,
     aes_x = "age", aes_y = "prop", aes_col = "cat",
     grid = c("as.factor(year)", "origin*sex"),
     labs_y = "proportion in %",
-    # name = paste0(mig_number, "18_", mig_name, "_star_proportion_smoothed_focus-age"),
+    name = paste0(mig_number, "18_", mig_name, "_star_proportion_smoothed_focus-age"),
     width = 11, height = 8,
     multi = uni_d
   )
@@ -831,7 +829,7 @@ mig_prop_a_dyso <- function(mig_path, mig_vari, mig_district,
   # age (subjectively selected)
   age_plot_pred <- seq(0, 60, by = 20)
 
-  sszplot(filter(plot_a_past_pred, age %in% age_plot_ma_prop),
+  sszplot(filter(plot_a_past_pred, age %in% age_plot_pred),
     aes_x = "year", aes_y = "prop_a", aes_col = "age",
     grid = c("sex", "origin"),
     labs_y = "proportion in %", labs_col = "age",
@@ -849,13 +847,12 @@ mig_prop_a_dyso <- function(mig_path, mig_vari, mig_district,
   
   # remove variables without further use
   rm(list = c(
-    "mig", "rel", "mis", "cas_dyso", "mis_dyso",
-    "years_plot_fit", "years_temp", "years_base", "year_past", "year_past_5",
-    "years_plot", "year_plot", "years_not_NA", "years_plot_ma",
-    "years_plot_ma_prop", "mis_dyaso", "age_plot", "mis_ma", "mis_ma_plot",
-    "mis_ma_prep", "mis_age_prop_ma", "age_plot_ma_prop", "prop_fit", "fit_lev",
-    "mis_fit_plot", "prop_base", "prop_pred", "prop_pred_begin", "prop_stand",
-    "mis_a_past_pred", "time_lev", "plot_a_past_pred", "age_plot_pred"
+    "mig", "rel", "mis", "cas_dyso", 
+    "mis_dyso", "mis_dyaso", "mis_smooth", "mis_smooth_plot", 
+    "age_plot_smooth", "mis_smooth_prep", "mis_age_prop_smooth", 
+    "age_plot_smooth_prop", "prop_fit", "mis_fit_plot", 
+    "year_plot", "years_base", "prop_base", "prop_pred", 
+    "prop_pred_begin", "prop_stand", "mis_a_past_pred", "age_plot_pred"    
   ))
 
 }

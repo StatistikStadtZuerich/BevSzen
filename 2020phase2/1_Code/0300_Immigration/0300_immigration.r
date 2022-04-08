@@ -92,43 +92,14 @@
                 ex_path = paste0(exp_path, "/immigration-star_prop-a-dyso_future.csv"),
                 mis_age_min = age_min,
                 mis_age_max = age_max, 
-                mis_span = ims_span,
-                mis_age_window_years = ims_age_window_years, 
+                mis_span_y = ims_span_y,
+                mis_span_a = ims_span_a,                
                 mis_age_base_begin = ims_age_base_begin,
                 mis_age_base_end = ims_age_base_end,
                 mis_age_window_thres = ims_age_window_thres,
                 mis_age_prop_trend = ims_age_prop_trend,
                 mis_age_thres_percent = ims_age_thres_percent,
                 mis_age_lower_thres = ims_age_lower_thres)  
-    
-    
-    
-    
-                mig_path <- imm_od
-                mig_vari <- "AnzZuzuWir"
-                mig_district <- "QuarCd"               
-                mig_name <- "immigration"
-                mig_number <- "03"
-                ex_path <- paste0(exp_path, "/immigration-star_prop-a-dyso_future.csv")
-                mis_age_min <- age_min
-                mis_age_max <- age_max
-                mis_span <- ims_span
-                mis_age_window_years <- ims_age_window_years 
-                mis_age_base_begin <- ims_age_base_begin
-                mis_age_base_end <- ims_age_base_end
-                mis_age_window_thres <- ims_age_window_thres
-                mis_age_prop_trend <- ims_age_prop_trend
-                mis_age_thres_percent <- ims_age_thres_percent
-                mis_age_lower_thres <- ims_age_lower_thres     
-    
-    
-    
-    
-    
-    
-    
-    
-    
     
 #log info    
     cat_log(paste0("immigration* rate: ", 
