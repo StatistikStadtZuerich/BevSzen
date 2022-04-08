@@ -178,9 +178,3 @@ run_scen(
 )
 
 
-
-
-#     bir (birth)
-#     dea (death)
-#     ims (immigration*)
-#     ems (emigration*)
