@@ -156,7 +156,7 @@ mig_rate_dy <- function(mig_path, mig_vari, mig_district,
   # past and prediction
   mis_past_pred <- as_tibble(expand_grid(
     district = uni_d,
-    year = (date_start + 1):szen_end
+    year = (date_start + 1):scen_end
   )) %>%
     left_join(select(mis_rate_dy, district, year, mis_rate_dy),
       by = c("district", "year")
@@ -204,7 +204,7 @@ mig_rate_dy <- function(mig_path, mig_vari, mig_district,
   ex_mig_rate_dy <- mutate(mis_past_pred,
     rate = round(rate_all, round_rate)
   ) %>%
-    filter(year >= szen_begin) %>%
+    filter(year >= scen_begin) %>%
     select(district, year, rate) %>%
     arrange(district, year)
 
@@ -381,7 +381,7 @@ mig_prop_so_dy <- function(mig_path, mig_vari, mig_district,
   # past and prediction
   mis_so_past_pred <- as_tibble(expand_grid(
     district = uni_d,
-    year = (date_start + 1):szen_end,
+    year = (date_start + 1):scen_end,
     sex = uni_s,
     origin = uni_o
   )) %>%
@@ -405,7 +405,7 @@ mig_prop_so_dy <- function(mig_path, mig_vari, mig_district,
   ex_mig_prop_dy <- mutate(mis_so_past_pred,
     prop = round(prop_all, round_prop)
   ) %>%
-    filter(year >= szen_begin) %>%
+    filter(year >= scen_begin) %>%
     select(district, year, sex, origin, prop) %>%
     arrange(district, year, sex, origin)
 
@@ -755,7 +755,7 @@ mig_prop_a_dyso <- function(mig_path, mig_vari, mig_district,
   # past and prediction
   mis_a_past_pred <- as_tibble(expand_grid(
     district = uni_d,
-    year = (date_start + 1):szen_end,
+    year = (date_start + 1):scen_end,
     age = mis_age_min:mis_age_max,
     sex = uni_s,
     origin = uni_o
@@ -772,7 +772,7 @@ mig_prop_a_dyso <- function(mig_path, mig_vari, mig_district,
   ex_mig_prop_a_dyso <- mutate(mis_a_past_pred,
     prop = round(prop_a, round_prop)
   ) %>%
-    filter(year >= szen_begin) %>%
+    filter(year >= scen_begin) %>%
     select(district, year, age, sex, origin, prop) %>%
     arrange(district, year, sex, origin, age)
 
@@ -804,7 +804,7 @@ mig_prop_a_dyso <- function(mig_path, mig_vari, mig_district,
   # therefore, a plot that focuses on certain years
 
   # years
-  year_plot <- seq(date_start + 1, szen_end, by = 8)
+  year_plot <- seq(date_start + 1, scen_end, by = 8)
 
   sszplot(filter(plot_a_past_pred, year %in% year_plot),
     aes_x = "age", aes_y = "prop_a", aes_col = "year",
