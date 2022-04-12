@@ -484,7 +484,8 @@ sszplot(plot_dat_fit,
 
 # ratio (Zurich / Switzerland)
 ratio_as <- select(mor_fit, age, sex, region, mor_fit) %>%
-  spread(key = region, value = mor_fit) %>%
+  pivot_wider(names_from = "region", values_from = "mor_fit") %>%
+  # spread(key = region, value = mor_fit) %>%
   mutate(ratio = Zurich / Switzerland)
 
 # Test influences of the tails
