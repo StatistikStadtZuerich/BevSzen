@@ -253,13 +253,14 @@ le <- mutate(pop_mean,
   # mx: age-specific mortality rate, Yusuf et al. (2014), eq 7.1
   mx = if_else(Px > 0, dx / Px, NA_real_),
   # qx1: probability to die between age x and age x+1, Yusuf et al. (2014), eq 7.4, 7.5, 7.6
-  # the last two age-values: qx should bei 1
+  # the last two age-values: qx should be 1
   # why? otherwise after the lag, some people 'survive' the last age
   qx1 = pmin(1, if_else(age == 0, if_else(B > 0, dx / B, NA_real_),
     if_else((age > 0) & (age < (dea_age_max_le - 1)), 2 * mx / (2 + mx), 1)
   )),
   # if there is no one at a certain age in the population (e.g. no 96 year old men),
-  # then qx1 is NA. However, a value is need to multiply the subsequent survival probabilities
+  # then qx1 is NA. However, a value is needed to multiply the subsequent survival probabilities
+#review# shouldn't this rather be the qx of the closest available age?
   qx = if_else(is.na(qx1), dea_qx_NA_le, qx1),
   # survival
   px_ = 1 - qx
@@ -273,7 +274,6 @@ le <- mutate(pop_mean,
   ) %>%
   ungroup() %>%
   mutate(
-    radix = radix,
     lx = radix * multlag,
     # expected deaths dx_, Yusuf et al. (2014), eq 7.8
     dx_ = lx * qx,
