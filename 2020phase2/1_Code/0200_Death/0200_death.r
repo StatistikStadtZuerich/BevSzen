@@ -401,6 +401,7 @@ mor_ch_asr <- filter(mor_fso_yas_past, year %in% dea_base_begin:dea_base_end) %>
     if_else(age >= dea_upper, dea_upper, age)
   )) %>%
   # over tails
+#review# I don't get this additional (compared to ZRH)  code chunk
   group_by(year, age_tail, sex, region) %>%
   summarize(
     mor_asr = median(mor_yas),
@@ -418,9 +419,10 @@ mor_asr_temp <- select(mor_zh_asr, age_tail, sex, region, mor_asr) %>%
   bind_rows(mor_ch_asr)
 
 mor_asr <- as_tibble(expand_grid(
+#review# why double?
   age = as.double(age_min:age_max),
   sex = uni_s,
-  region = factor(text_r, uni_r)
+  region = uni_r
 )) %>%
   mutate(age_tail = if_else(age <= dea_lower, dea_lower,
     if_else(age >= dea_upper, dea_upper, age)
