@@ -602,11 +602,9 @@ cat_log(paste0(
 # cleanup -----------------------------------------------------------------
 
 # remove variables without further use
-rm(list = c(
-  grep("^mor.*", ls(), value = TRUE),
-  grep("^pop*", ls(), value = TRUE),
-  grep("^bir*", ls(), value = TRUE),
-  grep("^dea*", ls(), value = TRUE),
-  grep("^le*", ls(), value = TRUE),
-  grep("^ratio*", ls(), value = TRUE)
-))
+rm(list = ls()[sapply(ls(), function(x) is.data.frame(get(x)))] %>%
+     as.tibble() %>%
+     filter(grepl("^(mor|pop|dea|ratio|bir|le).*", value)) %>%
+     pull(value))
+
+
