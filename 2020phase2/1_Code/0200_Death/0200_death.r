@@ -449,17 +449,20 @@ sszplot(mor_asr,
 mor_fit <- select(mor_asr, age, sex, region, mor_asr) %>%
   arrange(sex, region, age) %>%
   group_by(sex, region) %>%
-  mutate(mor_fit = pmax(0, exp(predict(loess(log(mor_asr) ~ age, span = dea_mor_span, degree = 1, na.action = na.aggregate))))) %>% 
+  mutate(mor_fit = pmax(0, exp(predict(
+    loess(log(mor_asr) ~ age, span = dea_mor_span, degree = 1, na.action = na.aggregate))))) %>% 
   ungroup()
 
 
 # plot
 
 # fit: levels
+#review# I still don't like it (see 0100, var. sel_lev, fit_lev)
 fit_lev <- c("initial", "smoothed")
 
 # plot data
-plot_dat_fit <- gather(mor_fit, `mor_asr`, `mor_fit`, key = category, value = mor) %>%
+plot_dat_fit <- mor_fit %>%
+  pivot_longer(c(mor_asr, mor_fit), names_to = "category", values_to = "mor") %>%
   mutate(cat = factor(if_else(category == "mor_asr",
     fit_lev[1], fit_lev[2]
   ), levels = fit_lev))
