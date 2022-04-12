@@ -308,6 +308,7 @@ le_ysr <- life_exp(
   data = mor_yasr, mor = "mor_yasr",
   age = "age", group_cols = c("year", "sex", "region"),
   age_max = dea_age_max_le, qx_NA = dea_qx_NA_le,
+#review# why not use the variable value instead of 10000?
   age_at = 0, radix = 100000
 ) %>%
   #' manual' correction
@@ -318,7 +319,7 @@ le_ysr <- life_exp(
       c(dea_fso_date_start:dea_fso_date_end, scen_begin:scen_end)), NA_real_, life_exp)
   )) %>%
   select(-life_exp)
-
+#review# avoid outcommented code
 # temp <- filter(le_ysr, (year == 2018) & (sex == "male") & (region == "Zurich"))
 # plot(temp$age, temp$px_, type = "o")
 # plot(temp$age, temp$mult)
@@ -336,7 +337,7 @@ le_ysr <- life_exp(
 le_methods <- filter(le_ysr, region == "Zurich") %>%
   right_join(le, by = c("year", "sex")) %>%
   rename(basic = life, rate = le_ysr) %>%
-  gather(`rate`, `basic`, key = "method", value = "life")
+  pivot_longer(c(rate, basic), names_to = "method", values_to = "life")
 
 # plot
 sszplot(le_methods,
@@ -546,6 +547,7 @@ le_ys_ZH <- life_exp(
   data = mor_zh_yas_past_future, mor = "mor_yas",
   age = "age", group_cols = c("year", "sex"),
   age_max = dea_age_max_le, qx_NA = dea_qx_NA_le,
+#review# why not use the variable value instead of 10000?
   age_at = 0, radix = 100000
 ) %>%
   mutate(region = factor(text_r[1], uni_r)) %>%
