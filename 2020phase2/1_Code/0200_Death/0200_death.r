@@ -44,6 +44,8 @@ t0 <- Sys.time()
 # death
 dea <- read_csv(dea_od) %>%
   rename(year = EreignisDatJahr, age = AlterVCd, dea = AnzSterWir) %>%
+#review# might use a function instead of factor(...) as this is repeating
+#dozens of times (in other filess as well)
   mutate(sex = factor(if_else(SexCd == 1, uni_s[1], uni_s[2]), uni_s)) %>%
   group_by(year, age, sex) %>%
   summarize(
@@ -115,7 +117,8 @@ mor_fso_yas_past <- filter(mor_fso, KategorieCd == dea_fso_cat_past) %>%
 # FSO, future
 # category: data of the future
 # WHY filter on year? there are also predictions for years in the past
-mor_fso_yas_future <- filter(mor_fso, (KategorieCd == dea_fso_cat_future) & (year >= scen_begin) & (year <= scen_end)) %>%
+mor_fso_yas_future <- mor_fso %>%
+  filter((KategorieCd == dea_fso_cat_future) & (year >= scen_begin) & (year <= scen_end)) %>%
   select(year, age, sex, region, mor_yas)
 
 # FSO, past and future
