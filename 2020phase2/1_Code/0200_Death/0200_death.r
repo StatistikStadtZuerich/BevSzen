@@ -204,7 +204,8 @@ sszplot(filter(mor_yasr, age %in% age_select),
 # no function, since only used once
 
 # age capped
-pop_capped <- mutate(pop, age_capped = if_else(age >= dea_age_max_le, dea_age_max_le, age)) %>%
+pop_capped <- pop %>%
+  mutate(age_capped = if_else(age >= dea_age_max_le, dea_age_max_le, age)) %>%
   group_by(year, age_capped, sex) %>%
   summarize(
     pop = sum(pop),
@@ -212,7 +213,8 @@ pop_capped <- mutate(pop, age_capped = if_else(age >= dea_age_max_le, dea_age_ma
   ) %>%
   rename(age = age_capped)
 
-dea_capped <- mutate(dea, age_capped = if_else(age >= dea_age_max_le, dea_age_max_le, age)) %>%
+dea_capped <- dea %>%
+  mutate(age_capped = if_else(age >= dea_age_max_le, dea_age_max_le, age)) %>%
   group_by(year, age_capped, sex) %>%
   summarize(
     dx = sum(dea),
