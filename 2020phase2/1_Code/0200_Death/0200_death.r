@@ -6,7 +6,9 @@
 # rok/bad
 #-------------------------------------------------------------------
 
-
+#review# not compliant with tidyverse style guide
+#review# should be: # paths, general -------------------------------
+#review# advantage: simply hit Ctrl-Shift-R to insert and have a proper toc
 #-------------------------------------------------------------------
 # paths, general
 #-------------------------------------------------------------------
@@ -485,9 +487,9 @@ sszplot(plot_dat_fit,
 # ratio (Zurich / Switzerland)
 ratio_as <- select(mor_fit, age, sex, region, mor_fit) %>%
   pivot_wider(names_from = "region", values_from = "mor_fit") %>%
-  # spread(key = region, value = mor_fit) %>%
   mutate(ratio = Zurich / Switzerland)
 
+#review# avoid outcommented codes
 # Test influences of the tails
 # mutate(ratio = 1)
 # mutate(ratio = if_else((age <= (dea_lower + 10)) | (age >= dea_upper), 1, ratio))
@@ -517,6 +519,7 @@ mor_zh_yas_future <- select(ratio_as, age, sex, ratio) %>%
   rename(mor_yas = mor)
 
 # ZH: past and future
+#review# wouldn't that simply be mor_zh_yas?
 mor_zh_yas_past_future <- select(mor_zh_yas, year, age, sex, mor_yas) %>%
   bind_rows(mor_zh_yas_future)
 
@@ -529,6 +532,7 @@ sszplot(mor_zh_yas_past_future,
   name = "0210_mortality-prediction_by-year-age-sex",
   width = 12, height = 8
 )
+#review# males look strange in 2050 (horizontal line)
 
 #-------------------------------------------------------------------
 # export mortality rates
@@ -547,7 +551,7 @@ write_csv(dea_ex, paste0(exp_path, "/mortality_future.csv"))
 #-------------------------------------------------------------------
 # Zurich: life expectancy (including the model data)
 #-------------------------------------------------------------------
-
+#review# what do we need this for? just for plots?
 # ZH: life expectancy
 le_ys_ZH <- life_exp(
   data = mor_zh_yas_past_future, mor = "mor_yas",
@@ -591,4 +595,18 @@ sszplot(le_ysr_model,
 cat_log(paste0(
   "mortality rate: ",
   capture.output(Sys.time() - t0)
+))
+
+
+
+# cleanup -----------------------------------------------------------------
+
+# remove variables without further use
+rm(list = c(
+  grep("^mor.*", ls(), value = TRUE),
+  grep("^pop*", ls(), value = TRUE),
+  grep("^bir*", ls(), value = TRUE),
+  grep("^dea*", ls(), value = TRUE),
+  grep("^le*", ls(), value = TRUE),
+  grep("^ratio*", ls(), value = TRUE)
 ))
