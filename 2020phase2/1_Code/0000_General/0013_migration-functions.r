@@ -409,18 +409,6 @@ mig_prop_so_dy <- function(mig_path, mig_vari, mig_district,
   # output (to get an idea of the exported output)
   return(list(ex_mig_prop_dy))
   
-  
-  #-------------------------------------------------------------------
-  # cleanup
-  #-------------------------------------------------------------------
-  
-  # remove variables without further use
-  rm(list = c(
-    "mig", "rel", "mis", "mis_dy", "cas_dyso", "mis_dyso",
-    "year_past", "year_past_5", "mis_so_base", "mis_so_pred",
-    "mis_so_pred_stand", "mis_so_past_pred"
-  ))
-  
 }
 
 
