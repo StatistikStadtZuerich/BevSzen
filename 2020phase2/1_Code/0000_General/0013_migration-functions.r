@@ -363,11 +363,13 @@ mig_prop_so_dy <- function(mig_path, mig_vari, mig_district,
 
   # standardize proportions per district and year to 100 percent
   mis_so_pred_stand <- group_by(mis_so_pred, district, year) %>%
-    summarize(
-      pred_roll_sum = sum_NA(pred_roll),
-      .groups = "drop"
-    ) %>%
-    right_join(mis_so_pred, by = c("district", "year")) %>%
+#review# why the right_join with itself? Do you want this?:
+    mutate(pred_roll_sum = sum_NA(pred_roll)) %>%
+    # summarize(
+    #   pred_roll_sum = sum_NA(pred_roll),
+    #   .groups = "drop"
+    # ) %>%
+    # right_join(mis_so_pred, by = c("district", "year")) %>%
     mutate(pred_roll_stand = if_else(pred_roll_sum == 0, NA_real_, round(pred_roll / pred_roll_sum * 100, round_prop)))
 
   # past and prediction
