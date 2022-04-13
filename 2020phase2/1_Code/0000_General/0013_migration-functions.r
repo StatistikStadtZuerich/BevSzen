@@ -32,6 +32,8 @@ mig_rate_dy <- function(mig_path, mig_vari, mig_district,
     rename(year = EreignisDatJahr, age = AlterVCd, mig = mig_vari) %>%
     left_join(look_dis, by = "QuarCd") %>%
     mutate(
+#review# same as mentioned earlier: might use a function for Sexcd and herkunftcd as
+#review# it is repeating many times
       sex = factor(if_else(SexCd == 1, uni_s[1], uni_s[2]), uni_s),
       origin = factor(if_else(HerkunftCd == 1, uni_o[1], uni_o[2]), uni_o),
       district = factor(distr, uni_d)
@@ -110,6 +112,8 @@ mig_rate_dy <- function(mig_path, mig_vari, mig_district,
     )
 
   # migration* rate (based on all possible cases)
+#review# out of curiosity: why use expand_grid (which gives a list and needs a as_tibble)
+#review# instead of expand.grid (which gives a dataframe directly)?
   mis_rate_dy <- as_tibble(expand_grid(
     district = uni_d,
     year = (date_start + 1):date_end
@@ -213,18 +217,6 @@ mig_rate_dy <- function(mig_path, mig_vari, mig_district,
 
   # output (to get an idea of the exported output)
   return(list(ex_mig_rate_dy))
-  
-  
-  #-------------------------------------------------------------------
-  # cleanup
-  #-------------------------------------------------------------------
-  
-  # remove variables without further use
-  rm(list = c(
-    "mig", "rel", "mis", "pop", "mis_dy", "pop_dy", "mis_rate_dy", 
-    "year_past", "year_past_5",
-    "mis_base", "mis_pred", "mis_past_pred"
-  ))
     
 }
 
