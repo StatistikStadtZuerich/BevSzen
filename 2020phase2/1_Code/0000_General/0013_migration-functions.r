@@ -583,13 +583,14 @@ mig_prop_a_dyso <- function(mig_path, mig_vari, mig_district,
   mis_smooth <- mis_dyaso %>%
     arrange(district, age, sex, origin, year) %>%
     group_by(district, age, sex, origin) %>%
-    mutate(mis_smooth = pmax(0, predict(loess(mis_dyaso ~ year, span = mis_span_y, degree = 1, na.action = na.aggregate)))) %>%
+    mutate(mis_smooth = pmax(0, predict(
+      loess(mis_dyaso ~ year, span = mis_span_y, degree = 1, na.action = na.aggregate)))) %>%
     ungroup()
 
-  
   # plot preparation
+
   fit_lev <- c("initial", "smoothed")  
-  
+#review# see previous remarks  
   mis_smooth_plot <- mis_smooth %>% 
     pivot_longer(c(mis_dyaso, mis_smooth), names_to = "category", values_to = "mis") %>% 
     mutate(cat = factor(if_else(category == "mis_dyaso",
@@ -637,6 +638,7 @@ mig_prop_a_dyso <- function(mig_path, mig_vari, mig_district,
       mis_dyso = sum(mis_dyaso),
       .groups = "drop"
     ) %>%
+#review# same as 364ff.: why join with itself?
     right_join(mis_smooth_prep, by = c("district", "year", "sex", "origin")) %>%
     mutate(prop_a_smooth = if_else(mis_dyso == 0, NA_real_, round(mis_dyaso / mis_dyso * 100, round_prop))) %>%
     select(district, year, age, sex, origin, prop_a_smooth) %>%
@@ -672,11 +674,13 @@ mig_prop_a_dyso <- function(mig_path, mig_vari, mig_district,
 
   prop_fit <- arrange(mis_age_prop_smooth, district, year, sex, origin, age) %>%
     group_by(district, year, sex, origin) %>%
-    mutate(prop_fit = pmax(0, predict(loess(prop_a_smooth ~ age, span = mis_span_a, degree = 1, na.action = na.aggregate)))) %>%
+    mutate(prop_fit = pmax(0, predict(
+      loess(prop_a_smooth ~ age, span = mis_span_a, degree = 1, na.action = na.aggregate)))) %>%
     ungroup()
 
   
   # plot preparation
+#review# see previous remarks 
   fit_lev <- c("initial", "smoothed")
 
   mis_fit_plot <- prop_fit %>% 
@@ -720,8 +724,6 @@ mig_prop_a_dyso <- function(mig_path, mig_vari, mig_district,
     lower_thres = mis_age_lower_thres, upper_thres = NA
   )
 
-
-
   # limit prediction period
   prop_pred_begin <- filter(prop_pred, year >= scen_begin)
 
@@ -731,6 +733,7 @@ mig_prop_a_dyso <- function(mig_path, mig_vari, mig_district,
       pred_roll_sum = sum_NA(pred_roll),
       .groups = "drop"
     ) %>%
+#review# same as 364ff.: why join with itself?
     right_join(prop_pred_begin, by = c("district", "year", "sex", "origin")) %>%
     mutate(pred_roll_stand = if_else(pred_roll_sum == 0, NA_real_, round(pred_roll / pred_roll_sum * 100, round_prop)))
 
@@ -769,16 +772,16 @@ mig_prop_a_dyso <- function(mig_path, mig_vari, mig_district,
     width = 11, height = 8,
     multi = uni_d
   )
-
-
+  
   # plot levels
   time_lev <- c("past", "future")
 
   # plot data
   plot_a_past_pred <- mutate(mis_a_past_pred,
-    time = factor(if_else(year <= mis_age_base_end,
-      time_lev[1], time_lev[2]
-    ), levels = time_lev)
+    time = factor(
+      if_else(year <= mis_age_base_end, time_lev[1], time_lev[2]),
+      levels = time_lev
+    )
   )
 
   # plot: focus age distribution
@@ -814,20 +817,6 @@ mig_prop_a_dyso <- function(mig_path, mig_vari, mig_district,
 
   # output (to get an idea of the exported output)
   return(list(ex_mig_prop_a_dyso))
-  
-  #-------------------------------------------------------------------
-  # cleanup
-  #-------------------------------------------------------------------
-  
-  # remove variables without further use
-  rm(list = c(
-    "mig", "rel", "mis", "cas_dyso", 
-    "mis_dyso", "mis_dyaso", "mis_smooth", "mis_smooth_plot", 
-    "age_plot_smooth", "mis_smooth_prep", "mis_age_prop_smooth", 
-    "age_plot_smooth_prop", "prop_fit", "mis_fit_plot", 
-    "year_plot", "years_base", "prop_base", "prop_pred", 
-    "prop_pred_begin", "prop_stand", "mis_a_past_pred", "age_plot_pred"    
-  ))
 
 }
 
