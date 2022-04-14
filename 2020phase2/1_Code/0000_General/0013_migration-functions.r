@@ -1,12 +1,12 @@
 # header ------------------------------------------------------------------
 # migration functions
-#-rate (by district, year)
-#-proportion of sex/origin (by district, year)
-#-proportion of age (by district, year, sex, origin)
+# -rate (by district, year)
+# -proportion of sex/origin (by district, year)
+# -proportion of age (by district, year, sex, origin)
 
 
-# migration rate per district and year (immigration, emigration)
 
+# migration rate per district and year ------------------------------------
 mig_rate_dy <- function(mig_path, mig_vari, mig_district,
                         mig_name, mig_number, ex_path,
                         mis_base_begin, mis_base_end,
@@ -18,18 +18,13 @@ mig_rate_dy <- function(mig_path, mig_vari, mig_district,
   # that are the only variables changed (when evaluation immigration or emigration)
   # relocation and population variables remain the same
 
-
-  #-------------------------------------------------------------------
-  # import and data preparation
-  #-------------------------------------------------------------------
+  # import and data preparation ---------------------------------------------
 
   # migration (immigration or emigration)
   mig <- read_csv(mig_path) %>%
     rename(year = EreignisDatJahr, age = AlterVCd, mig = mig_vari) %>%
     left_join(look_dis, by = "QuarCd") %>%
     mutate(
-#review# same as mentioned earlier: might use a function for Sexcd and herkunftcd as
-#review# it is repeating many times
       sex = factor(if_else(SexCd == 1, uni_s[1], uni_s[2]), uni_s),
       origin = factor(if_else(HerkunftCd == 1, uni_o[1], uni_o[2]), uni_o),
       district = factor(distr, uni_d)
@@ -90,9 +85,8 @@ mig_rate_dy <- function(mig_path, mig_vari, mig_district,
       .groups = "drop"
     )
 
-  #-------------------------------------------------------------------
-  # migration* rate (per district and year)
-  #-------------------------------------------------------------------
+
+  # migration* rate (per district and year) ---------------------------------
 
   # mis and pop: aggregate
   mis_dy <- group_by(mis, district, year) %>%
@@ -108,8 +102,6 @@ mig_rate_dy <- function(mig_path, mig_vari, mig_district,
     )
 
   # migration* rate (based on all possible cases)
-#review# out of curiosity: why use expand_grid (which gives a list and needs a as_tibble)
-#review# instead of expand.grid (which gives a dataframe directly)?
   mis_rate_dy <- as_tibble(expand_grid(
     district = uni_d,
     year = (date_start + 1):date_end
@@ -133,9 +125,8 @@ mig_rate_dy <- function(mig_path, mig_vari, mig_district,
     width = 12, height = 14
   )
 
-  #-------------------------------------------------------------------
-  # prediction: future migration* rate (per year and district)
-  #-------------------------------------------------------------------
+
+  # prediction: future migration* rate (per year and district) --------------
 
   # base years
   mis_base <- filter(
@@ -213,12 +204,10 @@ mig_rate_dy <- function(mig_path, mig_vari, mig_district,
 
   # output (to get an idea of the exported output)
   return(list(ex_mig_rate_dy))
-    
 }
 
 
-
-# in migration (immigration, emigration): proportion of sex and origin, by distict and year
+# migration: proportion of sex and origin, by distict and year ------------
 
 mig_prop_so_dy <- function(mig_path, mig_vari, mig_district,
                            mig_name, mig_number, ex_path,
@@ -232,9 +221,8 @@ mig_prop_so_dy <- function(mig_path, mig_vari, mig_district,
   # relocation variables remain the same
 
 
-  #-------------------------------------------------------------------
-  # import and data preparation
-  #-------------------------------------------------------------------
+
+# import and data preparation ---------------------------------------------
 
   # migration (immigration or emigration)
   mig <- read_csv(mig_path) %>%
@@ -283,9 +271,8 @@ mig_prop_so_dy <- function(mig_path, mig_vari, mig_district,
       .groups = "drop"
     )
 
-  #-------------------------------------------------------------------
-  # migration: distribution of sex and origin
-  #-------------------------------------------------------------------
+
+# migration: distribution of sex and origin -------------------------------
 
   # ims and pop: aggregate
   mis_dy <- group_by(mis, district, year) %>%
@@ -332,9 +319,7 @@ mig_prop_so_dy <- function(mig_path, mig_vari, mig_district,
   )
 
 
-  #-------------------------------------------------------------------
-  # distribution of sex and origin: prediction
-  #-------------------------------------------------------------------
+# distribution of sex and origin: prediction ------------------------------
 
   # base years
   mis_so_base <- filter(
@@ -359,13 +344,12 @@ mig_prop_so_dy <- function(mig_path, mig_vari, mig_district,
 
   # standardize proportions per district and year to 100 percent
   mis_so_pred_stand <- group_by(mis_so_pred, district, year) %>%
-#review# why the right_join with itself? Do you want this?:
     mutate(pred_roll_sum = sum_NA(pred_roll)) %>%
-    # summarize(
-    #   pred_roll_sum = sum_NA(pred_roll),
-    #   .groups = "drop"
-    # ) %>%
-    # right_join(mis_so_pred, by = c("district", "year")) %>%
+    summarize(
+      pred_roll_sum = sum_NA(pred_roll),
+      .groups = "drop"
+    ) %>%
+    right_join(mis_so_pred, by = c("district", "year")) %>%
     mutate(pred_roll_stand = if_else(pred_roll_sum == 0, NA_real_, round(pred_roll / pred_roll_sum * 100, round_prop)))
 
   # past and prediction
@@ -408,8 +392,7 @@ mig_prop_so_dy <- function(mig_path, mig_vari, mig_district,
 }
 
 
-
-# in migration (immigration, emigration): age proportion (by district, year, sex, origin)
+# migration: age proportion (by district, year, sex, origin) --------------
 
 mig_prop_a_dyso <- function(mig_path, mig_vari, mig_district,
                             mig_name, mig_number, ex_path,
@@ -425,9 +408,8 @@ mig_prop_a_dyso <- function(mig_path, mig_vari, mig_district,
   # that are the only variables changed (when evaluation immigration or emigration)
   # relocation variables remain the same
 
-  #-------------------------------------------------------------------
-  # import and data preparation
-  #-------------------------------------------------------------------
+
+# import and data preparation ---------------------------------------------
 
   # migration (immigration or emigration)
   mig <- read_csv(mig_path) %>%
@@ -475,9 +457,8 @@ mig_prop_a_dyso <- function(mig_path, mig_vari, mig_district,
       .groups = "drop"
     )
 
-  #-------------------------------------------------------------------
-  # immigration*: per district, year, sex, origin
-  #-------------------------------------------------------------------
+
+# immigration*: per district, year, sex, origi ----------------------------
 
   # WHY? to see where the denominator of the age proportion is low
 
@@ -522,9 +503,9 @@ mig_prop_a_dyso <- function(mig_path, mig_vari, mig_district,
     width = 12, height = 14
   )
 
-  #-------------------------------------------------------------------
-  # age proportion: per district, year, sex, origin
-  #-------------------------------------------------------------------
+  
+
+# age proportion: per district, year, sex, origin -------------------------
 
   # migration*: dyaso (already summarized before)
   mis_dyaso <- as_tibble(expand_grid(
@@ -572,9 +553,7 @@ mig_prop_a_dyso <- function(mig_path, mig_vari, mig_district,
   )
 
 
-  #-------------------------------------------------------------------
-  # smoothing migration* with LOESS over years (by district, age, sex, origin)
-  #-------------------------------------------------------------------
+# smoothing migration* with LOESS over years (by district, age, sex --------
 
   mis_smooth <- mis_dyaso %>%
     arrange(district, age, sex, origin, year) %>%
@@ -586,7 +565,6 @@ mig_prop_a_dyso <- function(mig_path, mig_vari, mig_district,
   # plot preparation
 
   fit_lev <- c("initial", "smoothed")  
-#review# see previous remarks  
   mis_smooth_plot <- mis_smooth %>% 
     pivot_longer(c(mis_dyaso, mis_smooth), names_to = "category", values_to = "mis") %>% 
     mutate(cat = factor(if_else(category == "mis_dyaso",
@@ -619,9 +597,8 @@ mig_prop_a_dyso <- function(mig_path, mig_vari, mig_district,
   )
 
 
-  #-------------------------------------------------------------------
-  # age proportion (after smoothing migration* over years)
-  #-------------------------------------------------------------------
+
+# age proportion (after smoothing migration* over years) ------------------
 
   # preparation
   mis_smooth_prep <- mis_smooth %>% 
@@ -634,7 +611,6 @@ mig_prop_a_dyso <- function(mig_path, mig_vari, mig_district,
       mis_dyso = sum(mis_dyaso),
       .groups = "drop"
     ) %>%
-#review# same as 364ff.: why join with itself?
     right_join(mis_smooth_prep, by = c("district", "year", "sex", "origin")) %>%
     mutate(prop_a_smooth = if_else(mis_dyso == 0, NA_real_, round(mis_dyaso / mis_dyso * 100, round_prop))) %>%
     select(district, year, age, sex, origin, prop_a_smooth) %>%
@@ -664,9 +640,8 @@ mig_prop_a_dyso <- function(mig_path, mig_vari, mig_district,
     multi = uni_d
   )
 
-  #-------------------------------------------------------------------
-  # smoothing proportion by age with LOESS (by district, year, sex, origin)
-  #-------------------------------------------------------------------
+
+# smoothing proportion by age with LOESS (by district, year, sex,  --------
 
   prop_fit <- arrange(mis_age_prop_smooth, district, year, sex, origin, age) %>%
     group_by(district, year, sex, origin) %>%
@@ -676,7 +651,6 @@ mig_prop_a_dyso <- function(mig_path, mig_vari, mig_district,
 
   
   # plot preparation
-#review# see previous remarks 
   fit_lev <- c("initial", "smoothed")
 
   mis_fit_plot <- prop_fit %>% 
@@ -697,9 +671,8 @@ mig_prop_a_dyso <- function(mig_path, mig_vari, mig_district,
     multi = uni_d
   )
 
-  #-------------------------------------------------------------------
-  # Constrained regression
-  #-------------------------------------------------------------------
+
+# constrained regression --------------------------------------------------
 
   # years: base period
   years_base <- mis_age_base_begin:mis_age_base_end
@@ -729,7 +702,6 @@ mig_prop_a_dyso <- function(mig_path, mig_vari, mig_district,
       pred_roll_sum = sum_NA(pred_roll),
       .groups = "drop"
     ) %>%
-#review# same as 364ff.: why join with itself?
     right_join(prop_pred_begin, by = c("district", "year", "sex", "origin")) %>%
     mutate(pred_roll_stand = if_else(pred_roll_sum == 0, NA_real_, round(pred_roll / pred_roll_sum * 100, round_prop)))
 
