@@ -174,7 +174,7 @@ run_scen <- function(scenarios, modules) {
 
 run_scen(
   scenarios = c("middle"),
-  modules = c("ims")
+  modules = c("ems")
 )
 
 
