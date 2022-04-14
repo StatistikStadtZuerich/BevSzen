@@ -12,9 +12,9 @@ time;bir_cha_base_end;no parameter in previous model;2021;2021;2021;year;low;bas
 time;bir_sex_ratio_begin;no parameter in previous model;1993;1993;1993;year;low;base period (in the past) for sex ration calculation, begin
 time;bir_sex_ratio_end;no parameter in previous model;2021;2021;2021;year;low;base period (in the past) for sex ration calculation, begin
 time;dea_fso_date_start;no parameter in previous model;1993;1993;1993;year;low;fso mortality data of the past: begin
-time;dea_fso_date_end;no parameter in previous model;2019;2019;2019;year;low;fso mortality data of the past: end
-time;dea_base_begin;tod.basis.beginn;2014;2014;2014;year;low;base period (in the past) for death rate, begin
-time;dea_base_end;tod.basis.ende;2021;2021;2021;year;low;base period (in the past) for death rate, end
+time;dea_fso_date_end;no parameter in previous model;2020;2020;2020;year;low;fso mortality data of the past: end
+time;dea_base_begin;tod.basis.beginn;2010;2010;2010;year;low;base period (in the past) for death rate, begin (data should be available for both Zurich and Switzerland)
+time;dea_base_end;tod.basis.ende;2020;2020;2020;year;low;base period (in the past) for death rate, end (data should be available for both Zurich and Switzerland)
 time;ims_base_begin;no parameter in previous model;2010;2010;2010;year;low;base period (not the future) for immigration* rate, begin
 time;ims_base_end;no parameter in previous model;2021;2021;2021;year;low;base period (not the future) for immigration* rate, end
 time;ims_so_base_begin;no parameter in previous model;2010;2010;2010;year;low;base period (not the future) for proportion of sex and origin in immigration*, begin
@@ -54,7 +54,7 @@ birth;bir_age_begin;geb.alter.beginn;15;15;15;year;no parameter (strictly speaki
 birth;bir_age_end;geb.alter.ende;49;49;49;year;no parameter (strictly speaking);fertility rate: fertile age (fixed expression): end
 birth;bir_thres_origin;geb.anz.rate.heimat;100;100;100;persons;low;"age distribution of women (population): if there are less women than this threshold in the tails (cumulative measure), then the rate based on origin (but not district) is used.
 "
-birth;bir_thres_overall;geb.anz.rate.stadt;50;50;50;persons;low;age distribution of women (population): if there are less woman than this threshold in the tails (cumulative measure), then the overall rate is used (e.g not the rate based on origin and district).
+birth;bir_thres_overall;geb.anz.rate.stadt;50;50;50;persons;low;age distribution of women (population): if there are less women than this threshold in the tails (cumulative measure), then the overall rate is used (e.g not the rate based on origin and district).
 birth;bir_thres_const;geb.anz.rate.const;25;25;25;persons;low;age distribution of women (population): if there are less women than this threshold in the tails (cumulative measure), then a constant rate is used (e.g not the rate based on origin and district). The constant rate is set by the parameter bir_thres_value.
 birth;bir_thres_value;geb.wert.rate.const;0;0;0;birth per woman and year in %;low;birth rate: if there are less women than a certain threshold (bir_thres_const)  a constant fertility rate is used. The values is chosen with this parameter.
 birth;bir_fer_span;no parameter in previous model;0.3;0.3;0.3;no unit;low;"proportion of data points used in the loess regressions of fertility by age; groups: district, year, origin"
@@ -71,14 +71,15 @@ birth;bir_cha_thres_percent;no parameter in previous model;20;20;20;percent;low;
 birth;bir_cha_window_thres;no parameter in previous model;13;13;13;years;low;origin change (mother-baby): filter over years (to smooth a potential break in the curve due to range of future fertility rates: bir_thres_percent).
 birth;bir_cha_lower_thres;no parameter in previous model;0;0;0;percent;low;origin change (mother-baby): lower threshold for the rate (here: the rate should not be negative), NA if there is no lower threshold
 birth;bir_cha_upper_thres;no parameter in previous model;100;100;100;percent;low;origin change (mother-baby): upper threshold for the rate (here: not more than 100 %), NA if there is no lower threshold
-death;dea_lower;tod.jung.alter.ende.schweiz, tod.jung.alter.ende.ausland;30;30;30;years (age);low;"Swiss: lower limit of age-dependent ratio (death rates of Zurich and entire Switzerland); comment: limit not included in range with age-dependence"
-death;dea_upper;tod.alt.alter.beginn.schweiz, tod.alt.alter.beginn.ausland;99;99;99;years (age);low;"Swiss: upper limit of age-dependent ratio (death rates of Zurich and entire Switzerland); comment: limit not included in range with age-dependence"
-death;dea_age_min;no parameter in previous model;0;0;0;years (age);low;minimum age in the model 
-death;dea_age_max;no parameter in previous model;120;120;120;years (age);low;maximum age in the model (should be clearly higher than maximum age in the population)
+death;dea_lower;tod.jung.alter.ende.schweiz, tod.jung.alter.ende.ausland;30;30;30;years (age);low;"lower age limit of age-dependent ratio (death rates of Zurich and entire Switzerland); comment: limit not included in range with age-dependence"
+death;dea_upper;tod.alt.alter.beginn.schweiz, tod.alt.alter.beginn.ausland;99;99;99;years (age);low;"upper age limit of age-dependent ratio (death rates of Zurich and entire Switzerland); comment: limit not included in range with age-dependence"
+death;dea_radix;no parameter in previous model;100000;100000;100000;people;no;radix for life expectancy calcuation (no effect on result)
+death;dea_age_at;no parameter in previous model;0;0;0;years (age);no;life expectancy at certain age (usually at birth)
 death;dea_age_max_le;tod.alt.alter.ende;120;120;120;years (age);low;maximum age for the estimation of the life expectancy
-death;dea_fso_cat_past;no parameter in previous model;2;2;2;no unit;no parameter;Category in the FSO data: data of the past
+death;dea_fso_cat_past;no parameter in previous model;2;2;2;no unit;no parameter;Category in the FSO data: (smoothed) data of the past
 death;dea_fso_cat_future;no parameter in previous model;3;3;3;no unit;no parameter;Category in the FSO data: data of the future
 death;dea_qx_NA_le;no parameter in previous model;0.8;0.8;0.8;per year;low;if there is no one at a certain age in the population (e.g. no 96 year old men), then qx (probability to die between age x and x+1) is NA. However, a value is need to multiply the subsequent survival probabilities
+death;dea_mor_span;no parameter in previous model;0.2;0.2;0.2;no unit;low;"proportion of data points used in the loess regressions of mortality by age; groups: sex, region (City of Zurich, Switzerland)"
 immigration*;ims_rate_prop_trend;zuz.rate.anteil.trend;20;20;20;percent;low;"immigration rate*: trend in addition to the mean; 20% means, 20% of the difference between trend and mean is added to the mean."
 immigration*;ims_rate_thres_percent;zuz.rate.grenze.prozent;20;20;20;percent;low;"It is not realistic that the immigration* rates changes dramatically (i.e. tenfold increase). Therefore, this threshold regulates the range of potential rates (change in percent of mean; e.g. +/- 20%)."
 immigration*;ims_rate_window_thres;zuz.rate.window.grenz;13;13;13;years;low;filter over years (to smooth a potential break in the curve due to range of future immigration* rates: imm_rate_thres_percent).
