@@ -1,4 +1,4 @@
-﻿category;parameter;parameter_old;lower;middle;upper;unit;relevance;description
+category;parameter;parameter_old;lower;middle;upper;unit;relevance;description
 time;date_start;daten.beginn;1993;1993;1993;year;no parameter (strictly speaking);begin of data
 time;date_end;daten.ende;2021;2021;2021;year;no parameter (strictly speaking);end of data
 time;scen_begin;szen.beginn;2022;2022;2022;year;no parameter (strictly speaking);future: begin
@@ -71,6 +71,8 @@ birth;bir_cha_lower_thres;no parameter in previous model;0;0;0;percent;low;origi
 birth;bir_cha_upper_thres;no parameter in previous model;100;100;100;percent;low;origin change (mother-baby): upper threshold for the rate (here: not more than 100 %), NA if there is no lower threshold
 death;dea_lower;tod.jung.alter.ende.schweiz, tod.jung.alter.ende.ausland;30;30;30;years (age);low;"lower age limit of age-dependent ratio (death rates of Zurich and entire Switzerland); comment: limit not included in range with age-dependence"
 death;dea_upper;tod.alt.alter.beginn.schweiz, tod.alt.alter.beginn.ausland;99;99;99;years (age);low;"upper age limit of age-dependent ratio (death rates of Zurich and entire Switzerland); comment: limit not included in range with age-dependence"
+death;dea_radix;no parameter in previous model;100000;100000;100000;people;no;radix for life expectancy calcuation (no effect on result)
+death;dea_age_at;no parameter in previous model;0;0;0;years (age);no;life expectancy at certain age (usually at birth)
 death;dea_age_max_le;tod.alt.alter.ende;120;120;120;years (age);low;maximum age for the estimation of the life expectancy
 death;dea_fso_cat_past;no parameter in previous model;2;2;2;no unit;no parameter;Category in the FSO data: (smoothed) data of the past
 death;dea_fso_cat_future;no parameter in previous model;3;3;3;no unit;no parameter;Category in the FSO data: data of the future
