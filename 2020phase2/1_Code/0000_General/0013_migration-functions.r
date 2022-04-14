@@ -345,7 +345,8 @@ mig_prop_so_dy <- function(mig_path, mig_vari, mig_district,
   # standardize proportions per district and year to 100 percent
   mis_so_pred_stand <- group_by(mis_so_pred, district, year) %>%
     mutate(pred_roll_sum = sum_NA(pred_roll),
-           pred_roll_stand = if_else(pred_roll_sum == 0, NA_real_, round(pred_roll / pred_roll_sum * 100, round_prop)))
+           pred_roll_stand = if_else(pred_roll_sum == 0, NA_real_, round(pred_roll / pred_roll_sum * 100, round_prop))) %>% 
+    ungroup()
 
   # past and prediction
   mis_so_past_pred <- as_tibble(expand_grid(
@@ -517,8 +518,6 @@ mig_prop_a_dyso <- function(mig_path, mig_vari, mig_district,
     arrange(district, year, sex, origin, age) %>%
     mutate(mis_prop_a = if_else(mis_dyso == 0, NA_real_, round(mis_dyaso / mis_dyso * 100, round_prop)))
 
-
-
   # plot: focus age distribution
   # years (subjectively selected)
   # WHY with rev? To have the last year in the plot
@@ -603,7 +602,8 @@ mig_prop_a_dyso <- function(mig_path, mig_vari, mig_district,
   # age proportion
   mis_age_prop_smooth <- group_by(mis_smooth_prep, district, year, sex, origin) %>%
     mutate(mis_dyso = sum_NA(mis_dyaso), 
-           prop_a_smooth = if_else(mis_dyso == 0, NA_real_, round(mis_dyaso / mis_dyso * 100, round_prop))) %>%           
+           prop_a_smooth = if_else(mis_dyso == 0, NA_real_, round(mis_dyaso / mis_dyso * 100, round_prop))) %>%
+    ungroup() %>% 
     select(district, year, age, sex, origin, prop_a_smooth) %>%
     arrange(district, year, sex, origin, age)           
 
