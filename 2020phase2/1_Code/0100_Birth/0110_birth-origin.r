@@ -72,8 +72,7 @@ bir <- read_csv(bir_od) %>%
 # find out the relevant processes/variables
 
 # origin change: data preparation
-cha <- bir %>%
-  pivot_wider(names_from = "originb", values_from = "bir") %>%
+cha <- spread(bir, key = originb, value = bir) %>%
   replace_na(list(Swiss = 0, foreign = 0)) %>%
   mutate(
     change = if_else(origin == "Swiss", foreign, Swiss),
@@ -174,15 +173,13 @@ cha_dya1f <- left_join(cha, look_a1, by = "age") %>%
     total = sum(total),
     .groups = "drop"
   ) %>%
-  mutate(cha_dya1f = if_else(total == 0, NA_real_, round(change / total * 100, round_rate))) %>%
-  rename(age = age_1)
-
+  mutate(cha_dya1f = if_else(total == 0, NA_real_, round(change / total * 100, round_rate)))
 
 sszplot(cha_dya1f,
-  aes_x = "year", aes_y = "cha_dya1f", aes_col = "age",
+  aes_x = "year", aes_y = "cha_dya1f", aes_col = "age_1",
   geom = c("line", "point"),
   i_x = year5,
-  labs_y = "origin change in %",
+  labs_y = "origin change in %", labs_col = "age",
   wrap = "district", ncol = 4,
   name = "0174_origin-change_by-district-year-age1-foreign",
   width = 12, height = 14
@@ -244,15 +241,4 @@ write_csv(cha_ex, paste0(exp_path, "/birth_origin-change_future.csv"))
 cat_log(paste0(
   "origin change at birth: ",
   capture.output(Sys.time() - t0)
-))
-
-
-#-------------------------------------------------------------------
-# cleanup
-#-------------------------------------------------------------------
-
-# remove variables without further use
-rm(list = c(
-  "bir", "cha", "cha_yo", "cha_ya1o", "cha_ya2o",
-  "cha_dyo", "cha_dya1f", "cha_base", "cha_pred"
 ))
