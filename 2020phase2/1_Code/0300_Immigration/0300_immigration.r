@@ -1,15 +1,8 @@
-#-------------------------------------------------------------------
+# header ------------------------------------------------------------------
 # Immigration
-#
-#
-#
-# rok/bad, June 2021
-#-------------------------------------------------------------------
 
 
-#-------------------------------------------------------------------
-# paths, general
-#-------------------------------------------------------------------
+# paths, general ----------------------------------------------------------
 
 # general functions already available?
 if (!exists("para")) {
@@ -36,9 +29,8 @@ if (!exists("para")) {
 # start time
 t0 <- Sys.time()
 
-#-------------------------------------------------------------------
-# immigration*: rate per district and year
-#-------------------------------------------------------------------
+
+# immigration*: rate per district and year --------------------------------
 
 # prediction: immigration* rate
 ims_rate_dy <- mig_rate_dy(
@@ -58,9 +50,8 @@ ims_rate_dy <- mig_rate_dy(
 )
 
 
-#-------------------------------------------------------------------
-# immigration*: proportion of sex and origin, by district and year
-#-------------------------------------------------------------------
+# immigration*: proportion of sex and origin ------------------------------
+# by district and year
 
 # prediction: proportion of sex an origin
 ims_prop_so_dy <- mig_prop_so_dy(
@@ -80,9 +71,8 @@ ims_prop_so_dy <- mig_prop_so_dy(
 )
 
 
-#-------------------------------------------------------------------
-# immigration*: proportion of age (per district, year, sex, origin)
-#-------------------------------------------------------------------
+# immigration*: proportion of age -----------------------------------------
+# per district, year, sex, origin
 
 # prediction: proportion of age (duration: approx. 8 minutes)
 ims_prop_a_dyso <- mig_prop_a_dyso(
