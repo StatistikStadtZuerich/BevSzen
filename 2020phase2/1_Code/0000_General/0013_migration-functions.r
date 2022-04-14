@@ -344,13 +344,8 @@ mig_prop_so_dy <- function(mig_path, mig_vari, mig_district,
 
   # standardize proportions per district and year to 100 percent
   mis_so_pred_stand <- group_by(mis_so_pred, district, year) %>%
-    mutate(pred_roll_sum = sum_NA(pred_roll)) %>%
-    summarize(
-      pred_roll_sum = sum_NA(pred_roll),
-      .groups = "drop"
-    ) %>%
-    right_join(mis_so_pred, by = c("district", "year")) %>%
-    mutate(pred_roll_stand = if_else(pred_roll_sum == 0, NA_real_, round(pred_roll / pred_roll_sum * 100, round_prop)))
+    mutate(pred_roll_sum = sum_NA(pred_roll),
+           pred_roll_stand = if_else(pred_roll_sum == 0, NA_real_, round(pred_roll / pred_roll_sum * 100, round_prop)))
 
   # past and prediction
   mis_so_past_pred <- as_tibble(expand_grid(
@@ -607,15 +602,10 @@ mig_prop_a_dyso <- function(mig_path, mig_vari, mig_district,
 
   # age proportion
   mis_age_prop_smooth <- group_by(mis_smooth_prep, district, year, sex, origin) %>%
-    summarize(
-      mis_dyso = sum(mis_dyaso),
-      .groups = "drop"
-    ) %>%
-    right_join(mis_smooth_prep, by = c("district", "year", "sex", "origin")) %>%
-    mutate(prop_a_smooth = if_else(mis_dyso == 0, NA_real_, round(mis_dyaso / mis_dyso * 100, round_prop))) %>%
+    mutate(mis_dyso = sum_NA(mis_dyaso), 
+           prop_a_smooth = if_else(mis_dyso == 0, NA_real_, round(mis_dyaso / mis_dyso * 100, round_prop))) %>%           
     select(district, year, age, sex, origin, prop_a_smooth) %>%
-    arrange(district, year, sex, origin, age)
-
+    arrange(district, year, sex, origin, age)           
 
   # plot: focus age distribution
   sszplot(filter(mis_age_prop_smooth, year %in% year_past_5),
