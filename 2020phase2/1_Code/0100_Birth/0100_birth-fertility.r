@@ -450,7 +450,7 @@ sszplot(age_dat,
 #-------------------------------------------------------------------
 
 # smoothed (only the prediction years)
-pred_fit <- filter(fer_pred, year >= szen_begin) %>%
+pred_fit <- filter(fer_pred, year >= scen_begin) %>%
   arrange(district, year, origin, age) %>%
   group_by(district, year, origin) %>%
   mutate(pred_fit = pmax(0, predict(loess(pred_roll ~ age,
@@ -459,7 +459,7 @@ pred_fit <- filter(fer_pred, year >= szen_begin) %>%
   ungroup()
 
 # plot prediction for selected years
-sel_years <- uniy_szen[(uniy_szen %% 10) == 0]
+sel_years <- uniy_scen[(uniy_scen %% 10) == 0]
 
 sel_lev <- c("initial", "smoothed")
 
@@ -485,7 +485,7 @@ sszplot(sel_dat,
 
 # prepare the export data
 fer_ex <- mutate(pred_fit, fer = round(pred_fit, round_rate)) %>%
-  filter(year >= szen_begin) %>%
+  filter(year >= scen_begin) %>%
   select(district, year, age, origin, fer) %>%
   arrange(district, year, age, origin)
 
@@ -516,7 +516,7 @@ tfr_dyo <- bind_rows(fer_ex_past, fer_ex) %>%
 # plot
 sszplot(tfr_dyo,
   aes_x = "year", aes_y = "TFR", aes_col = "origin",
-  i_x = c(bir_base_begin, szen_begin),
+  i_x = c(bir_base_begin, scen_begin),
   wrap = "district", ncol = 4,
   name = "0160_TFR_by-district-origin",
   width = 12, height = 14
@@ -540,7 +540,7 @@ tfr_a1 <- bind_rows(fer_ex_past, fer_ex) %>%
 # plot
 sszplot(tfr_a1,
   aes_x = "year", aes_y = "TFR", aes_col = "age",
-  i_x = c(bir_base_begin, szen_begin),
+  i_x = c(bir_base_begin, scen_begin),
   labs_col = "age",
   wrap = "district", ncol = 4,
   name = "0161_TFR_by-district-origin-age1",
@@ -549,7 +549,7 @@ sszplot(tfr_a1,
 )
 
 #-------------------------------------------------------------------
-# TFR by age class (more detailled)
+# TFR by age class (more detailed)
 #-------------------------------------------------------------------
 
 # TFR by age class
@@ -565,7 +565,7 @@ tfr_a2 <- bind_rows(fer_ex_past, fer_ex) %>%
 # plot
 sszplot(tfr_a2,
   aes_x = "year", aes_y = "TFR", aes_col = "age",
-  i_x = c(bir_base_begin, szen_begin),
+  i_x = c(bir_base_begin, scen_begin),
   labs_col = "age",
   wrap = "district", ncol = 4,
   name = "0162_TFR_by-district-origin-age2",

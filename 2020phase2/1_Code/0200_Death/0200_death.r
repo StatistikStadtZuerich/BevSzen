@@ -118,7 +118,7 @@ mor_yasr_zh_fso <- select(mor_zh_yas, year, age, sex, region, mor_yas) %>%
 
 # with all possible cases
 mor_yasr <- as_tibble(expand_grid(
-  year = (date_start + 1):szen_end,
+  year = (date_start + 1):scen_end,
   age = age_min:age_max,
   sex = uni_s,
   region = uni_r
@@ -320,7 +320,7 @@ sszplot(le_methods,
 # plot: life expectancy ---------------------------------------------------
 
 # years (all: past and future)
-year_all <- (date_start + 1):szen_end
+year_all <- (date_start + 1):scen_end
 year_all_5 <- sort(unique(year_all[year_all %% 5 == 0]))
 
 # focus: differences by sex
@@ -406,7 +406,17 @@ sszplot(mor_asr,
 )
 
 
+<<<<<<< HEAD
+#-------------------------------------------------------------------
+# smoothing with LOESS
+#-------------------------------------------------------------------
+||||||| 1e7ee97
+#-------------------------------------------------------------------
+# smoothing with loess
+#-------------------------------------------------------------------
+=======
 # smoothing with LOESS ----------------------------------------------------
+>>>>>>> master
 
 # fit
 # WHY log? because the mortality rates vary substantially
@@ -488,7 +498,7 @@ sszplot(mor_zh_yas_past_future,
 
 # prepare the export data
 dea_ex <- mutate(mor_zh_yas_past_future, mor = round(mor_yas, round_rate)) %>%
-  filter(year >= szen_begin) %>%
+  filter(year >= scen_begin) %>%
   select(year, age, sex, mor) %>%
   arrange(year, age, sex)
 

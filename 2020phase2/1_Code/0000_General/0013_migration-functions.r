@@ -1,16 +1,12 @@
-#-------------------------------------------------------------------
+# header ------------------------------------------------------------------
 # migration functions
-#-rate (by district, year)
-#-proportion of sex/origin (by district, year)
-#-proportion of age (by district, year, sex, origin)
-#
-#
-# rok/bad
-#-------------------------------------------------------------------
+# -rate (by district, year)
+# -proportion of sex/origin (by district, year)
+# -proportion of age (by district, year, sex, origin)
 
 
-# migration rate per district and year (immigration, emigration)
 
+# migration rate per district and year ------------------------------------
 mig_rate_dy <- function(mig_path, mig_vari, mig_district,
                         mig_name, mig_number, ex_path,
                         mis_base_begin, mis_base_end,
@@ -22,10 +18,7 @@ mig_rate_dy <- function(mig_path, mig_vari, mig_district,
   # that are the only variables changed (when evaluation immigration or emigration)
   # relocation and population variables remain the same
 
-
-  #-------------------------------------------------------------------
-  # import and data preparation
-  #-------------------------------------------------------------------
+  # import and data preparation ---------------------------------------------
 
   # migration (immigration or emigration)
   mig <- read_csv(mig_path) %>%
@@ -74,7 +67,7 @@ mig_rate_dy <- function(mig_path, mig_vari, mig_district,
     )
 
   # population
-  # year: begin of year population
+  # year: begin of year population (therefore, StichtagDatJahr + 1)
 
   pop <- read_csv(pop_od) %>%
     rename(age = AlterVCd, pop = AnzBestWir) %>%
@@ -92,9 +85,8 @@ mig_rate_dy <- function(mig_path, mig_vari, mig_district,
       .groups = "drop"
     )
 
-  #-------------------------------------------------------------------
-  # migration* rate (per district and year)
-  #-------------------------------------------------------------------
+
+  # migration* rate (per district and year) ---------------------------------
 
   # mis and pop: aggregate
   mis_dy <- group_by(mis, district, year) %>%
@@ -133,9 +125,8 @@ mig_rate_dy <- function(mig_path, mig_vari, mig_district,
     width = 12, height = 14
   )
 
-  #-------------------------------------------------------------------
-  # prediction: future migration* rate (per year and district)
-  #-------------------------------------------------------------------
+
+  # prediction: future migration* rate (per year and district) --------------
 
   # base years
   mis_base <- filter(
@@ -148,7 +139,7 @@ mig_rate_dy <- function(mig_path, mig_vari, mig_district,
     data = mis_base, x = "year", y = "mis_rate_dy",
     group_cols = "district",
     window = mis_rate_window_thres, base_t0 = mis_base_begin,
-    szen_t0 = szen_begin, szen_t1 = szen_end,
+    scen_t0 = scen_begin, scen_t1 = scen_end,
     prop_trend = mis_rate_prop_trend, thres_percent = mis_rate_thres_percent,
     lower_thres = mis_rate_lower_thres, upper_thres = NA
   )
@@ -156,7 +147,7 @@ mig_rate_dy <- function(mig_path, mig_vari, mig_district,
   # past and prediction
   mis_past_pred <- as_tibble(expand_grid(
     district = uni_d,
-    year = (date_start + 1):szen_end
+    year = (date_start + 1):scen_end
   )) %>%
     left_join(select(mis_rate_dy, district, year, mis_rate_dy),
       by = c("district", "year")
@@ -204,7 +195,7 @@ mig_rate_dy <- function(mig_path, mig_vari, mig_district,
   ex_mig_rate_dy <- mutate(mis_past_pred,
     rate = round(rate_all, round_rate)
   ) %>%
-    filter(year >= szen_begin) %>%
+    filter(year >= scen_begin) %>%
     select(district, year, rate) %>%
     arrange(district, year)
 
@@ -216,8 +207,7 @@ mig_rate_dy <- function(mig_path, mig_vari, mig_district,
 }
 
 
-
-# in migration (immigration, emigration): proportion of sex and origin, by distict and year
+# migration: proportion of sex and origin, by distict and year ------------
 
 mig_prop_so_dy <- function(mig_path, mig_vari, mig_district,
                            mig_name, mig_number, ex_path,
@@ -231,9 +221,8 @@ mig_prop_so_dy <- function(mig_path, mig_vari, mig_district,
   # relocation variables remain the same
 
 
-  #-------------------------------------------------------------------
-  # import and data preparation
-  #-------------------------------------------------------------------
+
+# import and data preparation ---------------------------------------------
 
   # migration (immigration or emigration)
   mig <- read_csv(mig_path) %>%
@@ -282,9 +271,8 @@ mig_prop_so_dy <- function(mig_path, mig_vari, mig_district,
       .groups = "drop"
     )
 
-  #-------------------------------------------------------------------
-  # migration: distribution of sex and origin
-  #-------------------------------------------------------------------
+
+# migration: distribution of sex and origin -------------------------------
 
   # ims and pop: aggregate
   mis_dy <- group_by(mis, district, year) %>%
@@ -331,9 +319,7 @@ mig_prop_so_dy <- function(mig_path, mig_vari, mig_district,
   )
 
 
-  #-------------------------------------------------------------------
-  # distribution of sex and origin: prediction
-  #-------------------------------------------------------------------
+# distribution of sex and origin: prediction ------------------------------
 
   # base years
   mis_so_base <- filter(
@@ -351,24 +337,21 @@ mig_prop_so_dy <- function(mig_path, mig_vari, mig_district,
     data = mis_so_base, x = "year", y = "mis_prop_dyso",
     group_cols = c("district", "sex", "origin"),
     window = mis_so_window_thres, base_t0 = mis_so_base_begin,
-    szen_t0 = szen_begin, szen_t1 = szen_end,
+    scen_t0 = scen_begin, scen_t1 = scen_end,
     prop_trend = mis_so_prop_trend, thres_percent = mis_so_thres_percent,
     lower_thres = mis_so_lower_thres, upper_thres = NA
   )
 
-  # standardize proportions per district/year to 100 percent
+  # standardize proportions per district and year to 100 percent
   mis_so_pred_stand <- group_by(mis_so_pred, district, year) %>%
-    summarize(
-      pred_roll_sum = sum_NA(pred_roll),
-      .groups = "drop"
-    ) %>%
-    right_join(mis_so_pred, by = c("district", "year")) %>%
-    mutate(pred_roll_stand = if_else(pred_roll_sum == 0, NA_real_, round(pred_roll / pred_roll_sum * 100, round_prop)))
+    mutate(pred_roll_sum = sum_NA(pred_roll),
+           pred_roll_stand = if_else(pred_roll_sum == 0, NA_real_, round(pred_roll / pred_roll_sum * 100, round_prop))) %>% 
+    ungroup()
 
   # past and prediction
   mis_so_past_pred <- as_tibble(expand_grid(
     district = uni_d,
-    year = (date_start + 1):szen_end,
+    year = (date_start + 1):scen_end,
     sex = uni_s,
     origin = uni_o
   )) %>%
@@ -392,27 +375,25 @@ mig_prop_so_dy <- function(mig_path, mig_vari, mig_district,
   ex_mig_prop_dy <- mutate(mis_so_past_pred,
     prop = round(prop_all, round_prop)
   ) %>%
-    filter(year >= szen_begin) %>%
+    filter(year >= scen_begin) %>%
     select(district, year, sex, origin, prop) %>%
     arrange(district, year, sex, origin)
 
   # export the data
   write_csv(ex_mig_prop_dy, ex_path)
 
-
-
   # output (to get an idea of the exported output)
   return(list(ex_mig_prop_dy))
+  
 }
 
 
-
-# in migration (immigration, emigration): age proportion (by distict, year, sex, origin)
+# migration: age proportion (by district, year, sex, origin) --------------
 
 mig_prop_a_dyso <- function(mig_path, mig_vari, mig_district,
                             mig_name, mig_number, ex_path,
                             mis_age_min, mis_age_max,
-                            mis_age_window_years,
+                            mis_span_y, mis_span_a, mis_age_window_years,
                             mis_age_base_begin, mis_age_base_end,
                             mis_age_window_thres, mis_age_prop_trend,
                             mis_age_thres_percent, mis_age_lower_thres, ...) {
@@ -423,9 +404,8 @@ mig_prop_a_dyso <- function(mig_path, mig_vari, mig_district,
   # that are the only variables changed (when evaluation immigration or emigration)
   # relocation variables remain the same
 
-  #-------------------------------------------------------------------
-  # import and data preparation
-  #-------------------------------------------------------------------
+
+# import and data preparation ---------------------------------------------
 
   # migration (immigration or emigration)
   mig <- read_csv(mig_path) %>%
@@ -473,9 +453,8 @@ mig_prop_a_dyso <- function(mig_path, mig_vari, mig_district,
       .groups = "drop"
     )
 
-  #-------------------------------------------------------------------
-  # immigration*: per district, year, sex, origin
-  #-------------------------------------------------------------------
+
+# immigration*: per district, year, sex, origi ----------------------------
 
   # WHY? to see where the denominator of the age proportion is low
 
@@ -510,7 +489,6 @@ mig_prop_a_dyso <- function(mig_path, mig_vari, mig_district,
     width = 12, height = 14
   )
 
-
   # plot
   sszplot(mis_dyso,
     aes_x = "year", aes_y = "mis_dyso", aes_col = "sex", aes_ltyp = "origin",
@@ -521,9 +499,9 @@ mig_prop_a_dyso <- function(mig_path, mig_vari, mig_district,
     width = 12, height = 14
   )
 
-  #-------------------------------------------------------------------
-  # age proportion: per district, year, sex, origin
-  #-------------------------------------------------------------------
+  
+
+# age proportion: per district, year, sex, origin -------------------------
 
   # migration*: dyaso (already summarized before)
   mis_dyaso <- as_tibble(expand_grid(
@@ -539,8 +517,6 @@ mig_prop_a_dyso <- function(mig_path, mig_vari, mig_district,
     left_join(mis_dyso, by = c("district", "year", "sex", "origin")) %>%
     arrange(district, year, sex, origin, age) %>%
     mutate(mis_prop_a = if_else(mis_dyso == 0, NA_real_, round(mis_dyaso / mis_dyso * 100, round_prop)))
-
-
 
   # plot: focus age distribution
   # years (subjectively selected)
@@ -571,154 +547,125 @@ mig_prop_a_dyso <- function(mig_path, mig_vari, mig_district,
   )
 
 
-  #-------------------------------------------------------------------
-  # moving average over years (by district, age, sex, origin)
-  #-------------------------------------------------------------------
+# smoothing migration* with LOESS over years (by district, age, sex --------
 
-  # moving average
-  mis_ma <- select(mis_dyaso, district, year, age, sex, origin, mis_dyaso) %>%
+  mis_smooth <- mis_dyaso %>%
+    arrange(district, age, sex, origin, year) %>%
     group_by(district, age, sex, origin) %>%
-    arrange(year) %>%
-    mutate(mis_roll = rollmean(mis_dyaso, k = mis_age_window_years, fill = NA)) %>%
+    mutate(mis_smooth = pmax(0, predict(
+      loess(mis_dyaso ~ year, span = mis_span_y, degree = 1, na.action = na.aggregate)))) %>%
     ungroup()
 
   # plot preparation
-  ma_lev <- c("initial", "moving average")
 
-  mis_ma_plot <- gather(mis_ma, `mis_dyaso`, `mis_roll`, key = category, value = mis) %>%
+  fit_lev <- c("initial", "smoothed")  
+  mis_smooth_plot <- mis_smooth %>% 
+    pivot_longer(c(mis_dyaso, mis_smooth), names_to = "category", values_to = "mis") %>% 
     mutate(cat = factor(if_else(category == "mis_dyaso",
-      ma_lev[1], ma_lev[2]
-    ), levels = ma_lev)) %>%
+      fit_lev[1], fit_lev[2]
+    ), levels = fit_lev)) %>%
     select(district, year, age, sex, origin, cat, mis)
 
 
   # plot: focus age distribution
-  # years (subjectively selected)
-  years_not_NA <- sort(unique(mis_ma$year[!is.na(mis_ma$mis_roll)]))
-  years_plot_ma <- seq(min(years_not_NA), max(years_not_NA), by = 6)
-
-  sszplot(filter(mis_ma_plot, year %in% years_plot_ma),
+  sszplot(filter(mis_smooth_plot, year %in% year_past_5),
     aes_x = "age", aes_y = "mis", aes_col = "cat",
     grid = c("as.factor(year)", "origin*sex"),
     labs_y = paste0(mig_name, "* per year"),
-    name = paste0(mig_number, "14_", mig_name, "_star_moving-average-over-year_focus-age"),
+    name = paste0(mig_number, "14_", mig_name, "_star_smoothed-over-year_focus-age"),
     width = 11, height = 8,
     multi = uni_d
   )
 
   # plot: focus years
   # age (subjectively selected)
-  age_plot_ma <- seq(0, 60, by = 20)
+  age_plot_smooth <- seq(0, 60, by = 20)
 
-  sszplot(filter(mis_ma_plot, age %in% age_plot_ma),
+  sszplot(filter(mis_smooth_plot, age %in% age_plot_smooth),
     aes_x = "year", aes_y = "mis", aes_col = "cat",
     grid = c("as.factor(age)", "origin*sex"),
     labs_y = paste0(mig_name, "* per year"),
-    name = paste0(mig_number, "15_", mig_name, "_star_moving-average-over-year_focus-years"),
+    name = paste0(mig_number, "15_", mig_name, "_star_smoothed-over-year_focus-years"),
     width = 11, height = 8,
     multi = uni_d
   )
 
 
-  #-------------------------------------------------------------------
-  # age proportion (after moving average)
-  #-------------------------------------------------------------------
 
-  # preparation (e.g. without years with NA)
-  mis_ma_prep <- filter(mis_ma, year %in% years_not_NA) %>%
-    select(district, year, age, sex, origin, mis_roll) %>%
-    rename(mis_dyaso = mis_roll)
+# age proportion (after smoothing migration* over years) ------------------
+
+  # preparation
+  mis_smooth_prep <- mis_smooth %>% 
+    select(district, year, age, sex, origin, mis_smooth) %>%
+    rename(mis_dyaso = mis_smooth)
 
   # age proportion
-  mis_age_prop_ma <- group_by(mis_ma_prep, district, year, sex, origin) %>%
-    summarize(
-      mis_dyso = sum(mis_dyaso),
-      .groups = "drop"
-    ) %>%
-    right_join(mis_ma_prep, by = c("district", "year", "sex", "origin")) %>%
-    mutate(prop_a_ma = if_else(mis_dyso == 0, NA_real_, round(mis_dyaso / mis_dyso * 100, round_prop))) %>%
-    select(district, year, age, sex, origin, prop_a_ma) %>%
-    arrange(district, year, sex, origin, age)
-
+  mis_age_prop_smooth <- group_by(mis_smooth_prep, district, year, sex, origin) %>%
+    mutate(mis_dyso = sum_NA(mis_dyaso), 
+           prop_a_smooth = if_else(mis_dyso == 0, NA_real_, round(mis_dyaso / mis_dyso * 100, round_prop))) %>%
+    ungroup() %>% 
+    select(district, year, age, sex, origin, prop_a_smooth) %>%
+    arrange(district, year, sex, origin, age)           
 
   # plot: focus age distribution
-  # years
-  # WHY like this with rev? To have the last year with data in the plot
-  years_plot_ma_prop <- rev(seq(max(years_not_NA), min(years_not_NA), by = -6))
-
-  sszplot(filter(mis_age_prop_ma, year %in% years_plot_ma_prop),
-    aes_x = "age", aes_y = "prop_a_ma", aes_col = "year",
+  sszplot(filter(mis_age_prop_smooth, year %in% year_past_5),
+    aes_x = "age", aes_y = "prop_a_smooth", aes_col = "year",
     grid = c("sex", "origin"),
     labs_y = "proportion in %",
-    name = paste0(mig_number, "16_", mig_name, "_star_age-proportion_after-moving-average_focus-age"),
+    name = paste0(mig_number, "16_", mig_name, "_star_age-proportion_after-smoothing_focus-age"),
     width = 11, height = 8,
     multi = uni_d
   )
 
   # plot: focus years
   # age (subjectively selected)
-  age_plot_ma_prop <- seq(0, 60, by = 20)
+  age_plot_smooth_prop <- seq(0, 60, by = 20)
 
-  sszplot(filter(mis_age_prop_ma, age %in% age_plot_ma_prop),
-    aes_x = "year", aes_y = "prop_a_ma", aes_col = "age",
+  sszplot(filter(mis_age_prop_smooth, age %in% age_plot_smooth_prop),
+    aes_x = "year", aes_y = "prop_a_smooth", aes_col = "age",
     grid = c("sex", "origin"),
     labs_y = "proportion in %", labs_col = "age",
-    name = paste0(mig_number, "17_", mig_name, "_star_age-proportion_after-moving-average_focus-years"),
+    name = paste0(mig_number, "17_", mig_name, "_star_age-proportion_after-smoothing_focus-years"),
     width = 11, height = 8,
     multi = uni_d
   )
 
-  #-------------------------------------------------------------------
-  # fit gam to age proportion
-  #-------------------------------------------------------------------
 
-  # with gam (duration: approx. 6 minutes)
+# smoothing proportion by age with LOESS (by district, year, sex,  --------
 
-  # details see: https://stat.ethz.ch/R-manual/R-patched/library/mgcv/html/smooth.terms.html
-  # initial smooth term 'tp' did not provide an appropriate fit ('bumps')
-  # therefore changed to 'ad' (adaptive smoother)
-  # ad: should be applied, when 'the degree of smoothing should itself vary with the covariates to be smoothed'
-
-  t0 <- Sys.time()
-
-  prop_fit <- arrange(mis_age_prop_ma, district, year, sex, origin, age) %>%
+  prop_fit <- arrange(mis_age_prop_smooth, district, year, sex, origin, age) %>%
     group_by(district, year, sex, origin) %>%
-    mutate(prop_fit = pmax(0, gam(prop_a_ma ~ s(age, bs = "ad"))$fitted.values)) %>%
+    mutate(prop_fit = pmax(0, predict(
+      loess(prop_a_smooth ~ age, span = mis_span_a, degree = 1, na.action = na.aggregate)))) %>%
     ungroup()
 
-  t1 <- Sys.time()
-  duration <- t1 - t0
-
-
+  
   # plot preparation
-  fit_lev <- c("initial", "with gam")
+  fit_lev <- c("initial", "smoothed")
 
-  mis_fit_plot <- gather(prop_fit, `prop_a_ma`, `prop_fit`, key = category, value = prop) %>%
-    mutate(cat = factor(if_else(category == "prop_a_ma",
+  mis_fit_plot <- prop_fit %>% 
+    pivot_longer(c(prop_a_smooth, prop_fit), names_to = "category", values_to = "prop") %>% 
+    mutate(cat = factor(if_else(category == "prop_a_smooth",
       fit_lev[1], fit_lev[2]
     ), levels = fit_lev)) %>%
-    select(district, year, age, sex, origin, cat, prop)
-
+    select(district, year, age, sex, origin, cat, prop)    
+    
   # plot: focus age distribution
-  # years (subjectively selected)
-  years_plot_fit <- seq(min(years_not_NA), max(years_not_NA), by = 6)
 
-  sszplot(filter(mis_fit_plot, year %in% years_plot_fit),
+  sszplot(filter(mis_fit_plot, year %in% year_past_5),
     aes_x = "age", aes_y = "prop", aes_col = "cat",
     grid = c("as.factor(year)", "origin*sex"),
     labs_y = "proportion in %",
-    name = paste0(mig_number, "18_", mig_name, "_star_proportion_with-gam_focus-age"),
+    name = paste0(mig_number, "18_", mig_name, "_star_proportion_smoothed_focus-age"),
     width = 11, height = 8,
     multi = uni_d
   )
 
-  #-------------------------------------------------------------------
-  # Constrained regression
-  #-------------------------------------------------------------------
+
+# constrained regression --------------------------------------------------
 
   # years: base period
-  years_temp <- mis_age_base_begin:mis_age_base_end
-  years_base <- years_temp[years_temp %in% years_not_NA]
+  years_base <- mis_age_base_begin:mis_age_base_end
 
   # data for base period
   prop_base <- filter(prop_fit, year %in% years_base)
@@ -731,15 +678,13 @@ mig_prop_a_dyso <- function(mig_path, mig_vari, mig_district,
     data = prop_base, x = "year", y = "prop_fit",
     group_cols = c("district", "age", "sex", "origin"),
     window = mis_age_window_thres, base_t0 = min(years_base),
-    szen_t0 = max(years_base) + 1, szen_t1 = szen_end,
+    scen_t0 = max(years_base) + 1, scen_t1 = scen_end,
     prop_trend = mis_age_prop_trend, thres_percent = mis_age_thres_percent,
     lower_thres = mis_age_lower_thres, upper_thres = NA
   )
 
-
-
   # limit prediction period
-  prop_pred_begin <- filter(prop_pred, year >= szen_begin)
+  prop_pred_begin <- filter(prop_pred, year >= scen_begin)
 
   # standardize the sum of the proportions to 100 percent
   prop_stand <- group_by(prop_pred_begin, district, year, sex, origin) %>%
@@ -753,7 +698,7 @@ mig_prop_a_dyso <- function(mig_path, mig_vari, mig_district,
   # past and prediction
   mis_a_past_pred <- as_tibble(expand_grid(
     district = uni_d,
-    year = (date_start + 1):szen_end,
+    year = (date_start + 1):scen_end,
     age = mis_age_min:mis_age_max,
     sex = uni_s,
     origin = uni_o
@@ -770,7 +715,7 @@ mig_prop_a_dyso <- function(mig_path, mig_vari, mig_district,
   ex_mig_prop_a_dyso <- mutate(mis_a_past_pred,
     prop = round(prop_a, round_prop)
   ) %>%
-    filter(year >= szen_begin) %>%
+    filter(year >= scen_begin) %>%
     select(district, year, age, sex, origin, prop) %>%
     arrange(district, year, sex, origin, age)
 
@@ -785,16 +730,16 @@ mig_prop_a_dyso <- function(mig_path, mig_vari, mig_district,
     width = 11, height = 8,
     multi = uni_d
   )
-
-
+  
   # plot levels
   time_lev <- c("past", "future")
 
   # plot data
   plot_a_past_pred <- mutate(mis_a_past_pred,
-    time = factor(if_else(year <= mis_age_base_end,
-      time_lev[1], time_lev[2]
-    ), levels = time_lev)
+    time = factor(
+      if_else(year <= mis_age_base_end, time_lev[1], time_lev[2]),
+      levels = time_lev
+    )
   )
 
   # plot: focus age distribution
@@ -802,7 +747,7 @@ mig_prop_a_dyso <- function(mig_path, mig_vari, mig_district,
   # therefore, a plot that focuses on certain years
 
   # years
-  year_plot <- seq(date_start + 1, szen_end, by = 8)
+  year_plot <- seq(date_start + 1, scen_end, by = 8)
 
   sszplot(filter(plot_a_past_pred, year %in% year_plot),
     aes_x = "age", aes_y = "prop_a", aes_col = "year",
@@ -819,7 +764,7 @@ mig_prop_a_dyso <- function(mig_path, mig_vari, mig_district,
   # age (subjectively selected)
   age_plot_pred <- seq(0, 60, by = 20)
 
-  sszplot(filter(plot_a_past_pred, age %in% age_plot_ma_prop),
+  sszplot(filter(plot_a_past_pred, age %in% age_plot_pred),
     aes_x = "year", aes_y = "prop_a", aes_col = "age",
     grid = c("sex", "origin"),
     labs_y = "proportion in %", labs_col = "age",
@@ -830,4 +775,9 @@ mig_prop_a_dyso <- function(mig_path, mig_vari, mig_district,
 
   # output (to get an idea of the exported output)
   return(list(ex_mig_prop_a_dyso))
+
 }
+
+
+
+
