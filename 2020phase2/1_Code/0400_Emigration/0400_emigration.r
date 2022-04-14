@@ -1,15 +1,8 @@
-#-------------------------------------------------------------------
+# header ------------------------------------------------------------------
 # Emigration
-#
-#
-#
-# rok/bad, June 2021
-#-------------------------------------------------------------------
 
 
-#-------------------------------------------------------------------
-# paths, general
-#-------------------------------------------------------------------
+# paths, general ----------------------------------------------------------
 
 # general functions already available?
 if (!exists("para")) {
@@ -36,9 +29,7 @@ if (!exists("para")) {
 # start time
 t0 <- Sys.time()
 
-#-------------------------------------------------------------------
-# emigration*: rate per district and year
-#-------------------------------------------------------------------
+# emigration*: rate per district and year ---------------------------------
 
 # prediction: emigration* rate
 ems_rate_dy <- mig_rate_dy(
@@ -58,10 +49,8 @@ ems_rate_dy <- mig_rate_dy(
 )
 
 
-
-#-------------------------------------------------------------------
-# emigration*: proportion of sex and origin, by district and year
-#-------------------------------------------------------------------
+# emigration*: proportion of sex and origin -------------------------------
+# by district and year
 
 # prediction: proportion of sex an origin
 ems_prop_so_dy <- mig_prop_so_dy(
@@ -81,10 +70,8 @@ ems_prop_so_dy <- mig_prop_so_dy(
 )
 
 
-
-#-------------------------------------------------------------------
-# emigration*: proportion of age (per district, year, sex, origin)
-#-------------------------------------------------------------------
+# emigration*: proportion of age ------------------------------------------
+# per district, year, sex, origin
 
 # prediction: proportion of age (duration: approx. 8 minutes)
 ems_prop_a_dyso <- mig_prop_a_dyso(
