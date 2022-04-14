@@ -1,12 +1,8 @@
-#-------------------------------------------------------------------
+# header ------------------------------------------------------------------
 # migration functions
 #-rate (by district, year)
 #-proportion of sex/origin (by district, year)
 #-proportion of age (by district, year, sex, origin)
-#
-#
-# rok/bad
-#-------------------------------------------------------------------
 
 
 # migration rate per district and year (immigration, emigration)
