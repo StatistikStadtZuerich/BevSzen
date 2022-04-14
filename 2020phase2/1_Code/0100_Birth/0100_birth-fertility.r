@@ -1,8 +1,16 @@
-# header ------------------------------------------------------------------
+#-------------------------------------------------------------------
 # birth: fertility rate
+#
+#
+#
+# rok/bad
+#-------------------------------------------------------------------
 
 
-# paths, general ----------------------------------------------------------
+
+#-------------------------------------------------------------------
+# paths, general
+#-------------------------------------------------------------------
 
 # general functions already available?
 if (!exists("para")) {
@@ -30,7 +38,9 @@ if (!exists("para")) {
 t0 <- Sys.time()
 
 
-# import and data preparation ---------------------------------------------
+#-------------------------------------------------------------------
+# import and data preparation
+#-------------------------------------------------------------------
 
 # birth
 # age: only births of women at 'fertile age'
@@ -50,6 +60,7 @@ bir <- read_csv(bir_od) %>%
     bir = sum(bir),
     .groups = "drop"
   )
+
 
 # population
 # year: begin of year population
@@ -72,10 +83,12 @@ pop <- read_csv(pop_od) %>%
   )
 
 
-
-# fertility ---------------------------------------------------------------
+#-------------------------------------------------------------------
+# fertility
+#-------------------------------------------------------------------
 
 # values for all possible cases
+
 # WHY with age categories? to calculate TFR by age category
 
 cas <- as_tibble(expand_grid(
@@ -115,8 +128,10 @@ fer_yao <- group_by(cas, year, age, origin) %>%
 fer_dyao <- mutate(cas, fer_dyao = if_else(pop == 0, NA_real_, round(bir / pop * 100, round_rate)))
 
 
+#-------------------------------------------------------------------
+# TFR (total fertility rate)
+#-------------------------------------------------------------------
 
-# TFR (total fertility rate) ----------------------------------------------
 # WHY? plots to define the base period for fertility prediction
 
 # TFR by year
@@ -221,7 +236,9 @@ sszplot(tfr_ya2o,
 )
 
 
-# fertility plots (before corrections) ------------------------------------
+#-------------------------------------------------------------------
+# fertility plots (before any corrections)
+#-------------------------------------------------------------------
 
 # plot: fertility by district, year, age, origin
 sszplot(filter(fer_dyao, year >= bir_base_begin),
@@ -249,7 +266,9 @@ sszplot(filter(fer_ya, year >= bir_base_begin),
 )
 
 
-# fertility: replace values in tails, base period only --------------------
+#-------------------------------------------------------------------
+# fertility: replace values in tails, base period only
+#-------------------------------------------------------------------
 
 # cumulative sums vs. thresholds
 # lowcum: cumulative sum from the lower tail of the age distribution
@@ -307,9 +326,11 @@ sszplot(fer_tail,
 )
 
 
-# smooth the corrected fertility rate -------------------------------------
+#-------------------------------------------------------------------
+# smooth the corrected fertility rate
+#-------------------------------------------------------------------
 
-# smoothing with LOESS
+# smoothing with loess
 fer_fit <- arrange(fer_tail, district, year, origin, age) %>%
   group_by(district, year, origin) %>%
   mutate(fer_fit = pmax(0, predict(loess(fer ~ age, span = bir_fer_span, degree = 1, na.action = na.aggregate)))) %>%
@@ -335,8 +356,9 @@ sszplot(fit_dat,
   multi = uni_d
 )
 
-
-# prediction --------------------------------------------------------------
+#-------------------------------------------------------------------
+# prediction
+#-------------------------------------------------------------------
 
 # constrained regression
 # (proportion of linear model and mean, within bandwidth)
@@ -360,8 +382,9 @@ fer_pred <- con_reg(
   mutate(fer_all = if_else(year <= bir_base_end, fer_dyao, pred_roll))
 
 
-
-# plot the predictions: age distribution by district and year -------------
+#-------------------------------------------------------------------
+# plot the predictions: age distribution by district and year
+#-------------------------------------------------------------------
 
 # plot
 sszplot(fer_pred,
@@ -375,7 +398,9 @@ sszplot(fer_pred,
 )
 
 
-# plot the predictions: along year, for selected age ----------------------
+#-------------------------------------------------------------------
+# plot the predictions: along year, for selected age
+#-------------------------------------------------------------------
 
 # selected age
 uni_age <- sort(unique(fer_pred$age))
@@ -420,7 +445,9 @@ sszplot(age_dat,
 )
 
 
-# smooth the future fertility rates ---------------------------------------
+#-------------------------------------------------------------------
+# smooth the future fertility rates
+#-------------------------------------------------------------------
 
 # smoothed (only the prediction years)
 pred_fit <- filter(fer_pred, year >= scen_begin) %>%
@@ -452,8 +479,9 @@ sszplot(sel_dat,
   multi = uni_d
 )
 
-
-# export fertility rates --------------------------------------------------
+#-------------------------------------------------------------------
+# export fertility rates
+#-------------------------------------------------------------------
 
 # prepare the export data
 fer_ex <- mutate(pred_fit, fer = round(pred_fit, round_rate)) %>%
@@ -465,8 +493,9 @@ fer_ex <- mutate(pred_fit, fer = round(pred_fit, round_rate)) %>%
 write_csv(fer_ex, paste0(exp_path, "/birth_fertility_future.csv"))
 
 
-
-# TFR (total fertility rate) ----------------------------------------------
+#-------------------------------------------------------------------
+# TFR (total fertility rate)
+#-------------------------------------------------------------------
 
 # fertility rate of past and future
 fer_ex_past <- rename(fer_dyao, fer = fer_dyao) %>%
@@ -494,9 +523,11 @@ sszplot(tfr_dyo,
 )
 
 
-# TFR by age class --------------------------------------------------------
+#-------------------------------------------------------------------
+# TFR by age class
+#-------------------------------------------------------------------
 
-# TFR data
+# TFR by age class
 tfr_a1 <- bind_rows(fer_ex_past, fer_ex) %>%
   left_join(look_a1, by = "age") %>%
   group_by(district, year, origin, age_1) %>%
@@ -517,8 +548,9 @@ sszplot(tfr_a1,
   multi = uni_o
 )
 
-
-# TFR by age class (more detailed) ----------------------------------------
+#-------------------------------------------------------------------
+# TFR by age class (more detailed)
+#-------------------------------------------------------------------
 
 # TFR by age class
 tfr_a2 <- bind_rows(fer_ex_past, fer_ex) %>%
