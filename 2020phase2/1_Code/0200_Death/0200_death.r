@@ -1,17 +1,8 @@
-#-------------------------------------------------------------------
+# header ------------------------------------------------------------------
 # death: mortality rate
-#
-#
-#
-# rok/bad
-#-------------------------------------------------------------------
 
-#review# not compliant with tidyverse style guide
-#review# should be: # paths, general -------------------------------
-#review# advantage: simply hit Ctrl-Shift-R to insert and have a proper toc
-#-------------------------------------------------------------------
-# paths, general
-#-------------------------------------------------------------------
+
+# paths, general ----------------------------------------------------------
 
 # general functions already available?
 if (!exists("para")) {
@@ -39,15 +30,12 @@ if (!exists("para")) {
 t0 <- Sys.time()
 
 
-#-------------------------------------------------------------------
-# import and data preparation
-#-------------------------------------------------------------------
+
+# import and data preparation ---------------------------------------------
 
 # death
 dea <- read_csv(dea_od) %>%
   rename(year = EreignisDatJahr, age = AlterVCd, dea = AnzSterWir) %>%
-#review# might use a function instead of factor(...) as this is repeating
-#dozens of times (in other filess as well)
   mutate(sex = factor(if_else(SexCd == 1, uni_s[1], uni_s[2]), uni_s)) %>%
   group_by(year, age, sex) %>%
   summarize(
@@ -95,9 +83,8 @@ mor_fso <- read_csv(dea_fso_od) %>%
   select(year, age, sex, region, KategorieCd, mor_yas)
 
 
-#-------------------------------------------------------------------
-# mortality
-#-------------------------------------------------------------------
+
+# mortality ---------------------------------------------------------------
 
 # Zurich (calculation based on all possible cases)
 mor_zh_yas <- as_tibble(expand_grid(
@@ -141,9 +128,9 @@ mor_yasr <- as_tibble(expand_grid(
   left_join(mor_yasr_zh_fso, by = c("year", "age", "sex", "region"))
 
 
-#-------------------------------------------------------------------
-# mortality: age plots
-#-------------------------------------------------------------------
+
+
+# mortality: age plots ----------------------------------------------------
 
 # years (past only)
 year_past <- (date_start + 1):date_end
@@ -169,9 +156,8 @@ sszplot(filter(mor_yasr, year %in% year_5),
   width = 12, height = 7
 )
 
-#-------------------------------------------------------------------
-# mortality: year plots
-#-------------------------------------------------------------------
+
+# mortality: year plots ---------------------------------------------------
 
 # age
 age_select <- c(0, 20, 40, 50, 60, 70, 80)
@@ -199,9 +185,9 @@ sszplot(filter(mor_yasr, age %in% age_select),
   angle = 90
 )
 
-#-------------------------------------------------------------------
-# life expectancy: based on deaths, births, population
-#-------------------------------------------------------------------
+
+
+# life expectancy: based on deaths, births, population --------------------
 
 # no function, since only used once
 
@@ -243,15 +229,15 @@ pop_mean <- as_tibble(expand_grid(
   left_join(bir, by = c("year", "age", "sex")) %>%
   replace_na(list(dx = 0, B = 0))
 
+
 # life expectancy
 
 # life expectancy at certain age (e.g. at birth)
 age_at <- 0
 
-# radix (since not relevant: not a model parameter)
 radix <- 100000
 
-le <- mutate(pop_mean,
+le_mult <- mutate(pop_mean,
   # mx: age-specific mortality rate, Yusuf et al. (2014), eq 7.1
   mx = if_else(Px > 0, dx / Px, NA_real_),
   # qx1: probability to die between age x and age x+1, Yusuf et al. (2014), eq 7.4, 7.5, 7.6
@@ -262,7 +248,6 @@ le <- mutate(pop_mean,
   )),
   # if there is no one at a certain age in the population (e.g. no 96 year old men),
   # then qx1 is NA. However, a value is needed to multiply the subsequent survival probabilities
-#review# shouldn't this rather be the qx of the closest available age?
   qx = if_else(is.na(qx1), dea_qx_NA_le, qx1),
   # survival
   px_ = 1 - qx
@@ -285,8 +270,16 @@ le <- mutate(pop_mean,
     Lx_ = if_else(age == 0, 0.3 * lx + 0.7 * lxp1,
       if_else((age > 0) & (age < dea_age_max_le), 0.5 * lx + 0.5 * lxp1, dx / mx)
     )
-  ) %>%
-  # life expectancy at certain age (e.g. birth)
+  )
+
+# check subgroups
+le_mult_sub <- filter(le_mult, (year == 2018) & (sex == "female"))
+plot(le_mult_sub$age, le_mult_sub$px_, type = "o")
+plot(le_mult_sub$age, le_mult_sub$mult)
+
+
+# life expectancy at certain age (e.g. birth)
+le <- le_mult %>% 
   group_by(year, sex) %>%
   summarize(
     life_years = sum(Lx_[age >= age_at], na.rm = TRUE),
@@ -296,21 +289,17 @@ le <- mutate(pop_mean,
   mutate(life = age_at + life_years / start_pop) %>%
   select(year, sex, life)
 
-# temp <- filter(le, (year == 2018) & (sex == "female"))
-# plot(temp$age, temp$px_, type = "o")
-# plot(temp$age, temp$mult)
 
-
-#-------------------------------------------------------------------
-# life expectancy: based on mortality rate
-#-------------------------------------------------------------------
+# life expectancy: based on mortality rate --------------------------------
 
 # life expectancy
+  # why radix not as parameter? 
+  # the result does not depend on the radix
+  # therefore, avoid to have irrelevant parameters
 le_ysr <- life_exp(
   data = mor_yasr, mor = "mor_yasr",
   age = "age", group_cols = c("year", "sex", "region"),
   age_max = dea_age_max_le, qx_NA = dea_qx_NA_le,
-#review# why not use the variable value instead of 10000?
   age_at = 0, radix = 100000
 ) %>%
   #' manual' correction
@@ -321,16 +310,10 @@ le_ysr <- life_exp(
       c(dea_fso_date_start:dea_fso_date_end, scen_begin:scen_end)), NA_real_, life_exp)
   )) %>%
   select(-life_exp)
-#review# avoid outcommented code
-# temp <- filter(le_ysr, (year == 2018) & (sex == "male") & (region == "Zurich"))
-# plot(temp$age, temp$px_, type = "o")
-# plot(temp$age, temp$mult)
-# plot(temp$age, temp$Lx_)
 
 
-#-------------------------------------------------------------------
-# method comparison (based on rate vs. death/birth/population)
-#-------------------------------------------------------------------
+
+# method comparison (based on rate vs. death/birth/population) ------------
 
 # method differences (rate vs. deaths/births/population)
 # details: see life expectancy function definition
@@ -350,9 +333,9 @@ sszplot(le_methods,
   width = 9, height = 5
 )
 
-#-------------------------------------------------------------------
-# plot: life expectancy
-#-------------------------------------------------------------------
+
+
+# plot: life expectancy ---------------------------------------------------
 
 # years (all: past and future)
 year_all <- (date_start + 1):szen_end
@@ -379,9 +362,9 @@ sszplot(le_ysr,
   width = 10, height = 6
 )
 
-#-------------------------------------------------------------------
-# mortality over base years (including tail correction)
-#-------------------------------------------------------------------
+
+
+# mortality over base years (including tail correction) -------------------
 
 # Zurich (tibble with all possible cases as input)
 mor_zh_asr <- filter(mor_zh_yas, year %in% dea_base_begin:dea_base_end) %>%
@@ -398,12 +381,15 @@ mor_zh_asr <- filter(mor_zh_yas, year %in% dea_base_begin:dea_base_end) %>%
 
 
 # Switzerland
+# why slightly different code (compared to Zurich)?
+# for Switzerland only mortality rates are available
+# median over rates as an approximation
+
 mor_ch_asr <- filter(mor_fso_yas_past, year %in% dea_base_begin:dea_base_end) %>%
   mutate(age_tail = if_else(age <= dea_lower, dea_lower,
     if_else(age >= dea_upper, dea_upper, age)
   )) %>%
   # over tails
-#review# I don't get this additional (compared to ZRH)  code chunk
   group_by(year, age_tail, sex, region) %>%
   summarize(
     mor_asr = median(mor_yas),
@@ -421,7 +407,6 @@ mor_asr_temp <- select(mor_zh_asr, age_tail, sex, region, mor_asr) %>%
   bind_rows(mor_ch_asr)
 
 mor_asr <- as_tibble(expand_grid(
-#review# why double?
   age = as.double(age_min:age_max),
   sex = uni_s,
   region = uni_r
@@ -442,9 +427,8 @@ sszplot(mor_asr,
 )
 
 
-#-------------------------------------------------------------------
-# smoothing with loess
-#-------------------------------------------------------------------
+
+# smoothing with LOESS ----------------------------------------------------
 
 # fit
 # WHY log? because the mortality rates vary substantially
@@ -459,7 +443,6 @@ mor_fit <- select(mor_asr, age, sex, region, mor_asr) %>%
 # plot
 
 # fit: levels
-#review# I still don't like it (see 0100, var. sel_lev, fit_lev)
 fit_lev <- c("initial", "smoothed")
 
 # plot data
@@ -480,19 +463,12 @@ sszplot(plot_dat_fit,
 )
 
 
-#-------------------------------------------------------------------
-# ratio Zurich / Switzerland
-#-------------------------------------------------------------------
+# ratio Zurich / Switzerland ----------------------------------------------
 
 # ratio (Zurich / Switzerland)
 ratio_as <- select(mor_fit, age, sex, region, mor_fit) %>%
   pivot_wider(names_from = "region", values_from = "mor_fit") %>%
   mutate(ratio = Zurich / Switzerland)
-
-#review# avoid outcommented codes
-# Test influences of the tails
-# mutate(ratio = 1)
-# mutate(ratio = if_else((age <= (dea_lower + 10)) | (age >= dea_upper), 1, ratio))
 
 # plot
 sszplot(ratio_as,
@@ -505,9 +481,8 @@ sszplot(ratio_as,
 )
 
 
-#-------------------------------------------------------------------
-# Zurich: future mortality rate
-#-------------------------------------------------------------------
+
+# Zurich: future mortality rate -------------------------------------------
 
 # ZH: future (based on ratio ZH / Switzerland)
 # mortality in percent per year, not more than 100 %
@@ -519,7 +494,6 @@ mor_zh_yas_future <- select(ratio_as, age, sex, ratio) %>%
   rename(mor_yas = mor)
 
 # ZH: past and future
-#review# wouldn't that simply be mor_zh_yas?
 mor_zh_yas_past_future <- select(mor_zh_yas, year, age, sex, mor_yas) %>%
   bind_rows(mor_zh_yas_future)
 
@@ -534,9 +508,19 @@ sszplot(mor_zh_yas_past_future,
 )
 #review# males look strange in 2050 (horizontal line)
 
-#-------------------------------------------------------------------
-# export mortality rates
-#-------------------------------------------------------------------
+temp <- mor_zh_yas_past_future %>% 
+  filter((sex == "male") & (year == 2050))
+plot(temp$age, log(temp$mor_yas))
+head(temp, 20)
+
+
+temp_ch <- mor_fso_yas_future %>% 
+  filter((sex == "male") & (year == 2050))
+plot(temp_ch$age, log(temp_ch$mor_yas))
+head(temp_ch, 20)
+
+
+# export mortality rates --------------------------------------------------
 
 # prepare the export data
 dea_ex <- mutate(mor_zh_yas_past_future, mor = round(mor_yas, round_rate)) %>%
@@ -548,16 +532,16 @@ dea_ex <- mutate(mor_zh_yas_past_future, mor = round(mor_yas, round_rate)) %>%
 write_csv(dea_ex, paste0(exp_path, "/mortality_future.csv"))
 
 
-#-------------------------------------------------------------------
-# Zurich: life expectancy (including the model data)
-#-------------------------------------------------------------------
-#review# what do we need this for? just for plots?
+
+# Zurich: life expectancy (including the model data) ----------------------
+
+# why? visual check, if life expectancy based on predicted rates are ok
+
 # ZH: life expectancy
 le_ys_ZH <- life_exp(
   data = mor_zh_yas_past_future, mor = "mor_yas",
   age = "age", group_cols = c("year", "sex"),
   age_max = dea_age_max_le, qx_NA = dea_qx_NA_le,
-#review# why not use the variable value instead of 10000?
   age_at = 0, radix = 100000
 ) %>%
   mutate(region = factor(text_r[1], uni_r)) %>%
