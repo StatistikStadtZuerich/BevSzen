@@ -1,16 +1,8 @@
-#-------------------------------------------------------------------
-# function: relocation proportion of migration*
-# (immigration* or emigration*)
-#
-#
-#
-# rok/bad, August 2021
-#-------------------------------------------------------------------
+# header ------------------------------------------------------------------
+# relocation proportion of migration* (immigration* or emigration*) 
 
 
-
-# proportion of relocation based on migration*
-
+# relocation proportion  --------------------------------------------------
 rel_prop <- function(mig_path, mig_vari, mig_district,
                      mig_name, rem_number, ex_path,
                      rem_base_begin, rem_base_end, rem_age_max,
@@ -30,9 +22,7 @@ rel_prop <- function(mig_path, mig_vari, mig_district,
 
 
 
-  #-------------------------------------------------------------------
-  # import and data preparation
-  #-------------------------------------------------------------------
+# import and data preparation ---------------------------------------------
 
   # migration (immigration or emigration)
   mig <- read_csv(mig_path) %>%
@@ -93,9 +83,9 @@ rel_prop <- function(mig_path, mig_vari, mig_district,
     replace_na(list(mis = 0, rel = 0))
 
 
-  #-------------------------------------------------------------------
-  # check differences by sex (sum over years)
-  #-------------------------------------------------------------------
+  
+
+# check differences by sex (sum over years) -------------------------------
 
   # WHY? Check if minor differences between sex? Because omitted in precition
   # theoretically this should be evaluated with all interactions (i.e. over years)
@@ -120,13 +110,12 @@ rel_prop <- function(mig_path, mig_vari, mig_district,
     multi = uni_o
   )
 
-  #-------------------------------------------------------------------
-  # differences by origin (sum over years and sex)
-  #-------------------------------------------------------------------
+
+# differences by origin (sum over years and sex) --------------------------
 
   # WHY?
   # first: to emphasize the need of origin in the model
-  # second: and the plots can be used to get an idea the value of an age threshold
+  # second: the plots can be used to get an idea the value of an age threshold
 
   # proportion by dao
   rel_prop_dao <- group_by(mis_rel, district, age, origin) %>%
@@ -146,9 +135,8 @@ rel_prop <- function(mig_path, mig_vari, mig_district,
     width = 11, height = 10
   )
 
-  #-------------------------------------------------------------------
-  # Which base years?
-  #-------------------------------------------------------------------
+
+# which base years? -------------------------------------------------------
 
   # year and origin
 
@@ -196,12 +184,12 @@ rel_prop <- function(mig_path, mig_vari, mig_district,
     grid = c("age", "."),
     labs_y = paste0("proportion in % (relocation on ", mig_name, "*)"),
     name = paste0(rem_number, "03_proportion-yao"),
-    width = 11, height = 14
+    width = 9, height = 15
   )
 
-  #-------------------------------------------------------------------
-  # aggregate over sex
-  #-------------------------------------------------------------------
+  
+
+# aggregate over sex ------------------------------------------------------
 
   # This plot is the starting point (before smoothing, age corrections)
 
@@ -255,13 +243,12 @@ rel_prop <- function(mig_path, mig_vari, mig_district,
     multi = uni_d
   )
 
-  #-------------------------------------------------------------------
-  # maximum age, base years
-  #-------------------------------------------------------------------
+
+# maximum age, base years -------------------------------------------------
 
   # WHY mean and not sum over high age? result is mean age
   # is more appropriate e.g. in plots
-  # and can be explaned (e.g. the mean amount of relocations from people as of age x)
+  # and can be explained (e.g. the mean amount of relocations from people as of age x)
 
   # aggregate
   dyao_amax_ybase <- filter(rem_dyao, (year >= rem_base_begin) & (year <= rem_base_end)) %>%
@@ -275,9 +262,8 @@ rel_prop <- function(mig_path, mig_vari, mig_district,
     rename(age = age_new)
 
 
-  #-------------------------------------------------------------------
-  # dyao: smoothing
-  #-------------------------------------------------------------------
+
+# dyao: smoothing ---------------------------------------------------------
 
   # smoothing (direction: age, result should not be below zero)
   dyao_smooth <- group_by(dyao_amax_ybase, district, year, origin) %>%
@@ -344,9 +330,8 @@ rel_prop <- function(mig_path, mig_vari, mig_district,
     multi = uni_d
   )
 
-  #-------------------------------------------------------------------
-  # dyao: proportion after smoothing
-  #-------------------------------------------------------------------
+
+# dyao: proportion after smoothing ----------------------------------------
 
   # proportion (within the range from 0 to 100 percent)
   prop_dyao_smooth <- mutate(dyao_smooth, rel_prop_dyao = pmax(0, pmin(
@@ -386,9 +371,9 @@ rel_prop <- function(mig_path, mig_vari, mig_district,
     multi = age_plot, multif = "filter(age == x)"
   )
 
-  #-------------------------------------------------------------------
-  # dao (without y)
-  #-------------------------------------------------------------------
+  
+
+# dao (without y) ---------------------------------------------------------
 
   # aggregate
   dao <- group_by(dyao_amax_ybase, district, age, origin) %>%
@@ -444,7 +429,7 @@ rel_prop <- function(mig_path, mig_vari, mig_district,
     labs_y = "quantity per year",
     name = paste0(rem_number, "10_processes_dao_smooth"),
     quotes = quote(scale_alpha_manual(values = c(0.3, 1))),
-    width = 15, height = 10,
+    width = 10, height = 8,
     multi = uni_d
   )
 
@@ -463,10 +448,9 @@ rel_prop <- function(mig_path, mig_vari, mig_district,
     width = 11, height = 10
   )
 
-  #-------------------------------------------------------------------
-  # proportion from different aggregation levels
-  #-------------------------------------------------------------------
+  
 
+# proportion from different aggregation levels ----------------------------
 
   # proportion
   temp_dyao <- select(prop_dyao_smooth, district, year, age, origin, mis_a, rel_prop_dyao) %>%
@@ -531,9 +515,8 @@ rel_prop <- function(mig_path, mig_vari, mig_district,
     multi = uni_d
   )
 
-  #-------------------------------------------------------------------
-  # smoothing (after different levels of aggregation were brought together
-  #-------------------------------------------------------------------
+
+# smoothing (after different levels of aggregation were brought to --------
 
   # smoothing (direction: age)
   prop_agg_smooth <- select(prop_agg, district, year, age, origin, rel_prop) %>%
@@ -584,17 +567,14 @@ rel_prop <- function(mig_path, mig_vari, mig_district,
     multi = uni_d
   )
 
-  #-------------------------------------------------------------------
-  # Constrained regression
-  #-------------------------------------------------------------------
+
+# constrained regression --------------------------------------------------
 
   # prediction (duration: approx. 20 seconds)
 
   # Why no upper threshold?
   # proportions will be standardized to 100 percent anyways
 
-
-  # system.time(
   prop_pred <-
     con_reg(
       data = prop_agg_smooth,
@@ -603,22 +583,20 @@ rel_prop <- function(mig_path, mig_vari, mig_district,
       group_cols = c("district", "age", "origin"),
       window = rem_window_thres,
       base_t0 = rem_base_begin,
-      szen_t0 = szen_begin,
-      szen_t1 = szen_end,
+      scen_t0 = scen_begin,
+      scen_t1 = scen_end,
       prop_trend = rem_prop_trend,
       thres_percent = rem_thres_percent,
       lower_thres = rem_lower_thres,
       upper_thres = rem_upper_thres
     )
-  # )
-
 
   # limit prediction period
-  prop_pred_begin <- filter(prop_pred, year >= szen_begin)
+  prop_pred_begin <- filter(prop_pred, year >= scen_begin)
 
-  #-------------------------------------------------------------------
-  # expand to ages beyond age threshold
-  #-------------------------------------------------------------------
+  
+
+# expand to ages beyond age threshold -------------------------------------
 
   # age at age threshold
   prop_age_thres <- filter(prop_pred_begin, age == rem_age_max) %>%
@@ -628,7 +606,7 @@ rel_prop <- function(mig_path, mig_vari, mig_district,
   # at ages beyond age threshold: adopt proportion
   prop_age <- as_tibble(expand_grid(
     district = uni_d,
-    year = szen_begin:szen_end,
+    year = scen_begin:scen_end,
     age = age_min:age_max,
     origin = uni_o
   )) %>%
@@ -658,7 +636,7 @@ rel_prop <- function(mig_path, mig_vari, mig_district,
   # plot: focus age
 
   # base years (subjectively, but last year in the plot)
-  year_plot <- seq(szen_begin, szen_end, by = 7)
+  year_plot <- seq(scen_begin, scen_end, by = 7)
 
   # plot
   sszplot(plot_pred_smooth %>% filter(year %in% year_plot),
@@ -671,9 +649,9 @@ rel_prop <- function(mig_path, mig_vari, mig_district,
     multi = uni_d
   )
 
-  #-------------------------------------------------------------------
-  # plot the final predictions
-  #-------------------------------------------------------------------
+  
+
+# plot the final predictions ----------------------------------------------
 
   # past rate (before smoothing)
   rem_dyao_not_smoothed <- mutate(rem_dyao,
@@ -684,7 +662,7 @@ rel_prop <- function(mig_path, mig_vari, mig_district,
   # past and prediction
   rem_past_pred <- as_tibble(expand_grid(
     district = uni_d,
-    year = date_start:szen_end,
+    year = date_start:scen_end,
     age = age_min:age_max,
     origin = uni_o
   )) %>%
@@ -692,7 +670,7 @@ rel_prop <- function(mig_path, mig_vari, mig_district,
     left_join(select(pred_smooth, district, year, age, origin, pred_smooth),
       by = c("district", "year", "age", "origin")
     ) %>%
-    mutate(prop = if_else(year < szen_begin, rel_prop_dyao, pred_smooth))
+    mutate(prop = if_else(year < scen_begin, rel_prop_dyao, pred_smooth))
 
   # colors
 
@@ -711,7 +689,7 @@ rel_prop <- function(mig_path, mig_vari, mig_district,
 
   # plot data
   plot_a_past_pred <- mutate(rem_past_pred,
-    time = factor(if_else(year < szen_begin,
+    time = factor(if_else(year < scen_begin,
       time_lev[1], time_lev[2]
     ), levels = time_lev)
   )
@@ -722,7 +700,7 @@ rel_prop <- function(mig_path, mig_vari, mig_district,
   # therefore, a plot that focuses on certain years
 
   # years
-  year_temp <- date_start:szen_end
+  year_temp <- date_start:scen_end
   year_plot <- seq(min(year_temp), max(year_temp), by = 8)
 
   sszplot(plot_a_past_pred %>% filter(year %in% year_plot),
@@ -752,9 +730,9 @@ rel_prop <- function(mig_path, mig_vari, mig_district,
     multi = uni_d
   )
 
-  #-------------------------------------------------------------------
-  # export the results
-  #-------------------------------------------------------------------
+  
+
+# export the results ------------------------------------------------------
 
   # proportion: prediction
   rel_ex_data <- mutate(pred_smooth, prop_rel_dyao = round(pred_smooth, round_prop)) %>%
