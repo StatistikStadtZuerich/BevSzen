@@ -30,7 +30,6 @@ if (!exists("para")) {
 t0 <- Sys.time()
 
 
-
 # proportion of relocation (based on immigration*) ------------------------
 
 ims_rel_prop <- rel_prop(
