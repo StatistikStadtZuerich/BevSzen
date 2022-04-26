@@ -122,6 +122,9 @@ sszplot(car_dyep,
 car_dyepw <- group_by(car_dat, district, year, residence, plot, owner, cat) %>%
   summarize(ha = sum(ha), .groups = "drop")
 
+
+
+
 # plot
 sszplot(car_dyepw,
   aes_x = "year", aes_y = "ha", aes_col = "residence", aes_ltyp = "plot",
