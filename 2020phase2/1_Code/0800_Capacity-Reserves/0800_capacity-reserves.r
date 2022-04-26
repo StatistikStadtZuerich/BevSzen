@@ -1,11 +1,6 @@
 # header ------------------------------------------------------------------
 
-
-
 # paths, general ----------------------------------------------------------
-
-
-
 
 # general functions already available?
 if (!exists("para")) {
@@ -36,9 +31,7 @@ car_path <- "2_Data/1_Input/KaReB.csv"
 t0 <- Sys.time()
 
 
-
 # import and data preparation ---------------------------------------------
-
 
 # capacity and reserves: data
 car_dat <- read_csv(car_path) %>%
@@ -100,9 +93,8 @@ sszplot(car_yepw,
   labs_x = "year of data delivery", labs_y = "area (in ha)",
   scale_y = c(0, NA),
   name = "0801_entire-city_by-owner",
-  width = 10, height = 8
+  width = 10, height = 10
 )
-
 
 
 # plot (by district, all owner categories) --------------------------------
@@ -145,7 +137,6 @@ sszplot(car_dyepw,
 
 
 # combine information (with the parameters) -------------------------------
-
 
 # current data (and no area values below zero)
 curr <- mutate(car_dyepw, area = pmax(0, ha)) %>%
@@ -238,7 +229,7 @@ sszplot(usage_prop,
 # usage per year ----------------------------------------------------------
 
 # exp-distribution over years
-exp_y <- tibble(year = szen_begin:szen_end) %>%
+exp_y <- tibble(year = scen_begin:scen_end) %>%
   mutate(
     delta = year - date_end,
     exp_y = exp(car_lamda * delta)
@@ -251,7 +242,7 @@ exp_y_sum <- filter(exp_y, year <= car_y) %>%
 # usage: proportion of the reserves per year
 usage_y_prop <- as_tibble(expand_grid(
   district = uni_d,
-  year = szen_begin:szen_end,
+  year = scen_begin:scen_end,
   owner = uni_w,
   exp_y_sum = exp_y_sum$exp_y_sum
 )) %>%
@@ -267,7 +258,7 @@ check_usage_y <- usage_y_prop %>%
   group_by(year) %>%
   summarize(usage_sum = sum(usage_new))
 
-# check: total usage (hab)
+# check: total usage (ha)
 sum(check_usage_y$usage_sum)
 
 # check: sum until year 'car_y'
@@ -280,7 +271,7 @@ check <- filter(usage_y_prop, year <= car_y) %>%
     .groups = "drop"
   )
 
-# the total sum (until year 'szen_end')
+# the total sum (until year 'scen_end')
 # the total should not exceed 100 percent of the reserves
 
 total <- group_by(usage_y_prop, district, owner) %>%
