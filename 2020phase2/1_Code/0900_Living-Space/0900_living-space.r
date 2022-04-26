@@ -1,5 +1,5 @@
 # header ------------------------------------------------------------------
-# living space ------------------------------------------------------------
+# living space
 
 # paths, general ----------------------------------------------------------
 
@@ -87,7 +87,7 @@ sszplot(spa_yw,
 
 
 
-# living space by district, year and owner --------------------------------
+# living space (area, apartments, people, by dyw) -------------------------
 
 # livings space (dyw)
 spa_dyw <- group_by(spa_dat, district, year, owner) %>%
