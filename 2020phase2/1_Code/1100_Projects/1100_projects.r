@@ -100,7 +100,7 @@ sszplot(pro_yt,
   labs_x = "",
   grid = c("status", "."),
   name = "1101_projects_by-year-status",
-  width = 6, height = 12
+  width = 8, height = 12
 )
 
 
@@ -121,7 +121,7 @@ sszplot(pro_yw,
   labs_x = "",
   grid = c(".", "owner"),
   name = "1102_projects_by-year-owner",
-  width = 10, height = 4
+  width = 12, height = 5
 )
 
 
@@ -142,7 +142,7 @@ sszplot(pro_ywt,
   labs_x = "",
   grid = c("status", "owner"),
   name = "1103_projects_by-year-owner-status",
-  width = 10, height = 12
+  width = 12, height = 12
 )
 
 
@@ -197,8 +197,6 @@ pro_not <- left_join(pro_all, look_not,
   by = "status"
 ) %>%
   mutate(realized = apartments * (100 - not_realized) / 100)
-
-
 
 
 # delayed -----------------------------------------------------------------
