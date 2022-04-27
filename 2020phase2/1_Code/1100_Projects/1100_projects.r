@@ -2,7 +2,6 @@
 # projects (i.e. construction projects)
 
 
-
 # paths, general ----------------------------------------------------------
 
 # general functions already available?
