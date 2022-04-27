@@ -204,18 +204,17 @@ pro_not <- left_join(pro_all, look_not,
 # lambda: non-linear model
 # WHY lambda positive?
 # to allow transformation before the regression
-transfo <- 5
 
 data_points <- tibble(
   year = c(pro_begin, pro_end),
-  lambda = c(pro_lambda_begin, pro_lambda_end)^(1 / transfo)
+  lambda = c(pro_lambda_begin, pro_lambda_end)^(1 / pro_transfo)
 )
 
 lm_ <- lm(lambda ~ year, data = data_points)
 
 lambda_y <- tibble(year = pro_begin:pro_end) %>%
   add_predictions(lm_) %>%
-  mutate(lambda = pred^transfo) %>%
+  mutate(lambda = pred^pro_transfo) %>%
   select(year, lambda)
 
 # delay (1 to 6 years)
