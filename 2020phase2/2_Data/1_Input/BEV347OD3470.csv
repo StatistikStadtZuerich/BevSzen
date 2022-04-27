@@ -1,250 +1,281 @@
 ﻿"StichtagDatJahr","QuarCd","QuarLang","EigentumCd","EigentumLang","StatusCd","StatusLang","WhgNeu","WhgAbbruch"
-2021,"021","Wollishofen","2","andere","4","Bau begonnen",30,0
-2021,"021","Wollishofen","2","andere","5","fertiggestellt",184,0
-2021,"023","Leimbach","2","andere","4","Bau begonnen",149,0
-2021,"024","Enge","2","andere","5","fertiggestellt",18,0
-2021,"031","Alt-Wiedikon","2","andere","4","Bau begonnen",7,0
-2021,"033","Friesenberg","2","andere","4","Bau begonnen",36,0
-2021,"034","Sihlfeld","2","andere","4","Bau begonnen",41,0
-2021,"041","Werd","1","staedtisch/genossenschaftlich","4","Bau begonnen",24,0
-2021,"041","Werd","2","andere","5","fertiggestellt",80,0
-2021,"042","Langstrasse","2","andere","4","Bau begonnen",57,0
-2021,"044","Hard","1","staedtisch/genossenschaftlich","5","fertiggestellt",46,0
-2021,"044","Hard","2","andere","4","Bau begonnen",34,0
-2021,"051","Gewerbeschule","1","staedtisch/genossenschaftlich","5","fertiggestellt",55,0
-2021,"051","Gewerbeschule","2","andere","4","Bau begonnen",34,0
-2021,"061","Unterstrass","1","staedtisch/genossenschaftlich","4","Bau begonnen",45,0
-2021,"061","Unterstrass","1","staedtisch/genossenschaftlich","5","fertiggestellt",105,0
-2021,"061","Unterstrass","2","andere","4","Bau begonnen",56,0
-2021,"063","Oberstrass","2","andere","3","bewilligt",2,2
-2021,"063","Oberstrass","2","andere","4","Bau begonnen",41,0
-2021,"071","Fluntern","2","andere","4","Bau begonnen",41,0
-2021,"071","Fluntern","2","andere","5","fertiggestellt",24,0
-2021,"072","Hottingen","2","andere","3","bewilligt",14,0
+2021,"023","Leimbach","2","andere","4","Bau begonnen",31,0
+2021,"042","Langstrasse","2","andere","4","Bau begonnen",42,0
+2021,"044","Hard","1","staedtisch/genossenschaftlich","4","Bau begonnen",16,0
+2021,"061","Unterstrass","2","andere","4","Bau begonnen",14,0
+2021,"063","Oberstrass","2","andere","4","Bau begonnen",6,0
+2021,"071","Fluntern","2","andere","4","Bau begonnen",26,0
 2021,"072","Hottingen","2","andere","4","Bau begonnen",6,0
-2021,"073","Hirslanden","2","andere","4","Bau begonnen",2,0
-2021,"074","Witikon","2","andere","4","Bau begonnen",86,0
-2021,"074","Witikon","2","andere","5","fertiggestellt",3,0
-2021,"081","Seefeld","1","staedtisch/genossenschaftlich","5","fertiggestellt",121,0
+2021,"074","Witikon","2","andere","4","Bau begonnen",4,0
 2021,"081","Seefeld","2","andere","4","Bau begonnen",15,0
-2021,"082","Mühlebach","2","andere","3","bewilligt",2,0
+2021,"082","Mühlebach","2","andere","4","Bau begonnen",2,0
 2021,"083","Weinegg","2","andere","4","Bau begonnen",24,0
+2021,"091","Albisrieden","1","staedtisch/genossenschaftlich","3","bewilligt",53,53
 2021,"091","Albisrieden","1","staedtisch/genossenschaftlich","4","Bau begonnen",109,0
-2021,"091","Albisrieden","2","andere","4","Bau begonnen",209,0
-2021,"091","Albisrieden","2","andere","5","fertiggestellt",9,0
-2021,"092","Altstetten","1","staedtisch/genossenschaftlich","4","Bau begonnen",173,0
-2021,"092","Altstetten","2","andere","4","Bau begonnen",292,0
-2021,"092","Altstetten","2","andere","5","fertiggestellt",82,0
-2021,"101","Höngg","2","andere","4","Bau begonnen",95,0
-2021,"101","Höngg","2","andere","5","fertiggestellt",22,0
-2021,"102","Wipkingen","2","andere","4","Bau begonnen",18,0
-2021,"102","Wipkingen","2","andere","5","fertiggestellt",5,0
-2021,"111","Affoltern","2","andere","4","Bau begonnen",59,0
-2021,"115","Oerlikon","1","staedtisch/genossenschaftlich","4","Bau begonnen",43,0
-2021,"115","Oerlikon","2","andere","4","Bau begonnen",100,0
-2021,"119","Seebach","2","andere","4","Bau begonnen",275,0
-2021,"119","Seebach","2","andere","5","fertiggestellt",144,0
-2021,"122","Schwamendingen-Mitte","2","andere","4","Bau begonnen",22,0
-2021,"122","Schwamendingen-Mitte","2","andere","5","fertiggestellt",14,0
-2022,"021","Wollishofen","1","staedtisch/genossenschaftlich","4","Bau begonnen",287,0
+2021,"092","Altstetten","2","andere","4","Bau begonnen",8,0
+2021,"101","Höngg","2","andere","4","Bau begonnen",20,0
+2021,"111","Affoltern","2","andere","4","Bau begonnen",1,0
+2021,"115","Oerlikon","2","andere","4","Bau begonnen",23,0
+2021,"119","Seebach","2","andere","4","Bau begonnen",20,0
+2021,"122","Schwamendingen-Mitte","2","andere","4","Bau begonnen",30,0
+2022,"021","Wollishofen","1","staedtisch/genossenschaftlich","4","Bau begonnen",290,0
 2022,"021","Wollishofen","2","andere","4","Bau begonnen",27,0
-2022,"023","Leimbach","1","staedtisch/genossenschaftlich","1","projektiert",47,0
-2022,"023","Leimbach","2","andere","4","Bau begonnen",18,0
+2022,"023","Leimbach","2","andere","4","Bau begonnen",20,0
 2022,"024","Enge","2","andere","3","bewilligt",46,40
-2022,"031","Alt-Wiedikon","1","staedtisch/genossenschaftlich","1","projektiert",99,95
 2022,"031","Alt-Wiedikon","2","andere","4","Bau begonnen",73,0
 2022,"033","Friesenberg","2","andere","4","Bau begonnen",12,0
-2022,"034","Sihlfeld","2","andere","4","Bau begonnen",46,0
-2022,"041","Werd","2","andere","4","Bau begonnen",2,0
+2022,"034","Sihlfeld","2","andere","3","bewilligt",21,5
+2022,"034","Sihlfeld","2","andere","4","Bau begonnen",70,0
+2022,"041","Werd","2","andere","4","Bau begonnen",12,0
 2022,"042","Langstrasse","2","andere","4","Bau begonnen",12,0
 2022,"044","Hard","2","andere","4","Bau begonnen",177,0
+2022,"051","Gewerbeschule","2","andere","4","Bau begonnen",34,0
 2022,"061","Unterstrass","1","staedtisch/genossenschaftlich","4","Bau begonnen",82,0
-2022,"061","Unterstrass","2","andere","4","Bau begonnen",30,0
-2022,"063","Oberstrass","2","andere","4","Bau begonnen",30,0
-2022,"071","Fluntern","2","andere","3","bewilligt",2,1
-2022,"071","Fluntern","2","andere","4","Bau begonnen",21,0
-2022,"072","Hottingen","2","andere","4","Bau begonnen",40,0
-2022,"073","Hirslanden","2","andere","3","bewilligt",50,46
-2022,"073","Hirslanden","2","andere","4","Bau begonnen",61,0
-2022,"074","Witikon","2","andere","3","bewilligt",22,6
-2022,"074","Witikon","2","andere","4","Bau begonnen",40,0
+2022,"061","Unterstrass","2","andere","4","Bau begonnen",38,0
+2022,"063","Oberstrass","2","andere","4","Bau begonnen",32,0
+2022,"071","Fluntern","2","andere","4","Bau begonnen",31,0
+2022,"072","Hottingen","2","andere","3","bewilligt",32,4
+2022,"072","Hottingen","2","andere","4","Bau begonnen",28,0
+2022,"073","Hirslanden","2","andere","4","Bau begonnen",111,0
+2022,"074","Witikon","2","andere","3","bewilligt",4,1
+2022,"074","Witikon","2","andere","4","Bau begonnen",191,0
 2022,"082","Mühlebach","2","andere","4","Bau begonnen",13,0
-2022,"083","Weinegg","2","andere","3","bewilligt",8,2
-2022,"083","Weinegg","2","andere","4","Bau begonnen",2,0
+2022,"083","Weinegg","2","andere","4","Bau begonnen",10,0
 2022,"091","Albisrieden","1","staedtisch/genossenschaftlich","4","Bau begonnen",75,0
-2022,"091","Albisrieden","2","andere","4","Bau begonnen",66,0
-2022,"092","Altstetten","2","andere","3","bewilligt",64,9
-2022,"092","Altstetten","2","andere","4","Bau begonnen",199,0
-2022,"101","Höngg","2","andere","3","bewilligt",17,3
-2022,"101","Höngg","2","andere","4","Bau begonnen",16,0
-2022,"102","Wipkingen","2","andere","3","bewilligt",14,12
-2022,"102","Wipkingen","2","andere","4","Bau begonnen",39,0
-2022,"111","Affoltern","1","staedtisch/genossenschaftlich","1","projektiert",64,62
-2022,"111","Affoltern","2","andere","1","projektiert",100,0
-2022,"111","Affoltern","2","andere","4","Bau begonnen",55,0
-2022,"115","Oerlikon","2","andere","3","bewilligt",16,0
-2022,"115","Oerlikon","2","andere","4","Bau begonnen",39,0
+2022,"091","Albisrieden","2","andere","4","Bau begonnen",195,0
+2022,"092","Altstetten","2","andere","4","Bau begonnen",428,0
+2022,"101","Höngg","2","andere","3","bewilligt",6,1
+2022,"101","Höngg","2","andere","4","Bau begonnen",61,0
+2022,"102","Wipkingen","2","andere","3","bewilligt",1,1
+2022,"102","Wipkingen","2","andere","4","Bau begonnen",67,0
+2022,"111","Affoltern","2","andere","3","bewilligt",1,1
+2022,"111","Affoltern","2","andere","4","Bau begonnen",95,0
+2022,"115","Oerlikon","1","staedtisch/genossenschaftlich","0","projektiert, Infoplan",123,0
+2022,"115","Oerlikon","1","staedtisch/genossenschaftlich","4","Bau begonnen",43,0
+2022,"115","Oerlikon","2","andere","4","Bau begonnen",78,0
 2022,"119","Seebach","1","staedtisch/genossenschaftlich","4","Bau begonnen",35,0
-2022,"119","Seebach","2","andere","3","bewilligt",24,36
-2022,"119","Seebach","2","andere","4","Bau begonnen",131,0
-2022,"121","Saatlen","1","staedtisch/genossenschaftlich","1","projektiert",54,52
-2022,"122","Schwamendingen-Mitte","2","andere","1","projektiert",61,17
+2022,"119","Seebach","2","andere","3","bewilligt",1,1
+2022,"119","Seebach","2","andere","4","Bau begonnen",341,0
 2022,"122","Schwamendingen-Mitte","2","andere","3","bewilligt",37,27
 2022,"122","Schwamendingen-Mitte","2","andere","4","Bau begonnen",26,0
-2022,"123","Hirzenbach","2","andere","3","bewilligt",29,0
-2023,"021","Wollishofen","1","staedtisch/genossenschaftlich","3","bewilligt",111,82
-2023,"021","Wollishofen","2","andere","3","bewilligt",376,14
-2023,"021","Wollishofen","2","andere","4","Bau begonnen",140,0
-2023,"023","Leimbach","1","staedtisch/genossenschaftlich","1","projektiert",250,189
-2023,"023","Leimbach","2","andere","3","bewilligt",22,0
-2023,"024","Enge","2","andere","3","bewilligt",176,15
-2023,"031","Alt-Wiedikon","2","andere","3","bewilligt",426,33
-2023,"034","Sihlfeld","1","staedtisch/genossenschaftlich","3","bewilligt",16,0
-2023,"041","Werd","2","andere","3","bewilligt",74,0
-2023,"044","Hard","1","staedtisch/genossenschaftlich","3","bewilligt",45,23
+2023,"021","Wollishofen","2","andere","4","Bau begonnen",76,0
+2023,"023","Leimbach","2","andere","3","bewilligt",3,1
+2023,"024","Enge","1","staedtisch/genossenschaftlich","0","projektiert, Infoplan",1,1
+2023,"024","Enge","2","andere","4","Bau begonnen",15,0
+2023,"031","Alt-Wiedikon","2","andere","3","bewilligt",19,18
+2023,"033","Friesenberg","2","andere","4","Bau begonnen",36,0
+2023,"034","Sihlfeld","1","staedtisch/genossenschaftlich","0","projektiert, Infoplan",254,56
+2023,"034","Sihlfeld","1","staedtisch/genossenschaftlich","4","Bau begonnen",16,0
+2023,"034","Sihlfeld","2","andere","3","bewilligt",52,48
+2023,"042","Langstrasse","2","andere","4","Bau begonnen",51,0
 2023,"044","Hard","2","andere","4","Bau begonnen",149,0
 2023,"051","Gewerbeschule","2","andere","4","Bau begonnen",30,0
-2023,"061","Unterstrass","1","staedtisch/genossenschaftlich","3","bewilligt",134,73
-2023,"061","Unterstrass","2","andere","1","projektiert",35,21
-2023,"061","Unterstrass","2","andere","3","bewilligt",82,96
+2023,"061","Unterstrass","2","andere","3","bewilligt",8,2
 2023,"061","Unterstrass","2","andere","4","Bau begonnen",35,0
-2023,"063","Oberstrass","2","andere","3","bewilligt",2,0
-2023,"071","Fluntern","2","andere","3","bewilligt",83,11
-2023,"072","Hottingen","2","andere","3","bewilligt",32,4
-2023,"073","Hirslanden","2","andere","3","bewilligt",25,0
-2023,"074","Witikon","2","andere","1","projektiert",100,29
-2023,"074","Witikon","2","andere","3","bewilligt",144,1
-2023,"082","Mühlebach","2","andere","3","bewilligt",54,13
-2023,"083","Weinegg","2","andere","3","bewilligt",23,3
-2023,"091","Albisrieden","1","staedtisch/genossenschaftlich","1","projektiert",502,126
-2023,"091","Albisrieden","2","andere","3","bewilligt",224,205
-2023,"092","Altstetten","2","andere","3","bewilligt",250,95
-2023,"092","Altstetten","2","andere","4","Bau begonnen",135,0
-2023,"101","Höngg","1","staedtisch/genossenschaftlich","1","projektiert",120,81
-2023,"101","Höngg","2","andere","3","bewilligt",35,0
-2023,"102","Wipkingen","2","andere","3","bewilligt",30,8
+2023,"071","Fluntern","2","andere","3","bewilligt",17,0
+2023,"074","Witikon","2","andere","3","bewilligt",21,2
+2023,"074","Witikon","2","andere","4","Bau begonnen",55,0
+2023,"082","Mühlebach","2","andere","4","Bau begonnen",36,0
+2023,"091","Albisrieden","2","andere","3","bewilligt",237,305
+2023,"092","Altstetten","1","staedtisch/genossenschaftlich","4","Bau begonnen",95,0
+2023,"092","Altstetten","2","andere","2","eingereicht",25,7
+2023,"092","Altstetten","2","andere","3","bewilligt",12,4
+2023,"092","Altstetten","2","andere","4","Bau begonnen",179,0
+2023,"101","Höngg","2","andere","3","bewilligt",34,1
 2023,"111","Affoltern","1","staedtisch/genossenschaftlich","4","Bau begonnen",191,0
-2023,"111","Affoltern","2","andere","3","bewilligt",53,27
-2023,"115","Oerlikon","2","andere","3","bewilligt",23,5
-2023,"119","Seebach","1","staedtisch/genossenschaftlich","1","projektiert",87,78
-2023,"119","Seebach","1","staedtisch/genossenschaftlich","3","bewilligt",18,2
+2023,"115","Oerlikon","2","andere","3","bewilligt",22,7
+2023,"115","Oerlikon","2","andere","4","Bau begonnen",12,0
 2023,"119","Seebach","1","staedtisch/genossenschaftlich","4","Bau begonnen",129,0
-2023,"119","Seebach","2","andere","3","bewilligt",26,6
-2023,"119","Seebach","2","andere","4","Bau begonnen",139,0
-2023,"122","Schwamendingen-Mitte","2","andere","3","bewilligt",11,3
-2023,"123","Hirzenbach","1","staedtisch/genossenschaftlich","3","bewilligt",84,0
+2023,"119","Seebach","2","andere","4","Bau begonnen",155,0
+2023,"122","Schwamendingen-Mitte","1","staedtisch/genossenschaftlich","4","Bau begonnen",133,0
+2023,"122","Schwamendingen-Mitte","2","andere","4","Bau begonnen",12,0
 2023,"123","Hirzenbach","1","staedtisch/genossenschaftlich","4","Bau begonnen",192,0
-2023,"123","Hirzenbach","2","andere","1","projektiert",200,0
-2024,"021","Wollishofen","1","staedtisch/genossenschaftlich","2","eingereicht",79,54
-2024,"021","Wollishofen","2","andere","1","projektiert",50,29
+2023,"123","Hirzenbach","2","andere","3","bewilligt",29,0
+2024,"021","Wollishofen","1","staedtisch/genossenschaftlich","3","bewilligt",211,141
+2024,"021","Wollishofen","2","andere","1","projektiert, andere",287,57
+2024,"021","Wollishofen","2","andere","3","bewilligt",333,20
+2024,"021","Wollishofen","2","andere","4","Bau begonnen",140,0
+2024,"023","Leimbach","1","staedtisch/genossenschaftlich","1","projektiert, andere",167,161
 2024,"023","Leimbach","2","andere","3","bewilligt",6,3
-2024,"024","Enge","2","andere","3","bewilligt",39,2
-2024,"031","Alt-Wiedikon","2","andere","3","bewilligt",9,2
-2024,"033","Friesenberg","1","staedtisch/genossenschaftlich","1","projektiert",147,97
-2024,"034","Sihlfeld","1","staedtisch/genossenschaftlich","1","projektiert",150,163
-2024,"034","Sihlfeld","2","andere","3","bewilligt",30,14
-2024,"041","Werd","2","andere","3","bewilligt",10,8
-2024,"042","Langstrasse","2","andere","3","bewilligt",51,15
-2024,"044","Hard","1","staedtisch/genossenschaftlich","2","eingereicht",122,80
-2024,"061","Unterstrass","1","staedtisch/genossenschaftlich","1","projektiert",85,46
-2024,"061","Unterstrass","1","staedtisch/genossenschaftlich","2","eingereicht",18,0
-2024,"061","Unterstrass","2","andere","3","bewilligt",23,5
-2024,"071","Fluntern","2","andere","3","bewilligt",10,1
-2024,"073","Hirslanden","2","andere","3","bewilligt",8,4
-2024,"074","Witikon","2","andere","2","eingereicht",100,60
-2024,"074","Witikon","2","andere","3","bewilligt",27,0
+2024,"024","Enge","2","andere","3","bewilligt",70,2
+2024,"031","Alt-Wiedikon","2","andere","3","bewilligt",376,10
+2024,"033","Friesenberg","1","staedtisch/genossenschaftlich","3","bewilligt",1,0
+2024,"033","Friesenberg","2","andere","3","bewilligt",3,0
+2024,"034","Sihlfeld","1","staedtisch/genossenschaftlich","1","projektiert, andere",150,276
+2024,"034","Sihlfeld","2","andere","3","bewilligt",9,10
+2024,"041","Werd","2","andere","1","projektiert, andere",79,0
+2024,"041","Werd","2","andere","3","bewilligt",74,0
+2024,"044","Hard","1","staedtisch/genossenschaftlich","1","projektiert, andere",149,0
+2024,"061","Unterstrass","1","staedtisch/genossenschaftlich","1","projektiert, andere",40,0
+2024,"061","Unterstrass","1","staedtisch/genossenschaftlich","3","bewilligt",245,73
+2024,"061","Unterstrass","2","andere","3","bewilligt",105,111
+2024,"063","Oberstrass","2","andere","3","bewilligt",17,5
+2024,"071","Fluntern","2","andere","3","bewilligt",75,12
+2024,"072","Hottingen","2","andere","3","bewilligt",14,0
+2024,"073","Hirslanden","2","andere","1","projektiert, andere",50,0
+2024,"073","Hirslanden","2","andere","3","bewilligt",33,4
+2024,"074","Witikon","2","andere","0","projektiert, Infoplan",181,101
+2024,"074","Witikon","2","andere","3","bewilligt",167,62
+2024,"081","Seefeld","2","andere","3","bewilligt",12,0
+2024,"082","Mühlebach","2","andere","3","bewilligt",18,0
+2024,"083","Weinegg","1","staedtisch/genossenschaftlich","0","projektiert, Infoplan",200,43
+2024,"083","Weinegg","2","andere","3","bewilligt",23,3
+2024,"091","Albisrieden","1","staedtisch/genossenschaftlich","1","projektiert, andere",0,45
 2024,"091","Albisrieden","1","staedtisch/genossenschaftlich","3","bewilligt",24,0
-2024,"091","Albisrieden","2","andere","3","bewilligt",87,1
-2024,"092","Altstetten","1","staedtisch/genossenschaftlich","2","eingereicht",158,86
-2024,"092","Altstetten","2","andere","2","eingereicht",150,16
-2024,"092","Altstetten","2","andere","3","bewilligt",9,2
-2024,"101","Höngg","2","andere","3","bewilligt",2,0
-2024,"102","Wipkingen","1","staedtisch/genossenschaftlich","1","projektiert",120,0
-2024,"102","Wipkingen","2","andere","2","eingereicht",44,39
-2024,"102","Wipkingen","2","andere","3","bewilligt",1,1
-2024,"111","Affoltern","1","staedtisch/genossenschaftlich","1","projektiert",200,24
-2024,"111","Affoltern","2","andere","3","bewilligt",20,16
-2024,"115","Oerlikon","2","andere","3","bewilligt",76,7
-2024,"119","Seebach","1","staedtisch/genossenschaftlich","1","projektiert",625,321
-2024,"119","Seebach","1","staedtisch/genossenschaftlich","3","bewilligt",290,133
+2024,"091","Albisrieden","2","andere","1","projektiert, andere",222,41
+2024,"091","Albisrieden","2","andere","3","bewilligt",10,0
+2024,"091","Albisrieden","2","andere","4","Bau begonnen",86,0
+2024,"092","Altstetten","1","staedtisch/genossenschaftlich","0","projektiert, Infoplan",70,41
+2024,"092","Altstetten","1","staedtisch/genossenschaftlich","1","projektiert, andere",173,0
+2024,"092","Altstetten","2","andere","1","projektiert, andere",56,8
+2024,"092","Altstetten","2","andere","3","bewilligt",162,95
+2024,"101","Höngg","1","staedtisch/genossenschaftlich","1","projektiert, andere",120,81
+2024,"101","Höngg","2","andere","0","projektiert, Infoplan",150,2
+2024,"101","Höngg","2","andere","3","bewilligt",55,29
+2024,"102","Wipkingen","2","andere","3","bewilligt",51,39
+2024,"111","Affoltern","1","staedtisch/genossenschaftlich","1","projektiert, andere",164,86
+2024,"111","Affoltern","2","andere","1","projektiert, andere",100,0
+2024,"111","Affoltern","2","andere","3","bewilligt",37,18
+2024,"115","Oerlikon","2","andere","1","projektiert, andere",135,0
+2024,"115","Oerlikon","2","andere","3","bewilligt",68,11
+2024,"119","Seebach","1","staedtisch/genossenschaftlich","1","projektiert, andere",447,267
+2024,"119","Seebach","1","staedtisch/genossenschaftlich","2","eingereicht",130,67
+2024,"119","Seebach","1","staedtisch/genossenschaftlich","3","bewilligt",146,61
 2024,"119","Seebach","1","staedtisch/genossenschaftlich","4","Bau begonnen",380,0
-2024,"119","Seebach","2","andere","2","eingereicht",68,0
-2024,"119","Seebach","2","andere","3","bewilligt",17,1
+2024,"119","Seebach","2","andere","3","bewilligt",34,2
 2024,"119","Seebach","2","andere","4","Bau begonnen",309,0
-2024,"121","Saatlen","1","staedtisch/genossenschaftlich","1","projektiert",955,311
-2024,"122","Schwamendingen-Mitte","1","staedtisch/genossenschaftlich","1","projektiert",145,101
-2024,"122","Schwamendingen-Mitte","2","andere","1","projektiert",218,0
-2024,"122","Schwamendingen-Mitte","2","andere","3","bewilligt",12,2
-2024,"123","Hirzenbach","2","andere","1","projektiert",400,66
-2025,"021","Wollishofen","1","staedtisch/genossenschaftlich","2","eingereicht",17,0
-2025,"021","Wollishofen","2","andere","1","projektiert",70,0
-2025,"021","Wollishofen","2","andere","2","eingereicht",304,0
-2025,"023","Leimbach","2","andere","2","eingereicht",3,0
-2025,"024","Enge","2","andere","2","eingereicht",10,0
-2025,"031","Alt-Wiedikon","2","andere","2","eingereicht",26,0
-2025,"031","Alt-Wiedikon","2","andere","6","sistiert",7,3
-2025,"033","Friesenberg","1","staedtisch/genossenschaftlich","1","projektiert",112,74
-2025,"033","Friesenberg","2","andere","2","eingereicht",48,0
-2025,"034","Sihlfeld","2","andere","3","bewilligt",43,65
-2025,"034","Sihlfeld","2","andere","6","sistiert",12,0
-2025,"044","Hard","1","staedtisch/genossenschaftlich","1","projektiert",305,312
-2025,"052","Escher Wyss","1","staedtisch/genossenschaftlich","1","projektiert",174,0
-2025,"052","Escher Wyss","2","andere","1","projektiert",675,9
-2025,"061","Unterstrass","2","andere","2","eingereicht",163,0
-2025,"063","Oberstrass","2","andere","2","eingereicht",56,0
-2025,"071","Fluntern","2","andere","2","eingereicht",15,0
-2025,"072","Hottingen","2","andere","2","eingereicht",7,0
-2025,"073","Hirslanden","2","andere","2","eingereicht",35,0
-2025,"074","Witikon","2","andere","1","projektiert",50,0
-2025,"074","Witikon","2","andere","2","eingereicht",23,0
-2025,"081","Seefeld","2","andere","6","sistiert",14,7
-2025,"083","Weinegg","2","andere","2","eingereicht",35,0
+2024,"121","Saatlen","1","staedtisch/genossenschaftlich","1","projektiert, andere",225,73
+2024,"122","Schwamendingen-Mitte","2","andere","1","projektiert, andere",251,0
+2024,"122","Schwamendingen-Mitte","2","andere","3","bewilligt",3,0
+2024,"123","Hirzenbach","2","andere","0","projektiert, Infoplan",55,18
+2024,"123","Hirzenbach","2","andere","1","projektiert, andere",600,144
+2025,"021","Wollishofen","1","staedtisch/genossenschaftlich","1","projektiert, andere",55,40
+2025,"021","Wollishofen","1","staedtisch/genossenschaftlich","2","eingereicht",37,17
+2025,"021","Wollishofen","2","andere","2","eingereicht",28,9
+2025,"023","Leimbach","1","staedtisch/genossenschaftlich","0","projektiert, Infoplan",200,102
+2025,"024","Enge","1","staedtisch/genossenschaftlich","0","projektiert, Infoplan",0,1
+2025,"031","Alt-Wiedikon","2","andere","2","eingereicht",69,28
+2025,"033","Friesenberg","1","staedtisch/genossenschaftlich","1","projektiert, andere",259,171
+2025,"034","Sihlfeld","1","staedtisch/genossenschaftlich","1","projektiert, andere",100,39
+2025,"044","Hard","1","staedtisch/genossenschaftlich","1","projektiert, andere",306,312
+2025,"044","Hard","1","staedtisch/genossenschaftlich","2","eingereicht",122,80
+2025,"052","Escher Wyss","2","andere","1","projektiert, andere",105,9
+2025,"061","Unterstrass","1","staedtisch/genossenschaftlich","1","projektiert, andere",100,0
+2025,"061","Unterstrass","1","staedtisch/genossenschaftlich","2","eingereicht",84,46
+2025,"061","Unterstrass","2","andere","1","projektiert, andere",110,0
+2025,"061","Unterstrass","2","andere","2","eingereicht",71,49
+2025,"081","Seefeld","2","andere","2","eingereicht",39,0
+2025,"091","Albisrieden","1","staedtisch/genossenschaftlich","1","projektiert, andere",597,126
+2025,"091","Albisrieden","1","staedtisch/genossenschaftlich","2","eingereicht",157,0
 2025,"091","Albisrieden","2","andere","2","eingereicht",105,0
-2025,"091","Albisrieden","2","andere","6","sistiert",45,20
-2025,"092","Altstetten","1","staedtisch/genossenschaftlich","1","projektiert",304,220
+2025,"091","Albisrieden","2","andere","3","bewilligt",70,0
+2025,"092","Altstetten","1","staedtisch/genossenschaftlich","1","projektiert, andere",53,0
+2025,"092","Altstetten","1","staedtisch/genossenschaftlich","2","eingereicht",32,15
 2025,"092","Altstetten","1","staedtisch/genossenschaftlich","3","bewilligt",265,0
-2025,"092","Altstetten","2","andere","2","eingereicht",49,0
-2025,"092","Altstetten","2","andere","6","sistiert",64,26
-2025,"101","Höngg","1","staedtisch/genossenschaftlich","1","projektiert",303,0
-2025,"101","Höngg","2","andere","1","projektiert",100,0
-2025,"101","Höngg","2","andere","2","eingereicht",21,0
-2025,"101","Höngg","2","andere","6","sistiert",54,31
-2025,"102","Wipkingen","1","staedtisch/genossenschaftlich","6","sistiert",22,16
-2025,"102","Wipkingen","2","andere","2","eingereicht",7,0
-2025,"102","Wipkingen","2","andere","6","sistiert",26,7
-2025,"111","Affoltern","1","staedtisch/genossenschaftlich","2","eingereicht",106,0
-2025,"111","Affoltern","2","andere","2","eingereicht",8,0
-2025,"115","Oerlikon","1","staedtisch/genossenschaftlich","1","projektiert",450,157
-2025,"115","Oerlikon","2","andere","1","projektiert",800,303
-2025,"115","Oerlikon","2","andere","2","eingereicht",122,0
-2025,"115","Oerlikon","2","andere","6","sistiert",6,1
-2025,"119","Seebach","1","staedtisch/genossenschaftlich","1","projektiert",760,0
-2025,"119","Seebach","2","andere","2","eingereicht",95,0
-2025,"122","Schwamendingen-Mitte","1","staedtisch/genossenschaftlich","1","projektiert",330,100
-2025,"122","Schwamendingen-Mitte","2","andere","2","eingereicht",13,0
-2025,"123","Hirzenbach","1","staedtisch/genossenschaftlich","1","projektiert",136,43
-2025,"123","Hirzenbach","2","andere","1","projektiert",410,218
-2025,"123","Hirzenbach","2","andere","2","eingereicht",26,0
-2025,"123","Hirzenbach","2","andere","6","sistiert",10,0
-2026,"031","Alt-Wiedikon","2","andere","6","sistiert",497,229
-2026,"034","Sihlfeld","1","staedtisch/genossenschaftlich","1","projektiert",746,257
-2026,"044","Hard","1","staedtisch/genossenschaftlich","1","projektiert",195,114
-2026,"051","Gewerbeschule","1","staedtisch/genossenschaftlich","1","projektiert",150,0
-2026,"051","Gewerbeschule","2","andere","1","projektiert",300,0
+2025,"092","Altstetten","1","staedtisch/genossenschaftlich","4","Bau begonnen",63,0
+2025,"092","Altstetten","2","andere","0","projektiert, Infoplan",22,22
+2025,"092","Altstetten","2","andere","2","eingereicht",177,33
+2025,"111","Affoltern","1","staedtisch/genossenschaftlich","4","Bau begonnen",276,0
+2025,"115","Oerlikon","1","staedtisch/genossenschaftlich","1","projektiert, andere",450,157
+2025,"115","Oerlikon","2","andere","1","projektiert, andere",210,96
+2025,"119","Seebach","1","staedtisch/genossenschaftlich","1","projektiert, andere",320,0
+2025,"119","Seebach","2","andere","1","projektiert, andere",213,0
+2025,"119","Seebach","2","andere","2","eingereicht",319,0
+2025,"121","Saatlen","1","staedtisch/genossenschaftlich","1","projektiert, andere",54,52
+2025,"121","Saatlen","2","andere","2","eingereicht",41,24
+2025,"122","Schwamendingen-Mitte","1","staedtisch/genossenschaftlich","1","projektiert, andere",210,130
+2025,"122","Schwamendingen-Mitte","1","staedtisch/genossenschaftlich","4","Bau begonnen",133,0
+2025,"122","Schwamendingen-Mitte","2","andere","1","projektiert, andere",30,1
+2025,"122","Schwamendingen-Mitte","2","andere","2","eingereicht",37,9
+2025,"123","Hirzenbach","1","staedtisch/genossenschaftlich","1","projektiert, andere",136,43
+2025,"123","Hirzenbach","2","andere","1","projektiert, andere",410,218
+2026,"011","Rathaus","1","staedtisch/genossenschaftlich","0","projektiert, Infoplan",1,1
+2026,"021","Wollishofen","2","andere","2","eingereicht",254,0
+2026,"024","Enge","2","andere","2","eingereicht",43,0
+2026,"031","Alt-Wiedikon","2","andere","6","sistiert",76,30
+2026,"033","Friesenberg","1","staedtisch/genossenschaftlich","2","eingereicht",20,0
+2026,"033","Friesenberg","2","andere","2","eingereicht",43,0
+2026,"034","Sihlfeld","2","andere","2","eingereicht",21,0
+2026,"034","Sihlfeld","2","andere","6","sistiert",99,23
+2026,"041","Werd","1","staedtisch/genossenschaftlich","6","sistiert",24,3
+2026,"044","Hard","1","staedtisch/genossenschaftlich","1","projektiert, andere",210,114
 2026,"052","Escher Wyss","1","staedtisch/genossenschaftlich","4","Bau begonnen",189,0
-2026,"074","Witikon","2","andere","1","projektiert",390,0
-2026,"092","Altstetten","1","staedtisch/genossenschaftlich","1","projektiert",230,130
-2026,"111","Affoltern","1","staedtisch/genossenschaftlich","1","projektiert",600,233
-2026,"111","Affoltern","1","staedtisch/genossenschaftlich","3","bewilligt",274,157
-2026,"119","Seebach","2","andere","1","projektiert",145,0
-2026,"122","Schwamendingen-Mitte","1","staedtisch/genossenschaftlich","3","bewilligt",266,151
-2027,"091","Albisrieden","1","staedtisch/genossenschaftlich","1","projektiert",100,147
-2028,"061","Unterstrass","1","staedtisch/genossenschaftlich","1","projektiert",88,10
-2028,"121","Saatlen","1","staedtisch/genossenschaftlich","1","projektiert",300,0
-2028,"122","Schwamendingen-Mitte","1","staedtisch/genossenschaftlich","1","projektiert",550,0
-2028,"123","Hirzenbach","1","staedtisch/genossenschaftlich","1","projektiert",95,72
-2029,"091","Albisrieden","1","staedtisch/genossenschaftlich","1","projektiert",280,111
-2029,"101","Höngg","1","staedtisch/genossenschaftlich","1","projektiert",320,167
-2029,"119","Seebach","2","andere","1","projektiert",300,0
-2030,"092","Altstetten","1","staedtisch/genossenschaftlich","1","projektiert",400,193
-2031,"119","Seebach","2","andere","2","eingereicht",12,0
+2026,"061","Unterstrass","1","staedtisch/genossenschaftlich","0","projektiert, Infoplan",130,110
+2026,"061","Unterstrass","2","andere","2","eingereicht",100,0
+2026,"063","Oberstrass","2","andere","2","eingereicht",35,0
+2026,"071","Fluntern","2","andere","2","eingereicht",29,0
+2026,"072","Hottingen","2","andere","2","eingereicht",8,0
+2026,"073","Hirslanden","2","andere","2","eingereicht",82,0
+2026,"074","Witikon","2","andere","1","projektiert, andere",390,0
+2026,"074","Witikon","2","andere","2","eingereicht",14,0
+2026,"081","Seefeld","2","andere","6","sistiert",14,7
+2026,"082","Mühlebach","2","andere","2","eingereicht",15,0
+2026,"083","Weinegg","2","andere","2","eingereicht",63,0
+2026,"091","Albisrieden","2","andere","2","eingereicht",249,0
+2026,"091","Albisrieden","2","andere","6","sistiert",46,24
+2026,"092","Altstetten","2","andere","2","eingereicht",96,0
+2026,"092","Altstetten","2","andere","6","sistiert",96,3
+2026,"101","Höngg","2","andere","2","eingereicht",7,0
+2026,"101","Höngg","2","andere","6","sistiert",26,5
+2026,"102","Wipkingen","1","staedtisch/genossenschaftlich","2","eingereicht",10,0
+2026,"102","Wipkingen","1","staedtisch/genossenschaftlich","6","sistiert",22,16
+2026,"102","Wipkingen","2","andere","6","sistiert",47,29
+2026,"111","Affoltern","1","staedtisch/genossenschaftlich","1","projektiert, andere",100,4
+2026,"111","Affoltern","1","staedtisch/genossenschaftlich","2","eingereicht",106,0
+2026,"111","Affoltern","2","andere","2","eingereicht",9,0
+2026,"111","Affoltern","2","andere","6","sistiert",2,0
+2026,"115","Oerlikon","2","andere","2","eingereicht",185,0
+2026,"115","Oerlikon","2","andere","6","sistiert",46,12
+2026,"119","Seebach","1","staedtisch/genossenschaftlich","2","eingereicht",79,0
+2026,"119","Seebach","1","staedtisch/genossenschaftlich","3","bewilligt",173,79
+2026,"119","Seebach","2","andere","1","projektiert, andere",145,0
+2026,"119","Seebach","2","andere","2","eingereicht",90,0
+2026,"122","Schwamendingen-Mitte","1","staedtisch/genossenschaftlich","1","projektiert, andere",150,101
+2026,"122","Schwamendingen-Mitte","2","andere","0","projektiert, Infoplan",110,110
+2026,"122","Schwamendingen-Mitte","2","andere","2","eingereicht",8,0
+2026,"122","Schwamendingen-Mitte","2","andere","6","sistiert",14,2
+2026,"123","Hirzenbach","1","staedtisch/genossenschaftlich","6","sistiert",84,0
+2026,"123","Hirzenbach","2","andere","2","eingereicht",55,0
+2026,"123","Hirzenbach","2","andere","6","sistiert",10,0
+2027,"021","Wollishofen","2","andere","1","projektiert, andere",120,0
+2027,"052","Escher Wyss","1","staedtisch/genossenschaftlich","1","projektiert, andere",174,0
+2027,"052","Escher Wyss","2","andere","1","projektiert, andere",570,0
+2027,"061","Unterstrass","1","staedtisch/genossenschaftlich","1","projektiert, andere",26,9
+2027,"074","Witikon","2","andere","1","projektiert, andere",50,0
+2027,"092","Altstetten","1","staedtisch/genossenschaftlich","1","projektiert, andere",230,130
+2027,"101","Höngg","1","staedtisch/genossenschaftlich","1","projektiert, andere",193,0
+2027,"101","Höngg","2","andere","1","projektiert, andere",100,0
+2027,"111","Affoltern","1","staedtisch/genossenschaftlich","0","projektiert, Infoplan",530,408
+2027,"111","Affoltern","1","staedtisch/genossenschaftlich","1","projektiert, andere",100,4
+2027,"111","Affoltern","2","andere","0","projektiert, Infoplan",180,125
+2027,"119","Seebach","1","staedtisch/genossenschaftlich","1","projektiert, andere",180,0
+2027,"119","Seebach","1","staedtisch/genossenschaftlich","2","eingereicht",125,65
+2027,"121","Saatlen","1","staedtisch/genossenschaftlich","1","projektiert, andere",225,73
+2027,"122","Schwamendingen-Mitte","1","staedtisch/genossenschaftlich","1","projektiert, andere",120,84
+2028,"023","Leimbach","1","staedtisch/genossenschaftlich","1","projektiert, andere",69,28
+2028,"024","Enge","2","andere","3","bewilligt",124,0
+2028,"034","Sihlfeld","1","staedtisch/genossenschaftlich","1","projektiert, andere",270,105
+2028,"051","Gewerbeschule","1","staedtisch/genossenschaftlich","1","projektiert, andere",125,0
+2028,"051","Gewerbeschule","2","andere","1","projektiert, andere",250,0
+2028,"052","Escher Wyss","1","staedtisch/genossenschaftlich","0","projektiert, Infoplan",130,1
+2028,"074","Witikon","2","andere","1","projektiert, andere",100,29
+2028,"091","Albisrieden","1","staedtisch/genossenschaftlich","2","eingereicht",124,0
+2028,"092","Altstetten","1","staedtisch/genossenschaftlich","0","projektiert, Infoplan",300,3
+2028,"111","Affoltern","1","staedtisch/genossenschaftlich","1","projektiert, andere",100,4
+2028,"115","Oerlikon","2","andere","1","projektiert, andere",450,207
+2028,"119","Seebach","1","staedtisch/genossenschaftlich","1","projektiert, andere",360,0
+2028,"121","Saatlen","1","staedtisch/genossenschaftlich","1","projektiert, andere",55,19
+2028,"123","Hirzenbach","1","staedtisch/genossenschaftlich","1","projektiert, andere",50,72
+2029,"031","Alt-Wiedikon","2","andere","6","sistiert",497,229
+2029,"091","Albisrieden","1","staedtisch/genossenschaftlich","1","projektiert, andere",140,56
+2029,"101","Höngg","1","staedtisch/genossenschaftlich","1","projektiert, andere",320,167
+2029,"111","Affoltern","1","staedtisch/genossenschaftlich","1","projektiert, andere",100,4
+2029,"119","Seebach","2","andere","1","projektiert, andere",300,0
+2030,"034","Sihlfeld","1","staedtisch/genossenschaftlich","1","projektiert, andere",290,113
+2030,"044","Hard","2","andere","0","projektiert, Infoplan",200,76
+2030,"091","Albisrieden","1","staedtisch/genossenschaftlich","1","projektiert, andere",140,56
+2030,"092","Altstetten","1","staedtisch/genossenschaftlich","1","projektiert, andere",217,193
+2030,"111","Affoltern","1","staedtisch/genossenschaftlich","1","projektiert, andere",200,8
+2031,"121","Saatlen","1","staedtisch/genossenschaftlich","1","projektiert, andere",225,73
+2032,"121","Saatlen","1","staedtisch/genossenschaftlich","0","projektiert, Infoplan",200,106
+2035,"044","Hard","1","staedtisch/genossenschaftlich","0","projektiert, Infoplan",30,10
