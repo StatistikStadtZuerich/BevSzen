@@ -63,7 +63,6 @@ pro_all <- as_tibble(expand_grid(
   replace_na(list(apartments = 0))
 
 
-
 # indicators (new/removed apartments) by year -----------------------------
 
 # by year
@@ -81,7 +80,6 @@ sszplot(pro_y,
   name = "1100_projects_by-year",
   width = 7, height = 4
 )
-
 
 
 # indicators by year and status -------------------------------------------
@@ -217,10 +215,14 @@ lambda_y <- tibble(year = pro_begin:pro_end) %>%
   mutate(lambda = pred^pro_transfo) %>%
   select(year, lambda)
 
-# delay (1 to 6 years)
+plot(lambda_y$year, lambda_y$lambda)
+
+# delay in years (1 to 'pro_max_delay')
+# WHY plus 1? since 'no delay' is also possible, one additional category
+
 delay <- as_tibble(expand_grid(
   year = pro_begin:pro_end,
-  delta = 1:6
+  delta = 1:(pro_max_delay + 1)
 )) %>%
   left_join(lambda_y, by = "year") %>%
   mutate(

@@ -173,8 +173,9 @@ allocation;aca_prop_trend_52p;no parameter in previous model;0;0;0;percent;low;"
 projects;pro_lambda_begin;map.lambda.beginn;2;2;2;per year;low;"the time delay of the projects (consolidated project list) is determined by means of an exponential function (with lambda); value at the beginning of the time period (of the consolidated project list)."
 projects;pro_lambda_end;map.lambda.ende;0.05;0.05;0.05;per year;low;"the time delay of the projects (consolidated project list) is determined by means of an exponential function (with lambda); value at the end of the time period (of the consolidated project list)."
 projects;pro_transfo;no parameter in previous model;5;5;5;no unit;low;transformation parameter (non-linear curve from pro_lambda_begin to pro_lambda_end)
-projects;pro_not_scheduled_ip;part of map.nicht1 (projektiert);80;80;80;percent;low;Percentage of projects (i.e. apartments) that are not realized: scheduled, from Infoplan
-projects;pro_not_scheduled_other;part of map.nicht1 (projektiert);60;60;60;percent;low;Percentage of projects (i.e. apartments) that are not realized: scheduled, other
+projects;pro_max_delay;no parameter in previous model;5;5;5;years;low;maximum delay
+projects;pro_not_scheduled_ip;part of map.nicht1 (projektiert);60;60;60;percent;low;Percentage of projects (i.e. apartments) that are not realized: scheduled, from Infoplan
+projects;pro_not_scheduled_other;part of map.nicht1 (projektiert);40;40;40;percent;low;Percentage of projects (i.e. apartments) that are not realized: scheduled, other
 projects;pro_not_submitted;map.nicht2 (eingereicht);0;0;0;percent;low;Percentage of projects (i.e. apartments) that are not realized: submitted
 projects;pro_not_approved;map.nicht3 (bewilligt);0;0;0;percent;low;Percentage of projects (i.e. apartments) that are not realized: approved
 projects;pro_not_started;map.nicht4 (Bau begonnen);0;0;0;percent;low;Percentage of projects (i.e. apartments) that are not realized: started
