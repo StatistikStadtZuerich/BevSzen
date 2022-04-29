@@ -11,7 +11,7 @@ if (!exists("para")) {
   setwd(paste0(here(), "/2020phase2/"))
 
   # general functions (without dependence on parameters)
-  source("1_Code/0000_General/0000_general_without-parameters.r")
+  source("1_Code/0000_General/0002_general_without-parameters.r")
 
   # parameters (depend on scenario)
   i_scen <- "middle"
@@ -22,7 +22,7 @@ if (!exists("para")) {
   }
 
   # general functions (with dependence on parameters)
-  source(paste0(code_path, "/0000_General/0001_general_with-parameters.r"))
+  source(paste0(code_path, "/0000_General/0003_general_with-parameters.r"))
 }
 
 # start time
@@ -49,7 +49,7 @@ own_dat <- read_csv(paste0(exp_path, "/ownership_past_future.csv"), lazy = FALSE
 tail(own_dat)
 
 # population
-# why population not from the housing open data  file?
+# why population not from the housing open data file?
 # there only people in apartments (and not in care centers etc)
 # the population number in the housing open data is below the total
 # amount of people in Zurich
@@ -66,7 +66,6 @@ pop <- read_csv(pop_od, lazy = FALSE) %>%
   )
 
 
-
 # projects and allocation (from apartments to people; future) -------------
 
 # calculate amount of people
@@ -79,7 +78,6 @@ pro_aca <- left_join(pro_dat, aca_dat,
 
 # if additional information is available on new projects (e.g. amount of people)
 # this could be incorporated here
-
 
 
 # capacity/reserves and living space (from m2 to people; future) ----------
@@ -238,9 +236,6 @@ pro_car <- as_tibble(expand_grid(
 
 # function: consider projects and reserves --------------------------------
 
-# x <- filter(pro_car, (district == "Albisrieden") & (owner == "cooperative housing"))
-# plot(x$year, x$car, type = "o")
-
 # consider projects and reserves
 project_reserves <- function(x, ...) {
 
@@ -310,7 +305,11 @@ project_reserves <- function(x, ...) {
 
 }
 
-# project_reserves(x)
+
+# Check: Albisrieden, cooperative housing
+x <- filter(pro_car, (district == "Albisrieden") & (owner == "cooperative housing"))
+plot(x$year, x$car, type = "o")
+project_reserves(x)
 
 
 # consider projects and reserves (apply the function)
@@ -319,11 +318,7 @@ pro_res_all <- pro_car %>%
   map(project_reserves) %>%
   bind_rows()
 
-
-
-
 # apply the parameter of empty apartments ---------------------------------
-
 
 # parameter can be applied directly to the population
 pro_res <- pro_res_all %>%
