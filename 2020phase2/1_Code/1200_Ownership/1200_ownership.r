@@ -83,6 +83,7 @@ sszplot(own_prop,
 # reserves: m2
 # however, the combined prediction is for personen
 # therefore, the proportion based on people
+
 own_cat <- filter(own_prop, category == "people") %>%
   select(district, year, prop) %>%
   ungroup()
