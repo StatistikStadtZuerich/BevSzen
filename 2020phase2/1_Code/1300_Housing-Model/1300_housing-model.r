@@ -383,7 +383,6 @@ sszplot(pop_all,
 )
 
 
-
 # export the results ------------------------------------------------------
 
 # per district
