@@ -11,7 +11,7 @@ if (!exists("para")) {
   setwd(paste0(here(), "/2020phase2/"))
 
   # general functions (without dependence on parameters)
-  source("1_Code/0000_General/0000_general_without-parameters.r")
+  source("1_Code/0000_General/0002_general_without-parameters.r")
 
   # parameters (depend on scenario)
   i_scen <- "middle"
@@ -22,7 +22,7 @@ if (!exists("para")) {
   }
 
   # general functions (with dependence on parameters)
-  source(paste0(code_path, "/0000_General/0001_general_with-parameters.r"))
+  source(paste0(code_path, "/0000_General/0003_general_with-parameters.r"))
 }
 
 # start time
@@ -78,6 +78,11 @@ sszplot(own_prop,
 # prediction --------------------------------------------------------------
 
 # category: people
+# WHY? prediction is based on different sources
+# projects: apartments
+# reserves: m2
+# however, the combined prediction is for personen
+# therefore, the proportion based on people
 own_cat <- filter(own_prop, category == "people") %>%
   select(district, year, prop) %>%
   ungroup()
