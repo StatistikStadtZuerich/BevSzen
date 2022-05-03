@@ -1,9 +1,16 @@
-# header ------------------------------------------------------------------
+#-------------------------------------------------------------------
 # birth: sex ratio
+#
+#
+#
+# rok/bad
+#-------------------------------------------------------------------
 
 
 
-# paths, general ----------------------------------------------------------
+#-------------------------------------------------------------------
+# paths, general
+#-------------------------------------------------------------------
 
 # general functions already available?
 if (!exists("para")) {
@@ -31,7 +38,9 @@ if (!exists("para")) {
 t0 <- Sys.time()
 
 
-# import, proportion male -------------------------------------------------
+#-------------------------------------------------------------------
+# import, proportion male
+#-------------------------------------------------------------------
 
 # proportion male
 pro_male <- read_csv(bir_od) %>%
@@ -59,7 +68,9 @@ sszplot(pro_male,
 )
 
 
-# prediction --------------------------------------------------------------
+#-------------------------------------------------------------------
+# prediction
+#-------------------------------------------------------------------
 
 # model
 # the sex proportion could depend on age
@@ -78,18 +89,22 @@ pred_mean <- pro_male %>%
 sszplot(pro_male,
   aes_x = "year", aes_y = "pro_male",
   geom = c("line", "point"),
-  i_x = year5, i_y = pred_mean$pred_mean,
+  i_x = year5,
   labs_y = "proportion male in %",
   scale_y = c(0, 70), breaks = seq(0, 70, 10),
-  name = "0191_sex-ratio_by-year_with-mean"
+  name = "0191_sex-ratio_by-year_with-mean",
+  quotes = quote(geom_hline(yintercept = pred_mean$pred_mean,
+                            col = col_6[1],
+                            linetype = 2))
 )
 
-
-# export the results ------------------------------------------------------
+#-------------------------------------------------------------------
+# export the results
+#-------------------------------------------------------------------
 
 # proportion male: prediction
 pro_male_pred <- tibble(
-  year = scen_begin:scen_end,
+  year = szen_begin:szen_end,
   pro_male = round(pred_mean$pred_mean, round_rate)
 )
 
@@ -101,3 +116,11 @@ cat_log(paste0(
   "proportion male babies: ",
   capture.output(Sys.time() - t0)
 ))
+
+
+#-------------------------------------------------------------------
+# cleanup
+#-------------------------------------------------------------------
+
+# remove variables without further use
+rm(list = c("pro_male", "pro_male_pred", "year5", "pred_mean"))

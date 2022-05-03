@@ -1,8 +1,16 @@
-# header ------------------------------------------------------------------
+#-------------------------------------------------------------------
 # birth: origin of the babies
+#
+#
+#
+# rok/bad
+#-------------------------------------------------------------------
 
 
-# paths, general ----------------------------------------------------------
+
+#-------------------------------------------------------------------
+# paths, general
+#-------------------------------------------------------------------
 
 # general functions already available?
 if (!exists("para")) {
@@ -30,7 +38,9 @@ if (!exists("para")) {
 t0 <- Sys.time()
 
 
-# import and data preparation ---------------------------------------------
+#-------------------------------------------------------------------
+# import and data preparation
+#-------------------------------------------------------------------
 
 # birth
 # age: only births of women at 'fertile age'
@@ -54,13 +64,16 @@ bir <- read_csv(bir_od) %>%
   )
 
 
-# origin change: plots ----------------------------------------------------
+#-------------------------------------------------------------------
+# origin change: plots
+#-------------------------------------------------------------------
 
 # WHY plots?
 # find out the relevant processes/variables
 
 # origin change: data preparation
-cha <- spread(bir, key = originb, value = bir) %>%
+cha <- bir %>%
+  pivot_wider(names_from = "originb", values_from = "bir") %>%
   replace_na(list(Swiss = 0, foreign = 0)) %>%
   mutate(
     change = if_else(origin == "Swiss", foreign, Swiss),
@@ -161,20 +174,24 @@ cha_dya1f <- left_join(cha, look_a1, by = "age") %>%
     total = sum(total),
     .groups = "drop"
   ) %>%
-  mutate(cha_dya1f = if_else(total == 0, NA_real_, round(change / total * 100, round_rate)))
+  mutate(cha_dya1f = if_else(total == 0, NA_real_, round(change / total * 100, round_rate))) %>%
+  rename(age = age_1)
+
 
 sszplot(cha_dya1f,
-  aes_x = "year", aes_y = "cha_dya1f", aes_col = "age_1",
+  aes_x = "year", aes_y = "cha_dya1f", aes_col = "age",
   geom = c("line", "point"),
   i_x = year5,
-  labs_y = "origin change in %", labs_col = "age",
+  labs_y = "origin change in %",
   wrap = "district", ncol = 4,
   name = "0174_origin-change_by-district-year-age1-foreign",
   width = 12, height = 14
 )
 
 
-# origin change (cha): model ----------------------------------------------
+#-------------------------------------------------------------------
+# origin change (cha): model
+#-------------------------------------------------------------------
 
 # base years
 cha_base <- filter(cha_dyo, (year >= bir_cha_base_begin) & (year <= bir_cha_base_end))
@@ -209,11 +226,14 @@ sszplot(cha_pred,
 )
 
 
-# export the results ------------------------------------------------------
+
+#-------------------------------------------------------------------
+# export the results
+#-------------------------------------------------------------------
 
 # prepare the export data
 cha_ex <- mutate(cha_pred, cha = round(cha_all, round_rate)) %>%
-  filter(year >= scen_begin) %>%
+  filter(year >= szen_begin) %>%
   select(district, year, origin, cha) %>%
   arrange(district, year, origin)
 
@@ -224,4 +244,15 @@ write_csv(cha_ex, paste0(exp_path, "/birth_origin-change_future.csv"))
 cat_log(paste0(
   "origin change at birth: ",
   capture.output(Sys.time() - t0)
+))
+
+
+#-------------------------------------------------------------------
+# cleanup
+#-------------------------------------------------------------------
+
+# remove variables without further use
+rm(list = c(
+  "bir", "cha", "cha_yo", "cha_ya1o", "cha_ya2o",
+  "cha_dyo", "cha_dya1f", "cha_base", "cha_pred"
 ))
