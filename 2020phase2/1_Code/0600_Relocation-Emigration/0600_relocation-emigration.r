@@ -12,7 +12,7 @@ if (!exists("para")) {
   setwd(paste0(here(), "/2020phase2/"))
 
   # general functions (without dependence on parameters)
-  source(paste0(code_path, "0000_General/0002_general_without-parameters.r"))
+  source("1_Code/0000_General/0002_general_without-parameters.r")
 
   # parameters (depend on scenario)
   i_scen <- "middle"
