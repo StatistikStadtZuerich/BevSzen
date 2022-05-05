@@ -53,11 +53,13 @@ uniy_scen <- scen_begin:scen_end
 look_not <- tibble(
   status = factor(pro_category, levels = pro_category),
   not_realized = c(
-    pro_not_scheduled, pro_not_submitted,
+    pro_not_scheduled_ip, pro_not_scheduled_other, 
+    pro_not_submitted,
     pro_not_approved, pro_not_started,
     pro_not_completed, pro_not_onhold
   )
 )
+
 
 
 #-------------------------------------------------------------------
