@@ -318,7 +318,6 @@ pro_sum <- pro_delay %>%
   group_by(district, year, owner, indicator) %>%
   summarize(apartments = sum(apartments),
   .groups = "drop")
-  ungroup()
 
 
 # export the results (projects: new/removed, by category) -----------------
