@@ -298,7 +298,7 @@ pro_y_both <- mutate(pro_y, corr = uni_corr[1]) %>%
 check <- group_by(pro_y_both, corr) %>%
   summarize(
     apartments = sum(apartments),
-    .group = "drop"
+    .groups = "drop"
   )
 
 # plot
