@@ -321,7 +321,7 @@ sszplot(aca_comb,
   wrap = "district", ncol = 4,
   i_x = c(spa_base_begin, spa_base_end),
   scale_y = c(0, NA),
-  name = "1008_allocation_precition_dyw_different-datasets",
+  name = "1008_allocation_prediction_dyw_different-datasets",
   width = 12, height = 14
 )
 
