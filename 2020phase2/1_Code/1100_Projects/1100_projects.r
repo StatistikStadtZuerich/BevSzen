@@ -316,7 +316,8 @@ sszplot(pro_y_both,
 
 pro_sum <- pro_delay %>%
   group_by(district, year, owner, indicator) %>%
-  summarize(apartments = sum(apartments)) %>%
+  summarize(apartments = sum(apartments),
+  .groups = "drop")
   ungroup()
 
 
