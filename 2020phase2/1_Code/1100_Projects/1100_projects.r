@@ -226,7 +226,7 @@ delay <- as_tibble(expand_grid(
 )) %>%
   left_join(lambda_y, by = "year") %>%
   mutate(
-    y = exp((-1) * lambda * delta),
+    y = exp(-lambda * delta),
     delay = delta - 1,
     delayText = if_else(delay == 1, paste0(delay, " year"),
       paste0(delay, " years")
