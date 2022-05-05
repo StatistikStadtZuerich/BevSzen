@@ -211,7 +211,7 @@ sszplot(aca_dyw_past_pred,
   wrap = "district", ncol = 4,
   i_x = c(aca_base_begin, aca_base_end),
   scale_y = c(0, NA),
-  name = "1006_allocation_precition_dyw",
+  name = "1006_allocation_prediction_dyw",
   width = 12, height = 14
 )
 
