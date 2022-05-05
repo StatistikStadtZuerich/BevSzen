@@ -42,7 +42,8 @@ own_dat <- read_csv(spa_od) %>%
   group_by(district, year, owner) %>%
   summarize(
     apartments = sum_NA(apartments),
-    people = sum_NA(people)
+    people = sum_NA(people),
+    .groups = "drop")
   ungroup()
 
 
