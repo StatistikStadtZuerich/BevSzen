@@ -335,7 +335,6 @@ pro_res <- pro_res_all %>%
 
 # with the past
 pop_fut_past <- bind_rows(pop_w, pro_res) %>%
-  rename(distr = district) %>%
   mutate(district = factor(distr, uni_d)) %>%
   select(district, year, owner, pop)
 
