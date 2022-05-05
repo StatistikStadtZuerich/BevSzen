@@ -80,7 +80,7 @@ sszplot(own_prop,
 # WHY? prediction is based on different sources
 # projects: apartments
 # reserves: m2
-# however, the combined prediction is for personen
+# however, the combined prediction is for persons
 # therefore, the proportion based on people
 
 own_cat <- filter(own_prop, category == "people") %>%
