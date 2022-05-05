@@ -43,7 +43,6 @@ own_dat <- read_csv(spa_od) %>%
   summarize(
     apartments = sum_NA(apartments),
     people = sum_NA(people)
-  ) %>%
   ungroup()
 
 
