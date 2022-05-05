@@ -335,7 +335,7 @@ pro_res <- pro_res_all %>%
 
 # with the past
 pop_fut_past <- bind_rows(pop_w, pro_res) %>%
-  mutate(district = factor(distr, uni_d)) %>%
+  mutate(district = factor(district, uni_d)) %>%
   select(district, year, owner, pop)
 
 # plot
