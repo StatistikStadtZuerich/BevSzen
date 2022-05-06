@@ -94,7 +94,7 @@ car_spa <- left_join(car_dat, spa_dat,
 
 # population by ownership (past) ------------------------------------------
 
-# left join on ownership (since this data set begins later)
+# join pop on ownership (since this data set begins later)
 pop_w <- left_join(own_dat, pop, by = c("district", "year")) %>%
   filter(year <= date_end) %>%
   mutate(
