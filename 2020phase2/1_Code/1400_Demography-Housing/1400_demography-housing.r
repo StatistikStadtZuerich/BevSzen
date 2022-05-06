@@ -1,5 +1,5 @@
 # header ------------------------------------------------------------------
-# demography and housing model 
+# demography and housing model
 
 
 
@@ -105,6 +105,49 @@ ims_prop_a <- read_csv(paste0(exp_path, "/immigration-star_prop-a-dyso_future.cs
     origin = factor(origin, levels = uni_o)
   )
 
+
+#immigration (for ims-plot)
+    imm_past <- read_csv(imm_od) %>% 
+        rename(year = EreignisDatJahr) %>%    
+        left_join(look_dis, by = "QuarCd") %>% 
+        mutate(district = factor(distr, uni_d)) %>%  
+        group_by(district, year) %>% 
+            summarize(ims = sum(AnzZuzuWir),
+                      .groups = "drop")
+        
+        
+#emigration (for ems-plot)
+    emi_past <- read_csv(emi_od) %>% 
+        rename(year = EreignisDatJahr) %>%    
+        left_join(look_dis, by = "QuarCd") %>% 
+        mutate(district = factor(distr, uni_d)) %>% 
+        group_by(district, year) %>% 
+            summarize(ems = sum(AnzWezuWir),
+                      .groups = "drop")
+        
+#immigration* (for plot)
+    ims_past <- read_csv(rel_od) %>% 
+        rename(year = EreignisDatJahr, ims = AnzUmzuWir) %>% 
+        left_join(look_dis, by = "QuarCd") %>% 
+        mutate(district = factor(distr, uni_d)) %>% 
+        select(district, year, ims) %>%       
+        bind_rows(imm_past) %>%      
+        group_by(district, year) %>% 
+            summarize(ims = sum(ims),
+                      .groups = "drop")
+        
+        
+#emigration* (for plot)
+    ems_past <- read_csv(rel_od) %>% 
+        rename(year = EreignisDatJahr, ems = AnzUmzuWir) %>% 
+        left_join(look_dis, by = c("QuarBisherCd" = "QuarCd")) %>% 
+        mutate(district = factor(distr, uni_d)) %>% 
+        select(district, year, ems) %>%       
+        bind_rows(emi_past) %>%      
+        group_by(district, year) %>% 
+            summarize(ems = sum(ems),
+                      .groups = "drop")        
+    
 # emigration*: emigration* rate
 ems_rate <- read_csv(paste0(exp_path, "/emigration-star_rate-dy_future.csv"), lazy = FALSE) %>%
   mutate(district = factor(district, levels = uni_d))
@@ -169,11 +212,12 @@ out_bir <- NULL
 out_dem <- NULL
 out_pop <- NULL
 out_nat <- NULL
+out_bal <- NULL # WHY? for checks
 
 # loop over years
 for (iyear in future) {
 
-  # iyear <- 2021
+  # iyear <- 2022
 
   # population at the begin of the year = population at the end of the previous year
   if (iyear == min(future)) {
@@ -353,10 +397,9 @@ for (iyear in future) {
     # pop + birth - death + immigration* - emigration*
     mutate(pop_theo = pop_bir_dea + ims - ems) %>%
     left_join(hou_year, by = "district") %>%
-    # tests if correction (ims3, ems3 are right)
+    # tests if correction (ims3, ems3 are correct)
     # mutate(ims = if_else(district == "Kreis 1", 5, ims)) %>%
     # mutate(ems = if_else(district == "Leimbach", 50, ems)) %>%
-
     mutate(
       differ = pop_limit - pop_theo,
       differ_ims = if_else(differ < 0,
@@ -394,9 +437,7 @@ for (iyear in future) {
   # sum(bal$differ)
   # sum(abs(bal$check))
 
-  # check: enough immigration* and/or emigration* for proper correction?
-  check <- bal %>%
-    filter((new_ims < 0) | (new_ems < 0))
+
 
   # apply the correction factors to the immigration* and emigration* by
   # district, age, sex, origin (same factor by district)
@@ -545,9 +586,106 @@ for (iyear in future) {
     select(district, year, age, sex, nat) %>%
     bind_rows(out_nat)
 
+  # outputs: balance (for checks), with variable 'year'
+  out_bal <- bal %>%
+    mutate(year = iyear) %>%
+    bind_rows(out_bal)
+
   # end of loop over years
 }
 
+
+# balance checks ----------------------------------------------------------
+
+# enough immigration* and/or emigration* for correction?
+# if no records: new_ims and new_ems were enough
+# no need to use new_ims2/new_ems2 and new_ims3/new/ems3
+enough_ims_ems <- out_bal %>%
+  filter((new_ims < 0) | (new_ems < 0))
+
+
+# balance: check = pop_bir_dea + new_ims3 - new_ems3 - pop_limit
+# if the balance works, the new population should be the population-limit
+# i.e. the result should be zero
+range(out_bal$check)
+
+# difference: population limit minus population (based on migration trends)
+# negative value: not enough space (immigration decreased, emigration increased)
+# positive value: too much space (immigration increased, emigration decreased)
+
+pos_neg <- c("positive", "negative")
+
+dat_pos_neg <- out_bal %>%
+  mutate(
+    differ_prop = differ / pop_limit * 100,   
+    cat = factor(if_else(differ < 0, pos_neg[2], pos_neg[1]),
+    levels = pos_neg
+  ))
+  
+  
+#plot: absolute difference  
+  sszplot(dat_pos_neg,
+    aes_x = "year", aes_y = "differ", aes_fill = "cat",
+    geom = "col", gridscale = "free_y",
+    labs_x = "", 
+    labs_y = "people ('population limit' minus 'population based on trends')", 
+    angle = 90, wrap = "district", ncol = 4,
+    name = "1400_population-limit_absolute-difference",
+    width = 16, height = 16
+  )
+
+#plot: relative difference  
+  sszplot(dat_pos_neg,
+    aes_x = "year", aes_y = "differ_prop", aes_fill = "cat",
+    geom = "col", 
+    labs_x = "", 
+    labs_y = "difference in % ('population limit' minus 'population based on trends')", 
+    angle = 90, wrap = "district", ncol = 4,
+    name = "1401_population-limit_relative-difference",
+    width = 16, height = 16
+  )
+
+
+
+# plot: migration correction ----------------------------------------------
+  
+cat <- c("past", "initial", "corrected")
+proc <- c("immigration*", "emigration*")  
+  
+ims_ems_past <- ims_past %>% 
+    left_join(ems_past, by = c("district", "year")) %>% 
+    rename(ims_past = ims, ems_past = ems) %>% 
+    pivot_longer(c(ims_past, ems_past),
+    names_to = "category", values_to = "people")  
+
+ims_ems_future <- out_bal %>% 
+  select(district, year, ims, ems, new_ims3, new_ems3) %>% 
+  pivot_longer(c(ims, ems, new_ims3, new_ems3),
+    names_to = "category", values_to = "people")
+
+ims_ems_past %>%
+  bind_rows(ims_ems_future) %>%
+  mutate(
+    cat = factor(case_when(
+      category %in% c("ims_past", "ems_past") ~ cat[1],
+      category %in% c("ims", "ems") ~ cat[2],
+      TRUE ~ cat[3]
+    ), levels = cat),
+    process = factor(if_else(category %in% c("ims_past", "ims", "new_ims3"),
+      proc[1], proc[2]
+    ), levels = proc)
+  ) %>% 
+  sszplot(
+    aes_x = "year", aes_y = "people", aes_col = "cat",
+    wrap = "process",
+    labs_x = "", labs_y = "migration per year",
+    scale_y = c(0, NA),
+    name = "1402_migration-correction",
+    width = 10, height = 5,
+    multi = uni_d
+  )
+    
+  
 
 # export the results ------------------------------------------------------
 
