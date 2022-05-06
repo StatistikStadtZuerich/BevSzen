@@ -396,28 +396,28 @@ comp_pro_car <- pro_car %>%
 #with final amount of people
 cat_level <- c("projects", "reserves", "final")
 
-comp_final <- pro_res_all %>% 
-  left_join(comp_pro_car, by = c("district", "year", "owner")) %>% 
-  pivot_longer(c(pro_cum, car_cum, pop), names_to = "category", values_to = "people") %>%   
+pro_res_all %>%
+  left_join(comp_pro_car, by = c("district", "year", "owner")) %>%
+  pivot_longer(c(pro_cum, car_cum, pop), names_to = "category", values_to = "people") %>%
   mutate(
     district = factor(district, levels = uni_d),
     cat = factor(case_when(
       category == "pro_cum" ~ cat_level[1],
-      category == "car_cum" ~ cat_level[2], 
-      TRUE ~ cat_level[3]), levels = cat_level)) %>% 
-  select(district, year, owner, cat, people)
-
-
-# plot
-sszplot(comp_final,
-  aes_x = "year", aes_y = "people", aes_col = "cat",
-  labs_y = "people",
-  wrap = "district", ncol = 4, gridscale = "free_y",
-  scale_y = c(0, NA),
-  name = "1305_projects_reserves_final",
-  width = 12, height = 14,
-  multi = uni_w
-)
+      category == "car_cum" ~ cat_level[2],
+      TRUE ~ cat_level[3]
+    ), levels = cat_level)
+  ) %>%
+  select(district, year, owner, cat, people) %>%
+  # plot
+  sszplot(
+    aes_x = "year", aes_y = "people", aes_col = "cat",
+    labs_y = "people",
+    wrap = "district", ncol = 4, gridscale = "free_y",
+    scale_y = c(0, NA),
+    name = "1305_projects_reserves_final",
+    width = 12, height = 14,
+    multi = uni_w
+  )
 
 
 # export the results ------------------------------------------------------
