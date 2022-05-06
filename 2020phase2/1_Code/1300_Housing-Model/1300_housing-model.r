@@ -46,7 +46,7 @@ spa_dat <- read_csv(paste0(exp_path, "/living-space_future.csv"), lazy = FALSE)
 
 # ownership (% cooperative housing)
 own_dat <- read_csv(paste0(exp_path, "/ownership_past_future.csv"), lazy = FALSE)
-tail(own_dat)
+
 
 # population
 # why population not from the housing open data file?
@@ -90,9 +90,6 @@ car_spa <- left_join(car_dat, spa_dat,
 ) %>%
   mutate(car = usage_ha * 10000 / spa_dyw) %>%
   select(district, year, owner, car)
-tail(car_spa)
-
-
 
 
 # population by ownership (past) ------------------------------------------
