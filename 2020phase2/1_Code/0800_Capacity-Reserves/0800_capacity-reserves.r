@@ -236,7 +236,7 @@ sszplot(usage_prop,
 exp_y <- tibble(year = scen_begin:scen_end) %>%
   mutate(
     delta = year - date_end,
-    exp_y = exp(car_lamda * delta)
+    exp_y = exp(car_lambda * delta)
   )
 
 # used reserves until a certain year (parameter: car_y)

@@ -46,7 +46,7 @@ spa_dat <- read_csv(paste0(exp_path, "/living-space_future.csv"), lazy = FALSE)
 
 # ownership (% cooperative housing)
 own_dat <- read_csv(paste0(exp_path, "/ownership_past_future.csv"), lazy = FALSE)
-tail(own_dat)
+
 
 # population
 # why population not from the housing open data file?
@@ -90,14 +90,11 @@ car_spa <- left_join(car_dat, spa_dat,
 ) %>%
   mutate(car = usage_ha * 10000 / spa_dyw) %>%
   select(district, year, owner, car)
-tail(car_spa)
-
-
 
 
 # population by ownership (past) ------------------------------------------
 
-# left join on ownership (since this data set begins later)
+# join pop on ownership (since this data set begins later)
 pop_w <- left_join(own_dat, pop, by = c("district", "year")) %>%
   filter(year <= date_end) %>%
   mutate(
@@ -380,6 +377,47 @@ sszplot(pop_all,
   name = "1304_population",
   width = 7, height = 5
 )
+
+
+# compare projects and reserves -------------------------------------------
+
+# projects and reserves (cumulative amount of people)
+comp_pro_car <- pro_car %>% 
+  replace_na(list(pop = 0, car = 0)) %>% 
+  mutate(car_cum = if_else(year == date_end, pop, car),
+         pro_y = if_else(year == date_end, pop, new - removed)) %>% 
+  group_by(district, owner) %>% 
+      arrange(year) %>% 
+      mutate(pro_cum = cumsum(pro_y)) %>% 
+  ungroup() %>% 
+  arrange(district, owner, year) %>% 
+  select(district, owner, year, pro_cum, car_cum)
+
+#with final amount of people
+cat_level <- c("projects", "reserves", "final")
+
+pro_res_all %>%
+  left_join(comp_pro_car, by = c("district", "year", "owner")) %>%
+  pivot_longer(c(pro_cum, car_cum, pop), names_to = "category", values_to = "people") %>%
+  mutate(
+    district = factor(district, levels = uni_d),
+    cat = factor(case_when(
+      category == "pro_cum" ~ cat_level[1],
+      category == "car_cum" ~ cat_level[2],
+      TRUE ~ cat_level[3]
+    ), levels = cat_level)
+  ) %>%
+  select(district, year, owner, cat, people) %>%
+  # plot
+  sszplot(
+    aes_x = "year", aes_y = "people", aes_col = "cat",
+    labs_y = "people",
+    wrap = "district", ncol = 4, gridscale = "free_y",
+    scale_y = c(0, NA),
+    name = "1305_projects_reserves_final",
+    width = 12, height = 14,
+    multi = uni_w
+  )
 
 
 # export the results ------------------------------------------------------

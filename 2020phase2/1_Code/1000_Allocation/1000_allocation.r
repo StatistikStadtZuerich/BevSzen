@@ -40,7 +40,12 @@ aca_dat <- read_csv(spa_od) %>%
   mutate(
     owner = factor(if_else(EigentumCd == 1, uni_w[1], uni_w[2]), uni_w),
     district = factor(distr, uni_d)
-  ) %>%
+  ) %>% 
+  group_by(year, district, owner) %>% 
+  summarize(
+    apartments = sum_NA(apartments),
+    people = sum_NA(people), 
+    .groups = "drop") %>% 
   select(year, district, owner, apartments, people)
 
 

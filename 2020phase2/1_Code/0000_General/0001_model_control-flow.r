@@ -1,15 +1,8 @@
-#-------------------------------------------------------------------
+# header ------------------------------------------------------------------
 # model control flows
-#
-#
-#
-# rok/bad
-#-------------------------------------------------------------------
 
 
-#-------------------------------------------------------------------
-# paths, parameters, functions
-#-------------------------------------------------------------------
+# paths, parameters, functions --------------------------------------------
 
 # working directory
 library(here)
@@ -19,9 +12,8 @@ setwd(paste0(here(), "/2020phase2/"))
 source("1_Code/0000_General/0002_general_without-parameters.r")
 
 
-#-------------------------------------------------------------------
-# source the code files
-#-------------------------------------------------------------------
+
+# source the code files ---------------------------------------------------
 
 # function for different scenarios and modules
 
@@ -174,7 +166,5 @@ run_scen <- function(scenarios, modules) {
 
 run_scen(
   scenarios = c("middle"),
-  modules = c("ree")
+  modules = c("hom")
 )
-
-
