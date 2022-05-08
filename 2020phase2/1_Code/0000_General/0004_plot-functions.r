@@ -1,12 +1,7 @@
-#------------------------------------------------------------------------------#
+# header ------------------------------------------------------------------
 # generic plot function
-#
-# kind of a ggplot wrapper to obtain similar and uniform plots
-# with less code
-#
-# bad/rok
-#------------------------------------------------------------------------------#
-#
+# kind of a ggplot wrapper to obtain similar and uniform plots with less code
+
 # @params: test
 # data: main tibble
 # geom: a char vector with the names of the desired geom. Default is geom_line.
@@ -185,8 +180,7 @@ sszplot <- function(data,
         }
 
         fix_col <- col_time
-      }
-      else
+      } else
       if (identical(def_col, "origin")) {
         fix_col <- col_o
       } else
@@ -378,8 +372,7 @@ sszplot <- function(data,
       if (is.numeric(data[[aes_x]])) {
         res <- res +
           scale_x_continuous(breaks = pretty_breaks())
-      }
-      else if (is.factor(data[[aes_x]])) {
+      } else if (is.factor(data[[aes_x]])) {
         res <- res +
           scale_x_discrete(limits = if (!is.null(scale_x)) {
             scale_x
@@ -569,8 +562,7 @@ sszplot <- function(data,
     if (!is.null(name)) {
       dev.off()
     }
-  }
-  else {
+  } else {
     if (!is.null(name)) {
       ggsave(target,
         plot = res,

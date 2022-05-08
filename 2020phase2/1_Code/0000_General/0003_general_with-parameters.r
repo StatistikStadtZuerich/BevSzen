@@ -1,16 +1,9 @@
-#-------------------------------------------------------------------
+# header ------------------------------------------------------------------
 # General: levels, colors, functions
 # (with dependence on parameters, i.e. scenarios)
-#
-#
-# rok/bad
-#-------------------------------------------------------------------
 
 
-
-#-------------------------------------------------------------------
-# paths
-#-------------------------------------------------------------------
+# paths -------------------------------------------------------------------
 
 # path for results (graphics)
 if (exists("i_scen")) {
@@ -34,9 +27,8 @@ if (exists("i_scen")) {
 }
 
 
-#-------------------------------------------------------------------
-# unique levels
-#-------------------------------------------------------------------
+
+# unique levels -----------------------------------------------------------
 
 # year: base period
 uniy_bir_base <- bir_base_begin:bir_base_end
@@ -45,15 +37,13 @@ uniy_bir_base <- bir_base_begin:bir_base_end
 uniy_scen <- scen_begin:scen_end
 
 
-#-------------------------------------------------------------------
-# lookup tables
-#-------------------------------------------------------------------
+# lookup tables -----------------------------------------------------------
 
 # projects not realized
 look_not <- tibble(
   status = factor(pro_category, levels = pro_category),
   not_realized = c(
-    pro_not_scheduled_ip, pro_not_scheduled_other, 
+    pro_not_scheduled_ip, pro_not_scheduled_other,
     pro_not_submitted,
     pro_not_approved, pro_not_started,
     pro_not_completed, pro_not_onhold
@@ -62,9 +52,7 @@ look_not <- tibble(
 
 
 
-#-------------------------------------------------------------------
-# colors
-#-------------------------------------------------------------------
+# colors ------------------------------------------------------------------
 
 # color for year (base period)
 col_y_base <- colorRampPalette(col_6)(length(uniy_bir_base))
@@ -76,17 +64,10 @@ col_time <- c(
 )
 
 
-
-#-------------------------------------------------------------------
-# specific functions
-#-------------------------------------------------------------------
+# specific functions ------------------------------------------------------
 
 # migration functions
 source(paste0(code_path, "0000_General/0013_migration-functions.r"))
 
 # relocation functions
 source(paste0(code_path, "0000_General/0014_relocation-function.r"))
-
-
-
-

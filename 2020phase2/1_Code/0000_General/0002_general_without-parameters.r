@@ -1,18 +1,10 @@
-#-------------------------------------------------------------------
+# header ------------------------------------------------------------------
 # general: packages, functions, levels, colors
 # (without dependence on parameters, i.e. scenarios)
-#
-#
-# rok/bad
-#-------------------------------------------------------------------
 
 
+# packages ----------------------------------------------------------------
 
-#-------------------------------------------------------------------
-# packages
-#-------------------------------------------------------------------
-
-# packages
 library(tidyverse)
 library(dvmisc) # for expand_grid
 library(gridExtra) # for ggplot on multiple pages
@@ -29,9 +21,8 @@ library(this.path) # to extract the current file name
 library(modelr) # add_predictions
 
 
-#-------------------------------------------------------------------
-# paths, import parameters
-#-------------------------------------------------------------------
+
+# paths, import parameters ------------------------------------------------
 
 # path for code
 code_path <- "1_Code/"
@@ -47,9 +38,7 @@ para <- read_delim(paste0(data_path, "3_Parameter/parameter.csv"), ";", lazy = F
   select(parameter, lower, middle, upper)
 
 
-#-------------------------------------------------------------------
-# general functions
-#-------------------------------------------------------------------
+# general functions -------------------------------------------------------
 
 # functions
 sum_NA <- function(x) {
@@ -67,17 +56,13 @@ cat_log <- function(...) {
 }
 
 
-#-------------------------------------------------------------------
-# options
-#-------------------------------------------------------------------
+# options -----------------------------------------------------------------
 
 # no scientic notation
 options(scipen = 999)
 
 
-#-------------------------------------------------------------------
-# lookup tables
-#-------------------------------------------------------------------
+# lookup tables -----------------------------------------------------------
 
 # districts (34 numbers)
 # used to transfer the open data files (with 34 districts) to 31 regions
@@ -103,9 +88,8 @@ look_pro <- tibble(code = as.double(1:7), initial = pro_initial, category = pro_
   mutate(status = factor(category, levels = pro_category))
 
 
-#-------------------------------------------------------------------
-# unique levels
-#-------------------------------------------------------------------
+
+# unique levels -----------------------------------------------------------
 
 # districts
 text_d <- unique(look_dis$distr)
@@ -147,9 +131,8 @@ text_c <- c("past", "lower", "middle", "upper")
 uni_c <- factor(text_c, levels = text_c)
 
 
-#-------------------------------------------------------------------
-# categories (t = text) and associated lookup tables
-#-------------------------------------------------------------------
+
+# categories (t = text) and associated lookup tables ----------------------
 
 # age category 1
 age_1 <- c(30, 40)
@@ -211,9 +194,8 @@ look_a4 <- tibble(age = 0:120) %>%
   ), levels = age_4t))
 
 
-#-------------------------------------------------------------------
-# colors, graphics
-#-------------------------------------------------------------------
+
+# colors, graphics --------------------------------------------------------
 
 # colors (e.g. for sex, origin)
 col_6 <- c("#005CA9", "#83072A", "#EB5E04", "#FBBA00", "#007229", "#9B9B9B")
@@ -264,9 +246,7 @@ neutral <- theme_bw() + theme(
 
 
 
-#-------------------------------------------------------------------
-# open data (od)
-#-------------------------------------------------------------------
+# open data (od) ----------------------------------------------------------
 
 # population (pop)
 pop_od <- "https://data.stadt-zuerich.ch/dataset/80d5c8af-b389-41d2-b6d8-d0deb1639f00/resource/b2abdef7-3e3f-4883-8033-6787a1561987/download/bev390od3903.csv"
@@ -305,9 +285,8 @@ spa_od <- "https://data.stadt-zuerich.ch/dataset/bau_best_whg_geb_gebmwhg_wfl_pe
 sce_od <- "https://data.stadt-zuerich.ch/dataset/bev_szenarien_od3440/download/BEV344OD3440.csv"
 
 
-#-------------------------------------------------------------------
-# specific functions
-#-------------------------------------------------------------------
+
+# specific functions ------------------------------------------------------
 
 # plot functions
 source(paste0(code_path, "0000_General/0004_plot-functions.r"))
