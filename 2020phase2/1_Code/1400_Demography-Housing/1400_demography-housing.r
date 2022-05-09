@@ -212,7 +212,8 @@ out_bir <- NULL
 out_dem <- NULL
 out_pop <- NULL
 out_nat <- NULL
-out_bal <- NULL # WHY? for checks
+out_bal <- NULL # WHY? for balance checks
+out_pop_smooth <- NULL # WHY? for smoothing checks
 
 # loop over years
 for (iyear in future) {
@@ -541,16 +542,28 @@ for (iyear in future) {
   # sum(emi$rel)
 
   # age plus 1, and with variable 'year'
-  pop_end_year <- pop_nat %>%
+  pop_end_year_age <- pop_nat %>%
     mutate(
       age = age + 1,
       year = iyear
     ) %>%
     select(district, year, age, sex, origin, pop_end_year) %>%
-    rename(pop = pop_end_year) %>%
     filter(age <= age_max)
   tail(pop_end_year)
 
+  #smoothing over age
+  pop_end_year_smooth <- pop_end_year_age %>% 
+    group_by(district, year, origin, sex) %>%    
+    arrange(age) %>%
+    mutate(pop = pmax(0, predict(
+      loess(pop_end_year ~ age, span = deh_span, degree = 1, na.action = na.aggregate)
+    ))) %>%
+    ungroup()  
+  
+  #population: output
+  pop_end_year <- pop_end_year_smooth %>% 
+    select(-pop_end_year)
+  
   # outputs: birth (separate, since no 'age' variable), with variable 'year'
   out_bir <- bir %>%
     mutate(year = iyear) %>%
@@ -579,6 +592,10 @@ for (iyear in future) {
   # outputs: end of year population
   out_pop <- pop_end_year %>%
     bind_rows(out_pop)
+  
+  # outputs: population before and after smoothing  
+  out_pop_smooth <- pop_end_year_smooth %>%
+    bind_rows(out_pop_smooth)    
 
   # outputs: naturalization (separate, since no 'origin' variable), with variable 'year'
   out_nat <- nat_count %>%
@@ -686,6 +703,37 @@ ims_ems_past %>%
   )
     
   
+
+
+# plot: smoothing over age ------------------------------------------------
+
+# selected years
+sel_years <- uniy_scen[(uniy_scen %% 5) == 0]
+
+# plot levels
+sel_lev <- c("initial", "smoothed")
+
+out_pop_smooth %>%
+  pivot_longer(c(pop_end_year, pop), names_to = "category", values_to = "pop") %>%
+  mutate(cat = factor(if_else(category == "pop_end_year",
+    sel_lev[1], sel_lev[2]), levels = sel_lev),
+    pop_pyramid = if_else(sex == uni_s[1], -pop, pop),) %>%
+  filter(year %in% sel_years) %>% 
+  sszplot(
+    aes_x = "age", aes_y = "pop_pyramid", aes_col = "sex",
+    aes_ltyp = "cat",
+    labs_y = "population",
+    i_y = 0,
+    width = 18, height = 7,
+    quotes = c(
+      quote(facet_grid(origin~year, scales = "free_x")),
+      quote(coord_flip()),
+      quote(scale_linetype_manual(values = c("dotted", "solid")))
+    ),
+    name = "1403_population-age-smoothing",
+    multi = uni_d
+  )
+
 
 # export the results ------------------------------------------------------
 
