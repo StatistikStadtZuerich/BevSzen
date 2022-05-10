@@ -469,7 +469,8 @@ pro_car_dw %>%
   mutate(prop = people / sum_NA(people) * 100) %>% 
   filter(cat == pro_res_level[1]) %>% 
   sszplot(
-    aes_x = "district", aes_y = "prop", aes_fill = "cat", 
+    aes_x = "district", aes_y = "prop",
+    fix_col = 1, 
     geom = "col",
     labs_x = "", labs_y = "proportion in % (projects on reserves)",
     wrap = "owner", ncol = 2,      
@@ -503,7 +504,8 @@ pro_car_dw %>%
   mutate(prop = people / sum_NA(people) * 100) %>% 
   filter(cat == pro_res_level[1]) %>% 
   sszplot(
-    aes_x = "district", aes_y = "prop", aes_fill = "cat", 
+    aes_x = "district", aes_y = "prop",
+    fix_col = 1, 
     geom = "col",
     labs_x = "", labs_y = "proportion in % (projects on reserves)",
     scale_x = rev(uni_d),
