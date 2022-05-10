@@ -310,7 +310,7 @@ sszplot <- function(data,
     geomfix <- ""
     if (is.null(aes_col) && is.null(aes_fill)) {
       geomfix <- paste0(
-        "colour = fix_col",
+        "colour = fix_col, fill = fix_col",
         if_else(nchar(fix_size) == 0, "", ",")
       )
     }
@@ -326,7 +326,8 @@ sszplot <- function(data,
       res <- res + eval(str2expression(paste0("geom_point(", geomfix, ")")))
     }
     if ("col" %in% geom) {
-      if (!is.null(aes_fill) & length(unique(data[[aes_fill]])) > 1) {
+      if (!is.null(aes_fill))
+        if (length(unique(data[[aes_fill]])) > 1) {
         geomfix <- paste0(geomfix, ", position = 'dodge'")
       }
       res <- res + eval(str2expression(paste0("geom_col(", geomfix, ")")))
