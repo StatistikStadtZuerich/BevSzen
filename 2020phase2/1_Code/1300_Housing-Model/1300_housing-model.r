@@ -419,6 +419,100 @@ pro_res_all %>%
     multi = uni_w
   )
 
+# total per district and owner
+# WHY not with the object car_spa?
+# it is easier to calculate totals with the original objects
+# and closer to 'raw' data, i.e. ownership trends not considered
+
+pro_res_level <- c("projects", "reserves")
+
+pro_dw <- pro_aca %>% 
+  group_by(district, owner) %>% 
+    summarize(new = sum_NA(new), 
+              removed = sum_NA(removed),
+              .groups = "drop") %>% 
+  mutate(pro = new - removed) %>% 
+  select(district, owner, pro)
+
+pro_car_dw <- car_spa %>% 
+  group_by(district, owner) %>% 
+    summarize(car = sum_NA(car), 
+              .groups = "drop") %>% 
+  left_join(pro_dw, by = c("district", "owner")) %>% 
+  pivot_longer(c(car, pro), names_to = "category", values_to = "people") %>% 
+  mutate(district = factor(district, levels = uni_d),
+         owner = factor(owner, levels = uni_w),
+         cat = factor(if_else(category == "pro", 
+                              pro_res_level[1], pro_res_level[2]), 
+                      levels = pro_res_level)) %>% 
+  select(district, owner, cat, people)
+
+# WHY not piped to the plot?
+# data of pro_car_dw will be used for a plot by district only (without owner)
+
+# plot: dw (people)
+sszplot(pro_car_dw,
+  aes_x = "district", aes_y = "people", aes_fill = "cat",
+  geom = "col",
+  labs_x = "", labs_y = "people",
+  wrap = "owner", ncol = 2,  
+  scale_x = rev(uni_d),
+  name = "1306_projects_reserves_dw_people",
+  width = 8, height = 8
+)
+
+# plot: dw (proportion)
+# WHY with aes_fill?
+# is needed in the plot function
+pro_car_dw %>% 
+  group_by(district, owner) %>% 
+  mutate(prop = people / sum_NA(people) * 100) %>% 
+  filter(cat == pro_res_level[1]) %>% 
+  sszplot(
+    aes_x = "district", aes_y = "prop", aes_fill = "cat", 
+    geom = "col",
+    labs_x = "", labs_y = "proportion in % (projects on reserves)",
+    wrap = "owner", ncol = 2,      
+    scale_x = rev(uni_d),
+    name = "1307_projects_reserves_dw_prop",
+    width = 8, height = 6
+  )
+
+# plot: d (people)
+pro_car_dw %>% 
+  group_by(district, cat) %>% 
+  summarize(people = sum_NA(people),
+            .groups = "drop") %>% 
+  sszplot(
+    aes_x = "district", aes_y = "people", aes_fill = "cat",
+    geom = "col",
+    labs_x = "", labs_y = "people",
+    scale_x = rev(uni_d),
+    name = "1308_projects_reserves_d_people",
+    width = 8, height = 8
+  )
+
+# plot: d (proportion)
+# WHY with aes_fill?
+# is needed in the plot function
+pro_car_dw %>% 
+  group_by(district, cat) %>% 
+  summarize(people = sum_NA(people),
+            .groups = "drop") %>% 
+  group_by(district) %>% 
+  mutate(prop = people / sum_NA(people) * 100) %>% 
+  filter(cat == pro_res_level[1]) %>% 
+  sszplot(
+    aes_x = "district", aes_y = "prop", aes_fill = "cat", 
+    geom = "col",
+    labs_x = "", labs_y = "proportion in % (projects on reserves)",
+    scale_x = rev(uni_d),
+    name = "1309_projects_reserves_d_prop",
+    width = 8, height = 8
+  )
+
+
+
 
 # export the results ------------------------------------------------------
 
