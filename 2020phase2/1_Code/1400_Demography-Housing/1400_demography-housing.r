@@ -549,7 +549,7 @@ for (iyear in future) {
     ) %>%
     select(district, year, age, sex, origin, pop_end_year) %>%
     filter(age <= age_max)
-  tail(pop_end_year)
+  tail(pop_end_year_age)
 
   #smoothing over age
   pop_end_year_smooth <- pop_end_year_age %>% 
