@@ -131,8 +131,7 @@ nat_past <- read_csv(nat_od) %>%
   mutate(scenario = uni_c[1])
 
 # previous published population scenarios
-# age: only age groups available
-# therefore, first evaluations without age
+# age: only age groups available on open data
 
 look_dis_temp <- look_dis %>%
   mutate(
@@ -146,7 +145,17 @@ sce <- read_csv(sce_od) %>%
   rename(year = StichtagDatJahr, pop = AnzBestWir) %>%
   filter(year >= scen_begin) %>%
   left_join(look_dis_temp, by = "QuarSort") %>%
-  mutate(
+  mutate(age_class = factor(case_when(
+    AlterV10Sort == 1 ~ age_3t[1],
+    AlterV10Sort == 2 ~ age_3t[2],                               
+    AlterV10Sort == 3 ~ age_3t[3],     
+    AlterV10Sort == 4 ~ age_3t[4],    
+    AlterV10Sort == 5 ~ age_3t[5],       
+    AlterV10Sort == 6 ~ age_3t[6],           
+    AlterV10Sort == 7 ~ age_3t[7],     
+    AlterV10Sort == 8 ~ age_3t[8],         
+    AlterV10Sort == 9 ~ age_3t[9],     
+    TRUE ~ age_3t[10]), levels = age_3t),
     sex = factor(if_else(SexSort == 1, uni_s[1], uni_s[2]), uni_s),
     origin = factor(if_else(HeimatRegionSort == 1, uni_o[1], uni_o[2]), uni_o),
     district = factor(distr, uni_d),
@@ -156,10 +165,11 @@ sce <- read_csv(sce_od) %>%
       TRUE ~ uni_c[4]
     )
   ) %>%
-  select(district, year, sex, origin, scenario, pop) %>%
-  group_by(district, year, sex, origin, scenario) %>%
-  summarize(pop = sum(pop)) %>%
-  ungroup()
+  select(district, year, age_class, sex, origin, scenario, pop) %>%
+  group_by(district, year, age_class, sex, origin, scenario) %>%
+  summarize(pop = sum(pop),
+            .groups = "drop")
+
 
 
 # data import: future (lower, middle, upper scenario) ---------------------
@@ -378,7 +388,7 @@ sszplot(pop_dyas,
 
 # population: new and previous scenarios ----------------------------------
 
-# preparation
+# total population
 new_prev <- factor(c("new", "previous"))
 
 pop_yc_new <- pop_yc %>%
@@ -386,8 +396,8 @@ pop_yc_new <- pop_yc %>%
 
 pop_yc_prev <- sce %>%
   group_by(year, scenario) %>%
-  summarize(pop = sum(pop)) %>%
-  ungroup() %>%
+  summarize(pop = sum(pop),
+            .groups = "drop") %>%
   mutate(cat = new_prev[2])
 
 pop_yc_new_prev <- pop_yc_new %>%
@@ -398,7 +408,55 @@ sszplot(pop_yc_new_prev,
   aes_col = "scenario", aes_ltyp = "cat",
   labs_y = "population",
   scale_y = c(0, NA),
-  name = "1519_pop_yc_new_prev"
+  name = "1510_pop_yc_new_prev"
+)
+
+# age: 80plus, by yso 
+sel_years <- uniy_scen[(uniy_scen %% 5) == 0]
+
+pop_80p_new <- pop_middle %>%
+  filter((age >= 80) &
+           (year %in% sel_years)) %>%  
+  group_by(year, sex, origin) %>% 
+    summarize(pop = sum_NA(pop), 
+              .groups = "drop") %>% 
+  mutate(sex = factor(sex, levels = uni_s),
+    origin = factor(origin, levels = uni_o),
+    cat = new_prev[1])  
+
+pop_80p_prev <- sce %>%
+  filter((age_class %in% age_3t[9:10]) &
+           (scenario == text_c[3]) &
+           (year %in% sel_years)) %>% 
+  group_by(year, sex, origin) %>% 
+    summarize(pop = sum_NA(pop), 
+              .groups = "drop") %>% 
+  mutate(cat = new_prev[2])
+
+# WHY not piped into plot? used for total (age 80plus, without so)
+pop_80p_new_prev <- pop_80p_new %>%
+  bind_rows(pop_80p_prev)
+
+sszplot(pop_80p_new_prev,
+  aes_x = "year", aes_y = "pop", aes_col = "cat",
+  labs_y = "people",
+  grid = c("sex", "origin"),
+  scale_y = c(0, NA),
+  width = 10, height = 6,
+  name = "1511_pop_80plus_so"
+)
+
+# age: 80plus, by y 
+pop_80p_new_prev %>% 
+  group_by(year, cat) %>% 
+    summarize(pop = sum_NA(pop), 
+              .groups = "drop") %>% 
+sszplot(
+  aes_x = "year", aes_y = "pop", aes_col = "cat",
+  labs_y = "people",
+  scale_y = c(0, NA),
+  width = 8, height = 5,
+  name = "1512_pop_80plus"
 )
 
 
