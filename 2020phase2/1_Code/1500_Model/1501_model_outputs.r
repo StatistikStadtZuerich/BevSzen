@@ -238,7 +238,7 @@ pop <- pop_past %>%
   )
 
 # selected years (e.g. for population pyramids)
-y_sel1 <- c(date_end, 2040)
+y_sel1 <- c(date_end, scen_end_public)
 y_sel2 <- c(date_end, rev(seq(scen_end, scen_begin, by = -10)))
 
 
@@ -412,7 +412,7 @@ sszplot(pop_yc_new_prev,
 )
 
 # age: 80plus, by yso 
-sel_years <- uniy_scen[(uniy_scen %% 5) == 0]
+sel_years <- uniy_scen_public[(uniy_scen_public %% 5) == 0]
 
 pop_80p_new <- pop_middle %>%
   filter((age >= 80) &
