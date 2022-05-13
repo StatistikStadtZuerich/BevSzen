@@ -33,13 +33,17 @@ t0 <- Sys.time()
 # import, data preparation ------------------------------------------------
 
 # projects (apartments, dyw)
-pro_dat <- read_csv(paste0(exp_path, "/projects_future.csv"), lazy = FALSE)
+pro_dat <- read_csv(paste0(exp_path, "/projects_future.csv"), lazy = FALSE) %>% 
+    mutate(apartments = if_else(district == "Wollishofen", 0, apartments))
+# ------------------------------------------------------------------------------------------test
 
 # allocation (persons per apartment, dyw)
 aca_dat <- read_csv(paste0(exp_path, "/allocation_future.csv"), lazy = FALSE)
 
 # capacity/reserves (m2, dyw)
-car_dat <- read_csv(paste0(exp_path, "/usage_area.csv"), lazy = FALSE)
+car_dat <- read_csv(paste0(exp_path, "/usage_area.csv"), lazy = FALSE) %>% 
+  mutate(usage_ha = if_else(district == "Wollishofen", usage_ha * 3, usage_ha))
+# ------------------------------------------------------------------------------------------test
 
 # living space (m2 per person, dyw)
 spa_dat <- read_csv(paste0(exp_path, "/living-space_future.csv"), lazy = FALSE)
