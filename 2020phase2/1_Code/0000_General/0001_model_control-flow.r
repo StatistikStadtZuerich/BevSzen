@@ -162,9 +162,9 @@ run_scen <- function(scenarios, modules) {
 # execute the function
 # run_scen(
 #     scenarios = c("lower", "middle", "upper"),
-#     modules = c("alw"))
+#     modules = c("hou"))
+
 
 run_scen(
-  scenarios = c("middle"),
-  modules = c("hom")
-)
+    scenarios = c("middle"),
+    modules = c("out"))

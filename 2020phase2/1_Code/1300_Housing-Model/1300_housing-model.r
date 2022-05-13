@@ -155,6 +155,7 @@ sszplot(pop_with_past,
   width = 12, height = 14
 )
 
+
 # proportion cooperative housing (according to capacity/reserves vs. district trends)
 prop_coop <- pop_with_past %>%
   mutate(simple = if_else(owner == uni_w[1], "cooperative", "private")) %>%
@@ -249,13 +250,21 @@ project_reserves <- function(x, ...) {
     # use the information from the project list (the result can not be negative)
     x$project[i] <- max(0, x$pop[i - 1] + x$new[i] - x$removed[i])
 
-    # select the larger value of projects and capacity/reserves
-    # if projects larger: known projects will be realized
-    # if capacity/reserves larger: not all future buildings in the project list
-    x$pop[i] <- max(x$project[i], x$car[i])
+    # trust the projects or reserves?
+    # if reserves larger, then select reserves
+    # why? not all future buildings in the project list 
+    # if projects larger: apply the parameter 'car_trust'
+    # for car_trust = 100 the lower reserves-value is used
+    # for car_trust = 0 the higher project-value is used    
+  
+    if (x$car[i] > x$project[i]) {
+      x$pop[i] <- x$car[i]
+    } else {
+      x$pop[i] <- x$project[i] - (x$project[i] - x$car[i]) * (car_trust/100)
+    }
 
     # correction of the reserves (if too much used due to the project list)
-    x$corr[i] <- max(0, x$project[i] - x$car[i])
+    x$corr[i] <- max(0, x$pop[i] - x$car[i])
 
     # correction (proportional to the capacity)
     # WHY not proportional to the usage?
@@ -284,14 +293,14 @@ project_reserves <- function(x, ...) {
   }
 
   # output
-  # if does the population exceeds the used reserves?
-  # trust the capacity/reserves or the project list?
+  # if the population exceeds the maximum possible population according the reserves calculation
+  # trust the reserves or the calculated population?
 
   y <- x %>%
     mutate(
       upper_limit_car = pmin(pop, car_max),
       diff_to_limit = pop - upper_limit_car,
-      to_subtract = car_trust / 100 * diff_to_limit,
+      to_subtract = car_max_trust / 100 * diff_to_limit,
       pop_new = pop - to_subtract
     ) %>%
     select(district, year, owner, pop_new) %>%
@@ -299,12 +308,12 @@ project_reserves <- function(x, ...) {
     filter(year >= scen_begin)
   print(y)
 
-
 }
 
 
-# Check: Albisrieden, cooperative housing
-x <- filter(pro_car, (district == "Albisrieden") & (owner == "cooperative housing"))
+
+# Check
+x <- filter(pro_car, (district == "Wollishofen") & (owner == "cooperative housing"))
 plot(x$year, x$car, type = "o")
 project_reserves(x)
 

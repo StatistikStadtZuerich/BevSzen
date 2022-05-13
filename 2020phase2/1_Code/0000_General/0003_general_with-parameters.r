@@ -36,6 +36,9 @@ uniy_bir_base <- bir_base_begin:bir_base_end
 # year: future
 uniy_scen <- scen_begin:scen_end
 
+# year: future (publications)
+uniy_scen_public <- scen_begin:scen_end_public
+
 
 # lookup tables -----------------------------------------------------------
 
