@@ -40,8 +40,8 @@ pop_past <- read_csv(pop_od) %>%
   ) %>%
   select(district, year, age, sex, origin, pop) %>%
   group_by(district, year, age, sex, origin) %>%
-  summarize(pop = sum(pop)) %>%
-  ungroup() %>%
+  summarize(pop = sum(pop),
+            .groups = "drop") %>%
   mutate(scenario = uni_c[1])
 
 # births
@@ -55,8 +55,8 @@ bir_past <- read_csv(bir_od) %>%
   ) %>%
   select(district, year, sex, origin, bir) %>%
   group_by(district, year, sex, origin) %>%
-  summarize(bir = sum(bir)) %>%
-  ungroup() %>%
+  summarize(bir = sum(bir),
+            .groups = "drop") %>%
   mutate(scenario = uni_c[1])
 
 # deaths
@@ -64,8 +64,8 @@ dea_past <- read_csv(dea_od) %>%
   rename(year = EreignisDatJahr, age = AlterVCd, dea = AnzSterWir) %>%
   mutate(sex = factor(if_else(SexCd == 1, uni_s[1], uni_s[2]), uni_s)) %>%
   group_by(year, age, sex) %>%
-  summarize(dea = sum(dea)) %>%
-  ungroup() %>%
+  summarize(dea = sum(dea),
+            .groups = "drop") %>%
   mutate(scenario = uni_c[1])
 
 # immigration
@@ -79,8 +79,8 @@ imm_past <- read_csv(imm_od) %>%
   ) %>%
   select(district, year, age, sex, origin, imm) %>%
   group_by(district, year, age, sex, origin) %>%
-  summarize(imm = sum(imm)) %>%
-  ungroup() %>%
+  summarize(imm = sum(imm),
+            .groups = "drop") %>%
   mutate(scenario = uni_c[1])
 
 # emigration
@@ -94,8 +94,8 @@ emi_past <- read_csv(emi_od) %>%
   ) %>%
   select(district, year, age, sex, origin, emi) %>%
   group_by(district, year, age, sex, origin) %>%
-  summarize(emi = sum(emi)) %>%
-  ungroup() %>%
+  summarize(emi = sum(emi),
+            .groups = "drop") %>%
   mutate(scenario = uni_c[1])
 
 # relocation
@@ -113,8 +113,8 @@ rel_past <- read_csv(rel_od) %>%
   ) %>%
   select(district_before, district_after, year, age, sex, origin, rel) %>%
   group_by(district_before, district_after, year, age, sex, origin) %>%
-  summarize(rel = sum(rel)) %>%
-  ungroup() %>%
+  summarize(rel = sum(rel),
+            .groups = "drop") %>%
   mutate(scenario = uni_c[1])
 
 # naturalization
@@ -245,8 +245,8 @@ y_sel2 <- c(date_end, rev(seq(scen_end, scen_begin, by = -10)))
 # yc
 pop_yc <- pop %>%
   group_by(year, scenario) %>%
-  summarize(pop = sum(pop)) %>%
-  ungroup()
+  summarize(pop = sum(pop),
+            .groups = "drop")
 
 sszplot(pop_yc,
   aes_x = "year", aes_y = "pop", aes_col = "scenario",
@@ -260,8 +260,8 @@ pop_yas <- pop %>%
   filter((scenario %in% uni_c[c(1, 3)]) &
     (year %in% y_sel1)) %>%
   group_by(year, age, sex) %>%
-  summarize(pop = sum(pop)) %>%
-  ungroup() %>%
+  summarize(pop = sum(pop),
+            .groups = "drop") %>%
   mutate(
     pop_pyramid = if_else(sex == uni_s[1], -pop, pop),
     year_factor = as.factor(year)
@@ -284,8 +284,8 @@ sszplot(pop_yas,
 pop_dy <- pop %>%
   filter(scenario %in% uni_c[c(1, 3)]) %>%
   group_by(district, year) %>%
-  summarize(pop = sum(pop)) %>%
-  ungroup()
+  summarize(pop = sum(pop),
+            .groups = "drop")
 
 sszplot(pop_dy,
   aes_x = "year", aes_y = "pop",
@@ -301,8 +301,8 @@ sszplot(pop_dy,
 pop_dyo <- pop %>%
   filter(scenario %in% uni_c[c(1, 3)]) %>%
   group_by(district, year, origin) %>%
-  summarize(pop = sum(pop)) %>%
-  ungroup()
+  summarize(pop = sum(pop),
+            .groups = "drop")
 
 sszplot(pop_dyo,
   aes_x = "year", aes_y = "pop", aes_col = "origin",
@@ -333,8 +333,8 @@ sszplot(pop_dyo_prop,
 # yoc
 pop_yoc <- pop %>%
   group_by(year, origin, scenario) %>%
-  summarize(pop = sum(pop)) %>%
-  ungroup()
+  summarize(pop = sum(pop),
+            .groups = "drop")
 
 sszplot(pop_yoc,
   aes_x = "year", aes_y = "pop", aes_col = "scenario",
@@ -362,8 +362,8 @@ pop_dyas <- pop %>%
   filter((scenario %in% uni_c[c(1, 3)]) &
     (year %in% y_sel1)) %>%
   group_by(district, year, age, sex) %>%
-  summarize(pop = sum(pop)) %>%
-  ungroup() %>%
+  summarize(pop = sum(pop),
+            .groups = "drop") %>%
   mutate(
     pop_pyramid = if_else(sex == uni_s[1], -pop, pop),
     year_factor = as.factor(year)
@@ -383,7 +383,22 @@ sszplot(pop_dyas,
   name = "1507_pop_dyas"
 )
 
+# dy: plot for slides
+# plot does not look how it should: why districts not on x-axis?-----------------------------------
 
+pop_dy %>% 
+  filter(year %in% c(date_end, scen_end_public)) %>% 
+  mutate(year_text = paste0("year:", year)) %>% 
+  sszplot(
+    aes_x = "district", aes_y = "pop", aes_fill = "year_text",
+    geom = "col",
+    labs_x = "", labs_y = "people",
+    scale_x = rev(uni_d),
+    angle = 90,
+    name = "1508_pop_dy_selected-years",
+    width = 8, height = 10
+  )  
+    
 
 
 # population: new and previous scenarios ----------------------------------
@@ -401,14 +416,15 @@ pop_yc_prev <- sce %>%
   mutate(cat = new_prev[2])
 
 pop_yc_new_prev <- pop_yc_new %>%
-  bind_rows(pop_yc_prev)
+  bind_rows(pop_yc_prev) %>% 
+  filter(year <= scen_end_public)
 
 sszplot(pop_yc_new_prev,
   aes_x = "year", aes_y = "pop",
   aes_col = "scenario", aes_ltyp = "cat",
   labs_y = "population",
   scale_y = c(0, NA),
-  name = "1510_pop_yc_new_prev"
+  name = "1510_pop_new-prev_yc"
 )
 
 # age: 80plus, by yso 
@@ -425,7 +441,7 @@ pop_80p_new <- pop_middle %>%
 pop_80p_prev <- sce %>%
   filter((age_class %in% age_3t[9:10]) &
            (scenario == text_c[3]) &
-           (year %in% sel_years)) %>% 
+           (year %in% uniy_scen_public)) %>% 
   group_by(year, sex, origin) %>% 
     summarize(pop = sum_NA(pop), 
               .groups = "drop") %>% 
@@ -441,7 +457,7 @@ sszplot(pop_80p_new_prev,
   grid = c("sex", "origin"),
   scale_y = c(0, NA),
   width = 10, height = 6,
-  name = "1511_pop_80plus_so"
+  name = "1511_pop_new-prev_80plus_so"
 )
 
 # age: 80plus, by y 
@@ -454,8 +470,102 @@ sszplot(
   labs_y = "people",
   scale_y = c(0, NA),
   width = 8, height = 5,
-  name = "1512_pop_80plus"
+  name = "1512_pop_new-prev_80plus"
 )
+
+# age categories, by y
+# WHY renamed? same name as in previous prediction
+pop_age_new <- pop_middle %>%
+  left_join(look_a3, by = "age") %>% 
+  rename(age_class = age_3) %>% 
+  filter(year %in% uniy_scen_public) %>% 
+  group_by(year, age_class) %>%
+    summarize(pop = sum_NA(pop),
+              .groups = "drop") %>% 
+    mutate(cat = new_prev[1])
+
+pop_age_prev <- sce %>%
+  filter((year %in% uniy_scen_public) &
+             (scenario == text_c[3])) %>% 
+  group_by(year, age_class) %>%
+    summarize(pop = sum_NA(pop),
+              .groups = "drop") %>% 
+    mutate(cat = new_prev[2])  
+
+# one category for 80+
+# WHY not defined as a separate category before? 
+# published population scenarios on open data have two separate categories for 80-89 and 90+
+
+# WHY not piped to plot? data also used to filter for must important age groups 
+# (frequent customer needs: young, elderly; plots used for slides)
+pop_age_new_prev <- pop_age_new %>%
+  bind_rows(pop_age_prev) %>%
+  mutate(age_class = factor(if_else(age_class %in% c("80-89", "90+"), "80+", as.character(age_class)))) %>%
+  group_by(year, age_class, cat) %>%
+  summarize(
+    pop = sum_NA(pop),
+    .groups = "drop"
+  )
+  
+sszplot(pop_age_new_prev,
+  aes_x = "year", aes_y = "pop", aes_col = "cat",
+  labs_y = "people",
+  wrap = "age_class", ncol = 3,  
+  scale_y = c(0, NA),
+  width = 10, height = 8,
+  name = "1513_pop_new_prev_a"
+)
+
+pop_age_new_prev %>% 
+  filter(age_class %in% c("0-9", "10-19")) %>% 
+sszplot(
+  aes_x = "year", aes_y = "pop", aes_col = "cat",
+  labs_y = "people",
+  wrap = "age_class", ncol = 2,  
+  scale_y = c(0, NA),
+  width = 10, height = 5,
+  name = "1514_pop_new_prev_a_young"
+)
+
+pop_age_new_prev %>% 
+  filter(age_class %in% c("60-69", "70-79", "80+")) %>% 
+sszplot(
+  aes_x = "year", aes_y = "pop", aes_col = "cat",
+  labs_y = "people",
+  wrap = "age_class", ncol = 3,  
+  scale_y = c(0, NA),
+  width = 11, height = 5,
+  name = "1515_pop_new_prev_a_elderly"
+)
+
+# new and previous: by dy (selected years only)
+pop_dy_new_sel <- pop_dy %>%
+  filter(year %in% c(date_end, scen_end_public)) %>% 
+  mutate(cat = if_else(year == date_end, 
+                       paste0(date_end, " (past)"),
+                       paste0(scen_end_public, " (new)")))
+
+pop_dy_prev_sel <- sce %>%
+  filter((scenario == text_c[3]) &
+           (year == scen_end_public)) %>%
+  group_by(district, year) %>%
+    summarize(pop = sum_NA(pop),
+              .groups = "drop") %>%
+  mutate(cat = paste0(scen_end_public, " (previous)"))
+
+# plot does not look how it should (see before)
+
+pop_dy_new_sel %>%
+  bind_rows(pop_dy_prev_sel) %>% 
+  sszplot(
+    aes_x = "district", aes_y = "pop", aes_fill = "cat",
+    geom = "col",
+    labs_x = "", labs_y = "people",
+    scale_x = rev(uni_d),
+    angle = 90,
+    name = "1516_pop_new_prev_dy",
+    width = 8, height = 10
+  )
 
 
 
@@ -477,8 +587,8 @@ bir <- bir_past %>%
 # yc
 bir_yc <- bir %>%
   group_by(year, scenario) %>%
-  summarize(bir = sum(bir)) %>%
-  ungroup()
+  summarize(bir = sum(bir),
+            .groups = "drop")
 
 sszplot(bir_yc,
   aes_x = "year", aes_y = "bir", aes_col = "scenario",
@@ -490,8 +600,8 @@ sszplot(bir_yc,
 # yoc
 bir_yoc <- bir %>%
   group_by(year, origin, scenario) %>%
-  summarize(bir = sum(bir)) %>%
-  ungroup()
+  summarize(bir = sum(bir),
+            groups = "drop")
 
 sszplot(bir_yoc,
   aes_x = "year", aes_y = "bir", aes_col = "scenario",
@@ -505,8 +615,8 @@ sszplot(bir_yoc,
 bir_dyo <- bir %>%
   filter(scenario %in% uni_c[c(1, 3)]) %>%
   group_by(district, year, origin) %>%
-  summarize(bir = sum(bir)) %>%
-  ungroup()
+  summarize(bir = sum(bir),
+            .groups = "drop")
 
 sszplot(bir_dyo,
   aes_x = "year", aes_y = "bir", aes_col = "origin",
@@ -541,8 +651,8 @@ sszplot(bir_dyo_prop,
 dea <- dem_future %>%
   select(year, age, sex, scenario, dea) %>%
   group_by(year, age, sex, scenario) %>%
-  summarize(dea = sum(dea)) %>%
-  ungroup() %>%
+  summarize(dea = sum(dea),
+            .groups = "drop") %>%
   bind_rows(dea_past) %>%
   left_join(look_a3, by = "age") %>%
   mutate(sex = factor(sex, levels = uni_s))
@@ -550,8 +660,8 @@ dea <- dem_future %>%
 # yc
 dea_yc <- dea %>%
   group_by(year, scenario) %>%
-  summarize(dea = sum(dea)) %>%
-  ungroup()
+  summarize(dea = sum(dea), 
+            .groups = "drop")
 
 sszplot(dea_yc,
   aes_x = "year", aes_y = "dea", aes_col = "scenario",
@@ -563,8 +673,8 @@ sszplot(dea_yc,
 # yac
 dea_yac <- dea %>%
   group_by(year, age_3, scenario) %>%
-  summarize(dea = sum(dea)) %>%
-  ungroup()
+  summarize(dea = sum(dea),
+            .groups = "drop")
 
 sszplot(dea_yac,
   aes_x = "year", aes_y = "dea", aes_col = "scenario",
@@ -579,8 +689,8 @@ sszplot(dea_yac,
 dea_ys <- dea %>%
   filter(scenario %in% uni_c[c(1, 3)]) %>%
   group_by(year, sex) %>%
-  summarize(dea = sum(dea)) %>%
-  ungroup()
+  summarize(dea = sum(dea),
+            .groups = "drop")
 
 sszplot(dea_ys,
   aes_x = "year", aes_y = "dea", aes_col = "sex",
@@ -594,8 +704,8 @@ sszplot(dea_ys,
 dea_yas <- dea %>%
   filter(scenario %in% uni_c[c(1, 3)]) %>%
   group_by(year, age_3, sex) %>%
-  summarize(dea = sum(dea)) %>%
-  ungroup()
+  summarize(dea = sum(dea),
+            .groups = "drop")
 
 sszplot(dea_yas,
   aes_x = "year", aes_y = "dea", aes_col = "sex",
@@ -625,8 +735,8 @@ imm <- dem_future %>%
 # yc
 imm_yc <- imm %>%
   group_by(year, scenario) %>%
-  summarize(imm = sum(imm)) %>%
-  ungroup()
+  summarize(imm = sum(imm),
+            .groups = "drop")
 
 sszplot(imm_yc,
   aes_x = "year", aes_y = "imm", aes_col = "scenario",
@@ -639,8 +749,8 @@ sszplot(imm_yc,
 imm_ya <- imm %>%
   filter(scenario %in% uni_c[c(1, 3)]) %>%
   group_by(year, age_3) %>%
-  summarize(imm = sum(imm)) %>%
-  ungroup()
+  summarize(imm = sum(imm),
+            .groups = "drop")
 
 sszplot(imm_ya,
   aes_x = "year", aes_y = "imm",
@@ -656,8 +766,8 @@ sszplot(imm_ya,
 imm_yao <- imm %>%
   filter(scenario %in% uni_c[c(1, 3)]) %>%
   group_by(year, age_3, origin) %>%
-  summarize(imm = sum(imm)) %>%
-  ungroup()
+  summarize(imm = sum(imm),
+            .groups = "drop")
 
 sszplot(imm_yao,
   aes_x = "year", aes_y = "imm", aes_col = "origin",
@@ -673,8 +783,8 @@ sszplot(imm_yao,
 imm_dyo <- imm %>%
   filter(scenario %in% uni_c[c(1, 3)]) %>%
   group_by(district, year, origin) %>%
-  summarize(imm = sum(imm)) %>%
-  ungroup()
+  summarize(imm = sum(imm),
+            .groups = "drop")
 
 sszplot(imm_dyo,
   aes_x = "year", aes_y = "imm", aes_col = "origin",
@@ -721,8 +831,8 @@ emi <- dem_future %>%
 # yc
 emi_yc <- emi %>%
   group_by(year, scenario) %>%
-  summarize(emi = sum(emi)) %>%
-  ungroup()
+  summarize(emi = sum(emi),
+            .groups = "drop")
 
 sszplot(emi_yc,
   aes_x = "year", aes_y = "emi", aes_col = "scenario",
@@ -735,8 +845,8 @@ sszplot(emi_yc,
 emi_ya <- emi %>%
   filter(scenario %in% uni_c[c(1, 3)]) %>%
   group_by(year, age_3) %>%
-  summarize(emi = sum(emi)) %>%
-  ungroup()
+  summarize(emi = sum(emi),
+            .groups = "drop")
 
 sszplot(emi_ya,
   aes_x = "year", aes_y = "emi",
@@ -752,8 +862,8 @@ sszplot(emi_ya,
 emi_yao <- emi %>%
   filter(scenario %in% uni_c[c(1, 3)]) %>%
   group_by(year, age_3, origin) %>%
-  summarize(emi = sum(emi)) %>%
-  ungroup()
+  summarize(emi = sum(emi),
+            .groups = "drop")
 
 sszplot(emi_yao,
   aes_x = "year", aes_y = "emi", aes_col = "origin",
@@ -769,8 +879,8 @@ sszplot(emi_yao,
 emi_dyo <- emi %>%
   filter(scenario %in% uni_c[c(1, 3)]) %>%
   group_by(district, year, origin) %>%
-  summarize(emi = sum(emi)) %>%
-  ungroup()
+  summarize(emi = sum(emi),
+            .groups = "drop")
 
 sszplot(emi_dyo,
   aes_x = "year", aes_y = "emi", aes_col = "origin",
@@ -830,8 +940,8 @@ net <- as_tibble(expand_grid(
 # yc
 net_yc <- net %>%
   group_by(year, scenario) %>%
-  summarize(net = sum(net)) %>%
-  ungroup()
+  summarize(net = sum(net),
+            .groups = "drop")
 
 sszplot(net_yc,
   aes_x = "year", aes_y = "net", aes_col = "scenario",
@@ -845,8 +955,8 @@ sszplot(net_yc,
 net_dyo <- net %>%
   filter(scenario %in% uni_c[c(1, 3)]) %>%
   group_by(district, year, origin) %>%
-  summarize(net = sum_NA(net)) %>%
-  ungroup()
+  summarize(net = sum_NA(net),
+            .groups = "drop")
 
 sszplot(net_dyo,
   aes_x = "year", aes_y = "net", aes_col = "origin",
@@ -877,8 +987,8 @@ nat <- nat_future %>%
 # yc
 nat_yc <- nat %>%
   group_by(year, scenario) %>%
-  summarize(nat = sum(nat)) %>%
-  ungroup()
+  summarize(nat = sum(nat),
+            .groups = "drop")
 
 sszplot(nat_yc,
   aes_x = "year", aes_y = "nat", aes_col = "scenario",
@@ -891,8 +1001,8 @@ sszplot(nat_yc,
 nat_dy <- nat %>%
   filter(scenario %in% uni_c[c(1, 3)]) %>%
   group_by(district, year) %>%
-  summarize(nat = sum(nat)) %>%
-  ungroup()
+  summarize(nat = sum(nat),
+            .groups = "drop")
 
 sszplot(nat_dy,
   aes_x = "year", aes_y = "nat",
@@ -918,8 +1028,8 @@ uni_cat <- c("data", "from immigration*", "from emigration*")
 rel_past_yaso <- rel_past %>%
   select(year, age, sex, origin, scenario, rel) %>%
   group_by(year, age, sex, origin, scenario) %>%
-  summarize(rel = sum(rel)) %>%
-  ungroup() %>%
+  summarize(rel = sum(rel),
+            .groups = "drop") %>%
   mutate(cat = factor(uni_cat[1], levels = uni_cat))
 
 # future: no district
@@ -928,9 +1038,9 @@ rel_future_yaso <- dem_future %>%
   group_by(year, age, sex, origin, scenario) %>%
   summarize(
     rei = sum(rei),
-    ree = sum(ree)
+    ree = sum(ree),
+    .groups = "drop"
   ) %>%
-  ungroup() %>%
   pivot_longer(
     cols = c("rei", "ree"), values_to = "rel",
     names_to = "category"
@@ -947,8 +1057,8 @@ rel <- rel_past_yaso %>%
 # yct (t: cat)
 rel_yct <- rel %>%
   group_by(year, scenario, cat) %>%
-  summarize(rel = sum(rel)) %>%
-  ungroup()
+  summarize(rel = sum(rel),
+            .groups = "drop")
 
 sszplot(rel_yct,
   aes_x = "year", aes_y = "rel", aes_col = "scenario",
