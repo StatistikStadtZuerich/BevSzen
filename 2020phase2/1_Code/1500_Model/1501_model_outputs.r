@@ -412,11 +412,9 @@ sszplot(pop_yc_new_prev,
 )
 
 # age: 80plus, by yso 
-sel_years <- uniy_scen_public[(uniy_scen_public %% 5) == 0]
-
 pop_80p_new <- pop_middle %>%
   filter((age >= 80) &
-           (year %in% sel_years)) %>%  
+           (year %in% uniy_scen_public)) %>%  
   group_by(year, sex, origin) %>% 
     summarize(pop = sum_NA(pop), 
               .groups = "drop") %>% 
@@ -458,6 +456,8 @@ sszplot(
   width = 8, height = 5,
   name = "1512_pop_80plus"
 )
+
+
 
 
 
