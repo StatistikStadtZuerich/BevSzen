@@ -167,5 +167,7 @@ run_scen <- function(scenarios, modules) {
 
 
 run_scen(
-    scenarios = c("lower", "middle", "upper"),
+    scenarios = c("middle"),
     modules = c("out"))
+
+
