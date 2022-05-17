@@ -194,6 +194,20 @@ look_a4 <- tibble(age = 0:120) %>%
   ), levels = age_4t))
 
 
+# age category 5
+age_5 <- c(0, 7, 16, 65, 80)
+
+age_5t <- c("0-6", "7-15", "16-64", "65-79", "80+")
+
+look_a5 <- tibble(age = 0:120) %>%
+  mutate(age_5 = factor(case_when(
+    age < age_5[2] ~ age_5t[1],
+    age < age_5[3] ~ age_5t[2],
+    age < age_5[4] ~ age_5t[3],
+    age < age_5[5] ~ age_5t[4],
+    TRUE ~ age_5t[5]
+  ), levels = age_5t))
+
 
 # colors, graphics --------------------------------------------------------
 
