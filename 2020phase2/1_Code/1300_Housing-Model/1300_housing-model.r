@@ -271,7 +271,8 @@ project_reserves <- function(x, ...) {
     # if the future capacity is also calculated based on ownership trends,
     # then the usage could be negative
     # a down-correction proportional to a negative usage does not make sense
-
+   
+     
     if (i < nrow(x)) {
       index <- (i + 1):nrow(x)
       x$subtract <- 0
