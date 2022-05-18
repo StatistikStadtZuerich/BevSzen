@@ -194,7 +194,6 @@ look_a4 <- tibble(age = 0:120) %>%
   ), levels = age_4t))
 
 
-
 # colors, graphics --------------------------------------------------------
 
 # colors (e.g. for sex, origin)
