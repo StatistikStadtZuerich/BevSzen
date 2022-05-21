@@ -307,7 +307,7 @@ for (iyear in future) {
   # immigration*
   ims <- popu %>%
     group_by(district) %>%
-    summarize(pop = sum(pop)) %>%
+      summarize(pop = sum(pop)) %>%
     ungroup() %>%
     left_join(filter(ims_rate, year == iyear), by = "district") %>%
     mutate(ims_d = pop * rate / 100) %>%
@@ -742,7 +742,7 @@ out_pop_smooth %>%
 # why Wollishofen? need to check age patterns of this district
 # why named d21? 21 is the number for district Wollishofen
 
-catego <- c("immigration", "emigration", "migration balance", "population")
+catego <- c("immigration", "emigration", "net migration", "population")
 line_catego <- c("initial", "final")
 
 # why not piped into plot? to get limits, and another plot (without origin)
@@ -751,13 +751,13 @@ pop_mig_21_yao <- out_dem %>%
   filter((district == "Wollishofen") & year >= 2022) %>%
   select(year, age, origin, ims_initial, ims, ems_initial, ems, pop_bir_dea, pop_end_year) %>%
   mutate(
-    bal_initial = ims_initial - ems_initial,
-    bal = ims - ems
+    net_initial = ims_initial - ems_initial,
+    net = ims - ems
   ) %>%
   pivot_longer(
     cols = c(
       "ims_initial", "ims", "ems_initial", "ems",
-      "bal_initial", "bal", "pop_bir_dea", "pop_end_year"
+      "net_initial", "net", "pop_bir_dea", "pop_end_year"
     ),
     names_to = "category", values_to = "people"
   ) %>%
@@ -770,11 +770,11 @@ pop_mig_21_yao <- out_dem %>%
     cat = factor(case_when(
       category %in% c("ims", "ims_initial") ~ catego[1],
       category %in% c("ems", "ems_initial") ~ catego[2],
-      category %in% c("bal", "bal_initial") ~ catego[3],
+      category %in% c("net", "net_initial") ~ catego[3],
       TRUE ~ catego[4]
     ), levels = catego),
     line_cat = factor(if_else(
-      category %in% c("ims_initial", "ems_initial", "bal_initial", "pop_bir_dea"),
+      category %in% c("ims_initial", "ems_initial", "net_initial", "pop_bir_dea"),
       line_catego[1], line_catego[2]
     ), levels = line_catego))
   
