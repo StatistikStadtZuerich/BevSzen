@@ -391,9 +391,9 @@ for (iyear in future) {
     summarize(
       pop_bir_dea = sum(pop_bir_dea),
       ims = sum(ims),
-      ems = sum(ems)
+      ems = sum(ems),
+      .groups = "drop"
     ) %>%
-    ungroup() %>%
     # theoretical population:
     # pop + birth - death + immigration* - emigration*
     mutate(pop_theo = pop_bir_dea + ims - ems) %>%
@@ -496,14 +496,14 @@ for (iyear in future) {
     mutate(origin = factor(origin, levels = uni_o)) %>%
     select(district, age, sex, origin, pop_end_year) %>%
     group_by(district, age, sex, origin) %>%
-    summarize(pop_end_year = sum(pop_end_year)) %>%
-    ungroup()
+    summarize(pop_end_year = sum(pop_end_year),
+              .groups = "drop")
 
   nat_count <- pop_nat_temp %>%
     filter((origin == uni_o[2]) & (age >= 0)) %>%
     group_by(district, age, sex) %>%
-    summarize(nat = sum(Swiss)) %>%
-    ungroup()
+    summarize(nat = sum(Swiss),
+              .groups = "drop")
 
   # determine immigration and relocation from immigration*
   rei_year <- rei %>%
@@ -573,7 +573,8 @@ for (iyear in future) {
   out_dem <- dem_factor %>%
     select(
       district, age, sex, origin,
-      dea_eff, ims_eff, ems_eff
+      dea_eff, ims_eff, ems_eff,
+      ims_initial, ems_initial, pop_bir_dea, pop_end_year
     ) %>%
     filter(age >= 0) %>%
     rename(dea = dea_eff, ims = ims_eff, ems = ems_eff) %>%
@@ -584,7 +585,8 @@ for (iyear in future) {
     mutate(year = iyear) %>%
     select(
       district, year, age, sex, origin,
-      dea, ims, imm, rei, ems, emi, ree
+      dea, ims, imm, rei, ems, emi, ree,
+      ims_initial, ems_initial, pop_bir_dea, pop_end_year
     ) %>%
     bind_rows(out_dem)
 
@@ -734,6 +736,98 @@ out_pop_smooth %>%
   )
 
 
+
+# plot: Wollishofen, population and migration (by yao) ----------------------
+
+# why Wollishofen? need to check age patterns of this district
+# why named d21? 21 is the number for district Wollishofen
+
+catego <- c("immigration", "emigration", "migration balance", "population")
+line_catego <- c("initial", "final")
+
+# why not piped into plot? to get limits, and another plot (without origin)
+
+pop_mig_21_yao <- out_dem %>%
+  filter((district == "Wollishofen") & year >= 2022) %>%
+  select(year, age, origin, ims_initial, ims, ems_initial, ems, pop_bir_dea, pop_end_year) %>%
+  mutate(
+    bal_initial = ims_initial - ems_initial,
+    bal = ims - ems
+  ) %>%
+  pivot_longer(
+    cols = c(
+      "ims_initial", "ims", "ems_initial", "ems",
+      "bal_initial", "bal", "pop_bir_dea", "pop_end_year"
+    ),
+    names_to = "category", values_to = "people"
+  ) %>%
+  group_by(year, age, origin, category) %>%
+  summarize(
+    people = sum_NA(people),
+    .groups = "drop"
+  ) %>%
+  mutate(
+    cat = factor(case_when(
+      category %in% c("ims", "ims_initial") ~ catego[1],
+      category %in% c("ems", "ems_initial") ~ catego[2],
+      category %in% c("bal", "bal_initial") ~ catego[3],
+      TRUE ~ catego[4]
+    ), levels = catego),
+    line_cat = factor(if_else(
+      category %in% c("ims_initial", "ems_initial", "bal_initial", "pop_bir_dea"),
+      line_catego[1], line_catego[2]
+    ), levels = line_catego))
+  
+upper_lim_yao <- pop_mig_21_yao %>%   
+  group_by(cat) %>% 
+    summarize(upper = max_NA(people),
+              .groups = "drop")
+
+# is it possible to set the y-limits per group?
+
+  sszplot(pop_mig_21_yao,
+    aes_x = "age", aes_y = "people", aes_col = "origin", aes_ltyp = "line_cat",
+    labs_y = "people",
+    wrap = "cat", ncol = 4,
+    scale_y = c(0, max(upper_lim_yao$upper)),
+    width = 12, height = 5,
+    i_x = seq(0, age_max, by = 20),    
+    i_y = 0,
+    name = "1404_pop_migration_d21yao",
+    multi = uniy_scen
+  )
+  
+
+
+# plot: Wollishofen, population and migration (by ya) ---------------------
+
+pop_mig_21_ya <- pop_mig_21_yao %>% 
+    group_by(year, age, cat, line_cat) %>% 
+      summarize(people = sum_NA(people))
+  
+upper_lim_ya <- pop_mig_21_ya %>%   
+  group_by(cat) %>% 
+    summarize(upper = max_NA(people),
+              .groups = "drop")
+
+# is it possible to set the y-limits per group?
+
+
+  sszplot(pop_mig_21_ya,
+    aes_x = "age", aes_y = "people", aes_ltyp = "line_cat",
+    labs_y = "people",
+    wrap = "cat", ncol = 4,
+    scale_y = c(0, max(upper_lim_ya$upper)),
+    width = 12, height = 5,
+    i_x = seq(0, age_max, by = 20),    
+    i_y = 0,
+    name = "1405_pop_migration_d21ya",
+    multi = uniy_scen
+  )  
+  
+  
+
+
 # export the results ------------------------------------------------------
 
 # births
@@ -743,6 +837,7 @@ out_bir %>%
 
 # demographic processes
 out_dem %>%
+  select(district, year, age, sex, origin, dea, ims, imm, rei, ems, emi, ree) %>% 
   arrange(district, year, age, sex, origin) %>%
   write_csv(paste0(out_path, "/demographic-processes_future.csv"))
 
