@@ -95,7 +95,8 @@ sszplot <- function(data,
                     multif = NULL,
                     quotes = NULL,
                     quotes_top = NULL,
-                    angle = NULL) {
+                    angle = NULL,
+                    flip_coor = FALSE) {
 
   # Checks --------------------------------------------------------------------------------------
 
@@ -332,7 +333,7 @@ sszplot <- function(data,
       }
       res <- res + eval(str2expression(paste0("geom_col(", geomfix, ")")))
 
-      if (length(unique(data[[aes_x]])) > 15) {
+      if (flip_coor) {
         res <- res + coord_flip()
       }
     }
@@ -559,7 +560,8 @@ sszplot <- function(data,
         title = eval(str2expression(title)),
         quotes = quotes,
         quotes_top = quotes_top,
-        angle = angle
+        angle = angle,
+        flip_coor = flip_coor
       )
     })
     if (!is.null(name)) {
