@@ -401,6 +401,27 @@ pop_dy %>%
     
 
 
+# dyc
+  pop %>%
+    group_by(district, year, scenario) %>%
+    summarize(pop = sum(pop),
+              .groups = "drop") %>% 
+    sszplot(
+      aes_x = "year", aes_y = "pop", aes_col = "scenario",
+      wrap = "district", ncol = 4,
+      labs_y = "population",
+      scale_y = c(0, NA),
+      i_x = scen_begin,
+      gridscale = "free_y",
+      width = 14, height = 14,
+      name = "1509_pop_dyc"
+    )
+
+
+
+
+
+
 # population: new and previous scenarios ----------------------------------
 
 # total population

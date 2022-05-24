@@ -519,6 +519,8 @@ sszplot <- function(data,
       if (identical(multi, uni_d)) multif <- "filter(district == x)"
       if (identical(multi, uni_o)) multif <- "filter(origin == x)"
       if (identical(multi, uni_w)) multif <- "filter(owner == x)"
+      if (identical(multi, uniy_scen)) multif <- "filter(year == x)" 
+      if (identical(multi, uniy_scen_public)) multif <- "filter(year == x)"        
     }
     stopifnot(!is.null(multi) && !is.null(multif))
 

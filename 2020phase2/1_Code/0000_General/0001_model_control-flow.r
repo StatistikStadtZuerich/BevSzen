@@ -2,7 +2,11 @@
 # model control flows
 
 
+
 # paths, parameters, functions --------------------------------------------
+
+# remove previous objects
+rm(list = ls())
 
 # working directory
 library(here)
@@ -167,9 +171,13 @@ run_scen <- function(scenarios, modules) {
 
 
 run_scen(
-    scenarios = c("lower", "middle", "upper"),
+    scenarios = c("middle"),
     modules = c("out"))
 
 
 
+#   pro (projects)
+#   hou (housing model)
+#   deh (demography and housing model)
+#   out (model outputs)
 
