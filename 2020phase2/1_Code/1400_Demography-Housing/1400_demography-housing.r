@@ -88,7 +88,7 @@ mor <- read_csv(paste0(exp_path, "/mortality_future.csv"), lazy = FALSE) %>%
 # immigration*: immigration* rate
 ims_rate <- read_csv(paste0(exp_path, "/immigration-star_rate-dy_future.csv"), lazy = FALSE) %>%
   mutate(district = factor(district, levels = uni_d)) %>% 
-  mutate(rate = if_else(district == "Wollishofen", 5, rate))
+  mutate(rate = if_else(district == "Wollishofen", 1, rate))
 
 # immigration*: sex and origin proportion
 ims_prop_so <- read_csv(paste0(exp_path, "/immigration-star_prop-so-dy_future.csv"), lazy = FALSE) %>%
