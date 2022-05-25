@@ -283,8 +283,10 @@ project_reserves <- function(x, ...) {
       }
 
       # subtract (usage per year, and cumulative usage plus population)
-      x$usage[index] <- pmax(0, x$usage[index] - x$subtract[index])      
-      x$car[index] <- pmax(0, x$car[index] - x$subtract[index])
+      x$usage[index] <- pmax(0, x$usage[index] - x$subtract[index])
+      
+      # new reserves value based on corrected usage
+      x$car[i+1] <- pmax(0, x$pop[i] + x$usage[i+1])
       
     }
 
