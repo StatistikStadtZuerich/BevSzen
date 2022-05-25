@@ -524,8 +524,6 @@ pro_car_dw %>%
   )
 
 
-
-
 # export the results ------------------------------------------------------
 
 # per district
