@@ -199,9 +199,11 @@ nat <- read_csv(paste0(exp_path, "/naturalization_future.csv"), lazy = FALSE) %>
 hou <- read_csv(paste0(exp_path, "/housing-model_population_d.csv"), lazy = FALSE) %>%
   mutate(district = factor(district, levels = uni_d)) %>%
   rename(pop_limit = pop) %>% 
-  mutate(pop_limit = if_else(district == "Wollishofen", pop_limit * 1.5)
+  mutate(pop_limit = if_else(district == "Wollishofen", pop_limit * 1.5, pop_limit))
   
-
+test <- hou %>% 
+  filter(district == "Wollishofen")
+as.data.frame(test)
 
 
 # loop over years ---------------------------------------------------------
