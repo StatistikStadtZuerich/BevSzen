@@ -198,12 +198,7 @@ nat <- read_csv(paste0(exp_path, "/naturalization_future.csv"), lazy = FALSE) %>
 # housing model
 hou <- read_csv(paste0(exp_path, "/housing-model_population_d.csv"), lazy = FALSE) %>%
   mutate(district = factor(district, levels = uni_d)) %>%
-  rename(pop_limit = pop) %>% 
-  mutate(pop_limit = if_else(district == "Wollishofen", pop_limit * 1.5, pop_limit))
-  
-test <- hou %>% 
-  filter(district == "Wollishofen")
-as.data.frame(test)
+  rename(pop_limit = pop)
 
 
 # loop over years ---------------------------------------------------------
@@ -837,7 +832,9 @@ upper_lim_ya <- pop_mig_21_ya %>%
 out_bal %>% 
   filter(district == "Wollishofen") %>% 
   arrange(year) %>% 
-  select(year, pop_bir_dea, ims, ems, pop_theo, pop_limit, differ, differ_ims, differ_ems, new_ims3, new_ems3) %>% 
+  select(year, pop_bir_dea, ims, ems, pop_theo, pop_limit, 
+         differ, differ_ims, differ_ems, 
+         new_ims, new_ems, new_ims2, new_ems2, new_ims3, new_ems3) %>% 
   write_csv(paste0(out_path, "/balance_Wollishofen.csv"))  
 
 
