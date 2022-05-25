@@ -200,6 +200,9 @@ hou <- read_csv(paste0(exp_path, "/housing-model_population_d.csv"), lazy = FALS
   mutate(district = factor(district, levels = uni_d)) %>%
   rename(pop_limit = pop)
 
+  # mutate(pop_limit = if_else(district == "Wollishofen", pop_limit * 1.5)
+  
+
 
 
 # loop over years ---------------------------------------------------------
