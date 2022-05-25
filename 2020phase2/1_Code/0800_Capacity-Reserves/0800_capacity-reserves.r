@@ -194,6 +194,7 @@ sszplot(usage_prop,
   geom = "col",
   labs_x = "", labs_y = "reserves (in ha)",
   scale_x = rev(uni_d),
+  flip_coor = TRUE,
   name = "0804_reserves_by-district",
   width = 8, height = 7
 )

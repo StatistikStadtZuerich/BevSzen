@@ -384,7 +384,6 @@ sszplot(pop_dyas,
 )
 
 # dy: plot for slides
-# plot does not look how it should: why districts not on x-axis?-----------------------------------
 
 pop_dy %>% 
   filter(year %in% c(date_end, scen_end_public)) %>% 
@@ -397,8 +396,7 @@ pop_dy %>%
     angle = 90,
     name = "1508_pop_dy_selected-years",
     width = 8, height = 10
-  )  
-    
+  )
 
 
 # dyc
@@ -416,10 +414,6 @@ pop_dy %>%
       width = 14, height = 14,
       name = "1509_pop_dyc"
     )
-
-
-
-
 
 
 # population: new and previous scenarios ----------------------------------
@@ -574,8 +568,6 @@ pop_dy_prev_sel <- sce %>%
               .groups = "drop") %>%
   mutate(cat = paste0(scen_end_public, " (previous)"))
 
-# plot does not look how it should (see before)
-
 pop_dy_new_sel %>%
   bind_rows(pop_dy_prev_sel) %>% 
   sszplot(
@@ -587,9 +579,6 @@ pop_dy_new_sel %>%
     name = "1516_pop_new_prev_dy",
     width = 8, height = 10
   )
-
-
-
 
 
 # birth -------------------------------------------------------------------
