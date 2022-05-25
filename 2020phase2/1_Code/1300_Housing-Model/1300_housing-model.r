@@ -7,8 +7,8 @@
 if (!exists("para")) {
 
   # working directory
-  library(here)
-  setwd(paste0(here(), "/2020phase2/"))
+  # library(here)
+  # setwd(paste0(here(), "/2020phase2/"))
 
   # general functions (without dependence on parameters)
   source("1_Code/0000_General/0002_general_without-parameters.r")
@@ -200,7 +200,8 @@ new_prop <- prop_coop %>%
 # apply the new proportion
 new_pop_car <- pop_total %>%
   group_by(district, year) %>%
-  summarize(pop = sum(pop)) %>%
+  summarize(pop = sum(pop),
+            .groups = "drop") %>%
   left_join(new_prop, by = c("district", "year")) %>%
   mutate(
     pop_cooperative = pop * prop / 100,
@@ -240,9 +241,11 @@ project_reserves <- function(x, ...) {
   # maximum usage of the capacity, plus population
   car_max <- max_NA(x$car)
 
-  # new colums
+  # new columns
   x$project <- NA
   x$corr <- NA
+  x$car[1] <- x$pop[1]
+  x$usage <- c(0, diff(x$car))
 
   # loop from second year (i.e. first year in the future) to the last prediction year
   for (i in 2:nrow(x)) {
@@ -266,28 +269,23 @@ project_reserves <- function(x, ...) {
     # correction of the reserves (if too much used due to the project list)
     x$corr[i] <- max(0, x$pop[i] - x$car[i])
 
-    # correction (proportional to the capacity)
-    # WHY not proportional to the usage?
-    # if the future capacity is also calculated based on ownership trends,
-    # then the usage could be negative
-    # a down-correction proportional to a negative usage does not make sense
-   
+    # correction (proportional to the reserve usage)
      
     if (i < nrow(x)) {
       index <- (i + 1):nrow(x)
       x$subtract <- 0
 
-      # if sum of population limit greater than zero: proportional correction,
-      # else uniform correction
-      if (sum(x$car[index]) > 0) {
-        x$subtract[index] <- x$car[index] / sum(x$car[index]) * x$corr[i]
-      }
-      else {
-        x$subtract[index] <- rep(1 / length(index), length(index)) * x$corr[i]
+      # correction proportional to usage
+      if (sum(x$usage[index]) > 0) {
+        x$subtract[index] <- x$usage[index] / sum(x$usage[index]) * x$corr[i]
+      } else {
+        x$subtract[index] <- 0
       }
 
-      # no negative population limit values
+      # subtract (usage per year, and cumulative usage plus population)
+      x$usage[index] <- pmax(0, x$usage[index] - x$subtract[index])      
       x$car[index] <- pmax(0, x$car[index] - x$subtract[index])
+      
     }
 
     # end of the loop over years
@@ -314,7 +312,7 @@ project_reserves <- function(x, ...) {
 
 
 # Check
-x <- filter(pro_car, (district == "Wollishofen") & (owner == "cooperative housing"))
+x <- filter(pro_car, (district == "Escher Wyss") & (owner == "private housing"))
 plot(x$year, x$car, type = "o")
 project_reserves(x)
 
