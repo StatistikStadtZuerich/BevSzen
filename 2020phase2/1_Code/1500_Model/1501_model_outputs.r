@@ -384,7 +384,6 @@ sszplot(pop_dyas,
 )
 
 # dy: plot for slides
-
 pop_dy %>% 
   filter(year %in% c(date_end, scen_end_public)) %>% 
   mutate(year_text = paste0("year:", year)) %>% 
@@ -392,10 +391,10 @@ pop_dy %>%
     aes_x = "district", aes_y = "pop", aes_fill = "year_text",
     geom = "col",
     labs_x = "", labs_y = "people",
-    scale_x = rev(uni_d),
+    scale_x = uni_d,
     angle = 90,
     name = "1508_pop_dy_selected-years",
-    width = 8, height = 10
+    width = 8, height = 6
   )
 
 
@@ -568,16 +567,21 @@ pop_dy_prev_sel <- sce %>%
               .groups = "drop") %>%
   mutate(cat = paste0(scen_end_public, " (previous)"))
 
+levels_cate <- c(paste0(date_end, " (past)"), 
+                 paste0(scen_end_public, " (previous)"),                  
+                 paste0(scen_end_public, " (new)")) 
+         
 pop_dy_new_sel %>%
   bind_rows(pop_dy_prev_sel) %>% 
+  mutate(cat = factor(cat, levels = levels_cate)) %>% 
   sszplot(
     aes_x = "district", aes_y = "pop", aes_fill = "cat",
     geom = "col",
     labs_x = "", labs_y = "people",
-    scale_x = rev(uni_d),
+    scale_x = uni_d,
     angle = 90,
     name = "1516_pop_new_prev_dy",
-    width = 8, height = 10
+    width = 8, height = 6
   )
 
 
