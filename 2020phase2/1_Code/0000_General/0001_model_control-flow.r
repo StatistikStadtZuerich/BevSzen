@@ -171,10 +171,8 @@ run_scen <- function(scenarios, modules) {
 
 
 run_scen(
-    scenarios = c("middle"),
+    scenarios = c("lower", "middle", "upper"),
     modules = c("out"))
-
-
 
 #   pro (projects)
 #   hou (housing model)
