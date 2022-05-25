@@ -195,13 +195,15 @@ nat <- read_csv(paste0(exp_path, "/naturalization_future.csv"), lazy = FALSE) %>
 # housing model
 hou <- read_csv(paste0(exp_path, "/housing-model_population_d.csv"), lazy = FALSE) %>%
   mutate(district = factor(district, levels = uni_d)) %>%
-  rename(pop_limit = pop) %>% 
-  mutate(factor =  1 + pmax(0, (year / 2021 - 1) * 10), 
-    pop_limit = if_else(district == "Wollishofen", factor * pop_limit, pop_limit))
+  rename(pop_limit = pop)
 
-test <- hou %>% 
-  filter(district == "Wollishofen")
-plot(test$year, test$factor)
+
+#   mutate(factor =  1 + pmax(0, (year / 2021 - 1) * 10), 
+#     pop_limit = if_else(district == "Wollishofen", factor * pop_limit, pop_limit))
+# 
+# test <- hou %>% 
+#   filter(district == "Wollishofen")
+# plot(test$year, test$factor)
 
 
 
