@@ -168,14 +168,8 @@ run_scen <- function(scenarios, modules) {
 #     scenarios = c("lower", "middle", "upper"),
 #     modules = c("hou"))
 
-
-
 run_scen(
-    scenarios = c("lower", "middle", "upper"),
+    scenarios = c("middle"),
     modules = c("out"))
 
-#   pro (projects)
-#   hou (housing model)
-#   deh (demography and housing model)
-#   out (model outputs)
 
