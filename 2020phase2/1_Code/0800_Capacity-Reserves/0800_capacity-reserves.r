@@ -225,6 +225,7 @@ sszplot(usage_prop,
   geom = "col",
   labs_x = "", labs_y = "usage area (in ha)",
   scale_x = rev(uni_d),
+  flip_coor = TRUE,  
   name = "0806_usage-area_by-district",
   width = 8, height = 7
 )
