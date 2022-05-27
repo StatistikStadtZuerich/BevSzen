@@ -456,9 +456,23 @@ sszplot(pop_yc_new_prev,
   aes_col = "scenario", aes_ltyp = "cat",
   labs_y = "population",
   scale_y = c(0, NA),
-  width = 7, height = 4,  
+  width = 9, height = 5.5,  
   name = "1510_pop_new-prev_yc"
 )
+
+# text to plot
+text_yc_new_prev <- pop_yc_new_prev %>% 
+  filter(year == scen_end_public) %>% 
+  pivot_wider(names_from = "cat", values_from = "pop") %>% 
+  mutate(diff = new - previous,
+    previous_round = round(previous / round_people_scen) * round_people_scen,
+    new_round = round(new / round_people_scen) * round_people_scen,
+    diff_round = round(diff / round_people_scen) * round_people_scen,          
+    text = paste0(scenario, " scenario: ", previous_round, " (", scen_begin-1, "), ", 
+                  new_round, " (", scen_begin, ", ", diff_round, ")"),
+    plot = "1510") %>% 
+  arrange(desc(scenario)) %>% 
+  select(plot, text)
 
 
 
@@ -1111,6 +1125,7 @@ sszplot(rel_yct,
 # text of the plots (for presentations, slides) ---------------------------
 
 text_plots <- text_yc %>% 
+  bind_rows(text_yc_new_prev) %>% 
   write_csv(paste0(out_path, "/text_plots.csv"))  
 
 
