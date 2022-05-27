@@ -316,7 +316,7 @@ text_pop_yas <- pop_yas %>%
   mutate(delta = end - begin, 
          percent = (delta) / begin * 100, 
          delta_round = round(delta / round_people_scen) * round_people_scen,         
-         percent_round = round(percent / round_prop) * round_prop,
+         percent_round = round(percent, round_prop_scen),
          text = paste0(age_class, ": ", delta_round, " (", percent_round, "%)"),
          plot = "1501") %>% 
   select(plot, text)
@@ -454,7 +454,7 @@ text_pop_dy <- pop_dy %>%
   mutate(delta = end - begin,
          percent = delta / begin * 100, 
          delta_round = round(delta / round_people_scen) * round_people_scen,
-         percent_round = round(percent / round_prop) * round_prop, 
+         percent_round = round(percent, round_prop_scen), 
          text = paste0(district, ": ", delta_round, " (", percent_round, "%)"),
          plot = "1508") %>% 
   arrange(desc(delta_round)) %>% 
@@ -518,9 +518,6 @@ text_yc_new_prev <- pop_yc_new_prev %>%
     plot = "1510") %>% 
   arrange(desc(scenario)) %>% 
   select(plot, text)
-
-
-
 
 
 # age: 80plus, by yso 
@@ -617,7 +614,7 @@ text_pop_age_new_prev <- pop_age_new_prev %>%
   filter(year == scen_end_public) %>%
   pivot_wider(names_from = "cat", values_from = "pop") %>%  
   mutate(percent = (new - previous) / previous * 100, 
-    percent_round = round(percent, round_prop),
+    percent_round = round(percent, round_prop_scen_a),
     text = paste0(age_class, ": ", percent_round, "%"), 
     plot = "1513") %>%
   select(plot, text)
