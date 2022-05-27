@@ -49,7 +49,7 @@ general;round_prop;no parameter in previous model;4;4;4;digits (proportion in pe
 general;round_area;no parameter in previous model;4;4;4;digits (area);no parameter;rounding of area (e.g. ha in the capacity and reserve module)
 general;round_people;no parameter in previous model;0;0;0;digits (people);no parameter;rounding of people
 general;round_aca;no parameter in previous model;4;4;4;digits (people per apartment);no parameter;rounding of allocation (people per apartment)
-general;round_people_scen;no parameter in previous model;100;100;100;digits (people);no parameter;"rounding of people (for future values; scenarios)"
+general;round_people_scen;no parameter in previous model;100;100;100;people (not digits);no parameter;"rounding of people (for future values; scenarios)"
 general;round_prop_scen;no parameter in previous model;0;0;0;digits (proportion in percent);no parameter;"rounding of proportion (for future values; scenarios)"
 birth;bir_age_begin;geb.alter.beginn;15;15;15;year;no parameter (strictly speaking);fertility rate: fertile age (fixed expression): begin
 birth;bir_age_end;geb.alter.ende;49;49;49;year;no parameter (strictly speaking);fertility rate: fertile age (fixed expression): end
