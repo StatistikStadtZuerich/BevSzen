@@ -298,6 +298,34 @@ sszplot(pop_yas,
   name = "1501_pop_yas"
 )
 
+# text to plot
+text_pop_yas <- pop_yas %>% 
+  left_join(look_a3, by = "age") %>%   
+  rename(age_class = age_3) %>% 
+  mutate(age_class = factor(if_else(age_class %in% c("80-89", "90+"), "80+", 
+                                    as.character(age_class)))) %>% 
+  filter(year %in% c(date_end, scen_end_public)) %>% 
+  group_by(year, age_class) %>% 
+    summarize(pop = sum_NA(pop), 
+              .groups = "drop") %>% 
+  mutate(cat = if_else(year == date_end, "begin", "end")) %>% 
+  pivot_wider(names_from = "cat", values_from = "pop") %>% 
+  arrange(age_class, year) %>% 
+  fill(begin) %>% 
+  filter(year == scen_end_public) %>% 
+  mutate(delta = end - begin, 
+         percent = (delta) / begin * 100, 
+         delta_round = round(delta / round_people_scen) * round_people_scen,         
+         percent_round = round(percent / round_prop) * round_prop,
+         text = paste0(age_class, ": ", delta_round, " (", percent_round, "%)"),
+         plot = "1501") %>% 
+  select(plot, text)
+  
+  
+  
+
+
+
 # dy
 pop_dy <- pop %>%
   filter(scenario %in% uni_c[c(1, 3)]) %>%
@@ -580,9 +608,20 @@ sszplot(pop_age_new_prev,
   labs_y = "people",
   wrap = "age_class", ncol = 3,  
   scale_y = c(0, NA),
-  width = 10, height = 8,
+  width = 8, height = 5,
   name = "1513_pop_new_prev_a"
 )
+
+# text to plot
+text_pop_age_new_prev <- pop_age_new_prev %>% 
+  filter(year == scen_end_public) %>%
+  pivot_wider(names_from = "cat", values_from = "pop") %>%  
+  mutate(percent = (new - previous) / previous * 100, 
+    percent_round = round(percent, round_prop),
+    text = paste0(age_class, ": ", percent_round, "%"), 
+    plot = "1513") %>%
+  select(plot, text)
+
 
 pop_age_new_prev %>% 
   filter(age_class %in% c("0-9", "10-19")) %>% 
@@ -1141,9 +1180,11 @@ sszplot(rel_yct,
 
 # text of the plots (for presentations, slides) ---------------------------
 
-text_plots <- text_yc %>% 
+text_yc %>% 
   bind_rows(text_yc_new_prev) %>% 
   bind_rows(text_pop_dy) %>%   
+  bind_rows(text_pop_yas) %>%  
+  bind_rows(text_pop_age_new_prev) %>%    
   write_csv(paste0(out_path, "/text_plots.csv"))  
 
 
