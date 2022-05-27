@@ -433,10 +433,6 @@ text_pop_dy <- pop_dy %>%
   select(plot, text)
 
 
-
-
-
-
 # dyc
   pop %>%
     group_by(district, year, scenario) %>%
@@ -639,7 +635,7 @@ pop_dy_new_sel %>%
     scale_x = uni_d,
     angle = 90,
     name = "1516_pop_new_prev_dy",
-    width = 8, height = 6
+    width = 9, height = 5
   )
 
 
