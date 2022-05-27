@@ -19,7 +19,6 @@ library(rlang) # for functions: symbols, quasiquotation (!!, !!!, :=)
 library(gtools) # invalid function (to check for NA, NULL, NaN), e.g. in constrained regression
 library(this.path) # to extract the current file name
 library(modelr) # add_predictions
-library(plyr) #round_any function (e.g. round to 100 people)
 
 
 
