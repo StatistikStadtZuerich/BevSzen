@@ -246,14 +246,32 @@ y_sel2 <- c(date_end, rev(seq(scen_end, scen_begin, by = -10)))
 pop_yc <- pop %>%
   group_by(year, scenario) %>%
   summarize(pop = sum(pop),
-            .groups = "drop")
+            .groups = "drop") %>% 
+  filter(year <= scen_end_public)
 
 sszplot(pop_yc,
   aes_x = "year", aes_y = "pop", aes_col = "scenario",
   labs_y = "population",
   scale_y = c(0, NA),
+  width = 7, height = 4,
   name = "1500_pop_yc"
 )
+
+# text to plot
+text_yc <- pop_yc %>% 
+  filter(year %in% c(date_end, scen_end_public)) %>% 
+  mutate(cat = if_else(year == date_end, "begin", "end")) %>% 
+  pivot_wider(names_from = "cat", values_from = "pop") %>% 
+  fill(begin) %>% 
+  filter(year == scen_end_public) %>% 
+  mutate(end_round = round(end / round_people_scen) * round_people_scen,
+         delta = end - begin,
+         delta_round = round(delta / round_people_scen) * round_people_scen, 
+         text = paste0(scenario, " scenario: ", end_round, " (", delta_round, ")"),
+         plot = "1500") %>% 
+  arrange(desc(scenario)) %>% 
+  select(plot, text)
+
 
 # yas
 pop_yas <- pop %>%
@@ -438,8 +456,13 @@ sszplot(pop_yc_new_prev,
   aes_col = "scenario", aes_ltyp = "cat",
   labs_y = "population",
   scale_y = c(0, NA),
+  width = 7, height = 4,  
   name = "1510_pop_new-prev_yc"
 )
+
+
+
+
 
 # age: 80plus, by yso 
 pop_80p_new <- pop_middle %>%
@@ -1082,3 +1105,12 @@ sszplot(rel_yct,
   quotes = quote(scale_linetype_manual(values = c("dashed", "solid", "dotted"))),
   name = "1580_rel_yct"
 )
+
+
+
+# text of the plots (for presentations, slides) ---------------------------
+
+text_plots <- text_yc %>% 
+  write_csv(paste0(out_path, "/text_plots.csv"))  
+
+
