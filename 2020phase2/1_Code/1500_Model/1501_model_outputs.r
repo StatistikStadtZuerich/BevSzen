@@ -412,8 +412,29 @@ pop_dy %>%
     scale_x = uni_d,
     angle = 90,
     name = "1508_pop_dy_selected-years",
-    width = 8, height = 6
+    width = 9, height = 5
   )
+
+
+# text to plot
+text_pop_dy <- pop_dy %>% 
+  filter(year %in% c(date_end, scen_end_public)) %>% 
+  mutate(cat = if_else(year == date_end, "begin", "end")) %>% 
+  pivot_wider(names_from = "cat", values_from = "pop") %>% 
+  fill(begin) %>% 
+  filter(year == scen_end_public) %>% 
+  mutate(delta = end - begin,
+         percent = delta / begin * 100, 
+         delta_round = round(delta / round_people_scen) * round_people_scen,
+         percent_round = round(percent / round_prop) * round_prop, 
+         text = paste0(district, ": ", delta_round, " (", percent_round, "%)"),
+         plot = "1508") %>% 
+  arrange(desc(delta_round)) %>% 
+  select(plot, text)
+
+
+
+
 
 
 # dyc
@@ -1126,6 +1147,7 @@ sszplot(rel_yct,
 
 text_plots <- text_yc %>% 
   bind_rows(text_yc_new_prev) %>% 
+  bind_rows(text_pop_dy) %>%   
   write_csv(paste0(out_path, "/text_plots.csv"))  
 
 
