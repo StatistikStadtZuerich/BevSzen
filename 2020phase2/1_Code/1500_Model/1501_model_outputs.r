@@ -445,7 +445,8 @@ pop_dy %>%
 
 
 # text to plot
-text_pop_dy <- pop_dy %>% 
+# WHY preparation (and not directly piped)? data used for the map (see below)
+text_pop_dy_prep <- pop_dy %>% 
   filter(year %in% c(date_end, scen_end_public)) %>% 
   mutate(cat = if_else(year == date_end, "begin", "end")) %>% 
   pivot_wider(names_from = "cat", values_from = "pop") %>% 
@@ -456,9 +457,25 @@ text_pop_dy <- pop_dy %>%
          delta_round = round(delta / round_people_scen) * round_people_scen,
          percent_round = round(percent, round_prop_scen), 
          text = paste0(district, ": ", delta_round, " (", percent_round, "%)"),
-         plot = "1508") %>% 
+         plot = "1508") 
+  
+text_pop_dy <- text_pop_dy_prep %>% 
   arrange(desc(delta_round)) %>% 
   select(plot, text)
+
+# data for map
+# WHY a lookup table? to get the district number
+lookup_map <- look_dis %>% 
+    mutate(QuarCd = if_else(distr == "Kreis 1", "010", QuarCd),
+           QuarSort = as.numeric(QuarCd)) %>% 
+    rename(district = distr) %>% 
+    distinct()
+
+text_pop_dy_prep %>% 
+  left_join(lookup_map, by = "district") %>% 
+  mutate(percent_text = paste0(percent_round, "%")) %>% 
+  select(QuarSort, district, percent_round, percent_text) %>% 
+  write_csv(paste0(out_path, "/map_pop_dy.csv"))  
 
 
 # dyc
