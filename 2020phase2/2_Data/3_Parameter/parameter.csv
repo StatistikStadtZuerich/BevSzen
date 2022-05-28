@@ -1,200 +1,200 @@
-category;parameter;parameter_old;lower;middle;upper;unit;relevance;description;uppertemp
-time;date_start;daten.beginn;1993;1993;1993;year;no parameter (strictly speaking);begin of data;1993
-time;date_end;daten.ende;2021;2021;2021;year;no parameter (strictly speaking);end of data;2021
-time;scen_begin;szen.beginn;2022;2022;2022;year;no parameter (strictly speaking);future: begin;2022
-time;scen_end;szen.ende;2050;2050;2050;year;no parameter (strictly speaking);future: end;2050
-time;scen_end_public;no parameter in previous model;2040;2040;2040;year;no parameter (strictly speaking);future: end (in publication);2040
-time;bir_base_begin;geb.basis.beginn;2010;2010;2010;year;medium;base period (in the past) for birth rate, begin;2010
-time;bir_base_end;geb.basis.ende;2021;2021;2021;year;medium;base period (in the past) for birth rate, end;2021
-time;bir_cha_base_begin;no parameter in previous model;2007;2007;2007;year;low;base period (in the past) for origin change (mother-baby), begin;2007
-time;bir_cha_base_end;no parameter in previous model;2021;2021;2021;year;low;base period (in the past) for origin change (mother-baby), end;2021
-time;bir_sex_ratio_begin;no parameter in previous model;1993;1993;1993;year;low;base period (in the past) for sex ration calculation, begin;1993
-time;bir_sex_ratio_end;no parameter in previous model;2021;2021;2021;year;low;base period (in the past) for sex ration calculation, begin;2021
-time;dea_fso_date_start;no parameter in previous model;1993;1993;1993;year;low;fso mortality data of the past: begin;1993
-time;dea_fso_date_end;no parameter in previous model;2020;2020;2020;year;low;fso mortality data of the past: end;2020
-time;dea_base_begin;tod.basis.beginn;2010;2010;2010;year;low;base period (in the past) for death rate, begin (data should be available for both Zurich and Switzerland);2010
-time;dea_base_end;tod.basis.ende;2020;2020;2020;year;low;base period (in the past) for death rate, end (data should be available for both Zurich and Switzerland);2020
-time;ims_base_begin;no parameter in previous model;2010;2010;2010;year;low;base period (not the future) for immigration* rate, begin;2010
-time;ims_base_end;no parameter in previous model;2021;2021;2021;year;low;base period (not the future) for immigration* rate, end;2021
-time;ims_so_base_begin;no parameter in previous model;2010;2010;2010;year;low;base period (not the future) for proportion of sex and origin in immigration*, begin;2010
-time;ims_so_base_end;no parameter in previous model;2021;2021;2021;year;low;base period (not the future)  for proportion of sex and origin in immigration*, end;2021
-time;ims_age_base_begin;no parameter in previous model;2010;2010;2010;year;low;base period (not the future) for proportion of age in immigration*, begin;2010
-time;ims_age_base_end;no parameter in previous model;2021;2021;2021;year;low;base period (not the future)  for proportion of age in immigration*, end;2021
-time;ems_base_begin;no parameter in previous model;2010;2010;2010;year;low;base period (not the future) for emigration* rate, begin;2010
-time;ems_base_end;no parameter in previous model;2021;2021;2021;year;low;base period (not the future) for emigration* rate, end;2021
-time;ems_so_base_begin;no parameter in previous model;2010;2010;2010;year;low;base period (not the future) for proportion of sex and origin in emigration*, begin;2010
-time;ems_so_base_end;no parameter in previous model;2021;2021;2021;year;low;base period (not the future)  for proportion of sex and origin in emigration*, end;2021
-time;ems_age_base_begin;no parameter in previous model;2010;2010;2010;year;low;base period (not the future) for proportion of age in emigration*, begin;2010
-time;ems_age_base_end;no parameter in previous model;2021;2021;2021;year;low;base period (not the future)  for proportion of age in emigration*, end;2021
-time;rei_base_begin;no parameter in previous model;2010;2010;2010;year;low;base period (not the future) for relocation based on immigration* (proportion), begin;2010
-time;rei_base_end;no parameter in previous model;2021;2021;2021;year;low;base period (not the future) for relocation based on immigration* (proportion), end;2021
-time;ree_base_begin;no parameter in previous model;2010;2010;2010;year;low;base period (not the future) for relocation based on emigration* (proportion), begin;2010
-time;ree_base_end;no parameter in previous model;2021;2021;2021;year;low;base period (not the future) for relocation based on emigration* (proportion), end;2021
-time;nat_base_begin;no parameter in previous model;2011;2011;2011;year;low;base period (not the future) for naturalization, begin;2011
-time;nat_base_end;no parameter in previous model;2021;2021;2021;year;low;base period (not the future) for naturalization, end;2021
-time;spa_base_begin;no parameter in previous model;2011;2011;2011;year;low;base period (not the future) for living space, begin;2011
-time;spa_base_end;no parameter in previous model;2021;2021;2021;year;low;base period (not the future) for living space, end;2021
-time;spa_base_begin_52p;no parameter in previous model;2015;2015;2015;year;low;"base period (not the future) for living space, begin, district 'Escher Wyss' (district ID = 52; since empty apartments increased the mean living space values; before 2015)";2015
-time;aca_base_begin;no parameter in previous model;2011;2011;2011;year;low;base period (not the future) for allocation, begin;2011
-time;aca_base_end;no parameter in previous model;2021;2021;2021;year;low;base period (not the future) for allocation, end;2021
-time;aca_base_begin_52p;no parameter in previous model;2015;2015;2015;year;low;"base period (not the future) for allocation, begin, district 'Escher Wyss' (district ID = 52; since empty apartments decreased the mean allocation values; before 2015)";2015
-time;pro_begin;map.wohnbau.beginn;2022;2022;2022;year;low;"first year (of consolidated project list; reasonable: first scenario year)";2022
-time;pro_end;map.wohnbau.ende;2031;2031;2031;year;low;last year (of consolidated project list);2031
-time;own_base_begin;no parameter in previous model;2015;2015;2015;year;low;base period (not the future) for ownership calculation, begin;2015
-time;own_base_end;no parameter in previous model;2021;2021;2021;year;low;base period (not the future) for ownership calculation, end;2021
-age;age_min;no parameter in previous model;0;0;0;years (age);low;minimum age in the model ;0
-age;age_max;no parameter in previous model;120;120;120;years (age);low;maximum age in the model (should be clearly higher than maximum age in the population);120
-general;round_rate;no parameter in previous model;4;4;4;digits (rate in percent per year);no parameter;rounding of rates (digits, rate in percent per year);4
-general;round_prop;no parameter in previous model;4;4;4;digits (proportion in percent);no parameter;rounding of proportion (digits, proportion in percent);4
-general;round_area;no parameter in previous model;4;4;4;digits (area);no parameter;rounding of area (e.g. ha in the capacity and reserve module);4
-general;round_people;no parameter in previous model;0;0;0;digits (people);no parameter;rounding of people;0
-general;round_aca;no parameter in previous model;4;4;4;digits (people per apartment);no parameter;rounding of allocation (people per apartment);4
-general;round_people_scen;no parameter in previous model;100;100;100;people (not digits);no parameter;"rounding of people (for future values; scenarios)";100
-general;round_prop_scen;no parameter in previous model;0;0;0;digits (proportion in percent);no parameter;"rounding of proportion (for future values; scenarios)";0
-general;round_prop_scen_a;no parameter in previous model;1;1;1;digits (proportion in percent);no parameter;"rounding of proportion (for future values; scenarios): comparison to previous scenarios by age";1
-birth;bir_age_begin;geb.alter.beginn;15;15;15;year;no parameter (strictly speaking);fertility rate: fertile age (fixed expression): begin;15
-birth;bir_age_end;geb.alter.ende;49;49;49;year;no parameter (strictly speaking);fertility rate: fertile age (fixed expression): end;49
+category;parameter;parameter_old;lower;middle;upper;unit;relevance;description
+time;date_start;daten.beginn;1993;1993;1993;year;no parameter (strictly speaking);begin of data
+time;date_end;daten.ende;2021;2021;2021;year;no parameter (strictly speaking);end of data
+time;scen_begin;szen.beginn;2022;2022;2022;year;no parameter (strictly speaking);future: begin
+time;scen_end;szen.ende;2050;2050;2050;year;no parameter (strictly speaking);future: end
+time;scen_end_public;no parameter in previous model;2040;2040;2040;year;no parameter (strictly speaking);future: end (in publication)
+time;bir_base_begin;geb.basis.beginn;2010;2010;2010;year;medium;base period (in the past) for birth rate, begin
+time;bir_base_end;geb.basis.ende;2021;2021;2021;year;medium;base period (in the past) for birth rate, end
+time;bir_cha_base_begin;no parameter in previous model;2007;2007;2007;year;low;base period (in the past) for origin change (mother-baby), begin
+time;bir_cha_base_end;no parameter in previous model;2021;2021;2021;year;low;base period (in the past) for origin change (mother-baby), end
+time;bir_sex_ratio_begin;no parameter in previous model;1993;1993;1993;year;low;base period (in the past) for sex ration calculation, begin
+time;bir_sex_ratio_end;no parameter in previous model;2021;2021;2021;year;low;base period (in the past) for sex ration calculation, begin
+time;dea_fso_date_start;no parameter in previous model;1993;1993;1993;year;low;fso mortality data of the past: begin
+time;dea_fso_date_end;no parameter in previous model;2020;2020;2020;year;low;fso mortality data of the past: end
+time;dea_base_begin;tod.basis.beginn;2010;2010;2010;year;low;base period (in the past) for death rate, begin (data should be available for both Zurich and Switzerland)
+time;dea_base_end;tod.basis.ende;2020;2020;2020;year;low;base period (in the past) for death rate, end (data should be available for both Zurich and Switzerland)
+time;ims_base_begin;no parameter in previous model;2010;2010;2010;year;low;base period (not the future) for immigration* rate, begin
+time;ims_base_end;no parameter in previous model;2021;2021;2021;year;low;base period (not the future) for immigration* rate, end
+time;ims_so_base_begin;no parameter in previous model;2010;2010;2010;year;low;base period (not the future) for proportion of sex and origin in immigration*, begin
+time;ims_so_base_end;no parameter in previous model;2021;2021;2021;year;low;base period (not the future)  for proportion of sex and origin in immigration*, end
+time;ims_age_base_begin;no parameter in previous model;2010;2010;2010;year;low;base period (not the future) for proportion of age in immigration*, begin
+time;ims_age_base_end;no parameter in previous model;2021;2021;2021;year;low;base period (not the future)  for proportion of age in immigration*, end
+time;ems_base_begin;no parameter in previous model;2010;2010;2010;year;low;base period (not the future) for emigration* rate, begin
+time;ems_base_end;no parameter in previous model;2021;2021;2021;year;low;base period (not the future) for emigration* rate, end
+time;ems_so_base_begin;no parameter in previous model;2010;2010;2010;year;low;base period (not the future) for proportion of sex and origin in emigration*, begin
+time;ems_so_base_end;no parameter in previous model;2021;2021;2021;year;low;base period (not the future)  for proportion of sex and origin in emigration*, end
+time;ems_age_base_begin;no parameter in previous model;2010;2010;2010;year;low;base period (not the future) for proportion of age in emigration*, begin
+time;ems_age_base_end;no parameter in previous model;2021;2021;2021;year;low;base period (not the future)  for proportion of age in emigration*, end
+time;rei_base_begin;no parameter in previous model;2010;2010;2010;year;low;base period (not the future) for relocation based on immigration* (proportion), begin
+time;rei_base_end;no parameter in previous model;2021;2021;2021;year;low;base period (not the future) for relocation based on immigration* (proportion), end
+time;ree_base_begin;no parameter in previous model;2010;2010;2010;year;low;base period (not the future) for relocation based on emigration* (proportion), begin
+time;ree_base_end;no parameter in previous model;2021;2021;2021;year;low;base period (not the future) for relocation based on emigration* (proportion), end
+time;nat_base_begin;no parameter in previous model;2011;2011;2011;year;low;base period (not the future) for naturalization, begin
+time;nat_base_end;no parameter in previous model;2021;2021;2021;year;low;base period (not the future) for naturalization, end
+time;spa_base_begin;no parameter in previous model;2011;2011;2011;year;low;base period (not the future) for living space, begin
+time;spa_base_end;no parameter in previous model;2021;2021;2021;year;low;base period (not the future) for living space, end
+time;spa_base_begin_52p;no parameter in previous model;2015;2015;2015;year;low;"base period (not the future) for living space, begin, district 'Escher Wyss' (district ID = 52; since empty apartments increased the mean living space values; before 2015)"
+time;aca_base_begin;no parameter in previous model;2011;2011;2011;year;low;base period (not the future) for allocation, begin
+time;aca_base_end;no parameter in previous model;2021;2021;2021;year;low;base period (not the future) for allocation, end
+time;aca_base_begin_52p;no parameter in previous model;2015;2015;2015;year;low;"base period (not the future) for allocation, begin, district 'Escher Wyss' (district ID = 52; since empty apartments decreased the mean allocation values; before 2015)"
+time;pro_begin;map.wohnbau.beginn;2022;2022;2022;year;low;"first year (of consolidated project list; reasonable: first scenario year)"
+time;pro_end;map.wohnbau.ende;2031;2031;2031;year;low;last year (of consolidated project list)
+time;own_base_begin;no parameter in previous model;2015;2015;2015;year;low;base period (not the future) for ownership calculation, begin
+time;own_base_end;no parameter in previous model;2021;2021;2021;year;low;base period (not the future) for ownership calculation, end
+age;age_min;no parameter in previous model;0;0;0;years (age);low;minimum age in the model 
+age;age_max;no parameter in previous model;120;120;120;years (age);low;maximum age in the model (should be clearly higher than maximum age in the population)
+general;round_rate;no parameter in previous model;4;4;4;digits (rate in percent per year);no parameter;rounding of rates (digits, rate in percent per year)
+general;round_prop;no parameter in previous model;4;4;4;digits (proportion in percent);no parameter;rounding of proportion (digits, proportion in percent)
+general;round_area;no parameter in previous model;4;4;4;digits (area);no parameter;rounding of area (e.g. ha in the capacity and reserve module)
+general;round_people;no parameter in previous model;0;0;0;digits (people);no parameter;rounding of people
+general;round_aca;no parameter in previous model;4;4;4;digits (people per apartment);no parameter;rounding of allocation (people per apartment)
+general;round_people_scen;no parameter in previous model;100;100;100;people (not digits);no parameter;"rounding of people (for future values; scenarios)"
+general;round_prop_scen;no parameter in previous model;0;0;0;digits (proportion in percent);no parameter;"rounding of proportion (for future values; scenarios)"
+general;round_prop_scen_a;no parameter in previous model;1;1;1;digits (proportion in percent);no parameter;"rounding of proportion (for future values; scenarios): comparison to previous scenarios by age"
+birth;bir_age_begin;geb.alter.beginn;15;15;15;year;no parameter (strictly speaking);fertility rate: fertile age (fixed expression): begin
+birth;bir_age_end;geb.alter.ende;49;49;49;year;no parameter (strictly speaking);fertility rate: fertile age (fixed expression): end
 birth;bir_thres_origin;geb.anz.rate.heimat;100;100;100;persons;low;"age distribution of women (population): if there are less women than this threshold in the tails (cumulative measure), then the rate based on origin (but not district) is used.
-";100
-birth;bir_thres_overall;geb.anz.rate.stadt;50;50;50;persons;low;age distribution of women (population): if there are less women than this threshold in the tails (cumulative measure), then the overall rate is used (e.g not the rate based on origin and district).;50
-birth;bir_thres_const;geb.anz.rate.const;25;25;25;persons;low;age distribution of women (population): if there are less women than this threshold in the tails (cumulative measure), then a constant rate is used (e.g not the rate based on origin and district). The constant rate is set by the parameter bir_thres_value.;25
-birth;bir_thres_value;geb.wert.rate.const;0;0;0;birth per woman and year in %;low;birth rate: if there are less women than a certain threshold (bir_thres_const)  a constant fertility rate is used. The values is chosen with this parameter.;0
-birth;bir_fer_span;no parameter in previous model;0.3;0.3;0.3;no unit;low;"proportion of data points used in the LOESS regressions of fertility by age; groups: district, year, origin";0.3
-birth;bir_prop_trend;geb.anteil.trend;20;20;20;percent;medium;"trend in addition to the mean; 20% means, 20% of the difference between trend and mean is added to the mean.";20
-birth;bir_thres_percent;geb.grenze.prozent;20;20;20;percent;low;"It is not realistic that the fertility rate changes dramatically (i.e. tenfold increase). Therefore, this threshold regulates the range of potential future fertility rates (change in percent of mean; e.g. +/- 20%).";20
-birth;bir_window_thres;geb.window.grenz;13;13;13;years;low;filter over years (to smooth a potential break in the curve due to range of future fertility rates: bir_thres_percent).;13
-birth;bir_lower_thres;no parameter in previous model;0;0;0;percent per year;low;lower threshold for the rate (e.g. the birth rate should not be negative), NA if there is no lower threshold;0
-birth;bir_upper_thres;no parameter in previous model;NA;NA;NA;percent per year;low;upper threshold for the rate, NA if there is no upper threshold;NA
-birth;bir_plot_lim;no parameter in previous model;30;30;30;percent per year;no parameter;"the fertility rates of the past are compared with the predictions; the y-axis is limited (since the fertility rate of the past can be very large due to low population)";30
-birth;bir_fer_span_pred;no parameter in previous model;0.15;0.15;0.15;no unit;low;"after the prediction: proportion of data points used in the LOESS regressions of fertility by age; groups: district, year, origin";0.15
-birth;bir_cha_trend;geb.heimat.anteil.trend;0;0;0;percent;low;"origin change (mother-baby): trend in addition to the mean; 20% means, 20% of the difference between trend and mean is added to the mean.";0
-birth;bir_cha_prop_trend;no parameter in previous model;20;20;20;percent;medium;"origin change (mother-baby): trend in addition to the mean; 20% means, 20% of the difference between trend and mean is added to the mean.";20
-birth;bir_cha_thres_percent;no parameter in previous model;20;20;20;percent;low;"origin change (mother-baby): It is not realistic that the fertility rate changes dramatically (i.e. tenfold increase). Therefore, this threshold regulates the range of potential future fertility rates (change in percent of mean; e.g. +/- 20%).";20
-birth;bir_cha_window_thres;no parameter in previous model;13;13;13;years;low;origin change (mother-baby): filter over years (to smooth a potential break in the curve due to range of future fertility rates: bir_thres_percent).;13
-birth;bir_cha_lower_thres;no parameter in previous model;0;0;0;percent;low;origin change (mother-baby): lower threshold for the rate (here: the rate should not be negative), NA if there is no lower threshold;0
-birth;bir_cha_upper_thres;no parameter in previous model;100;100;100;percent;low;origin change (mother-baby): upper threshold for the rate (here: not more than 100 %), NA if there is no lower threshold;100
-death;dea_lower;tod.jung.alter.ende.schweiz, tod.jung.alter.ende.ausland;30;30;30;years (age);low;"lower age limit of age-dependent ratio (death rates of Zurich and entire Switzerland); comment: limit not included in range with age-dependence";30
-death;dea_upper;tod.alt.alter.beginn.schweiz, tod.alt.alter.beginn.ausland;99;99;99;years (age);low;"upper age limit of age-dependent ratio (death rates of Zurich and entire Switzerland); comment: limit not included in range with age-dependence";99
-death;dea_radix;no parameter in previous model;100000;100000;100000;persons;no;radix (starting population) for life expectancy calcuation (no effect on result);100000
-death;dea_age_at;no parameter in previous model;0;0;0;years (age);no;"life expectancy at certain age (usually at birth; i.e. age zero)";0
-death;dea_age_max_le;tod.alt.alter.ende;120;120;120;years (age);low;maximum age for the estimation of the life expectancy;120
-death;dea_fso_cat_past;no parameter in previous model;2;2;2;no unit;no parameter;Category in the FSO data: (smoothed) data of the past;2
-death;dea_fso_cat_future;no parameter in previous model;3;3;3;no unit;no parameter;Category in the FSO data: data of the future;3
-death;dea_qx_NA_le;no parameter in previous model;0.8;0.8;0.8;per year;low;if there is no one at a certain age in the population (e.g. no 96 year old men), then qx (probability to die between age x and x+1) is NA. However, a value is need to multiply the subsequent survival probabilities;0.8
-death;dea_mor_span;no parameter in previous model;0.2;0.2;0.2;no unit;low;"proportion of data points used in the LOESS regressions of mortality by age; groups: sex, region (City of Zurich, Switzerland)";0.2
-immigration*;ims_rate_prop_trend;zuz.rate.anteil.trend;20;20;20;percent;low;"immigration rate*: trend in addition to the mean; 20% means, 20% of the difference between trend and mean is added to the mean.";20
-immigration*;ims_rate_thres_percent;zuz.rate.grenze.prozent;20;20;20;percent;low;"It is not realistic that the immigration* rates changes dramatically (i.e. tenfold increase). Therefore, this threshold regulates the range of potential rates (change in percent of mean; e.g. +/- 20%).";20
-immigration*;ims_rate_window_thres;zuz.rate.window.grenz;13;13;13;years;low;filter over years (to smooth a potential break in the curve due to range of future immigration* rates: imm_rate_thres_percent).;13
-immigration*;ims_rate_lower_thres;no parameter in previous model;0;0;0;percent;no parameter;lower threshold for the rate (here: the rate should not be negative), NA if there is no lower threshold;0
-immigration*;ims_so_prop_trend;zuz.ghvert.anteil.trend;20;20;20;percent;low;"proportion of sex and origin: trend in addition to the mean; 20% means, 20% of the difference between trend and mean is added to the mean.";20
-immigration*;ims_so_thres_percent;zuz.ghvert.grenze.prozent;20;20;20;percent;low;"It is not realistic that the proportions of sex and origin change dramatically (i.e. tenfold increase). Therefore, this threshold regulates the range of potential proportions (change in percent of mean; e.g. +/- 20%).";20
+"
+birth;bir_thres_overall;geb.anz.rate.stadt;50;50;50;persons;low;age distribution of women (population): if there are less women than this threshold in the tails (cumulative measure), then the overall rate is used (e.g not the rate based on origin and district).
+birth;bir_thres_const;geb.anz.rate.const;25;25;25;persons;low;age distribution of women (population): if there are less women than this threshold in the tails (cumulative measure), then a constant rate is used (e.g not the rate based on origin and district). The constant rate is set by the parameter bir_thres_value.
+birth;bir_thres_value;geb.wert.rate.const;0;0;0;birth per woman and year in %;low;birth rate: if there are less women than a certain threshold (bir_thres_const)  a constant fertility rate is used. The values is chosen with this parameter.
+birth;bir_fer_span;no parameter in previous model;0.3;0.3;0.3;no unit;low;"proportion of data points used in the LOESS regressions of fertility by age; groups: district, year, origin"
+birth;bir_prop_trend;geb.anteil.trend;20;20;20;percent;medium;"trend in addition to the mean; 20% means, 20% of the difference between trend and mean is added to the mean."
+birth;bir_thres_percent;geb.grenze.prozent;20;20;20;percent;low;"It is not realistic that the fertility rate changes dramatically (i.e. tenfold increase). Therefore, this threshold regulates the range of potential future fertility rates (change in percent of mean; e.g. +/- 20%)."
+birth;bir_window_thres;geb.window.grenz;13;13;13;years;low;filter over years (to smooth a potential break in the curve due to range of future fertility rates: bir_thres_percent).
+birth;bir_lower_thres;no parameter in previous model;0;0;0;percent per year;low;lower threshold for the rate (e.g. the birth rate should not be negative), NA if there is no lower threshold
+birth;bir_upper_thres;no parameter in previous model;NA;NA;NA;percent per year;low;upper threshold for the rate, NA if there is no upper threshold
+birth;bir_plot_lim;no parameter in previous model;30;30;30;percent per year;no parameter;"the fertility rates of the past are compared with the predictions; the y-axis is limited (since the fertility rate of the past can be very large due to low population)"
+birth;bir_fer_span_pred;no parameter in previous model;0.15;0.15;0.15;no unit;low;"after the prediction: proportion of data points used in the LOESS regressions of fertility by age; groups: district, year, origin"
+birth;bir_cha_trend;geb.heimat.anteil.trend;0;0;0;percent;low;"origin change (mother-baby): trend in addition to the mean; 20% means, 20% of the difference between trend and mean is added to the mean."
+birth;bir_cha_prop_trend;no parameter in previous model;20;20;20;percent;medium;"origin change (mother-baby): trend in addition to the mean; 20% means, 20% of the difference between trend and mean is added to the mean."
+birth;bir_cha_thres_percent;no parameter in previous model;20;20;20;percent;low;"origin change (mother-baby): It is not realistic that the fertility rate changes dramatically (i.e. tenfold increase). Therefore, this threshold regulates the range of potential future fertility rates (change in percent of mean; e.g. +/- 20%)."
+birth;bir_cha_window_thres;no parameter in previous model;13;13;13;years;low;origin change (mother-baby): filter over years (to smooth a potential break in the curve due to range of future fertility rates: bir_thres_percent).
+birth;bir_cha_lower_thres;no parameter in previous model;0;0;0;percent;low;origin change (mother-baby): lower threshold for the rate (here: the rate should not be negative), NA if there is no lower threshold
+birth;bir_cha_upper_thres;no parameter in previous model;100;100;100;percent;low;origin change (mother-baby): upper threshold for the rate (here: not more than 100 %), NA if there is no lower threshold
+death;dea_lower;tod.jung.alter.ende.schweiz, tod.jung.alter.ende.ausland;30;30;30;years (age);low;"lower age limit of age-dependent ratio (death rates of Zurich and entire Switzerland); comment: limit not included in range with age-dependence"
+death;dea_upper;tod.alt.alter.beginn.schweiz, tod.alt.alter.beginn.ausland;99;99;99;years (age);low;"upper age limit of age-dependent ratio (death rates of Zurich and entire Switzerland); comment: limit not included in range with age-dependence"
+death;dea_radix;no parameter in previous model;100000;100000;100000;persons;no;radix (starting population) for life expectancy calcuation (no effect on result)
+death;dea_age_at;no parameter in previous model;0;0;0;years (age);no;"life expectancy at certain age (usually at birth; i.e. age zero)"
+death;dea_age_max_le;tod.alt.alter.ende;120;120;120;years (age);low;maximum age for the estimation of the life expectancy
+death;dea_fso_cat_past;no parameter in previous model;2;2;2;no unit;no parameter;Category in the FSO data: (smoothed) data of the past
+death;dea_fso_cat_future;no parameter in previous model;3;3;3;no unit;no parameter;Category in the FSO data: data of the future
+death;dea_qx_NA_le;no parameter in previous model;0.8;0.8;0.8;per year;low;if there is no one at a certain age in the population (e.g. no 96 year old men), then qx (probability to die between age x and x+1) is NA. However, a value is need to multiply the subsequent survival probabilities
+death;dea_mor_span;no parameter in previous model;0.2;0.2;0.2;no unit;low;"proportion of data points used in the LOESS regressions of mortality by age; groups: sex, region (City of Zurich, Switzerland)"
+immigration*;ims_rate_prop_trend;zuz.rate.anteil.trend;20;20;20;percent;low;"immigration rate*: trend in addition to the mean; 20% means, 20% of the difference between trend and mean is added to the mean."
+immigration*;ims_rate_thres_percent;zuz.rate.grenze.prozent;20;20;20;percent;low;"It is not realistic that the immigration* rates changes dramatically (i.e. tenfold increase). Therefore, this threshold regulates the range of potential rates (change in percent of mean; e.g. +/- 20%)."
+immigration*;ims_rate_window_thres;zuz.rate.window.grenz;13;13;13;years;low;filter over years (to smooth a potential break in the curve due to range of future immigration* rates: imm_rate_thres_percent).
+immigration*;ims_rate_lower_thres;no parameter in previous model;0;0;0;percent;no parameter;lower threshold for the rate (here: the rate should not be negative), NA if there is no lower threshold
+immigration*;ims_so_prop_trend;zuz.ghvert.anteil.trend;20;20;20;percent;low;"proportion of sex and origin: trend in addition to the mean; 20% means, 20% of the difference between trend and mean is added to the mean."
+immigration*;ims_so_thres_percent;zuz.ghvert.grenze.prozent;20;20;20;percent;low;"It is not realistic that the proportions of sex and origin change dramatically (i.e. tenfold increase). Therefore, this threshold regulates the range of potential proportions (change in percent of mean; e.g. +/- 20%)."
 immigration*;ims_so_window_thres;"zuz.ghvert.window.grenz
-";13;13;13;years;low;filter over years (to smooth a potential break in the curve due to range of future proportions;13
-immigration*;ims_so_lower_thres;no parameter in previous model;0;0;0;percent;no parameter;lower threshold for the proportions (here: the proportions should not be negative), NA if there is no lower threshold;0
-immigration*;ims_span_y;no parameter in previous model;0.3;0.3;0.3;no unit;low;"proportion of data points used in the loess regressions of proportion by year; groups: district, age, sex, origin (immigration* by district, year, age, sex, origin)";0.3
-immigration*;ims_span_a;no parameter in previous model;0.1;0.1;0.1;no unit;low;"proportion of data points used in the LOESS regressions of proportion by age; groups: district, year, sex, origin (age proportion by district, year, sex, origin)";0.1
-immigration*;ims_age_prop_trend;no parameter in previous model;20;20;20;percent;low;"age distribution of immigrations*: trend in addition to the mean; 20% means, 20% of the difference between trend and mean is added to the mean.";20
-immigration*;ims_age_thres_percent;no parameter in previous model;20;20;20;percent;low;"age distribution of immigrations*: It is not realistic that the proportion of age changes dramatically (i.e. tenfold increase). Therefore, this threshold regulates the range of potential proportions (change in percent of mean; e.g. +/- 20%).";20
-immigration*;ims_age_window_thres;no parameter in previous model;13;13;13;years;low;age distribution of immigrations*: filter over years (to smooth a potential break in the curve due to range of future proportions;13
-immigration*;ims_age_lower_thres;no parameter in previous model;0;0;0;percent;no parameter;age distribution of immigrations*: lower threshold for the proportions (here: the proportions should not be negative), NA if there is no lower threshold;0
-emigration*;ems_rate_prop_trend;weg.rate.anteil.trend;20;20;20;percent;low;"emigration rate*: trend in addition to the mean; 20% means, 20% of the difference between trend and mean is added to the mean.";20
-emigration*;ems_rate_thres_percent;weg.rate.grenze.prozent;20;20;20;percent;low;"It is not realistic that the emigration* rates changes dramatically (i.e. tenfold increase). Therefore, this threshold regulates the range of potential rates (change in percent of mean; e.g. +/- 20%).";20
-emigration*;ems_rate_window_thres;weg.rate.window.grenz;13;13;13;years;low;filter over years (to smooth a potential break in the curve due to range of future emigration* rates: imm_rate_thres_percent).;13
-emigration*;ems_rate_lower_thres;no parameter in previous model;0;0;0;percent;no parameter;lower threshold for the rate (here: the rate should not be negative), NA if there is no lower threshold;0
-emigration*;ems_so_prop_trend;weg.ghvert.anteil.trend;20;20;20;percent;low;"proportion of sex and origin: trend in addition to the mean; 20% means, 20% of the difference between trend and mean is added to the mean.";20
-emigration*;ems_so_thres_percent;weg.ghvert.grenze.prozent;20;20;20;percent;low;"It is not realistic that the proportions of sex and origin change dramatically (i.e. tenfold increase). Therefore, this threshold regulates the range of potential proportions (change in percent of mean; e.g. +/- 20%).";20
+";13;13;13;years;low;filter over years (to smooth a potential break in the curve due to range of future proportions
+immigration*;ims_so_lower_thres;no parameter in previous model;0;0;0;percent;no parameter;lower threshold for the proportions (here: the proportions should not be negative), NA if there is no lower threshold
+immigration*;ims_span_y;no parameter in previous model;0.3;0.3;0.3;no unit;low;"proportion of data points used in the loess regressions of proportion by year; groups: district, age, sex, origin (immigration* by district, year, age, sex, origin)"
+immigration*;ims_span_a;no parameter in previous model;0.1;0.1;0.1;no unit;low;"proportion of data points used in the LOESS regressions of proportion by age; groups: district, year, sex, origin (age proportion by district, year, sex, origin)"
+immigration*;ims_age_prop_trend;no parameter in previous model;20;20;20;percent;low;"age distribution of immigrations*: trend in addition to the mean; 20% means, 20% of the difference between trend and mean is added to the mean."
+immigration*;ims_age_thres_percent;no parameter in previous model;20;20;20;percent;low;"age distribution of immigrations*: It is not realistic that the proportion of age changes dramatically (i.e. tenfold increase). Therefore, this threshold regulates the range of potential proportions (change in percent of mean; e.g. +/- 20%)."
+immigration*;ims_age_window_thres;no parameter in previous model;13;13;13;years;low;age distribution of immigrations*: filter over years (to smooth a potential break in the curve due to range of future proportions
+immigration*;ims_age_lower_thres;no parameter in previous model;0;0;0;percent;no parameter;age distribution of immigrations*: lower threshold for the proportions (here: the proportions should not be negative), NA if there is no lower threshold
+emigration*;ems_rate_prop_trend;weg.rate.anteil.trend;20;20;20;percent;low;"emigration rate*: trend in addition to the mean; 20% means, 20% of the difference between trend and mean is added to the mean."
+emigration*;ems_rate_thres_percent;weg.rate.grenze.prozent;20;20;20;percent;low;"It is not realistic that the emigration* rates changes dramatically (i.e. tenfold increase). Therefore, this threshold regulates the range of potential rates (change in percent of mean; e.g. +/- 20%)."
+emigration*;ems_rate_window_thres;weg.rate.window.grenz;13;13;13;years;low;filter over years (to smooth a potential break in the curve due to range of future emigration* rates: imm_rate_thres_percent).
+emigration*;ems_rate_lower_thres;no parameter in previous model;0;0;0;percent;no parameter;lower threshold for the rate (here: the rate should not be negative), NA if there is no lower threshold
+emigration*;ems_so_prop_trend;weg.ghvert.anteil.trend;20;20;20;percent;low;"proportion of sex and origin: trend in addition to the mean; 20% means, 20% of the difference between trend and mean is added to the mean."
+emigration*;ems_so_thres_percent;weg.ghvert.grenze.prozent;20;20;20;percent;low;"It is not realistic that the proportions of sex and origin change dramatically (i.e. tenfold increase). Therefore, this threshold regulates the range of potential proportions (change in percent of mean; e.g. +/- 20%)."
 emigration*;ems_so_window_thres;"weg.ghvert.window.grenz
-";13;13;13;years;low;filter over years (to smooth a potential break in the curve due to range of future proportions;13
-emigration*;ems_so_lower_thres;no parameter in previous model;0;0;0;percent;no parameter;lower threshold for the proportions (here: the proportions should not be negative), NA if there is no lower threshold;0
-emigration*;ems_span_y;no parameter in previous model;0.3;0.3;0.3;no unit;low;"proportion of data points used in the LOESS regressions of proportion by year; groups: district, age, sex, origin (emigration* by district, year, age, sex, origin)";0.3
-emigration*;ems_span_a;no parameter in previous model;0.1;0.1;0.1;no unit;low;"proportion of data points used in the LOESS regressions of proportion by age; groups: district, year, sex, origin (age proportion by district, year, sex, origin)";0.1
-emigration*;ems_age_prop_trend;no parameter in previous model;20;20;20;percent;low;"age distribution of emigrations*: trend in addition to the mean; 20% means, 20% of the difference between trend and mean is added to the mean.";20
-emigration*;ems_age_thres_percent;no parameter in previous model;20;20;20;percent;low;"age distribution of emigrations*: It is not realistic that the proportion of age changes dramatically (i.e. tenfold increase). Therefore, this threshold regulates the range of potential proportions (change in percent of mean; e.g. +/- 20%).";20
-emigration*;ems_age_window_thres;no parameter in previous model;13;13;13;years;low;age distribution of emigrations*: filter over years (to smooth a potential break in the curve due to range of future proportions;13
-emigration*;ems_age_lower_thres;no parameter in previous model;0;0;0;percent;no parameter;age distribution of emigrations*: lower threshold for the proportions (here: the proportions should not be negative), NA if there is no lower threshold;0
-relocation and immigration*;rei_age_max;umz.alter.max;70;70;70;years;low;as of this age: one single proportion (relocation on immigration*);70
-relocation and immigration*;rei_ims_span_dyao;similar to umz.window.alter;0.2;0.2;0.2;no unit;medium;"proportion of data points used in the LOESS regressions of immigration* by age; groups: district, year, origin";0.2
-relocation and immigration*;rei_rel_span_dyao;similar to umz.window.alter;0.2;0.2;0.2;no unit;medium;"proportion of data points used in the LOESS regressions of relocation by age; groups: district, year, origin";0.2
-relocation and immigration*;rei_ims_span_dao;similar to umz.window.alter;0.12;0.12;0.12;no unit;medium;"proportion of data points used in the LOESS regressions of immigration* by age; groups: district, origin";0.12
-relocation and immigration*;rei_rel_span_dao;similar to umz.window.alter;0.12;0.12;0.12;no unit;medium;"proportion of data points used in the LOESS regressions of relocation by age; groups: district, origin";0.12
-relocation and immigration*;rei_ims_thres_y;similar to umz.anz.rate.stadt;0.4;0.4;0.4;persons per year;low;when immigration* is above this threshold: proportion with year (and district, age, origin), below without year (but with district, age, origin).;0.4
-relocation and immigration*;rei_prop_span;similar to umz.window.alter;0.3;0.3;0.3;no unit;medium;"proportion of data points used in the LOESS regressions of proportion by age; groups: district, year, origin";0.3
-relocation and immigration*;rei_prop_trend;umz.anteil.trend;20;20;20;percent;low;"relocation proportion on immigration*: trend in addition to the mean; 20% means, 20% of the difference between trend and mean is added to the mean.";20
-relocation and immigration*;rei_thres_percent;no parameter in previous model;20;20;20;percent;low;"relocation proportion on immigration*: It is not realistic that the proportion changes dramatically (i.e. tenfold increase). Therefore, this threshold regulates the range of potential proportions (change in percent of mean; e.g. +/- 20%).";20
-relocation and immigration*;rei_window_thres;no parameter in previous model;13;13;13;years;low;relocation proportion on immigration*: filter over years (to smooth a potential break in the curve due to range of future proportions;13
-relocation and immigration*;rei_lower_thres;no parameter in previous model;0;0;0;percent;no parameter;relocation proportion on immigration*: lower threshold for the proportions (here: the proportions should not be negative), NA if there is no lower threshold;0
-relocation and immigration*;rei_upper_thres;no parameter in previous model;100;100;100;percent;no parameter;relocation proportion on immigration*: lower threshold for the proportions (here: the proportions should not be more than 100 percent), NA if there is no lower threshold;100
-relocation and immigration*;rei_pred_span;similar to umz.window.alter;0.15;0.15;0.15;no unit;medium;"after expansion of the prediction to age beyond age threshold: proportion of data points used in the LOESS regressions of the prediction (proportion) by age; groups: district, year, origin";0.15
-relocation and emigration*;ree_age_max;umz.alter.max;70;70;70;years;low;as of this age: one single proportion (relocation on emigration*);70
-relocation and emigration*;ree_ems_span_dyao;similar to umz.window.alter;0.2;0.2;0.2;no unit;medium;"proportion of data points used in the LOESS regressions of emigration* by age; groups: district, year, origin";0.2
-relocation and emigration*;ree_rel_span_dyao;similar to umz.window.alter;0.2;0.2;0.2;no unit;medium;"proportion of data points used in the LOESS regressions of relocation by age; groups: district, year, origin";0.2
-relocation and emigration*;ree_ems_span_dao;similar to umz.window.alter;0.12;0.12;0.12;no unit;medium;"proportion of data points used in the LOESS regressions of emigration* by age; groups: district, origin";0.12
-relocation and emigration*;ree_rel_span_dao;similar to umz.window.alter;0.12;0.12;0.12;no unit;medium;"proportion of data points used in the LOESS regressions of relocation by age; groups: district, origin";0.12
-relocation and emigration*;ree_ems_thres_y;similar to umz.anz.rate.heimat;0.4;0.4;0.4;persons per year;low;when immigration* is above this threshold: proportion with year (and district, age, origin), below without year (but with district, age, origin).;0.4
-relocation and emigration*;ree_prop_span;similar to umz.window.alter;0.3;0.3;0.3;no unit;medium;"proportion of data points used in the LOESS regressions of proportion by age; groups: district, year, origin";0.3
-relocation and emigration*;ree_prop_trend;umz.anteil.trend;20;20;20;percent;low;"relocation proportion on emigration*: trend in addition to the mean; 20% means, 20% of the difference between trend and mean is added to the mean.";20
-relocation and emigration*;ree_thres_percent;no parameter in previous model;20;20;20;percent;low;"relocation proportion on emigration*: It is not realistic that the proportion changes dramatically (i.e. tenfold increase). Therefore, this threshold regulates the range of potential proportions (change in percent of mean; e.g. +/- 20%).";20
-relocation and emigration*;ree_window_thres;no parameter in previous model;13;13;13;years;low;relocation proportion on emigration*: filter over years (to smooth a potential break in the curve due to range of future proportions;13
-relocation and emigration*;ree_lower_thres;no parameter in previous model;0;0;0;percent;no parameter;relocation proportion on emigration*: lower threshold for the proportions (here: the proportions should not be negative), NA if there is no lower threshold;0
-relocation and emigration*;ree_upper_thres;no parameter in previous model;100;100;100;percent;no parameter;relocation proportion on emigration*: lower threshold for the proportions (here: the proportions should not be more than 100 percent), NA if there is no lower threshold;100
-relocation and emigration*;ree_pred_span;similar to umz.window.alter;0.15;0.15;0.15;no unit;medium;"after expansion of the prediction to age beyond age threshold: proportion of data points used in the LOESS regressions the prediction (proportion) by age; groups: district, year, origin";0.15
-naturalization;nat_pop_span_das;similar to brw.window.alter;0.1;0.1;0.1;no unit;low;"proportion of data points used in the LOESS regressions of foreign population by age; groups: district, sex";0.1
-naturalization;nat_nat_span_das;similar to brw.window.alter;0.15;0.15;0.15;no unit;low;"proportion of data points used in the LOESS regressions of naturalization by age; groups: district, sex";0.15
-naturalization;nat_pop_thres;similar to brw.rate.anz.null;0.5;0.5;0.5;persons;low;if less persons in the (smoothed) foreign population than this threshold: then the naturalization rate is set to nat_pop_value;0.5
-naturalization;nat_pop_value;no parameter in previous model;0;0;0;percent per year;low;value of the naturalization rate, if the foreign population is below nat_pop_thres;0
-naturalization;nat_rate_span_das;similar to brw.window.alter;0.1;0.1;0.1;no unit;low;"proportion of data points used in the LOESS regressions of the rate by age; groups: district, sex";0.1
-naturalization;nat_pop_span_ya;similar to brw.window.alter;0.1;0.1;0.1;no unit;low;"proportion of data points used in the LOESS regressions of foreign population by age; groups: year (base years only)";0.1
-naturalization;nat_nat_span_ya;similar to brw.window.alter;0.15;0.15;0.15;no unit;low;"proportion of data points used in the LOESS regressions of naturalization by age; groups: year (base years only)";0.15
-naturalization;nat_rate_span_ya;similar to brw.window.alter;0.1;0.1;0.1;no unit;low;"proportion of data points used in the LOESS regressions of the rate by age; groups: year (base years only)";0.1
-naturalization;nat_prop_trend;brw.anteil.trend;20;20;20;percent;low;"naturalization: trend in addition to the mean; 20% means, 20% of the difference between trend and mean is added to the mean.";20
-naturalization;nat_thres_percent;no parameter in previous model;20;20;20;percent;low;"naturalization: It is not realistic that the rate changes dramatically (i.e. tenfold increase). Therefore, this threshold regulates the range of potential rates (change in percent of mean; e.g. +/- 20%).";20
-naturalization;nat_window_thres;no parameter in previous model;13;13;13;years;low;naturalization: filter over years (to smooth a potential break in the curve due to range of future proportions;13
-naturalization;nat_lower_thres;no parameter in previous model;0;0;0;percent;low;naturalization: lower threshold for the proportions (here: the naturalization rates should not be negative), NA if there is no lower threshold;0
-naturalization;nat_pop_span_a;similar to brw.window.alter;0.1;0.1;0.1;no unit;low;"proportion of data points used in the LOESS regressions of foreign population by age; no groups (base years only)";0.1
-naturalization;nat_nat_span_a;similar to brw.window.alter;0.15;0.15;0.15;no unit;low;"proportion of data points used in the LOESS regressions of naturalization by age; no groups (base years only)";0.15
-naturalization;nat_rate_span_a;similar to brw.window.alter;0.1;0.1;0.1;no unit;low;"proportion of data points used in the LOESS regressions of the rate by age; no groups (base years only)";0.1
-naturalization;nat_factor_thres;no parameter in previous model;0.5;0.5;0.5;naturalizations per year;low;if the naturalization rate is below this threshold: then the trend factor ist set to nat_factor_value;0.5
-naturalization;nat_factor_value;no parameter in previous model;0;0;0;no unit;low;value of the trend factor, if the naturalization rate is below nat_factor_thres;0
-naturalization;nat_rate_span_dyas;similar to brw.window.alter;0.1;0.1;0.1;no unit;low;"proportion of data points used in the LOESS regressions of the rate by age; groups: district, year, sex";0.1
-capacity and reserves;car_sc;kareb.vf;25;25;25;percent;medium;"Proportion of staircases; for the conversion from total area to living area.";25
-capacity and reserves;car_resi;kareb.wohnant;-25;0;0;percent;high;Residence portion ('slider'): -100% = minimum residential share according to the building regulation (BZO), 0% = real residential share, +100% = maximum residential share according to building regulation.;25
-capacity and reserves;car_plot;kareb.areal;0;50;50;percent;high;"Proportion of plot construction ('slider'); 0% = without plot construction, 100% = with plot construction";100
-capacity and reserves;car_uti_input;no parameter in previous model;85;85;85;percent;high;degree of utilization used to calculate the input data;85
-capacity and reserves;car_uti;kareb.ausbau;75;85;85;percent;high;"degree of utilization; linear influence on the capacity";95
-capacity and reserves;car_pp;kareb.ina.prozentpunkte;0;0;0;percent points;medium;usage: less or more percentage points (parameter between -100 and +100);0
-capacity and reserves;car_y;kareb.ina.jahr;2047;2047;2047;year;low;Reference year of the usage values;2047
-capacity and reserves;car_lambda;kareb.ina.lambda;-0.04;-0.04;-0.04;per year;high;"lambda value of an exponential function exp(lambda * time since start of scenario); proportion of utilization per year";-0.04
-living space;spa_apart;wf.anzwohn;500;500;500;apartments;low;"Amount of apartments per district and owner; if less apartments, then the value of the entire city (by owner) is used";500
-living space;spa_prop_trend;wf.anteil.trend;0;20;20;percent;high;"living space: trend in addition to the mean; 20% means, 20% of the difference between trend and mean is added to the mean.";50
-living space;spa_thres_percent;wf.grenze.prozent;20;20;20;percent;low;"living space: It is not realistic that the living space changes dramatically (i.e. tenfold increase). Therefore, this threshold regulates the range of potential changes (change in percent of mean; e.g. +/- 20%).";20
-living space;spa_window_thres;wf.window.szen;7;7;7;years;low;living space: filter over years (to smooth a potential break in the curve due to range of future proportions;7
-living space;spa_prop_trend_52p;no parameter in previous model;0;0;0;percent;low;"living space in the Escher Wyss district (district-ID = 52): trend in addition to the mean; 20% means, 20% of the difference between trend and mean is added to the mean.";0
-allocation;aca_apart;bq.anzwohn;500;500;500;apartments;low;"Amount of apartments per district and owner; if less apartments, then the value of the entire city (by owner) is used";500
-allocation;aca_prop_trend;bq.anteil.trend;0;20;50;percent;high;"allocation: trend in addition to the mean; 20% means, 20% of the difference between trend and mean is added to the mean.";50
-allocation;aca_thres_percent;bq.grenze.prozent;20;20;20;percent;low;"allocation: It is not realistic that the allocation values change dramatically (i.e. tenfold ncrease). Therefore, this threshold regulates the range of potential changes (change in percent of mean; e.g. +/- 20%).";20
-allocation;aca_window_thres;bq.window.szen;7;7;7;years;low;allocation: filter over years (to smooth a potential break in the curve due to range of future proportions;7
-allocation;aca_prop_trend_52p;no parameter in previous model;0;0;0;percent;low;"allocation in the Escher Wyss district (district-ID = 52): trend in addition to the mean; 20% means, 20% of the difference between trend and mean is added to the mean.";0
-projects;pro_lambda_begin;map.lambda.beginn;3;3;3;per year;low;"the time delay of the projects (consolidated project list) is determined by means of an exponential function (with lambda); value at the beginning of the time period (of the consolidated project list).";3
-projects;pro_lambda_end;map.lambda.ende;0.5;0.5;0.5;per year;low;"the time delay of the projects (consolidated project list) is determined by means of an exponential function (with lambda); value at the end of the time period (of the consolidated project list).";0.5
-projects;pro_transfo;no parameter in previous model;5;5;5;no unit;low;transformation parameter (non-linear curve from pro_lambda_begin to pro_lambda_end);5
-projects;pro_max_delay;no parameter in previous model;5;5;5;years;low;maximum delay;5
-projects;pro_not_scheduled_ip;part of map.nicht1 (projektiert);30;30;30;percent;high;Percentage of projects (i.e. apartments) that are not realized: scheduled, from Infoplan;30
-projects;pro_not_scheduled_other;part of map.nicht1 (projektiert);20;20;20;percent;high;Percentage of projects (i.e. apartments) that are not realized: scheduled, other;20
-projects;pro_not_submitted;map.nicht2 (eingereicht);0;0;0;percent;high;Percentage of projects (i.e. apartments) that are not realized: submitted;0
-projects;pro_not_approved;map.nicht3 (bewilligt);0;0;0;percent;high;Percentage of projects (i.e. apartments) that are not realized: approved;0
-projects;pro_not_started;map.nicht4 (Bau begonnen);0;0;0;percent;high;Percentage of projects (i.e. apartments) that are not realized: started;0
-projects;pro_not_completed;map.nicht5 (fertiggestellt);0;0;0;percent;high;Percentage of projects (i.e. apartments) that are not realized: completed;0
-projects;pro_not_onhold;map.nicht6 (sistiert);10;10;10;percent;high;Percentage of projects (i.e. apartments) that are not realized: on hold;10
-ownership;own_prop_trend;ea.anteil.trend;50;50;50;percent;low;"ownership: trend in addition to the mean; 20% means, 20% of the difference between trend and mean is added to the mean.";50
-ownership;own_thres_percent;ea.grenze.prozent;20;20;20;percent;low;"ownership: It is not realistic that the proportion changes dramatically (i.e. tenfold increase). Therefore, this threshold regulates the range of potential proportions (change in percent of mean; e.g. +/- 20%).";20
-ownership;own_window_thres;ea.window.szen;7;7;7;years;low;ownership: filter over years (to smooth a potential break in the curve due to range of future proportions;7
-ownership;own_lower_thres;no parameter in previous model;0;0;0;percent;no parameter;ownership: lower threshold for the proportions (here: the proportions should not be negative), NA if there is no lower threshold;0
-ownership;own_upper_thres;no parameter in previous model;100;100;100;percent;no parameter;ownership: lower threshold for the proportions (here: the proportions should not be more than 100 percent), NA if there is no lower threshold;100
-housing model;car_coop;similar to wohn.modell.typ;100;100;100;percent;low;Percentage of cooperative housing can be used from capacity/reserves (car_coop = 100), or from the trends in the districts (car_coop = 0) or a mixture of both data sources. In other words: car_coop = percentage used from capacity/reserves.;100
-housing model;car_trust;no parameter in previous model;0;0;0;percent;high;If the amount of people according to the project list exceeds the population (in a given year!) according to capacity/reserves: trust the capacity/reserves number (parameter = 100%)? Or the project list (parameter = 0%)?;0
-housing model;car_max_trust;no parameter in previous model;100;100;50;percent;high;If the amount of people exceeds the maximum (over all years!) according to capacity/reserves: trust the capacity/reserves population (parameter = 100%)? Or the calculated population (parameter = 0%)? Idea: not more people than population according to reserves usage;100
-housing model;empty_coop;similar to wohn.modell.anteil.leerwhg;0;0;0;percent;low;Percentage of empty apartments: cooperative housing;0
-housing model;empty_private;similar to wohn.modell.anteil.leerwhg;0;0;0;percent;low;Percentage of empty apartments: private housing;0
-demography and housing model;less_ims;similar to mod.ant.zuz (in the previous model only one parameter for both situations: less or more living space available);75;75;75;percent;high;less living space available (according to reserves, compared to trend calcuation). Then immigration* is decreased, and emigration* increased. This parameter determines how much of the difference is compensated by changes of immigration* (the remainder is corrected with emigration*);75
-demography and housing model;more_ims;similar to mod.ant.zuz (in the previous model only one parameter for both situations: less or more living space available);50;50;50;percent;high;more living space available (according to reserves, compared to trend calcuation). Then immigration* is increased, and emigration* decreased. This parameter determines how much of the difference is compensated by changes of immigration* (the remainder is corrected with emigration*);50
-demography and housing model;deh_span;no parameter in previous model;0.04;0.04;0.04;no unit;medium;"in future population: proportion of data points used in the LOESS regressions by age; groups: district, year, sex, origin";0.04
+";13;13;13;years;low;filter over years (to smooth a potential break in the curve due to range of future proportions
+emigration*;ems_so_lower_thres;no parameter in previous model;0;0;0;percent;no parameter;lower threshold for the proportions (here: the proportions should not be negative), NA if there is no lower threshold
+emigration*;ems_span_y;no parameter in previous model;0.3;0.3;0.3;no unit;low;"proportion of data points used in the LOESS regressions of proportion by year; groups: district, age, sex, origin (emigration* by district, year, age, sex, origin)"
+emigration*;ems_span_a;no parameter in previous model;0.1;0.1;0.1;no unit;low;"proportion of data points used in the LOESS regressions of proportion by age; groups: district, year, sex, origin (age proportion by district, year, sex, origin)"
+emigration*;ems_age_prop_trend;no parameter in previous model;20;20;20;percent;low;"age distribution of emigrations*: trend in addition to the mean; 20% means, 20% of the difference between trend and mean is added to the mean."
+emigration*;ems_age_thres_percent;no parameter in previous model;20;20;20;percent;low;"age distribution of emigrations*: It is not realistic that the proportion of age changes dramatically (i.e. tenfold increase). Therefore, this threshold regulates the range of potential proportions (change in percent of mean; e.g. +/- 20%)."
+emigration*;ems_age_window_thres;no parameter in previous model;13;13;13;years;low;age distribution of emigrations*: filter over years (to smooth a potential break in the curve due to range of future proportions
+emigration*;ems_age_lower_thres;no parameter in previous model;0;0;0;percent;no parameter;age distribution of emigrations*: lower threshold for the proportions (here: the proportions should not be negative), NA if there is no lower threshold
+relocation and immigration*;rei_age_max;umz.alter.max;70;70;70;years;low;as of this age: one single proportion (relocation on immigration*)
+relocation and immigration*;rei_ims_span_dyao;similar to umz.window.alter;0.2;0.2;0.2;no unit;medium;"proportion of data points used in the LOESS regressions of immigration* by age; groups: district, year, origin"
+relocation and immigration*;rei_rel_span_dyao;similar to umz.window.alter;0.2;0.2;0.2;no unit;medium;"proportion of data points used in the LOESS regressions of relocation by age; groups: district, year, origin"
+relocation and immigration*;rei_ims_span_dao;similar to umz.window.alter;0.12;0.12;0.12;no unit;medium;"proportion of data points used in the LOESS regressions of immigration* by age; groups: district, origin"
+relocation and immigration*;rei_rel_span_dao;similar to umz.window.alter;0.12;0.12;0.12;no unit;medium;"proportion of data points used in the LOESS regressions of relocation by age; groups: district, origin"
+relocation and immigration*;rei_ims_thres_y;similar to umz.anz.rate.stadt;0.4;0.4;0.4;persons per year;low;when immigration* is above this threshold: proportion with year (and district, age, origin), below without year (but with district, age, origin).
+relocation and immigration*;rei_prop_span;similar to umz.window.alter;0.3;0.3;0.3;no unit;medium;"proportion of data points used in the LOESS regressions of proportion by age; groups: district, year, origin"
+relocation and immigration*;rei_prop_trend;umz.anteil.trend;20;20;20;percent;low;"relocation proportion on immigration*: trend in addition to the mean; 20% means, 20% of the difference between trend and mean is added to the mean."
+relocation and immigration*;rei_thres_percent;no parameter in previous model;20;20;20;percent;low;"relocation proportion on immigration*: It is not realistic that the proportion changes dramatically (i.e. tenfold increase). Therefore, this threshold regulates the range of potential proportions (change in percent of mean; e.g. +/- 20%)."
+relocation and immigration*;rei_window_thres;no parameter in previous model;13;13;13;years;low;relocation proportion on immigration*: filter over years (to smooth a potential break in the curve due to range of future proportions
+relocation and immigration*;rei_lower_thres;no parameter in previous model;0;0;0;percent;no parameter;relocation proportion on immigration*: lower threshold for the proportions (here: the proportions should not be negative), NA if there is no lower threshold
+relocation and immigration*;rei_upper_thres;no parameter in previous model;100;100;100;percent;no parameter;relocation proportion on immigration*: lower threshold for the proportions (here: the proportions should not be more than 100 percent), NA if there is no lower threshold
+relocation and immigration*;rei_pred_span;similar to umz.window.alter;0.15;0.15;0.15;no unit;medium;"after expansion of the prediction to age beyond age threshold: proportion of data points used in the LOESS regressions of the prediction (proportion) by age; groups: district, year, origin"
+relocation and emigration*;ree_age_max;umz.alter.max;70;70;70;years;low;as of this age: one single proportion (relocation on emigration*)
+relocation and emigration*;ree_ems_span_dyao;similar to umz.window.alter;0.2;0.2;0.2;no unit;medium;"proportion of data points used in the LOESS regressions of emigration* by age; groups: district, year, origin"
+relocation and emigration*;ree_rel_span_dyao;similar to umz.window.alter;0.2;0.2;0.2;no unit;medium;"proportion of data points used in the LOESS regressions of relocation by age; groups: district, year, origin"
+relocation and emigration*;ree_ems_span_dao;similar to umz.window.alter;0.12;0.12;0.12;no unit;medium;"proportion of data points used in the LOESS regressions of emigration* by age; groups: district, origin"
+relocation and emigration*;ree_rel_span_dao;similar to umz.window.alter;0.12;0.12;0.12;no unit;medium;"proportion of data points used in the LOESS regressions of relocation by age; groups: district, origin"
+relocation and emigration*;ree_ems_thres_y;similar to umz.anz.rate.heimat;0.4;0.4;0.4;persons per year;low;when immigration* is above this threshold: proportion with year (and district, age, origin), below without year (but with district, age, origin).
+relocation and emigration*;ree_prop_span;similar to umz.window.alter;0.3;0.3;0.3;no unit;medium;"proportion of data points used in the LOESS regressions of proportion by age; groups: district, year, origin"
+relocation and emigration*;ree_prop_trend;umz.anteil.trend;20;20;20;percent;low;"relocation proportion on emigration*: trend in addition to the mean; 20% means, 20% of the difference between trend and mean is added to the mean."
+relocation and emigration*;ree_thres_percent;no parameter in previous model;20;20;20;percent;low;"relocation proportion on emigration*: It is not realistic that the proportion changes dramatically (i.e. tenfold increase). Therefore, this threshold regulates the range of potential proportions (change in percent of mean; e.g. +/- 20%)."
+relocation and emigration*;ree_window_thres;no parameter in previous model;13;13;13;years;low;relocation proportion on emigration*: filter over years (to smooth a potential break in the curve due to range of future proportions
+relocation and emigration*;ree_lower_thres;no parameter in previous model;0;0;0;percent;no parameter;relocation proportion on emigration*: lower threshold for the proportions (here: the proportions should not be negative), NA if there is no lower threshold
+relocation and emigration*;ree_upper_thres;no parameter in previous model;100;100;100;percent;no parameter;relocation proportion on emigration*: lower threshold for the proportions (here: the proportions should not be more than 100 percent), NA if there is no lower threshold
+relocation and emigration*;ree_pred_span;similar to umz.window.alter;0.15;0.15;0.15;no unit;medium;"after expansion of the prediction to age beyond age threshold: proportion of data points used in the LOESS regressions the prediction (proportion) by age; groups: district, year, origin"
+naturalization;nat_pop_span_das;similar to brw.window.alter;0.1;0.1;0.1;no unit;low;"proportion of data points used in the LOESS regressions of foreign population by age; groups: district, sex"
+naturalization;nat_nat_span_das;similar to brw.window.alter;0.15;0.15;0.15;no unit;low;"proportion of data points used in the LOESS regressions of naturalization by age; groups: district, sex"
+naturalization;nat_pop_thres;similar to brw.rate.anz.null;0.5;0.5;0.5;persons;low;if less persons in the (smoothed) foreign population than this threshold: then the naturalization rate is set to nat_pop_value
+naturalization;nat_pop_value;no parameter in previous model;0;0;0;percent per year;low;value of the naturalization rate, if the foreign population is below nat_pop_thres
+naturalization;nat_rate_span_das;similar to brw.window.alter;0.1;0.1;0.1;no unit;low;"proportion of data points used in the LOESS regressions of the rate by age; groups: district, sex"
+naturalization;nat_pop_span_ya;similar to brw.window.alter;0.1;0.1;0.1;no unit;low;"proportion of data points used in the LOESS regressions of foreign population by age; groups: year (base years only)"
+naturalization;nat_nat_span_ya;similar to brw.window.alter;0.15;0.15;0.15;no unit;low;"proportion of data points used in the LOESS regressions of naturalization by age; groups: year (base years only)"
+naturalization;nat_rate_span_ya;similar to brw.window.alter;0.1;0.1;0.1;no unit;low;"proportion of data points used in the LOESS regressions of the rate by age; groups: year (base years only)"
+naturalization;nat_prop_trend;brw.anteil.trend;20;20;20;percent;low;"naturalization: trend in addition to the mean; 20% means, 20% of the difference between trend and mean is added to the mean."
+naturalization;nat_thres_percent;no parameter in previous model;20;20;20;percent;low;"naturalization: It is not realistic that the rate changes dramatically (i.e. tenfold increase). Therefore, this threshold regulates the range of potential rates (change in percent of mean; e.g. +/- 20%)."
+naturalization;nat_window_thres;no parameter in previous model;13;13;13;years;low;naturalization: filter over years (to smooth a potential break in the curve due to range of future proportions
+naturalization;nat_lower_thres;no parameter in previous model;0;0;0;percent;low;naturalization: lower threshold for the proportions (here: the naturalization rates should not be negative), NA if there is no lower threshold
+naturalization;nat_pop_span_a;similar to brw.window.alter;0.1;0.1;0.1;no unit;low;"proportion of data points used in the LOESS regressions of foreign population by age; no groups (base years only)"
+naturalization;nat_nat_span_a;similar to brw.window.alter;0.15;0.15;0.15;no unit;low;"proportion of data points used in the LOESS regressions of naturalization by age; no groups (base years only)"
+naturalization;nat_rate_span_a;similar to brw.window.alter;0.1;0.1;0.1;no unit;low;"proportion of data points used in the LOESS regressions of the rate by age; no groups (base years only)"
+naturalization;nat_factor_thres;no parameter in previous model;0.5;0.5;0.5;naturalizations per year;low;if the naturalization rate is below this threshold: then the trend factor ist set to nat_factor_value
+naturalization;nat_factor_value;no parameter in previous model;0;0;0;no unit;low;value of the trend factor, if the naturalization rate is below nat_factor_thres
+naturalization;nat_rate_span_dyas;similar to brw.window.alter;0.1;0.1;0.1;no unit;low;"proportion of data points used in the LOESS regressions of the rate by age; groups: district, year, sex"
+capacity and reserves;car_sc;kareb.vf;25;25;25;percent;medium;"Proportion of staircases; for the conversion from total area to living area."
+capacity and reserves;car_resi;kareb.wohnant;-25;0;25;percent;high;Residence portion ('slider'): -100% = minimum residential share according to the building regulation (BZO), 0% = real residential share, +100% = maximum residential share according to building regulation.
+capacity and reserves;car_plot;kareb.areal;0;50;100;percent;high;"Proportion of plot construction ('slider'); 0% = without plot construction, 100% = with plot construction"
+capacity and reserves;car_uti_input;no parameter in previous model;85;85;85;percent;high;degree of utilization used to calculate the input data
+capacity and reserves;car_uti;kareb.ausbau;75;85;95;percent;high;"degree of utilization; linear influence on the capacity"
+capacity and reserves;car_pp;kareb.ina.prozentpunkte;0;0;0;percent points;medium;usage: less or more percentage points (parameter between -100 and +100)
+capacity and reserves;car_y;kareb.ina.jahr;2047;2047;2047;year;low;Reference year of the usage values
+capacity and reserves;car_lambda;kareb.ina.lambda;-0.04;-0.04;-0.04;per year;high;"lambda value of an exponential function exp(lambda * time since start of scenario); proportion of utilization per year"
+living space;spa_apart;wf.anzwohn;500;500;500;apartments;low;"Amount of apartments per district and owner; if less apartments, then the value of the entire city (by owner) is used"
+living space;spa_prop_trend;wf.anteil.trend;0;20;50;percent;high;"living space: trend in addition to the mean; 20% means, 20% of the difference between trend and mean is added to the mean."
+living space;spa_thres_percent;wf.grenze.prozent;20;20;20;percent;low;"living space: It is not realistic that the living space changes dramatically (i.e. tenfold increase). Therefore, this threshold regulates the range of potential changes (change in percent of mean; e.g. +/- 20%)."
+living space;spa_window_thres;wf.window.szen;7;7;7;years;low;living space: filter over years (to smooth a potential break in the curve due to range of future proportions
+living space;spa_prop_trend_52p;no parameter in previous model;0;0;0;percent;low;"living space in the Escher Wyss district (district-ID = 52): trend in addition to the mean; 20% means, 20% of the difference between trend and mean is added to the mean."
+allocation;aca_apart;bq.anzwohn;500;500;500;apartments;low;"Amount of apartments per district and owner; if less apartments, then the value of the entire city (by owner) is used"
+allocation;aca_prop_trend;bq.anteil.trend;0;20;50;percent;high;"allocation: trend in addition to the mean; 20% means, 20% of the difference between trend and mean is added to the mean."
+allocation;aca_thres_percent;bq.grenze.prozent;20;20;20;percent;low;"allocation: It is not realistic that the allocation values change dramatically (i.e. tenfold ncrease). Therefore, this threshold regulates the range of potential changes (change in percent of mean; e.g. +/- 20%)."
+allocation;aca_window_thres;bq.window.szen;7;7;7;years;low;allocation: filter over years (to smooth a potential break in the curve due to range of future proportions
+allocation;aca_prop_trend_52p;no parameter in previous model;0;0;0;percent;low;"allocation in the Escher Wyss district (district-ID = 52): trend in addition to the mean; 20% means, 20% of the difference between trend and mean is added to the mean."
+projects;pro_lambda_begin;map.lambda.beginn;3;3;3;per year;low;"the time delay of the projects (consolidated project list) is determined by means of an exponential function (with lambda); value at the beginning of the time period (of the consolidated project list)."
+projects;pro_lambda_end;map.lambda.ende;0.5;0.5;0.5;per year;low;"the time delay of the projects (consolidated project list) is determined by means of an exponential function (with lambda); value at the end of the time period (of the consolidated project list)."
+projects;pro_transfo;no parameter in previous model;5;5;5;no unit;low;transformation parameter (non-linear curve from pro_lambda_begin to pro_lambda_end)
+projects;pro_max_delay;no parameter in previous model;5;5;5;years;low;maximum delay
+projects;pro_not_scheduled_ip;part of map.nicht1 (projektiert);30;30;30;percent;high;Percentage of projects (i.e. apartments) that are not realized: scheduled, from Infoplan
+projects;pro_not_scheduled_other;part of map.nicht1 (projektiert);20;20;20;percent;high;Percentage of projects (i.e. apartments) that are not realized: scheduled, other
+projects;pro_not_submitted;map.nicht2 (eingereicht);0;0;0;percent;high;Percentage of projects (i.e. apartments) that are not realized: submitted
+projects;pro_not_approved;map.nicht3 (bewilligt);0;0;0;percent;high;Percentage of projects (i.e. apartments) that are not realized: approved
+projects;pro_not_started;map.nicht4 (Bau begonnen);0;0;0;percent;high;Percentage of projects (i.e. apartments) that are not realized: started
+projects;pro_not_completed;map.nicht5 (fertiggestellt);0;0;0;percent;high;Percentage of projects (i.e. apartments) that are not realized: completed
+projects;pro_not_onhold;map.nicht6 (sistiert);10;10;10;percent;high;Percentage of projects (i.e. apartments) that are not realized: on hold
+ownership;own_prop_trend;ea.anteil.trend;50;50;50;percent;low;"ownership: trend in addition to the mean; 20% means, 20% of the difference between trend and mean is added to the mean."
+ownership;own_thres_percent;ea.grenze.prozent;20;20;20;percent;low;"ownership: It is not realistic that the proportion changes dramatically (i.e. tenfold increase). Therefore, this threshold regulates the range of potential proportions (change in percent of mean; e.g. +/- 20%)."
+ownership;own_window_thres;ea.window.szen;7;7;7;years;low;ownership: filter over years (to smooth a potential break in the curve due to range of future proportions
+ownership;own_lower_thres;no parameter in previous model;0;0;0;percent;no parameter;ownership: lower threshold for the proportions (here: the proportions should not be negative), NA if there is no lower threshold
+ownership;own_upper_thres;no parameter in previous model;100;100;100;percent;no parameter;ownership: lower threshold for the proportions (here: the proportions should not be more than 100 percent), NA if there is no lower threshold
+housing model;car_coop;similar to wohn.modell.typ;100;100;100;percent;low;Percentage of cooperative housing can be used from capacity/reserves (car_coop = 100), or from the trends in the districts (car_coop = 0) or a mixture of both data sources. In other words: car_coop = percentage used from capacity/reserves.
+housing model;car_trust;no parameter in previous model;0;0;0;percent;high;If the amount of people according to the project list exceeds the population (in a given year!) according to capacity/reserves: trust the capacity/reserves number (parameter = 100%)? Or the project list (parameter = 0%)?
+housing model;car_max_trust;no parameter in previous model;100;100;100;percent;high;If the amount of people exceeds the maximum (over all years!) according to capacity/reserves: trust the capacity/reserves population (parameter = 100%)? Or the calculated population (parameter = 0%)? Idea: not more people than population according to reserves usage
+housing model;empty_coop;similar to wohn.modell.anteil.leerwhg;0;0;0;percent;low;Percentage of empty apartments: cooperative housing
+housing model;empty_private;similar to wohn.modell.anteil.leerwhg;0;0;0;percent;low;Percentage of empty apartments: private housing
+demography and housing model;less_ims;similar to mod.ant.zuz (in the previous model only one parameter for both situations: less or more living space available);75;75;75;percent;high;less living space available (according to reserves, compared to trend calcuation). Then immigration* is decreased, and emigration* increased. This parameter determines how much of the difference is compensated by changes of immigration* (the remainder is corrected with emigration*)
+demography and housing model;more_ims;similar to mod.ant.zuz (in the previous model only one parameter for both situations: less or more living space available);50;50;50;percent;high;more living space available (according to reserves, compared to trend calcuation). Then immigration* is increased, and emigration* decreased. This parameter determines how much of the difference is compensated by changes of immigration* (the remainder is corrected with emigration*)
+demography and housing model;deh_span;no parameter in previous model;0.04;0.04;0.04;no unit;medium;"in future population: proportion of data points used in the LOESS regressions by age; groups: district, year, sex, origin"
