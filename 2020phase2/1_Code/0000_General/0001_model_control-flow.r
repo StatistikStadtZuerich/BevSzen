@@ -124,22 +124,22 @@ run_scen <- function(scenarios, modules) {
     }
 
     # living space
-    if (modules %in% c("all", "alw", "hom", "spa")) {
+    if (modules %in% c("all", "alw", "how", "hom", "spa")) {
       source(paste0(code_path, "0900_Living-Space/0900_living-space.r"))
     }
 
     # allocation
-    if (modules %in% c("all", "alw", "hom", "aca")) {
+    if (modules %in% c("all", "alw", "how", "hom", "aca")) {
       source(paste0(code_path, "1000_Allocation/1000_allocation.r"))
     }
 
     # projects
-    if (modules %in% c("all", "alw", "hom", "pro")) {
+    if (modules %in% c("all", "alw", "how", "hom", "pro")) {
       source(paste0(code_path, "1100_Projects/1100_projects.r"))
     }
 
     # ownership
-    if (modules %in% c("all", "alw", "hom", "own")) {
+    if (modules %in% c("all", "alw", "how", "hom", "own")) {
       source(paste0(code_path, "1200_Ownership/1200_ownership.r"))
     }
 
@@ -170,7 +170,7 @@ run_scen <- function(scenarios, modules) {
 #     scenarios = c("lower", "middle", "upper"),
 #     modules = c("hou"))
 
-zeit1 <- Sys.time()
+time_start <- Sys.time()
 
 run_scen(
     scenarios = c("lower", "middle", "upper"),
@@ -180,7 +180,7 @@ run_scen(
     scenarios = c("middle"),
     modules = c("out"))
 
-zeit2 <- Sys.time()
-zeit2-zeit1
+Sys.time() - time_start
+
 
 
