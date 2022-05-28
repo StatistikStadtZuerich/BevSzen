@@ -174,10 +174,10 @@ time_start <- Sys.time()
 
 run_scen(
     scenarios = c("lower", "middle", "upper"),
-    modules = c("how"))
+    modules = c("alw"))
 
 run_scen(
-    scenarios = c("middle"),
+    scenarios = c("lower", "middle", "upper"),
     modules = c("out"))
 
 Sys.time() - time_start
