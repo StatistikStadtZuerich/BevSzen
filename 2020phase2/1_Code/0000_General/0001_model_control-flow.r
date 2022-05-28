@@ -174,7 +174,7 @@ zeit1 <- Sys.time()
 
 run_scen(
     scenarios = c("lower", "middle", "upper"),
-    modules = c("how"))
+    modules = c("out"))
 
 
 zeit2 <- Sys.time()
