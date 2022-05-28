@@ -173,7 +173,7 @@ run_scen <- function(scenarios, modules) {
 zeit1 <- Sys.time()
 
 run_scen(
-    scenarios = c("upper"),
+    scenarios = c("lower", "middle", "upper"),
     modules = c("how"))
 
 
