@@ -154,7 +154,7 @@ run_scen <- function(scenarios, modules) {
     }
 
     # model outputs
-    if (modules %in% c("all", "how", "out")) {
+    if (modules %in% c("all", "out")) {
       source(paste0(code_path, "1500_Model/1501_model_outputs.r"))
     }
 
