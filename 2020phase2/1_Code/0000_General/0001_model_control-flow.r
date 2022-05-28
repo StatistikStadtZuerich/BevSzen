@@ -47,7 +47,9 @@ source("1_Code/0000_General/0002_general_without-parameters.r")
 #   hou (housing model)
 #   deh (demography and housing model)
 #   out (model outputs)
+# how (housing without output: hom, hou, deh)
 # alw (all without output: since 'out' needs lower/middle/upper scenario)
+
 
 
 
@@ -117,37 +119,37 @@ run_scen <- function(scenarios, modules) {
     }
 
     # capacity, reserves
-    if (modules %in% c("all", "alw", "hom", "car")) {
+    if (modules %in% c("all", "alw", "how", "hom", "car")) {
       source(paste0(code_path, "0800_Capacity-Reserves/0800_capacity-reserves.r"))
     }
 
     # living space
-    if (modules %in% c("all", "alw", "hom", "spa")) {
+    if (modules %in% c("all", "alw", "how", "hom", "spa")) {
       source(paste0(code_path, "0900_Living-Space/0900_living-space.r"))
     }
 
     # allocation
-    if (modules %in% c("all", "alw", "hom", "aca")) {
+    if (modules %in% c("all", "alw", "how", "hom", "aca")) {
       source(paste0(code_path, "1000_Allocation/1000_allocation.r"))
     }
 
     # projects
-    if (modules %in% c("all", "alw", "hom", "pro")) {
+    if (modules %in% c("all", "alw", "how", "hom", "pro")) {
       source(paste0(code_path, "1100_Projects/1100_projects.r"))
     }
 
     # ownership
-    if (modules %in% c("all", "alw", "hom", "own")) {
+    if (modules %in% c("all", "alw", "how", "hom", "own")) {
       source(paste0(code_path, "1200_Ownership/1200_ownership.r"))
     }
 
     # housing model
-    if (modules %in% c("all", "alw", "hom", "hou")) {
+    if (modules %in% c("all", "alw", "how", "hom", "hou")) {
       source(paste0(code_path, "1300_Housing-Model/1300_housing-model.r"))
     }
 
     # demography and housing model
-    if (modules %in% c("all", "alw", "deh")) {
+    if (modules %in% c("all", "alw", "how", "deh")) {
       source(paste0(code_path, "1400_Demography-Housing/1400_demography-housing.r"))
     }
 
@@ -169,7 +171,17 @@ run_scen <- function(scenarios, modules) {
 #     modules = c("hou"))
 
 run_scen(
-    scenarios = c("lower", "middle", "upper"),
+    scenarios = c("middle"),
     modules = c("out"))
 
 
+
+#   hom (housing-modules)
+#     car (capacity-reserves)
+#     spa (living space)
+#     aca (allocation)
+#     pro (projects)
+#     own (ownership)
+#   hou (housing model)
+#   deh (demography and housing model)
+#   out (model outputs)
