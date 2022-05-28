@@ -157,8 +157,8 @@ naturalization;nat_factor_thres;no parameter in previous model;0.5;0.5;0.5;natur
 naturalization;nat_factor_value;no parameter in previous model;0;0;0;no unit;low;value of the trend factor, if the naturalization rate is below nat_factor_thres;0
 naturalization;nat_rate_span_dyas;similar to brw.window.alter;0.1;0.1;0.1;no unit;low;"proportion of data points used in the LOESS regressions of the rate by age; groups: district, year, sex";0.1
 capacity and reserves;car_sc;kareb.vf;25;25;25;percent;medium;"Proportion of staircases; for the conversion from total area to living area.";25
-capacity and reserves;car_resi;kareb.wohnant;-25;0;25;percent;high;Residence portion ('slider'): -100% = minimum residential share according to the building regulation (BZO), 0% = real residential share, +100% = maximum residential share according to building regulation.;25
-capacity and reserves;car_plot;kareb.areal;0;50;50;percent;high;"Proportion of plot construction ('slider'); 0% = without plot construction, 100% = with plot construction";100
+capacity and reserves;car_resi;kareb.wohnant;-25;0;0;percent;high;Residence portion ('slider'): -100% = minimum residential share according to the building regulation (BZO), 0% = real residential share, +100% = maximum residential share according to building regulation.;25
+capacity and reserves;car_plot;kareb.areal;0;50;100;percent;high;"Proportion of plot construction ('slider'); 0% = without plot construction, 100% = with plot construction";100
 capacity and reserves;car_uti_input;no parameter in previous model;85;85;85;percent;high;degree of utilization used to calculate the input data;85
 capacity and reserves;car_uti;kareb.ausbau;75;85;85;percent;high;"degree of utilization; linear influence on the capacity";95
 capacity and reserves;car_pp;kareb.ina.prozentpunkte;0;0;0;percent points;medium;usage: less or more percentage points (parameter between -100 and +100);0

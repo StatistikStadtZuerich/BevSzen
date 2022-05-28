@@ -154,7 +154,7 @@ run_scen <- function(scenarios, modules) {
     }
 
     # model outputs
-    if (modules %in% c("all", "out")) {
+    if (modules %in% c("all", "how", "out")) {
       source(paste0(code_path, "1500_Model/1501_model_outputs.r"))
     }
 
@@ -170,12 +170,15 @@ run_scen <- function(scenarios, modules) {
 #     scenarios = c("lower", "middle", "upper"),
 #     modules = c("hou"))
 
+zeit1 <- Sys.time()
+
 run_scen(
-    scenarios = c("middle", "upper"),
-    modules = c("out"))
+    scenarios = c("upper"),
+    modules = c("how"))
 
 
-
+zeit2 <- Sys.time()
+zeit2-zeit1
 
 
 #   hom (housing-modules)
