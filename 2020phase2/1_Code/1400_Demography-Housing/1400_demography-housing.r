@@ -198,18 +198,6 @@ hou <- read_csv(paste0(exp_path, "/housing-model_population_d.csv"), lazy = FALS
   rename(pop_limit = pop)
 
 
-#   mutate(factor =  1 + pmax(0, (year / 2021 - 1) * 10), 
-#     pop_limit = if_else(district == "Wollishofen", factor * pop_limit, pop_limit))
-# 
-# test <- hou %>% 
-#   filter(district == "Wollishofen")
-# plot(test$year, test$factor)
-
-
-
-
-
-
 # loop over years ---------------------------------------------------------
 
 # last year of data,
