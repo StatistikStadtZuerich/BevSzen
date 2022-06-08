@@ -47,8 +47,11 @@ age;age_max;no parameter in previous model;120;120;120;years (age);low;maximum a
 general;round_rate;no parameter in previous model;4;4;4;digits (rate in percent per year);no parameter;rounding of rates (digits, rate in percent per year)
 general;round_prop;no parameter in previous model;4;4;4;digits (proportion in percent);no parameter;rounding of proportion (digits, proportion in percent)
 general;round_area;no parameter in previous model;4;4;4;digits (area);no parameter;rounding of area (e.g. ha in the capacity and reserve module)
-general;round_people;no parameter in previous model;0;0;0;digits (area);no parameter;rounding of people
-general;round_aca;no parameter in previous model;4;4;4;digits (area);no parameter;rounding of allocation (people per apartment)
+general;round_people;no parameter in previous model;0;0;0;digits (people);no parameter;rounding of people
+general;round_aca;no parameter in previous model;4;4;4;digits (people per apartment);no parameter;rounding of allocation (people per apartment)
+general;round_people_scen;no parameter in previous model;100;100;100;people (not digits);no parameter;"rounding of people (for future values; scenarios)"
+general;round_prop_scen;no parameter in previous model;0;0;0;digits (proportion in percent);no parameter;"rounding of proportion (for future values; scenarios)"
+general;round_prop_scen_a;no parameter in previous model;1;1;1;digits (proportion in percent);no parameter;"rounding of proportion (for future values; scenarios): comparison to previous scenarios by age"
 birth;bir_age_begin;geb.alter.beginn;15;15;15;year;no parameter (strictly speaking);fertility rate: fertile age (fixed expression): begin
 birth;bir_age_end;geb.alter.ende;49;49;49;year;no parameter (strictly speaking);fertility rate: fertile age (fixed expression): end
 birth;bir_thres_origin;geb.anz.rate.heimat;100;100;100;persons;low;"age distribution of women (population): if there are less women than this threshold in the tails (cumulative measure), then the rate based on origin (but not district) is used.
@@ -154,20 +157,20 @@ naturalization;nat_factor_thres;no parameter in previous model;0.5;0.5;0.5;natur
 naturalization;nat_factor_value;no parameter in previous model;0;0;0;no unit;low;value of the trend factor, if the naturalization rate is below nat_factor_thres
 naturalization;nat_rate_span_dyas;similar to brw.window.alter;0.1;0.1;0.1;no unit;low;"proportion of data points used in the LOESS regressions of the rate by age; groups: district, year, sex"
 capacity and reserves;car_sc;kareb.vf;25;25;25;percent;medium;"Proportion of staircases; for the conversion from total area to living area."
-capacity and reserves;car_resi;kareb.wohnant;-25;0;25;percent;high;Residence portion ('slider'): -100% = minimum residential share according to the building regulation (BZO), 0% = real residential share, +100% = maximum residential share according to building regulation.
+capacity and reserves;car_resi;kareb.wohnant;-30;10;50;percent;high;Residence portion ('slider'): -100% = minimum residential share according to the building regulation (BZO), 0% = real residential share, +100% = maximum residential share according to building regulation.
 capacity and reserves;car_plot;kareb.areal;0;50;100;percent;high;"Proportion of plot construction ('slider'); 0% = without plot construction, 100% = with plot construction"
 capacity and reserves;car_uti_input;no parameter in previous model;85;85;85;percent;high;degree of utilization used to calculate the input data
-capacity and reserves;car_uti;kareb.ausbau;75;85;90;percent;high;"degree of utilization; linear influence on the capacity"
+capacity and reserves;car_uti;kareb.ausbau;75;85;95;percent;high;"degree of utilization; linear influence on the capacity"
 capacity and reserves;car_pp;kareb.ina.prozentpunkte;0;0;0;percent points;medium;usage: less or more percentage points (parameter between -100 and +100)
 capacity and reserves;car_y;kareb.ina.jahr;2047;2047;2047;year;low;Reference year of the usage values
 capacity and reserves;car_lambda;kareb.ina.lambda;-0.04;-0.04;-0.04;per year;high;"lambda value of an exponential function exp(lambda * time since start of scenario); proportion of utilization per year"
 living space;spa_apart;wf.anzwohn;500;500;500;apartments;low;"Amount of apartments per district and owner; if less apartments, then the value of the entire city (by owner) is used"
-living space;spa_prop_trend;wf.anteil.trend;20;20;20;percent;low;"living space: trend in addition to the mean; 20% means, 20% of the difference between trend and mean is added to the mean."
+living space;spa_prop_trend;wf.anteil.trend;0;20;50;percent;high;"living space: trend in addition to the mean; 20% means, 20% of the difference between trend and mean is added to the mean."
 living space;spa_thres_percent;wf.grenze.prozent;20;20;20;percent;low;"living space: It is not realistic that the living space changes dramatically (i.e. tenfold increase). Therefore, this threshold regulates the range of potential changes (change in percent of mean; e.g. +/- 20%)."
 living space;spa_window_thres;wf.window.szen;7;7;7;years;low;living space: filter over years (to smooth a potential break in the curve due to range of future proportions
 living space;spa_prop_trend_52p;no parameter in previous model;0;0;0;percent;low;"living space in the Escher Wyss district (district-ID = 52): trend in addition to the mean; 20% means, 20% of the difference between trend and mean is added to the mean."
 allocation;aca_apart;bq.anzwohn;500;500;500;apartments;low;"Amount of apartments per district and owner; if less apartments, then the value of the entire city (by owner) is used"
-allocation;aca_prop_trend;bq.anteil.trend;20;20;20;percent;low;"allocation: trend in addition to the mean; 20% means, 20% of the difference between trend and mean is added to the mean."
+allocation;aca_prop_trend;bq.anteil.trend;0;20;50;percent;high;"allocation: trend in addition to the mean; 20% means, 20% of the difference between trend and mean is added to the mean."
 allocation;aca_thres_percent;bq.grenze.prozent;20;20;20;percent;low;"allocation: It is not realistic that the allocation values change dramatically (i.e. tenfold ncrease). Therefore, this threshold regulates the range of potential changes (change in percent of mean; e.g. +/- 20%)."
 allocation;aca_window_thres;bq.window.szen;7;7;7;years;low;allocation: filter over years (to smooth a potential break in the curve due to range of future proportions
 allocation;aca_prop_trend_52p;no parameter in previous model;0;0;0;percent;low;"allocation in the Escher Wyss district (district-ID = 52): trend in addition to the mean; 20% means, 20% of the difference between trend and mean is added to the mean."
@@ -189,7 +192,7 @@ ownership;own_lower_thres;no parameter in previous model;0;0;0;percent;no parame
 ownership;own_upper_thres;no parameter in previous model;100;100;100;percent;no parameter;ownership: lower threshold for the proportions (here: the proportions should not be more than 100 percent), NA if there is no lower threshold
 housing model;car_coop;similar to wohn.modell.typ;100;100;100;percent;low;Percentage of cooperative housing can be used from capacity/reserves (car_coop = 100), or from the trends in the districts (car_coop = 0) or a mixture of both data sources. In other words: car_coop = percentage used from capacity/reserves.
 housing model;car_trust;no parameter in previous model;0;0;0;percent;high;If the amount of people according to the project list exceeds the population (in a given year!) according to capacity/reserves: trust the capacity/reserves number (parameter = 100%)? Or the project list (parameter = 0%)?
-housing model;car_max_trust;no parameter in previous model;100;100;100;percent;high;If the amount of people exceeds the maximum (over all years!) according to capacity/reserves: trust the capacity/reserves populatin (parameter = 100%)? Or the calculated population (parameter = 0%)? Idea: not more people than population according to reserves usage
+housing model;car_max_trust;no parameter in previous model;100;100;100;percent;high;If the amount of people exceeds the maximum (over all years!) according to capacity/reserves: trust the capacity/reserves population (parameter = 100%)? Or the calculated population (parameter = 0%)? Idea: not more people than population according to reserves usage
 housing model;empty_coop;similar to wohn.modell.anteil.leerwhg;0;0;0;percent;low;Percentage of empty apartments: cooperative housing
 housing model;empty_private;similar to wohn.modell.anteil.leerwhg;0;0;0;percent;low;Percentage of empty apartments: private housing
 demography and housing model;less_ims;similar to mod.ant.zuz (in the previous model only one parameter for both situations: less or more living space available);75;75;75;percent;high;less living space available (according to reserves, compared to trend calcuation). Then immigration* is decreased, and emigration* increased. This parameter determines how much of the difference is compensated by changes of immigration* (the remainder is corrected with emigration*)

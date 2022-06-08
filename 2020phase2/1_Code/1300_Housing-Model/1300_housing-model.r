@@ -270,7 +270,7 @@ project_reserves <- function(x, ...) {
     x$corr[i] <- max(0, x$pop[i] - x$car[i])
 
     # correction (proportional to the reserve usage)
-     
+
     if (i < nrow(x)) {
       index <- (i + 1):nrow(x)
       x$subtract <- 0
@@ -284,10 +284,10 @@ project_reserves <- function(x, ...) {
 
       # subtract (usage per year, and cumulative usage plus population)
       x$usage[index] <- pmax(0, x$usage[index] - x$subtract[index])
-      
+
       # new reserves value based on corrected usage
       x$car[i+1] <- pmax(0, x$pop[i] + x$usage[i+1])
-      
+
     }
 
     # end of the loop over years

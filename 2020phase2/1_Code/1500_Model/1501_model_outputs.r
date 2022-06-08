@@ -246,14 +246,32 @@ y_sel2 <- c(date_end, rev(seq(scen_end, scen_begin, by = -10)))
 pop_yc <- pop %>%
   group_by(year, scenario) %>%
   summarize(pop = sum(pop),
-            .groups = "drop")
+            .groups = "drop") %>% 
+  filter(year <= scen_end_public)
 
 sszplot(pop_yc,
   aes_x = "year", aes_y = "pop", aes_col = "scenario",
   labs_y = "population",
   scale_y = c(0, NA),
+  width = 7, height = 4,
   name = "1500_pop_yc"
 )
+
+# text to plot
+text_yc <- pop_yc %>% 
+  filter(year %in% c(date_end, scen_end_public)) %>% 
+  mutate(cat = if_else(year == date_end, "begin", "end")) %>% 
+  pivot_wider(names_from = "cat", values_from = "pop") %>% 
+  fill(begin) %>% 
+  filter(year == scen_end_public) %>% 
+  mutate(end_round = round(end / round_people_scen) * round_people_scen,
+         delta = end - begin,
+         delta_round = round(delta / round_people_scen) * round_people_scen, 
+         text = paste0(scenario, " scenario: ", end_round, " (", delta_round, ")"),
+         plot = "1500") %>% 
+  arrange(desc(scenario)) %>% 
+  select(plot, text)
+
 
 # yas
 pop_yas <- pop %>%
@@ -279,6 +297,34 @@ sszplot(pop_yas,
   width = 6, height = 6,
   name = "1501_pop_yas"
 )
+
+# text to plot
+text_pop_yas <- pop_yas %>% 
+  left_join(look_a3, by = "age") %>%   
+  rename(age_class = age_3) %>% 
+  mutate(age_class = factor(if_else(age_class %in% c("80-89", "90+"), "80+", 
+                                    as.character(age_class)))) %>% 
+  filter(year %in% c(date_end, scen_end_public)) %>% 
+  group_by(year, age_class) %>% 
+    summarize(pop = sum_NA(pop), 
+              .groups = "drop") %>% 
+  mutate(cat = if_else(year == date_end, "begin", "end")) %>% 
+  pivot_wider(names_from = "cat", values_from = "pop") %>% 
+  arrange(age_class, year) %>% 
+  fill(begin) %>% 
+  filter(year == scen_end_public) %>% 
+  mutate(delta = end - begin, 
+         percent = (delta) / begin * 100, 
+         delta_round = round(delta / round_people_scen) * round_people_scen,         
+         percent_round = round(percent, round_prop_scen),
+         text = paste0(age_class, ": ", delta_round, " (", percent_round, "%)"),
+         plot = "1501") %>% 
+  select(plot, text)
+  
+  
+  
+
+
 
 # dy
 pop_dy <- pop %>%
@@ -384,7 +430,6 @@ sszplot(pop_dyas,
 )
 
 # dy: plot for slides
-
 pop_dy %>% 
   filter(year %in% c(date_end, scen_end_public)) %>% 
   mutate(year_text = paste0("year:", year)) %>% 
@@ -392,11 +437,45 @@ pop_dy %>%
     aes_x = "district", aes_y = "pop", aes_fill = "year_text",
     geom = "col",
     labs_x = "", labs_y = "people",
-    scale_x = rev(uni_d),
+    scale_x = uni_d,
     angle = 90,
     name = "1508_pop_dy_selected-years",
-    width = 8, height = 10
+    width = 9, height = 5
   )
+
+
+# text to plot
+# WHY preparation (and not directly piped)? data used for the map (see below)
+text_pop_dy_prep <- pop_dy %>% 
+  filter(year %in% c(date_end, scen_end_public)) %>% 
+  mutate(cat = if_else(year == date_end, "begin", "end")) %>% 
+  pivot_wider(names_from = "cat", values_from = "pop") %>% 
+  fill(begin) %>% 
+  filter(year == scen_end_public) %>% 
+  mutate(delta = end - begin,
+         percent = delta / begin * 100, 
+         delta_round = round(delta / round_people_scen) * round_people_scen,
+         percent_round = round(percent, round_prop_scen), 
+         text = paste0(district, ": ", delta_round, " (", percent_round, "%)"),
+         plot = "1508") 
+  
+text_pop_dy <- text_pop_dy_prep %>% 
+  arrange(desc(delta_round)) %>% 
+  select(plot, text)
+
+# data for map
+# WHY a lookup table? to get the district number
+lookup_map <- look_dis %>% 
+    mutate(QuarCd = if_else(distr == "Kreis 1", "010", QuarCd),
+           QuarSort = as.numeric(QuarCd)) %>% 
+    rename(district = distr) %>% 
+    distinct()
+
+text_pop_dy_prep %>% 
+  left_join(lookup_map, by = "district") %>% 
+  mutate(percent_text = paste0(percent_round, "%")) %>% 
+  select(QuarSort, district, percent_round, percent_text) %>% 
+  write_csv(paste0(out_path, "/map_pop_dy.csv"))  
 
 
 # dyc
@@ -439,8 +518,24 @@ sszplot(pop_yc_new_prev,
   aes_col = "scenario", aes_ltyp = "cat",
   labs_y = "population",
   scale_y = c(0, NA),
+  width = 9, height = 5.5,  
   name = "1510_pop_new-prev_yc"
 )
+
+# text to plot
+text_yc_new_prev <- pop_yc_new_prev %>% 
+  filter(year == scen_end_public) %>% 
+  pivot_wider(names_from = "cat", values_from = "pop") %>% 
+  mutate(diff = new - previous,
+    previous_round = round(previous / round_people_scen) * round_people_scen,
+    new_round = round(new / round_people_scen) * round_people_scen,
+    diff_round = round(diff / round_people_scen) * round_people_scen,          
+    text = paste0(scenario, " scenario: ", previous_round, " (", scen_begin-1, "), ", 
+                  new_round, " (", scen_begin, ", ", diff_round, ")"),
+    plot = "1510") %>% 
+  arrange(desc(scenario)) %>% 
+  select(plot, text)
+
 
 # age: 80plus, by yso 
 pop_80p_new <- pop_middle %>%
@@ -527,9 +622,20 @@ sszplot(pop_age_new_prev,
   labs_y = "people",
   wrap = "age_class", ncol = 3,  
   scale_y = c(0, NA),
-  width = 10, height = 8,
+  width = 8, height = 5,
   name = "1513_pop_new_prev_a"
 )
+
+# text to plot
+text_pop_age_new_prev <- pop_age_new_prev %>% 
+  filter(year == scen_end_public) %>%
+  pivot_wider(names_from = "cat", values_from = "pop") %>%  
+  mutate(percent = (new - previous) / previous * 100, 
+    percent_round = round(percent, round_prop_scen_a),
+    text = paste0(age_class, ": ", percent_round, "%"), 
+    plot = "1513") %>%
+  select(plot, text)
+
 
 pop_age_new_prev %>% 
   filter(age_class %in% c("0-9", "10-19")) %>% 
@@ -568,16 +674,21 @@ pop_dy_prev_sel <- sce %>%
               .groups = "drop") %>%
   mutate(cat = paste0(scen_end_public, " (previous)"))
 
+levels_cate <- c(paste0(date_end, " (past)"), 
+                 paste0(scen_end_public, " (previous)"),                  
+                 paste0(scen_end_public, " (new)")) 
+         
 pop_dy_new_sel %>%
   bind_rows(pop_dy_prev_sel) %>% 
+  mutate(cat = factor(cat, levels = levels_cate)) %>% 
   sszplot(
     aes_x = "district", aes_y = "pop", aes_fill = "cat",
     geom = "col",
     labs_x = "", labs_y = "people",
-    scale_x = rev(uni_d),
+    scale_x = uni_d,
     angle = 90,
     name = "1516_pop_new_prev_dy",
-    width = 8, height = 10
+    width = 9, height = 5
   )
 
 
@@ -1078,3 +1189,16 @@ sszplot(rel_yct,
   quotes = quote(scale_linetype_manual(values = c("dashed", "solid", "dotted"))),
   name = "1580_rel_yct"
 )
+
+
+
+# text of the plots (for presentations, slides) ---------------------------
+
+text_yc %>% 
+  bind_rows(text_yc_new_prev) %>% 
+  bind_rows(text_pop_dy) %>%   
+  bind_rows(text_pop_yas) %>%  
+  bind_rows(text_pop_age_new_prev) %>%    
+  write_csv(paste0(out_path, "/text_plots.csv"))  
+
+
