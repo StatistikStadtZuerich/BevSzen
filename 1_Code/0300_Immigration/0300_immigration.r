@@ -6,11 +6,7 @@
 
 # general functions already available?
 if (!exists("para")) {
-
-  # working directory
-  library(here)
-  setwd(paste0(here(), "/2020phase2/"))
-
+  
   # general functions (without dependence on parameters)
   source("1_Code/0000_General/0002_general_without-parameters.r")
 

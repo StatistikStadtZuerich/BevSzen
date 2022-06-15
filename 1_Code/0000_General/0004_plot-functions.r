@@ -2,7 +2,7 @@
 # generic plot function
 # kind of a ggplot wrapper to obtain similar and uniform plots with less code
 
-# @params: test
+#' @params:
 # data: main tibble
 # geom: a char vector with the names of the desired geom. Default is geom_line.
 #       if "", then geom must be defined in quotes parameter (see below)
@@ -579,7 +579,4 @@ sszplot <- function(data,
     }
   }
 
-
-  # TODO:
-  #     simple long format function?
 }

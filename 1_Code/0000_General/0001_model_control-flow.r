@@ -5,21 +5,11 @@
 
 # paths, parameters, functions --------------------------------------------
 
-# remove previous objects
-rm(list = ls())
-
-# working directory
-library(here)
-setwd(paste0(here(), "/2020phase2/"))
-
 # general functions without dependence on parameters
 source("1_Code/0000_General/0002_general_without-parameters.r")
 
 
-
-# source the code files ---------------------------------------------------
-
-# function for different scenarios and modules
+# function run_scen() for different scenarios and modules
 
 # possible values
 
@@ -49,9 +39,6 @@ source("1_Code/0000_General/0002_general_without-parameters.r")
 #   out (model outputs)
 # how (housing without output: hom, hou, deh)
 # alw (all without output: since 'out' needs lower/middle/upper scenario)
-
-
-
 
 run_scen <- function(scenarios, modules) {
 
