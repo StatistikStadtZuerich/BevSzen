@@ -50,6 +50,15 @@ max_NA <- function(x) {
 
 # cat to log file
 cat_log <- function(...) {
+  sub_path <- regmatches(
+    log_file,
+    regexpr(".*[\\/]", log_file)
+  )
+  if (!dir.exists(sub_path)) {
+    dir.create(sub_path, recursive = TRUE
+    )
+  }
+  
   cat(...,
     file = log_file, sep = "\n", append = TRUE
   )

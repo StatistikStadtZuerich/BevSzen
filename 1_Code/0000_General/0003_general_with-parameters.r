@@ -11,12 +11,20 @@ if (exists("i_scen")) {
 } else {
   res_path <- "3_Results/"
 }
+if (!dir.exists(res_path)) {
+  dir.create(res_path, recursive = TRUE
+  )
+}
 
 # path for exports (rates)
 if (exists("i_scen")) {
   exp_path <- paste0(data_path, "4_Rates/", i_scen, "/")
 } else {
   exp_path <- paste0(data_path, "4_Rates/")
+}
+if (!dir.exists(exp_path)) {
+  dir.create(exp_path, recursive = TRUE
+  )
 }
 
 # path for outputs (future: population and demographic processes)
@@ -25,7 +33,10 @@ if (exists("i_scen")) {
 } else {
   out_path <- paste0(data_path, "5_Outputs/")
 }
-
+if (!dir.exists(out_path)) {
+  dir.create(out_path, recursive = TRUE
+  )
+}
 
 
 # unique levels -----------------------------------------------------------

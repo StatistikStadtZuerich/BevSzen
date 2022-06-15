@@ -43,7 +43,8 @@ source("1_Code/0000_General/0002_general_without-parameters.r")
 run_scen <- function(scenarios, modules) {
 
   # start with a new log file (delete the previous file)
-  file.remove(log_file)
+  if (file.exists(log_file))
+    file.remove(log_file)
 
   # different scenarios
   for (i_scen in scenarios) {
@@ -161,7 +162,7 @@ time_start <- Sys.time()
 
 run_scen(
     scenarios = c("lower", "middle", "upper"),
-    modules = c("alw"))
+    modules = c("all"))
 
 # run_scen(
 #     scenarios = c("lower", "middle", "upper"),
