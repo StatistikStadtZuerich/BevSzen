@@ -1,6 +1,8 @@
 # header -------------------------------------------------------------------
 # prepare data for csv output files which are later loaded into a DWH
 
+
+# prep work ---------------------------------------------------------------
 source("1_Code/0000_General/0002_general_without-parameters.r")
 
 scen_begin <- para$middle[para$parameter == "scen_begin"]
@@ -17,18 +19,18 @@ files <- paste0(paste0(data_path, "5_Outputs/"),
                 list.files(path = paste0(data_path, "5_Outputs/"), recursive = TRUE))
 
 # read birth data and adapt structure
+read_files <- files[str_detect(files, "births_future")]
 births <-
   # lower scenario
-  read_csv(files[str_detect(files, "births_future")][1]) %>%
+  read_csv(read_files[1], lazy = FALSE) %>%
   mutate(VersionArtCd = 1) %>%
   # middle scenario
-  bind_rows(read_csv(files[str_detect(files, "births_future")][2]) %>%
+  bind_rows(read_csv(read_files[2], lazy = FALSE) %>%
     mutate(VersionArtCd = 2)) %>%
   # upper scenario
-  bind_rows(read_csv(files[str_detect(files, "births_future")][3]) %>%
+  bind_rows(read_csv(read_files[3], lazy = FALSE) %>%
     mutate(VersionArtCd = 3)) %>%
-  mutate(PublJahr = scen_begin, 
-         BasisSzenarienCd = 2, 
+  mutate(BasisSzenarienCd = 2, 
          AlterVCd = 0) %>%
   # get codes instead of text
   left_join(tibble(sex = levels(uni_s),
@@ -37,32 +39,33 @@ births <-
                    HerkunftCd = as.numeric(labels(uni_o)))) %>%
   rename("Jahr" = year,
          "AnzGebuWir" = bir) %>%
-  # join with past data
-  bind_rows(read_csv(bir_od) %>%
+  # add past data
+  bind_rows(read_csv(bir_od, lazy = FALSE) %>%
             left_join(look_dis, by = "QuarCd") %>%
             rename("Jahr" = EreignisDatJahr,
                    "district" = distr) %>%
-            mutate(PublJahr = scen_begin,
-                   BasisSzenarienCd = 1,
+            mutate(BasisSzenarienCd = 1,
                    AlterVCd = 0,
                    VersionArtCd = 1)
   ) %>%
+  mutate(PublJahr = scen_begin) %>%
   select(Jahr, PublJahr, BasisSzenarienCd, VersionArtCd, AlterVCd, SexCd,
-         HerkunftCd, district, AnzGebuWir)
+         HerkunftCd, district, AnzGebuWir) %>%
+
 
 # read population data and adapt structure
+read_files <- files[str_detect(files, "population_future")]
 pop <-
   # lower scenario
-  read_csv(files[str_detect(files, "population_future")][1]) %>%
+  read_csv(read_files[1], lazy = FALSE) %>%
   mutate(VersionArtCd = 1) %>%
   # middle scenario
-  bind_rows(read_csv(files[str_detect(files, "population_future")][2]) %>%
+  bind_rows(read_csv(read_files[2], lazy = FALSE) %>%
     mutate(VersionArtCd = 2)) %>%
   # upper scenario
-  bind_rows(read_csv(files[str_detect(files, "population_future")][3]) %>%
+  bind_rows(read_csv(read_files[3], lazy = FALSE) %>%
     mutate(VersionArtCd = 3)) %>%
-  mutate(PublJahr = scen_begin,
-         BasisSzenarienCd = 2) %>%
+  mutate(BasisSzenarienCd = 2) %>%
   # get codes instead of text
   left_join(tibble(sex = levels(uni_s),
                    SexCd = as.numeric(labels(uni_s)))) %>%
@@ -71,32 +74,32 @@ pop <-
   rename("Jahr" = year, 
          "AnzBestWir" = pop,
          "AlterVCd" = age) %>%
-  # join with past data
-  bind_rows(read_csv(pop_od) %>%
+  # add past data
+  bind_rows(read_csv(pop_od, lazy = FALSE) %>%
               left_join(look_dis, by = "QuarCd") %>%
               rename("Jahr" = StichtagDatJahr,
                      "district" = distr) %>%
-              mutate(PublJahr = scen_begin,
-                     BasisSzenarienCd = 1,
+              mutate(BasisSzenarienCd = 1,
                      VersionArtCd = 1)
   ) %>%
+  mutate(PublJahr = scen_begin) %>%
   select(Jahr, PublJahr, BasisSzenarienCd, VersionArtCd, AlterVCd, SexCd, 
          HerkunftCd, district, AnzBestWir)
 
 
 # read naturalization data and adapt structure
+read_files <- files[str_detect(files, "naturalization_future")]
 nat <-
   # lower scenario
-  read_csv(files[str_detect(files, "naturalization_future")][1]) %>%
+  read_csv(read_files[1], lazy = FALSE) %>%
   mutate(VersionArtCd = 1) %>%
   # middle scenario
-  bind_rows(read_csv(files[str_detect(files, "naturalization_future")][2]) %>%
+  bind_rows(read_csv(read_files[2], lazy = FALSE) %>%
     mutate(VersionArtCd = 2)) %>%
   # upper scenario
-  bind_rows(read_csv(files[str_detect(files, "naturalization_future")][3]) %>%
+  bind_rows(read_csv(read_files[3], lazy = FALSE) %>%
     mutate(VersionArtCd = 3)) %>%
-  mutate(PublJahr = scen_begin, 
-         BasisSzenarienCd = 2, 
+  mutate(BasisSzenarienCd = 2, 
          HerkunftCd = 1) %>%
   # get codes instead of text
   left_join(tibble(sex = levels(uni_s),
@@ -104,33 +107,33 @@ nat <-
   rename("Jahr" = year, 
          "AnzEinbWir" = nat,
          "AlterVCd" = age) %>% 
-  # join with past data
-  bind_rows(read_csv(nat_od) %>%
+  # add past data
+  bind_rows(read_csv(nat_od, lazy = FALSE) %>%
             filter((HerkunftBisherCd == 2) & (HerkunftCd == 1)) %>%
             left_join(look_dis, by = "QuarCd") %>%
             rename("Jahr" = EreignisDatJahr,
                    "district" = distr) %>%
-            mutate(PublJahr = scen_begin,
-                   BasisSzenarienCd = 1,
+            mutate(BasisSzenarienCd = 1,
                    VersionArtCd = 1)
 ) %>%
+  mutate(PublJahr = scen_begin) %>%
   select(Jahr, PublJahr, BasisSzenarienCd, VersionArtCd, AlterVCd, SexCd, 
          HerkunftCd, district, AnzEinbWir)
 
 
 # read demographic data and adapt structure
+read_files <- files[str_detect(files, "demographic")]
 demo <-
   # lower scenario
-  read_csv(files[str_detect(files, "demographic")][1]) %>%
+  read_csv(read_files[1], lazy = FALSE) %>%
   mutate(VersionArtCd = 1) %>%
   # middle scenario
-  bind_rows(read_csv(files[str_detect(files, "demographic")][2]) %>%
+  bind_rows(read_csv(read_files[2], lazy = FALSE) %>%
     mutate(VersionArtCd = 2)) %>%
   # upper scenario
-  bind_rows(read_csv(files[str_detect(files, "demographic")][3]) %>%
+  bind_rows(read_csv(read_files[3], lazy = FALSE) %>%
     mutate(VersionArtCd = 3)) %>%
-  mutate(PublJahr = scen_begin, 
-         BasisSzenarienCd = 2) %>%
+  mutate(BasisSzenarienCd = 2) %>%
   # get codes instead of text
   left_join(tibble(sex = levels(uni_s),
                    SexCd = as.numeric(labels(uni_s)))) %>%
@@ -142,70 +145,51 @@ demo <-
          "AnzUmzuWir" = rei, 
          "AnzSterWir" = dea,
          "AlterVCd" = age)  %>%
-  # join with past data
+  # add past data
   # death
-  bind_rows(read_csv(dea_od) %>%
+  bind_rows(read_csv(dea_od, lazy = FALSE) %>%
               left_join(look_dis, by = "QuarCd") %>%
               rename("Jahr" = EreignisDatJahr,
                      "district" = distr) %>%
-              mutate(PublJahr = scen_begin,
-                     BasisSzenarienCd = 1,
+              mutate(BasisSzenarienCd = 1,
                      VersionArtCd = 1)
   ) %>%  
   # immigration
-  bind_rows(read_csv(imm_od) %>%
+  bind_rows(read_csv(imm_od, lazy = FALSE) %>%
             left_join(look_dis, by = "QuarCd") %>%
             rename("Jahr" = EreignisDatJahr,
                    "district" = distr) %>%
-            mutate(PublJahr = scen_begin,
-                   BasisSzenarienCd = 1,
+            mutate(BasisSzenarienCd = 1,
                    VersionArtCd = 1)
             ) %>%
   # emigration
-  bind_rows(read_csv(imm_od) %>%
+  bind_rows(read_csv(imm_od, lazy = FALSE) %>%
               left_join(look_dis, by = "QuarCd") %>%
               rename("Jahr" = EreignisDatJahr,
                      "district" = distr) %>%
-              mutate(PublJahr = scen_begin,
-                     BasisSzenarienCd = 1,
+              mutate(BasisSzenarienCd = 1,
                      VersionArtCd = 1)
   ) %>%
   # relocation
-  bind_rows(read_csv(imm_od) %>%
+  bind_rows(read_csv(imm_od, lazy = FALSE) %>%
               left_join(look_dis, by = "QuarCd") %>%
               rename("Jahr" = EreignisDatJahr,
                      "district" = distr) %>%
-              mutate(PublJahr = scen_begin,
-                     BasisSzenarienCd = 1,
+              mutate(BasisSzenarienCd = 1,
                      VersionArtCd = 1)
   ) %>%
+  mutate(PublJahr = scen_begin) %>%
   select(Jahr, PublJahr, BasisSzenarienCd, VersionArtCd, AlterVCd, SexCd, 
          HerkunftCd, district, AnzZuzuWir, AnzWezuWir, AnzUmzuWir, AnzSterWir)
 
 
 # join the relevant data, change char to codes, write output file
 pop %>%
-  full_join(demo, 
-            by = c("Jahr", "PublJahr", "BasisSzenarienCd", "VersionArtCd", "AlterVCd",
-                   "SexCd", "HerkunftCd", "district")) %>%
-  full_join(nat, 
-            by = c("Jahr", "PublJahr", "BasisSzenarienCd", "VersionArtCd", "AlterVCd", 
-                   "SexCd", "HerkunftCd", "district")) %>%
-  full_join(births, 
-            by = c("Jahr", "PublJahr", "BasisSzenarienCd", "VersionArtCd", "AlterVCd",
-                   "SexCd", "HerkunftCd", "district")) %>%
+  full_join(demo) %>%
+  full_join(nat) %>%
+  full_join(births) %>%
   left_join(look_reg, by = c("district")) %>%
-  mutate(
-    SexCd = case_when(
-      SexCd == "male" ~ 1,
-      SexCd == "female" ~ 2
-    ),
-    HerkunftCd = case_when(
-      HerkunftCd == "Swiss" ~ 1,
-      HerkunftCd == "foreign" ~ 2
-    ),
-    QuarCd = distnum
-  ) %>%
+  mutate(QuarCd = distnum) %>%
   select(
     Jahr, PublJahr, BasisSzenarienCd, VersionArtCd, AlterVCd, SexCd, HerkunftCd, QuarCd,
     AnzBestWir, AnzGebuWir, AnzZuzuWir, AnzWezuWir, AnzUmzuWir, AnzEinbWir, AnzSterWir
@@ -215,7 +199,7 @@ pop %>%
 
 # capacity and reserves ---------------------------------------------------
 
-read_csv("2_Data/1_Input/KaReB.csv") %>%
+read_csv("2_Data/1_Input/KaReB.csv", lazy = FALSE) %>%
   pivot_longer(
     cols = c("Kapazitaet", "Bestand", "Reserve", "Inanspruchnahme"),
     names_to = "BereichCd",
