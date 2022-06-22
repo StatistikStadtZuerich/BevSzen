@@ -46,11 +46,14 @@ births <-
                    "district" = distr) %>%
             mutate(BasisSzenarienCd = 1,
                    AlterVCd = 0,
-                   VersionArtCd = 1)
+                   VersionArtCd = 1) %>%
+            group_by(Jahr, BasisSzenarienCd, VersionArtCd, SexCd, 
+                       HerkunftCd, district) %>%
+            summarize(AnzGebuWir = sum(AnzGebuWir),
+                        .groups = "drop")
   ) %>%
-  mutate(PublJahr = scen_begin) %>%
-  select(Jahr, PublJahr, BasisSzenarienCd, VersionArtCd, AlterVCd, SexCd,
-         HerkunftCd, district, AnzGebuWir) %>%
+  select(Jahr, BasisSzenarienCd, VersionArtCd, AlterVCd, SexCd,
+         HerkunftCd, district, AnzGebuWir)
 
 
 # read population data and adapt structure
@@ -80,10 +83,13 @@ pop <-
               rename("Jahr" = StichtagDatJahr,
                      "district" = distr) %>%
               mutate(BasisSzenarienCd = 1,
-                     VersionArtCd = 1)
+                     VersionArtCd = 1) %>%
+              group_by(Jahr, BasisSzenarienCd, VersionArtCd, AlterVCd, SexCd, 
+                       HerkunftCd, district) %>%
+              summarize(AnzBestWir = sum(AnzBestWir),
+                        .groups = "drop")
   ) %>%
-  mutate(PublJahr = scen_begin) %>%
-  select(Jahr, PublJahr, BasisSzenarienCd, VersionArtCd, AlterVCd, SexCd, 
+  select(Jahr, BasisSzenarienCd, VersionArtCd, AlterVCd, SexCd, 
          HerkunftCd, district, AnzBestWir)
 
 
@@ -109,15 +115,14 @@ nat <-
          "AlterVCd" = age) %>% 
   # add past data
   bind_rows(read_csv(nat_od, lazy = FALSE) %>%
-            filter((HerkunftBisherCd == 2) & (HerkunftCd == 1)) %>%
-            left_join(look_dis, by = "QuarCd") %>%
-            rename("Jahr" = EreignisDatJahr,
+              filter((HerkunftBisherCd == 2) & (HerkunftCd == 1)) %>%
+              left_join(look_dis, by = "QuarCd") %>%
+              rename("Jahr" = EreignisDatJahr,
                    "district" = distr) %>%
-            mutate(BasisSzenarienCd = 1,
+              mutate(BasisSzenarienCd = 1,
                    VersionArtCd = 1)
 ) %>%
-  mutate(PublJahr = scen_begin) %>%
-  select(Jahr, PublJahr, BasisSzenarienCd, VersionArtCd, AlterVCd, SexCd, 
+  select(Jahr, BasisSzenarienCd, VersionArtCd, AlterVCd, SexCd, 
          HerkunftCd, district, AnzEinbWir)
 
 
@@ -152,44 +157,60 @@ demo <-
               rename("Jahr" = EreignisDatJahr,
                      "district" = distr) %>%
               mutate(BasisSzenarienCd = 1,
-                     VersionArtCd = 1)
+                     VersionArtCd = 1) %>%
+              group_by(Jahr, BasisSzenarienCd, VersionArtCd, AlterVCd, SexCd, 
+                       HerkunftCd, district) %>%
+              summarize(AnzSterWir = sum(AnzSterWir),
+                        .groups = "drop")
   ) %>%  
   # immigration
   bind_rows(read_csv(imm_od, lazy = FALSE) %>%
-            left_join(look_dis, by = "QuarCd") %>%
-            rename("Jahr" = EreignisDatJahr,
+              left_join(look_dis, by = "QuarCd") %>%
+              rename("Jahr" = EreignisDatJahr,
                    "district" = distr) %>%
-            mutate(BasisSzenarienCd = 1,
-                   VersionArtCd = 1)
+              mutate(BasisSzenarienCd = 1,
+                   VersionArtCd = 1) %>%
+              group_by(Jahr, BasisSzenarienCd, VersionArtCd, AlterVCd, SexCd, 
+                       HerkunftCd, district) %>%
+              summarize(AnzZuzuWir = sum(AnzZuzuWir),
+                        .groups = "drop")
             ) %>%
   # emigration
-  bind_rows(read_csv(imm_od, lazy = FALSE) %>%
+  bind_rows(read_csv(emi_od, lazy = FALSE) %>%
               left_join(look_dis, by = "QuarCd") %>%
               rename("Jahr" = EreignisDatJahr,
                      "district" = distr) %>%
               mutate(BasisSzenarienCd = 1,
-                     VersionArtCd = 1)
+                     VersionArtCd = 1) %>%
+              group_by(Jahr, BasisSzenarienCd, VersionArtCd, AlterVCd, SexCd, 
+                       HerkunftCd, district) %>%
+              summarize(AnzWezuWir = sum(AnzWezuWir),
+                        .groups = "drop")
   ) %>%
   # relocation
-  bind_rows(read_csv(imm_od, lazy = FALSE) %>%
+  bind_rows(read_csv(rel_od, lazy = FALSE) %>%
               left_join(look_dis, by = "QuarCd") %>%
               rename("Jahr" = EreignisDatJahr,
                      "district" = distr) %>%
               mutate(BasisSzenarienCd = 1,
-                     VersionArtCd = 1)
+                     VersionArtCd = 1) %>%
+              group_by(Jahr, BasisSzenarienCd, VersionArtCd, AlterVCd, SexCd, 
+                       HerkunftCd, district) %>%
+              summarize(AnzUmzuWir = sum(AnzUmzuWir),
+                        .groups = "drop")
   ) %>%
-  mutate(PublJahr = scen_begin) %>%
-  select(Jahr, PublJahr, BasisSzenarienCd, VersionArtCd, AlterVCd, SexCd, 
+  select(Jahr, BasisSzenarienCd, VersionArtCd, AlterVCd, SexCd, 
          HerkunftCd, district, AnzZuzuWir, AnzWezuWir, AnzUmzuWir, AnzSterWir)
 
 
-# join the relevant data, change char to codes, write output file
+# join the relevant data, write output file
 pop %>%
   full_join(demo) %>%
   full_join(nat) %>%
   full_join(births) %>%
   left_join(look_reg, by = c("district")) %>%
-  mutate(QuarCd = distnum) %>%
+  mutate(QuarCd = distnum,
+         PublJahr = scen_begin) %>%
   select(
     Jahr, PublJahr, BasisSzenarienCd, VersionArtCd, AlterVCd, SexCd, HerkunftCd, QuarCd,
     AnzBestWir, AnzGebuWir, AnzZuzuWir, AnzWezuWir, AnzUmzuWir, AnzEinbWir, AnzSterWir
