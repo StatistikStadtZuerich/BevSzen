@@ -5,34 +5,28 @@
 
 # paths -------------------------------------------------------------------
 
+# generic results are saved in middle scenario
+if (!exists("i_scen")) i_scen <- "middle"
+
 # path for results (graphics)
-if (exists("i_scen")) {
-  res_path <- paste0("3_Results/", i_scen, "/")
-} else {
-  res_path <- "3_Results/"
-}
+res_path <- paste0("3_Results/", i_scen, "/")
+
 if (!dir.exists(res_path)) {
   dir.create(res_path, recursive = TRUE
   )
 }
 
 # path for exports (rates)
-if (exists("i_scen")) {
-  exp_path <- paste0(data_path, "4_Rates/", i_scen, "/")
-} else {
-  exp_path <- paste0(data_path, "4_Rates/")
-}
+exp_path <- paste0(data_path, "4_Rates/", i_scen, "/")
+
 if (!dir.exists(exp_path)) {
   dir.create(exp_path, recursive = TRUE
   )
 }
 
 # path for outputs (future: population and demographic processes)
-if (exists("i_scen")) {
-  out_path <- paste0(data_path, "5_Outputs/", i_scen, "/")
-} else {
-  out_path <- paste0(data_path, "5_Outputs/")
-}
+out_path <- paste0(data_path, "5_Outputs/", i_scen, "/")
+
 if (!dir.exists(out_path)) {
   dir.create(out_path, recursive = TRUE
   )
