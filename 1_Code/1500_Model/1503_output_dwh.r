@@ -269,31 +269,36 @@ births %>%
   group_by(Jahr, VersionArtCd) %>%
   summarise(birth = sum_NA(AnzGebuWir), .groups = "drop") %>%
   sszplot(aes_x = "Jahr", aes_y = "birth", aes_col = "VersionArtCd",
+          labs_x = "year", labs_y = "frequency",
           name = "1590_bir_yc")
 
 pop %>%
   group_by(Jahr, VersionArtCd) %>%
   summarise(pop = sum_NA(AnzBestWir), .groups = "drop") %>%
   sszplot(aes_x = "Jahr", aes_y = "pop", aes_col = "VersionArtCd",
+          labs_x = "year", labs_y = "frequency",
           name = "1591_pop_yc")
 
 nat %>%
   group_by(Jahr, VersionArtCd) %>%
   summarise(nat = sum_NA(AnzEinbWir), .groups = "drop") %>%
   sszplot(aes_x = "Jahr", aes_y = "nat", aes_col = "VersionArtCd",
+          labs_x = "year", labs_y = "frequency",
           name = "1592_nat_yc")
 
 demo %>%
   group_by(Jahr, VersionArtCd) %>%
-  summarise(ims = sum_NA(AnzZuzuWir), 
-            ems = sum_NA(AnzWezuWir),
+  summarise(imm = sum_NA(AnzZuzuWir), 
+            emi = sum_NA(AnzWezuWir),
             dea = sum_NA(AnzSterWir),
             .groups = "drop") %>%
-  pivot_longer(cols = c(ims, ems, dea),
+  pivot_longer(cols = c(imm, emi, dea),
                names_to = "type") %>%
   sszplot(aes_x = "Jahr", aes_y = "value", aes_col = "VersionArtCd",
           wrap = "type",
+          labs_x = "year", labs_y = "frequency",
           gridscale = "free",
+          width = 10, height = 5,
           name = "1593_demo_yc")
 
 # combine population data -------------------------------------------------
@@ -312,13 +317,23 @@ pop %>%
   ) %>%
   # DWH requirement: NAs as 0
   mutate(across(everything(), ~ replace_na(.x, replace = 0))) %>%
-  # as.character to avoid 9.12e-04 etc. in csv file
+  # as.character to avoid things like 9.12e-04 etc. in csv file
   mutate(across(everything(), as.character)) %>%
+  mutate(AlterVCd = case_when(
+    nchar(AlterVCd) == 1 ~ paste0("00", AlterVCd),
+    nchar(AlterVCd) == 2 ~ paste0("0", AlterVCd),
+    nchar(AlterVCd) == 3 ~ AlterVCd
+  )) %>%
+  mutate(QuarCd = case_when(
+    nchar(QuarCd) == 2 ~ paste0("0", QuarCd),
+    nchar(QuarCd) == 3 ~ QuarCd
+  )) %>%
   write_delim(paste0(dwh_path, "DM_BEV.csv"), delim = ";")
 
 
 # capacity and reserves ---------------------------------------------------
 
+# read data, bring to long format and adjust BereichCd
 read_csv("2_Data/1_Input/KaReB.csv", lazy = FALSE) %>%
   pivot_longer(
     cols = car_initial,
@@ -333,6 +348,24 @@ read_csv("2_Data/1_Input/KaReB.csv", lazy = FALSE) %>%
     BereichCd == car_initial[1] ~ 3,
     BereichCd == car_initial[3] ~ 4
   )) %>%
-  mutate(BruttoGeschFlaeche = as.integer(BruttoGeschFlaeche)) %>%
-  filter(PublJahr == scen_begin) %>%
-  write_delim(paste0(dwh_path, "DM_KAREB.csv"), delim = ";")
+  mutate(BruttoGeschFlaeche = as.integer(BruttoGeschFlaeche),
+         ArealCd = as.factor(ArealCd),
+         WohnanteilCd = as.factor(WohnanteilCd),
+         BereichCd = as.factor(BereichCd)) %T>%
+  # write data after filtering into csv, then proceed unfiltered for plot
+  { write_delim(filter(., PublJahr == scen_begin),
+                paste0(dwh_path, "DM_KAREB.csv"),
+                delim = ";")  } %>%
+  # prepare control plot
+  group_by(PublJahr, WohnanteilCd, ArealCd, BereichCd) %>%
+  summarize(BruttoGeschFlaeche = sum(BruttoGeschFlaeche),
+            .groups = "drop") %>%
+  mutate(BruttoGeschFlaeche = BruttoGeschFlaeche/10000) %>%
+  sszplot(aes_x = "PublJahr", aes_y = "BruttoGeschFlaeche",
+          aes_col = "WohnanteilCd", aes_ltyp = "ArealCd",
+          geom = c("line", "point"),
+          wrap = "BereichCd", ncol = 2, gridscale = "free",
+          labs_x = "publication year", labs_y = "area (ha)",
+          scale_y = c(0, NA),
+          width = 10, height = 8,
+          name = "1594_cap_res")
