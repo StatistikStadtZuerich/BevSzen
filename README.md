@@ -28,7 +28,7 @@ run_scen( scenarios = c("lower", "middle", "upper"), modules = c("all"))
 
 ## Documentation:
 
-[Documentation (gerrman)](https://www.stadt-zuerich.ch/prd/de/index/statistik/themen/bevoelkerung/bevoelkerungsentwicklung/bevoelkerungsszenarien.html#dokumentation)
+[Documentation (german)](https://www.stadt-zuerich.ch/prd/de/index/statistik/themen/bevoelkerung/bevoelkerungsentwicklung/bevoelkerungsszenarien.html#dokumentation)
 
 ## Author:
 
