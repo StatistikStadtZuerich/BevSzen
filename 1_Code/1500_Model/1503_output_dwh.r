@@ -34,17 +34,19 @@ files <- paste0(paste0(data_path, "5_Outputs/"),
 
 # past data
 bir_past <- read_csv(bir_od, lazy = FALSE) %>%
-  group_by(EreignisDatJahr,
-           SexCd,
-           HerkunftCd,
-           QuarCd) %>%
-  summarize(AnzGebuWir = sum(AnzGebuWir),
-            .groups = "drop") %>%
   left_join(look_dis, by = "QuarCd") %>%
   rename("Jahr" = EreignisDatJahr,
          "district" = distr) %>%
   mutate(BasisSzenarienCd = basis_fact, # de facto value from past
-         AlterVCd = 0)
+         AlterVCd = 0) %>%
+  group_by(Jahr,
+           SexCd,
+           AlterVCd,
+           HerkunftCd,
+           district,
+           BasisSzenarienCd) %>%
+  summarize(AnzGebuWir = sum(AnzGebuWir),
+            .groups = "drop")
 
 # scenario data
 read_files <- files[str_detect(files, "births_future")]
@@ -87,18 +89,19 @@ births <-
 # read population data and adapt structure --------------------------------
 
 # past data
-pop_past <- read_csv(pop_od, lazy = FALSE) %>%
-  group_by(StichtagDatJahr,
-           AlterVCd,
-           SexCd,
-           HerkunftCd,
-           QuarCd) %>%
-  summarize(AnzBestWir = sum(AnzBestWir),
-            .groups = "drop") %>%
+pop_past <- read_csv(pop_od, lazy = FALSE)%>%
   left_join(look_dis, by = "QuarCd") %>%
   rename("Jahr" = StichtagDatJahr,
          "district" = distr) %>%
-  mutate(BasisSzenarienCd = basis_fact)
+  mutate(BasisSzenarienCd = basis_fact) %>%
+  group_by(Jahr,
+           AlterVCd,
+           SexCd,
+           HerkunftCd,
+           district,
+           BasisSzenarienCd) %>%
+  summarize(AnzBestWir = sum(AnzBestWir),
+            .groups = "drop") 
 
 #scenario data
 read_files <- files[str_detect(files, "population_future")]
@@ -146,7 +149,15 @@ nat_past <- read_csv(nat_od, lazy = FALSE) %>%
   left_join(look_dis, by = "QuarCd") %>%
   rename("Jahr" = EreignisDatJahr,
          "district" = distr) %>%
-  mutate(BasisSzenarienCd = basis_fact)
+  mutate(BasisSzenarienCd = basis_fact) %>%
+  group_by(Jahr,
+           AlterVCd,
+           SexCd,
+           HerkunftCd,
+           district,
+           BasisSzenarienCd) %>%
+  summarize(AnzEinbWir = sum(AnzEinbWir),
+            .groups = "drop") 
 
 # scenario data 
 read_files <- files[str_detect(files, "naturalization_future")]
@@ -190,39 +201,26 @@ nat <-
 # past data
 # death
 demo_past <- read_csv(dea_od, lazy = FALSE) %>%
-  group_by(EreignisDatJahr,
-           AlterVCd,
-           SexCd,
-           HerkunftCd,
-           QuarCd) %>%
-  summarize(AnzSterWir = sum(AnzSterWir),
-            .groups = "drop") %>%
   # immigration
   bind_rows(
-    read_csv(imm_od, lazy = FALSE) %>%
-      group_by(EreignisDatJahr,
-               AlterVCd,
-               SexCd,
-               HerkunftCd,
-               QuarCd) %>%
-      summarize(AnzZuzuWir = sum(AnzZuzuWir),
-                .groups = "drop")
-  ) %>%
+    read_csv(imm_od, lazy = FALSE)) %>%
   # emigration
   bind_rows(
-    read_csv(emi_od, lazy = FALSE) %>%
-      group_by(EreignisDatJahr,
-               AlterVCd,
-               SexCd,
-               HerkunftCd,
-               QuarCd) %>%
-      summarize(AnzWezuWir = sum(AnzWezuWir),
-                .groups = "drop")
-  ) %>%
+    read_csv(emi_od, lazy = FALSE)) %>%
   left_join(look_dis, by = "QuarCd") %>%
   rename("Jahr" = EreignisDatJahr,
          "district" = distr) %>%
-  mutate(BasisSzenarienCd = basis_fact)
+  mutate(BasisSzenarienCd = basis_fact) %>%
+  group_by(Jahr,
+           AlterVCd,
+           SexCd,
+           HerkunftCd,
+           district,
+           BasisSzenarienCd) %>%
+  summarize(AnzSterWir = sum(AnzSterWir, na.rm = TRUE),
+            AnzWezuWir = sum(AnzWezuWir, na.rm = TRUE),
+            AnzZuzuWir = sum(AnzZuzuWir, na.rm = TRUE),
+            .groups = "drop")
 
 # scenario data
 read_files <- files[str_detect(files, "demographic")]
