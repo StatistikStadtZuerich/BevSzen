@@ -4,7 +4,7 @@
 
 This [R](https://www.r-project.org/) code is used to generate various population development scenarios for the city of Zurich, Switzerland. The underlying models are based on official population and residential statistics as well as capacity and construction reserve calculations. Documentation can be found [here](5_Documentation).
 
-All necessary data is [Open Data](https://data.stadt-zuerich.ch/) except the capacity and reserves data.
+All necessary data is [Open Data](https://data.stadt-zuerich.ch/) except the projects as well as the capacity and reserves data.
 
 ## Usage:
 
@@ -24,7 +24,7 @@ How to execute the entire model:
 run_scen( scenarios = c("lower", "middle", "upper"), modules = c("all"))
 ```
 
-**Caveat**: Capacity and reserves data is currently not publicly available and therefore the respective modules cannot be run. We are working on the open data availability of the respective dataset and hope to be able to provide it soon.
+**Caveat**: Projects and Capacity and reserves data is currently not publicly available and therefore the respective modules cannot be run. We are working on the open data availability of the respective datasets and hope to be able to provide them soon.
 
 ## Documentation:
 
