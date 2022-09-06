@@ -153,7 +153,7 @@ sce <- read_csv(sce_od) %>%
     AlterV10Sort == 9 ~ age_3t[9],     
     TRUE ~ age_3t[10]), levels = age_3t),
     sex = factor(if_else(SexSort == 1, uni_s[1], uni_s[2]), uni_s),
-    origin = factor(if_else(HeimatRegionSort == 1, uni_o[1], uni_o[2]), uni_o),
+    origin = factor(if_else(HerkunftSort == 1, uni_o[1], uni_o[2]), uni_o),
     district = factor(distr, uni_d),
     scenario = case_when(
       VersionArtSort == 1 ~ uni_c[2],
