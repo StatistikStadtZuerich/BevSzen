@@ -82,7 +82,8 @@ car_dat_comb <- read_csv(paste0(inp_path, "KaReB_actual.csv")) %>%
 
 car_dat_comb %>% 
   group_by(year, bzo, cat) %>%
-  summarise(ha = sum(ha)) %>%
+  summarise(ha = sum(ha),
+            .groups = "drop") %>%
   sszplot(aes_x = "year", aes_y = "ha", aes_col = "bzo",
         wrap = "cat",
         fix_col = 2)
