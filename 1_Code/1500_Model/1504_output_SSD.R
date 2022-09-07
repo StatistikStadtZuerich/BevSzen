@@ -4,7 +4,7 @@
 # calculate values for Schulraumplanung according request by SSD
 # nr. of children by district and age group, middle scenario, KaReB according BZO2040
 # (age groups: 5-6, 7-12, 13-15)
-# for the years 2022, 2037, 2040, 2045, 2050
+# for the years 2021, 2037, 2040, 2045, 2050
 
 # prep work ---------------------------------------------------------------
 # general functions (without dependence on parameters)
@@ -32,16 +32,8 @@ run_scen(
   scenarios = c("middle"),
   modules = c("all"))
 
-# check
 pop_middle %>%
-group_by(year) %>%
-  summarise(pop = sum_NA(pop), .groups = "drop") %>%
-  sszplot(aes_x = "year", aes_y = "pop",
-          labs_x = "year", labs_y = "frequency",
-          name = "1595_pop_y")
-
-pop_middle %>%
-  filter(year %in% c(2022, 2037, 2040, 2045, 2050),
+  filter(year %in% c(2021, 2037, 2040, 2045, 2050),
          age >= 5 & age <= 15) %>%
   mutate(age1 = factor(if_else(age <=6, uni_kids[1],
                         if_else(age <=12, uni_kids[2],
@@ -55,6 +47,55 @@ pop_middle %>%
   arrange(QuarSort) %>% 
   select(-QuarCd, -QuarSort) %>%
   write_delim(ssd_path, delim = ";")
+
+
+# checks ------------------------------------------------------------------
+
+# input data
+car_dat_comb <- read_csv(paste0(inp_path, "KaReB_actual.csv")) %>%
+  mutate(bzo = "16") %>%
+  union(read_csv(paste0(inp_path, "KaReB.csv")) %>%
+          mutate(bzo = "40")) %>%
+  rename(year = PublJahr) %>%
+  pivot_longer(
+    cols = car_initial,
+    names_to = "initial",
+    values_to = "area"
+  ) %>%
+  left_join(look_car, by = "initial") %>%
+  mutate(distnum = as.numeric(QuarCd)) %>%
+  left_join(look_reg, by = "distnum") %>%
+  mutate(
+    cat = factor(category, car_category),
+    residence = factor(
+      case_when(
+        WohnanteilCd == 1 ~ uni_e[1],
+        WohnanteilCd == 2 ~ uni_e[2],
+        TRUE ~ uni_e[3]
+      )
+    ),
+    plot = factor(if_else(ArealCd == 1, uni_p[1], uni_p[2]), uni_p),
+    owner = factor(if_else(EigentumGrundstkCd == 1, uni_w[1], uni_w[2]), uni_w),
+    ha = area / 10000
+  ) %>%
+  select(year, residence, plot, district, owner, cat, ha, bzo)
+
+car_dat_comb %>% 
+  group_by(year, bzo, cat) %>%
+  summarise(ha = sum(ha)) %>%
+  sszplot(aes_x = "year", aes_y = "ha", aes_col = "bzo",
+        wrap = "cat",
+        fix_col = 2)
+
+car_dat_comb %>% select(bzo) %>% distinct() %>% tally()
+
+
+# 
+pop_middle %>%
+  group_by(year) %>%
+  summarise(pop = sum_NA(pop), .groups = "drop") %>%
+  sszplot(aes_x = "year", aes_y = "pop",
+          labs_x = "year", labs_y = "frequency")
 
 # cleanup work ------------------------------------------------------------
 
