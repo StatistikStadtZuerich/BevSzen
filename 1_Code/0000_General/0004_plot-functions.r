@@ -200,7 +200,7 @@ sszplot <- function(data,
       if (identical(def_col, "indicator")) {
         fix_col <- col_i
       } else {
-        fix_col <- col_palette[1:tally(distinct(data[def_col]))]
+        fix_col <- col_palette[1:tally(distinct(data[def_col]))$n]
       }
 
       # if aes_col/aes_fill is a continuous variable, it has to be converted to a factor (discrete scale)
