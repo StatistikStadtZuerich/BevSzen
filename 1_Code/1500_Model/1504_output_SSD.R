@@ -81,14 +81,19 @@ car_dat_comb <- read_csv(paste0(inp_path, "KaReB_actual.csv")) %>%
   select(year, residence, plot, district, owner, cat, ha, bzo)
 
 car_dat_comb %>% 
-  group_by(year, bzo, cat) %>%
+  group_by(year, bzo, cat, owner) %>%
   summarise(ha = sum(ha),
             .groups = "drop") %>%
-  sszplot(aes_x = "year", aes_y = "ha", aes_col = "bzo",
+  filter(year == scen_begin) %>%
+  sszplot(aes_x = "owner", aes_y = "ha", aes_fill = "bzo",
         wrap = "cat",
+        geom = "col",
         fix_col = 2)
 
-car_dat_comb %>% select(bzo) %>% distinct() %>% tally()
+car_dat %>% select(year) %>% distinct()
+
+
+#
 
 
 # 
