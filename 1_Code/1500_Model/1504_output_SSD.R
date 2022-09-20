@@ -26,6 +26,9 @@ ssd_path <- paste0(ssd_path, "pop_scen_SSD.csv")
 age_groups <- c("5- und 6-Jährige",	"7- bis 12-Jährige",	"13- bis 15-Jährige")
 uni_kids <- factor(age_groups, levels = age_groups)
 
+# store existing (i.e. BZO16) data
+pop_middle_16 <- pop_middle
+
 # run the model and build output data -------------------------------------
 
 run_scen(
@@ -80,6 +83,7 @@ car_dat_comb <- read_csv(paste0(inp_path, "KaReB_actual.csv")) %>%
   ) %>%
   select(year, residence, plot, district, owner, cat, ha, bzo)
 
+# plot bzo 16 vs 40 input data for scenario begin
 car_dat_comb %>% 
   group_by(year, bzo, cat, owner) %>%
   summarise(ha = sum(ha),
@@ -90,10 +94,20 @@ car_dat_comb %>%
         geom = "col",
         fix_col = 2)
 
-car_dat %>% select(year) %>% distinct()
+# plot bzo40 input data for scenario begin and 1 yr prev
+car_dat_comb %>% 
+  group_by(year, bzo, cat, owner) %>%
+  summarise(ha = sum(ha),
+            .groups = "drop") %>%
+  filter(year %in% c(scen_begin, scen_begin-1),
+         bzo == 40) %>% 
+  sszplot(aes_x = "owner", aes_y = "ha", aes_fill = "year",
+          wrap = "cat",
+          geom = "col",
+          fix_col = 2)
 
+# scenario results for the different BZOs
 
-#
 
 
 # 
