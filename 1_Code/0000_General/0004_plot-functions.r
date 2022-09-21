@@ -328,7 +328,7 @@ sszplot <- function(data,
     }
     if ("col" %in% geom) {
       if (!is.null(aes_fill))
-        if (length(unique(data[[aes_fill]])) > 1) {
+        if (data %>% select(aes_fill) %>% distinct() %>% count() > 1) {
         geomfix <- paste0(geomfix, ", position = 'dodge'")
       }
       res <- res + eval(str2expression(paste0("geom_col(", geomfix, ")")))
@@ -575,7 +575,8 @@ sszplot <- function(data,
         height = height
       )
     } else {
-      print(res)
+      
+      (res)
     }
   }
 
