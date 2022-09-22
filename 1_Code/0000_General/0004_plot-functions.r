@@ -204,14 +204,14 @@ sszplot <- function(data,
       }
 
       # if aes_col/aes_fill is a continuous variable, it has to be converted to a factor (discrete scale)
-      if (is.numeric(eval(str2lang(paste0("data$", def_col))))) {
+      # if (is.numeric(eval(str2lang(paste0("data$", def_col))))) {
         if (!is.null(aes_col)) {
           aes_col <- as.factor(eval(str2lang(paste0("data$", aes_col))))
         }
         if (!is.null(aes_fill)) {
           aes_fill <- as.factor(eval(str2lang(paste0("data$", aes_fill))))
         }
-      }
+      # }
     }
 
 
@@ -328,7 +328,7 @@ sszplot <- function(data,
     }
     if ("col" %in% geom) {
       if (!is.null(aes_fill))
-        if (data %>% select(aes_fill) %>% distinct() %>% count() > 1) {
+        if (aes_fill %>% levels() %>% length() > 1) {
         geomfix <- paste0(geomfix, ", position = 'dodge'")
       }
       res <- res + eval(str2expression(paste0("geom_col(", geomfix, ")")))
