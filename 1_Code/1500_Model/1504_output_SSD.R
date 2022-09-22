@@ -12,7 +12,7 @@ source("1_Code/0000_General/0002_general_without-parameters.r")
 
 # exchange KaReB file
 inp_path <- paste0(data_path, "1_Input/")
-file.rename(paste0(inp_path, "KaReB.csv"), paste0(inp_path, "KaReB_actual.csv"))
+file.rename(paste0(inp_path, "KaReB.csv"), paste0(inp_path, "KaReB_2016.csv"))
 file.rename(paste0(inp_path, "KaReB_2040.csv"), paste0(inp_path, "KaReB.csv"))
 
 # output path creation
@@ -55,7 +55,7 @@ pop_middle %>%
 # checks ------------------------------------------------------------------
 
 # input data
-car_dat_comb <- read_csv(paste0(inp_path, "KaReB_actual.csv")) %>%
+car_dat_comb <- read_csv(paste0(inp_path, "KaReB_2016.csv")) %>%
   mutate(bzo = "16") %>%
   union(read_csv(paste0(inp_path, "KaReB.csv")) %>%
           mutate(bzo = "40")) %>%
@@ -92,7 +92,22 @@ car_dat_comb %>%
   sszplot(aes_x = "owner", aes_y = "ha", aes_fill = "bzo",
         wrap = "cat",
         geom = "col",
-        fix_col = 2)
+        fix_col = 2,
+        name = "15A1_bzo_16_vs_40",
+        title = paste("BZO 16 vs. 40 for year", scen_begin))
+
+car_dat_comb %>% 
+  group_by(year, bzo, cat, owner, district) %>%
+  summarise(ha = sum(ha),
+            .groups = "drop") %>%
+  filter(year == scen_begin) %>%
+  sszplot(aes_x = "owner", aes_y = "ha", aes_fill = "bzo",
+          wrap = "district",
+          geom = "col",
+          fix_col = 2,
+          multi = car_dat_comb %>% select(cat) %>% distinct %>% pull(),
+          # name = "15A2_car_dcat",
+          multif = "filter(cat == x)")
 
 # plot bzo40 input data for scenario begin and 1 yr prev
 car_dat_comb %>% 
@@ -104,7 +119,8 @@ car_dat_comb %>%
   sszplot(aes_x = "owner", aes_y = "ha", aes_fill = "year",
           wrap = "cat",
           geom = "col",
-          fix_col = 2)
+          fix_col = 2,
+          title = paste("BZO 40 for years", scen_begin-1, "and", scen_begin))
 
 # scenario results for the different BZOs
 
@@ -121,4 +137,4 @@ pop_middle %>%
 
 # exchange KaReB file back to original
 file.rename(paste0(inp_path, "KaReB.csv"), paste0(inp_path, "KaReB_2040.csv"))
-file.rename(paste0(inp_path, "KaReB_actual.csv"), paste0(inp_path, "KaReB.csv"))
+file.rename(paste0(inp_path, "KaReB_2016.csv"), paste0(inp_path, "KaReB.csv"))
