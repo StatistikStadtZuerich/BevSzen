@@ -7,8 +7,18 @@
 # for the years 2021, 2037, 2040, 2045, 2050
 
 # prep work ---------------------------------------------------------------
+
 # general functions (without dependence on parameters)
 source("1_Code/0000_General/0002_general_without-parameters.r")
+# parameters (depend on scenario)
+i_scen <- "middle"
+for (i_para in 1:nrow(para)) {
+  assign(para$parameter[i_para], para[[i_scen]][i_para],
+         envir = .GlobalEnv
+  )
+}
+# general functions (with dependence on parameters)
+source(paste0(code_path, "/0000_General/0003_general_with-parameters.r"))
 
 # exchange KaReB file
 inp_path <- paste0(data_path, "1_Input/")
@@ -105,8 +115,9 @@ car_dat_comb %>%
           wrap = "district",
           geom = "col",
           fix_col = 2,
+          name = "15A2_car_dcat",
+          width = 14, height = 10,
           multi = car_dat_comb %>% select(cat) %>% distinct %>% pull(),
-          # name = "15A2_car_dcat",
           multif = "filter(cat == x)")
 
 # plot bzo40 input data for scenario begin and 1 yr prev
@@ -120,7 +131,23 @@ car_dat_comb %>%
           wrap = "cat",
           geom = "col",
           fix_col = 2,
+          name = "15A3_bzo40_last_2_years", 
           title = paste("BZO 40 for years", scen_begin-1, "and", scen_begin))
+
+car_dat_comb %>% 
+  group_by(year, bzo, cat, owner, district) %>%
+  summarise(ha = sum(ha),
+            .groups = "drop") %>%
+  filter(year %in% c(scen_begin, scen_begin-1),
+         bzo == 40) %>% 
+  sszplot(aes_x = "owner", aes_y = "ha", aes_fill = "year",
+          wrap = "district",
+          geom = "col",
+          fix_col = 2,
+          name = "15A4_bzo40_last_2_years_per district",
+          width = 14, height = 10,
+          multi = car_dat_comb %>% select(cat) %>% distinct %>% pull(),
+          multif = "filter(cat == x)")
 
 # scenario results for the different BZOs
 
