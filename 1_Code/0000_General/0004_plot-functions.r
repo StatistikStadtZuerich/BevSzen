@@ -329,10 +329,15 @@ sszplot <- function(data,
       res <- res + eval(str2expression(paste0("geom_point(", geomfix, ")")))
     }
     if ("col" %in% geom) {
-      if (!is.null(aes_fill))
-        if (data %>% select(aes_fill) %>% distinct() %>% pull() %>% length() > 1) {
+      if (!is.null(aes_fill)) {
+        if (is.factor(aes_fill))
+          af_len <- aes_fill %>% levels() %>% length()
+        else
+          af_len <- data %>% select(aes_fill) %>% distinct() %>% pull() %>% length()
+        if (af_len > 1)
           geomfix <- paste0(geomfix, ", position = 'dodge'")
-        }
+      }
+        
       res <- res + eval(str2expression(paste0("geom_col(", geomfix, ")")))
 
       if (flip_coor) {
