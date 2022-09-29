@@ -330,7 +330,7 @@ sszplot <- function(data,
     }
     if ("col" %in% geom) {
       if (!is.null(aes_fill))
-        if (aes_fill %>% levels() %>% length() > 1) {
+        if (data %>% select(aes_fill) %>% distinct() %>% pull() %>% length() > 1) {
           geomfix <- paste0(geomfix, ", position = 'dodge'")
         }
       res <- res + eval(str2expression(paste0("geom_col(", geomfix, ")")))
