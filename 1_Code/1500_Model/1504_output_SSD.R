@@ -150,21 +150,124 @@ car_dat_comb %>%
           multif = "filter(cat == x)")
 
 # scenario results for the different BZOs
+# total
 pop_middle_16 %>%
   mutate(bzo = 16) %>%
   union(pop_middle %>% mutate(bzo = 40)) %>%
-  group_by(bzo) %>%
+  group_by(bzo, year) %>%
+  summarise(pop = sum(pop), .groups = "drop") %>%
+  sszplot(aes_x = "year", aes_y = "pop",  aes_fill = "bzo",
+          geom = "col",
+          fix_col = 2,
+          labs_x = "year", labs_y = "frequency",
+          name = "15A5_pop_yd_bzo_16_vs_40",
+          width = 10, height = 7)
+
+# by district
+pop_middle_16 %>%
+  mutate(bzo = 16) %>%
+  union(pop_middle %>% mutate(bzo = 40)) %>%
+  group_by(bzo, year, district) %>%
+  summarise(pop = sum(pop), .groups = "drop") %>%
+  sszplot(aes_x = "year", aes_y = "pop",  aes_fill = "bzo",
+          geom = "col",
+          fix_col = 2,
+          labs_x = "year", labs_y = "frequency",
+          name = "15A6_pop_yd_bzo_16_vs_40",
+          width = 10, height = 7,
+          multi = uni_d)
+
+# by age group
+pop_middle_16 %>%
+  mutate(bzo = 16) %>%
+  union(pop_middle %>% mutate(bzo = 40)) %>%
+  mutate(age_group = age %/% 10 + 1) %>%
+  mutate(age_group = if_else(age_group > 9, 9, age_group)) %>%
+  group_by(bzo, year, age_group) %>%
+  summarise(pop = sum(pop), .groups = "drop") %>%
+  sszplot(aes_x = "year", aes_y = "pop",  aes_fill = "bzo",
+          geom = "col",
+          fix_col = 2,
+          labs_x = "year", labs_y = "frequency",
+          angle = 90,
+          name = "15A7_pop_ya_bzo_16_vs_40",
+          width = 20, height = 14,
+          wrap = "age_group", ncol = 3)
+
+
+# scenario results from last year and this year in comparison
+xlp <- "//szh.loc/ssz/data/Projekte/BevSzen/2021_BZO2040/3_Resultate/3000_Auswertungen/3_Zukuenftige-Bevoelkerungsentwicklung_BZO2040_nach-Altersklasse-Quartier-Jahr.xlsx"
+sheets <- readxl::excel_sheets(xlp)
+sheets <- sheets[2:length(sheets)]
+cn <- c("district", "total", 1:11)
+
+for (i in sheets) {
+  readin <- readxl::read_xlsx(xlp, sheet = i, skip = 10, col_names = cn, n_max = 31) %>%
+    select(-2) %>%
+    pivot_longer(cols = c(-1), names_to = "age_group", values_to = "pop") %>%
+    mutate(age_group = as.numeric(age_group)) %>%
+    mutate(age_group = if_else(age_group > 9, 9, age_group)) %>%
+    mutate(year = as.integer(i), model_year = 21) %>%
+    mutate(district = if_else(district == "Mühlebach", "Muehlebach", district)) %>%
+    mutate(district = if_else(district == "Höngg", "Hoengg", district))
+  
+  if (i == sheets[1]) {
+    pop_middle_prevyear <- readin
+  } else {
+    pop_middle_prevyear <- pop_middle_prevyear %>% union(readin)
+  }
+}
+
+
+
+
+pop_prev_current <- pop_middle %>%
+  mutate(model_year = 22) %>%
+  mutate(age_group = age %/% 10 + 1) %>%
+  mutate(age_group = if_else(age_group > 9, 9, age_group)) %>%
+  filter(year %in% as.integer(sheets)) %>%
+  group_by(district, age_group, year) %>%
   summarise(pop = sum(pop)) %>%
-  sszplot(aes_x = "bzo", aes_y = "pop",
-          geom = "col")
+  mutate(model_year = 22) %>%
+  union(pop_middle_prevyear)
+
+# total
+pop_prev_current %>%
+  group_by(model_year, year) %>%
+  summarise(pop = sum(pop), .groups = "drop") %>%
+  sszplot(aes_x = "year", aes_y = "pop",  aes_fill = "model_year",
+          geom = "col",
+          fix_col = 2,
+          labs_x = "year", labs_y = "frequency",
+          # name = "15A5_pop_yd_bzo_16_vs_40",
+          width = 10, height = 7)
+
+# by district
+pop_prev_current %>%
+  group_by(model_year, year, district) %>%
+  summarise(pop = sum(pop), .groups = "drop") %>%
+  sszplot(aes_x = "year", aes_y = "pop",  aes_fill = "model_year",
+          geom = "col",
+          fix_col = 2,
+          labs_x = "year", labs_y = "frequency",
+          # name = "15A6_pop_yd_bzo_16_vs_40",
+          width = 10, height = 7,
+          wrap = "district")
+
+# by age group
+pop_prev_current %>%
+  group_by(model_year, year, age_group) %>%
+  summarise(pop = sum(pop), .groups = "drop") %>%
+  sszplot(aes_x = "year", aes_y = "pop",  aes_fill = "model_year",
+          geom = "col",
+          fix_col = 2,
+          labs_x = "year", labs_y = "frequency",
+          angle = 90,
+          # name = "15A7_pop_ya_bzo_16_vs_40",
+          width = 20, height = 14,
+          wrap = "age_group", ncol = 3)
 
 
-# 
-pop_middle %>%
-  group_by(year) %>%
-  summarise(pop = sum_NA(pop), .groups = "drop") %>%
-  sszplot(aes_x = "year", aes_y = "pop",
-          labs_x = "year", labs_y = "frequency")
 
 # cleanup work ------------------------------------------------------------
 
