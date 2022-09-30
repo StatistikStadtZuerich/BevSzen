@@ -150,7 +150,13 @@ car_dat_comb %>%
           multif = "filter(cat == x)")
 
 # scenario results for the different BZOs
-
+pop_middle_16 %>%
+  mutate(bzo = 16) %>%
+  union(pop_middle %>% mutate(bzo = 40)) %>%
+  group_by(bzo) %>%
+  summarise(pop = sum(pop)) %>%
+  sszplot(aes_x = "bzo", aes_y = "pop",
+          geom = "col")
 
 
 # 
