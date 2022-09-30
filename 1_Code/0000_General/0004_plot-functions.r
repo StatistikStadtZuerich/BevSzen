@@ -127,6 +127,9 @@ sszplot <- function(data,
     )
   }
   target <- paste(target, paste0(name, ".", file_type), sep = "/")
+  
+  if (is_grouped_df(data))
+    data <- data %>% ungroup()
 
 
   ## building of the plot is only needed if we are not in multipage mode
