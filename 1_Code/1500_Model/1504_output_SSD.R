@@ -239,7 +239,7 @@ pop_prev_current %>%
           geom = "col",
           fix_col = 2,
           labs_x = "year", labs_y = "frequency",
-          # name = "15A5_pop_yd_bzo_16_vs_40",
+          name = "15A8_pop_y_bzo40_21_vs_22",
           width = 10, height = 7)
 
 # by district
@@ -250,7 +250,7 @@ pop_prev_current %>%
           geom = "col",
           fix_col = 2,
           labs_x = "year", labs_y = "frequency",
-          # name = "15A6_pop_yd_bzo_16_vs_40",
+          name = "15A9_pop_yd_bzo40_21_vs_22",
           width = 10, height = 7,
           wrap = "district")
 
@@ -263,7 +263,7 @@ pop_prev_current %>%
           fix_col = 2,
           labs_x = "year", labs_y = "frequency",
           angle = 90,
-          # name = "15A7_pop_ya_bzo_16_vs_40",
+          name = "15B1_pop_ya_bzo40_21_vs_22",
           width = 20, height = 14,
           wrap = "age_group", ncol = 3)
 
