@@ -123,10 +123,13 @@ sszplot <- function(data,
   target <- paste(res_path, sub_path, sep = "/")
   if (!file.exists(paste(getwd(), target, sep = "/"))) {
     dir.create(paste(getwd(), target, sep = "/"),
-      recursive = TRUE
+               recursive = TRUE
     )
   }
   target <- paste(target, paste0(name, ".", file_type), sep = "/")
+  
+  if (is_grouped_df(data))
+    data <- data %>% ungroup()
 
 
   ## building of the plot is only needed if we are not in multipage mode
@@ -156,8 +159,8 @@ sszplot <- function(data,
 
     if (is.null(def_col)) {
       ifelse(fix_col > length(col_palette),
-        fix_col <- col_palette[1],
-        fix_col <- col_palette[fix_col]
+             fix_col <- col_palette[1],
+             fix_col <- col_palette[fix_col]
       )
     } else {
       if (def_col %in% c("year", "month", "week", "day")) {
@@ -182,34 +185,36 @@ sszplot <- function(data,
 
         fix_col <- col_time
       } else
-      if (identical(def_col, "origin")) {
-        fix_col <- col_o
-      } else
-      if (identical(def_col, "sex")) {
-        fix_col <- col_s
-      } else
-      if (identical(def_col, "region")) {
-        fix_col <- col_r
-      } else
-      if (identical(def_col, "owner")) {
-        fix_col <- col_w
-      } else
-      if (identical(def_col, "residence")) {
-        fix_col <- col_e
-      } else
-      if (identical(def_col, "indicator")) {
-        fix_col <- col_i
-      } else {
-        fix_col <- col_palette[1:count(unique(data[def_col]))$n]
-      }
+        if (identical(def_col, "origin")) {
+          fix_col <- col_o
+        } else
+          if (identical(def_col, "sex")) {
+            fix_col <- col_s
+          } else
+            if (identical(def_col, "region")) {
+              fix_col <- col_r
+            } else
+              if (identical(def_col, "owner")) {
+                fix_col <- col_w
+              } else
+                if (identical(def_col, "residence")) {
+                  fix_col <- col_e
+                } else
+                  if (identical(def_col, "indicator")) {
+                    fix_col <- col_i
+                  } else {
+                    fix_col <- col_palette[1:pull(tally(distinct(data[def_col])))]
+                  }
 
       # if aes_col/aes_fill is a continuous variable, it has to be converted to a factor (discrete scale)
       if (is.numeric(eval(str2lang(paste0("data$", def_col))))) {
         if (!is.null(aes_col)) {
-          aes_col <- as.factor(eval(str2lang(paste0("data$", aes_col))))
+          aes_col <- data %>% select(aes_col) %>% distinct() %>% pull()
+          if (!is.factor(aes_col)) aes_col <- aes_col %>% as.factor()
         }
         if (!is.null(aes_fill)) {
-          aes_fill <- as.factor(eval(str2lang(paste0("data$", aes_fill))))
+          aes_fill <- data %>% select(aes_fill) %>% pull() %>% as.factor()
+          if (!is.factor(aes_fill)) aes_fill <- aes_fill %>% as.factor()        
         }
       }
     }
@@ -327,10 +332,15 @@ sszplot <- function(data,
       res <- res + eval(str2expression(paste0("geom_point(", geomfix, ")")))
     }
     if ("col" %in% geom) {
-      if (!is.null(aes_fill))
-        if (length(unique(data[[aes_fill]])) > 1) {
-        geomfix <- paste0(geomfix, ", position = 'dodge'")
+      if (!is.null(aes_fill)) {
+        if (is.factor(aes_fill))
+          af_len <- aes_fill %>% levels() %>% length()
+        else
+          af_len <- data %>% select(aes_fill) %>% distinct() %>% pull() %>% length()
+        if (af_len > 1)
+          geomfix <- paste0(geomfix, ", position = 'dodge'")
       }
+        
       res <- res + eval(str2expression(paste0("geom_col(", geomfix, ")")))
 
       if (flip_coor) {
@@ -391,15 +401,15 @@ sszplot <- function(data,
       if (identical(scale_y, "pretty")) {
         res <- res + scale_y_continuous(breaks = pretty_breaks())
       } else
-      if (identical(scale_y, "log")) {
-        res <- res + scale_y_continuous(trans = "log10")
-      } else {
-        res <- res + scale_y_continuous(breaks = if (!is.null(breaks)) {
-          breaks
+        if (identical(scale_y, "log")) {
+          res <- res + scale_y_continuous(trans = "log10")
         } else {
-          pretty_breaks()
-        })
-      }
+          res <- res + scale_y_continuous(breaks = if (!is.null(breaks)) {
+            breaks
+          } else {
+            pretty_breaks()
+          })
+        }
       # if scale_y contains a numeric vector we expect an expand_limits request
       # (limits inside scale_... functions lead to out of bounds values and
       # cause missing values and warnings/errors)
@@ -439,9 +449,9 @@ sszplot <- function(data,
 
       res <- res +
         facet_grid(as.formula(paste(grid[1], "~", grid[2])),
-          cols = ncol,
-          scale = gridscale,
-          labeller = eval(gridlab)
+                   cols = ncol,
+                   scale = gridscale,
+                   labeller = eval(gridlab)
         )
     } else if (!is.null(wrap)) {
       # labeller for columnns should be 'label_both', except the ones in ex_both
@@ -453,9 +463,9 @@ sszplot <- function(data,
 
       res <- res +
         facet_wrap(as.formula(paste("~", wrap)),
-          ncol = ncol,
-          scale = gridscale,
-          labeller = eval(gridlab)
+                   ncol = ncol,
+                   scale = gridscale,
+                   labeller = eval(gridlab)
         )
     }
 
@@ -520,8 +530,8 @@ sszplot <- function(data,
       if (identical(multi, uni_d)) multif <- "filter(district == x)"
       if (identical(multi, uni_o)) multif <- "filter(origin == x)"
       if (identical(multi, uni_w)) multif <- "filter(owner == x)"
-      if (identical(multi, uniy_scen)) multif <- "filter(year == x)" 
-      if (identical(multi, uniy_scen_public)) multif <- "filter(year == x)"        
+      if (identical(multi, uniy_scen)) multif <- "filter(year == x)"
+      if (identical(multi, uniy_scen_public)) multif <- "filter(year == x)"
     }
     stopifnot(!is.null(multi) && !is.null(multif))
 
@@ -570,9 +580,9 @@ sszplot <- function(data,
   } else {
     if (!is.null(name)) {
       ggsave(target,
-        plot = res,
-        width = width,
-        height = height
+             plot = res,
+             width = width,
+             height = height
       )
     } else {
       print(res)
