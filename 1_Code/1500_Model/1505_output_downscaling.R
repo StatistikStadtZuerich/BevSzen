@@ -59,7 +59,8 @@ kareb %>% filter(QuarCd == "010") %>% print(n=Inf)
 
 
 
-
+# prepare output data based on spa_dyw
+# this is still according to the format of last year, transposing to long comes later
 downscale <- spa_dyw_past_pred %>%
   filter(year >= scen_begin-1) %>%
   left_join(lookup_map, by = "district") %>% 
@@ -70,14 +71,19 @@ downscale <- spa_dyw_past_pred %>%
 
 
 downscale %>%
+  # add the population
   left_join(pop_total, by = c("district", "year", "owner")) %>%
   mutate(anz.pers.ksj = rowSums(tibble(.$anz.pers.ksj, .$pop), na.rm = TRUE)) %>%
   mutate(wohnflaeche.ksj = wf.ksj * anz.pers.ksj) %>%
   select( -pop) %>%
-  left_join(car_dat, by = c("district", "year", "owner")) %>%
-  mutate(flaeche.ina.eff = usage_ha * 1e4) %>%
-  select(-usage_ha) %>%
+  # calculate delta population and derive flaeche.ina.eff
+  left_join((spa_dyw %>% filter(year == max(year)) %>% select(district, owner, people)), by =  c("district", "owner")) %>%
+  mutate(delta_pop = anz.pers.ksj - people) %>%
+  mutate(flaeche.ina.eff = delta_pop * wf.ksj) %>%
+  # add bq.ksj
   left_join(aca_comb, by = c("district", "year", "owner")) %>%
   mutate(bq.ksj = aca) %>%
   select(-aca_dyw, -aca_yw, -aca_52p, -aca, -apart_thres) %>%
   mutate(anz.wohn.ksj = anz.pers.ksj / bq.ksj)
+
+  
