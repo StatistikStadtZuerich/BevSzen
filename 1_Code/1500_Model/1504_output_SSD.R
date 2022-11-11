@@ -26,11 +26,11 @@ file.rename(paste0(inp_path, "KaReB.csv"), paste0(inp_path, "KaReB_2016.csv"))
 file.rename(paste0(inp_path, "KaReB_2040.csv"), paste0(inp_path, "KaReB.csv"))
 
 # output path creation
-ssd_path <- paste0(data_path, "8_SSD/")
-if (!dir.exists(ssd_path)) {
-  dir.create(ssd_path, recursive = TRUE)
+req_path <- paste0(data_path, "8_requests/")
+if (!dir.exists(req_path)) {
+  dir.create(req_path, recursive = TRUE)
 }
-ssd_path <- paste0(ssd_path, "pop_scen_SSD.csv")
+req_path <- paste0(req_path, "pop_scen_SSD.csv")
 
 # factor for age grouping
 age_groups <- c("5- und 6-Jährige",	"7- bis 12-Jährige",	"13- bis 15-Jährige")
@@ -59,7 +59,7 @@ pop_middle %>%
   left_join(lookup_map, by = "district") %>% 
   arrange(QuarSort) %>% 
   select(-QuarCd, -QuarSort) %>%
-  write_delim(ssd_path, delim = ";")
+  write_delim(req_path, delim = ";")
 
 
 # checks ------------------------------------------------------------------
