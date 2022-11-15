@@ -4,6 +4,8 @@
 # calculate values for downscaling request by AfS
 #
 # for the years 2021, 2037, 2040, 2045, 2050
+# 
+# with bzo2040: make sure to use 1504_output_SSZ.r to obtain respective KaReB file!!
 
 # prep work ---------------------------------------------------------------
 
@@ -94,4 +96,18 @@ downscale <-
   # add flaeche.ina from kareb and calculate ratio
   left_join(kareb %>% select(QuarCd, ownerCd = EigentumGrundstkCd, Inanspruchnahme), by = c("QuarCd", "ownerCd")) %>%
   mutate(flaeche.ina = Inanspruchnahme) %>%
-  mutate(raatio.ina.eff = flaeche.ina.eff / flaeche.ina)
+  mutate(ratio.ina.eff = flaeche.ina.eff / flaeche.ina)
+
+
+
+# transpose to long format
+# 
+downscale %>%
+  rename(wohnflaeche = wohnflaeche.ksj,
+         bq = bq.ksj,
+         wfp = wf.ksj,
+         anz.wohn = anz.wohn.ksj,
+         anz.pers = anz.pers.ksj) %>%
+  select(year, QuarCd, district, ownerCd, owner, wohnflaeche, ratio.ina.eff, bq, wfp, anz.wohn, anz.pers) %>%
+  pivot_longer(cols =  c(wohnflaeche, ratio.ina.eff, bq, wfp, anz.wohn, anz.pers),
+               names_to = "type")
