@@ -5,7 +5,7 @@
 #
 # for the years 2021, 2037, 2040, 2045, 2050
 # 
-# with bzo2040: make sure to use 1504_output_SSZ.r to obtain respective KaReB file!!
+# with bzo2040: make sure to use correct  to obtain respective KaReB file!!
 
 # prep work ---------------------------------------------------------------
 
