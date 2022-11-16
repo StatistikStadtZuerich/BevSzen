@@ -34,7 +34,15 @@ if (!dir.exists(req_path)) {
 req_path <- paste0(req_path, "pop_scen_downscaling.csv")
 
 
+# run the model with bzo2040 -------------------------------------
+
+run_scen(
+  scenarios = c("middle"),
+  modules = c("all"))
+
+
 # check some things -------------------------------------------------------
+# not needed for output
 
 read_csv("2_Data/4_Rates/middle/living-space_future.csv")
 spa_dyw
@@ -46,7 +54,6 @@ read_csv("2_Data/5_Outputs/middle/population_future.csv") %>%
   summarise(pop = sum(pop)) %>%
   left_join(pop_total, by = c("district", "year"))
 pop_total
-
 
 car_dat
 # same as:
@@ -128,3 +135,9 @@ downscale_long <- downscale %>%
 # write output
 downscale_long %>%
   write_delim(req_path, delim = ";")
+
+# cleanup work ------------------------------------------------------------
+
+# exchange KaReB file back to original
+file.rename(paste0(inp_path, "KaReB.csv"), paste0(inp_path, "KaReB_2040.csv"))
+file.rename(paste0(inp_path, "KaReB_2016.csv"), paste0(inp_path, "KaReB.csv"))
