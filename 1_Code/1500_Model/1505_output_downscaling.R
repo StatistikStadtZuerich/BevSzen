@@ -118,3 +118,8 @@ downscale_long <- downscale %>%
   select(year, QuarCd, district, ownerCd, owner, wohnflaeche, flaeche.ina, flaeche.ina.eff, ratio.ina.eff, bq, wfp, anz.wohn, anz.pers) %>%
   pivot_longer(cols =  c(wohnflaeche, flaeche.ina, flaeche.ina.eff, ratio.ina.eff, bq, wfp, anz.wohn, anz.pers),
                names_to = "type")
+
+
+# write output
+downscale_long %>%
+  write_delim(req_path, delim = ";")
