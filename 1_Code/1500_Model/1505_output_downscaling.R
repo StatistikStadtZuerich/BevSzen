@@ -99,9 +99,10 @@ downscale <-
   select(-aca_dyw, -aca_yw, -aca_52p, -aca, -apart_thres) %>%
   mutate(anz.wohn.ksj = anz.pers.ksj / bq.ksj) %>%
   # calculate delta population and derive flaeche.ina.eff
+  #  (also add the part coming from the verkehrsflächenfaktor car_sc)
   left_join((spa_dyw %>% filter(year == max(year)) %>% select(district, owner, people)), by = c("district", "owner")) %>%
   mutate(delta_pop = anz.pers.ksj - people) %>%
-  mutate(flaeche.ina.eff = delta_pop * wf.ksj) %>%
+  mutate(flaeche.ina.eff = delta_pop * wf.ksj * (100+car_sc)/100) %>%
   # add flaeche.ina and calculate ratio
   left_join(flaeche.ina, by = c("QuarCd", "ownerCd", "year")) %>%
   mutate(ratio.ina.eff = flaeche.ina.eff / flaeche.ina) %>%
@@ -109,9 +110,7 @@ downscale <-
   select(
     year, QuarCd, district, ownerCd, owner, wohnflaeche.lbj, wohnflaeche.ksj, flaeche.ina, flaeche.ina.eff,
     ratio.ina.eff, bq.ksj, wf.ksj, anz.wohn.ksj, anz.pers.ksj
-  ) 
-
-
+  )
 
 # transpose to long format
 # consolidate ksj and lbj figures into one
