@@ -66,11 +66,17 @@ kareb <- read_csv("2_Data/1_Input/KaReB.csv") %>%
 
 # calculate flaeche.ina from kareb and calculate ratio
 # for this, we have to distribute the flaeche.ina exponentially
-# exp_y is used for this (same as in 0800) and then 
-flaeche.ina <- full_join(exp_y,
+# exp_y was used for this (see in 0800); but here we need to distribute from 1 to 0 (I guess)
+# therefore I apply a normalization (and restrict years to scen_begin + 25)
+exp_afs <- exp_y %>%
+  add_row(year =scen_begin-1, delta = 0, exp_y = 1) %>%
+  filter(year <= scen_begin+25) %>%
+  mutate(scale = (exp_y - min(exp_y))/(1-min(exp_y)))
+
+flaeche.ina <- full_join(exp_afs,
                          kareb %>% select(QuarCd, ownerCd = EigentumGrundstkCd, Inanspruchnahme),
                          by = character()) %>%
-  mutate(flaeche.ina = Inanspruchnahme * (1-exp_y))
+  mutate(flaeche.ina = Inanspruchnahme * (1-scale))
 
 # prepare output data based on spa_dyw
 # this is still according to the format of last year, transposing to long follows further down
@@ -80,7 +86,7 @@ downscale <-
   filter(year >= scen_begin - 1) %>%
   left_join(lookup_map, by = "district") %>%
   left_join(tibble(ownerCd = labels(uni_w), owner = uni_w), by = "owner") %>%
-#  mutate(wohnflaeche.ksj = NA, flaeche.ina = NA, flaeche.ina.eff = NA, ratio.ina.eff = NA, bq.ksj = NA) %>%
+  # mutate(wohnflaeche.ksj = NA, flaeche.ina = NA, flaeche.ina.eff = NA, ratio.ina.eff = NA, bq.ksj = NA) %>%
   rename(wohnflaeche.lbj = area, wf.ksj = spa_dyw_all, anz.wohn.ksj = apartments, anz.pers.ksj = people)%>%
   # add the population
   left_join(pop_total, by = c("district", "year", "owner")) %>%
