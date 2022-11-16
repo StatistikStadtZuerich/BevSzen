@@ -64,21 +64,24 @@ kareb <- read_csv("2_Data/1_Input/KaReB.csv") %>%
   ungroup() %>%
   mutate(EigentumGrundstkCd = as.character(EigentumGrundstkCd))
 
-
+# calculate flaeche.ina from kareb and calculate ratio
+# for this, we have to distribute the flaeche.ina exponentially
+# exp_y is used for this (same as in 0800) and then 
+flaeche.ina <- full_join(exp_y,
+                         kareb %>% select(QuarCd, ownerCd = EigentumGrundstkCd, Inanspruchnahme),
+                         by = character()) %>%
+  mutate(flaeche.ina = Inanspruchnahme * (1-exp_y))
 
 # prepare output data based on spa_dyw
-# this is still according to the format of last year, transposing to long comes later
+# this is still according to the format of last year, transposing to long follows further down
+# 
 downscale <-
   spa_dyw_past_pred %>%
   filter(year >= scen_begin - 1) %>%
   left_join(lookup_map, by = "district") %>%
   left_join(tibble(ownerCd = labels(uni_w), owner = uni_w), by = "owner") %>%
-  mutate(wohnflaeche.ksj = NA, flaeche.ina = NA, flaeche.ina.eff = NA, ratio.ina.eff = NA, bq.ksj = NA) %>%
-  rename(wohnflaeche.lbj = area, wf.ksj = spa_dyw_all, anz.wohn.ksj = apartments, anz.pers.ksj = people) %>%
-  select(
-    year, QuarCd, district, ownerCd, owner, wohnflaeche.lbj, wohnflaeche.ksj, flaeche.ina, flaeche.ina.eff,
-    ratio.ina.eff, bq.ksj, wf.ksj, anz.wohn.ksj, anz.pers.ksj
-  ) %>%
+#  mutate(wohnflaeche.ksj = NA, flaeche.ina = NA, flaeche.ina.eff = NA, ratio.ina.eff = NA, bq.ksj = NA) %>%
+  rename(wohnflaeche.lbj = area, wf.ksj = spa_dyw_all, anz.wohn.ksj = apartments, anz.pers.ksj = people)%>%
   # add the population
   left_join(pop_total, by = c("district", "year", "owner")) %>%
   mutate(anz.pers.ksj = rowSums(tibble(.$anz.pers.ksj, .$pop), na.rm = TRUE)) %>%
@@ -93,21 +96,25 @@ downscale <-
   left_join((spa_dyw %>% filter(year == max(year)) %>% select(district, owner, people)), by = c("district", "owner")) %>%
   mutate(delta_pop = anz.pers.ksj - people) %>%
   mutate(flaeche.ina.eff = delta_pop * wf.ksj) %>%
-  # add flaeche.ina from kareb and calculate ratio
-  left_join(kareb %>% select(QuarCd, ownerCd = EigentumGrundstkCd, Inanspruchnahme), by = c("QuarCd", "ownerCd")) %>%
-  mutate(flaeche.ina = Inanspruchnahme) %>%
-  mutate(ratio.ina.eff = flaeche.ina.eff / flaeche.ina)
+  # add flaeche.ina and calculate ratio
+  left_join(flaeche.ina, by = c("QuarCd", "ownerCd", "year")) %>%
+  mutate(ratio.ina.eff = flaeche.ina.eff / flaeche.ina) %>%
+  # select the desired columns
+  select(
+    year, QuarCd, district, ownerCd, owner, wohnflaeche.lbj, wohnflaeche.ksj, flaeche.ina, flaeche.ina.eff,
+    ratio.ina.eff, bq.ksj, wf.ksj, anz.wohn.ksj, anz.pers.ksj
+  ) 
 
 
 
 # transpose to long format
-# 
-downscale %>%
+# consolidate ksj and lbj figures into one
+downscale_long <- downscale %>%
   rename(wohnflaeche = wohnflaeche.ksj,
          bq = bq.ksj,
          wfp = wf.ksj,
          anz.wohn = anz.wohn.ksj,
          anz.pers = anz.pers.ksj) %>%
-  select(year, QuarCd, district, ownerCd, owner, wohnflaeche, ratio.ina.eff, bq, wfp, anz.wohn, anz.pers) %>%
-  pivot_longer(cols =  c(wohnflaeche, ratio.ina.eff, bq, wfp, anz.wohn, anz.pers),
+  select(year, QuarCd, district, ownerCd, owner, wohnflaeche, flaeche.ina, flaeche.ina.eff, ratio.ina.eff, bq, wfp, anz.wohn, anz.pers) %>%
+  pivot_longer(cols =  c(wohnflaeche, flaeche.ina, flaeche.ina.eff, ratio.ina.eff, bq, wfp, anz.wohn, anz.pers),
                names_to = "type")
