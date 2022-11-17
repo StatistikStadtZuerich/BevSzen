@@ -22,8 +22,10 @@ source(paste0(code_path, "/0000_General/0003_general_with-parameters.r"))
 
 # exchange KaReB file
 inp_path <- paste0(data_path, "1_Input/")
-file.rename(paste0(inp_path, "KaReB.csv"), paste0(inp_path, "KaReB_2016.csv"))
-file.rename(paste0(inp_path, "KaReB_2040.csv"), paste0(inp_path, "KaReB.csv"))
+if (file.exists(paste0(inp_path, "KaReB_2040.csv"))) {
+  file.rename(paste0(inp_path, "KaReB.csv"), paste0(inp_path, "KaReB_2016.csv"))
+  file.rename(paste0(inp_path, "KaReB_2040.csv"), paste0(inp_path, "KaReB.csv"))
+}
 
 # output path creation
 req_path <- paste0(data_path, "8_requests/")
