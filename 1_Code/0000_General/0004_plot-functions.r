@@ -128,7 +128,6 @@ sszplot <- function(data,
   }
   target <- paste(target, paste0(name, ".", file_type), sep = "/")
 
-
   ## building of the plot is only needed if we are not in multipage mode
   if (is.null(multi)) {
 
@@ -203,6 +202,7 @@ sszplot <- function(data,
         fix_col <- col_palette[1:count(unique(data[def_col]))$n]
       }
 
+      fill_var <- aes_fill
       # if aes_col/aes_fill is a continuous variable, it has to be converted to a factor (discrete scale)
       if (is.numeric(eval(str2lang(paste0("data$", def_col))))) {
         if (!is.null(aes_col)) {
@@ -328,7 +328,7 @@ sszplot <- function(data,
     }
     if ("col" %in% geom) {
       if (!is.null(aes_fill))
-        if (length(unique(data[[aes_fill]])) > 1) {
+        if (length(unique(data[[fill_var]])) > 1) {
         geomfix <- paste0(geomfix, ", position = 'dodge'")
       }
       res <- res + eval(str2expression(paste0("geom_col(", geomfix, ")")))
