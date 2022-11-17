@@ -334,7 +334,7 @@ sszplot <- function(data,
         if (af_len > 1)
           geomfix <- paste0(geomfix, ", position = 'dodge'")
       }
-      
+        
       res <- res + eval(str2expression(paste0("geom_col(", geomfix, ")")))
 
       if (flip_coor) {
