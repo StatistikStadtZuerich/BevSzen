@@ -37,6 +37,7 @@ age_groups <- c("5- und 6-Jährige",	"7- bis 12-Jährige",	"13- bis 15-Jährige"
 uni_kids <- factor(age_groups, levels = age_groups)
 
 # store existing (i.e. BZO16) data
+# (this requires a complete run of the model beforehand with the BZO2016 KaReB)
 pop_middle_16 <- pop_middle
 
 # run the model and build output data -------------------------------------
@@ -44,13 +45,14 @@ pop_middle_16 <- pop_middle
 run_scen(
   scenarios = c("middle"),
   modules = c("all"))
+source(paste0(code_path, "1500/1501_model_outputs.r"))
 
 pop_middle %>%
   filter(year %in% c(2021, 2037, 2040, 2045, 2050),
          age >= 5 & age <= 15) %>%
-  mutate(age1 = factor(if_else(age <=6, uni_kids[1],
-                        if_else(age <=12, uni_kids[2],
-                                uni_kids[3]))),
+  mutate(age1 = factor(case_when(age <= 6 ~ uni_kids[1],
+                                 age <= 12 ~ uni_kids[2],
+                                 TRUE ~ uni_kids[3])),
          pop = round(pop, 0)) %>%
   group_by(district, year, age1) %>%
   summarise(pop = sum_NA(pop),
