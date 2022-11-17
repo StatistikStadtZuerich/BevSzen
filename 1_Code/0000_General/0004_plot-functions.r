@@ -202,7 +202,6 @@ sszplot <- function(data,
         fix_col <- col_palette[1:count(unique(data[def_col]))$n]
       }
 
-      fill_var <- aes_fill
       # if aes_col/aes_fill is a continuous variable, it has to be converted to a factor (discrete scale)
       if (is.numeric(eval(str2lang(paste0("data$", def_col))))) {
         if (!is.null(aes_col)) {
@@ -327,10 +326,15 @@ sszplot <- function(data,
       res <- res + eval(str2expression(paste0("geom_point(", geomfix, ")")))
     }
     if ("col" %in% geom) {
-      if (!is.null(aes_fill))
-        if (length(unique(data[[fill_var]])) > 1) {
-        geomfix <- paste0(geomfix, ", position = 'dodge'")
+      if (!is.null(aes_fill)) {
+        if (is.factor(aes_fill))
+          af_len <- aes_fill %>% levels() %>% length()
+        else
+          af_len <- data %>% select(aes_fill) %>% distinct() %>% pull() %>% length()
+        if (af_len > 1)
+          geomfix <- paste0(geomfix, ", position = 'dodge'")
       }
+      
       res <- res + eval(str2expression(paste0("geom_col(", geomfix, ")")))
 
       if (flip_coor) {
