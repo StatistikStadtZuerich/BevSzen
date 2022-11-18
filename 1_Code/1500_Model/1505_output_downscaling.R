@@ -2,10 +2,12 @@
 # header ------------------------------------------------------------------
 
 # calculate values for downscaling request by AfS
-#
-# for the years 2021, 2037, 2040, 2045, 2050
 # 
-# with bzo2040: make sure to use correct  to obtain respective KaReB file!!
+# with bzo2040: make sure to use KaReB file!!
+# 
+# data is basically prepared based on previously calculated values from 
+# BevSzen (but with BZO2040). Calculations concern mainly the usage from
+# KaReB, see below.
 
 # prep work ---------------------------------------------------------------
 
@@ -44,78 +46,64 @@ run_scen(
 source(paste0(code_path, "1500/1501_model_outputs.r"))
 
 
-# check some things -------------------------------------------------------
-# not needed for output
-
-read_csv("2_Data/4_Rates/middle/living-space_future.csv")
-spa_dyw
-spa_dyw_past_pred
-
-
-read_csv("2_Data/5_Outputs/middle/population_future.csv") %>%
-  group_by(district, year) %>%
-  summarise(pop = sum(pop)) %>%
-  left_join(pop_total, by = c("district", "year"))
-pop_total
-
-car_dat
-# same as:
-# usage_area <- read_csv("2_Data/4_Rates/middle/usage_area.csv")
-
-# check parameters used for flaeche.ina (should be 50 and 85 according to spec)
-car_plot
-car_uti
-
 # load data ---------------------------------------------------------------
 kareb <- read_csv("2_Data/1_Input/KaReB.csv") %>%
   group_by(QuarCd, PublJahr, ArealCd, WohnanteilCd, EigentumGrundstkCd) %>%
   summarise(Inanspruchnahme = sum(Inanspruchnahme)) %>%
+  # filter to current year,  plot construction, real portion
   filter(PublJahr == scen_begin, ArealCd == 1, WohnanteilCd == 2) %>%
   ungroup() %>%
   mutate(EigentumGrundstkCd = as.character(EigentumGrundstkCd))
 
-# calculate flaeche.ina from kareb and calculate ratio
+# calculate flaeche.ina from kareb
 # for this, we have to distribute the flaeche.ina exponentially
-# exp_y was used for this (see in 0800); but here we need to distribute from 1 to 0 (I guess)
+# exp_y was used for this (see in 0800); but here we need to distribute it from 1 (2047) to 0 (now)
 # therefore I apply a normalization (and restrict years to scen_begin + 25)
+# the data is cumulative; hence scale values do not add up to 100% but insteaad
+# reach 100% after 25 years (therefore we revert "direction" by using 1 - scale)
 exp_afs <- exp_y %>%
-  add_row(year =scen_begin-1, delta = 0, exp_y = 1) %>%
-  filter(year <= scen_begin+25) %>%
-  mutate(scale = (exp_y - min(exp_y))/(1-min(exp_y)))
+  add_row(year = date_end, delta = 0, exp_y = 1) %>%
+  filter(year <= scen_begin + 25) %>%
+  mutate(scale = 1 - (exp_y - min(exp_y))/(1-min(exp_y)))
 
-flaeche.ina <- full_join(exp_afs,
-                         kareb %>% select(QuarCd, ownerCd = EigentumGrundstkCd, Inanspruchnahme),
-                         by = character()) %>%
-  mutate(flaeche.ina = Inanspruchnahme * (1-scale))
+flaeche.ina <- exp_afs %>%
+  full_join(kareb %>% select(QuarCd, ownerCd = EigentumGrundstkCd, Inanspruchnahme),
+            by = character()) %>%
+  mutate(flaeche.ina = Inanspruchnahme * scale)
 
-# prepare output data based on spa_dyw
+# prepare output data
 # this is still according to the format of last year, transposing to long follows further down
-# 
 downscale <-
+  # spa_dyw provides general structure incl. area, aprartments and people for the current year
+  # plus living area per person (wf.ksj) for all years
   spa_dyw_past_pred %>%
   filter(year >= scen_begin - 1) %>%
   left_join(lookup_map, by = "district") %>%
   left_join(tibble(ownerCd = labels(uni_w), owner = uni_w), by = "owner") %>%
-  # mutate(wohnflaeche.ksj = NA, flaeche.ina = NA, flaeche.ina.eff = NA, ratio.ina.eff = NA, bq.ksj = NA) %>%
   rename(wohnflaeche.lbj = area, wf.ksj = spa_dyw_all, anz.wohn.ksj = apartments, anz.pers.ksj = people)%>%
-  # add the population
+
+  # add the population for the future years and calculate living area (wohnflaeche.ksj)
   left_join(pop_total, by = c("district", "year", "owner")) %>%
   mutate(anz.pers.ksj = rowSums(tibble(.$anz.pers.ksj, .$pop), na.rm = TRUE)) %>%
   mutate(wohnflaeche.ksj = wf.ksj * anz.pers.ksj) %>%
   select(-pop) %>%
-  # add bq.ksj
+  
+  # add bq.ksj from allocation and calculate number of future apartments
   left_join(aca_comb, by = c("district", "year", "owner")) %>%
   mutate(bq.ksj = aca) %>%
   select(-aca_dyw, -aca_yw, -aca_52p, -aca, -apart_thres) %>%
   mutate(anz.wohn.ksj = anz.pers.ksj / bq.ksj) %>%
-  # calculate delta population and derive flaeche.ina.eff
-  #  (also add the part coming from the verkehrsflächenfaktor car_sc)
+  
+  # calculate delta population (future years - current year) and derive flaeche.ina.eff
+  #  (also add the part coming from car_sc (Proportion of staircases; for the conversion from total area to living area))
   left_join((spa_dyw %>% filter(year == max(year)) %>% select(district, owner, people)), by = c("district", "owner")) %>%
   mutate(delta_pop = anz.pers.ksj - people) %>%
   mutate(flaeche.ina.eff = delta_pop * wf.ksj * (100+car_sc)/100) %>%
-  # add flaeche.ina and calculate ratio
+  
+  # add flaeche.ina and calculate ratio ina.eff/ina
   left_join(flaeche.ina, by = c("QuarCd", "ownerCd", "year")) %>%
   mutate(ratio.ina.eff = flaeche.ina.eff / flaeche.ina) %>%
+  
   # select the desired columns
   select(
     year, QuarCd, district, ownerCd, owner, wohnflaeche.lbj, wohnflaeche.ksj, flaeche.ina, flaeche.ina.eff,
