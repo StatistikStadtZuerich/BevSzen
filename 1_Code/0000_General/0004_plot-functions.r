@@ -131,7 +131,6 @@ sszplot <- function(data,
   if (is_grouped_df(data))
     data <- data %>% ungroup()
 
-
   ## building of the plot is only needed if we are not in multipage mode
   if (is.null(multi)) {
 
