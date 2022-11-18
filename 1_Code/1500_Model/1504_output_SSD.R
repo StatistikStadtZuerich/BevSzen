@@ -49,6 +49,11 @@ run_scen(
   modules = c("all"))
 source(paste0(code_path, "1500/1501_model_outputs.r"))
 
+#(in case pop_middle is not existing, run the follwoing code lines:
+# pop_middle <- read_csv(paste0(data_path, "5_Outputs/middle/population_future.csv")) %>%
+#  mutate(scenario = uni_c[3])
+#)
+
 pop_middle %>%
   filter(year %in% c(2021, 2037, 2040, 2045, 2050),
          age >= 5 & age <= 15) %>%
@@ -104,11 +109,11 @@ car_dat_comb %>%
             .groups = "drop") %>%
   filter(year == scen_begin) %>%
   sszplot(aes_x = "owner", aes_y = "ha", aes_fill = "bzo",
-        wrap = "cat",
-        geom = "col",
-        fix_col = 2,
-        name = "15A1_bzo_16_vs_40",
-        title = paste("BZO 16 vs. 40 for year", scen_begin))
+          wrap = "cat",
+          geom = "col",
+          fix_col = 2,
+          name = "15A1_bzo_16_vs_40",
+          title = paste("BZO 16 vs. 40 for year", scen_begin))
 
 car_dat_comb %>% 
   group_by(year, bzo, cat, owner, district) %>%
