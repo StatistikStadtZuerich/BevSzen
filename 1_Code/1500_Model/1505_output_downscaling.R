@@ -102,24 +102,25 @@ downscale <-
   
   # add flaeche.ina and calculate ratio ina.eff/ina
   left_join(flaeche.ina, by = c("QuarCd", "ownerCd", "year")) %>%
-  mutate(ratio.ina.eff = flaeche.ina.eff / flaeche.ina) %>%
+  mutate(ratio.ina = flaeche.ina.eff / flaeche.ina) %>%
   
   # select the desired columns
   select(
     year, QuarCd, district, ownerCd, owner, wohnflaeche.lbj, wohnflaeche.ksj, flaeche.ina, flaeche.ina.eff,
-    ratio.ina.eff, bq.ksj, wf.ksj, anz.wohn.ksj, anz.pers.ksj
+    ratio.ina, bq.ksj, wf.ksj, anz.wohn.ksj, anz.pers.ksj
   )
 
 # transpose to long format
 # consolidate ksj and lbj figures into one
 downscale_long <- downscale %>%
-  rename(wohnflaeche = wohnflaeche.ksj,
+  rename(districtCd = QuarCd,
+         wohnflaeche = wohnflaeche.ksj,
          bq = bq.ksj,
          wfp = wf.ksj,
          anz.wohn = anz.wohn.ksj,
          anz.pers = anz.pers.ksj) %>%
-  select(year, QuarCd, district, ownerCd, owner, wohnflaeche, flaeche.ina, flaeche.ina.eff, ratio.ina.eff, bq, wfp, anz.wohn, anz.pers) %>%
-  pivot_longer(cols =  c(wohnflaeche, flaeche.ina, flaeche.ina.eff, ratio.ina.eff, bq, wfp, anz.wohn, anz.pers),
+  select(year, districtCd, district, ownerCd, owner, wohnflaeche, flaeche.ina, flaeche.ina.eff, ratio.ina, bq, wfp, anz.wohn, anz.pers) %>%
+  pivot_longer(cols =  c(wohnflaeche, flaeche.ina, flaeche.ina.eff, ratio.ina, bq, wfp, anz.wohn, anz.pers),
                names_to = "type")
 
 
