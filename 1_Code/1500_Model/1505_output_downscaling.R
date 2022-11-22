@@ -131,6 +131,23 @@ downscale_long %>%
 
 
 # create some plots for plausibility testing ------------------------------
+# show the 8 variables over time (summarised)
+downscale_long %>%
+  group_by(year, type) %>%
+  summarise(value = sum(value),
+            .groups = "drop") %>%
+  sszplot(aes_x = "year", aes_y = "value",
+          geom = "line",
+          labs_x = "year", labs_y = "value",
+          angle = 90,
+          gridscale = "free_y",
+          name = "15C1_downscale_y",
+          width = 20, height = 14,
+          wrap = "type", ncol = 3,
+          quotes = quote(expand_limits(y = 0)))
+
+# show the 8 variables over time, differentiated by ownership,
+# one page per district
 downscale_long %>%
   group_by(year, district, owner, type) %>%
   summarise(value = sum(value)) %>%
@@ -139,9 +156,10 @@ downscale_long %>%
           labs_x = "year", labs_y = "value",
           angle = 90,
           gridscale = "free_y",
-          name = "15C1_downscale_ydw",
+          name = "15C2_downscale_ydw",
           width = 20, height = 14,
           wrap = "type", ncol = 3,
+          quotes = quote(expand_limits(y = 0)),
           multi = uni_d)
 
 
