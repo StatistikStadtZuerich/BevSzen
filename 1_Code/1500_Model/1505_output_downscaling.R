@@ -120,6 +120,7 @@ downscale_long <- downscale %>%
          anz.wohn = anz.wohn.ksj,
          anz.pers = anz.pers.ksj) %>%
   select(year, districtCd, district, ownerCd, owner, wohnflaeche, flaeche.ina, flaeche.ina.eff, ratio.ina, bq, wfp, anz.wohn, anz.pers) %>%
+  filter(year <= scen_begin + 25) %>%
   pivot_longer(cols =  c(wohnflaeche, flaeche.ina, flaeche.ina.eff, ratio.ina, bq, wfp, anz.wohn, anz.pers),
                names_to = "type")
 
@@ -127,6 +128,22 @@ downscale_long <- downscale %>%
 # write output
 downscale_long %>%
   write_delim(req_path, delim = ";")
+
+
+# create some plots for plausibility testing ------------------------------
+downscale_long %>%
+  group_by(year, district, owner, type) %>%
+  summarise(value = sum(value)) %>%
+  sszplot(aes_x = "year", aes_y = "value",  aes_col = "owner",
+          geom = "line",
+          labs_x = "year", labs_y = "value",
+          angle = 90,
+          gridscale = "free_y",
+          name = "15C1_downscale_ydw",
+          width = 20, height = 14,
+          wrap = "type", ncol = 3,
+          multi = uni_d)
+
 
 # cleanup work ------------------------------------------------------------
 
