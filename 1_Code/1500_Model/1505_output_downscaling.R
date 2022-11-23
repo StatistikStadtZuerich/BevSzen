@@ -3,7 +3,7 @@
 
 # calculate values for downscaling request by AfS
 # 
-# with bzo2040: make sure to use KaReB file!!
+# with bzo2040: make sure to use correct KaReB file!!
 # 
 # data is basically prepared based on previously calculated values from 
 # BevSzen (but with BZO2040). Calculations concern mainly the usage from
@@ -50,7 +50,7 @@ source(paste0(code_path, "1500/1501_model_outputs.r"))
 kareb <- read_csv("2_Data/1_Input/KaReB.csv") %>%
   group_by(QuarCd, PublJahr, ArealCd, WohnanteilCd, EigentumGrundstkCd) %>%
   summarise(Inanspruchnahme = sum(Inanspruchnahme)) %>%
-  # filter to current year,  plot construction, real portion
+  # filter on current year,  plot construction, real portion
   filter(PublJahr == scen_begin, ArealCd == 1, WohnanteilCd == 2) %>%
   ungroup() %>%
   mutate(EigentumGrundstkCd = as.character(EigentumGrundstkCd))
@@ -58,7 +58,7 @@ kareb <- read_csv("2_Data/1_Input/KaReB.csv") %>%
 # calculate flaeche.ina from kareb
 # for this, we have to distribute the flaeche.ina exponentially
 # exp_y was used for this (see in 0800); but here we need to distribute it from 1 (2047) to 0 (now)
-# therefore I apply a normalization (and restrict years to scen_begin + 25)
+# therefore we apply a normalization (and restrict years to scen_begin + 25)
 # the data is cumulative; hence scale values do not add up to 100% but insteaad
 # reach 100% after 25 years (therefore we revert "direction" by using 1 - scale)
 exp_afs <- exp_y %>%
@@ -72,9 +72,9 @@ flaeche.ina <- exp_afs %>%
   mutate(flaeche.ina = Inanspruchnahme * scale)
 
 # prepare output data
-# this is still according to the format of last year, transposing to long follows further down
+# this is still according to the format of last year (2021), transposing to long follows further down
 downscale <-
-  # spa_dyw provides general structure incl. area, aprartments and people for the current year
+  # spa_dyw provides general structure incl. area, apartments and people for the current year
   # plus living area per person (wf.ksj) for all years
   spa_dyw_past_pred %>%
   filter(year >= scen_begin - 1) %>%
