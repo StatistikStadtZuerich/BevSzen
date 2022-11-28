@@ -33,10 +33,6 @@ if (!dir.exists(req_path)) {
 }
 req_path <- paste0(req_path, "pop_scen_TAZ.csv")
 
-# store existing (i.e. BZO16) data
-# (this requires a complete run of the model beforehand with the BZO2016 KaReB)
-pop_middle_16 <- pop_middle
-
 # run the model and build output data -------------------------------------
 
 run_scen(
@@ -70,5 +66,7 @@ pop_middle %>%
 # cleanup work ------------------------------------------------------------
 
 # exchange KaReB file back to original
-file.rename(paste0(inp_path, "KaReB.csv"), paste0(inp_path, "KaReB_2040.csv"))
-file.rename(paste0(inp_path, "KaReB_2016.csv"), paste0(inp_path, "KaReB.csv"))
+if (file.exists(paste0(inp_path, "KaReB_2016.csv"))) {
+  file.rename(paste0(inp_path, "KaReB.csv"), paste0(inp_path, "KaReB_2040.csv"))
+  file.rename(paste0(inp_path, "KaReB_2016.csv"), paste0(inp_path, "KaReB.csv"))
+}
