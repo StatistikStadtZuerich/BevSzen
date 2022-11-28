@@ -47,7 +47,7 @@ source(paste0(code_path, "1500/1501_model_outputs.r"))
 
 pop_middle %>%
   filter(year <= 2040) %>%
-  mutate(pop = round(pop, 0)) %>%
+  mutate(pop = round(pop, -1)) %>%
   group_by(district, year) %>%
   summarise(pop = sum_NA(pop),
             .groups = "drop") %>%
