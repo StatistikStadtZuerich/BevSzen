@@ -56,7 +56,7 @@ pop %>%
   mutate(age1 = factor(case_when(age <= 6 ~ uni_kids[1],
                                  age <= 12 ~ uni_kids[2],
                                  TRUE ~ uni_kids[3])),
-         pop = round(pop, 0)) %>%
+         pop = round(pop, -1)) %>%
   group_by(district, year, age1) %>%
   summarise(pop = sum_NA(pop),
             .groups = "drop") %>%
