@@ -49,14 +49,10 @@ run_scen(
   modules = c("all"))
 source(paste0(code_path, "1500/1501_model_outputs.r"))
 
-#(in case pop_middle is not existing, run the follwoing code lines:
-# pop_middle <- read_csv(paste0(data_path, "5_Outputs/middle/population_future.csv")) %>%
-#  mutate(scenario = uni_c[3])
-#)
-
-pop_middle %>%
+pop %>%
   filter(year %in% c(2021, 2037, 2040, 2045, 2050),
-         age >= 5 & age <= 15) %>%
+         age >= 5 & age <= 15,
+         scenario %in% c("past", "middle")) %>%
   mutate(age1 = factor(case_when(age <= 6 ~ uni_kids[1],
                                  age <= 12 ~ uni_kids[2],
                                  TRUE ~ uni_kids[3])),
