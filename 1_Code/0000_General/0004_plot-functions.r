@@ -206,14 +206,18 @@ sszplot <- function(data,
                   }
 
       # if aes_col/aes_fill is a continuous variable, it has to be converted to a factor (discrete scale)
+      # due to data masking of dplyr, this is pretty cumbersome to achieve dynamically;
+      # it uses embracing ({...}) and := from the glue package as well as indirection (.data[[...]])
       if (is.numeric(eval(str2lang(paste0("data$", def_col))))) {
         if (!is.null(aes_col)) {
-          aes_col <- data %>% select(aes_col) %>% distinct() %>% pull()
-          if (!is.factor(aes_col)) aes_col <- aes_col %>% as.factor()
+          colour_col <- data %>% select(aes_col) %>% distinct() %>% pull()
+          if (!is.factor(colour_col))
+            data <- data %>% mutate("{aes_col}" := as.factor(.data[[aes_col]]))
         }
         if (!is.null(aes_fill)) {
-          aes_fill <- data %>% select(aes_fill) %>% pull() %>% as.factor()
-          if (!is.factor(aes_fill)) aes_fill <- aes_fill %>% as.factor()        
+          colour_col <- data %>% select(aes_fill) %>% distinct %>% pull()
+          if (!is.factor(colour_col))
+            data <- data %>% mutate("{aes_fill}" := as.factor(.data[[aes_fill]]))       
         }
       }
     }
