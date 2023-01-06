@@ -297,7 +297,7 @@ sce_od <- "https://data.stadt-zuerich.ch/dataset/bev_szenarien_od3440/download/B
 # specific functions ------------------------------------------------------
 
 # plot functions
-source(paste0(code_path, "0000_General/0004_plot-functions.r"))
+source(paste0(code_path, "0000_General/general_sszplots.r"))
 
 # constrained regression
 source(paste0(code_path, "0000_General/0011_constrained-regression.r"))
