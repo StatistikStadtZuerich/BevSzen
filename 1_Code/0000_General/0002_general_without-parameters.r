@@ -304,3 +304,6 @@ source(paste0(code_path, "0000_General/0011_constrained-regression.r"))
 
 # life expectancy
 source(paste0(code_path, "0000_General/0012_life-expectancy.r"))
+
+# utilities
+source(paste0(code_path, "0000_General/general_utils.r"))
