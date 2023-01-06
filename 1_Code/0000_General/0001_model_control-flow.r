@@ -53,21 +53,23 @@ run_scen <- function(scenarios, modules) {
     # scenario in the log file
     cat_log(paste0("------ scenario ", i_scen, " ------"))
 
-    # assign values to parameters
-    # to global environment
-    # WHY? will be used in functions outside this function
-
-    for (i_para in 1:nrow(para)) {
-      assign(para$parameter[i_para], para[[i_scen]][i_para],
-        envir = .GlobalEnv
-      )
-    }
-
-    # same with the scenario name
-    assign("i_scen", i_scen, envir = .GlobalEnv)
-
-    # general functions (with dependence on parameters)
-    source(paste0(code_path, "/0000_General/0003_general_with-parameters.r"))
+    # # assign values to parameters
+    # # to global environment
+    # # WHY? will be used in functions outside this function
+    # 
+    # for (i_para in 1:nrow(para)) {
+    #   assign(para$parameter[i_para], para[[i_scen]][i_para],
+    #     envir = .GlobalEnv
+    #   )
+    # }
+    # 
+    # # same with the scenario name
+    # assign("i_scen", i_scen, envir = .GlobalEnv)
+    # 
+    # # general functions (with dependence on parameters)
+    # source(paste0(code_path, "/0000_General/0003_general_with-parameters.r"))
+  
+    util_gf(i_scen)
 
     # birth
     if (modules %in% c("all", "alw", "dem", "bir")) {
