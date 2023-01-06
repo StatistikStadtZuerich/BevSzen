@@ -3,15 +3,8 @@
 
 
 # prep work ---------------------------------------------------------------
-# general functions (without dependence on parameters)
-source("1_Code/0000_General/0002_general_without-parameters.r")
 
-# parameters
-for (i_para in 1:nrow(para)) {
-  assign(para$parameter[i_para], para[["middle"]][i_para],
-         envir = .GlobalEnv
-  )
-}
+util_gf()
 
 # output path creation
 dwh_path <- paste0(data_path, "7_DWH/")
