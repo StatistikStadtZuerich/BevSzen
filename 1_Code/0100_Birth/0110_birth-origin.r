@@ -7,23 +7,7 @@
 
 # paths, general ----------------------------------------------------------
 
-# general functions already available?
-if (!exists("para")) {
-
-  # general functions (without dependence on parameters)
-  source("1_Code/0000_General/0002_general_without-parameters.r")
-
-  # parameters (depend on scenario)
-  i_scen <- "middle"
-  for (i_para in 1:nrow(para)) {
-    assign(para$parameter[i_para], para[[i_scen]][i_para],
-      envir = .GlobalEnv
-    )
-  }
-
-  # general functions (with dependence on parameters)
-  source(paste0(code_path, "/0000_General/0003_general_with-parameters.r"))
-}
+util_gf()
 
 # start time
 t0 <- Sys.time()
