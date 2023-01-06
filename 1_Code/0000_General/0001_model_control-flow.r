@@ -1,14 +1,6 @@
 # header ------------------------------------------------------------------
 # model control flows
 
-
-
-# paths, parameters, functions --------------------------------------------
-
-# general functions without dependence on parameters
-source("1_Code/0000_General/0002_general_without-parameters.r")
-
-
 # function run_scen() for different scenarios and modules
 
 # possible values
@@ -41,6 +33,9 @@ source("1_Code/0000_General/0002_general_without-parameters.r")
 # alw (all without output: since 'out' needs lower/middle/upper scenario)
 
 run_scen <- function(scenarios, modules) {
+  
+  # general functions without dependence on parameters
+  source("1_Code/0000_General/0002_general_without-parameters.r")
 
   # start with a new log file (delete the previous file)
   if (file.exists(log_file))
