@@ -5,8 +5,25 @@
 # -proportion of age (by district, year, sex, origin)
 
 
-
-# migration rate per district and year ------------------------------------
+#' migration rate per district and year
+#'
+#' @param mig_path 
+#' @param mig_vari 
+#' @param mig_district 
+#' @param mig_name 
+#' @param mig_number 
+#' @param ex_path 
+#' @param mis_base_begin 
+#' @param mis_base_end 
+#' @param mis_rate_window_thres 
+#' @param mis_rate_prop_trend 
+#' @param mis_rate_thres_percent 
+#' @param mis_rate_lower_thres 
+#'
+#' @return
+#' @export
+#'
+#' @examples
 mig_rate_dy <- function(mig_path, mig_vari, mig_district,
                         mig_name, mig_number, ex_path,
                         mis_base_begin, mis_base_end,
@@ -207,8 +224,27 @@ mig_rate_dy <- function(mig_path, mig_vari, mig_district,
 }
 
 
-# migration: proportion of sex and origin, by distict and year ------------
 
+#' migration: proportion of sex and origin, by distict and year
+#'
+#' @param mig_path 
+#' @param mig_vari 
+#' @param mig_district 
+#' @param mig_name 
+#' @param mig_number 
+#' @param ex_path 
+#' @param mis_so_base_begin 
+#' @param mis_so_base_end 
+#' @param mis_so_window_thres 
+#' @param mis_so_prop_trend 
+#' @param mis_so_thres_percent 
+#' @param mis_so_lower_thres 
+#' @param ... 
+#'
+#' @return
+#' @export
+#'
+#' @examples
 mig_prop_so_dy <- function(mig_path, mig_vari, mig_district,
                            mig_name, mig_number, ex_path,
                            mis_so_base_begin, mis_so_base_end,
@@ -388,8 +424,32 @@ mig_prop_so_dy <- function(mig_path, mig_vari, mig_district,
 }
 
 
-# migration: age proportion (by district, year, sex, origin) --------------
 
+#' migration: age proportion (by district, year, sex, origin)
+#'
+#' @param mig_path 
+#' @param mig_vari 
+#' @param mig_district 
+#' @param mig_name 
+#' @param mig_number 
+#' @param ex_path 
+#' @param mis_age_min 
+#' @param mis_age_max 
+#' @param mis_span_y 
+#' @param mis_span_a 
+#' @param mis_age_window_years 
+#' @param mis_age_base_begin 
+#' @param mis_age_base_end 
+#' @param mis_age_window_thres 
+#' @param mis_age_prop_trend 
+#' @param mis_age_thres_percent 
+#' @param mis_age_lower_thres 
+#' @param ... 
+#'
+#' @return
+#' @export
+#'
+#' @examples
 mig_prop_a_dyso <- function(mig_path, mig_vari, mig_district,
                             mig_name, mig_number, ex_path,
                             mis_age_min, mis_age_max,

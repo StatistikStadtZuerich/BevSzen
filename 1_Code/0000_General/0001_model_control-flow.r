@@ -1,37 +1,34 @@
-# header ------------------------------------------------------------------
-# model control flows
-
-# function run_scen() for different scenarios and modules
-
-# possible values
-
-# scenarios
-#   lower
-#   middle
-#   upper
-
-# modules
-# all
-#   dem (demography-modules),
-#     bir (birth)
-#     dea (death)
-#     ims (immigration*)
-#     ems (emigration*)
-#     rei (relocation-immigration)
-#     ree (relocation-emigration)
-#     nat (naturalization)
-#   hom (housing-modules)
-#     car (capacity-reserves)
-#     spa (living space)
-#     aca (allocation)
-#     pro (projects)
-#     own (ownership)
-#   hou (housing model)
-#   deh (demography and housing model)
-#   out (model outputs)
-# how (housing without output: hom, hou, deh)
-# alw (all without output: since 'out' needs lower/middle/upper scenario)
-
+#' model control
+#' 
+#' This function runs parts of or the whole population model by calling respective functions and creates data and plot outputs.
+#'
+#' @param scenarios Character vector. Valid values: "lower", "middle", "upper"
+#' @param modules Character vector. Valid values:
+#' all  
+#' dem (demography-modules)  
+#' bir (birth)  
+#' dea (death)  
+#' ims (immigration*)  
+#' ems (emigration*)  
+#' rei (relocation-immigration)  
+#' ree (relocation-emigration)  
+#' nat (naturalization)  
+#' hom (housing-modules)  
+#' car (capacity-reserves)  
+#' spa (living space)  
+#' aca (allocation)  
+#' pro (projects)  
+#' own (ownership)  
+#' hou (housing model)  
+#' deh (demography and housing model)  
+#' out (model outputs)  
+#' how (housing without output: hom, hou, deh)  
+#' alw (all without output: since 'out' needs lower/middle/upper scenario)  
+#'
+#' @return no return value
+#' @export
+#'
+#' @examples run_scen(scenarios = c("lower", "middle", "upper"), modules = c("all"))
 run_scen <- function(scenarios, modules) {
   
   # general functions without dependence on parameters
@@ -50,20 +47,6 @@ run_scen <- function(scenarios, modules) {
 
     # # assign values to parameters
     # # to global environment
-    # # WHY? will be used in functions outside this function
-    # 
-    # for (i_para in 1:nrow(para)) {
-    #   assign(para$parameter[i_para], para[[i_scen]][i_para],
-    #     envir = .GlobalEnv
-    #   )
-    # }
-    # 
-    # # same with the scenario name
-    # assign("i_scen", i_scen, envir = .GlobalEnv)
-    # 
-    # # general functions (with dependence on parameters)
-    # source(paste0(code_path, "/0000_General/0003_general_with-parameters.r"))
-  
     util_gf(i_scen)
 
     # birth
@@ -168,11 +151,6 @@ run_scen <- function(scenarios, modules) {
   # end of scenario function
 }
 
-
-# execute the function
-# run_scen(
-#     scenarios = c("lower", "middle", "upper"),
-#     modules = c("hou"))
 
 time_start <- Sys.time()
 
