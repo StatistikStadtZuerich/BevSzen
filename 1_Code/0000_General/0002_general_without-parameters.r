@@ -63,7 +63,7 @@ cat_log <- function(...) {
   }
   
   cat(...,
-    file = log_file, sep = "\n", append = TRUE
+      file = log_file, sep = "\n", append = TRUE
   )
 }
 
@@ -152,7 +152,7 @@ age_1t <- c("15-29", "30-39", "40-49")
 
 look_a1 <- tibble(age = 15:49) %>%
   mutate(age_1 = factor(if_else(age < age_1[1], age_1t[1],
-    if_else(age < age_1[2], age_1t[2], age_1t[3])
+                                if_else(age < age_1[2], age_1t[2], age_1t[3])
   ), levels = age_1t))
 
 # age category 2
@@ -161,11 +161,11 @@ age_2t <- c("15-24", "25-29", "30-34", "35-39", "40-49")
 
 look_a2 <- tibble(age = 15:49) %>%
   mutate(age_2 = factor(if_else(age < age_2[1], age_2t[1],
-    if_else(age < age_2[2], age_2t[2],
-      if_else(age < age_2[3], age_2t[3],
-        if_else(age < age_2[4], age_2t[4], age_2t[5])
-      )
-    )
+                                if_else(age < age_2[2], age_2t[2],
+                                        if_else(age < age_2[3], age_2t[3],
+                                                if_else(age < age_2[4], age_2t[4], age_2t[5])
+                                        )
+                                )
   ), levels = age_2t))
 
 
@@ -300,7 +300,7 @@ sce_od <- "https://data.stadt-zuerich.ch/dataset/bev_szenarien_od3440/download/B
 # specific functions ------------------------------------------------------
 
 # plot functions
-source(paste0(code_path, "0000_General/general_sszplot.r"))
+source(paste0(code_path, "../R/general_sszplot.r"))
 
 # constrained regression
 source(paste0(code_path, "0000_General/0011_constrained-regression.r"))
@@ -309,4 +309,4 @@ source(paste0(code_path, "0000_General/0011_constrained-regression.r"))
 source(paste0(code_path, "0000_General/0012_life-expectancy.r"))
 
 # utilities
-source(paste0(code_path, "0000_General/general_utils.r"))
+source(paste0(code_path, "../R/general_utils.r"))
