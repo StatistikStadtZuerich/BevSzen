@@ -3,7 +3,7 @@
 #' @param i_scen 
 #'
 #' @return NULL
-#' @export NULL
+#' @export
 #'
 #' @examples util_gf("lower")
 util_gf <- function(i_scen = "middle"){
