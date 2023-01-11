@@ -36,8 +36,8 @@
 #' @examples run_scen(scenarios = c("lower", "middle", "upper"), modules = c("all"))
 run_scen <- function(scenarios, modules) {
   
-  # general functions without dependence on parameters
-  source("1_Code/0000_General/0002_general_without-parameters.r")
+  # general functions
+  util_gf()
   
   # start with a new log file (delete the previous file)
   if (file.exists(log_file))
@@ -50,8 +50,7 @@ run_scen <- function(scenarios, modules) {
     # scenario in the log file
     cat_log(paste0("------ scenario ", i_scen, " ------"))
     
-    # # assign values to parameters
-    # # to global environment
+    # scenario specific: assign values to parameters to global environment
     util_gf(i_scen)
     
     # birth
