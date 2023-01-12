@@ -20,7 +20,7 @@
 #' @param mis_rate_thres_percent 
 #' @param mis_rate_lower_thres 
 #'
-#' @return
+#' @return NULL
 #' @export
 #'
 #' @examples
@@ -241,7 +241,7 @@ mig_rate_dy <- function(mig_path, mig_vari, mig_district,
 #' @param mis_so_lower_thres 
 #' @param ... 
 #'
-#' @return
+#' @return NULL
 #' @export
 #'
 #' @examples
@@ -446,7 +446,7 @@ mig_prop_so_dy <- function(mig_path, mig_vari, mig_district,
 #' @param mis_age_lower_thres 
 #' @param ... 
 #'
-#' @return
+#' @return NULL
 #' @export
 #'
 #' @examples
