@@ -5,20 +5,29 @@
 ## Prerequisite: original outputs to be stored in data_freeze/2_Data
 
 
+# preliminary work --------------------------------------------------------
+
 # load necessary variables first
 util_gf()
 
-# prepare list of csv's to be compared
-list_current_rates <- list.files(paste0(data_path, "4_Rates"), recursive = TRUE, full.names = TRUE)
-list_freeze_rates <- list.files(paste0("data_freeze/", data_path, "4_Rates"), recursive = TRUE, full.names = TRUE)
-list_current_outputs <- list.files(paste0(data_path, "5_Outputs"), recursive = TRUE, full.names = TRUE)
-list_freeze_outputs <- list.files(paste0("data_freeze/", data_path, "5_Outputs"), recursive = TRUE, full.names = TRUE) 
 
+# functions ---------------------------------------------------------------
 
+# function to obtain list of files
+# searches in subpaths of 2_Data
+# if freeze is set to TRUE, searches in subpaths of data_freeze/2_data
+# returns list of csv's as character vectors (input for comparison function)
+get_filelist <- function(subpath, freeze = FALSE) {
+  if (freeze)
+    list.files(paste0("data_freeze/", data_path, subpath), recursive = TRUE, full.names = TRUE)
+  else
+    list.files(paste0(data_path, subpath), recursive = TRUE, full.names = TRUE)
+}
 
-
+# comparison function:
 # function accepts two character vectors with paths to csv files
 # and compares them for equality
+# NB: names are not checked; comparison based on position inside vector
 check_eq <- function(current, freeze) {
   
   if (length(current) != length(freeze)) {
@@ -26,7 +35,7 @@ check_eq <- function(current, freeze) {
     return(out)
   }
   
-  out <- character(length(current))
+  out <- rep("not tested", length(current))
   
   for (i in seq_along(current)) {
     
@@ -48,8 +57,10 @@ check_eq <- function(current, freeze) {
 }
 
 
+# analysis ----------------------------------------------------------------
+
 # compare rates
-eq_rates <- check_eq(list_current_rates, list_freeze_rates)
+eq_rates <- check_eq(get_filelist("4_rates"), get_filelist("4_rates", freeze = TRUE))
 
 # compare outputs
-eq_outputs <- check_eq(list_current_outputs, list_freeze_outputs)
+eq_outputs <- check_eq(get_filelist("5_outputs"), get_filelist("5_outputs", freeze = TRUE))
