@@ -1,6 +1,6 @@
 .Rhistory
 .Rproj.user
 .Ruserdata
-.RData
+*.RData
 .DS_Store
 3_Results
