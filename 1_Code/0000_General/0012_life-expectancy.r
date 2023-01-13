@@ -1,21 +1,23 @@
-
-# header ------------------------------------------------------------------
-# life expectancy
-
-
-# life expectancy based on mortality rate (based on Yusuf et al. 2014)
-
-# method differences (rate vs. deaths/births/population)
-#-age capped (if only below a age threshold): rate aggregation does not make sense
-#-population Px: not average population over a year,
-#  here the rate is based on population at the end of the previous year
-#-qx not with births (probability to die between age x and age x+1): at age zero: with births
-#-Lx_ (person-years lived) at maximum age: cannot be calculated as dx / mx, since dx (deaths) are not available
-
-# based on Yusuf F., Martins J. M., Swanson D. A., 2014. Methods of Demographic Analysis.
-# Springer Dordrecht Heidelberg New York London. DOI 10.1007/978-94-007-6784-3
-
-
+#' life expectancy
+#' 
+#' life expectancy based on mortality rate (based on Yusuf et al. 2014)
+#' 
+#' method differences (rate vs. deaths/births/population)  
+#' -age capped (if only below a age threshold): rate aggregation does not make sense  
+#' -population Px: not average population over a year, here the rate is based on population at the end of the previous year  
+#' -qx not with births (probability to die between age x and age x+1): at age zero: with births  
+#' -Lx_ (person-years lived) at maximum age: cannot be calculated as dx / mx, since dx (deaths) are not available  
+#' 
+#' based on Yusuf F., Martins J. M., Swanson D. A., 2014. Methods of Demographic Analysis.  
+#' Springer Dordrecht Heidelberg New York London. DOI 10.1007/978-94-007-6784-3
+#'
+#' @param data 
+#' @param ... 
+#'
+#' @return
+#' @export
+#'
+#' @examples
 life_exp <- function(data, ...) {
 
   # variables

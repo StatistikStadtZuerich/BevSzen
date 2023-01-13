@@ -1,8 +1,35 @@
-# header ------------------------------------------------------------------
-# relocation proportion of migration* (immigration* or emigration*) 
-
-
-# relocation proportion  --------------------------------------------------
+#' relocation proportion of migration* (immigration* or emigration*)
+#' 
+#' variables: WHY only migration path and variable name?  
+#' these are the only variables changed (when evaluation immigration or emigration), 
+#' relocation and population variables remain the same
+#'
+#' @param mig_path 
+#' @param mig_vari 
+#' @param mig_district 
+#' @param mig_name 
+#' @param rem_number 
+#' @param ex_path 
+#' @param rem_base_begin 
+#' @param rem_base_end 
+#' @param rem_age_max 
+#' @param rem_mis_span_dyao 
+#' @param rem_rel_span_dyao 
+#' @param rem_mis_span_dao 
+#' @param rem_rel_span_dao 
+#' @param rem_mis_thres_y 
+#' @param rem_prop_span 
+#' @param rem_window_thres 
+#' @param rem_prop_trend 
+#' @param rem_thres_percent 
+#' @param rem_lower_thres 
+#' @param rem_upper_thres 
+#' @param rem_pred_span 
+#'
+#' @return
+#' @export
+#'
+#' @examples
 rel_prop <- function(mig_path, mig_vari, mig_district,
                      mig_name, rem_number, ex_path,
                      rem_base_begin, rem_base_end, rem_age_max,
@@ -13,13 +40,6 @@ rel_prop <- function(mig_path, mig_vari, mig_district,
                      rem_window_thres, rem_prop_trend, rem_thres_percent,
                      rem_lower_thres, rem_upper_thres,
                      rem_pred_span) {
-
-
-  # variables
-  # WHY only migration path and variable name?
-  # that are the only variables changed (when evaluation immigration or emigration)
-  # relocation and population variables remain the same
-
 
 
 # import and data preparation ---------------------------------------------

@@ -33,6 +33,9 @@ data_path <- "2_Data/"
 # log file
 log_file <- "2_Data/6_Log/log.txt"
 
+# temporary path (since data not on open data yet)
+car_path <- "2_Data/1_Input/KaReB.csv"
+
 # import parameter
 para <- read_delim(paste0(data_path, "3_Parameter/parameter.csv"), ";", lazy = FALSE) %>%
   select(parameter, lower, middle, upper)
@@ -60,7 +63,7 @@ cat_log <- function(...) {
   }
   
   cat(...,
-    file = log_file, sep = "\n", append = TRUE
+      file = log_file, sep = "\n", append = TRUE
   )
 }
 
@@ -149,7 +152,7 @@ age_1t <- c("15-29", "30-39", "40-49")
 
 look_a1 <- tibble(age = 15:49) %>%
   mutate(age_1 = factor(if_else(age < age_1[1], age_1t[1],
-    if_else(age < age_1[2], age_1t[2], age_1t[3])
+                                if_else(age < age_1[2], age_1t[2], age_1t[3])
   ), levels = age_1t))
 
 # age category 2
@@ -158,11 +161,11 @@ age_2t <- c("15-24", "25-29", "30-34", "35-39", "40-49")
 
 look_a2 <- tibble(age = 15:49) %>%
   mutate(age_2 = factor(if_else(age < age_2[1], age_2t[1],
-    if_else(age < age_2[2], age_2t[2],
-      if_else(age < age_2[3], age_2t[3],
-        if_else(age < age_2[4], age_2t[4], age_2t[5])
-      )
-    )
+                                if_else(age < age_2[2], age_2t[2],
+                                        if_else(age < age_2[3], age_2t[3],
+                                                if_else(age < age_2[4], age_2t[4], age_2t[5])
+                                        )
+                                )
   ), levels = age_2t))
 
 
@@ -297,10 +300,13 @@ sce_od <- "https://data.stadt-zuerich.ch/dataset/bev_szenarien_od3440/download/B
 # specific functions ------------------------------------------------------
 
 # plot functions
-source(paste0(code_path, "0000_General/0004_plot-functions.r"))
+source(paste0(code_path, "../R/general_sszplot.r"))
 
 # constrained regression
 source(paste0(code_path, "0000_General/0011_constrained-regression.r"))
 
 # life expectancy
 source(paste0(code_path, "0000_General/0012_life-expectancy.r"))
+
+# utilities
+source(paste0(code_path, "../R/general_utils.r"))

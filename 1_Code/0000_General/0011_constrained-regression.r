@@ -1,9 +1,14 @@
-
-# header ------------------------------------------------------------------
-# constrained regression
-
-
-# constrained regression (proportion of linear model and mean within bandwidth)
+#' constrained regression
+#' 
+#' proportion of linear model and mean within bandwidth
+#'
+#' @param data 
+#' @param ... 
+#'
+#' @return tibble with prediction data
+#' @export
+#'
+#' @examples
 con_reg <- function(data, ...) {
 
   # variables
