@@ -29,20 +29,24 @@ get_filelist <- function(subpath, freeze = FALSE) {
 # and compares them for equality
 # NB: names are not checked; comparison based on position inside vector
 check_eq <- function(current, freeze) {
+
+  out <- rep("not tested", length(current))
+  cnt_eq <- 0L
   
   if (length(current) != length(freeze)) {
     out <- "file lists do not have same length"
+    print(out)
     return(out)
   }
   
-  out <- rep("not tested", length(current))
-  
   for (i in seq_along(current)) {
     
-    a <- read_csv(current[i])
-    b <- read_csv(freeze[i])
+    print(paste("checking file", i, "out of", length(current), "files"))
+    a <- read_csv(current[i], show_col_types = FALSE)
+    b <- read_csv(freeze[i], show_col_types = FALSE)
     
     check <- all_equal(a, b, ignore_row_order = FALSE)
+    
     if (!isTRUE(check)) {
       out[i] <- paste("files not equal:",
                       "first file:", current[i],
@@ -50,8 +54,14 @@ check_eq <- function(current, freeze) {
       break
     } else {
       out[i] <- paste("files equal:", current[i])
+      cnt_eq <- cnt_eq + 1
     }
   }
+  
+  if (cnt_eq == length(current))
+    print("comparison finished: all files are equal")
+  else
+    print("comparison interrupted: files differ; check output for details")
   
   out
 }
