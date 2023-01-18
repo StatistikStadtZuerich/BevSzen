@@ -75,7 +75,7 @@ col_time <- c(
 # specific functions ------------------------------------------------------
 
 # migration functions
-source(paste0(code_path, "0000_General/0013_migration-functions.r"))
+source(paste0(code_path, "../R/general_migration-functions.r"))
 
 # relocation functions
-source(paste0(code_path, "0000_General/0014_relocation-function.r"))
+source(paste0(code_path, "../R/general_relocation-function.r"))

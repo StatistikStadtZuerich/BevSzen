@@ -303,10 +303,10 @@ sce_od <- "https://data.stadt-zuerich.ch/dataset/bev_szenarien_od3440/download/B
 source(paste0(code_path, "../R/general_sszplot.r"))
 
 # constrained regression
-source(paste0(code_path, "0000_General/0011_constrained-regression.r"))
+source(paste0(code_path, "../R/general_constrained-regression.r"))
 
 # life expectancy
-source(paste0(code_path, "0000_General/0012_life-expectancy.r"))
+source(paste0(code_path, "../R/general_life-expectancy.r"))
 
 # utilities
 source(paste0(code_path, "../R/general_utils.r"))
