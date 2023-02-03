@@ -25,16 +25,16 @@ library(modelr) # add_predictions
 # paths, import parameters ------------------------------------------------
 
 # path for code
-code_path <- "1_Code/"
+code_path <- paste0(here::here(), "/1_Code/")
 
 # path for data
-data_path <- "2_Data/"
+data_path <- paste0(here::here(), "/2_Data/")
 
 # log file
-log_file <- "2_Data/6_Log/log.txt"
+log_file <- paste0(here::here(), "/2_Data/6_Log/log.txt")
 
 # temporary path (since data not on open data yet)
-car_path <- "2_Data/1_Input/KaReB.csv"
+car_path <- paste0(here::here(), "/2_Data/1_Input/KaReB.csv")
 
 # import parameter
 para <- read_delim(paste0(data_path, "3_Parameter/parameter.csv"), ";", lazy = FALSE) %>%
@@ -300,13 +300,13 @@ sce_od <- "https://data.stadt-zuerich.ch/dataset/bev_szenarien_od3440/download/B
 # specific functions ------------------------------------------------------
 
 # plot functions
-source(paste0(code_path, "../R/general_sszplot.r"))
+source(paste0(here::here(), "/R/general_sszplot.r"))
 
 # constrained regression
-source(paste0(code_path, "../R/general_constrained-regression.r"))
+source(paste0(here::here(), "/R/general_constrained-regression.r"))
 
 # life expectancy
-source(paste0(code_path, "../R/general_life-expectancy.r"))
+source(paste0(here::here(), "/R/general_life-expectancy.r"))
 
 # utilities
-source(paste0(code_path, "../R/general_utils.r"))
+source(paste0(here::here(), "/R/general_utils.r"))
