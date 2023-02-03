@@ -4,5 +4,5 @@
 *.RData
 .DS_Store
 3_Results
-
-/.quarto/
+.quarto/
+.Rbuildignore
