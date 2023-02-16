@@ -1,5 +1,5 @@
 ## test for equalness of two tibbles
-## idea: compare csv's from origiinal code run vs. current scenario run
+## idea: compare csv's from original code run vs. current scenario run
 ## to make sure any changes in code do not affect output
 ## Files in consideration are in 2_Data/4_Rates and 2_Data/5_Outputs
 ## Prerequisite: original outputs to be stored in data_freeze/2_Data
@@ -19,7 +19,7 @@ util_gf()
 # returns list of csv's as character vectors (input for comparison function)
 get_filelist <- function(subpath, freeze = FALSE) {
   if (freeze)
-    list.files(paste0("data_freeze/", data_path, subpath), recursive = TRUE, full.names = TRUE)
+    list.files(paste0(here::here(), "/data_freeze/2_Data/", subpath), recursive = TRUE, full.names = TRUE)
   else
     list.files(paste0(data_path, subpath), recursive = TRUE, full.names = TRUE)
 }
