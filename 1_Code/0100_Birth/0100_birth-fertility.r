@@ -5,7 +5,7 @@
 
 
 # paths, general ----------------------------------------------------------
-
+source("1_code/0000_general/general_utils.R")
 util_gf()
 
 # start time
@@ -262,16 +262,16 @@ fer_tail <- filter(fer_dyao, year >= bir_base_begin) %>%
     )
   )
 
-# corrected fertility: plot preparation
-cor_level <- c("initial", "corrected")
-
-fer_cor <- select(fer_tail, district, year, origin, age, fer_dyao, fer) %>%
-  pivot_longer(c(fer_dyao, fer), names_to = "category", values_to = "fer") %>%
-  mutate(cat = factor(if_else(category == "fer_dyao",
-    cor_level[1], cor_level[2]
-  ), levels = cor_level)) %>%
-  select(district, year, origin, age, cat, fer)
-
+# # corrected fertility: plot preparation
+# cor_level <- c("initial", "corrected")
+# 
+# fer_cor <- select(fer_tail, district, year, origin, age, fer_dyao, fer) %>%
+#   pivot_longer(c(fer_dyao, fer), names_to = "category", values_to = "fer") %>%
+#   mutate(cat = factor(if_else(category == "fer_dyao",
+#     cor_level[1], cor_level[2]
+#   ), levels = cor_level)) %>%
+#   select(district, year, origin, age, cat, fer)
+# 
 # # plot: initial vs. corrected fertility
 # sszplot(fer_cor,
 #   aes_x = "age", aes_y = "fer", aes_col = "origin", aes_ltyp = "cat",
@@ -543,14 +543,3 @@ cat_log(paste0(
 ))
 
 
-
-# cleanup -----------------------------------------------------------------
-
-# remove variables without further use
-# rm(list = c(
-#   "bir", "cas", "fer_dyao", "fer_ya", "fer_yao", "fer_tail",
-#   "fer_cor", "fer_fit", "fer_fit", "fit_dat", "fer_pred",
-#   "pred_fit", "pop", "sel_dat", "tfr_a1", "tfr_a2",
-#   "tfr_y", "tfr_ya1", "tfr_ya1o", "tfr_ya2", "tfr_ya2o",
-#   "tfr_yo"
-# ))

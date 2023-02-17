@@ -14,8 +14,9 @@ format:
     css: "sszTheme.css"
     fig-format: png
     page-layout: full
-    fig-width: 20
-    colum: screen-inset
+    fig-width: 15
+    fig-height: 8
+    column: page
 editor: visual
 params:
   pdf_output: FALSE
@@ -28,7 +29,7 @@ execute:
 ```{r}
 #| label: prep
 
-source("R/general_utils.R")
+source("1_code/0000_general/general_utils.R")
 util_gf()
 run_scen("middle", "bir")
 
@@ -46,7 +47,6 @@ run_scen("middle", "bir")
 ```{r}
 #| label: fig-tfr_y
 #| fig-cap: "total fertility rate by year"
-#| column: screen-inset-shaded
 
 tfr_y <- group_by(fer_ya, year) %>%
   summarize(
@@ -64,7 +64,7 @@ sszplot(tfr_y,
 )
 ```
   
-  
+{{< pagebreak >}}
   
 ```{r}
 #| label: fig-tfr_yo
@@ -262,6 +262,15 @@ sszplot(filter(fer_ya, year >= bir_base_begin),
 #| fig-height: 8
 
 name <- ifelse(isTRUE(params$pdf_output), "0120_fertility_tail-correction", "")
+
+cor_level <- c("initial", "corrected")
+
+fer_cor <- select(fer_tail, district, year, origin, age, fer_dyao, fer) %>%
+  pivot_longer(c(fer_dyao, fer), names_to = "category", values_to = "fer") %>%
+  mutate(cat = factor(if_else(category == "fer_dyao",
+    cor_level[1], cor_level[2]
+  ), levels = cor_level)) %>%
+  select(district, year, origin, age, cat, fer)
 
 sszplot(fer_cor,
   aes_x = "age", aes_y = "fer", aes_col = "origin", aes_ltyp = "cat",
