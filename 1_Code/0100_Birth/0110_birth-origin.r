@@ -6,7 +6,7 @@
 
 
 # paths, general ----------------------------------------------------------
-
+source("1_code/0000_general/general_utils.R")
 util_gf()
 
 # start time
@@ -214,10 +214,3 @@ cat_log(paste0(
 ))
 
 
-# cleanup -----------------------------------------------------------------
-
-# remove variables without further use
-# rm(list = c(
-#   "bir", "cha", "cha_yo", "cha_ya1o", "cha_ya2o",
-#   "cha_dyo", "cha_dya1f", "cha_base", "cha_pred"
-# ))

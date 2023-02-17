@@ -4,7 +4,7 @@
 
 
 # paths, general ----------------------------------------------------------
-
+source("1_code/0000_general/general_utils.R")
 util_gf()
 
 # start time
@@ -87,8 +87,3 @@ cat_log(paste0(
   capture.output(Sys.time() - t0)
 ))
 
-
-# cleanup -----------------------------------------------------------------
-
-# remove variables without further use
-# rm(list = c("pro_male", "pro_male_pred", "year5", "pred_mean"))
