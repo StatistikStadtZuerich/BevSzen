@@ -190,3 +190,20 @@ util_gf <- function(i_scen = "middle"){
   # general functions (with dependence on parameters)
   source(paste0(code_path, "0000_General/0003_general_with-parameters.r"))
 }
+
+
+#' define name for plots
+#' 
+#' depending upon parameter setting, name is either returned or not. sszplot function will plot a respective
+#' PDF file in this case.
+#' If not, an empty string is returned. No PDF is generated; this is used when creating a quarto file with all plots.
+#'
+#' @param name 
+#'
+#' @return String
+#' @export
+#'
+#' @examples plot_name("my_plot")
+plot_name <- function(name){
+  ifelse(isTRUE(params$pdf_output), "0200_mortality_by-year-age-sex-region_focus-age-sex", "")
+}
