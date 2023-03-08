@@ -134,18 +134,20 @@ sszplot <- function(data,
   )
 
   # create target path and create corresponding folder if not yet existing
-  target <- paste(res_path, sub_path, sep = "/")
-  if (!file.exists(paste(getwd(), target, sep = "/"))) {
-    dir.create(paste(getwd(), target, sep = "/"),
-               recursive = TRUE
-    )
+  if (!is.null(name) && name == "") name <- NULL
+  
+  if (!is.null(name)) {
+    target <- paste(res_path, sub_path, sep = "/")
+    if (!file.exists(paste(getwd(), target, sep = "/"))) {
+      dir.create(paste(getwd(), target, sep = "/"),
+                 recursive = TRUE
+      )
+    }
+    target <- paste(target, paste0(name, ".", file_type), sep = "/")
   }
-  target <- paste(target, paste0(name, ".", file_type), sep = "/")
   
   if (is_grouped_df(data))
     data <- data %>% ungroup()
-  
-  if (!is.null(name) && name == "") name <- NULL
   
   ## building of the plot is only needed if we are not in multipage mode
   if (is.null(multi)) {
