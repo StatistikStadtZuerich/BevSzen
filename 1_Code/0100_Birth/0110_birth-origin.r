@@ -6,7 +6,7 @@
 
 
 # paths, general ----------------------------------------------------------
-source("1_code/0000_general/general_utils.R")
+source(paste0(here::here(),"/1_code/0000_general/general_utils.R"))
 util_gf()
 
 # start time
