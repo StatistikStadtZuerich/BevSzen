@@ -1,8 +1,6 @@
 ---
 title: "Population scenarios: immigration plots"
 author: "Klemens Rosin, Daniel Baumgartner"
-params:
-  pdf_output: FALSE
 ---
 
 ```{r}
@@ -10,7 +8,7 @@ params:
 
 source("1_code/0000_general/general_utils.R")
 util_gf()
-run_scen("middle", "ims")
+run_scen(params$scen, "ims")
 
 # assign the return values of the migration functions so they can be used inside the quarto environment
 rate <- ims_rate_dy
@@ -21,7 +19,7 @@ pred <- ims_prop_a_dyso
 
 # Immigration
 
-## immigration* rate (per district and year)
+## immigration\* rate (per district and year)
 
 ```{r}
 #| label: fig-mis_rate_dy
@@ -44,7 +42,7 @@ pred <- ims_prop_a_dyso
 
 ```
 
-## prediction: future immigration* rate (per year and district)
+## prediction: future immigration\* rate (per year and district)
 
 ### overview
 
@@ -137,7 +135,7 @@ pred <- ims_prop_a_dyso
 
 ## age proportion
 
-### immigration*
+### immigration\*
 
 ```{r}
 #| label: fig-mis_dyso
@@ -159,7 +157,6 @@ pred <- ims_prop_a_dyso
   )
 ```
 
-
 ```{r}
 #| label: fig-mis_dyso_free
 #| fig-cap: immigration* per district, year, sex, origin; free scales
@@ -174,7 +171,7 @@ pred <- ims_prop_a_dyso
   )
 ```
 
-### age proportion: per district, year, sex, origin 
+### age proportion: per district, year, sex, origin
 
 #### focus age
 
@@ -224,7 +221,7 @@ pred <- ims_prop_a_dyso
   )
 ```
 
-## smoothing immigration* with LOESS over years (by district, age, sex)
+## smoothing immigration\* with LOESS over years (by district, age, sex)
 
 #### focus age
 
@@ -280,7 +277,7 @@ pred <- ims_prop_a_dyso
 
 ```
 
-## age proportion (after smoothing immigration* over years)
+## age proportion (after smoothing immigration\* over years)
 
 #### focus age
 
@@ -355,7 +352,6 @@ pred <- ims_prop_a_dyso
     multi = uni_d
   )
 ```
-
 
 ## regression
 
@@ -433,4 +429,3 @@ pred <- ims_prop_a_dyso
     multi = uni_d
   )
 ```
-

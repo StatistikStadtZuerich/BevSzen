@@ -3,6 +3,7 @@ title: "Population scenarios: emigration plots"
 author: "Klemens Rosin, Daniel Baumgartner"
 params:
   pdf_output: FALSE
+  scen: "middle"
 ---
 
 ```{r}
@@ -10,7 +11,7 @@ params:
 
 source("1_code/0000_general/general_utils.R")
 util_gf()
-run_scen("middle", "ems")
+run_scen(params$scen, "ems")
 
 # assign the return values of the migration functions so they can be used inside the quarto environment
 rate <- ems_rate_dy
