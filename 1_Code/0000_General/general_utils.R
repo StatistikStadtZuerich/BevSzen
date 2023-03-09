@@ -147,7 +147,7 @@ run_scen <- function(scenarios, modules) {
       assign("i_scen", i_scen, envir = .GlobalEnv)
       
       # general functions (with dependence on parameters)
-      source(paste0(code_path, "/0000_General/0003_general_with-parameters.r"))
+      source(paste0(code_path, "0000_General/0003_general_with-parameters.r"))
       source(paste0(code_path, "1500_Model/1501_model_outputs.r"))
     }
   }
@@ -174,7 +174,7 @@ util_gf <- function(i_scen = "middle"){
   if (!exists("para", envir = .GlobalEnv)) {
     
     # general functions (without dependence on parameters)
-    source("1_Code/0000_General/0002_general_without-parameters.r")
+    source(paste0(here::here(), "/1_Code/0000_General/0002_general_without-parameters.r"))
   }
   
   # parameters (depend on scenario)
@@ -188,5 +188,22 @@ util_gf <- function(i_scen = "middle"){
     assign("i_scen", i_scen, envir = .GlobalEnv)
   
   # general functions (with dependence on parameters)
-  source(paste0(code_path, "/0000_General/0003_general_with-parameters.r"))
+  source(paste0(code_path, "0000_General/0003_general_with-parameters.r"))
+}
+
+
+#' define name for plots
+#' 
+#' depending upon parameter setting, name is either returned or not. sszplot function will plot a respective
+#' PDF file in this case.
+#' If not, an empty string is returned. No PDF is generated; this is used when creating a quarto file with all plots.
+#'
+#' @param name 
+#'
+#' @return String
+#' @export
+#'
+#' @examples plot_name("my_plot")
+plot_name <- function(name){
+  ifelse(isTRUE(params$pdf_output), "0200_mortality_by-year-age-sex-region_focus-age-sex", "")
 }

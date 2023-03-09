@@ -9,7 +9,7 @@
 if (!exists("i_scen")) i_scen <- "middle"
 
 # path for results (graphics)
-res_path <- paste0("3_Results/", i_scen, "/")
+res_path <- paste0(here::here(), "/3_Results/", i_scen, "/")
 
 if (!dir.exists(res_path)) {
   dir.create(res_path, recursive = TRUE
@@ -75,7 +75,7 @@ col_time <- c(
 # specific functions ------------------------------------------------------
 
 # migration functions
-source(paste0(code_path, "0000_General/0013_migration-functions.r"))
+source(paste0(code_path, "/0000_general/general_migration-functions.r"))
 
 # relocation functions
-source(paste0(code_path, "0000_General/0014_relocation-function.r"))
+source(paste0(code_path, "/0000_general/general_relocation-function.r"))

@@ -3,7 +3,7 @@
 
 
 # paths, general ----------------------------------------------------------
-
+source(paste0(here::here(),"/1_code/0000_general/general_utils.R"))
 util_gf()
 
 # start time
@@ -106,59 +106,59 @@ mor_yasr <- as_tibble(expand_grid(
   left_join(mor_yasr_zh_fso, by = c("year", "age", "sex", "region"))
 
 
-# mortality: age plots ----------------------------------------------------
-
-# years (past only)
-year_past <- (date_start + 1):date_end
-year_5 <- sort(unique(year_past[year_past %% 5 == 0]))
-
-# focus: difference in mortality by sex
-sszplot(filter(mor_yasr, year %in% year_5),
-  aes_x = "age", aes_y = "mor_yasr", aes_col = "sex",
-  labs_y = "mortality rate (in % per year)",
-  scale_y = "log",
-  grid = c("region", "year"),
-  name = "0200_mortality_by-year-age-sex-region_focus-age-sex",
-  width = 12, height = 7
-)
-
-# focus: difference in mortality by region
-sszplot(filter(mor_yasr, year %in% year_5),
-  aes_x = "age", aes_y = "mor_yasr", aes_col = "region",
-  labs_y = "mortality rate (in % per year)",
-  scale_y = "log",
-  grid = c("sex", "year"),
-  name = "0201_mortality_by-year-age-sex-region_focus-age-region",
-  width = 12, height = 7
-)
-
-
-# mortality: year plots ---------------------------------------------------
-
-# age
-age_select <- c(0, 20, 40, 50, 60, 70, 80)
-
-# focus: difference in mortality by sex
-sszplot(filter(mor_yasr, age %in% age_select),
-  aes_x = "year", aes_y = "mor_yasr", aes_col = "sex",
-  labs_y = "mortality rate (in % per year)",
-  scale_y = "log",
-  grid = c("region", "age"),
-  name = "0202_mortality_by-year-age-sex-region_focus-year-sex",
-  width = 14, height = 7,
-  angle = 90
-)
-
-# focus: difference in mortality by region
-sszplot(filter(mor_yasr, age %in% age_select),
-  aes_x = "year", aes_y = "mor_yasr", aes_col = "region",
-  labs_y = "mortality rate (in % per year)",
-  scale_y = "log",
-  grid = c("sex", "age"),
-  name = "0203_mortality_by-year-age-sex-region_focus-year-region",
-  width = 14, height = 7,
-  angle = 90
-)
+# # mortality: age plots ----------------------------------------------------
+# 
+# # years (past only)
+# year_past <- (date_start + 1):date_end
+# year_5 <- sort(unique(year_past[year_past %% 5 == 0]))
+# 
+# # focus: difference in mortality by sex
+# sszplot(filter(mor_yasr, year %in% year_5),
+#   aes_x = "age", aes_y = "mor_yasr", aes_col = "sex",
+#   labs_y = "mortality rate (in % per year)",
+#   scale_y = "log",
+#   grid = c("region", "year"),
+#   name = "0200_mortality_by-year-age-sex-region_focus-age-sex",
+#   width = 12, height = 7
+# )
+# 
+# # focus: difference in mortality by region
+# sszplot(filter(mor_yasr, year %in% year_5),
+#   aes_x = "age", aes_y = "mor_yasr", aes_col = "region",
+#   labs_y = "mortality rate (in % per year)",
+#   scale_y = "log",
+#   grid = c("sex", "year"),
+#   name = "0201_mortality_by-year-age-sex-region_focus-age-region",
+#   width = 12, height = 7
+# )
+# 
+# 
+# # mortality: year plots ---------------------------------------------------
+# 
+# # age
+# age_select <- c(0, 20, 40, 50, 60, 70, 80)
+# 
+# # focus: difference in mortality by sex
+# sszplot(filter(mor_yasr, age %in% age_select),
+#   aes_x = "year", aes_y = "mor_yasr", aes_col = "sex",
+#   labs_y = "mortality rate (in % per year)",
+#   scale_y = "log",
+#   grid = c("region", "age"),
+#   name = "0202_mortality_by-year-age-sex-region_focus-year-sex",
+#   width = 14, height = 7,
+#   angle = 90
+# )
+# 
+# # focus: difference in mortality by region
+# sszplot(filter(mor_yasr, age %in% age_select),
+#   aes_x = "year", aes_y = "mor_yasr", aes_col = "region",
+#   labs_y = "mortality rate (in % per year)",
+#   scale_y = "log",
+#   grid = c("sex", "age"),
+#   name = "0203_mortality_by-year-age-sex-region_focus-year-region",
+#   width = 14, height = 7,
+#   angle = 90
+# )
 
 
 # life expectancy: based on deaths, births, population --------------------
@@ -276,54 +276,54 @@ le_ysr <- life_exp(
   select(-life_exp)
 
 
-# method comparison (based on rate vs. death/birth/population) ------------
-
-# method differences (rate vs. deaths/births/population)
-# details: see life expectancy function definition
-
-# plot data
-le_methods <- filter(le_ysr, region == "Zurich") %>%
-  right_join(le, by = c("year", "sex")) %>%
-  rename(basic = life, rate = le_ysr) %>%
-  pivot_longer(c(rate, basic), names_to = "method", values_to = "life")
-
-# plot
-sszplot(le_methods,
-  aes_x = "year", aes_y = "life", aes_col = "method",
-  labs_y = "life expectancy at birth",
-  grid = c(".", "sex"),
-  name = "0204_life-expectancy-at-birth_by-year-method",
-  width = 9, height = 5
-)
-
-
-# plot: life expectancy ---------------------------------------------------
-
-# years (all: past and future)
-year_all <- (date_start + 1):scen_end
-year_all_5 <- sort(unique(year_all[year_all %% 5 == 0]))
-
-# focus: differences by sex
-sszplot(le_ysr,
-  aes_x = "year", aes_y = "le_ysr", aes_col = "sex",
-  i_x = year_all_5,
-  labs_y = "life expectancy at birth",
-  grid = c(".", "region"),
-  name = "0205_life-expectancy-at-birth_by-year-sex-region_focus-sex",
-  width = 10, height = 6
-)
-
-# focus: differences by region
-sszplot(le_ysr,
-  aes_x = "year", aes_y = "le_ysr", aes_col = "region",
-  i_x = year_all_5,
-  labs_y = "life expectancy at birth",
-  grid = c(".", "sex"),
-  name = "0206_life-expectancy-at-birth_by-year-sex-region_focus-region",
-  width = 10, height = 6
-)
-
-
+# # method comparison (based on rate vs. death/birth/population) ------------
+# 
+# # method differences (rate vs. deaths/births/population)
+# # details: see life expectancy function definition
+# 
+# # plot data
+# le_methods <- filter(le_ysr, region == "Zurich") %>%
+#   right_join(le, by = c("year", "sex")) %>%
+#   rename(basic = life, rate = le_ysr) %>%
+#   pivot_longer(c(rate, basic), names_to = "method", values_to = "life")
+# 
+# # plot
+# sszplot(le_methods,
+#   aes_x = "year", aes_y = "life", aes_col = "method",
+#   labs_y = "life expectancy at birth",
+#   grid = c(".", "sex"),
+#   name = "0204_life-expectancy-at-birth_by-year-method",
+#   width = 9, height = 5
+# )
+# 
+# 
+# # plot: life expectancy ---------------------------------------------------
+# 
+# # years (all: past and future)
+# year_all <- (date_start + 1):scen_end
+# year_all_5 <- sort(unique(year_all[year_all %% 5 == 0]))
+# 
+# # focus: differences by sex
+# sszplot(le_ysr,
+#   aes_x = "year", aes_y = "le_ysr", aes_col = "sex",
+#   i_x = year_all_5,
+#   labs_y = "life expectancy at birth",
+#   grid = c(".", "region"),
+#   name = "0205_life-expectancy-at-birth_by-year-sex-region_focus-sex",
+#   width = 10, height = 6
+# )
+# 
+# # focus: differences by region
+# sszplot(le_ysr,
+#   aes_x = "year", aes_y = "le_ysr", aes_col = "region",
+#   i_x = year_all_5,
+#   labs_y = "life expectancy at birth",
+#   grid = c(".", "sex"),
+#   name = "0206_life-expectancy-at-birth_by-year-sex-region_focus-region",
+#   width = 10, height = 6
+# )
+# 
+# 
 # mortality over base years (including tail correction) -------------------
 
 # Zurich (tibble with all possible cases as input)
@@ -374,18 +374,18 @@ mor_asr <- as_tibble(expand_grid(
     if_else(age >= dea_upper, dea_upper, age)
   )) %>%
   left_join(mor_asr_temp, by = c("age_tail", "sex", "region"))
-
-# plot
-sszplot(mor_asr,
-  aes_x = "age", aes_y = "mor_asr", aes_col = "region",
-  labs_y = "mortality rate (in % per year)",
-  scale_y = "log",
-  grid = c("sex", "."),
-  name = "0207_mortality_by-age-sex-region_tails-corrected",
-  width = 8, height = 7
-)
-
-
+# 
+# # plot
+# sszplot(mor_asr,
+#   aes_x = "age", aes_y = "mor_asr", aes_col = "region",
+#   labs_y = "mortality rate (in % per year)",
+#   scale_y = "log",
+#   grid = c("sex", "."),
+#   name = "0207_mortality_by-age-sex-region_tails-corrected",
+#   width = 8, height = 7
+# )
+# 
+# 
 # smoothing with LOESS ----------------------------------------------------
 # fit
 # WHY log? because the mortality rates vary substantially
@@ -393,49 +393,49 @@ mor_fit <- select(mor_asr, age, sex, region, mor_asr) %>%
   arrange(sex, region, age) %>%
   group_by(sex, region) %>%
   mutate(mor_fit = pmax(0, exp(predict(
-    loess(log(mor_asr) ~ age, span = dea_mor_span, degree = 1, na.action = na.aggregate))))) %>% 
+    loess(log(mor_asr) ~ age, span = dea_mor_span, degree = 1, na.action = na.aggregate))))) %>%
   ungroup()
-
-# plot
-
-# fit: levels
-fit_lev <- c("initial", "smoothed")
-
-# plot data
-plot_dat_fit <- mor_fit %>%
-  pivot_longer(c(mor_asr, mor_fit), names_to = "category", values_to = "mor") %>%
-  mutate(cat = factor(if_else(category == "mor_asr",
-    fit_lev[1], fit_lev[2]
-  ), levels = fit_lev))
-
-# plot
-sszplot(plot_dat_fit,
-  aes_x = "age", aes_y = "mor", aes_col = "region", aes_ltyp = "cat",
-  labs_y = "mortality rate (in % per year)",
-  scale_y = "log",
-  grid = c("sex", "."),
-  name = "0208_mortality_by-age-sex-region_fitted",
-  width = 8, height = 7
-)
-
-
+# 
+# # plot
+# 
+# # fit: levels
+# fit_lev <- c("initial", "smoothed")
+# 
+# # plot data
+# plot_dat_fit <- mor_fit %>%
+#   pivot_longer(c(mor_asr, mor_fit), names_to = "category", values_to = "mor") %>%
+#   mutate(cat = factor(if_else(category == "mor_asr",
+#     fit_lev[1], fit_lev[2]
+#   ), levels = fit_lev))
+# 
+# # plot
+# sszplot(plot_dat_fit,
+#   aes_x = "age", aes_y = "mor", aes_col = "region", aes_ltyp = "cat",
+#   labs_y = "mortality rate (in % per year)",
+#   scale_y = "log",
+#   grid = c("sex", "."),
+#   name = "0208_mortality_by-age-sex-region_fitted",
+#   width = 8, height = 7
+# )
+# 
+# 
 # ratio Zurich / Switzerland ----------------------------------------------
 
 # ratio (Zurich / Switzerland)
 ratio_as <- select(mor_fit, age, sex, region, mor_fit) %>%
   pivot_wider(names_from = "region", values_from = "mor_fit") %>%
   mutate(ratio = Zurich / Switzerland)
-
-# plot
-sszplot(ratio_as,
-  aes_x = "age", aes_y = "ratio", aes_col = "sex",
-  i_x = c(dea_lower, dea_upper), i_y = 1,
-  labs_y = "mortality ratio (Zurich / Switzerland)",
-  scale_y = c(0, NA),
-  name = "0209_ratio-Zurich-Switzerland_by-age-sex",
-  width = 10, height = 5
-)
-
+# 
+# # plot
+# sszplot(ratio_as,
+#   aes_x = "age", aes_y = "ratio", aes_col = "sex",
+#   i_x = c(dea_lower, dea_upper), i_y = 1,
+#   labs_y = "mortality ratio (Zurich / Switzerland)",
+#   scale_y = c(0, NA),
+#   name = "0209_ratio-Zurich-Switzerland_by-age-sex",
+#   width = 10, height = 5
+# )
+#
 
 # Zurich: future mortality rate -------------------------------------------
 
@@ -452,15 +452,15 @@ mor_zh_yas_future <- select(ratio_as, age, sex, ratio) %>%
 mor_zh_yas_past_future <- select(mor_zh_yas, year, age, sex, mor_yas) %>%
   bind_rows(mor_zh_yas_future)
 
-# plot
-sszplot(mor_zh_yas_past_future,
-  aes_x = "age", aes_y = "mor_yas", aes_col = "year",
-  labs_y = "mortality rate (in % per year)",
-  scale_y = "log",
-  grid = c("sex", "."),
-  name = "0210_mortality-prediction_by-year-age-sex",
-  width = 12, height = 8
-)
+# # plot
+# sszplot(mor_zh_yas_past_future,
+#   aes_x = "age", aes_y = "mor_yas", aes_col = "year",
+#   labs_y = "mortality rate (in % per year)",
+#   scale_y = "log",
+#   grid = c("sex", "."),
+#   name = "0210_mortality-prediction_by-year-age-sex",
+#   width = 12, height = 8
+# )
 
 
 # export mortality rates --------------------------------------------------
@@ -475,61 +475,50 @@ dea_ex <- mutate(mor_zh_yas_past_future, mor = round(mor_yas, round_rate)) %>%
 write_csv(dea_ex, paste0(exp_path, "/mortality_future.csv"))
 
 
-# Zurich: life expectancy (including the model data) ----------------------
-
-# why? visual check, if life expectancy based on predicted rates are ok
-
-# ZH: life expectancy
-le_ys_ZH <- life_exp(
-  data = mor_zh_yas_past_future, mor = "mor_yas",
-  age = "age", group_cols = c("year", "sex"),
-  age_max = dea_age_max_le, qx_NA = dea_qx_NA_le,
-  age_at = dea_age_at, radix = dea_radix
-) %>%
-  mutate(region = factor(text_r[1], uni_r)) %>%
-  rename(le_ysr = life_exp) %>%
-  select(year, sex, region, le_ysr)
-
-# plot data
-le_ysr_model <- filter(le_ysr, region != "Zurich") %>%
-  bind_rows(le_ys_ZH) %>%
-  arrange(year, sex, region)
-
-
-# plots
-
-# focus: differences by sex
-sszplot(le_ysr_model,
-  aes_x = "year", aes_y = "le_ysr", aes_col = "sex",
-  labs_y = "life expectancy at birth",
-  grid = c(".", "region"),
-  name = "0211_life-expectancy-at-birth_by-year-sex-region_focus-sex_model",
-  width = 10, height = 6
-)
-
-# focus: differences by region
-sszplot(le_ysr_model,
-  aes_x = "year", aes_y = "le_ysr", aes_col = "region",
-  labs_y = "life expectancy at birth",
-  grid = c(".", "sex"),
-  name = "0212_life-expectancy-at-birth_by-year-sex-region_focus-region_model",
-  width = 10, height = 6
-)
+# # Zurich: life expectancy (including the model data) ----------------------
+# 
+# # why? visual check, if life expectancy based on predicted rates are ok
+# 
+# # ZH: life expectancy
+# le_ys_ZH <- life_exp(
+#   data = mor_zh_yas_past_future, mor = "mor_yas",
+#   age = "age", group_cols = c("year", "sex"),
+#   age_max = dea_age_max_le, qx_NA = dea_qx_NA_le,
+#   age_at = dea_age_at, radix = dea_radix
+# ) %>%
+#   mutate(region = factor(text_r[1], uni_r)) %>%
+#   rename(le_ysr = life_exp) %>%
+#   select(year, sex, region, le_ysr)
+# 
+# # plot data
+# le_ysr_model <- filter(le_ysr, region != "Zurich") %>%
+#   bind_rows(le_ys_ZH) %>%
+#   arrange(year, sex, region)
+# 
+# 
+# # plots
+# 
+# # focus: differences by sex
+# sszplot(le_ysr_model,
+#   aes_x = "year", aes_y = "le_ysr", aes_col = "sex",
+#   labs_y = "life expectancy at birth",
+#   grid = c(".", "region"),
+#   name = "0211_life-expectancy-at-birth_by-year-sex-region_focus-sex_model",
+#   width = 10, height = 6
+# )
+# 
+# # focus: differences by region
+# sszplot(le_ysr_model,
+#   aes_x = "year", aes_y = "le_ysr", aes_col = "region",
+#   labs_y = "life expectancy at birth",
+#   grid = c(".", "sex"),
+#   name = "0212_life-expectancy-at-birth_by-year-sex-region_focus-region_model",
+#   width = 10, height = 6
+# )
 
 # log info
 cat_log(paste0(
   "mortality rate: ",
   capture.output(Sys.time() - t0)
 ))
-
-
-# cleanup -----------------------------------------------------------------
-
-# remove variables without further use
-rm(list = ls()[sapply(ls(), function(x) is.data.frame(get(x)))] %>%
-     as_tibble() %>%
-     filter(grepl("^(mor|pop|dea|ratio|bir|le).*", value)) %>%
-     pull(value))
-
-
 

@@ -108,10 +108,10 @@ sszplot <- function(data,
                     flip_coor = FALSE) {
   
   # Checks --------------------------------------------------------------------------------------
-  
+     
   # some elementary checks (but not too sophisticated)
   stopifnot(!is.null(data) && !is.null(aes_x))
-  stopifnot(!geom == "" || !is.null(quotes))
+  stopifnot(!all(geom == "") || !is.null(quotes))
   
   # Prep work -----------------------------------------------------------------------------------
   # 
@@ -132,15 +132,19 @@ sszplot <- function(data,
     current_file,
     regexpr("[^\\/]*$", current_file)
   )
-  
+
   # create target path and create corresponding folder if not yet existing
-  target <- paste(res_path, sub_path, sep = "/")
-  if (!file.exists(paste(getwd(), target, sep = "/"))) {
-    dir.create(paste(getwd(), target, sep = "/"),
-               recursive = TRUE
-    )
+  if (!is.null(name) && name == "") name <- NULL
+  
+  if (!is.null(name)) {
+    target <- paste(res_path, sub_path, sep = "/")
+    if (!file.exists(paste(getwd(), target, sep = "/"))) {
+      dir.create(paste(getwd(), target, sep = "/"),
+                 recursive = TRUE
+      )
+    }
+    target <- paste(target, paste0(name, ".", file_type), sep = "/")
   }
-  target <- paste(target, paste0(name, ".", file_type), sep = "/")
   
   if (is_grouped_df(data))
     data <- data %>% ungroup()
@@ -169,7 +173,7 @@ sszplot <- function(data,
     } else {
       NULL
     }
-    
+
     if (is.null(def_col)) {
       ifelse(fix_col > length(col_palette),
              fix_col <- col_palette[1],
@@ -238,7 +242,7 @@ sszplot <- function(data,
     
     
     # build the plot ------------------------------------------------------------------------------
-    
+  
     # default plot
     res <- ggplot(data) +
       neutral
@@ -330,23 +334,28 @@ sszplot <- function(data,
       fix_size <- paste("size = ", fix_size)
     }
     
-    geomfix <- ""
+    geomfix_w_fill <- geomfix_wo_fill <- ""
     if (is.null(aes_col) && is.null(aes_fill)) {
-      geomfix <- paste0(
+      geomfix_w_fill <- paste0(
         "colour = fix_col, fill = fix_col",
+        if_else(nchar(fix_size) == 0, "", ",")
+      )
+      geomfix_wo_fill <- paste0(
+        "colour = fix_col",
         if_else(nchar(fix_size) == 0, "", ",")
       )
     }
     if (is.null(aes_size)) {
-      geomfix <- paste0(geomfix, fix_size)
+      geomfix_w_fill <- paste0(geomfix_w_fill, fix_size)
+      geomfix_wo_fill <- paste0(geomfix_wo_fill, fix_size)
     }
     
     
     if ("line" %in% geom) {
-      res <- res + eval(str2expression(paste0("geom_line(", geomfix, ")")))
+      res <- res + eval(str2expression(paste0("geom_line(", geomfix_wo_fill, ")")))
     }
     if ("point" %in% geom) {
-      res <- res + eval(str2expression(paste0("geom_point(", geomfix, ")")))
+      res <- res + eval(str2expression(paste0("geom_point(", geomfix_w_fill, ")")))
     }
     if ("col" %in% geom) {
       if (!is.null(aes_fill)) {
@@ -355,10 +364,10 @@ sszplot <- function(data,
         else
           af_len <- data %>% select(aes_fill) %>% distinct() %>% pull() %>% length()
         if (af_len > 1)
-          geomfix <- paste0(geomfix, ", position = 'dodge'")
+          geomfix_w_fill <- paste0(geomfix_w_fill, ", position = 'dodge'")
       }
       
-      res <- res + eval(str2expression(paste0("geom_col(", geomfix, ")")))
+      res <- res + eval(str2expression(paste0("geom_col(", geomfix_w_fill, ")")))
       
       if (flip_coor) {
         res <- res + coord_flip()
