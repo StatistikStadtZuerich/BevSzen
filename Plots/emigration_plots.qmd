@@ -1,5 +1,5 @@
 ---
-title: "Population scenarios: immigration plots"
+title: "Population scenarios: emigration plots"
 author: "Klemens Rosin, Daniel Baumgartner"
 params:
   pdf_output: FALSE
@@ -10,22 +10,22 @@ params:
 
 source("1_code/0000_general/general_utils.R")
 util_gf()
-run_scen("middle", "ims")
+run_scen("middle", "ems")
 
 # assign the return values of the migration functions so they can be used inside the quarto environment
-rate <- ims_rate_dy
-prop <- ims_prop_so_dy
-pred <- ims_prop_a_dyso
+rate <- ems_rate_dy
+prop <- ems_prop_so_dy
+pred <- ems_prop_a_dyso
 
 ```
 
-# Immigration
+# Emigration
 
-## immigration* rate (per district and year)
+## emigration* rate (per district and year)
 
 ```{r}
 #| label: fig-mis_rate_dy
-#| fig-cap: immigration* rate by district and year
+#| fig-cap: emigration* rate by district and year
 #| fig-height: 10
 
   # years of the past (for plot)
@@ -37,20 +37,20 @@ pred <- ims_prop_a_dyso
     aes_x = "year", aes_y = "mis_rate_dy",
     i_x = year_past_5,
     wrap = "district", ncol = 4,
-    labs_y = "immigration* rate (in % per year)",
-    name = plot_name("0300_immigration-star-rate_by-district-year"),
+    labs_y = "emigration* rate (in % per year)",
+    name = plot_name("0400_emigration-star-rate_by-district-year"),
     width = 12, height = 14
   )
 
 ```
 
-## prediction: future immigration* rate (per year and district)
+## prediction: future emigration* rate (per year and district)
 
 ### overview
 
 ```{r}
 #| label: fig-mis_past_pred
-#| fig-cap: immigration* rate by district and year; prediction
+#| fig-cap: emigration* rate by district and year; prediction
 #| fig-height: 10
 
   # levels
@@ -66,8 +66,8 @@ pred <- ims_prop_a_dyso
     aes_x = "year", aes_y = "rate_all", aes_ltyp = "time",
     i_x = c(rate$mis_base_begin, rate$mis_base_end),
     wrap = "district", ncol = 4,
-    labs_y = "immigration* rate (in % per year)",
-    name = plot_name("0301_immigration-star-rate_by-district-year_prediction"),
+    labs_y = "emigration* rate (in % per year)",
+    name = plot_name("0401_emigration-star-rate_by-district-year_prediction"),
     width = 12, height = 14
   )
 ```
@@ -76,7 +76,7 @@ pred <- ims_prop_a_dyso
 
 ```{r}
 #| label: fig-mis_past_pred_details
-#| fig-cap: immigration* rate by district and year; prediction with details
+#| fig-cap: emigration* rate by district and year; prediction with details
 #| fig-height: 10
 
   sszplot(rate$mis_past_pred,
@@ -84,8 +84,8 @@ pred <- ims_prop_a_dyso
     geom = "point",
     i_x = c(rate$mis_base_begin, rate$mis_base_end),
     wrap = "district", ncol = 4,
-    labs_y = "immigration* rate (in % per year)",
-    name = plot_name("0302_immigration-star-rate_by-district-year_prediction-details"),
+    labs_y = "emigration* rate (in % per year)",
+    name = plot_name("0402_emigration-star-rate_by-district-year_prediction-details"),
     width = 12, height = 14,
     quotes = c(
       quote(geom_line(aes(x = year, y = pred), linetype = 2)),
@@ -99,7 +99,7 @@ pred <- ims_prop_a_dyso
 
 ```{r}
 #| label: fig-mis_dyso_prop
-#| fig-cap: immigration proportion of sex by origin, district and year
+#| fig-cap: emigration proportion of sex by origin, district and year
 #| fig-height: 10
 
   # years of the past (for plot)
@@ -111,8 +111,8 @@ pred <- ims_prop_a_dyso
     aes_x = "year", aes_y = "mis_prop_dyso", aes_col = "sex", aes_ltyp = "origin",
     i_x = year_past_5,
     wrap = "district", ncol = 4,
-    labs_y = "proportion in % (per district and year, in immigration*)",
-    name = plot_name("0303_immigration_proportion-sex-origin_by-district-year"),
+    labs_y = "proportion in % (per district and year, in emigration*)",
+    name = plot_name("0403_emigration_proportion-sex-origin_by-district-year"),
     width = 12, height = 14
   )
   
@@ -122,26 +122,26 @@ pred <- ims_prop_a_dyso
 
 ```{r}
 #| label: fig-mis_so_past_pred
-#| fig-cap: immigration proportion of sex by origin, district and year; prediction
+#| fig-cap: emigration proportion of sex by origin, district and year; prediction
 #| fig-height: 10
 
   sszplot(prop$mis_so_past_pred,
     aes_x = "year", aes_y = "prop_all", aes_col = "sex", aes_ltyp = "origin",
     i_x = c(prop$mis_so_base_begin, prop$mis_so_base_end),
     wrap = "district", ncol = 4,
-    labs_y = "proportion in % (per district and year, in immigration*)",
-    name = plot_name("0304_immigration_proportion-sex-origin_by-district-year_prediction"),
+    labs_y = "proportion in % (per district and year, in emigration*)",
+    name = plot_name("0404_emigration_proportion-sex-origin_by-district-year_prediction"),
     width = 12, height = 14
   )
 ```
 
 ## age proportion
 
-### immigration*
+### emigration*
 
 ```{r}
 #| label: fig-mis_dyso
-#| fig-cap: immigration* per district, year, sex, origin
+#| fig-cap: emigration* per district, year, sex, origin
 #| fig-height: 10
 
   # years of the past (for plot)
@@ -153,8 +153,8 @@ pred <- ims_prop_a_dyso
     aes_x = "year", aes_y = "mis_dyso", aes_col = "sex", aes_ltyp = "origin",
     i_x = year_past_5,
     wrap = "district", ncol = 4,
-    labs_y = "immigration* per year",
-    name = plot_name("0310_immigration_star_per-district-year-sex-origin"),
+    labs_y = "emigration* per year",
+    name = plot_name("0410_emigration_star_per-district-year-sex-origin"),
     width = 12, height = 14
   )
 ```
@@ -162,14 +162,14 @@ pred <- ims_prop_a_dyso
 
 ```{r}
 #| label: fig-mis_dyso_free
-#| fig-cap: immigration* per district, year, sex, origin; free scales
+#| fig-cap: emigration* per district, year, sex, origin; free scales
 
   sszplot(pred$mis_dyso,
     aes_x = "year", aes_y = "mis_dyso", aes_col = "sex", aes_ltyp = "origin",
     i_x = year_past_5,
     wrap = "district", ncol = 4, gridscale = "free",
-    labs_y = "immigration* per year",
-    name = plot_name("0311_immigration_star_per-district-year-sex-origin_free-scales"),
+    labs_y = "emigration* per year",
+    name = plot_name("0411_emigration_star_per-district-year-sex-origin_free-scales"),
     width = 12, height = 14
   )
 ```
@@ -180,7 +180,7 @@ pred <- ims_prop_a_dyso
 
 ```{r}
 #| label: fig-mis_dyaso_age
-#| fig-cap: immigration* age proportion per district, year, sex, origin; focus on age
+#| fig-cap: emigration* age proportion per district, year, sex, origin; focus on age
 #| fig-keep: all
 #| fig-subcap: !expr paste("District of", levels(uni_d))
 #| fig-width: 11
@@ -194,7 +194,7 @@ pred <- ims_prop_a_dyso
     aes_x = "age", aes_y = "mis_prop_a", aes_col = "year",
     grid = c("sex", "origin"),
     labs_y = "proportion in %", labs_col = "year",
-    name = plot_name("0312_immigration_star_age-proportion_per-district-year-sex-origin_focus-age"),
+    name = plot_name("0412_emigration_star_age-proportion_per-district-year-sex-origin_focus-age"),
     width = 11, height = 8,
     multi = uni_d
   )
@@ -205,7 +205,7 @@ pred <- ims_prop_a_dyso
 
 ```{r}
 #| label: fig-mis_dyaso_years
-#| fig-cap: immigration* age proportion per district, year, sex, origin; focus on years
+#| fig-cap: emigration* age proportion per district, year, sex, origin; focus on years
 #| fig-keep: all
 #| fig-subcap: !expr paste("District of", levels(uni_d))
 #| fig-width: 11
@@ -218,19 +218,19 @@ pred <- ims_prop_a_dyso
     aes_x = "year", aes_y = "mis_prop_a", aes_col = "age",
     grid = c("sex", "origin"),
     labs_y = "proportion in %", labs_col = "age",
-    name = plot_name("0313_immigration_star_age-proportion_per-district-year-sex-origin_focus-years"),
+    name = plot_name("0413_emigration_star_age-proportion_per-district-year-sex-origin_focus-years"),
     width = 11, height = 8,
     multi = uni_d
   )
 ```
 
-## smoothing immigration* with LOESS over years (by district, age, sex)
+## smoothing emigration* with LOESS over years (by district, age, sex)
 
 #### focus age
 
 ```{r}
 #| label: fig-mis_smooth_plot
-#| fig-cap: immigration* smoothed over year; focus on age
+#| fig-cap: emigration* smoothed over year; focus on age
 #| fig-keep: all
 #| fig-subcap: !expr paste("District of", levels(uni_d))
 #| fig-width: 11
@@ -249,8 +249,8 @@ pred <- ims_prop_a_dyso
   sszplot(filter(mis_smooth_plot, year %in% year_past_5),
     aes_x = "age", aes_y = "mis", aes_col = "cat",
     grid = c("as.factor(year)", "origin*sex"),
-    labs_y = "immigration* per year",
-    name = plot_name("0314_immigration_star_smoothed-over-year_focus-age"),
+    labs_y = "emigration* per year",
+    name = plot_name("0414_emigration_star_smoothed-over-year_focus-age"),
     width = 11, height = 8,
     multi = uni_d
   )
@@ -260,7 +260,7 @@ pred <- ims_prop_a_dyso
 
 ```{r}
 #| label: fig-mis_smooth_plot_years
-#| fig-cap: immigration* smoothed over year; focus on years
+#| fig-cap: emigration* smoothed over year; focus on years
 #| fig-keep: all
 #| fig-subcap: !expr paste("District of", levels(uni_d))
 #| fig-width: 11
@@ -272,21 +272,21 @@ pred <- ims_prop_a_dyso
   sszplot(filter(mis_smooth_plot, age %in% age_plot_smooth),
     aes_x = "year", aes_y = "mis", aes_col = "cat",
     grid = c("as.factor(age)", "origin*sex"),
-    labs_y = "immigration* per year",
-    name = plot_name("0315_immigration_star_smoothed-over-year_focus-years"),
+    labs_y = "emigration* per year",
+    name = plot_name("0415_emigration_star_smoothed-over-year_focus-years"),
     width = 11, height = 8,
     multi = uni_d
   )
 
 ```
 
-## age proportion (after smoothing immigration* over years)
+## age proportion (after smoothing emigration* over years)
 
 #### focus age
 
 ```{r}
 #| label: fig-mis_age_prop_smooth
-#| fig-cap: immigration* age proportion after smoothing; focus on age
+#| fig-cap: emigration* age proportion after smoothing; focus on age
 #| fig-keep: all
 #| fig-subcap: !expr paste("District of", levels(uni_d))
 #| fig-width: 11
@@ -296,7 +296,7 @@ pred <- ims_prop_a_dyso
     aes_x = "age", aes_y = "prop_a_smooth", aes_col = "year",
     grid = c("sex", "origin"),
     labs_y = "proportion in %",
-    name = plot_name("0316_immigration_star_age-proportion_after-smoothing_focus-age"),
+    name = plot_name("0416_emigration_star_age-proportion_after-smoothing_focus-age"),
     width = 11, height = 8,
     multi = uni_d
   )
@@ -306,7 +306,7 @@ pred <- ims_prop_a_dyso
 
 ```{r}
 #| label: fig-mis_age_prop_smooth_years
-#| fig-cap: immigration* age proportion after smoothing; focus on years
+#| fig-cap: emigration* age proportion after smoothing; focus on years
 #| fig-keep: all
 #| fig-subcap: !expr paste("District of", levels(uni_d))
 #| fig-width: 11
@@ -319,7 +319,7 @@ pred <- ims_prop_a_dyso
     aes_x = "year", aes_y = "prop_a_smooth", aes_col = "age",
     grid = c("sex", "origin"),
     labs_y = "proportion in %", labs_col = "age",
-    name = plot_name("0317_immigration_star_age-proportion_after-smoothing_focus-years"),
+    name = plot_name("0417_emigration_star_age-proportion_after-smoothing_focus-years"),
     width = 11, height = 8,
     multi = uni_d
   )
@@ -331,7 +331,7 @@ pred <- ims_prop_a_dyso
 
 ```{r}
 #| label: fig-mis_fit_plot
-#| fig-cap: immigration* proportion smoothed; focus on age
+#| fig-cap: emigration* proportion smoothed; focus on age
 #| fig-keep: all
 #| fig-subcap: !expr paste("District of", levels(uni_d))
 #| fig-width: 11
@@ -350,7 +350,7 @@ pred <- ims_prop_a_dyso
     aes_x = "age", aes_y = "prop", aes_col = "cat",
     grid = c("as.factor(year)", "origin*sex"),
     labs_y = "proportion in %",
-    name = plot_name("0318_immigration_star_proportion_smoothed_focus-age"),
+    name = plot_name("0418_emigration_star_proportion_smoothed_focus-age"),
     width = 11, height = 8,
     multi = uni_d
   )
@@ -361,7 +361,7 @@ pred <- ims_prop_a_dyso
 
 ```{r}
 #| label: fig-mis_a_past_pred
-#| fig-cap: immigration* age proportion by district, year, sex, origin; past and future
+#| fig-cap: emigration* age proportion by district, year, sex, origin; past and future
 #| fig-keep: all
 #| fig-subcap: !expr paste("District of", levels(uni_d))
 #| fig-width: 11
@@ -371,7 +371,7 @@ pred <- ims_prop_a_dyso
     aes_x = "age", aes_y = "prop_a", aes_col = "year",
     grid = c("origin", "sex"),
     labs_y = "proportion in %",
-    name = plot_name("0319_immigration_star_age-proportion_by-district-year-sex-origin_past-future"),
+    name = plot_name("0419_emigration_star_age-proportion_by-district-year-sex-origin_past-future"),
     width = 11, height = 8,
     multi = uni_d
   )
@@ -383,7 +383,7 @@ pred <- ims_prop_a_dyso
 
 ```{r}
 #| label: fig-plot_a_past_pred_age
-#| fig-cap: immigration* age proportion by district, year, sex, origin; past and future, focus on age
+#| fig-cap: emigration* age proportion by district, year, sex, origin; past and future, focus on age
 #| fig-keep: all
 #| fig-subcap: !expr paste("District of", levels(uni_d))
 #| fig-width: 11
@@ -405,7 +405,7 @@ pred <- ims_prop_a_dyso
     grid = c("sex", "origin"),
     labs_y = "proportion in %", labs_col = "year",
     fix_size = 1,
-    name = plot_name("0320_immigration_star_age-proportion_by-district-year-sex-origin_past-future_focus-age"),
+    name = plot_name("0420_emigration_star_age-proportion_by-district-year-sex-origin_past-future_focus-age"),
     width = 11, height = 8,
     multi = uni_d
   )
@@ -415,7 +415,7 @@ pred <- ims_prop_a_dyso
 
 ```{r}
 #| label: fig-plot_a_past_pred_age_years
-#| fig-cap: immigration* age proportion by district, year, sex, origin; past and future, focus on years
+#| fig-cap: emigration* age proportion by district, year, sex, origin; past and future, focus on years
 #| fig-keep: all
 #| fig-subcap: !expr paste("District of", levels(uni_d))
 #| fig-width: 11
@@ -428,7 +428,7 @@ pred <- ims_prop_a_dyso
     aes_x = "year", aes_y = "prop_a", aes_col = "age",
     grid = c("sex", "origin"),
     labs_y = "proportion in %", labs_col = "age",
-    name = plot_name("0321_immigration_star_age-proportion_by-district-year-sex-origin_past-future_focus-years"),
+    name = plot_name("0421_emigration_star_age-proportion_by-district-year-sex-origin_past-future_focus-years"),
     width = 11, height = 8,
     multi = uni_d
   )
