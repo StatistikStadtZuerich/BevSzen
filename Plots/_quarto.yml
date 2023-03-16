@@ -1,0 +1,50 @@
+project:
+  output-dir: "../3_Results/Plots/middle"
+  execute-dir: project
+  type: book
+
+book:
+  title: "Plots for population scenarios"
+  author: "Klemens Rosin, Daniel Baumgartner"
+  date: today
+  chapters:
+    - index.qmd
+    - plots_birth.qmd
+    - plots_death.qmd
+    - plots_immigration.qmd
+    - plots_emigration.qmd
+    - plots_reloc_immigration.qmd
+    - plots_reloc_emigration.qmd
+    - references.qmd
+
+bibliography: references.bib
+
+
+toc: true
+toc-depth: 4
+number-sections: true
+format:
+  html:
+    # theme: cosmo
+    code-fold: true
+    df-print: kable
+    embed-resources: true
+    css: "sszTheme.css"
+    fig-format: png
+    page-layout: full
+    fig-width: 15
+    fig-height: 8
+    column: page-left
+    anchor-sections: true
+    smooth-scroll: true
+    max-width: "2400"
+  pdf:
+    df-print: kable
+editor: visual
+params:
+  pdf_output: FALSE
+  scen: "middle"
+execute:
+  echo: false
+  warning: false
+  cache: true
