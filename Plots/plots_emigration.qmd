@@ -1,15 +1,12 @@
 ---
-title: "Population scenarios: emigration plots"
+title: "Emigration plots"
 author: "Klemens Rosin, Daniel Baumgartner"
-params:
-  pdf_output: FALSE
-  scen: "middle"
 ---
 
 ```{r}
 #| label: prep
 
-source("1_code/0000_general/general_utils.R")
+source(paste0(here::here(), "/1_code/0000_general/general_utils.R"))
 util_gf()
 run_scen(params$scen, "ems")
 
@@ -20,9 +17,8 @@ pred <- ems_prop_a_dyso
 
 ```
 
-# Emigration
 
-## emigration* rate (per district and year)
+## emigration\* rate (per district and year)
 
 ```{r}
 #| label: fig-mis_rate_dy
@@ -45,7 +41,7 @@ pred <- ems_prop_a_dyso
 
 ```
 
-## prediction: future emigration* rate (per year and district)
+## prediction: future emigration\* rate (per year and district)
 
 ### overview
 
@@ -138,7 +134,7 @@ pred <- ems_prop_a_dyso
 
 ## age proportion
 
-### emigration*
+### emigration\*
 
 ```{r}
 #| label: fig-mis_dyso
@@ -160,7 +156,6 @@ pred <- ems_prop_a_dyso
   )
 ```
 
-
 ```{r}
 #| label: fig-mis_dyso_free
 #| fig-cap: emigration* per district, year, sex, origin; free scales
@@ -175,7 +170,7 @@ pred <- ems_prop_a_dyso
   )
 ```
 
-### age proportion: per district, year, sex, origin 
+### age proportion: per district, year, sex, origin
 
 #### focus age
 
@@ -225,7 +220,7 @@ pred <- ems_prop_a_dyso
   )
 ```
 
-## smoothing emigration* with LOESS over years (by district, age, sex)
+## smoothing emigration\* with LOESS over years (by district, age, sex)
 
 #### focus age
 
@@ -281,7 +276,7 @@ pred <- ems_prop_a_dyso
 
 ```
 
-## age proportion (after smoothing emigration* over years)
+## age proportion (after smoothing emigration\* over years)
 
 #### focus age
 
@@ -356,7 +351,6 @@ pred <- ems_prop_a_dyso
     multi = uni_d
   )
 ```
-
 
 ## regression
 
@@ -434,4 +428,3 @@ pred <- ems_prop_a_dyso
     multi = uni_d
   )
 ```
-

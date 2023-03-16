@@ -1,12 +1,12 @@
 ---
-title: "Population scenarios: immigration plots"
+title: "Immigration plots"
 author: "Klemens Rosin, Daniel Baumgartner"
 ---
 
 ```{r}
 #| label: prep
 
-source("1_code/0000_general/general_utils.R")
+source(paste0(here::here(), "/1_code/0000_general/general_utils.R"))
 util_gf()
 run_scen(params$scen, "ims")
 
@@ -17,7 +17,6 @@ pred <- ims_prop_a_dyso
 
 ```
 
-# Immigration
 
 ## immigration\* rate (per district and year)
 

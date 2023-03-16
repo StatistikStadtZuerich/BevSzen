@@ -1,22 +1,22 @@
 ---
-title: "Population scenarios: death plots"
+title: "Death plots"
 author: "Klemens Rosin, Daniel Baumgartner"
 ---
 
 ```{r}
 #| label: prep
 
-source("1_code/0000_general/general_utils.R")
+source(paste0(here::here(), "/1_code/0000_general/general_utils.R"))
 util_gf()
 run_scen(params$scen, "dea")
 
 ```
 
-# Mortality
+## Mortality
 
-## age plots
+### age plots
 
-### focus: difference in mortality by sex
+#### focus: difference in mortality by sex
 
 ```{r}
 #| label: fig-mor_yasr_age_sex
@@ -36,7 +36,7 @@ sszplot(filter(mor_yasr, year %in% year_5),
 )
 ```
 
-### focus: difference in mortality by region
+#### focus: difference in mortality by region
 
 ```{r}
 #| label: fig-mor_yasr_age_region
@@ -52,9 +52,9 @@ sszplot(filter(mor_yasr, year %in% year_5),
 )
 ```
 
-## year plots
+### year plots
 
-### focus: difference in mortality by sex
+#### focus: difference in mortality by sex
 
 ```{r}
 #| label: fig-mor_yasr_year_rsex
@@ -74,7 +74,7 @@ sszplot(filter(mor_yasr, age %in% age_select),
 )
 ```
 
-### focus: difference in mortality by region
+#### focus: difference in mortality by region
 
 ```{r}
 #| label: fig-mor_yasr_year_region
@@ -91,7 +91,7 @@ sszplot(filter(mor_yasr, age %in% age_select),
 )
 ```
 
-## method comparison (based on rate vs. death/birth/population)
+### method comparison (based on rate vs. death/birth/population)
 
 method differences (rate vs. deaths/births/population) details: see life expectancy function definition
 
@@ -114,9 +114,9 @@ sszplot(le_methods,
 )
 ```
 
-## life expectancy
+### life expectancy
 
-### focus: differences by sex
+#### focus: differences by sex
 
 ```{r}
 #| label: fig-le_ysr_sex
@@ -136,7 +136,7 @@ sszplot(le_ysr,
 )
 ```
 
-### focus: differences by region
+#### focus: differences by region
 
 ```{r}
 #| label: fig-le_ysr_region
@@ -152,7 +152,7 @@ sszplot(le_ysr,
 )
 ```
 
-## mortality over base years (including tail correction)
+### mortality over base years (including tail correction)
 
 ```{r}
 #| label: fig-mor_asr
@@ -169,7 +169,7 @@ sszplot(mor_asr,
 )
 ```
 
-## smoothing with LOESS
+### smoothing with LOESS
 
 ```{r}
 #| label: fig-plot_dat_fit
@@ -196,7 +196,7 @@ sszplot(plot_dat_fit,
 )
 ```
 
-## ratio Zurich / Switzerland
+### ratio Zurich / Switzerland
 
 ```{r}
 #| label: fig-ratio_as
@@ -213,7 +213,7 @@ sszplot(ratio_as,
 )
 ```
 
-## Zurich: future mortality rate
+### Zurich: future mortality rate
 
 ```{r}
 #| label: fig-mor_zh_yas_past_future
@@ -230,9 +230,9 @@ sszplot(mor_zh_yas_past_future,
 )
 ```
 
-## Zurich: life expectancy (including the model data)
+### Zurich: life expectancy (including the model data)
 
-### focus: differences by sex
+#### focus: differences by sex
 
 ```{r}
 #| label: le_ysr_model_sex
@@ -267,7 +267,7 @@ sszplot(le_ysr_model,
 
 ```
 
-### focus: differences by region
+#### focus: differences by region
 
 ```{r}
 #| label: le_ysr_model_region

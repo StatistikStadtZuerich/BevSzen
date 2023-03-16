@@ -1,12 +1,12 @@
 ---
-title: "Population scenarios: birth plots"
+title: "Birth plots"
 author: "Klemens Rosin, Daniel Baumgartner"
 ---
 
 ```{r}
 #| label: prep
 
-source("1_code/0000_general/general_utils.R")
+source(paste0(here::here(), "/1_code/0000_general/general_utils.R"))
 util_gf()
 run_scen(params$scen, "bir")
 
@@ -14,11 +14,11 @@ run_scen(params$scen, "bir")
 
 ```
 
-# Fertility
+## Fertility
 
-## TFR (total fertility rate)
+### TFR (total fertility rate)
 
-### plots to define the base period for fertility prediction
+#### plots to define the base period for fertility prediction
 
 ```{r}
 #| label: fig-tfr_y
@@ -144,7 +144,7 @@ sszplot(tfr_ya2o,
 )
 ```
 
-### fertility plots (before any corrections)
+#### fertility plots (before any corrections)
 
 ```{r}
 #| label: fig-fer_dyao
@@ -194,7 +194,7 @@ sszplot(filter(fer_ya, year >= bir_base_begin),
 )
 ```
 
-## corrected fertility:
+### corrected fertility:
 
 ```{r}
 #| label: fig-fer_cor
@@ -268,7 +268,7 @@ sszplot(fit_dat,
 )
 ```
 
-## Prediction
+### Prediction
 
 ```{r}
 #| label: fig-fer_pred
@@ -379,7 +379,7 @@ sszplot(sel_dat,
 )
 ```
 
-### TFR (total fertility rate) of past and future
+#### TFR (total fertility rate) of past and future
 
 ```{r}
 #| label: fig-tfr_dyo
@@ -461,9 +461,9 @@ sszplot(tfr_a2,
 )
 ```
 
-# Origin
+## Origin
 
-## Origin change
+### Origin change
 
 ```{r}
 #| label: fig-cha_yo
@@ -587,7 +587,7 @@ sszplot(cha_dya1f,
 )
 ```
 
-## Prediction of origin change
+### Prediction of origin change
 
 ```{r}
 #| label: fig-cha_pred
@@ -605,9 +605,9 @@ sszplot(cha_pred,
 )
 ```
 
-# Sex ratio
+## Sex ratio
 
-## Current proportion
+### Current proportion
 
 ```{r}
 #| label: fig-pro_male
@@ -625,7 +625,7 @@ sszplot(pro_male,
 )
 ```
 
-## Prediction of proportion
+### Prediction of proportion
 
 ```{r}
 #| label: fig-pro_male_pred
