@@ -105,107 +105,107 @@ rel_prop <- function(mig_path, mig_vari, mig_district,
 
   
 
-# check differences by sex (sum over years) -------------------------------
-
-  # WHY? Check if minor differences between sex? Because omitted in precition
-  # theoretically this should be evaluated with all interactions (i.e. over years)
-  # however, there are not enough data points available
-
-  # proportion by daso
-  rel_prop_daso <- group_by(mis_rel, district, age, sex, origin) %>%
-    summarize(
-      mis = sum(mis),
-      rel = sum(rel),
-      .groups = "drop"
-    ) %>%
-    mutate(rel_prop_daso = if_else(mis == 0, NA_real_, round(rel / mis * 100, round_prop)))
-
-  # plot: focus sex
-  sszplot(rel_prop_daso,
-    aes_x = "age", aes_y = "rel_prop_daso", aes_col = "sex",
-    wrap = "district", ncol = 4,
-    labs_y = paste0("proportion in % (relocation on ", mig_name, "*)"),
-    name = paste0(rem_number, "00_proportion-daso_focus-sex"),
-    width = 12, height = 14,
-    multi = uni_o
-  )
-
-
-# differences by origin (sum over years and sex) --------------------------
-
-  # WHY?
-  # first: to emphasize the need of origin in the model
-  # second: the plots can be used to get an idea the value of an age threshold
-
-  # proportion by dao
-  rel_prop_dao <- group_by(mis_rel, district, age, origin) %>%
-    summarize(
-      mis = sum(mis),
-      rel = sum(rel),
-      .groups = "drop"
-    ) %>%
-    mutate(rel_prop_dao = if_else(mis == 0, NA_real_, round(rel / mis * 100, round_prop)))
-
-  # plot
-  sszplot(rel_prop_dao,
-    aes_x = "age", aes_y = "rel_prop_dao", aes_col = "origin",
-    wrap = "district", ncol = 4,
-    labs_y = paste0("proportion in % (relocation on ", mig_name, "*)"),
-    name = paste0(rem_number, "01_proportion-dao_focus-origin"),
-    width = 11, height = 10
-  )
-
-
-# which base years? -------------------------------------------------------
-
-  # year and origin
-
-  # WHY? simplest plot to determine the base years
-
-  # proportion by yo
-  rel_prop_yo <- group_by(mis_rel, year, origin) %>%
-    summarize(
-      mis = sum(mis),
-      rel = sum(rel),
-      .groups = "drop"
-    ) %>%
-    mutate(rel_prop_yo = if_else(mis == 0, NA_real_, round(rel / mis * 100, round_prop)))
-
-  # plot
-  sszplot(rel_prop_yo,
-    aes_x = "year", aes_y = "rel_prop_yo", aes_col = "origin",
-    labs_y = paste0("proportion in % (relocation on ", mig_name, "*)"),
-    name = paste0(rem_number, "02_proportion-yo"),
-    width = 8, height = 6,
-    quotes = quote(expand_limits(y = 0))
-  )
-
-  # year, age, origin
-
-  # proportion by yao
-  rel_prop_yao <- group_by(mis_rel, year, age, origin) %>%
-    summarize(
-      mis = sum(mis),
-      rel = sum(rel),
-      .groups = "drop"
-    ) %>%
-    rename(age_num = age) %>%
-    mutate(
-      rel_prop_yao = if_else(mis == 0, NA_real_, round(rel / mis * 100, round_prop)),
-      age = as.factor(age_num)
-    )
-
-  # age (subjectively selected)
-  age_plot <- seq(0, 80, by = 10)
-
-  # plot
-  sszplot(rel_prop_yao %>% filter(age_num %in% age_plot),
-    aes_x = "year", aes_y = "rel_prop_yao", aes_col = "origin",
-    grid = c("age", "."),
-    labs_y = paste0("proportion in % (relocation on ", mig_name, "*)"),
-    name = paste0(rem_number, "03_proportion-yao"),
-    width = 9, height = 15
-  )
+# # check differences by sex (sum over years) -------------------------------
+# 
+#   # WHY? Check if minor differences between sex? Because omitted in precition
+#   # theoretically this should be evaluated with all interactions (i.e. over years)
+#   # however, there are not enough data points available
+# 
+#   # proportion by daso
+#   rel_prop_daso <- group_by(mis_rel, district, age, sex, origin) %>%
+#     summarize(
+#       mis = sum(mis),
+#       rel = sum(rel),
+#       .groups = "drop"
+#     ) %>%
+#     mutate(rel_prop_daso = if_else(mis == 0, NA_real_, round(rel / mis * 100, round_prop)))
+# 
+#   # plot: focus sex
+#   sszplot(rel_prop_daso,
+#     aes_x = "age", aes_y = "rel_prop_daso", aes_col = "sex",
+#     wrap = "district", ncol = 4,
+#     labs_y = paste0("proportion in % (relocation on ", mig_name, "*)"),
+#     name = paste0(rem_number, "00_proportion-daso_focus-sex"),
+#     width = 12, height = 14,
+#     multi = uni_o
+#   )
+# 
+# 
+# # differences by origin (sum over years and sex) --------------------------
+# 
+#   # WHY?
+#   # first: to emphasize the need of origin in the model
+#   # second: the plots can be used to get an idea the value of an age threshold
+# 
+#   # proportion by dao
+#   rel_prop_dao <- group_by(mis_rel, district, age, origin) %>%
+#     summarize(
+#       mis = sum(mis),
+#       rel = sum(rel),
+#       .groups = "drop"
+#     ) %>%
+#     mutate(rel_prop_dao = if_else(mis == 0, NA_real_, round(rel / mis * 100, round_prop)))
+# 
+#   # plot
+#   sszplot(rel_prop_dao,
+#     aes_x = "age", aes_y = "rel_prop_dao", aes_col = "origin",
+#     wrap = "district", ncol = 4,
+#     labs_y = paste0("proportion in % (relocation on ", mig_name, "*)"),
+#     name = paste0(rem_number, "01_proportion-dao_focus-origin"),
+#     width = 11, height = 10
+#   )
+# 
+# 
+# # which base years? -------------------------------------------------------
+# 
+#   # year and origin
+# 
+#   # WHY? simplest plot to determine the base years
+# 
+#   # proportion by yo
+#   rel_prop_yo <- group_by(mis_rel, year, origin) %>%
+#     summarize(
+#       mis = sum(mis),
+#       rel = sum(rel),
+#       .groups = "drop"
+#     ) %>%
+#     mutate(rel_prop_yo = if_else(mis == 0, NA_real_, round(rel / mis * 100, round_prop)))
+# 
+#   # plot
+#   sszplot(rel_prop_yo,
+#     aes_x = "year", aes_y = "rel_prop_yo", aes_col = "origin",
+#     labs_y = paste0("proportion in % (relocation on ", mig_name, "*)"),
+#     name = paste0(rem_number, "02_proportion-yo"),
+#     width = 8, height = 6,
+#     quotes = quote(expand_limits(y = 0))
+#   )
+# 
+#   # year, age, origin
+# 
+#   # proportion by yao
+#   rel_prop_yao <- group_by(mis_rel, year, age, origin) %>%
+#     summarize(
+#       mis = sum(mis),
+#       rel = sum(rel),
+#       .groups = "drop"
+#     ) %>%
+#     rename(age_num = age) %>%
+#     mutate(
+#       rel_prop_yao = if_else(mis == 0, NA_real_, round(rel / mis * 100, round_prop)),
+#       age = as.factor(age_num)
+#     )
+# 
+#   # age (subjectively selected)
+#   age_plot <- seq(0, 80, by = 10)
+# 
+#   # plot
+#   sszplot(rel_prop_yao %>% filter(age_num %in% age_plot),
+#     aes_x = "year", aes_y = "rel_prop_yao", aes_col = "origin",
+#     grid = c("age", "."),
+#     labs_y = paste0("proportion in % (relocation on ", mig_name, "*)"),
+#     name = paste0(rem_number, "03_proportion-yao"),
+#     width = 9, height = 15
+#   )
 
   
 
@@ -221,47 +221,47 @@ rel_prop <- function(mig_path, mig_vari, mig_district,
       .groups = "drop"
     )
 
-  # plot preparation
-  process_lev <- c("relocation", paste0(mig_name, "*"))
-
-  process_plot <- gather(rem_dyao, `rel`, `mis`, key = category, value = count) %>%
-    mutate(cat = factor(if_else(category == "rel",
-      process_lev[1], process_lev[2]
-    ), levels = process_lev)) %>%
-    select(district, year, age, origin, cat, count)
-
-
-  # plot: focus age
-
-  # years (subjectively, but last year in the plot)
-  year_plot <- seq(date_end, date_start, by = -8)
-
-  sszplot(process_plot %>% filter(year %in% year_plot),
-    aes_x = "age", aes_y = "count", aes_col = "cat",
-    grid = c("year", "origin"),
-    labs_y = "quantity per year",
-    name = paste0(rem_number, "04_processes_dyao_focus-age"),
-    width = 11, height = 14,
-    multi = uni_d
-  )
-
-  # plot: focus years
-
-  # age (subjectively selected)
-  age_plot <- seq(0, 80, by = 20)
-
-  # with age as factor
-  process_plot_age <- rename(process_plot, age_num = age) %>%
-    mutate(age = as.factor(age_num))
-
-  sszplot(process_plot_age %>% filter(age_num %in% age_plot),
-    aes_x = "year", aes_y = "count", aes_col = "cat",
-    grid = c("age", "origin"),
-    labs_y = "quantity per year",
-    name = paste0(rem_number, "05_processes_dyao_focus-years"),
-    width = 12, height = 8,
-    multi = uni_d
-  )
+  # # plot preparation
+  # process_lev <- c("relocation", paste0(mig_name, "*"))
+  # 
+  # process_plot <- gather(rem_dyao, `rel`, `mis`, key = category, value = count) %>%
+  #   mutate(cat = factor(if_else(category == "rel",
+  #     process_lev[1], process_lev[2]
+  #   ), levels = process_lev)) %>%
+  #   select(district, year, age, origin, cat, count)
+  # 
+  # 
+  # # plot: focus age
+  # 
+  # # years (subjectively, but last year in the plot)
+  # year_plot <- seq(date_end, date_start, by = -8)
+  # 
+  # sszplot(process_plot %>% filter(year %in% year_plot),
+  #   aes_x = "age", aes_y = "count", aes_col = "cat",
+  #   grid = c("year", "origin"),
+  #   labs_y = "quantity per year",
+  #   name = paste0(rem_number, "04_processes_dyao_focus-age"),
+  #   width = 11, height = 14,
+  #   multi = uni_d
+  # )
+  # 
+  # # plot: focus years
+  # 
+  # # age (subjectively selected)
+  # age_plot <- seq(0, 80, by = 20)
+  # 
+  # # with age as factor
+  # process_plot_age <- rename(process_plot, age_num = age) %>%
+  #   mutate(age = as.factor(age_num))
+  # 
+  # sszplot(process_plot_age %>% filter(age_num %in% age_plot),
+  #   aes_x = "year", aes_y = "count", aes_col = "cat",
+  #   grid = c("age", "origin"),
+  #   labs_y = "quantity per year",
+  #   name = paste0(rem_number, "05_processes_dyao_focus-years"),
+  #   width = 12, height = 8,
+  #   multi = uni_d
+  # )
 
 
 # maximum age, base years -------------------------------------------------
@@ -294,61 +294,61 @@ rel_prop <- function(mig_path, mig_vari, mig_district,
     ) %>%
     ungroup()
 
-  # plot preparation
-  smooth_lev <- c("initial", "smoothed")
-
-  temp_initial <- gather(dyao_smooth, `rel`, `mis`, key = category, value = count) %>%
-    mutate(
-      cat = factor(if_else(category == "rel",
-        process_lev[1], process_lev[2]
-      ), levels = process_lev),
-      smooth = factor(smooth_lev[1], levels = smooth_lev)
-    ) %>%
-    select(district, year, age, origin, cat, smooth, count)
-
-  temp_smooth <- gather(dyao_smooth, `rel_a`, `mis_a`, key = category, value = count) %>%
-    mutate(
-      cat = factor(if_else(category == "rel_a",
-        process_lev[1], process_lev[2]
-      ), levels = process_lev),
-      smooth = factor(smooth_lev[2], levels = smooth_lev)
-    ) %>%
-    select(district, year, age, origin, cat, smooth, count)
-
-  smooth_plot <- bind_rows(temp_initial, temp_smooth)
-
-
-  # plot: focus age
-
-  # base years (subjectively, but last year in the plot)
-  year_plot <- seq(rem_base_end, rem_base_begin, by = -7)
-
-  # plot
-  sszplot(smooth_plot %>% filter(year %in% year_plot),
-    aes_x = "age", aes_y = "count", aes_col = "cat", aes_ltyp = "smooth", aes_alpha = "smooth",
-    grid = c("origin", "year"),
-    labs_y = "quantity per year",
-    name = paste0(rem_number, "06_processes_dyao_smooth_focus-age"),
-    quotes = quote(scale_alpha_manual(values = c(0.3, 1))),
-    width = 15, height = 8,
-    multi = uni_d
-  )
-
-  # plot: focus years
-
-  # age (subjectively selected)
-  age_plot <- seq(0, 60, by = 20)
-
-  # plot
-  sszplot(smooth_plot %>% filter(age %in% age_plot),
-    aes_x = "year", aes_y = "count", aes_col = "cat", aes_ltyp = "smooth", aes_alpha = "smooth",
-    grid = c("origin", "age"),
-    labs_y = "quantity per year",
-    name = paste0(rem_number, "07_processes_dyao_smooth_focus-years"),
-    quotes = quote(scale_alpha_manual(values = c(0.3, 1))),
-    width = 15, height = 8,
-    multi = uni_d
-  )
+  # # plot preparation
+  # smooth_lev <- c("initial", "smoothed")
+  # 
+  # temp_initial <- gather(dyao_smooth, `rel`, `mis`, key = category, value = count) %>%
+  #   mutate(
+  #     cat = factor(if_else(category == "rel",
+  #       process_lev[1], process_lev[2]
+  #     ), levels = process_lev),
+  #     smooth = factor(smooth_lev[1], levels = smooth_lev)
+  #   ) %>%
+  #   select(district, year, age, origin, cat, smooth, count)
+  # 
+  # temp_smooth <- gather(dyao_smooth, `rel_a`, `mis_a`, key = category, value = count) %>%
+  #   mutate(
+  #     cat = factor(if_else(category == "rel_a",
+  #       process_lev[1], process_lev[2]
+  #     ), levels = process_lev),
+  #     smooth = factor(smooth_lev[2], levels = smooth_lev)
+  #   ) %>%
+  #   select(district, year, age, origin, cat, smooth, count)
+  # 
+  # smooth_plot <- bind_rows(temp_initial, temp_smooth)
+  # 
+  # 
+  # # plot: focus age
+  # 
+  # # base years (subjectively, but last year in the plot)
+  # year_plot <- seq(rem_base_end, rem_base_begin, by = -7)
+  # 
+  # # plot
+  # sszplot(smooth_plot %>% filter(year %in% year_plot),
+  #   aes_x = "age", aes_y = "count", aes_col = "cat", aes_ltyp = "smooth", aes_alpha = "smooth",
+  #   grid = c("origin", "year"),
+  #   labs_y = "quantity per year",
+  #   name = paste0(rem_number, "06_processes_dyao_smooth_focus-age"),
+  #   quotes = quote(scale_alpha_manual(values = c(0.3, 1))),
+  #   width = 15, height = 8,
+  #   multi = uni_d
+  # )
+  # 
+  # # plot: focus years
+  # 
+  # # age (subjectively selected)
+  # age_plot <- seq(0, 60, by = 20)
+  # 
+  # # plot
+  # sszplot(smooth_plot %>% filter(age %in% age_plot),
+  #   aes_x = "year", aes_y = "count", aes_col = "cat", aes_ltyp = "smooth", aes_alpha = "smooth",
+  #   grid = c("origin", "age"),
+  #   labs_y = "quantity per year",
+  #   name = paste0(rem_number, "07_processes_dyao_smooth_focus-years"),
+  #   quotes = quote(scale_alpha_manual(values = c(0.3, 1))),
+  #   width = 15, height = 8,
+  #   multi = uni_d
+  # )
 
 
 # dyao: proportion after smoothing ----------------------------------------
@@ -360,38 +360,38 @@ rel_prop <- function(mig_path, mig_vari, mig_district,
   )))
 
 
-  # plot: focus age
-
-  # base years (subjectively, but last year in the plot)
-  year_plot <- seq(rem_base_end, rem_base_begin, by = -3)
-
-  # plot
-  sszplot(prop_dyao_smooth,
-    aes_x = "age", aes_y = "rel_prop_dyao", aes_col = "origin",
-    wrap = "district", ncol = 4,
-    labs_y = paste0("proportion in % (relocation on ", mig_name, "*)"),
-    name = paste0(rem_number, "08_proportion_dyao_smooth_focus-age"),
-    width = 11, height = 10,
-    multi = year_plot, multif = "filter(year == x)"
-  )
-
-  # plot: focus year
-
-  # age (subjectively selected)
-  age_plot <- seq(0, 70, by = 10)
-
-  # plot
-  sszplot(prop_dyao_smooth,
-    aes_x = "year", aes_y = "rel_prop_dyao", aes_col = "origin",
-    wrap = "district", ncol = 4,
-    labs_y = paste0("proportion in % (relocation on ", mig_name, "*)"),
-    name = paste0(rem_number, "09_proportion_dyao_smooth_focus-years"),
-    title = "paste0('age: ', as.character(x))",
-    width = 11, height = 10,
-    multi = age_plot, multif = "filter(age == x)"
-  )
-
-  
+  # # plot: focus age
+  # 
+  # # base years (subjectively, but last year in the plot)
+  # year_plot <- seq(rem_base_end, rem_base_begin, by = -3)
+  # 
+  # # plot
+  # sszplot(prop_dyao_smooth,
+  #   aes_x = "age", aes_y = "rel_prop_dyao", aes_col = "origin",
+  #   wrap = "district", ncol = 4,
+  #   labs_y = paste0("proportion in % (relocation on ", mig_name, "*)"),
+  #   name = paste0(rem_number, "08_proportion_dyao_smooth_focus-age"),
+  #   width = 11, height = 10,
+  #   multi = year_plot, multif = "filter(year == x)"
+  # )
+  # 
+  # # plot: focus year
+  # 
+  # # age (subjectively selected)
+  # age_plot <- seq(0, 70, by = 10)
+  # 
+  # # plot
+  # sszplot(prop_dyao_smooth,
+  #   aes_x = "year", aes_y = "rel_prop_dyao", aes_col = "origin",
+  #   wrap = "district", ncol = 4,
+  #   labs_y = paste0("proportion in % (relocation on ", mig_name, "*)"),
+  #   name = paste0(rem_number, "09_proportion_dyao_smooth_focus-years"),
+  #   title = "paste0('age: ', as.character(x))",
+  #   width = 11, height = 10,
+  #   multi = age_plot, multif = "filter(age == x)"
+  # )
+  # 
+  # 
 
 # dao (without y) ---------------------------------------------------------
 
@@ -420,38 +420,38 @@ rel_prop <- function(mig_path, mig_vari, mig_district,
     ) %>%
     ungroup()
 
-  # plot preparation
-  temp_initial <- gather(dao_smooth, `rel`, `mis`, key = category, value = count) %>%
-    mutate(
-      cat = factor(if_else(category == "rel",
-        process_lev[1], process_lev[2]
-      ), levels = process_lev),
-      smooth = factor(smooth_lev[1], levels = smooth_lev)
-    ) %>%
-    select(district, age, origin, cat, smooth, count)
-
-  temp_smooth <- gather(dao_smooth, `rel_a`, `mis_a`, key = category, value = count) %>%
-    mutate(
-      cat = factor(if_else(category == "rel_a",
-        process_lev[1], process_lev[2]
-      ), levels = process_lev),
-      smooth = factor(smooth_lev[2], levels = smooth_lev)
-    ) %>%
-    select(district, age, origin, cat, smooth, count)
-
-  dao_smooth_plot <- bind_rows(temp_initial, temp_smooth)
-
-
-  # plot
-  sszplot(dao_smooth_plot,
-    aes_x = "age", aes_y = "count", aes_col = "cat", aes_ltyp = "smooth", aes_alpha = "smooth",
-    grid = c("origin", "."),
-    labs_y = "quantity per year",
-    name = paste0(rem_number, "10_processes_dao_smooth"),
-    quotes = quote(scale_alpha_manual(values = c(0.3, 1))),
-    width = 10, height = 8,
-    multi = uni_d
-  )
+  # # plot preparation
+  # temp_initial <- gather(dao_smooth, `rel`, `mis`, key = category, value = count) %>%
+  #   mutate(
+  #     cat = factor(if_else(category == "rel",
+  #       process_lev[1], process_lev[2]
+  #     ), levels = process_lev),
+  #     smooth = factor(smooth_lev[1], levels = smooth_lev)
+  #   ) %>%
+  #   select(district, age, origin, cat, smooth, count)
+  # 
+  # temp_smooth <- gather(dao_smooth, `rel_a`, `mis_a`, key = category, value = count) %>%
+  #   mutate(
+  #     cat = factor(if_else(category == "rel_a",
+  #       process_lev[1], process_lev[2]
+  #     ), levels = process_lev),
+  #     smooth = factor(smooth_lev[2], levels = smooth_lev)
+  #   ) %>%
+  #   select(district, age, origin, cat, smooth, count)
+  # 
+  # dao_smooth_plot <- bind_rows(temp_initial, temp_smooth)
+  # 
+  # 
+  # # plot
+  # sszplot(dao_smooth_plot,
+  #   aes_x = "age", aes_y = "count", aes_col = "cat", aes_ltyp = "smooth", aes_alpha = "smooth",
+  #   grid = c("origin", "."),
+  #   labs_y = "quantity per year",
+  #   name = paste0(rem_number, "10_processes_dao_smooth"),
+  #   quotes = quote(scale_alpha_manual(values = c(0.3, 1))),
+  #   width = 10, height = 8,
+  #   multi = uni_d
+  # )
 
   # proportion after smoothing
   prop_dao_smooth <- mutate(dao_smooth, rel_prop_dao = pmax(0, pmin(
@@ -459,14 +459,14 @@ rel_prop <- function(mig_path, mig_vari, mig_district,
     if_else(mis_a == 0, NA_real_, round(rel_a / mis_a * 100, round_prop))
   )))
 
-  # plot
-  sszplot(prop_dao_smooth,
-    aes_x = "age", aes_y = "rel_prop_dao", aes_col = "origin",
-    wrap = "district", ncol = 4,
-    labs_y = paste0("proportion in % (relocation on ", mig_name, "*)"),
-    name = paste0(rem_number, "11_proportion_dao_smooth"),
-    width = 11, height = 10
-  )
+  # # plot
+  # sszplot(prop_dao_smooth,
+  #   aes_x = "age", aes_y = "rel_prop_dao", aes_col = "origin",
+  #   wrap = "district", ncol = 4,
+  #   labs_y = paste0("proportion in % (relocation on ", mig_name, "*)"),
+  #   name = paste0(rem_number, "11_proportion_dao_smooth"),
+  #   width = 11, height = 10
+  # )
 
   
 
@@ -485,55 +485,55 @@ rel_prop <- function(mig_path, mig_vari, mig_district,
       rel_prop_source = factor(if_else(mis >= rem_mis_thres_y, sources[1], sources[2]), levels = sources)
     )
 
-  # plot: entire curves (different aggregations levels)
-  entire_curves <- select(prop_agg, district, year, age, origin, rel_prop_dyao, rel_prop_dao) %>%
-    rename(dyao = rel_prop_dyao, dao = rel_prop_dao) %>%
-    gather(`dyao`, `dao`, key = category, value = count) %>%
-    mutate(cat = factor(category, levels = sources))
-
-  # base years (subjectively, but last year in the plot)
-  year_plot <- seq(rem_base_end, rem_base_begin, by = -3)
-
-  sszplot(entire_curves %>% filter(year %in% year_plot),
-    aes_x = "age", aes_y = "count", aes_col = "cat",
-    grid = c("year", "origin"),
-    labs_y = paste0("proportion in % (relocation on ", mig_name, "*)"),
-    name = paste0(rem_number, "12_proportion_different-aggregation-levels"),
-    width = 12, height = 8,
-    multi = uni_d
-  )
-
-  # plot: focus age
-
-  # base years (subjectively, but last year in the plot)
-  year_plot <- seq(rem_base_end, rem_base_begin, by = -3)
-
-  sszplot(prop_agg %>% filter(year %in% year_plot),
-    aes_x = "age", aes_y = "rel_prop", aes_col = "rel_prop_source",
-    quotes_top = quote(geom_line(aes(x = age, y = rel_prop), color = "black")),
-    geom = "point",
-    grid = c("year", "origin"),
-    labs_y = paste0("proportion in % (relocation on ", mig_name, "*)"),
-    name = paste0(rem_number, "13_one-proportion-from-different-aggregation-levels_focus-age"),
-    width = 12, height = 8,
-    multi = uni_d
-  )
-
-  # plot: focus years
-
-  # age (subjectively selected)
-  age_plot <- seq(0, 60, by = 20)
-
-  sszplot(prop_agg %>% filter(age %in% age_plot),
-    aes_x = "year", aes_y = "rel_prop", aes_col = "rel_prop_source",
-    quotes_top = quote(geom_line(aes(x = year, y = rel_prop), color = "black")),
-    geom = "point",
-    grid = c("age", "origin"),
-    labs_y = paste0("proportion in % (relocation on ", mig_name, "*)"),
-    name = paste0(rem_number, "14_one-proportion-from-different-aggregation-levels_focus-years"),
-    width = 12, height = 8,
-    multi = uni_d
-  )
+  # # plot: entire curves (different aggregations levels)
+  # entire_curves <- select(prop_agg, district, year, age, origin, rel_prop_dyao, rel_prop_dao) %>%
+  #   rename(dyao = rel_prop_dyao, dao = rel_prop_dao) %>%
+  #   gather(`dyao`, `dao`, key = category, value = count) %>%
+  #   mutate(cat = factor(category, levels = sources))
+  # 
+  # # base years (subjectively, but last year in the plot)
+  # year_plot <- seq(rem_base_end, rem_base_begin, by = -3)
+  # 
+  # sszplot(entire_curves %>% filter(year %in% year_plot),
+  #   aes_x = "age", aes_y = "count", aes_col = "cat",
+  #   grid = c("year", "origin"),
+  #   labs_y = paste0("proportion in % (relocation on ", mig_name, "*)"),
+  #   name = paste0(rem_number, "12_proportion_different-aggregation-levels"),
+  #   width = 12, height = 8,
+  #   multi = uni_d
+  # )
+  # 
+  # # plot: focus age
+  # 
+  # # base years (subjectively, but last year in the plot)
+  # year_plot <- seq(rem_base_end, rem_base_begin, by = -3)
+  # 
+  # sszplot(prop_agg %>% filter(year %in% year_plot),
+  #   aes_x = "age", aes_y = "rel_prop", aes_col = "rel_prop_source",
+  #   quotes_top = quote(geom_line(aes(x = age, y = rel_prop), color = "black")),
+  #   geom = "point",
+  #   grid = c("year", "origin"),
+  #   labs_y = paste0("proportion in % (relocation on ", mig_name, "*)"),
+  #   name = paste0(rem_number, "13_one-proportion-from-different-aggregation-levels_focus-age"),
+  #   width = 12, height = 8,
+  #   multi = uni_d
+  # )
+  # 
+  # # plot: focus years
+  # 
+  # # age (subjectively selected)
+  # age_plot <- seq(0, 60, by = 20)
+  # 
+  # sszplot(prop_agg %>% filter(age %in% age_plot),
+  #   aes_x = "year", aes_y = "rel_prop", aes_col = "rel_prop_source",
+  #   quotes_top = quote(geom_line(aes(x = year, y = rel_prop), color = "black")),
+  #   geom = "point",
+  #   grid = c("age", "origin"),
+  #   labs_y = paste0("proportion in % (relocation on ", mig_name, "*)"),
+  #   name = paste0(rem_number, "14_one-proportion-from-different-aggregation-levels_focus-years"),
+  #   width = 12, height = 8,
+  #   multi = uni_d
+  # )
 
 
 # smoothing (after different levels of aggregation were brought to --------
@@ -548,44 +548,44 @@ rel_prop <- function(mig_path, mig_vari, mig_district,
     ))))) %>%
     ungroup()
 
-  # plot preparation
-  plot_agg_smooth <- gather(prop_agg_smooth, `rel_prop`, `prop_smooth`, key = category, value = count) %>%
-    mutate(cat = factor(if_else(category == "rel_prop",
-      smooth_lev[1], smooth_lev[2]
-    ), levels = smooth_lev)) %>%
-    select(district, year, age, origin, cat, count)
-
-  # plot: focus age
-
-  # base years (subjectively, but last year in the plot)
-  year_plot <- seq(rem_base_end, rem_base_begin, by = -3)
-
-  # plot
-  sszplot(plot_agg_smooth %>% filter(year %in% year_plot),
-    aes_x = "age", aes_y = "count", aes_ltyp = "cat", aes_alpha = "cat",
-    grid = c("year", "origin"),
-    labs_y = paste0("proportion in % (relocation on ", mig_name, "*)"),
-    name = paste0(rem_number, "15_one-proportion_smoothing_focus-age"),
-    quotes = quote(scale_alpha_manual(values = c(0.3, 1))),
-    width = 15, height = 8,
-    multi = uni_d
-  )
-
-  # plot: focus years
-
-  # age (subjectively selected)
-  age_plot <- seq(0, 60, by = 20)
-
-  # plot
-  sszplot(plot_agg_smooth %>% filter(age %in% age_plot),
-    aes_x = "year", aes_y = "count", aes_ltyp = "cat", aes_alpha = "cat",
-    grid = c("origin", "age"),
-    labs_y = paste0("proportion in % (relocation on ", mig_name, "*)"),
-    name = paste0(rem_number, "16_one-proportion_smoothing_focus-years"),
-    quotes = quote(scale_alpha_manual(values = c(0.3, 1))),
-    width = 15, height = 8,
-    multi = uni_d
-  )
+  # # plot preparation
+  # plot_agg_smooth <- gather(prop_agg_smooth, `rel_prop`, `prop_smooth`, key = category, value = count) %>%
+  #   mutate(cat = factor(if_else(category == "rel_prop",
+  #     smooth_lev[1], smooth_lev[2]
+  #   ), levels = smooth_lev)) %>%
+  #   select(district, year, age, origin, cat, count)
+  # 
+  # # plot: focus age
+  # 
+  # # base years (subjectively, but last year in the plot)
+  # year_plot <- seq(rem_base_end, rem_base_begin, by = -3)
+  # 
+  # # plot
+  # sszplot(plot_agg_smooth %>% filter(year %in% year_plot),
+  #   aes_x = "age", aes_y = "count", aes_ltyp = "cat", aes_alpha = "cat",
+  #   grid = c("year", "origin"),
+  #   labs_y = paste0("proportion in % (relocation on ", mig_name, "*)"),
+  #   name = paste0(rem_number, "15_one-proportion_smoothing_focus-age"),
+  #   quotes = quote(scale_alpha_manual(values = c(0.3, 1))),
+  #   width = 15, height = 8,
+  #   multi = uni_d
+  # )
+  # 
+  # # plot: focus years
+  # 
+  # # age (subjectively selected)
+  # age_plot <- seq(0, 60, by = 20)
+  # 
+  # # plot
+  # sszplot(plot_agg_smooth %>% filter(age %in% age_plot),
+  #   aes_x = "year", aes_y = "count", aes_ltyp = "cat", aes_alpha = "cat",
+  #   grid = c("origin", "age"),
+  #   labs_y = paste0("proportion in % (relocation on ", mig_name, "*)"),
+  #   name = paste0(rem_number, "16_one-proportion_smoothing_focus-years"),
+  #   quotes = quote(scale_alpha_manual(values = c(0.3, 1))),
+  #   width = 15, height = 8,
+  #   multi = uni_d
+  # )
 
 
 # constrained regression --------------------------------------------------
@@ -645,110 +645,110 @@ rel_prop <- function(mig_path, mig_vari, mig_district,
     ungroup()
 
 
-  # plot preparation
-  plot_pred_smooth <- select(pred_smooth, district, year, age, origin, pred_all_age, pred_smooth) %>%
-    gather(pred_smooth, `pred_all_age`, `pred_smooth`, key = category, value = count) %>%
-    mutate(cat = factor(if_else(category == "pred_all_age",
-      smooth_lev[1], smooth_lev[2]
-    ), levels = smooth_lev)) %>%
-    select(district, year, age, origin, cat, count)
-
-  # plot: focus age
-
-  # base years (subjectively, but last year in the plot)
-  year_plot <- seq(scen_begin, scen_end, by = 7)
-
-  # plot
-  sszplot(plot_pred_smooth %>% filter(year %in% year_plot),
-    aes_x = "age", aes_y = "count", aes_ltyp = "cat", aes_alpha = "cat",
-    grid = c("origin", "year"),
-    labs_y = paste0("proportion in % (relocation on ", mig_name, "*)"),
-    name = paste0(rem_number, "17_prediction_dyao_smooth"),
-    quotes = quote(scale_alpha_manual(values = c(0.3, 1))),
-    width = 15, height = 8,
-    multi = uni_d
-  )
+  # # plot preparation
+  # plot_pred_smooth <- select(pred_smooth, district, year, age, origin, pred_all_age, pred_smooth) %>%
+  #   gather(pred_smooth, `pred_all_age`, `pred_smooth`, key = category, value = count) %>%
+  #   mutate(cat = factor(if_else(category == "pred_all_age",
+  #     smooth_lev[1], smooth_lev[2]
+  #   ), levels = smooth_lev)) %>%
+  #   select(district, year, age, origin, cat, count)
+  # 
+  # # plot: focus age
+  # 
+  # # base years (subjectively, but last year in the plot)
+  # year_plot <- seq(scen_begin, scen_end, by = 7)
+  # 
+  # # plot
+  # sszplot(plot_pred_smooth %>% filter(year %in% year_plot),
+  #   aes_x = "age", aes_y = "count", aes_ltyp = "cat", aes_alpha = "cat",
+  #   grid = c("origin", "year"),
+  #   labs_y = paste0("proportion in % (relocation on ", mig_name, "*)"),
+  #   name = paste0(rem_number, "17_prediction_dyao_smooth"),
+  #   quotes = quote(scale_alpha_manual(values = c(0.3, 1))),
+  #   width = 15, height = 8,
+  #   multi = uni_d
+  # )
 
   
 
-# plot the final predictions ----------------------------------------------
-
-  # past rate (before smoothing)
-  rem_dyao_not_smoothed <- mutate(rem_dyao,
-    rel_prop_dyao = pmax(0, pmin(100, if_else(mis == 0, NA_real_, round(rel / mis * 100, round_prop))))
-  ) %>%
-    select(district, year, age, origin, rel_prop_dyao)
-
-  # past and prediction
-  rem_past_pred <- as_tibble(expand_grid(
-    district = uni_d,
-    year = date_start:scen_end,
-    age = age_min:age_max,
-    origin = uni_o
-  )) %>%
-    left_join(rem_dyao_not_smoothed, by = c("district", "year", "age", "origin")) %>%
-    left_join(select(pred_smooth, district, year, age, origin, pred_smooth),
-      by = c("district", "year", "age", "origin")
-    ) %>%
-    mutate(prop = if_else(year < scen_begin, rel_prop_dyao, pred_smooth))
-
-  # colors
-
-  # plot: focus age distribution
-  sszplot(rem_past_pred,
-    aes_x = "age", aes_y = "prop", aes_col = "year",
-    grid = c(".", "origin"),
-    labs_y = paste0("proportion in % (relocation on ", mig_name, "*)"),
-    name = paste0(rem_number, "18_proportion_dyao_past-future"),
-    width = 14, height = 7,
-    multi = uni_d
-  )
-
-  # plot levels
-  time_lev <- c("past", "future")
-
-  # plot data
-  plot_a_past_pred <- mutate(rem_past_pred,
-    time = factor(if_else(year < scen_begin,
-      time_lev[1], time_lev[2]
-    ), levels = time_lev)
-  )
-
-  # plot: focus age distribution
-  # test: x <- uni_d[3]
-  # WHY this plot: it is recommendable to look precisely at the age plots over years
-  # therefore, a plot that focuses on certain years
-
-  # years
-  year_temp <- date_start:scen_end
-  year_plot <- seq(min(year_temp), max(year_temp), by = 8)
-
-  sszplot(plot_a_past_pred %>% filter(year %in% year_plot),
-    aes_x = "age", aes_y = "prop", aes_col = "year", aes_alpha = "time",
-    grid = c(".", "origin"),
-    labs_y = paste0("proportion in % (relocation on ", mig_name, "*)"),
-    name = paste0(rem_number, "19_proportion_dyao_past-future_focus-age"),
-    quotes = quote(scale_alpha_manual(values = c(0.4, 1))),
-    width = 14, height = 7,
-    multi = uni_d
-  )
-
-
-  # plot: focus years
-
-  # age (subjectively selected)
-  age_plot_pred <- seq(0, 60, by = 20)
-
-  sszplot(plot_a_past_pred %>% filter(age %in% age_plot_pred),
-    aes_x = "year", aes_y = "prop", aes_col = "age",
-    i_x = c(rem_base_begin, rem_base_end),
-    grid = c(".", "origin"),
-    labs_y = paste0("proportion in % (relocation on ", mig_name, "*)"), labs_col = "age",
-    name = paste0(rem_number, "20_proportion_dyao_past-future_focus-years"),
-    quotes = quote(scale_alpha_manual(values = c(0.4, 1))),
-    width = 14, height = 6,
-    multi = uni_d
-  )
+# # plot the final predictions ----------------------------------------------
+# 
+#   # past rate (before smoothing)
+#   rem_dyao_not_smoothed <- mutate(rem_dyao,
+#     rel_prop_dyao = pmax(0, pmin(100, if_else(mis == 0, NA_real_, round(rel / mis * 100, round_prop))))
+#   ) %>%
+#     select(district, year, age, origin, rel_prop_dyao)
+# 
+#   # past and prediction
+#   rem_past_pred <- as_tibble(expand_grid(
+#     district = uni_d,
+#     year = date_start:scen_end,
+#     age = age_min:age_max,
+#     origin = uni_o
+#   )) %>%
+#     left_join(rem_dyao_not_smoothed, by = c("district", "year", "age", "origin")) %>%
+#     left_join(select(pred_smooth, district, year, age, origin, pred_smooth),
+#       by = c("district", "year", "age", "origin")
+#     ) %>%
+#     mutate(prop = if_else(year < scen_begin, rel_prop_dyao, pred_smooth))
+# 
+#   # colors
+# 
+#   # plot: focus age distribution
+#   sszplot(rem_past_pred,
+#     aes_x = "age", aes_y = "prop", aes_col = "year",
+#     grid = c(".", "origin"),
+#     labs_y = paste0("proportion in % (relocation on ", mig_name, "*)"),
+#     name = paste0(rem_number, "18_proportion_dyao_past-future"),
+#     width = 14, height = 7,
+#     multi = uni_d
+#   )
+# 
+#   # plot levels
+#   time_lev <- c("past", "future")
+# 
+#   # plot data
+#   plot_a_past_pred <- mutate(rem_past_pred,
+#     time = factor(if_else(year < scen_begin,
+#       time_lev[1], time_lev[2]
+#     ), levels = time_lev)
+#   )
+# 
+#   # plot: focus age distribution
+#   # test: x <- uni_d[3]
+#   # WHY this plot: it is recommendable to look precisely at the age plots over years
+#   # therefore, a plot that focuses on certain years
+# 
+#   # years
+#   year_temp <- date_start:scen_end
+#   year_plot <- seq(min(year_temp), max(year_temp), by = 8)
+# 
+#   sszplot(plot_a_past_pred %>% filter(year %in% year_plot),
+#     aes_x = "age", aes_y = "prop", aes_col = "year", aes_alpha = "time",
+#     grid = c(".", "origin"),
+#     labs_y = paste0("proportion in % (relocation on ", mig_name, "*)"),
+#     name = paste0(rem_number, "19_proportion_dyao_past-future_focus-age"),
+#     quotes = quote(scale_alpha_manual(values = c(0.4, 1))),
+#     width = 14, height = 7,
+#     multi = uni_d
+#   )
+# 
+# 
+#   # plot: focus years
+# 
+#   # age (subjectively selected)
+#   age_plot_pred <- seq(0, 60, by = 20)
+# 
+#   sszplot(plot_a_past_pred %>% filter(age %in% age_plot_pred),
+#     aes_x = "year", aes_y = "prop", aes_col = "age",
+#     i_x = c(rem_base_begin, rem_base_end),
+#     grid = c(".", "origin"),
+#     labs_y = paste0("proportion in % (relocation on ", mig_name, "*)"), labs_col = "age",
+#     name = paste0(rem_number, "20_proportion_dyao_past-future_focus-years"),
+#     quotes = quote(scale_alpha_manual(values = c(0.4, 1))),
+#     width = 14, height = 6,
+#     multi = uni_d
+#   )
 
   
 
@@ -763,5 +763,17 @@ rel_prop <- function(mig_path, mig_vari, mig_district,
   write_csv(rel_ex_data, ex_path)
 
   # output (to get an idea of the exported output)
-  return(list(rel_ex_data))
+  return(list(rel_ex_data = rel_ex_data,
+              mis_rel = mis_rel,
+              rem_dyao = rem_dyao,
+              dyao_smooth = dyao_smooth,
+              prop_dyao_smooth = prop_dyao_smooth,
+              dao_smooth = dao_smooth,
+              prop_dao_smooth = prop_dao_smooth,
+              prop_agg = prop_agg,
+              prop_agg_smooth = prop_agg_smooth,
+              pred_smooth = pred_smooth,
+              rem_base_end = rem_base_end,
+              rem_base_begin = rem_base_begin,
+              sources = sources))
 }
