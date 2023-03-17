@@ -1,0 +1,657 @@
+---
+title: "Naturalization plots"
+author: "Klemens Rosin, Daniel Baumgartner"
+---
+
+```{r}
+#| label: prep
+
+# source general functions
+source(paste0(here::here(), "/1_code/0000_general/general_utils.R"))
+
+# read general variables for common use
+params <- yaml::read_yaml(paste0(here::here(), "/Plots/_variables.yml"))
+
+# source utility functions
+run_scen(params$scen, "nat")
+
+```
+
+## naturalization vs. denaturalization
+
+```{r}
+#| label: fig-proc
+#| fig-cap: naturalization on citizenship change
+
+# process levels
+processes <- c("nat", "denat")
+
+# processes
+proc <- filter(nat_denat, origin_prev != origin) %>%
+  mutate(proc = factor(if_else(origin_prev == uni_o[2],
+    processes[1], processes[2]
+  ), levels = processes)) %>%
+  group_by(year, proc) %>%
+  summarize(
+    count = sum(nat),
+    .groups = "drop"
+  ) %>%
+  spread(key = proc, value = count) %>%
+  replace_na(list(nat = 0, denat = 0)) %>%
+  mutate(
+    total = nat + denat,
+    prop_nat = if_else(total == 0, NA_real_, round(nat / total * 100, round_prop))
+  )
+
+# plot
+sszplot(proc,
+  aes_x = "year", aes_y = "prop_nat",
+  labs_y = "proportion in % (naturalization on citizenship change)",
+  name = plot_name("0700_naturalization-on-citizenship-change"),
+  width = 8, height = 6
+)
+```
+
+## naturalization rate: which variables?
+
+### age and sex
+
+```{r}
+#| label: fig-nat_as
+#| fig-cap: rate age and sex
+
+# rate by as
+nat_as <- group_by(nat_pop, age, sex) %>%
+  summarize(
+    pop = sum(pop),
+    nat = sum(nat),
+    .groups = "drop"
+  ) %>%
+  mutate(nat_as = if_else(pop == 0, NA_real_, round(nat / pop * 100, round_rate)))
+
+sszplot(nat_as,
+  aes_x = "age", aes_y = "nat_as", aes_col = "sex",
+  labs_y = "naturalization rate (in % per year)",
+  scale_y = c(0, NA),
+  name = plot_name("0701_rate_as"),
+  width = 8, height = 6
+)
+```
+
+### year and sex
+
+```{r}
+#| label: fig-nat_ys
+#| fig-cap: rate year and sex
+
+# rate by ys
+nat_ys <- group_by(nat_pop, year, sex) %>%
+  summarize(
+    pop = sum(pop),
+    nat = sum(nat),
+    .groups = "drop"
+  ) %>%
+  mutate(nat_ys = if_else(pop == 0, NA_real_, round(nat / pop * 100, round_rate)))
+
+sszplot(nat_ys,
+  aes_x = "year", aes_y = "nat_ys", aes_col = "sex",
+  labs_y = "naturalization rate (in % per year)",
+  scale_y = c(0, NA),
+  name = plot_name("0702_rate_ys"),
+  width = 8, height = 6
+)
+```
+
+### year, age and sex
+
+```{r}
+#| label: fig-nat_yas_age
+#| fig-cap: rate year, age, sex; focus on age
+#| fig-width: 10
+#| fig-height: 10
+
+# rate by yas
+nat_yas <- group_by(nat_pop, year, age, sex) %>%
+  summarize(
+    pop = sum(pop),
+    nat = sum(nat),
+    .groups = "drop"
+  ) %>%
+  mutate(nat_yas = if_else(pop == 0, NA_real_, round(nat / pop * 100, round_rate)))
+
+
+# years (subjectively, but last year in the plot)
+year_plot <- seq(date_end, (date_start + 1), by = -4)
+
+sszplot(filter(nat_yas, year %in% year_plot),
+  aes_x = "age", aes_y = "nat_yas", aes_col = "sex",
+  labs_y = "naturalization rate (in % per year)",
+  wrap = "year", ncol = 3,
+  name = plot_name("0703_rate_yas_focus-age"),
+  width = 10, height = 10
+)
+```
+
+```{r}
+#| label: fig-nat_yas_year
+#| fig-cap: rate year, age, sex; focus on year
+#| fig-width: 8
+#| fig-height: 10
+
+# age (subjectively selected)
+age_plot <- seq(0, 70, by = 10)
+
+sszplot(filter(nat_yas, age %in% age_plot),
+  aes_x = "year", aes_y = "nat_yas", aes_col = "sex",
+  labs_y = "naturalization rate (in % per year)",
+  wrap = "age", ncol = 2,
+  name = plot_name("0704_rate_yas_focus-years"),
+  width = 8, height = 10
+)
+```
+
+### district, age and sex
+
+```{r}
+#| label: fig-nat_das
+#| fig-cap: rate district, age and sex
+#| fig-width: 12
+#| fig-height: 14
+
+# rate by das
+nat_das <- group_by(nat_pop, district, age, sex) %>%
+  summarize(
+    pop = sum(pop),
+    nat = sum(nat),
+    .groups = "drop"
+  ) %>%
+  mutate(nat_das = if_else(pop == 0, NA_real_, round(nat / pop * 100, round_rate)))
+
+sszplot(nat_das,
+  aes_x = "age", aes_y = "nat_das", aes_col = "sex",
+  labs_y = "naturalization rate (in % per year)",
+  scale_y = c(0, 25),
+  wrap = "district", ncol = 4,
+  name = plot_name("0705_rate_das"),
+  width = 12, height = 14
+)
+
+
+```
+
+### district, year and sex
+
+```{r}
+#| label: fig-nat_dys
+#| fig-cap: rate district, year and sex
+#| fig-width: 12
+#| fig-height: 14
+
+# rate by dys
+nat_dys <- group_by(nat_pop, district, year, sex) %>%
+  summarize(
+    pop = sum(pop),
+    nat = sum(nat),
+    .groups = "drop"
+  ) %>%
+  mutate(nat_dys = if_else(pop == 0, NA_real_, round(nat / pop * 100, round_rate)))
+
+sszplot(nat_dys,
+  aes_x = "year", aes_y = "nat_dys", aes_col = "sex",
+  labs_y = "naturalization rate (in % per year)",
+  wrap = "district", ncol = 4,
+  name = plot_name("0706_rate_dys"),
+  width = 12, height = 14
+)
+```
+
+## das: smoothing (nat and pop)
+
+```{r}
+#| label: fig-smooth_plot
+#| fig-cap: processes by district, age, sex; smoothed
+#| fig-keep: all
+#| #| fig-subcap: !expr paste("Origin", levels(uni_d))
+
+# plot preparation
+process_lev <- c("naturalization", "population")
+smooth_lev <- c("initial", "smoothed")
+
+temp_initial <- gather(nat_pop_das_smooth, `nat`, `pop`, key = category, value = count) %>%
+  mutate(
+    cat = factor(if_else(category == "nat",
+      process_lev[1], process_lev[2]
+    ), levels = process_lev),
+    smooth = factor(smooth_lev[1], levels = smooth_lev)
+  ) %>%
+  select(district, age, sex, cat, smooth, count)
+
+temp_smooth <- gather(nat_pop_das_smooth, `nat_a`, `pop_a`, key = category, value = count) %>%
+  mutate(
+    cat = factor(if_else(category == "nat_a",
+      process_lev[1], process_lev[2]
+    ), levels = process_lev),
+    smooth = factor(smooth_lev[2], levels = smooth_lev)
+  ) %>%
+  select(district, age, sex, cat, smooth, count)
+
+smooth_plot <- bind_rows(temp_initial, temp_smooth)
+
+# plot
+sszplot(smooth_plot,
+  aes_x = "age", aes_y = "count", aes_col = "cat", aes_ltyp = "smooth", aes_alpha = "smooth",
+  labs_y = "quantity per year (naturalization), quantity (population)",
+  grid = c("cat", "sex"), gridscale = "free_y",
+  name = plot_name("0707_processes_das_smooth"),
+  width = 15, height = 8,
+  multi = uni_d,
+  quotes = quote(scale_alpha_manual(values = c(0.3, 1)))
+)
+```
+
+## das: naturalization rate
+
+```{r}
+#| label: fig-rate_plot
+#| fig-cap: rate by district, age and sex
+#| fig-width: 12
+#| fig-height: 5
+#| fig-keep: all
+#| fig-subcap: !expr paste("Origin", levels(uni_d))
+
+# plot preparation
+rate_plot <- gather(nat_rate_das, `rate_thres`, `rate_smooth`, key = category, value = count) %>%
+  mutate(cat = factor(if_else(category == "rate_thres",
+    smooth_lev[1], smooth_lev[2]
+  ), levels = smooth_lev)) %>%
+  select(district, age, sex, cat, count)
+
+# plot
+sszplot(rate_plot,
+  aes_x = "age", aes_y = "count", aes_ltyp = "cat", aes_alpha = "cat",
+  labs_y = "naturalization rate (in % per year)",
+  grid = c(".", "sex"),
+  name = plot_name("0708_rate_das"),
+  width = 12, height = 5,
+  multi = uni_d,
+  quotes = quote(scale_alpha_manual(values = c(0.3, 1)))
+)
+```
+
+## ya: smooth processes (preparation for trend by ya)
+
+### by years (subjectively, but last year in the plot)
+
+```{r}
+#| label: fig-smooth_plot_ya_age
+#| fig-cap: processes by year and age; smoothed, focus on age
+
+# plot preparation
+temp_initial_ya <- gather(nat_ya, `nat`, `pop`, key = category, value = count) %>%
+  mutate(
+    cat = factor(if_else(category == "nat",
+      process_lev[1], process_lev[2]
+    ), levels = process_lev),
+    smooth = factor(smooth_lev[1], levels = smooth_lev)
+  ) %>%
+  select(year, age, cat, smooth, count)
+
+temp_smooth_ya <- gather(nat_ya, `nat_a`, `pop_a`, key = category, value = count) %>%
+  mutate(
+    cat = factor(if_else(category == "nat_a",
+      process_lev[1], process_lev[2]
+    ), levels = process_lev),
+    smooth = factor(smooth_lev[2], levels = smooth_lev)
+  ) %>%
+  select(year, age, cat, smooth, count)
+
+smooth_plot_ya <- bind_rows(temp_initial_ya, temp_smooth_ya)
+
+year_plot <- seq(nat_base_end, nat_base_begin, by = -4)
+
+sszplot(filter(smooth_plot_ya, year %in% year_plot),
+  aes_x = "age", aes_y = "count", aes_col = "cat", aes_ltyp = "smooth", aes_alpha = "smooth",
+  labs_y = "quantity per year (naturalization), quantity (population)",
+  grid = c("cat", "year"), gridscale = "free_y",
+  name = plot_name("0709_processes_ya_smooth_focus-age"),
+  width = 15, height = 8,
+  quotes = quote(scale_alpha_manual(values = c(0.3, 1)))
+)
+```
+
+### by age (subjectively selected)
+
+```{r}
+#| label: fig-smooth_plot_ya_year
+#| fig-cap: processes by year and age; smoothed, focus on years
+
+age_plot <- seq(0, 100, by = 20)
+
+sszplot(filter(smooth_plot_ya, age %in% age_plot),
+  aes_x = "year", aes_y = "count", aes_col = "cat", aes_ltyp = "smooth", aes_alpha = "smooth",
+  labs_y = "quantity per year (naturalization), quantity (population)",
+  grid = c("cat", "age"), gridscale = "free_y",
+  name = plot_name("0710_processes_ya_smooth_focus-years"),
+  width = 15, height = 8,
+  quotes = quote(scale_alpha_manual(values = c(0.3, 1)))
+)
+```
+
+## ya: rate
+
+### by years (subjectively, but last year in the plot)
+
+```{r}
+#| label: fig-rate_ya_plot_year
+#| fig-cap: rate by year and age, focus on age
+
+# plot preparation
+rate_ya_plot <- gather(nat_rate_ya, `rate_thres`, `rate_smooth`, key = category, value = count) %>%
+  mutate(cat = factor(if_else(category == "rate_thres",
+    smooth_lev[1], smooth_lev[2]
+  ), levels = smooth_lev)) %>%
+  select(year, age, cat, count)
+
+# years (subjectively, but last year in the plot)
+year_plot <- seq(nat_base_end, nat_base_begin, by = -2)
+
+sszplot(filter(rate_ya_plot, year %in% year_plot),
+  aes_x = "age", aes_y = "count", aes_ltyp = "cat", aes_alpha = "cat",
+  labs_y = "naturalization rate (in % per year)",
+  wrap = "year", ncol = 3,
+  name = plot_name("0711_rate_ya_focus-age"),
+  width = 15, height = 8,
+  quotes = quote(scale_alpha_manual(values = c(0.3, 1)))
+)
+```
+
+### by age (subjectively selected)
+
+```{r}
+#| label: fig-rate_ya_plot_age
+#| fig-cap: rate by year and age, focus on years
+
+sszplot(filter(rate_ya_plot, age %in% age_plot),
+  aes_x = "year", aes_y = "count", aes_ltyp = "cat", aes_alpha = "cat",
+  labs_y = "naturalization rate (in % per year)",
+  grid = c(".", "age"),
+  name = plot_name("0712_rate_ya_focus-years"),
+  width = 15, height = 6,
+  quotes = quote(scale_alpha_manual(values = c(0.3, 1)))
+)
+```
+
+## constrained regression
+
+### focus age
+
+```{r}
+#| label: fig-rate_ya_past_pred_age
+#| fig-cap: rate by year and age; past and future, focus on age
+#| fig-width: 10
+#| fig-height: 7
+
+# years (subjectively, but last year in the plot)
+year_plot <- seq(nat_base_begin, scen_end, by = 10)
+
+sszplot(rate_ya_past_pred,
+  aes_x = "age", aes_y = "rate_ya", aes_col = "year",
+  labs_y = "naturalization rate (in % per year)",
+  name = plot_name("0713_rate_ya_past-future_focus-age"),
+  width = 10, height = 7
+)
+```
+
+### focus years
+
+```{r}
+#| label: fig-rate_ya_past_pred_year
+#| fig-cap: rate by year and age; past and future, focus on years
+#| fig-width: 10
+#| fig-height: 7
+
+# age (subjectively selected)
+age_plot <- seq(0, 100, by = 10)
+
+sszplot(filter(rate_ya_past_pred, age %in% age_plot),
+  aes_x = "year", aes_y = "rate_ya",
+  labs_y = "naturalization rate (in % per year)",
+  wrap = "age", ncol = 5,
+  name = plot_name("0714_rate_ya_past-future_focus-years"),
+  width = 10, height = 7
+)
+```
+
+## smooth processes (preparation for the trend factor calculation)
+
+```{r}
+#| label: fig-smooth_plot_a
+#| fig-cap: processes by age, smoothed
+#| fig-width: 10
+#| fig-height: 8
+
+# plot preparation
+temp_initial_a <- gather(nat_a, `nat`, `pop`, key = category, value = count) %>%
+  mutate(
+    cat = factor(if_else(category == "nat",
+      process_lev[1], process_lev[2]
+    ), levels = process_lev),
+    smooth = factor(smooth_lev[1], levels = smooth_lev)
+  ) %>%
+  select(age, cat, smooth, count)
+
+temp_smooth_a <- gather(nat_a, `nat_a`, `pop_a`, key = category, value = count) %>%
+  mutate(
+    cat = factor(if_else(category == "nat_a",
+      process_lev[1], process_lev[2]
+    ), levels = process_lev),
+    smooth = factor(smooth_lev[2], levels = smooth_lev)
+  ) %>%
+  select(age, cat, smooth, count)
+
+smooth_plot_a <- bind_rows(temp_initial_a, temp_smooth_a)
+
+
+# plots
+sszplot(smooth_plot_a,
+  aes_x = "age", aes_y = "count", aes_col = "cat", aes_ltyp = "smooth", aes_alpha = "smooth",
+  labs_y = "quantity per year (naturalization), quantity (population)",
+  grid = c("cat", "."), gridscale = "free_y",
+  name = plot_name("0715_processes_a_smooth"),
+  width = 10, height = 8,
+  quotes = quote(scale_alpha_manual(values = c(0.3, 1)))
+)
+```
+
+## rate
+
+```{r}
+#| label: fig-rate_a_plot
+#| fig-cap: rate by age
+#| fig-width: 12
+#| fig-height: 7
+
+# plot preparation
+rate_a_plot <- gather(nat_rate_a, `rate_thres`, `rate_smooth`, key = category, value = count) %>%
+  mutate(cat = factor(if_else(category == "rate_thres",
+    smooth_lev[1], smooth_lev[2]
+  ), levels = smooth_lev)) %>%
+  select(age, cat, count)
+
+# plots
+sszplot(rate_a_plot,
+  aes_x = "age", aes_y = "count", aes_ltyp = "cat", aes_alpha = "cat",
+  labs_y = "naturalization rate (in % per year)",
+  name = plot_name("0716_rate_a"),
+  width = 12, height = 7,
+  quotes = quote(scale_alpha_manual(values = c(0.3, 1)))
+)
+```
+
+## trend factor ('rate ya' to 'rate a')
+
+```{r}
+#| label: fig-tf_ya_age
+#| fig-cap: trend factor by year and age, focus on age
+#| fig-width: 10
+#| fig-height: 8
+
+sszplot(tf_ya,
+  aes_x = "age", aes_y = "tf_ya", aes_col = "year",
+  i_y = 1,
+  labs_y = "trend factor",
+  scale_y = c(0, 2),
+  name = plot_name("0717_trend-factor_focus-age"),
+  width = 10, height = 8
+)
+```
+
+```{r}
+#| label: fig-tf_ya_year
+#| fig-cap: trend factor by year and age, focus on years
+#| fig-width: 10
+#| fig-height: 8
+
+# age (subjectively selected)
+age_plot <- seq(0, 100, by = 10)
+
+sszplot(filter(tf_ya, age %in% age_plot),
+  aes_x = "year", aes_y = "tf_ya",
+  i_y = 1,
+  labs_y = "trend factor",
+  wrap = "age", ncol = 4,
+  name = plot_name("0718_trend-factor_focus-years"),
+  width = 10, height = 8
+)
+```
+
+## future rate (dyas)
+
+```{r}
+#| label: fig-plot_pred_smooth
+#| fig-cap: prediction by district, year, age and origin; smoothed
+#| fig-keep: all
+#| fig-subcap: !expr paste("Origin", levels(uni_d))
+
+# plot preparation
+plot_pred_smooth <- select(rate_dyas_future, district, year, age, sex, rate_dyas, rate_smoothed) %>%
+  gather(`rate_dyas`, `rate_smoothed`, key = category, value = count) %>%
+  mutate(cat = factor(if_else(category == "rate_dyas",
+    smooth_lev[1], smooth_lev[2]
+  ), levels = smooth_lev)) %>%
+  select(district, year, age, sex, cat, count)
+
+# base years (subjectively)
+year_plot <- seq(scen_begin, scen_end, by = 7)
+
+# plot
+sszplot(filter(plot_pred_smooth, year %in% year_plot),
+  aes_x = "age", aes_y = "count", aes_ltyp = "cat", aes_alpha = "cat",
+  labs_y = "naturalization rate (in % per year)",
+  grid = c("sex", "year"),
+  name = plot_name("0719_prediction_dyao_smooth"),
+  width = 15, height = 8,
+  multi = uni_d,
+  quotes = quote(scale_alpha_manual(values = c(0.3, 1)))
+)
+```
+
+## past and rate (dyas)
+
+### overview
+
+```{r}
+#| label: fig-rate_dyas_past_future
+#| fig-cap: rate by district, year, age and origin; past and future
+#| fig-keep: all
+#| fig-subcap: !expr paste("Origin", levels(uni_d))
+
+# past
+rate_dyas_past <- group_by(nat_pop, district, year, age, sex) %>%
+  summarize(
+    pop = sum(pop),
+    nat = sum(nat),
+    .groups = "drop"
+  ) %>%
+  mutate(rate_past = pmin(100, if_else(pop == 0, NA_real_, round(nat / pop * 100, round_rate))))
+
+# past and future
+rate_dyas_past_future <- as_tibble(expand_grid(
+  district = uni_d,
+  year = (date_start + 1):scen_end,
+  age = age_min:age_max,
+  sex = uni_s
+)) %>%
+  left_join(select(rate_dyas_past, district, year, age, sex, rate_past),
+    by = c("district", "year", "age", "sex")
+  ) %>%
+  left_join(select(rate_dyas_future, district, year, age, sex, rate_smoothed),
+    by = c("district", "year", "age", "sex")
+  ) %>%
+  replace_na(list(rate_past = 0, rate_smoothed = 0)) %>%
+  mutate(rate_dyas = if_else(year < scen_begin, rate_past, rate_smoothed))
+
+# plot: focus age distribution
+sszplot(rate_dyas_past_future,
+  aes_x = "age", aes_y = "rate_dyas", aes_col = "year",
+  labs_y = "naturalization rate (in % per year)",
+  grid = c(".", "sex"),
+  name = plot_name("0720_rate_dyao_past-future"),
+  width = 14, height = 7,
+  multi = uni_d
+)
+```
+
+### focus age
+
+plot: focus age distribution WHY this plot: it is recommendable to look precisely at the age plots over years therefore, a plot that focuses on certain years
+
+```{r}
+#| label: fig-plot_a_past_pred_age
+#| fig-cap: rate by district, year, age and origin; past and future, focus on age
+#| fig-keep: all
+#| fig-subcap: !expr paste("Origin", levels(uni_d))
+
+# plot levels
+time_lev <- c("past", "future")
+
+# plot data
+plot_a_past_pred <- mutate(rate_dyas_past_future,
+  time = factor(if_else(year < scen_begin,
+    time_lev[1], time_lev[2]
+  ), levels = time_lev)
+)
+
+# years
+year_plot <- seq(date_start + 1, scen_end, by = 7)
+
+sszplot(filter(plot_a_past_pred, year %in% year_plot),
+  aes_x = "age", aes_y = "rate_dyas", aes_col = "year",
+  labs_y = "naturalization rate (in % per year)", labs_col = "year",
+  grid = c(".", "sex"),
+  name = plot_name("0721_rate_dyao_past-future_focus-age"),
+  width = 14, height = 7,
+  multi = uni_d
+)
+```
+
+### focus years
+
+```{r}
+#| label: fig-plot_a_past_pred_year
+#| fig-cap: rate by district, year, age and origin; past and future, focus on years
+#| fig-keep: all
+#| fig-subcap: !expr paste("Origin", levels(uni_d))
+
+# age (subjectively selected)
+age_plot_pred <- seq(0, 60, by = 20)
+
+sszplot(filter(plot_a_past_pred, age %in% age_plot_pred),
+  aes_x = "year", aes_y = "rate_dyas", aes_col = "age",
+  labs_y = "naturalization rate (in % per year)", labs_col = "age",
+  grid = c(".", "sex"),
+  name = plot_name("0722_rate_dyao_past-future_focus-years"),
+  width = 14, height = 6,
+  multi = uni_d
+)
+```
