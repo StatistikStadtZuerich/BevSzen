@@ -6,11 +6,17 @@ author: "Klemens Rosin, Daniel Baumgartner"
 ```{r}
 #| label: prep
 
+# source general functions
 source(paste0(here::here(), "/1_code/0000_general/general_utils.R"))
-util_gf()
-run_scen(params$scen, "bir")
 
-# knitr::opts_knit$set(base.dir = res_path)
+# read general variables for common use
+params <- yaml::read_yaml(paste0(here::here(), "/Plots/_variables.yml"))
+
+# source utility functions
+util_gf(params$scen)
+
+# run the scenario
+run_scen(params$scen, "bir")
 
 ```
 
