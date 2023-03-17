@@ -1,0 +1,212 @@
+---
+title: "Capacity reserves plots"
+author: "Klemens Rosin, Daniel Baumgartner"
+---
+
+```{r}
+#| label: prep
+
+# source general functions
+source(paste0(here::here(), "/1_code/0000_general/general_utils.R"))
+
+# read general variables for common use
+params <- yaml::read_yaml(paste0(here::here(), "/Plots/_variables.yml"))
+
+# source utility functions
+run_scen(params$scen, "car")
+
+```
+
+## careb
+### plot entire city, all owner categories
+
+```{r}
+#| label: fig-0800
+#| fig-cap: entire city
+#| fig-width: 12
+#| fig-height: 10
+
+# aggregate (year, residence, plot)
+car_yep <- group_by(car_dat, year, residence, plot, cat) %>%
+  summarize(ha = sum(ha), .groups = "drop")
+
+# plot
+sszplot(car_yep,
+  aes_x = "year", aes_y = "ha", aes_col = "residence", aes_ltyp = "plot",
+  geom = c("line", "point"),
+  wrap = "cat", ncol = 2, gridscale = "free",
+  labs_x = "year of data delivery", labs_y = "area (in ha)",
+  scale_y = c(0, NA),
+  name = plot_name("0800_entire-city"),
+  width = 10, height = 8
+)
+```
+
+### plot entire city, by owner
+
+```{r}
+#| label: fig-0801
+#| fig-cap: entire city by owner
+#| fig-width: 10
+#| fig-height: 10
+
+# aggregate (year, residence, plot, owner)
+car_yepw <- group_by(car_dat, year, residence, plot, owner, cat) %>%
+  summarize(ha = sum(ha), .groups = "drop")
+
+# plot
+sszplot(car_yepw,
+  aes_x = "year", aes_y = "ha", aes_col = "residence", aes_ltyp = "plot",
+  geom = c("line", "point"),
+  grid = c("cat", "owner"), gridscale = "free_y",
+  labs_x = "year of data delivery", labs_y = "area (in ha)",
+  scale_y = c(0, NA),
+  name = plot_name("0801_entire-city_by-owner"),
+  width = 10, height = 10
+)
+```
+
+### plot by district, all owner categories
+
+```{r}
+#| label: fig-0802
+#| fig-cap: by districts
+#| fig-width: 12
+#| fig-height: 10
+#| fig-keep: all
+#| fig-subcap: !expr paste("Origin", levels(uni_d))
+
+# aggregate (district, year, residence, plot)
+car_dyep <- group_by(car_dat, district, year, residence, plot, cat) %>%
+  summarize(ha = sum(ha), .groups = "drop")
+
+# plot
+sszplot(car_dyep,
+  aes_x = "year", aes_y = "ha", aes_col = "residence", aes_ltyp = "plot",
+  geom = c("line", "point"),
+  wrap = "cat", gridscale = "free", ncol = 2,
+  labs_x = "year of data delivery", labs_y = "area (in ha)",
+  scale_y = c(0, NA),
+  name = plot_name("0802_districts"),
+  width = 10, height = 8,
+  multi = uni_d
+)
+```
+
+### plot by district, by owner
+
+```{r}
+#| label: fig-0803
+#| fig-cap: districts by owner
+#| fig-width: 12
+#| fig-height: 10
+#| fig-keep: all
+#| fig-subcap: !expr paste("Origin", levels(uni_d))
+
+# plot
+sszplot(car_dyepw,
+  aes_x = "year", aes_y = "ha", aes_col = "residence", aes_ltyp = "plot",
+  geom = c("line", "point"),
+  grid = c("cat", "owner"), gridscale = "free_y",
+  labs_x = "year of data delivery", labs_y = "area (in ha)",
+  scale_y = c(0, NA),
+  name = plot_name("0803_districts_by-owner"),
+  width = 10, height = 8,
+  multi = uni_d
+)
+```
+
+## combine information (with the parameters)
+### reserves (area) data (and no area values below zero)
+
+```{r}
+#| label: fig-0804
+#| fig-cap: reserves by district
+#| fig-width: 12
+#| fig-height: 10
+
+sszplot(usage_prop,
+  aes_x = "district", aes_y = "reserve_new", aes_fill = "owner",
+  geom = "col",
+  labs_x = "", labs_y = "reserves (in ha)",
+  scale_x = rev(uni_d),
+  flip_coor = TRUE,
+  name = plot_name("0804_reserves_by-district"),
+  width = 8, height = 7
+)
+```
+
+### usage proportion
+
+```{r}
+#| label: fig-0805
+#| fig-cap: usage proportion by district
+#| fig-width: 12
+#| fig-height: 10
+
+sszplot(usage_prop,
+  aes_x = "district", aes_y = "usage_prop", aes_fill = "owner",
+  geom = "col",
+  labs_x = "", labs_y = "usage proportion (in % of the reserves)",
+  scale_x = rev(uni_d),
+  flip_coor = TRUE,
+  name = plot_name("0805_usage-proportion_by-district"),
+  width = 8, height = 7
+)
+```
+
+### usage area
+
+```{r}
+#| label: fig-0806
+#| fig-cap: usage area by district
+#| fig-width: 12
+#| fig-height: 10
+
+sszplot(usage_prop,
+  aes_x = "district", aes_y = "usage", aes_fill = "owner",
+  geom = "col",
+  labs_x = "", labs_y = "usage area (in ha)",
+  scale_x = rev(uni_d),
+  flip_coor = TRUE,  
+  name = plot_name("0806_usage-area_by-district"),
+  width = 8, height = 7
+)
+```
+
+## usage per year
+### usage proportion
+
+```{r}
+#| label: fig-0807
+#| fig-cap: usage proportion by district and year
+#| fig-width: 12
+#| fig-height: 14
+
+sszplot(total,
+  aes_x = "year", aes_y = "usage_prop", aes_col = "owner",
+  wrap = "district", ncol = 4,
+  labs_x = "", labs_y = "usage proportion (in % of the reserves per year)",
+  scale_y = c(0, NA),
+  name = plot_name("0807_usage-proportion_by-district-year"),
+  width = 12, height = 14
+)
+```
+
+### usage area
+
+```{r}
+#| label: fig-0808
+#| fig-cap: usage area by district and year
+#| fig-width: 12
+#| fig-height: 14
+
+sszplot(total,
+  aes_x = "year", aes_y = "usage_area", aes_col = "owner",
+  wrap = "district", ncol = 4,
+  labs_x = "", labs_y = "usage area (in ha per year)",
+  scale_y = c(0, NA),
+  name = plot_name("0808_usage-area_by-district-year"),
+  width = 12, height = 14
+)
+```
