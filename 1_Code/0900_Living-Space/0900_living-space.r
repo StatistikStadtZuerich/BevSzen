@@ -13,10 +13,10 @@ t0 <- Sys.time()
 
 # living space: data
 spa_dat <- read_csv(spa_od) %>%
-  rename(year = StichtagDatJahr, area = Wohnungsfl, apartments = AnzWhg, people = PersInGeb) %>%
+  rename(year = StichtagDatJahr, area = Wohnflaeche, apartments = AnzWhgStat, people = AnzBestWir) %>%
   left_join(look_dis, by = "QuarCd") %>%
   mutate(
-    owner = factor(if_else(EigentumCd == 1, uni_w[1], uni_w[2]), uni_w),
+    owner = factor(if_else(EigentuemerSSZPubl3Cd == 1, uni_w[1], uni_w[2]), uni_w),
     district = factor(distr, uni_d)
   ) %>%
   group_by(year, district, owner) %>% 
@@ -29,30 +29,30 @@ spa_dat <- read_csv(spa_od) %>%
 
 
 
-# living space by year ----------------------------------------------------
-
-# livings space (y)
-# WHY? e.g. to support the base year decision
-spa_y <- group_by(spa_dat, year) %>%
-  summarize(
-    area = sum_NA(area),
-    people = sum_NA(people)
-  ) %>%
-  ungroup() %>%
-  mutate(spa_y = round(area / people, round_area))
-
-sszplot(spa_y,
-  aes_x = "year", aes_y = "spa_y",
-  labs_y = "living space (m² per person)",
-  scale_y = c(0, NA),
-  name = "0900_living-space_y",
-  width = 8, height = 5
-)
-
-
-
-# living space by year and owner ------------------------------------------
-
+# # living space by year ----------------------------------------------------
+# 
+# # livings space (y)
+# # WHY? e.g. to support the base year decision
+# spa_y <- group_by(spa_dat, year) %>%
+#   summarize(
+#     area = sum_NA(area),
+#     people = sum_NA(people)
+#   ) %>%
+#   ungroup() %>%
+#   mutate(spa_y = round(area / people, round_area))
+# 
+# sszplot(spa_y,
+#   aes_x = "year", aes_y = "spa_y",
+#   labs_y = "living space (m² per person)",
+#   scale_y = c(0, NA),
+#   name = "0900_living-space_y",
+#   width = 8, height = 5
+# )
+# 
+# 
+# 
+# # living space by year and owner ------------------------------------------
+# 
 # livings space (yw)
 spa_yw <- group_by(spa_dat, year, owner) %>%
   summarize(
@@ -61,20 +61,20 @@ spa_yw <- group_by(spa_dat, year, owner) %>%
   ) %>%
   ungroup() %>%
   mutate(spa_yw = round(area / people, round_area))
-
-
-sszplot(spa_yw,
-  aes_x = "year", aes_y = "spa_yw", aes_col = "owner",
-  labs_y = "living space (m² per person)",
-  scale_y = c(0, NA),
-  name = "0901_living-space_yw",
-  width = 8, height = 5
-)
-
-
-
-# living space (area, apartments, people, by dyw) -------------------------
-
+# 
+# 
+# sszplot(spa_yw,
+#   aes_x = "year", aes_y = "spa_yw", aes_col = "owner",
+#   labs_y = "living space (m² per person)",
+#   scale_y = c(0, NA),
+#   name = "0901_living-space_yw",
+#   width = 8, height = 5
+# )
+# 
+# 
+# 
+# # living space (area, apartments, people, by dyw) -------------------------
+# 
 # livings space (dyw)
 spa_dyw <- group_by(spa_dat, district, year, owner) %>%
   summarize(
@@ -85,46 +85,46 @@ spa_dyw <- group_by(spa_dat, district, year, owner) %>%
   ) %>%
   ungroup() %>%
   mutate(spa_dyw = round(area / people, round_area))
-
-# plot: living space
-sszplot(spa_dyw,
-  aes_x = "year", aes_y = "spa_dyw", aes_col = "owner",
-  labs_y = "living space (m² per person)",
-  wrap = "district", ncol = 4,
-  scale_y = c(0, NA),
-  name = "0902_living-space_dyw",
-  width = 12, height = 14
-)
-
-# plot: area
-sszplot(spa_dyw,
-  aes_x = "year", aes_y = "area_ha", aes_col = "owner",
-  labs_y = "living area (in ha)",
-  wrap = "district", ncol = 4,
-  scale_y = c(0, NA),
-  name = "0903_area_dyw",
-  width = 12, height = 14
-)
-
-# plot: apartments
-sszplot(spa_dyw,
-  aes_x = "year", aes_y = "apartments", aes_col = "owner",
-  labs_y = "apartments",
-  wrap = "district", ncol = 4,
-  scale_y = c(0, NA),
-  name = "0904_apartments_dyw",
-  width = 12, height = 14
-)
-
-# plot: people
-sszplot(spa_dyw,
-  aes_x = "year", aes_y = "people", aes_col = "owner",
-  labs_y = "people",
-  wrap = "district", ncol = 4,
-  scale_y = c(0, NA),
-  name = "0905_people_dyw",
-  width = 12, height = 14
-)
+# 
+# # plot: living space
+# sszplot(spa_dyw,
+#   aes_x = "year", aes_y = "spa_dyw", aes_col = "owner",
+#   labs_y = "living space (m² per person)",
+#   wrap = "district", ncol = 4,
+#   scale_y = c(0, NA),
+#   name = "0902_living-space_dyw",
+#   width = 12, height = 14
+# )
+# 
+# # plot: area
+# sszplot(spa_dyw,
+#   aes_x = "year", aes_y = "area_ha", aes_col = "owner",
+#   labs_y = "living area (in ha)",
+#   wrap = "district", ncol = 4,
+#   scale_y = c(0, NA),
+#   name = "0903_area_dyw",
+#   width = 12, height = 14
+# )
+# 
+# # plot: apartments
+# sszplot(spa_dyw,
+#   aes_x = "year", aes_y = "apartments", aes_col = "owner",
+#   labs_y = "apartments",
+#   wrap = "district", ncol = 4,
+#   scale_y = c(0, NA),
+#   name = "0904_apartments_dyw",
+#   width = 12, height = 14
+# )
+# 
+# # plot: people
+# sszplot(spa_dyw,
+#   aes_x = "year", aes_y = "people", aes_col = "owner",
+#   labs_y = "people",
+#   wrap = "district", ncol = 4,
+#   scale_y = c(0, NA),
+#   name = "0905_people_dyw",
+#   width = 12, height = 14
+# )
 
 
 # prediction: entire city, by owner ---------------------------------------
@@ -157,15 +157,15 @@ spa_yw_past_pred <- as_tibble(expand_grid(
   ) %>%
   mutate(spa_yw_all = if_else(year < scen_begin, spa_yw, pred_roll))
 
-# plot
-sszplot(spa_yw_past_pred,
-  aes_x = "year", aes_y = "spa_yw_all", aes_col = "owner",
-  labs_y = "living space (m² per person)",
-  i_x = c(spa_base_begin, spa_base_end),
-  scale_y = c(0, NA),
-  name = "0906_living-space_prediction_yw",
-  width = 10, height = 7
-)
+# # plot
+# sszplot(spa_yw_past_pred,
+#   aes_x = "year", aes_y = "spa_yw_all", aes_col = "owner",
+#   labs_y = "living space (m² per person)",
+#   i_x = c(spa_base_begin, spa_base_end),
+#   scale_y = c(0, NA),
+#   name = "0906_living-space_prediction_yw",
+#   width = 10, height = 7
+# )
 
 
 
@@ -200,16 +200,16 @@ spa_dyw_past_pred <- as_tibble(expand_grid(
   ) %>%
   mutate(spa_dyw_all = if_else(year < scen_begin, spa_dyw, pred_roll))
 
-# plot
-sszplot(spa_dyw_past_pred,
-  aes_x = "year", aes_y = "spa_dyw_all", aes_col = "owner",
-  labs_y = "living space (m² per person)",
-  wrap = "district", ncol = 4,
-  i_x = c(spa_base_begin, spa_base_end),
-  scale_y = c(0, NA),
-  name = "0907_living-space_prediction_dyw",
-  width = 12, height = 14
-)
+# # plot
+# sszplot(spa_dyw_past_pred,
+#   aes_x = "year", aes_y = "spa_dyw_all", aes_col = "owner",
+#   labs_y = "living space (m² per person)",
+#   wrap = "district", ncol = 4,
+#   i_x = c(spa_base_begin, spa_base_end),
+#   scale_y = c(0, NA),
+#   name = "0907_living-space_prediction_dyw",
+#   width = 12, height = 14
+# )
 
 
 
@@ -263,15 +263,15 @@ spa_yw_past_pred_52 <- as_tibble(expand_grid(
     district = uni_d[uni_d == "Escher Wyss"]
   )
 
-# plot
-sszplot(spa_yw_past_pred_52,
-  aes_x = "year", aes_y = "spa_dyw_all", aes_col = "owner",
-  labs_y = "living space (m² per person)",
-  i_x = c(spa_base_begin_52p, spa_base_end),
-  scale_y = c(0, NA),
-  name = "0908_living-space_prediction_52yw",
-  width = 10, height = 7
-)
+# # plot
+# sszplot(spa_yw_past_pred_52,
+#   aes_x = "year", aes_y = "spa_dyw_all", aes_col = "owner",
+#   labs_y = "living space (m² per person)",
+#   i_x = c(spa_base_begin_52p, spa_base_end),
+#   scale_y = c(0, NA),
+#   name = "0908_living-space_prediction_52yw",
+#   width = 10, height = 7
+# )
 
 
 
@@ -319,41 +319,41 @@ spa_comb <- spa_prep_dyw %>%
     )
   ))
 
-# plot: past and prediction
-sszplot(spa_comb,
-  aes_x = "year", aes_y = "spa", aes_col = "owner",
-  labs_y = "living space (m² per person)",
-  wrap = "district", ncol = 4,
-  i_x = c(spa_base_begin, spa_base_end),
-  scale_y = c(0, NA),
-  name = "0909_living-space_prediction_dyw_different-datasets",
-  width = 12, height = 14
-)
-
-# plot both (i.e. per district, and entire city)
-
-names_before <- c("spa_dyw", "spa_yw", "spa")
-names_plot <- c("by district", "entire city", "prediction")
-
-spa_both <- select(spa_comb, district, year, owner, spa_dyw, spa_yw, spa) %>%
-  pivot_longer(cols = names_before, names_to = "category", values_to = "spa") %>%
-  mutate(cat = factor(case_when(
-    category == names_before[1] ~ names_plot[1],
-    category == names_before[2] ~ names_plot[2],
-    TRUE ~ names_plot[3]
-  ), levels = names_plot))
-
-# same content, different plot
-sszplot(spa_both,
-  aes_x = "year", aes_y = "spa", aes_col = "cat",
-  grid = c(".", "owner"),
-  labs_y = "living space (m² per person)",
-  i_x = c(spa_base_begin, spa_base_end),
-  scale_y = c(0, NA),
-  name = "0910_living-space_dyw-yw",
-  width = 8, height = 4,
-  multi = uni_d
-)
+# # plot: past and prediction
+# sszplot(spa_comb,
+#   aes_x = "year", aes_y = "spa", aes_col = "owner",
+#   labs_y = "living space (m² per person)",
+#   wrap = "district", ncol = 4,
+#   i_x = c(spa_base_begin, spa_base_end),
+#   scale_y = c(0, NA),
+#   name = "0909_living-space_prediction_dyw_different-datasets",
+#   width = 12, height = 14
+# )
+# 
+# # plot both (i.e. per district, and entire city)
+# 
+# names_before <- c("spa_dyw", "spa_yw", "spa")
+# names_plot <- c("by district", "entire city", "prediction")
+# 
+# spa_both <- select(spa_comb, district, year, owner, spa_dyw, spa_yw, spa) %>%
+#   pivot_longer(cols = names_before, names_to = "category", values_to = "spa") %>%
+#   mutate(cat = factor(case_when(
+#     category == names_before[1] ~ names_plot[1],
+#     category == names_before[2] ~ names_plot[2],
+#     TRUE ~ names_plot[3]
+#   ), levels = names_plot))
+# 
+# # same content, different plot
+# sszplot(spa_both,
+#   aes_x = "year", aes_y = "spa", aes_col = "cat",
+#   grid = c(".", "owner"),
+#   labs_y = "living space (m² per person)",
+#   i_x = c(spa_base_begin, spa_base_end),
+#   scale_y = c(0, NA),
+#   name = "0910_living-space_dyw-yw",
+#   width = 8, height = 4,
+#   multi = uni_d
+# )
 
 
 

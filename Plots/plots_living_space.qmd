@@ -1,0 +1,253 @@
+
+# Living spaces
+
+```{r}
+#| label: prep
+
+# source general functions
+source(paste0(here::here(), "/1_code/0000_general/general_utils.R"))
+
+# read general variables for common use
+params <- yaml::read_yaml(paste0(here::here(), "/Plots/_variables.yml"))
+
+# source utility functions
+run_scen(params$scen, "spa")
+
+```
+
+## living space yearly
+
+### livings space by year
+WHY? e.g. to support the base year decision
+
+```{r}
+#| label: fig-0900
+#| fig-cap: living space by year
+
+spa_y <- group_by(spa_dat, year) %>%
+  summarize(
+    area = sum_NA(area),
+    people = sum_NA(people)
+  ) %>%
+  ungroup() %>%
+  mutate(spa_y = round(area / people, round_area))
+
+sszplot(spa_y,
+  aes_x = "year", aes_y = "spa_y",
+  labs_y = "living space (m² per person)",
+  scale_y = c(0, NA),
+  name = plot_name("0900_living-space_y"),
+  width = 8, height = 5
+)
+```
+
+### living space by year and owner
+
+```{r}
+#| label: fig-0901
+#| fig-cap: living space by year and owner
+
+sszplot(spa_yw,
+  aes_x = "year", aes_y = "spa_yw", aes_col = "owner",
+  labs_y = "living space (m² per person)",
+  scale_y = c(0, NA),
+  name = plot_name("0901_living-space_yw"),
+  width = 8, height = 5
+)
+```
+
+## living space (area, apartments, people, by dyw)
+
+### space
+
+```{r}
+#| label: fig-0902
+#| fig-cap: living space by district, year and owner
+#| fig-width: 12
+#| fig-height: 14
+
+sszplot(spa_dyw,
+  aes_x = "year", aes_y = "spa_dyw", aes_col = "owner",
+  labs_y = "living space (m² per person)",
+  wrap = "district", ncol = 4,
+  scale_y = c(0, NA),
+  name = plot_name("0902_living-space_dyw"),
+  width = 12, height = 14
+)
+```
+
+### area
+
+```{r}
+#| label: fig-0903
+#| fig-cap: area by district, year and owner
+#| fig-width: 12
+#| fig-height: 14
+
+sszplot(spa_dyw,
+  aes_x = "year", aes_y = "area_ha", aes_col = "owner",
+  labs_y = "living area (in ha)",
+  wrap = "district", ncol = 4,
+  scale_y = c(0, NA),
+  name = plot_name("0903_area_dyw"),
+  width = 12, height = 14
+)
+```
+
+### apartments
+
+```{r}
+#| label: fig-0904
+#| fig-cap: apartments by district, year and owner
+#| fig-width: 12
+#| fig-height: 14
+
+sszplot(spa_dyw,
+  aes_x = "year", aes_y = "apartments", aes_col = "owner",
+  labs_y = "apartments",
+  wrap = "district", ncol = 4,
+  scale_y = c(0, NA),
+  name = plot_name("0904_apartments_dyw"),
+  width = 12, height = 14
+)
+```
+
+### people
+
+```{r}
+#| label: fig-0905
+#| fig-cap: people by district, year and owner
+#| fig-width: 12
+#| fig-height: 14
+
+sszplot(spa_dyw,
+  aes_x = "year", aes_y = "people", aes_col = "owner",
+  labs_y = "people",
+  wrap = "district", ncol = 4,
+  scale_y = c(0, NA),
+  name = plot_name("0905_people_dyw"),
+  width = 12, height = 14
+)
+```
+
+## predictions
+
+### entire city, by owner
+
+```{r}
+#| label: fig-0906
+#| fig-cap: living space prediction by year and ownership
+#| fig-width: 10
+#| fig-height: 7
+
+sszplot(spa_yw_past_pred,
+  aes_x = "year", aes_y = "spa_yw_all", aes_col = "owner",
+  labs_y = "living space (m² per person)",
+  i_x = c(spa_base_begin, spa_base_end),
+  scale_y = c(0, NA),
+  name = plot_name("0906_living-space_prediction_yw"),
+  width = 10, height = 7
+)
+```
+
+### entire city, by district and owner
+
+```{r}
+#| label: fig-0907
+#| fig-cap: living space prediction by district, year and ownership
+#| fig-width: 12
+#| fig-height: 14
+
+sszplot(spa_dyw_past_pred,
+  aes_x = "year", aes_y = "spa_dyw_all", aes_col = "owner",
+  labs_y = "living space (m² per person)",
+  wrap = "district", ncol = 4,
+  i_x = c(spa_base_begin, spa_base_end),
+  scale_y = c(0, NA),
+  name = plot_name("0907_living-space_prediction_dyw"),
+  width = 12, height = 14
+)
+```
+
+### Escher Wyss, by owner
+
+WHY a different approach for the Escher Wyss district, private housing?
+the living space over time differs substantially from the other districts
+(increase until 2013, then decrease)
+reason: few apartments in 2008 then very intense construction activity
+numbers: less than 1500 apartments in 2008, more than 3100 apartments in 2017
+after construction some apartments were finished, yet no one lived there yet
+for a certain moment the empty apartments increase the living space (based on buildings)
+due to the high ratio of new buildings (compared to existing buildings) the living space was increased
+this will not happen again in future (due to the higher amount of buildings)
+
+```{r}
+#| label: fig-0908
+#| fig-cap: living space prediction for Escher Wyss district, by year and ownership
+#| fig-width: 10
+#| fig-height: 7
+
+sszplot(spa_yw_past_pred_52,
+  aes_x = "year", aes_y = "spa_dyw_all", aes_col = "owner",
+  labs_y = "living space (m² per person)",
+  i_x = c(spa_base_begin_52p, spa_base_end),
+  scale_y = c(0, NA),
+  name = plot_name("0908_living-space_prediction_52yw"),
+  width = 10, height = 7
+)
+```
+
+## combine datasets
+
+###  past and prediction
+
+```{r}
+#| label: fig-0909
+#| fig-cap: living space prediction by district, year and owner; different datasets
+#| fig-width: 12
+#| fig-height: 14
+
+sszplot(spa_comb,
+  aes_x = "year", aes_y = "spa", aes_col = "owner",
+  labs_y = "living space (m² per person)",
+  wrap = "district", ncol = 4,
+  i_x = c(spa_base_begin, spa_base_end),
+  scale_y = c(0, NA),
+  name = plot_name("0909_living-space_prediction_dyw_different-datasets"),
+  width = 12, height = 14
+)
+```
+
+### plot both (i.e. per district, and entire city)
+
+```{r}
+#| label: fig-0910
+#| fig-cap: living space prediction by district, year and owner plus entire city
+#| fig-width: 10
+#| fig-height: 5
+#| fig-keep: all
+#| fig-subcap: !expr paste("Origin", levels(uni_d))
+
+names_before <- c("spa_dyw", "spa_yw", "spa")
+names_plot <- c("by district", "entire city", "prediction")
+
+spa_both <- select(spa_comb, district, year, owner, spa_dyw, spa_yw, spa) %>%
+  pivot_longer(cols = names_before, names_to = "category", values_to = "spa") %>%
+  mutate(cat = factor(case_when(
+    category == names_before[1] ~ names_plot[1],
+    category == names_before[2] ~ names_plot[2],
+    TRUE ~ names_plot[3]
+  ), levels = names_plot))
+
+# same content, different plot
+sszplot(spa_both,
+  aes_x = "year", aes_y = "spa", aes_col = "cat",
+  grid = c(".", "owner"),
+  labs_y = "living space (m² per person)",
+  i_x = c(spa_base_begin, spa_base_end),
+  scale_y = c(0, NA),
+  name = plot_name("0910_living-space_dyw-yw"),
+  width = 8, height = 4,
+  multi = uni_d
+)
+```
