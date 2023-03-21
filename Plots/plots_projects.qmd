@@ -1,0 +1,222 @@
+
+# Projects
+
+```{r}
+#| label: prep
+
+# source general functions
+source(paste0(here::here(), "/1_code/0000_general/general_utils.R"))
+
+# read general variables for common use
+params <- yaml::read_yaml(paste0(here::here(), "/Plots/_variables.yml"))
+
+# source utility functions
+run_scen(params$scen, "pro")
+
+```
+
+## indicators (new/removed apartments)
+
+### by year
+
+```{r}
+#| label: fig-1100
+#| fig-cap: projects by year
+#| fig-width: 10
+#| fig-height: 7
+
+pro_y <- group_by(pro_all, year, indicator) %>%
+  summarize(
+    apartments = sum_NA(apartments),
+    .groups = "drop"
+  )
+
+sszplot(pro_y,
+  aes_x = "year", aes_y = "apartments", aes_fill = "indicator",
+  geom = "col",
+  labs_x = "",
+  name = plot_name("1100_projects_by-year"),
+  width = 7, height = 4
+)
+```
+
+### by year, status
+
+```{r}
+#| label: fig-1101
+#| fig-cap: projects by year and status
+#| fig-width: 8
+#| fig-height: 12
+
+pro_yt <- group_by(pro_all, year, status, indicator) %>%
+  summarize(
+    apartments = sum_NA(apartments),
+    .groups = "drop"
+  )
+
+sszplot(pro_yt,
+  aes_x = "year", aes_y = "apartments", aes_fill = "indicator",
+  geom = "col",
+  labs_x = "",
+  grid = c("status", "."),
+  name = plot_name("1101_projects_by-year-status"),
+  width = 8, height = 12
+)
+```
+
+### by year, owner
+
+```{r}
+#| label: fig-1102
+#| fig-cap: projects by year and owner
+#| fig-width: 12
+#| fig-height: 5
+
+pro_yw <- group_by(pro_all, year, owner, indicator) %>%
+  summarize(
+    apartments = sum_NA(apartments),
+    .groups = "drop"
+  )
+
+sszplot(pro_yw,
+  aes_x = "year", aes_y = "apartments", aes_fill = "indicator",
+  geom = "col",
+  labs_x = "",
+  grid = c(".", "owner"),
+  name = plot_name("1102_projects_by-year-owner"),
+  width = 12, height = 5
+)
+```
+
+### by year, owner, status
+
+```{r}
+#| label: fig-1103
+#| fig-cap: projects by year, owner and status
+#| fig-width: 12
+#| fig-height: 12
+
+pro_ywt <- group_by(pro_all, year, owner, status, indicator) %>%
+  summarize(
+    apartments = sum_NA(apartments),
+    .groups = "drop"
+  )
+
+sszplot(pro_ywt,
+  aes_x = "year", aes_y = "apartments", aes_fill = "indicator",
+  geom = "col",
+  labs_x = "",
+  grid = c("status", "owner"),
+  name = plot_name("1103_projects_by-year-owner-status"),
+  width = 12, height = 12
+)
+```
+
+### by district, year
+
+```{r}
+#| label: fig-1104
+#| fig-cap: projects by district and year
+#| fig-width: 10
+#| fig-height: 12
+
+pro_dy <- group_by(pro_all, district, year, indicator) %>%
+  summarize(
+    apartments = sum_NA(apartments),
+    .groups = "drop"
+  )
+
+sszplot(pro_dy,
+  aes_x = "year", aes_y = "apartments", aes_fill = "indicator",
+  geom = "col",
+  labs_x = "", angle = 90,
+  wrap = "district", ncol = 4,
+  name = plot_name("1104_projects_by-district-year"),
+  width = 10, height = 12
+)
+```
+
+### by district, year, owner
+
+```{r}
+#| label: fig-1105
+#| fig-cap: projects by district, year and owner
+#| fig-width: 10
+#| fig-height: 11
+
+pro_dyw <- group_by(pro_all, district, year, owner, indicator) %>%
+  summarize(
+    apartments = sum_NA(apartments),
+    .groups = "drop"
+  )
+
+sszplot(pro_dyw,
+  aes_x = "year", aes_y = "apartments", aes_fill = "indicator",
+  geom = "col",
+  labs_x = "", angle = 90,
+  wrap = "district", ncol = 4,
+  name = plot_name("1105_projects_by-district-year-owner"),
+  width = 10, height = 11,
+  multi = uni_w
+)
+```
+
+## not realized projects
+
+### delayed
+
+```{r}
+#| label: fig-1106
+#| fig-cap: projects delay by year
+#| fig-width: 10
+#| fig-height: 7
+
+sszplot(delay,
+  aes_x = "year", aes_y = "ynorm", aes_fill = "delayText",
+  geom = "col",
+  labs_x = "", labs_y = "percent (of the apartments)",
+  name = plot_name("1106_projects_delay-by-year"),
+  width = 7, height = 4.5
+)
+```
+
+### initial vs. 'not realized'/'delayed'
+
+```{r}
+#| label: fig-1107
+#| fig-cap: projects; initial, delayed and not realized, by year
+#| fig-width: 12
+#| fig-height: 5
+
+# after corrections
+text_corr <- c("initial", "not realized, delayed")
+uni_corr <- factor(text_corr, levels = text_corr)
+
+pro_y_nd <- group_by(pro_delay, year, indicator) %>%
+  summarize(
+    apartments = sum_NA(apartments),
+    .groups = "drop"
+  ) %>%
+  mutate(corr = uni_corr[2])
+
+# with initial
+pro_y_both <- mutate(pro_y, corr = uni_corr[1]) %>%
+  bind_rows(pro_y_nd)
+
+# check (difference, since parameter for 'not realized')
+check <- group_by(pro_y_both, corr) %>%
+  summarize(
+    apartments = sum(apartments),
+    .groups = "drop"
+  )
+
+# plot
+sszplot(pro_y_both,
+  aes_x = "year", aes_y = "apartments", aes_fill = "corr",
+  geom = "col",
+  labs_x = "",
+  grid = c(".", "indicator"),
+  name = plot_name("1107_projects-not-realized-delayed_by-year"),
+  width = 12, height = 5
+)
+```
