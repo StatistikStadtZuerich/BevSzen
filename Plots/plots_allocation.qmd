@@ -1,0 +1,224 @@
+
+# Allocation
+
+```{r}
+#| label: prep
+
+# source general functions
+source(paste0(here::here(), "/1_code/0000_general/general_utils.R"))
+
+# read general variables for common use
+params <- yaml::read_yaml(paste0(here::here(), "/Plots/_variables.yml"))
+
+# source utility functions
+run_scen(params$scen, "aca")
+
+```
+
+## allocation yearly
+
+### entire city by year
+WHY? e.g. to support the base year decision
+
+```{r}
+#| label: fig-1000
+#| fig-cap: allocation by year
+
+aca_y <- group_by(aca_dat, year) %>%
+  summarize(
+    apartments = sum_NA(apartments),
+    people = sum_NA(people)
+  ) %>%
+  ungroup() %>%
+  mutate(aca_y = round(people / apartments, round_aca))
+
+sszplot(aca_y,
+  aes_x = "year", aes_y = "aca_y",
+  labs_y = "allocation (people per apartment)",
+  scale_y = c(0, NA),
+  name = plot_name("1000_allocation_y"),
+  width = 8, height = 5
+)
+```
+
+### entire city by year and owner
+
+```{r}
+#| label: fig-1001
+#| fig-cap: allocation by year and ownership
+
+sszplot(aca_yw,
+  aes_x = "year", aes_y = "aca_yw", aes_col = "owner",
+  labs_y = "allocation (people per apartment)",
+  scale_y = c(0, NA),
+  name = plot_name("1001_allocation_yw"),
+  width = 8, height = 5
+)
+```
+
+### allocation by district, year, owner
+
+```{r}
+#| label: fig-1002
+#| fig-cap: allocation by district, year and ownership
+#| fig-width: 12
+#| fig-height: 14
+
+sszplot(aca_dyw,
+  aes_x = "year", aes_y = "aca_dyw", aes_col = "owner",
+  labs_y = "allocation (people per apartment)",
+  wrap = "district", ncol = 4,
+  scale_y = c(0, NA),
+  name = plot_name("1002_allocation_dyw"),
+  width = 12, height = 14
+)
+```
+
+### apartments by district, year, owner
+
+```{r}
+#| label: fig-1003
+#| fig-cap: apartments by district, year and ownership
+#| fig-width: 12
+#| fig-height: 14
+
+sszplot(aca_dyw,
+  aes_x = "year", aes_y = "apartments", aes_col = "owner",
+  labs_y = "apartments",
+  wrap = "district", ncol = 4,
+  scale_y = c(0, NA),
+  name = plot_name("1003_apartments_dyw"),
+  width = 12, height = 14
+)
+```
+
+### people by district, year, owner
+
+```{r}
+#| label: fig-1004
+#| fig-cap: people by district, year and ownership
+#| fig-width: 12
+#| fig-height: 14
+
+sszplot(aca_dyw,
+  aes_x = "year", aes_y = "people", aes_col = "owner",
+  labs_y = "people",
+  wrap = "district", ncol = 4,
+  scale_y = c(0, NA),
+  name = plot_name("1004_people_dyw"),
+  width = 12, height = 14
+)
+```
+
+## predictions
+
+### entire city, by owner
+
+```{r}
+#| label: fig-1005
+#| fig-cap: allocation prediction by year and ownership
+#| fig-width: 10
+#| fig-height: 7
+
+sszplot(aca_yw_past_pred,
+  aes_x = "year", aes_y = "aca_yw_all", aes_col = "owner",
+  labs_y = "allocation (people per apartment)",
+  i_x = c(aca_base_begin, aca_base_end),
+  scale_y = c(0, NA),
+  name = plot_name("1005_allocation_prediction_yw"),
+  width = 10, height = 7
+)
+```
+
+### entire city, by district and owner
+
+```{r}
+#| label: fig-1006
+#| fig-cap: allocation prediction by district, year and ownership
+#| fig-width: 12
+#| fig-height: 14
+
+sszplot(aca_dyw_past_pred,
+  aes_x = "year", aes_y = "aca_dyw_all", aes_col = "owner",
+  labs_y = "allocation (people per apartment)",
+  wrap = "district", ncol = 4,
+  i_x = c(aca_base_begin, aca_base_end),
+  scale_y = c(0, NA),
+  name = plot_name("1006_allocation_prediction_dyw"),
+  width = 12, height = 14
+)
+```
+
+### Escher Wyss, by owner
+WHY a different approach for the Escher Wyss district, private housing?
+same approach as in the living space model (see @sec-escherwyss_ls)
+
+```{r}
+#| label: fig-1007
+#| fig-cap: allocation prediction for Escher Wyss district, by year and ownership
+#| fig-width: 10
+#| fig-height: 7
+
+sszplot(aca_yw_past_pred_52,
+  aes_x = "year", aes_y = "aca_dyw_all", aes_col = "owner",
+  labs_y = "allocation (people per apartment)",
+  i_x = c(aca_base_begin_52p, aca_base_end),
+  scale_y = c(0, NA),
+  name = plot_name("1007_allocation_prediction_52yw"),
+  width = 10, height = 7
+)
+```
+
+## combine datasets
+
+###  past and prediction
+
+```{r}
+#| label: fig-1008
+#| fig-cap: allocation prediction by district, year and owner; different datasets
+#| fig-width: 12
+#| fig-height: 14
+
+sszplot(aca_comb,
+  aes_x = "year", aes_y = "aca", aes_col = "owner",
+  labs_y = "allocation (people per apartment)",
+  wrap = "district", ncol = 4,
+  i_x = c(spa_base_begin, spa_base_end),
+  scale_y = c(0, NA),
+  name = plot_name("1008_allocation_prediction_dyw_different-datasets"),
+  width = 12, height = 14
+)
+```
+
+### plot both (i.e. per district, and entire city)
+
+```{r}
+#| label: fig-1009
+#| fig-cap: allocation prediction by district, year and owner plus entire city
+#| fig-width: 10
+#| fig-height: 5
+#| fig-keep: all
+#| fig-subcap: !expr paste("Origin", levels(uni_d))
+
+names_before <- c("aca_dyw", "aca_yw", "aca")
+names_plot <- c("by district", "entire city", "prediction")
+
+aca_both <- select(aca_comb, district, year, owner, aca_dyw, aca_yw, aca) %>%
+  pivot_longer(cols = names_before, names_to = "category", values_to = "aca") %>%
+  mutate(cat = factor(case_when(
+    category == names_before[1] ~ names_plot[1],
+    category == names_before[2] ~ names_plot[2],
+    TRUE ~ names_plot[3]
+  ), levels = names_plot))
+
+sszplot(aca_both,
+  aes_x = "year", aes_y = "aca", aes_col = "cat",
+  grid = c(".", "owner"),
+  labs_y = "allocation (people per apartment)",
+  i_x = c(spa_base_begin, spa_base_end),
+  scale_y = c(0, NA),
+  name = plot_name("1009_allocation_dyw-yw"),
+  width = 8, height = 4,
+  multi = uni_d
+)
+```
