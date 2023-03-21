@@ -23,6 +23,7 @@ book:
     - plots_careb.qmd
     - plots_living_space.qmd
     - plots_allocation.qmd
+    - plots_projects.qmd
     - references.qmd
 
 bibliography: references.bib
