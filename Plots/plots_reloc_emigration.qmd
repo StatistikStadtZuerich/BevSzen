@@ -1,7 +1,5 @@
----
-title: "Relocation on emigration plots"
-author: "Klemens Rosin, Daniel Baumgartner"
----
+
+# Relocation on emigration
 
 ```{r}
 #| label: prep
@@ -19,7 +17,6 @@ run_scen(params$scen, "ree")
 rate <- ems_rel_prop
 
 ```
-
 
 ## Relocation proportion
 
@@ -57,9 +54,7 @@ WHY? Check if minor differences between sex? Because omitted in prediction
 
 ### differences by origin (sum over years and sex)
 
-WHY?
-first: to emphasize the need of origin in the model
-second: the plots can be used to get an idea the value of an age threshold
+WHY? first: to emphasize the need of origin in the model second: the plots can be used to get an idea the value of an age threshold
 
 ```{r}
 #| label: fig-rel_prop_dao
@@ -89,6 +84,7 @@ second: the plots can be used to get an idea the value of an age threshold
 ### which base years?
 
 #### year and origin
+
 WHY? simplest plot to determine the base years
 
 ```{r}
@@ -151,6 +147,7 @@ WHY? simplest plot to determine the base years
 ```
 
 ### aggregate over sex
+
 This plot is the starting point (before smoothing, age corrections)
 
 #### focus on age
@@ -218,6 +215,7 @@ This plot is the starting point (before smoothing, age corrections)
 ```
 
 ### dyao: smoothing
+
 #### focus age
 
 ```{r}
@@ -288,8 +286,8 @@ This plot is the starting point (before smoothing, age corrections)
 ```
 
 ### dyao: proportion after smoothing
-#### focus age
 
+#### focus age
 
 ```{r}
 #| label: fig-prop_dyao_smooth_age
@@ -335,6 +333,7 @@ This plot is the starting point (before smoothing, age corrections)
 ```
 
 ### smoothing
+
 #### processes
 
 ```{r}
@@ -396,8 +395,8 @@ This plot is the starting point (before smoothing, age corrections)
 ```
 
 ### proportion from different aggregation levels ----------------------------
-#### entire curves (different aggregations levels)
 
+#### entire curves (different aggregations levels)
 
 ```{r}
 #| label: fig-entire_curves
@@ -473,6 +472,7 @@ This plot is the starting point (before smoothing, age corrections)
 ```
 
 ### smoothing (after different levels of aggregation were brought to
+
 #### focus age
 
 ```{r}
@@ -521,8 +521,8 @@ This plot is the starting point (before smoothing, age corrections)
 ```
 
 ## Prediction
-### (constrained regression)
 
+### (constrained regression)
 
 ```{r}
 #| label: fig-plot_pred_smooth
@@ -556,6 +556,7 @@ This plot is the starting point (before smoothing, age corrections)
 ```
 
 ## final predictions
+
 ### past and future
 
 ```{r}
@@ -597,8 +598,8 @@ This plot is the starting point (before smoothing, age corrections)
 ```
 
 ### focus age distribution
-WHY this plot: it is recommendable to look precisely at the age plots over years
-therefore, a plot that focuses on certain years
+
+WHY this plot: it is recommendable to look precisely at the age plots over years therefore, a plot that focuses on certain years
 
 ```{r}
 #| label: fig-plot_a_past_pred_age

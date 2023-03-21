@@ -1,7 +1,5 @@
----
-title: "Immigration plots"
-author: "Klemens Rosin, Daniel Baumgartner"
----
+
+# Immigration
 
 ```{r}
 #| label: prep

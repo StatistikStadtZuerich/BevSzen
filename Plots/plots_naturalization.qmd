@@ -1,7 +1,5 @@
----
-title: "Naturalization plots"
-author: "Klemens Rosin, Daniel Baumgartner"
----
+
+# Naturalization
 
 ```{r}
 #| label: prep

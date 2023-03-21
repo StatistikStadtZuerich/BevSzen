@@ -1,7 +1,5 @@
----
-title: "Birth plots"
-author: "Klemens Rosin, Daniel Baumgartner"
----
+
+# Birth
 
 ```{r}
 #| label: prep

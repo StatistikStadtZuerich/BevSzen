@@ -1,7 +1,5 @@
----
-title: "Emigration plots"
-author: "Klemens Rosin, Daniel Baumgartner"
----
+
+# Emigration
 
 ```{r}
 #| label: prep

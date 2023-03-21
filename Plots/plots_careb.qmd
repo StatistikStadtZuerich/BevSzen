@@ -1,7 +1,5 @@
----
-title: "Capacity reserves plots"
-author: "Klemens Rosin, Daniel Baumgartner"
----
+
+# Capacity reserves
 
 ```{r}
 #| label: prep
@@ -18,6 +16,7 @@ run_scen(params$scen, "car")
 ```
 
 ## careb
+
 ### plot entire city, all owner categories
 
 ```{r}

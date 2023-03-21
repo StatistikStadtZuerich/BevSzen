@@ -1,7 +1,5 @@
----
-title: "Death plots"
-author: "Klemens Rosin, Daniel Baumgartner"
----
+
+# Death
 
 ```{r}
 #| label: prep

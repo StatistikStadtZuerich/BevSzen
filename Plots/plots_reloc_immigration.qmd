@@ -1,11 +1,7 @@
----
-title: "Relocation on immigration plots"
-author: "Klemens Rosin, Daniel Baumgartner"
----
+
+# Relocation on immigration
 
 ```{r}
-#| label: prep
-
 #| label: prep
 
 # source general functions
