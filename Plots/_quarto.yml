@@ -7,6 +7,10 @@ book:
   title: "Plots for population scenarios"
   author: "Klemens Rosin, Daniel Baumgartner"
   date: today
+  page-navigation: true
+  search: true
+  sidebar:
+    style: "docked"
   chapters:
     - index.qmd
     - plots_birth.qmd
@@ -17,6 +21,8 @@ book:
     - plots_reloc_emigration.qmd
     - plots_naturalization.qmd
     - plots_careb.qmd
+    - plots_living_space.qmd
+    - plots_allocation.qmd
     - references.qmd
 
 bibliography: references.bib
@@ -40,8 +46,6 @@ format:
     anchor-sections: true
     smooth-scroll: true
     max-width: "2400"
-  pdf:
-    df-print: kable
 editor: visual
 execute:
   echo: false
