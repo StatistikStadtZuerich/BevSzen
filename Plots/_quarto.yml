@@ -13,17 +13,20 @@ book:
     style: "docked"
   chapters:
     - index.qmd
-    - plots_birth.qmd
-    - plots_death.qmd
-    - plots_immigration.qmd
-    - plots_emigration.qmd
-    - plots_reloc_immigration.qmd
-    - plots_reloc_emigration.qmd
-    - plots_naturalization.qmd
-    - plots_careb.qmd
-    - plots_living_space.qmd
-    - plots_allocation.qmd
-    - plots_projects.qmd
+    - 01_birth.qmd
+    - 02_death.qmd
+    - 03_immigration.qmd
+    - 04_emigration.qmd
+    - 05_reloc_immigration.qmd
+    - 06_reloc_emigration.qmd
+    - 07_naturalization.qmd
+    - 08_careb.qmd
+    - 09_living_space.qmd
+    - 10_allocation.qmd
+    - 11_projects.qmd
+    - 12_ownership.qmd
+    - 13_housing.qmd
+    - 14_dem_hhouse.qmd
     - references.qmd
 
 bibliography: references.bib
