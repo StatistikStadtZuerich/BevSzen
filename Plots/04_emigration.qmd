@@ -3,6 +3,7 @@
 
 ```{r}
 #| label: prep
+#| output: false
 
 # source general functions
 source(paste0(here::here(), "/1_code/0000_general/general_utils.R"))
