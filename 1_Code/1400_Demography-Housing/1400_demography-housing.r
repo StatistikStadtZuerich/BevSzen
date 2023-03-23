@@ -87,47 +87,46 @@ ims_prop_a <- read_csv(paste0(exp_path, "/immigration-star_prop-a-dyso_future.cs
   )
 
 
-#immigration (for ims-plot)
-    imm_past <- read_csv(imm_od) %>% 
-        rename(year = EreignisDatJahr) %>%    
-        left_join(look_dis, by = "QuarCd") %>% 
-        mutate(district = factor(distr, uni_d)) %>%  
-        group_by(district, year) %>% 
-            summarize(ims = sum(AnzZuzuWir),
-                      .groups = "drop")
-        
-        
-#emigration (for ems-plot)
-    emi_past <- read_csv(emi_od) %>% 
-        rename(year = EreignisDatJahr) %>%    
-        left_join(look_dis, by = "QuarCd") %>% 
-        mutate(district = factor(distr, uni_d)) %>% 
-        group_by(district, year) %>% 
-            summarize(ems = sum(AnzWezuWir),
-                      .groups = "drop")
-        
-#immigration* (for plot)
-    ims_past <- read_csv(rel_od) %>% 
-        rename(year = EreignisDatJahr, ims = AnzUmzuWir) %>% 
-        left_join(look_dis, by = "QuarCd") %>% 
-        mutate(district = factor(distr, uni_d)) %>% 
-        select(district, year, ims) %>%       
-        bind_rows(imm_past) %>%      
-        group_by(district, year) %>% 
-            summarize(ims = sum(ims),
-                      .groups = "drop")
-        
-        
-#emigration* (for plot)
-    ems_past <- read_csv(rel_od) %>% 
-        rename(year = EreignisDatJahr, ems = AnzUmzuWir) %>% 
-        left_join(look_dis, by = c("QuarBisherCd" = "QuarCd")) %>% 
-        mutate(district = factor(distr, uni_d)) %>% 
-        select(district, year, ems) %>%       
-        bind_rows(emi_past) %>%      
-        group_by(district, year) %>% 
-            summarize(ems = sum(ems),
-                      .groups = "drop")        
+# #immigration (for ims-plot)
+# imm_past <- read_csv(imm_od) %>% 
+#   rename(year = EreignisDatJahr) %>%    
+#   left_join(look_dis, by = "QuarCd") %>% 
+#   mutate(district = factor(distr, uni_d)) %>%  
+#   group_by(district, year) %>% 
+#   summarize(ims = sum(AnzZuzuWir),
+#             .groups = "drop")
+# 
+# 
+# #emigration (for ems-plot)
+# emi_past <- read_csv(emi_od) %>% 
+#   rename(year = EreignisDatJahr) %>%    
+#   left_join(look_dis, by = "QuarCd") %>% 
+#   mutate(district = factor(distr, uni_d)) %>% 
+#   group_by(district, year) %>% 
+#   summarize(ems = sum(AnzWezuWir),
+#             .groups = "drop")
+# 
+# #immigration* (for plot)
+# ims_past <- read_csv(rel_od) %>% 
+#   rename(year = EreignisDatJahr, ims = AnzUmzuWir) %>% 
+#   left_join(look_dis, by = "QuarCd") %>% 
+#   mutate(district = factor(distr, uni_d)) %>% 
+#   select(district, year, ims) %>%       
+#   bind_rows(imm_past) %>%      
+#   group_by(district, year) %>% 
+#   summarize(ims = sum(ims),
+#             .groups = "drop")
+# 
+# #emigration* (for plot)
+# ems_past <- read_csv(rel_od) %>% 
+#   rename(year = EreignisDatJahr, ems = AnzUmzuWir) %>% 
+#   left_join(look_dis, by = c("QuarBisherCd" = "QuarCd")) %>% 
+#   mutate(district = factor(distr, uni_d)) %>% 
+#   select(district, year, ems) %>%       
+#   bind_rows(emi_past) %>%      
+#   group_by(district, year) %>% 
+#   summarize(ems = sum(ems),
+#             .groups = "drop")        
     
 # emigration*: emigration* rate
 ems_rate <- read_csv(paste0(exp_path, "/emigration-star_rate-dy_future.csv"), lazy = FALSE) %>%
@@ -214,8 +213,8 @@ for (iyear in future) {
     replace_na(list(fer = 0, pop = 0)) %>%
     mutate(bir = pop * fer / 100) %>%
     group_by(district, origin) %>%
-    summarize(bir = sum(bir)) %>%
-    ungroup()
+    summarize(bir = sum(bir),
+              .groups = "drop")
 
   # sum(bir_do$bir)
 
@@ -241,8 +240,8 @@ for (iyear in future) {
     select(district, new_origin, bir) %>%
     rename(origin = new_origin) %>%
     group_by(district, origin) %>%
-    summarize(bir = sum(bir)) %>%
-    ungroup()
+    summarize(bir = sum(bir),
+              .groups = "drop")
 
   # births: with variable 'sex'
 
@@ -593,217 +592,217 @@ for (iyear in future) {
 }
 
 
-# balance checks ----------------------------------------------------------
-
-# enough immigration* and/or emigration* for correction?
-# if no records: new_ims and new_ems were enough
-# no need to use new_ims2/new_ems2 and new_ims3/new/ems3
-enough_ims_ems <- out_bal %>%
-  filter((new_ims < 0) | (new_ems < 0))
-
-
-# balance: check = pop_bir_dea + new_ims3 - new_ems3 - pop_limit
-# if the balance works, the new population should be the population-limit
-# i.e. the result should be zero
-range(out_bal$check)
-
-# difference: population limit minus population (based on migration trends)
-# negative value: not enough space (immigration decreased, emigration increased)
-# positive value: too much space (immigration increased, emigration decreased)
-
-pos_neg <- c("positive", "negative")
-
-dat_pos_neg <- out_bal %>%
-  mutate(
-    differ_prop = differ / pop_limit * 100,   
-    cat = factor(if_else(differ < 0, pos_neg[2], pos_neg[1]),
-    levels = pos_neg
-  ))
-  
-  
-#plot: absolute difference  
-  sszplot(dat_pos_neg,
-    aes_x = "year", aes_y = "differ", aes_fill = "cat",
-    geom = "col", gridscale = "free_y",
-    labs_x = "", 
-    labs_y = "people ('population limit' minus 'population based on trends')", 
-    angle = 90, wrap = "district", ncol = 4,
-    name = "1400_population-limit_absolute-difference",
-    width = 16, height = 16
-  )
-
-#plot: relative difference  
-  sszplot(dat_pos_neg,
-    aes_x = "year", aes_y = "differ_prop", aes_fill = "cat",
-    geom = "col", 
-    labs_x = "", 
-    labs_y = "difference in % ('population limit' minus 'population based on trends')", 
-    angle = 90, wrap = "district", ncol = 4,
-    name = "1401_population-limit_relative-difference",
-    width = 16, height = 16
-  )
-
-
-
-# plot: migration correction ----------------------------------------------
-  
-cat <- c("past", "initial", "corrected")
-proc <- c("immigration*", "emigration*")  
-  
-ims_ems_past <- ims_past %>% 
-    left_join(ems_past, by = c("district", "year")) %>% 
-    rename(ims_past = ims, ems_past = ems) %>% 
-    pivot_longer(c(ims_past, ems_past),
-    names_to = "category", values_to = "people")  
-
-ims_ems_future <- out_bal %>% 
-  select(district, year, ims, ems, new_ims3, new_ems3) %>% 
-  pivot_longer(c(ims, ems, new_ims3, new_ems3),
-    names_to = "category", values_to = "people")
-
-ims_ems_past %>%
-  bind_rows(ims_ems_future) %>%
-  mutate(
-    cat = factor(case_when(
-      category %in% c("ims_past", "ems_past") ~ cat[1],
-      category %in% c("ims", "ems") ~ cat[2],
-      TRUE ~ cat[3]
-    ), levels = cat),
-    process = factor(if_else(category %in% c("ims_past", "ims", "new_ims3"),
-      proc[1], proc[2]
-    ), levels = proc)
-  ) %>% 
-  sszplot(
-    aes_x = "year", aes_y = "people", aes_col = "cat",
-    wrap = "process",
-    labs_x = "", labs_y = "migration per year",
-    scale_y = c(0, NA),
-    name = "1402_migration-correction",
-    width = 10, height = 5,
-    multi = uni_d
-  )
-    
-  
-
-
-# plot: smoothing over age ------------------------------------------------
-
-# selected years
-sel_years <- uniy_scen[(uniy_scen %% 5) == 0]
-
-# plot levels
-sel_lev <- c("initial", "smoothed")
-
-out_pop_smooth %>%
-  pivot_longer(c(pop_end_year, pop), names_to = "category", values_to = "pop") %>%
-  mutate(cat = factor(if_else(category == "pop_end_year",
-    sel_lev[1], sel_lev[2]), levels = sel_lev),
-    pop_pyramid = if_else(sex == uni_s[1], -pop, pop),) %>%
-  filter(year %in% sel_years) %>% 
-  sszplot(
-    aes_x = "age", aes_y = "pop_pyramid", aes_col = "sex",
-    aes_ltyp = "cat",
-    labs_y = "population",
-    i_y = 0,
-    width = 18, height = 7,
-    quotes = c(
-      quote(facet_grid(origin~year, scales = "free_x")),
-      quote(coord_flip()),
-      quote(scale_linetype_manual(values = c("dotted", "solid")))
-    ),
-    name = "1403_population-age-smoothing",
-    multi = uni_d
-  )
-
-
-
-# plot: Wollishofen, population and migration (by yao) ----------------------
-
-# why Wollishofen? need to check age patterns of this district
-# why named d21? 21 is the number for district Wollishofen
-
-catego <- c("immigration", "emigration", "net migration", "population")
-line_catego <- c("initial", "final")
-
-# why not piped into plot? to get limits, and another plot (without origin)
-
-pop_mig_21_yao <- out_dem %>%
-  filter((district == "Wollishofen") & year >= 2022) %>%
-  select(year, age, origin, ims_initial, ims, ems_initial, ems, pop_bir_dea, pop_end_year) %>%
-  mutate(
-    net_initial = ims_initial - ems_initial,
-    net = ims - ems
-  ) %>%
-  pivot_longer(
-    cols = c(
-      "ims_initial", "ims", "ems_initial", "ems",
-      "net_initial", "net", "pop_bir_dea", "pop_end_year"
-    ),
-    names_to = "category", values_to = "people"
-  ) %>%
-  group_by(year, age, origin, category) %>%
-  summarize(
-    people = sum_NA(people),
-    .groups = "drop"
-  ) %>%
-  mutate(
-    cat = factor(case_when(
-      category %in% c("ims", "ims_initial") ~ catego[1],
-      category %in% c("ems", "ems_initial") ~ catego[2],
-      category %in% c("net", "net_initial") ~ catego[3],
-      TRUE ~ catego[4]
-    ), levels = catego),
-    line_cat = factor(if_else(
-      category %in% c("ims_initial", "ems_initial", "net_initial", "pop_bir_dea"),
-      line_catego[1], line_catego[2]
-    ), levels = line_catego))
-  
-upper_lim_yao <- pop_mig_21_yao %>%   
-  group_by(cat) %>% 
-    summarize(upper = max_NA(people),
-              .groups = "drop")
-
-# is it possible to set the y-limits per group?
-
-  sszplot(pop_mig_21_yao,
-    aes_x = "age", aes_y = "people", aes_col = "origin", aes_ltyp = "line_cat",
-    labs_y = "people",
-    wrap = "cat", ncol = 4,
-    scale_y = c(0, max(upper_lim_yao$upper)),
-    width = 12, height = 5,
-    i_x = seq(0, age_max, by = 20),    
-    i_y = 0,
-    name = "1404_pop_migration_d21yao",
-    multi = uniy_scen
-  )
-  
-
-
-# plot: Wollishofen, population and migration (by ya) ---------------------
-
-pop_mig_21_ya <- pop_mig_21_yao %>% 
-    group_by(year, age, cat, line_cat) %>% 
-      summarize(people = sum_NA(people))
-  
-upper_lim_ya <- pop_mig_21_ya %>%   
-  group_by(cat) %>% 
-    summarize(upper = max_NA(people),
-              .groups = "drop")
-
-# is it possible to set the y-limits per group?
-
-
-  sszplot(pop_mig_21_ya,
-    aes_x = "age", aes_y = "people", aes_ltyp = "line_cat",
-    labs_y = "people",
-    wrap = "cat", ncol = 4,
-    scale_y = c(0, max(upper_lim_ya$upper)),
-    width = 12, height = 5,
-    i_x = seq(0, age_max, by = 20),    
-    i_y = 0,
-    name = "1405_pop_migration_d21ya",
-    multi = uniy_scen
-  )  
+# # balance checks ----------------------------------------------------------
+# 
+# # enough immigration* and/or emigration* for correction?
+# # if no records: new_ims and new_ems were enough
+# # no need to use new_ims2/new_ems2 and new_ims3/new/ems3
+# enough_ims_ems <- out_bal %>%
+#   filter((new_ims < 0) | (new_ems < 0))
+# 
+# 
+# # balance: check = pop_bir_dea + new_ims3 - new_ems3 - pop_limit
+# # if the balance works, the new population should be the population-limit
+# # i.e. the result should be zero
+# range(out_bal$check)
+# 
+# # difference: population limit minus population (based on migration trends)
+# # negative value: not enough space (immigration decreased, emigration increased)
+# # positive value: too much space (immigration increased, emigration decreased)
+# 
+# pos_neg <- c("positive", "negative")
+# 
+# dat_pos_neg <- out_bal %>%
+#   mutate(
+#     differ_prop = differ / pop_limit * 100,   
+#     cat = factor(if_else(differ < 0, pos_neg[2], pos_neg[1]),
+#     levels = pos_neg
+#   ))
+#   
+#   
+# #plot: absolute difference  
+#   sszplot(dat_pos_neg,
+#     aes_x = "year", aes_y = "differ", aes_fill = "cat",
+#     geom = "col", gridscale = "free_y",
+#     labs_x = "", 
+#     labs_y = "people ('population limit' minus 'population based on trends')", 
+#     angle = 90, wrap = "district", ncol = 4,
+#     name = "1400_population-limit_absolute-difference",
+#     width = 16, height = 16
+#   )
+# 
+# #plot: relative difference  
+#   sszplot(dat_pos_neg,
+#     aes_x = "year", aes_y = "differ_prop", aes_fill = "cat",
+#     geom = "col", 
+#     labs_x = "", 
+#     labs_y = "difference in % ('population limit' minus 'population based on trends')", 
+#     angle = 90, wrap = "district", ncol = 4,
+#     name = "1401_population-limit_relative-difference",
+#     width = 16, height = 16
+#   )
+# 
+# 
+# 
+# # plot: migration correction ----------------------------------------------
+#   
+# cat <- c("past", "initial", "corrected")
+# proc <- c("immigration*", "emigration*")  
+#   
+# ims_ems_past <- ims_past %>% 
+#     left_join(ems_past, by = c("district", "year")) %>% 
+#     rename(ims_past = ims, ems_past = ems) %>% 
+#     pivot_longer(c(ims_past, ems_past),
+#     names_to = "category", values_to = "people")  
+# 
+# ims_ems_future <- out_bal %>% 
+#   select(district, year, ims, ems, new_ims3, new_ems3) %>% 
+#   pivot_longer(c(ims, ems, new_ims3, new_ems3),
+#     names_to = "category", values_to = "people")
+# 
+# ims_ems_past %>%
+#   bind_rows(ims_ems_future) %>%
+#   mutate(
+#     cat = factor(case_when(
+#       category %in% c("ims_past", "ems_past") ~ cat[1],
+#       category %in% c("ims", "ems") ~ cat[2],
+#       TRUE ~ cat[3]
+#     ), levels = cat),
+#     process = factor(if_else(category %in% c("ims_past", "ims", "new_ims3"),
+#       proc[1], proc[2]
+#     ), levels = proc)
+#   ) %>% 
+#   sszplot(
+#     aes_x = "year", aes_y = "people", aes_col = "cat",
+#     wrap = "process",
+#     labs_x = "", labs_y = "migration per year",
+#     scale_y = c(0, NA),
+#     name = "1402_migration-correction",
+#     width = 10, height = 5,
+#     multi = uni_d
+#   )
+#     
+#   
+# 
+# 
+# # plot: smoothing over age ------------------------------------------------
+# 
+# # selected years
+# sel_years <- uniy_scen[(uniy_scen %% 5) == 0]
+# 
+# # plot levels
+# sel_lev <- c("initial", "smoothed")
+# 
+# out_pop_smooth %>%
+#   pivot_longer(c(pop_end_year, pop), names_to = "category", values_to = "pop") %>%
+#   mutate(cat = factor(if_else(category == "pop_end_year",
+#     sel_lev[1], sel_lev[2]), levels = sel_lev),
+#     pop_pyramid = if_else(sex == uni_s[1], -pop, pop),) %>%
+#   filter(year %in% sel_years) %>% 
+#   sszplot(
+#     aes_x = "age", aes_y = "pop_pyramid", aes_col = "sex",
+#     aes_ltyp = "cat",
+#     labs_y = "population",
+#     i_y = 0,
+#     width = 18, height = 7,
+#     quotes = c(
+#       quote(facet_grid(origin~year, scales = "free_x")),
+#       quote(coord_flip()),
+#       quote(scale_linetype_manual(values = c("dotted", "solid")))
+#     ),
+#     name = "1403_population-age-smoothing",
+#     multi = uni_d
+#   )
+# 
+# 
+# 
+# # plot: Wollishofen, population and migration (by yao) ----------------------
+# 
+# # why Wollishofen? need to check age patterns of this district
+# # why named d21? 21 is the number for district Wollishofen
+# 
+# catego <- c("immigration", "emigration", "net migration", "population")
+# line_catego <- c("initial", "final")
+# 
+# # why not piped into plot? to get limits, and another plot (without origin)
+# 
+# pop_mig_21_yao <- out_dem %>%
+#   filter((district == "Wollishofen") & year >= 2022) %>%
+#   select(year, age, origin, ims_initial, ims, ems_initial, ems, pop_bir_dea, pop_end_year) %>%
+#   mutate(
+#     net_initial = ims_initial - ems_initial,
+#     net = ims - ems
+#   ) %>%
+#   pivot_longer(
+#     cols = c(
+#       "ims_initial", "ims", "ems_initial", "ems",
+#       "net_initial", "net", "pop_bir_dea", "pop_end_year"
+#     ),
+#     names_to = "category", values_to = "people"
+#   ) %>%
+#   group_by(year, age, origin, category) %>%
+#   summarize(
+#     people = sum_NA(people),
+#     .groups = "drop"
+#   ) %>%
+#   mutate(
+#     cat = factor(case_when(
+#       category %in% c("ims", "ims_initial") ~ catego[1],
+#       category %in% c("ems", "ems_initial") ~ catego[2],
+#       category %in% c("net", "net_initial") ~ catego[3],
+#       TRUE ~ catego[4]
+#     ), levels = catego),
+#     line_cat = factor(if_else(
+#       category %in% c("ims_initial", "ems_initial", "net_initial", "pop_bir_dea"),
+#       line_catego[1], line_catego[2]
+#     ), levels = line_catego))
+#   
+# upper_lim_yao <- pop_mig_21_yao %>%   
+#   group_by(cat) %>% 
+#     summarize(upper = max_NA(people),
+#               .groups = "drop")
+# 
+# # is it possible to set the y-limits per group?
+# 
+#   sszplot(pop_mig_21_yao,
+#     aes_x = "age", aes_y = "people", aes_col = "origin", aes_ltyp = "line_cat",
+#     labs_y = "people",
+#     wrap = "cat", ncol = 4,
+#     scale_y = c(0, max(upper_lim_yao$upper)),
+#     width = 12, height = 5,
+#     i_x = seq(0, age_max, by = 20),    
+#     i_y = 0,
+#     name = "1404_pop_migration_d21yao",
+#     multi = uniy_scen
+#   )
+#   
+# 
+# 
+# # plot: Wollishofen, population and migration (by ya) ---------------------
+# 
+# pop_mig_21_ya <- pop_mig_21_yao %>% 
+#     group_by(year, age, cat, line_cat) %>% 
+#       summarize(people = sum_NA(people))
+#   
+# upper_lim_ya <- pop_mig_21_ya %>%   
+#   group_by(cat) %>% 
+#     summarize(upper = max_NA(people),
+#               .groups = "drop")
+# 
+# # is it possible to set the y-limits per group?
+# 
+# 
+#   sszplot(pop_mig_21_ya,
+#     aes_x = "age", aes_y = "people", aes_ltyp = "line_cat",
+#     labs_y = "people",
+#     wrap = "cat", ncol = 4,
+#     scale_y = c(0, max(upper_lim_ya$upper)),
+#     width = 12, height = 5,
+#     i_x = seq(0, age_max, by = 20),    
+#     i_y = 0,
+#     name = "1405_pop_migration_d21ya",
+#     multi = uniy_scen
+#   )  
   
   
  # balance for Wollishofen 
