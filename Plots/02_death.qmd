@@ -23,7 +23,7 @@ run_scen(params$scen, "dea")
 #### focus: difference in mortality by sex
 
 ```{r}
-#| label: fig-mor_yasr_age_sex
+#| label: fig-0200
 #| fig-cap: "mortality by age, year, sex, region"
 
 # years (past only)
@@ -43,7 +43,7 @@ sszplot(filter(mor_yasr, year %in% year_5),
 #### focus: difference in mortality by region
 
 ```{r}
-#| label: fig-mor_yasr_age_region
+#| label: fig-0201
 #| fig-cap: "mortality by age, year, region, sex"
 
 sszplot(filter(mor_yasr, year %in% year_5),
@@ -61,7 +61,7 @@ sszplot(filter(mor_yasr, year %in% year_5),
 #### focus: difference in mortality by sex
 
 ```{r}
-#| label: fig-mor_yasr_year_rsex
+#| label: fig-0202
 #| fig-cap: "mortality by year, age, sex, region"
 
 # age
@@ -81,7 +81,7 @@ sszplot(filter(mor_yasr, age %in% age_select),
 #### focus: difference in mortality by region
 
 ```{r}
-#| label: fig-mor_yasr_year_region
+#| label: fig-0203
 #| fig-cap: "mortality by year, age, region, sex"
 
 sszplot(filter(mor_yasr, age %in% age_select),
@@ -100,7 +100,7 @@ sszplot(filter(mor_yasr, age %in% age_select),
 method differences (rate vs. deaths/births/population) details: see life expectancy function definition
 
 ```{r}
-#| label: fig-le_ysr
+#| label: fig-0204
 #| fig-cap: "life expectancy at birth by year and method"
 
 # plot data
@@ -123,7 +123,7 @@ sszplot(le_methods,
 #### focus: differences by sex
 
 ```{r}
-#| label: fig-le_ysr_sex
+#| label: fig-0205
 #| fig-cap: "life expecancy at birth by year, sex and region"
 
 # years (all: past and future)
@@ -143,7 +143,7 @@ sszplot(le_ysr,
 #### focus: differences by region
 
 ```{r}
-#| label: fig-le_ysr_region
+#| label: fig-0206
 #| fig-cap: "life expecancy at birth by year, region and sex"
 
 sszplot(le_ysr,
@@ -159,7 +159,7 @@ sszplot(le_ysr,
 ### mortality over base years (including tail correction)
 
 ```{r}
-#| label: fig-mor_asr
+#| label: fig-0207
 #| fig-cap: "mortality by age, sex, region; tails corrected"
 
 # plot
@@ -176,7 +176,7 @@ sszplot(mor_asr,
 ### smoothing with LOESS
 
 ```{r}
-#| label: fig-plot_dat_fit
+#| label: fig-0208
 #| fig-cap: "mortality bby age, sex and region; fitted"
 
 # fit: levels
@@ -203,7 +203,7 @@ sszplot(plot_dat_fit,
 ### ratio Zurich / Switzerland
 
 ```{r}
-#| label: fig-ratio_as
+#| label: fig-0209
 #| fig-cap: "ratio Zurich/Switzerland by age and sex"
 
 # plot
@@ -220,7 +220,7 @@ sszplot(ratio_as,
 ### Zurich: future mortality rate
 
 ```{r}
-#| label: fig-mor_zh_yas_past_future
+#| label: fig-0210
 #| fig-cap: mortality prediction by year, age and sex
 
 # plot
@@ -239,7 +239,7 @@ sszplot(mor_zh_yas_past_future,
 #### focus: differences by sex
 
 ```{r}
-#| label: le_ysr_model_sex
+#| label: fig-0211
 #| fig-cap: "life expectancy at birth by year, sex, region; with model"
 
 # why? visual check, if life expectancy based on predicted rates are ok
@@ -274,7 +274,7 @@ sszplot(le_ysr_model,
 #### focus: differences by region
 
 ```{r}
-#| label: le_ysr_model_region
+#| label: fig-0212
 #| fig-cap: "life expectancy at birth by year, region, sex; with model"
 
 sszplot(le_ysr_model,

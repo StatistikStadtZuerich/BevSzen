@@ -19,7 +19,7 @@ run_scen(params$scen, "nat")
 ## naturalization vs. denaturalization
 
 ```{r}
-#| label: fig-proc
+#| label: fig-0700
 #| fig-cap: naturalization on citizenship change
 
 # process levels
@@ -56,7 +56,7 @@ sszplot(proc,
 ### age and sex
 
 ```{r}
-#| label: fig-nat_as
+#| label: fig-0701
 #| fig-cap: rate age and sex
 
 # rate by as
@@ -80,7 +80,7 @@ sszplot(nat_as,
 ### year and sex
 
 ```{r}
-#| label: fig-nat_ys
+#| label: fig-0702
 #| fig-cap: rate year and sex
 
 # rate by ys
@@ -104,7 +104,7 @@ sszplot(nat_ys,
 ### year, age and sex
 
 ```{r}
-#| label: fig-nat_yas_age
+#| label: fig-0703
 #| fig-cap: rate year, age, sex; focus on age
 #| fig-width: 10
 #| fig-height: 10
@@ -132,7 +132,7 @@ sszplot(filter(nat_yas, year %in% year_plot),
 ```
 
 ```{r}
-#| label: fig-nat_yas_year
+#| label: fig-0704
 #| fig-cap: rate year, age, sex; focus on year
 #| fig-width: 8
 #| fig-height: 10
@@ -152,7 +152,7 @@ sszplot(filter(nat_yas, age %in% age_plot),
 ### district, age and sex
 
 ```{r}
-#| label: fig-nat_das
+#| label: fig-0705
 #| fig-cap: rate district, age and sex
 #| fig-width: 12
 #| fig-height: 14
@@ -181,7 +181,7 @@ sszplot(nat_das,
 ### district, year and sex
 
 ```{r}
-#| label: fig-nat_dys
+#| label: fig-0706
 #| fig-cap: rate district, year and sex
 #| fig-width: 12
 #| fig-height: 14
@@ -207,10 +207,10 @@ sszplot(nat_dys,
 ## das: smoothing (nat and pop)
 
 ```{r}
-#| label: fig-smooth_plot
+#| label: fig-0707
 #| fig-cap: processes by district, age, sex; smoothed
 #| fig-keep: all
-#| #| fig-subcap: !expr paste("Origin", levels(uni_d))
+#| fig-subcap: !expr paste("District of", levels(uni_d))
 
 # plot preparation
 process_lev <- c("naturalization", "population")
@@ -251,12 +251,12 @@ sszplot(smooth_plot,
 ## das: naturalization rate
 
 ```{r}
-#| label: fig-rate_plot
+#| label: fig-0708
 #| fig-cap: rate by district, age and sex
 #| fig-width: 12
 #| fig-height: 5
 #| fig-keep: all
-#| fig-subcap: !expr paste("Origin", levels(uni_d))
+#| fig-subcap: !expr paste("District of", levels(uni_d))
 
 # plot preparation
 rate_plot <- gather(nat_rate_das, `rate_thres`, `rate_smooth`, key = category, value = count) %>%
@@ -282,7 +282,7 @@ sszplot(rate_plot,
 ### by years (subjectively, but last year in the plot)
 
 ```{r}
-#| label: fig-smooth_plot_ya_age
+#| label: fig-0709
 #| fig-cap: processes by year and age; smoothed, focus on age
 
 # plot preparation
@@ -321,7 +321,7 @@ sszplot(filter(smooth_plot_ya, year %in% year_plot),
 ### by age (subjectively selected)
 
 ```{r}
-#| label: fig-smooth_plot_ya_year
+#| label: fig-0710
 #| fig-cap: processes by year and age; smoothed, focus on years
 
 age_plot <- seq(0, 100, by = 20)
@@ -341,7 +341,7 @@ sszplot(filter(smooth_plot_ya, age %in% age_plot),
 ### by years (subjectively, but last year in the plot)
 
 ```{r}
-#| label: fig-rate_ya_plot_year
+#| label: fig-0711
 #| fig-cap: rate by year and age, focus on age
 
 # plot preparation
@@ -367,7 +367,7 @@ sszplot(filter(rate_ya_plot, year %in% year_plot),
 ### by age (subjectively selected)
 
 ```{r}
-#| label: fig-rate_ya_plot_age
+#| label: fig-0712
 #| fig-cap: rate by year and age, focus on years
 
 sszplot(filter(rate_ya_plot, age %in% age_plot),
@@ -385,7 +385,7 @@ sszplot(filter(rate_ya_plot, age %in% age_plot),
 ### focus age
 
 ```{r}
-#| label: fig-rate_ya_past_pred_age
+#| label: fig-0713
 #| fig-cap: rate by year and age; past and future, focus on age
 #| fig-width: 10
 #| fig-height: 7
@@ -404,7 +404,7 @@ sszplot(rate_ya_past_pred,
 ### focus years
 
 ```{r}
-#| label: fig-rate_ya_past_pred_year
+#| label: fig-0714
 #| fig-cap: rate by year and age; past and future, focus on years
 #| fig-width: 10
 #| fig-height: 7
@@ -424,7 +424,7 @@ sszplot(filter(rate_ya_past_pred, age %in% age_plot),
 ## smooth processes (preparation for the trend factor calculation)
 
 ```{r}
-#| label: fig-smooth_plot_a
+#| label: fig-0715
 #| fig-cap: processes by age, smoothed
 #| fig-width: 10
 #| fig-height: 8
@@ -465,7 +465,7 @@ sszplot(smooth_plot_a,
 ## rate
 
 ```{r}
-#| label: fig-rate_a_plot
+#| label: fig-0716
 #| fig-cap: rate by age
 #| fig-width: 12
 #| fig-height: 7
@@ -490,7 +490,7 @@ sszplot(rate_a_plot,
 ## trend factor ('rate ya' to 'rate a')
 
 ```{r}
-#| label: fig-tf_ya_age
+#| label: fig-0717
 #| fig-cap: trend factor by year and age, focus on age
 #| fig-width: 10
 #| fig-height: 8
@@ -506,7 +506,7 @@ sszplot(tf_ya,
 ```
 
 ```{r}
-#| label: fig-tf_ya_year
+#| label: fig-0718
 #| fig-cap: trend factor by year and age, focus on years
 #| fig-width: 10
 #| fig-height: 8
@@ -527,10 +527,10 @@ sszplot(filter(tf_ya, age %in% age_plot),
 ## future rate (dyas)
 
 ```{r}
-#| label: fig-plot_pred_smooth
+#| label: fig-0719
 #| fig-cap: prediction by district, year, age and origin; smoothed
 #| fig-keep: all
-#| fig-subcap: !expr paste("Origin", levels(uni_d))
+#| fig-subcap: !expr paste("District of", levels(uni_d))
 
 # plot preparation
 plot_pred_smooth <- select(rate_dyas_future, district, year, age, sex, rate_dyas, rate_smoothed) %>%
@@ -560,10 +560,10 @@ sszplot(filter(plot_pred_smooth, year %in% year_plot),
 ### overview
 
 ```{r}
-#| label: fig-rate_dyas_past_future
+#| label: fig-0720
 #| fig-cap: rate by district, year, age and origin; past and future
 #| fig-keep: all
-#| fig-subcap: !expr paste("Origin", levels(uni_d))
+#| fig-subcap: !expr paste("District of", levels(uni_d))
 
 # past
 rate_dyas_past <- group_by(nat_pop, district, year, age, sex) %>%
@@ -606,10 +606,10 @@ sszplot(rate_dyas_past_future,
 plot: focus age distribution WHY this plot: it is recommendable to look precisely at the age plots over years therefore, a plot that focuses on certain years
 
 ```{r}
-#| label: fig-plot_a_past_pred_age
+#| label: fig-0721
 #| fig-cap: rate by district, year, age and origin; past and future, focus on age
 #| fig-keep: all
-#| fig-subcap: !expr paste("Origin", levels(uni_d))
+#| fig-subcap: !expr paste("District of", levels(uni_d))
 
 # plot levels
 time_lev <- c("past", "future")
@@ -637,10 +637,10 @@ sszplot(filter(plot_a_past_pred, year %in% year_plot),
 ### focus years
 
 ```{r}
-#| label: fig-plot_a_past_pred_year
+#| label: fig-0722
 #| fig-cap: rate by district, year, age and origin; past and future, focus on years
 #| fig-keep: all
-#| fig-subcap: !expr paste("Origin", levels(uni_d))
+#| fig-subcap: !expr paste("District of", levels(uni_d))
 
 # age (subjectively selected)
 age_plot_pred <- seq(0, 60, by = 20)

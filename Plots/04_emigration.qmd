@@ -24,7 +24,7 @@ pred <- ems_prop_a_dyso
 ## emigration\* rate (per district and year)
 
 ```{r}
-#| label: fig-mis_rate_dy
+#| label: fig-0400
 #| fig-cap: emigration* rate by district and year
 #| fig-height: 10
 
@@ -49,7 +49,7 @@ pred <- ems_prop_a_dyso
 ### overview
 
 ```{r}
-#| label: fig-mis_past_pred
+#| label: fig-0401
 #| fig-cap: emigration* rate by district and year; prediction
 #| fig-height: 10
 
@@ -75,7 +75,7 @@ pred <- ems_prop_a_dyso
 ### more detailed: regression and limits
 
 ```{r}
-#| label: fig-mis_past_pred_details
+#| label: fig-0402
 #| fig-cap: emigration* rate by district and year; prediction with details
 #| fig-height: 10
 
@@ -98,7 +98,7 @@ pred <- ems_prop_a_dyso
 ## migration: distribution of sex and origin
 
 ```{r}
-#| label: fig-mis_dyso_prop
+#| label: fig-0403
 #| fig-cap: emigration proportion of sex by origin, district and year
 #| fig-height: 10
 
@@ -121,7 +121,7 @@ pred <- ems_prop_a_dyso
 ## distribution of sex and origin: prediction
 
 ```{r}
-#| label: fig-mis_so_past_pred
+#| label: fig-0404
 #| fig-cap: emigration proportion of sex by origin, district and year; prediction
 #| fig-height: 10
 
@@ -140,7 +140,7 @@ pred <- ems_prop_a_dyso
 ### emigration\*
 
 ```{r}
-#| label: fig-mis_dyso
+#| label: fig-0410
 #| fig-cap: emigration* per district, year, sex, origin
 #| fig-height: 10
 
@@ -160,7 +160,7 @@ pred <- ems_prop_a_dyso
 ```
 
 ```{r}
-#| label: fig-mis_dyso_free
+#| label: fig-0411
 #| fig-cap: emigration* per district, year, sex, origin; free scales
 
   sszplot(pred$mis_dyso,
@@ -178,7 +178,7 @@ pred <- ems_prop_a_dyso
 #### focus age
 
 ```{r}
-#| label: fig-mis_dyaso_age
+#| label: fig-0412
 #| fig-cap: emigration* age proportion per district, year, sex, origin; focus on age
 #| fig-keep: all
 #| fig-subcap: !expr paste("District of", levels(uni_d))
@@ -203,7 +203,7 @@ pred <- ems_prop_a_dyso
 #### focus years
 
 ```{r}
-#| label: fig-mis_dyaso_years
+#| label: fig-0413
 #| fig-cap: emigration* age proportion per district, year, sex, origin; focus on years
 #| fig-keep: all
 #| fig-subcap: !expr paste("District of", levels(uni_d))
@@ -228,7 +228,7 @@ pred <- ems_prop_a_dyso
 #### focus age
 
 ```{r}
-#| label: fig-mis_smooth_plot
+#| label: fig-0414
 #| fig-cap: emigration* smoothed over year; focus on age
 #| fig-keep: all
 #| fig-subcap: !expr paste("District of", levels(uni_d))
@@ -258,7 +258,7 @@ pred <- ems_prop_a_dyso
 #### focus years
 
 ```{r}
-#| label: fig-mis_smooth_plot_years
+#| label: fig-0415
 #| fig-cap: emigration* smoothed over year; focus on years
 #| fig-keep: all
 #| fig-subcap: !expr paste("District of", levels(uni_d))
@@ -284,7 +284,7 @@ pred <- ems_prop_a_dyso
 #### focus age
 
 ```{r}
-#| label: fig-mis_age_prop_smooth
+#| label: fig-0416
 #| fig-cap: emigration* age proportion after smoothing; focus on age
 #| fig-keep: all
 #| fig-subcap: !expr paste("District of", levels(uni_d))
@@ -304,7 +304,7 @@ pred <- ems_prop_a_dyso
 #### focus years
 
 ```{r}
-#| label: fig-mis_age_prop_smooth_years
+#| label: fig-0417
 #| fig-cap: emigration* age proportion after smoothing; focus on years
 #| fig-keep: all
 #| fig-subcap: !expr paste("District of", levels(uni_d))
@@ -329,7 +329,7 @@ pred <- ems_prop_a_dyso
 #### focus age
 
 ```{r}
-#| label: fig-mis_fit_plot
+#| label: fig-0418
 #| fig-cap: emigration* proportion smoothed; focus on age
 #| fig-keep: all
 #| fig-subcap: !expr paste("District of", levels(uni_d))
@@ -358,7 +358,7 @@ pred <- ems_prop_a_dyso
 ## regression
 
 ```{r}
-#| label: fig-mis_a_past_pred
+#| label: fig-0419
 #| fig-cap: emigration* age proportion by district, year, sex, origin; past and future
 #| fig-keep: all
 #| fig-subcap: !expr paste("District of", levels(uni_d))
@@ -380,7 +380,7 @@ pred <- ems_prop_a_dyso
 #### focus age
 
 ```{r}
-#| label: fig-plot_a_past_pred_age
+#| label: fig-0420
 #| fig-cap: emigration* age proportion by district, year, sex, origin; past and future, focus on age
 #| fig-keep: all
 #| fig-subcap: !expr paste("District of", levels(uni_d))
@@ -412,7 +412,7 @@ pred <- ems_prop_a_dyso
 #### focus years
 
 ```{r}
-#| label: fig-plot_a_past_pred_age_years
+#| label: fig-0421
 #| fig-cap: emigration* age proportion by district, year, sex, origin; past and future, focus on years
 #| fig-keep: all
 #| fig-subcap: !expr paste("District of", levels(uni_d))

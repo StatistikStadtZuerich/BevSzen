@@ -22,7 +22,7 @@ run_scen(params$scen, "bir")
 #### plots to define the base period for fertility prediction
 
 ```{r}
-#| label: fig-tfr_y
+#| label: fig-0100
 #| fig-cap: "total fertility rate by year"
 
 tfr_y <- group_by(fer_ya, year) %>%
@@ -40,7 +40,7 @@ sszplot(tfr_y,
 ```
 
 ```{r}
-#| label: fig-tfr_yo
+#| label: fig-0101
 #| fig-cap: "total fertility rate by year and origin"
 
 tfr_yo <- group_by(fer_yao, year, origin) %>%
@@ -58,7 +58,7 @@ sszplot(tfr_yo,
 ```
 
 ```{r}
-#| label: fig-tfr_ya1
+#| label: fig-0102
 #| fig-cap: "total fertility rate by year and age class (3)"
 
 tfr_ya1 <- left_join(fer_ya, look_a1, by = "age") %>%
@@ -78,7 +78,7 @@ sszplot(tfr_ya1,
 ```
 
 ```{r}
-#| label: fig-tfr_ya2
+#| label: fig-0103
 #| fig-cap: "total fertility rate by year and age class (5)"
 
 tfr_ya2 <- left_join(fer_ya, look_a2, by = "age") %>%
@@ -98,7 +98,7 @@ sszplot(tfr_ya2,
 ```
 
 ```{r}
-#| label: fig-tfr_y1o
+#| label: fig-0104
 #| fig-cap: "total fertility rate by year, origin and age class (3)"
 #| fig-width: 16
 #| fig-height: 5
@@ -122,7 +122,7 @@ sszplot(tfr_ya1o,
 ```
 
 ```{r}
-#| label: fig-tfr_ya2o
+#| label: fig-0105
 #| fig-cap: "total fertility rate by year, origin and age class (5)"
 #| fig-width: 16
 #| fig-height: 5
@@ -148,7 +148,7 @@ sszplot(tfr_ya2o,
 #### fertility plots (before any corrections)
 
 ```{r}
-#| label: fig-fer_dyao
+#| label: fig-0110
 #| fig-cap: "fertility by district, year, age, origin"
 #| fig-keep: all
 #| fig-subcap: !expr paste("District of", levels(uni_d))
@@ -168,7 +168,7 @@ sszplot(filter(fer_dyao, year >= bir_base_begin),
 ```
 
 ```{r}
-#| label: fig-fer_yao
+#| label: fig-0111
 #| fig-cap: "fertility by year, age, origin"
 #| fig-width: 11
 #| fig-height: 7
@@ -182,7 +182,7 @@ sszplot(filter(fer_yao, year >= bir_base_begin),
 ```
 
 ```{r}
-#| label: fig-fer_ya
+#| label: fig-0112
 #| fig-cap: "fertility by year, age"
 #| fig-width: 11
 #| fig-height: 7
@@ -198,7 +198,7 @@ sszplot(filter(fer_ya, year >= bir_base_begin),
 ### corrected fertility:
 
 ```{r}
-#| label: fig-fer_cor
+#| label: fig-0120
 #| fig-cap: "initial vs. corrected fertility"
 #| fig-subcap: !expr paste("District of", levels(uni_d))
 #| fig-width: 13
@@ -224,7 +224,7 @@ sszplot(fer_cor,
 ```
 
 ```{r}
-#| label: fig-fer_tail
+#| label: fig-0121
 #| fig-cap: "cumulative population from the tails"
 #| fig-subcap: !expr paste("District of", levels(uni_d))
 #| fig-width: 13
@@ -243,7 +243,7 @@ sszplot(fer_tail,
 ```
 
 ```{r}
-#| label: fig-fit_dat
+#| label: fig-0122
 #| fig-cap: smooth the corrected fertility rate"
 #| fig-subcap: !expr paste("District of", levels(uni_d))
 #| fig-width: 13
@@ -272,7 +272,7 @@ sszplot(fit_dat,
 ### Prediction
 
 ```{r}
-#| label: fig-fer_pred
+#| label: fig-0140
 #| fig-cap: "plot the predictions: age distribution by district and year"
 #| fig-subcap: !expr paste("Origin", levels(uni_o))
 #| fig-width: 12
@@ -292,7 +292,7 @@ sszplot(fer_pred,
 swiss
 
 ```{r}
-#| label: fig-age_dat_swiss
+#| label: fig-0141
 #| fig-cap: "predictions: along year, for selected age"
 #| fig-subcap: !expr paste("District of", levels(uni_d))
 #| fig-width: 11
@@ -324,7 +324,7 @@ sszplot(age_dat,
 foreign
 
 ```{r}
-#| label: fig-age_dat_foreign
+#| label: fig-0142
 #| fig-cap: "predictions: along year, for selected age"
 #| fig-subcap: !expr paste("District of", levels(uni_d))
 #| fig-width: 11
@@ -353,7 +353,7 @@ sszplot(age_dat,
 smoothed (only the prediction years)
 
 ```{r}
-#| label: fig-sel_dat
+#| label: fig-0150
 #| fig-cap: prediction of fertility rates, smoothed
 #| fig-subcap: !expr paste("District of", levels(uni_d))
 #| fig-width: 10
@@ -383,7 +383,7 @@ sszplot(sel_dat,
 #### TFR (total fertility rate) of past and future
 
 ```{r}
-#| label: fig-tfr_dyo
+#| label: fig-0160
 #| fig-cap: TFR by year and origin
 #| fig-width: 12
 #| fig-height: 14
@@ -407,7 +407,7 @@ sszplot(tfr_dyo,
 ```
 
 ```{r}
-#| label: fig-tfr_a1
+#| label: fig-0161
 #| fig-cap: TFR by year and age class (3 groups)
 #| fig-subcap: !expr paste("Origin", levels(uni_o))
 #| fig-width: 12
@@ -435,7 +435,7 @@ sszplot(tfr_a1,
 ```
 
 ```{r}
-#| label: fig-tfr_a2
+#| label: fig-0162
 #| fig-cap: TFR by year and age class (5 groups)
 #| fig-subcap: !expr paste("Origin", levels(uni_o))
 #| fig-width: 12
@@ -467,7 +467,7 @@ sszplot(tfr_a2,
 ### Origin change
 
 ```{r}
-#| label: fig-cha_yo
+#| label: fig-0170
 #| fig-cap: origin change by year, origin
 
 # change by year, origin
@@ -491,7 +491,7 @@ sszplot(cha_yo,
 ```
 
 ```{r}
-#| label: fig-cha_ya1o
+#| label: fig-0171
 #| fig-cap: origin change by year, age class (3), origin
 #| fig-width: 12
 
@@ -517,7 +517,7 @@ sszplot(cha_ya1o,
 ```
 
 ```{r}
-#| label: fig-cha_ya2o
+#| label: fig-0172
 #| fig-cap: origin change by year, age class (5), origin
 #| fig-width: 12
 
@@ -543,7 +543,7 @@ sszplot(cha_ya2o,
 ```
 
 ```{r}
-#| label: fig-cha_dyo
+#| label: fig-0173
 #| fig-cap: origin change by district, year, origin
 #| fig-width: 12
 #| fig-height: 14
@@ -560,7 +560,7 @@ sszplot(cha_dyo,
 ```
 
 ```{r}
-#| label: fig-cha_dya1f
+#| label: fig-0174
 #| fig-cap: origin change by district, year, age1 (foreign only, since few cases for Swiss)
 #| fig-width: 12
 #| fig-height: 14
@@ -591,7 +591,7 @@ sszplot(cha_dya1f,
 ### Prediction of origin change
 
 ```{r}
-#| label: fig-cha_pred
+#| label: fig-0175
 #| fig-cap: predicted origin change by year and origin
 #| fig-width: 12
 #| fig-height: 14
@@ -611,7 +611,7 @@ sszplot(cha_pred,
 ### Current proportion
 
 ```{r}
-#| label: fig-pro_male
+#| label: fig-0190
 #| fig-cap: proportion of sexes by year
 
 year5 <- pro_male$year[pro_male$year %% 5 == 0]
@@ -629,7 +629,7 @@ sszplot(pro_male,
 ### Prediction of proportion
 
 ```{r}
-#| label: fig-pro_male_pred
+#| label: fig-0191
 #| fig-cap: predicted mean proportion of sexes by year
 
 sszplot(pro_male,

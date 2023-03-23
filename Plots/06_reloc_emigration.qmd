@@ -26,7 +26,7 @@ rate <- ems_rel_prop
 WHY? Check if minor differences between sex? Because omitted in prediction
 
 ```{r}
-#| label: fig-rel_prop_daso
+#| label: fig-0600
 #| fig-cap: proportion of relocation by district, age, sex and origin
 #| fig-keep: all
 #| fig-subcap: !expr paste("Origin", levels(uni_o))
@@ -58,7 +58,7 @@ WHY? Check if minor differences between sex? Because omitted in prediction
 WHY? first: to emphasize the need of origin in the model second: the plots can be used to get an idea the value of an age threshold
 
 ```{r}
-#| label: fig-rel_prop_dao
+#| label: fig-0601
 #| fig-cap: proportion of relocation by district, age and origin
 #| fig-width: 11
 #| fig-height: 10
@@ -89,7 +89,7 @@ WHY? first: to emphasize the need of origin in the model second: the plots can b
 WHY? simplest plot to determine the base years
 
 ```{r}
-#| label: fig-rel_prop_yo
+#| label: fig-0602
 #| fig-cap: proportion by year and origin
 #| fig-width: 15
 #| fig-height: 12
@@ -116,7 +116,7 @@ WHY? simplest plot to determine the base years
 #### year, age, origin
 
 ```{r}
-#| label: fig-rel_prop_yao
+#| label: fig-0603
 #| fig-cap: propportion by year, age and origin
 #| fig-width: 9
 #| fig-height: 15
@@ -154,7 +154,7 @@ This plot is the starting point (before smoothing, age corrections)
 #### focus on age
 
 ```{r}
-#| label: fig-process_plot
+#| label: fig-0604
 #| fig-cap: processes by district, age, year and origin
 #| fig-keep: all
 #| fig-subcap: !expr paste("District of", levels(uni_d))
@@ -189,7 +189,7 @@ This plot is the starting point (before smoothing, age corrections)
 #### focus on years
 
 ```{r}
-#| label: fig-process_plot_age
+#| label: fig-0605
 #| fig-cap: processes by district, year, age and origin
 #| fig-keep: all
 #| fig-subcap: !expr paste("District of", levels(uni_d))
@@ -220,7 +220,7 @@ This plot is the starting point (before smoothing, age corrections)
 #### focus age
 
 ```{r}
-#| label: fig-smooth_plot_age
+#| label: fig-0606
 #| fig-cap: processes by district, age, year and origin
 #| fig-keep: all
 #| fig-subcap: !expr paste("District of", levels(uni_d))
@@ -266,7 +266,7 @@ This plot is the starting point (before smoothing, age corrections)
 #### focus years
 
 ```{r}
-#| label: fig-smooth_plot_years
+#| label: fig-0607
 #| fig-cap: processes by district, year, age and origin
 #| fig-keep: all
 #| fig-subcap: !expr paste("District of", levels(uni_d))
@@ -291,7 +291,7 @@ This plot is the starting point (before smoothing, age corrections)
 #### focus age
 
 ```{r}
-#| label: fig-prop_dyao_smooth_age
+#| label: fig-0608
 #| fig-cap: proportion smooothed by district, age, year and origin
 #| fig-width: 11
 #| fig-height: 10
@@ -313,7 +313,7 @@ This plot is the starting point (before smoothing, age corrections)
 #### plot: focus year
 
 ```{r}
-#| label: fig-prop_dyao_smooth_year
+#| label: fig-0609
 #| fig-cap: proportion smooothed by district, year, age and origin
 #| fig-width: 11
 #| fig-height: 10
@@ -338,7 +338,7 @@ This plot is the starting point (before smoothing, age corrections)
 #### processes
 
 ```{r}
-#| label: fig-dao_smooth_plot
+#| label: fig-0610
 #| fig-cap: processes by district, age and origin; smoothed
 #| fig-keep: all
 #| fig-subcap: !expr paste("District of", levels(uni_d))
@@ -381,7 +381,7 @@ This plot is the starting point (before smoothing, age corrections)
 #### proportions
 
 ```{r}
-#| label: fig-prop_dao_smooth
+#| label: fig-0611
 #| fig-cap: proportion by district, age and origin; smoothed
 #| fig-width: 11
 #| fig-height: 10
@@ -400,7 +400,7 @@ This plot is the starting point (before smoothing, age corrections)
 #### entire curves (different aggregations levels)
 
 ```{r}
-#| label: fig-entire_curves
+#| label: fig-0612
 #| fig-cap: proportion from different aggregation levels
 #| fig-keep: all
 #| fig-subcap: !expr paste("District of", levels(uni_d))
@@ -428,7 +428,7 @@ This plot is the starting point (before smoothing, age corrections)
 #### focus age
 
 ```{r}
-#| label: fig-prop_agg_age
+#| label: fig-0613
 #| fig-cap: proportion from different aggregation levels, focus on age
 #| fig-keep: all
 #| fig-subcap: !expr paste("District of", levels(uni_d))
@@ -450,7 +450,7 @@ This plot is the starting point (before smoothing, age corrections)
 #### focus years
 
 ```{r}
-#| label: fig-prop_agg_year
+#| label: fig-0614
 #| fig-cap: proportion from different aggregation levels, focus on years
 #| fig-keep: all
 #| fig-subcap: !expr paste("District of", levels(uni_d))
@@ -477,7 +477,7 @@ This plot is the starting point (before smoothing, age corrections)
 #### focus age
 
 ```{r}
-#| label: fig-plot_agg_smooth_age
+#| label: fig-0615
 #| fig-cap: one proportion after smoothing, focus on age
 #| fig-keep: all
 #| fig-subcap: !expr paste("District of", levels(uni_d))
@@ -504,7 +504,7 @@ This plot is the starting point (before smoothing, age corrections)
 #### focus years
 
 ```{r}
-#| label: fig-plot_agg_smooth_year
+#| label: fig-0616
 #| fig-cap: one proportion after smoothing, focus on year
 #| fig-keep: all
 #| fig-subcap: !expr paste("District of", levels(uni_d))
@@ -526,7 +526,7 @@ This plot is the starting point (before smoothing, age corrections)
 ### (constrained regression)
 
 ```{r}
-#| label: fig-plot_pred_smooth
+#| label: fig-0617
 #| fig-cap: prediction by district, year, age and origin; smoothed
 #| fig-keep: all
 #| fig-subcap: !expr paste("District of", levels(uni_d))
@@ -561,7 +561,7 @@ This plot is the starting point (before smoothing, age corrections)
 ### past and future
 
 ```{r}
-#| label: fig-rem_past_pred
+#| label: fig-0618
 #| fig-cap: predicted and past proportions by district, year, age, origin
 #| fig-keep: all
 #| fig-subcap: !expr paste("District of", levels(uni_d))
@@ -603,7 +603,7 @@ This plot is the starting point (before smoothing, age corrections)
 WHY this plot: it is recommendable to look precisely at the age plots over years therefore, a plot that focuses on certain years
 
 ```{r}
-#| label: fig-plot_a_past_pred_age
+#| label: fig-0619
 #| fig-cap: predicted and past proportions by district, year, age, origin; focus age
 #| fig-keep: all
 #| fig-subcap: !expr paste("District of", levels(uni_d))
@@ -636,7 +636,7 @@ WHY this plot: it is recommendable to look precisely at the age plots over years
 ### focus year distribution
 
 ```{r}
-#| label: fig-plot_a_past_pred_year
+#| label: fig-0620
 #| fig-cap: predicted and past proportions by district, year, age, origin; focus year
 #| fig-keep: all
 #| fig-subcap: !expr paste("District of", levels(uni_d))
