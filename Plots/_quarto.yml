@@ -26,7 +26,7 @@ book:
     - 11_projects.qmd
     - 12_ownership.qmd
     - 13_housing.qmd
-    - 14_dem_hhouse.qmd
+    - 14_dem_house.qmd
     - references.qmd
 
 bibliography: references.bib
