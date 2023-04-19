@@ -36,22 +36,18 @@
 #' @examples run_scen(scenarios = c("lower", "middle", "upper"), modules = c("all"))
 run_scen <- function(scenarios, modules) {
   
-  # general functions
-  util_gf()
-  
-  # start with a new log file (delete the previous file)
-  if (file.exists(log_file))
-    file.remove(log_file)
-  
   # different scenarios
   for (i_scen in scenarios) {
     # i_scen <- "middle"
+    # scenario specific: assign values to parameters to global environment
+    util_gf(i_scen)
     
     # scenario in the log file
     cat_log(paste0("------ scenario ", i_scen, " ------"))
-    
-    # scenario specific: assign values to parameters to global environment
-    util_gf(i_scen)
+
+    # start with a new log file (delete the previous file)
+    if (file.exists(log_file) && i_scen == scenarios[1])
+      file.remove(log_file)
     
     # birth
     if (modules %in% c("all", "alw", "dem", "bir")) {
@@ -137,14 +133,14 @@ run_scen <- function(scenarios, modules) {
       # assign values to parameters
       # to global environment
       # WHY? will be used in functions outside this function
-      for (i_para in 1:nrow(para)) {
-        assign(para$parameter[i_para], para[[i_scen]][i_para],
-               envir = .GlobalEnv
-        )
-      }
+      # for (i_para in 1:nrow(para)) {
+      #   assign(para$parameter[i_para], para[[i_scen]][i_para], envir = .GlobalEnv
+      #   )
+      # }
       
       # same with the scenario name
-      assign("i_scen", i_scen, envir = .GlobalEnv)
+      # assign("i_scen", i_scen, envir = .GlobalEnv)
+      util_gf(i_scen)
       
       # general functions (with dependence on parameters)
       source(paste0(code_path, "0000_General/0003_general_with-parameters.r"))
@@ -171,21 +167,21 @@ run_scen <- function(scenarios, modules) {
 #' @examples util_gf("lower")
 util_gf <- function(i_scen = "middle"){
   # general functions already available?
-  if (!exists("para", envir = .GlobalEnv)) {
+  if (!exists("code_path", envir = .GlobalEnv)) {
     
     # general functions (without dependence on parameters)
     source(paste0(here::here(), "/1_Code/0000_General/0002_general_without-parameters.r"))
   }
   
+  # import parameter
+  para <- read_delim(paste0(data_path, "3_Parameter/parameter.csv"), ";", lazy = FALSE) %>%
+    select(parameter, lower, middle, upper)
   # parameters (depend on scenario)
   for (i_para in 1:nrow(para)) {
-    assign(para$parameter[i_para], para[[i_scen]][i_para],
-           envir = .GlobalEnv
-    )
+    assign(para$parameter[i_para], para[[i_scen]][i_para], envir = .GlobalEnv)
   }
   
-  if (!exists("i_scen", envir = .GlobalEnv))
-    assign("i_scen", i_scen, envir = .GlobalEnv)
+  assign("i_scen", i_scen, envir = .GlobalEnv)
   
   # general functions (with dependence on parameters)
   source(paste0(code_path, "0000_General/0003_general_with-parameters.r"))
@@ -205,5 +201,31 @@ util_gf <- function(i_scen = "middle"){
 #'
 #' @examples plot_name("my_plot")
 plot_name <- function(name){
-  ifelse(isTRUE(params$pdf_output), "0200_mortality_by-year-age-sex-region_focus-age-sex", "")
+  ifelse(isTRUE(params$pdf_output), name, "")
 }
+
+
+
+#' render complete book
+#' 
+#' run the necessary parts of all scenarios, then render book
+#' (this is necessary because last chapter needs input from all scenarios)
+#' however, usually it is not necessary to create books for each scenario
+#' but only for the middle one.
+#'
+#' @param cache_refresh should cache of quarto rendering be completely dropped? Defaults to TRUE
+#'
+#' @return
+#' @export
+#'
+#' @examples render_book()
+render_book <- function(cache_refresh = TRUE){
+    run_scen(scenarios = c("lower", "middle", "upper"), modules = "all")
+    
+    quarto_render(input = "./Plots",
+                  execute_params = list(scen = "middle",
+                                        output_dir = paste("./3_Results/Plots/middle")),
+                  cache_refresh = cache_refresh,
+                  as_job = FALSE)
+}
+

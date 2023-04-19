@@ -1,0 +1,58 @@
+project:
+  output-dir: "../3_Results/Plots"
+  execute-dir: project
+  type: book
+
+book:
+  title: "Plots for population scenarios"
+  author: "Klemens Rosin, Daniel Baumgartner"
+  date: today
+  page-navigation: true
+  search: true
+  sidebar:
+    style: "docked"
+  chapters:
+    - index.qmd
+    - 01_birth.qmd
+    - 02_death.qmd
+    - 03_immigration.qmd
+    - 04_emigration.qmd
+    - 05_reloc_immigration.qmd
+    - 06_reloc_emigration.qmd
+    - 07_naturalization.qmd
+    - 08_careb.qmd
+    - 09_living_space.qmd
+    - 10_allocation.qmd
+    - 11_projects.qmd
+    - 12_ownership.qmd
+    - 13_housing.qmd
+    - 14_dem_house.qmd
+    - 15_model_output.qmd
+    - references.qmd
+
+bibliography: references.bib
+
+
+toc: true
+toc-depth: 4
+number-sections: true
+format:
+  html:
+    # theme: cosmo
+    code-fold: true
+    df-print: kable
+    embed-resources: true
+    css: "sszTheme.css"
+    fig-format: png
+    page-layout: full
+    fig-width: 15
+    fig-height: 8
+    column: body
+    anchor-sections: true
+    smooth-scroll: true
+    max-width: "2400"
+editor: visual
+execute:
+  echo: false
+  warning: false
+  cache: true

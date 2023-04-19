@@ -1,51 +1,28 @@
----
-title: "Population scenarios: birth plots"
-author: "SSZ"
-toc: true
-toc-depth: 4
-number-sections: true
-format:
-  pdf:
-    df-print: kable
-  html: 
-    code-fold: true
-    df-print: kable
-    embed-resources: true
-    css: "sszTheme.css"
-    fig-format: png
-    page-layout: full
-    fig-width: 15
-    fig-height: 8
-    column: page
-editor: visual
-params:
-  pdf_output: FALSE
-execute:
-  echo: false
-  warning: false
-  cache: true
----
+# Birth
 
 ```{r}
 #| label: prep
+#| output: false
 
-source("1_code/0000_general/general_utils.R")
-util_gf()
-run_scen("middle", "bir")
+# source general functions
+source(paste0(here::here(), "/1_code/0000_general/general_utils.R"))
 
-# knitr::opts_knit$set(base.dir = res_path)
+# read general variables for common use
+params <- yaml::read_yaml(paste0(here::here(), "/Plots/_variables.yml"))
+
+# run the scenario
+run_scen(params$scen, "bir")
 
 ```
 
+## Fertility
 
-# Fertility
+### TFR (total fertility rate)
 
-## TFR (total fertility rate)
-
-### plots to define the base period for fertility prediction
+#### plots to define the base period for fertility prediction
 
 ```{r}
-#| label: fig-tfr_y
+#| label: fig-0100
 #| fig-cap: "total fertility rate by year"
 
 tfr_y <- group_by(fer_ya, year) %>%
@@ -54,20 +31,16 @@ tfr_y <- group_by(fer_ya, year) %>%
     .groups = "drop"
   )
 
-name <- ifelse(isTRUE(params$pdf_output), "0100_TFR_by-year", "")
-
 sszplot(tfr_y,
   aes_x = "year", aes_y = "tfr_y",
   labs_y = "TFR", i_x = "5",
   geom = c("line", "point"),
-  name = name
+  name = plot_name("0100_TFR_by-year")
 )
 ```
-  
-{{< pagebreak >}}
-  
+
 ```{r}
-#| label: fig-tfr_yo
+#| label: fig-0101
 #| fig-cap: "total fertility rate by year and origin"
 
 tfr_yo <- group_by(fer_yao, year, origin) %>%
@@ -76,20 +49,16 @@ tfr_yo <- group_by(fer_yao, year, origin) %>%
     .groups = "drop"
   )
 
-name <- ifelse(isTRUE(params$pdf_output), "0101_TFR_by-year-origin", "")
-
 sszplot(tfr_yo,
   aes_x = "year", aes_y = "tfr_yo", aes_col = "origin",
   labs_y = "TFR", i_x = "5",
   geom = c("line", "point"),
-  name = name
+  name = plot_name("0101_TFR_by-year-origin")
 )
 ```
-  
-  
-  
+
 ```{r}
-#| label: fig-tfr_ya1
+#| label: fig-0102
 #| fig-cap: "total fertility rate by year and age class (3)"
 
 tfr_ya1 <- left_join(fer_ya, look_a1, by = "age") %>%
@@ -100,20 +69,16 @@ tfr_ya1 <- left_join(fer_ya, look_a1, by = "age") %>%
   ) %>%
   rename(age = age_1)
 
-name <- ifelse(isTRUE(params$pdf_output), "0102_TFR_by-year-age1", "")
-
 sszplot(tfr_ya1,
   aes_x = "year", aes_y = "tfr_ya1", aes_col = "age",
   i_x = "5", labs_y = "TFR",
   geom = c("line", "point"),
-  name = name
+  name = plot_name("0102_TFR_by-year-age1")
 )
 ```
-  
-  
-  
+
 ```{r}
-#| label: fig-tfr_ya2
+#| label: fig-0103
 #| fig-cap: "total fertility rate by year and age class (5)"
 
 tfr_ya2 <- left_join(fer_ya, look_a2, by = "age") %>%
@@ -124,20 +89,16 @@ tfr_ya2 <- left_join(fer_ya, look_a2, by = "age") %>%
   ) %>%
   rename(age = age_2)
 
-name <- ifelse(isTRUE(params$pdf_output), "0103_TFR_by-year-age2", "")
-
 sszplot(tfr_ya2,
   aes_x = "year", aes_y = "tfr_ya2", aes_col = "age",
   i_x = "5", labs_y = "TFR",
   geom = c("line", "point"),
-  name = name
+  name = plot_name("0103_TFR_by-year-age2")
 )
 ```
-  
-  
-  
+
 ```{r}
-#| label: fig-tfr_y1o
+#| label: fig-0104
 #| fig-cap: "total fertility rate by year, origin and age class (3)"
 #| fig-width: 16
 #| fig-height: 5
@@ -150,22 +111,18 @@ tfr_ya1o <- left_join(fer_yao, look_a1, by = "age") %>%
   ) %>%
   rename(age = age_1)
 
-name <- ifelse(isTRUE(params$pdf_output), "0104_TFR_by-year-age1-origin", "")
-
 sszplot(tfr_ya1o,
   aes_x = "year", aes_y = "tfr_ya1o", aes_col = "origin",
   wrap = "age", ncol = nlevels(tfr_ya1o$age),
   labs_y = "TFR", i_x = "5",
   geom = c("line", "point"),
-  name = name,
+  name = plot_name("0104_TFR_by-year-age1-origin"),
   width = 16, height = 5
 )
 ```
-  
-  
-  
+
 ```{r}
-#| label: fig-tfr_ya2o
+#| label: fig-0105
 #| fig-cap: "total fertility rate by year, origin and age class (5)"
 #| fig-width: 16
 #| fig-height: 5
@@ -178,31 +135,27 @@ tfr_ya2o <- left_join(fer_yao, look_a2, by = "age") %>%
   ) %>%
   rename(age = age_2)
 
-name <- ifelse(isTRUE(params$pdf_output), "0105_TFR_by-year-age2", "")
-
 sszplot(tfr_ya2o,
   aes_x = "year", aes_y = "tfr_ya2o", aes_col = "origin",
   wrap = "age", ncol = nlevels(tfr_ya2o$age),
   labs_y = "TFR", i_x = "5",
   geom = c("line", "point"),
-  name = name,
+  name = plot_name("0105_TFR_by-year-age2"),
   width = 16, height = 5
 )
 ```
-  
-  
-  
-### fertility plots (before any corrections)
+
+#### fertility plots (before any corrections)
 
 ```{r}
-#| label: fig-fer_dyao
+#| label: fig-0110
 #| fig-cap: "fertility by district, year, age, origin"
 #| fig-keep: all
 #| fig-subcap: !expr paste("District of", levels(uni_d))
 #| fig-width: 11
 #| fig-height: 7
 
-name <- ifelse(isTRUE(params$pdf_output), "0110_fertility_by-district-year-age-origin", "")
+name <- plot_name("0110_fertility_by-district-year-age-origin")
 
 sszplot(filter(fer_dyao, year >= bir_base_begin),
   aes_x = "age", aes_y = "fer_dyao", aes_col = "origin",
@@ -213,55 +166,43 @@ sszplot(filter(fer_dyao, year >= bir_base_begin),
 )
 
 ```
-  
-  
-  
+
 ```{r}
-#| label: fig-fer_yao
+#| label: fig-0111
 #| fig-cap: "fertility by year, age, origin"
 #| fig-width: 11
 #| fig-height: 7
 
-name <- ifelse(isTRUE(params$pdf_output), "0111_fertility_by-year-age-origin", "")
-
 sszplot(filter(fer_yao, year >= bir_base_begin),
   aes_x = "age", aes_y = "fer_yao", aes_col = "origin",
   wrap = "as.factor(year)", labs_y = "fertility rate (in % per year)",
-  name = name,
+  name = plot_name("0111_fertility_by-year-age-origin"),
   width = 11, height = 7
 )
 ```
-  
-  
-  
+
 ```{r}
-#| label: fig-fer_ya
+#| label: fig-0112
 #| fig-cap: "fertility by year, age"
 #| fig-width: 11
 #| fig-height: 7
 
-name <- ifelse(isTRUE(params$pdf_output), "0112_fertility_by-year-age", "")
-
 sszplot(filter(fer_ya, year >= bir_base_begin),
   aes_x = "age", aes_y = "fer_ya", wrap = "as.factor(year)",
   labs_y = "fertility rate (in % per year)",
-  name = name,
+  name = plot_name("0112_fertility_by-year-age"),
   width = 11, height = 7
 )
 ```
-  
-  
-  
-## corrected fertility:
+
+### corrected fertility:
 
 ```{r}
-#| label: fig-fer_cor
+#| label: fig-0120
 #| fig-cap: "initial vs. corrected fertility"
 #| fig-subcap: !expr paste("District of", levels(uni_d))
 #| fig-width: 13
 #| fig-height: 8
-
-name <- ifelse(isTRUE(params$pdf_output), "0120_fertility_tail-correction", "")
 
 cor_level <- c("initial", "corrected")
 
@@ -276,22 +217,18 @@ sszplot(fer_cor,
   aes_x = "age", aes_y = "fer", aes_col = "origin", aes_ltyp = "cat",
   wrap = "as.factor(year)",
   labs_y = "fertility rate (in % per year)",
-  name = name,
+  name = plot_name("0120_fertility_tail-correction"),
   width = 13, height = 8,
   multi = uni_d
 )
 ```
-  
-  
-  
+
 ```{r}
-#| label: fig-fer_tail
+#| label: fig-0121
 #| fig-cap: "cumulative population from the tails"
 #| fig-subcap: !expr paste("District of", levels(uni_d))
 #| fig-width: 13
 #| fig-height: 8
-
-name <- ifelse(isTRUE(params$pdf_output), "0121_cumulative-population-from_tails", "")
 
 sszplot(fer_tail,
   aes_x = "age", aes_y = "low_cum", aes_col = "origin",
@@ -299,22 +236,18 @@ sszplot(fer_tail,
   i_y = c(bir_thres_origin, bir_thres_overall, bir_thres_const),
   labs_y = "cumulative population from tails",
   multi = uni_d,
-  name = name,
+  name = plot_name("0121_cumulative-population-from_tails"),
   width = 13, height = 8,
   quotes = quote(geom_line(aes(x = age, y = up_cum, color = origin)))
 )
 ```
-  
-  
-  
+
 ```{r}
-#| label: fig-fit_dat
+#| label: fig-0122
 #| fig-cap: smooth the corrected fertility rate"
 #| fig-subcap: !expr paste("District of", levels(uni_d))
 #| fig-width: 13
 #| fig-height: 8
-
-name <- ifelse(isTRUE(params$pdf_output), "0130_fertility_fit", "")
 
 fit_lev <- c("initial", "smoothed")
 
@@ -330,47 +263,40 @@ sszplot(fit_dat,
   aes_x = "age", aes_y = "fer", aes_col = "origin", aes_ltyp = "cat",
   wrap = "as.factor(year)",
   labs_y = "fertility rate (in % per year)",
-  name = name,
+  name = plot_name("0130_fertility_fit"),
   width = 13, height = 8,
   multi = uni_d
 )
 ```
-  
-  
-  
-## Prediction
+
+### Prediction
 
 ```{r}
-#| label: fig-fer_pred
+#| label: fig-0140
 #| fig-cap: "plot the predictions: age distribution by district and year"
 #| fig-subcap: !expr paste("Origin", levels(uni_o))
 #| fig-width: 12
 #| fig-height: 14
-
-name <- ifelse(isTRUE(params$pdf_output), "0140_fertility-prediction_by-district", "")
 
 sszplot(fer_pred,
   aes_x = "age", aes_y = "fer_all", aes_col = "year",
   wrap = "district",
   labs_y = "fertility rate (in % per year)",
   scale_y = c(0, bir_plot_lim),
-  name = name,
+  name = plot_name("0140_fertility-prediction_by-district"),
   width = 12, height = 14,
   multi = uni_o
 )
 ```
-  
-  
+
 swiss
 
 ```{r}
-#| label: fig-age_dat_swiss
+#| label: fig-0141
 #| fig-cap: "predictions: along year, for selected age"
 #| fig-subcap: !expr paste("District of", levels(uni_d))
 #| fig-width: 11
 #| fig-height: 5
-
-name <- ifelse(isTRUE(params$pdf_output), "0141_fertility-prediction_by-district_along-year_Swiss", "")
 
 # selected age
 uni_age <- sort(unique(fer_pred$age))
@@ -384,7 +310,7 @@ sszplot(age_dat,
   scale_y = c(0, bir_plot_lim),
   title = paste0("as.character(paste0('", levels(uni_o)[uni_o == uni_o[1]], ": ', x))"),
   geom = "point",
-  name = name,
+  name = plot_name("0141_fertility-prediction_by-district_along-year_Swiss"),
   width = 11, height = 5,
   multi = uni_d,
   quotes = c(
@@ -394,18 +320,15 @@ sszplot(age_dat,
   )
 )
 ```
-  
-  
+
 foreign
 
 ```{r}
-#| label: fig-age_dat_foreign
+#| label: fig-0142
 #| fig-cap: "predictions: along year, for selected age"
 #| fig-subcap: !expr paste("District of", levels(uni_d))
 #| fig-width: 11
 #| fig-height: 5
-
-name <- ifelse(isTRUE(params$pdf_output), "0142_fertility-prediction_by-district_along-year_foreign", "")
 
 # plot: foreign
 age_dat <- filter(fer_pred, (origin == uni_o[2]) & (age %in% sel_age))
@@ -416,7 +339,7 @@ sszplot(age_dat,
   scale_y = c(0, bir_plot_lim),
   title = paste0("as.character(paste0('", levels(uni_o)[uni_o == uni_o[2]], ": ', x))"),
   geom = "point",
-  name = name,
+  name = plot_name("0142_fertility-prediction_by-district_along-year_foreign"),
   width = 11, height = 5,
   multi = uni_d,
   quotes = c(
@@ -426,18 +349,15 @@ sszplot(age_dat,
   )
 )
 ```
-  
-  
+
 smoothed (only the prediction years)
 
 ```{r}
-#| label: fig-sel_dat
+#| label: fig-0150
 #| fig-cap: prediction of fertility rates, smoothed
 #| fig-subcap: !expr paste("District of", levels(uni_d))
 #| fig-width: 10
 #| fig-height: 6
-
-name <- ifelse(isTRUE(params$pdf_output), "0150_fertility-prediction_before-after-fit", "")
 
 sel_years <- uniy_scen[(uniy_scen %% 10) == 0]
 sel_lev <- c("initial", "smoothed")
@@ -454,23 +374,19 @@ sszplot(sel_dat,
   aes_x = "age", aes_y = "fer", aes_col = "cat",
   grid = c("origin", "year"),
   labs_y = "fertility rate (in % per year)",
-  name = name,
+  name = plot_name("0150_fertility-prediction_before-after-fit"),
   width = 10, height = 6,
   multi = uni_d
 )
 ```
-  
-  
-  
-### TFR (total fertility rate) of past and future
+
+#### TFR (total fertility rate) of past and future
 
 ```{r}
-#| label: fig-tfr_dyo
+#| label: fig-0160
 #| fig-cap: TFR by year and origin
 #| fig-width: 12
 #| fig-height: 14
-
-name <- ifelse(isTRUE(params$pdf_output), "0160_TFR_by-district-origin", "")
 
 # TFR
 tfr_dyo <- bind_rows(fer_ex_past, fer_ex) %>%
@@ -485,22 +401,18 @@ sszplot(tfr_dyo,
   aes_x = "year", aes_y = "TFR", aes_col = "origin",
   i_x = c(bir_base_begin, scen_begin),
   wrap = "district", ncol = 4,
-  name = name,
+  name = plot_name("0160_TFR_by-district-origin"),
   width = 12, height = 14
 )
 ```
-  
-  
-  
+
 ```{r}
-#| label: fig-tfr_a1
+#| label: fig-0161
 #| fig-cap: TFR by year and age class (3 groups)
 #| fig-subcap: !expr paste("Origin", levels(uni_o))
 #| fig-width: 12
 #| fig-height: 14
 
-name <- ifelse(isTRUE(params$pdf_output), "0161_TFR_by-district-origin-age1", "")
-               
 tfr_a1 <- bind_rows(fer_ex_past, fer_ex) %>%
   left_join(look_a1, by = "age") %>%
   group_by(district, year, origin, age_1) %>%
@@ -516,22 +428,18 @@ sszplot(tfr_a1,
   i_x = c(bir_base_begin, scen_begin),
   labs_col = "age",
   wrap = "district", ncol = 4,
-  name = name,
+  name = plot_name("0161_TFR_by-district-origin-age1"),
   width = 12, height = 14,
   multi = uni_o
 )
 ```
-  
-  
-  
+
 ```{r}
-#| label: fig-tfr_a2
+#| label: fig-0162
 #| fig-cap: TFR by year and age class (5 groups)
 #| fig-subcap: !expr paste("Origin", levels(uni_o))
 #| fig-width: 12
 #| fig-height: 14
-
-name <- ifelse(isTRUE(params$pdf_output), "0162_TFR_by-district-origin-age2", "")
 
 tfr_a2 <- bind_rows(fer_ex_past, fer_ex) %>%
   left_join(look_a2, by = "age") %>%
@@ -548,23 +456,19 @@ sszplot(tfr_a2,
   i_x = c(bir_base_begin, scen_begin),
   labs_col = "age",
   wrap = "district", ncol = 4,
-  name = name,
+  name = plot_name("0162_TFR_by-district-origin-age2"),
   width = 12, height = 14,
   multi = uni_o
 )
 ```
-  
-  
-  
-# Origin
 
-## Origin change
+## Origin
+
+### Origin change
 
 ```{r}
-#| label: fig-cha_yo
+#| label: fig-0170
 #| fig-cap: origin change by year, origin
-
-name <- ifelse(isTRUE(params$pdf_output), "0170_origin-change_by-year-origin", "")
 
 # change by year, origin
 cha_yo <- group_by(cha, year, origin) %>%
@@ -582,18 +486,14 @@ sszplot(cha_yo,
   geom = c("line", "point"),
   i_x = year5,
   labs_y = "origin change in %",
-  name = name
+  name = plot_name("0170_origin-change_by-year-origin")
 )
 ```
-  
-  
-  
+
 ```{r}
-#| label: fig-cha_ya1o
+#| label: fig-0171
 #| fig-cap: origin change by year, age class (3), origin
 #| fig-width: 12
-
-name <- ifelse(isTRUE(params$pdf_output), "0171_origin-change_by-year-age1-origin", "")
 
 cha_ya1o <- left_join(cha, look_a1, by = "age") %>%
   group_by(year, age_1, origin) %>%
@@ -611,19 +511,15 @@ sszplot(cha_ya1o,
   i_x = year5,
   labs_y = "origin change in %",
   wrap = "age",
-  name = name,
+  name = plot_name("0171_origin-change_by-year-age1-origin"),
   width = 12
 )
 ```
-  
-  
-  
+
 ```{r}
-#| label: fig-cha_ya2o
+#| label: fig-0172
 #| fig-cap: origin change by year, age class (5), origin
 #| fig-width: 12
-
-name <- ifelse(isTRUE(params$pdf_output), "0172_origin-change_by-year-age2-origin", "")
 
 cha_ya2o <- left_join(cha, look_a2, by = "age") %>%
   group_by(year, age_2, origin) %>%
@@ -641,20 +537,16 @@ sszplot(cha_ya2o,
   i_x = year5,
   labs_y = "origin change in %",
   wrap = "age", ncol = nlevels(cha_ya2o$age),
-  name = name,
+  name = plot_name("0172_origin-change_by-year-age2-origin"),
   width = 12
 )
 ```
-  
-  
-  
+
 ```{r}
-#| label: fig-cha_dyo
+#| label: fig-0173
 #| fig-cap: origin change by district, year, origin
 #| fig-width: 12
 #| fig-height: 14
-
-name <- ifelse(isTRUE(params$pdf_output), "0173_origin-change_by-district-year-origin", "")
 
 sszplot(cha_dyo,
         aes_x = "year", aes_y = "cha_dyo", aes_col = "origin",
@@ -662,20 +554,16 @@ sszplot(cha_dyo,
         i_x = year5,
         labs_y = "origin change in %",
         wrap = "district", ncol = 4,
-        name = name,
+        name = plot_name("0173_origin-change_by-district-year-origin"),
         width = 12, height = 14
 )
 ```
-  
-  
-  
+
 ```{r}
-#| label: fig-cha_dya1f
+#| label: fig-0174
 #| fig-cap: origin change by district, year, age1 (foreign only, since few cases for Swiss)
 #| fig-width: 12
 #| fig-height: 14
-
-name <- ifelse(isTRUE(params$pdf_output), "0174_origin-change_by-district-year-age1-foreign", "")
 
 cha_dya1f <- left_join(cha, look_a1, by = "age") %>%
   filter(origin == "foreign") %>%
@@ -695,44 +583,36 @@ sszplot(cha_dya1f,
   i_x = year5,
   labs_y = "origin change in %",
   wrap = "district", ncol = 4,
-  name = name,
+  name = plot_name("0174_origin-change_by-district-year-age1-foreign"),
   width = 12, height = 14
 )
 ```
-  
-  
-  
-## Prediction of origin change
+
+### Prediction of origin change
 
 ```{r}
-#| label: fig-cha_pred
+#| label: fig-0175
 #| fig-cap: predicted origin change by year and origin
 #| fig-width: 12
 #| fig-height: 14
-
-name <- ifelse(isTRUE(params$pdf_output), "0175_origin-change_by-district-year-origin_past-future", "")
 
 sszplot(cha_pred,
   aes_x = "year", aes_y = "cha_all", aes_col = "origin",
   i_x = c(bir_cha_base_begin, bir_cha_base_end),
   labs_y = "origin change in %",
   wrap = "district", ncol = 4,
-  name = name,
+  name = plot_name("0175_origin-change_by-district-year-origin_past-future"),
   width = 12, height = 14
 )
 ```
-  
-  
-  
-# Sex ratio
 
-## Current proportion
+## Sex ratio
+
+### Current proportion
 
 ```{r}
-#| label: fig-pro_male
+#| label: fig-0190
 #| fig-cap: proportion of sexes by year
-
-name <- ifelse(isTRUE(params$pdf_output), "0190_sex-ratio_by-year", "")
 
 year5 <- pro_male$year[pro_male$year %% 5 == 0]
 
@@ -742,19 +622,15 @@ sszplot(pro_male,
   i_x = year5, i_y = 50,
   labs_y = "proportion male in %",
   scale_y = c(0, 70), breaks = seq(0, 70, 10),
-  name = name
+  name = plot_name("0190_sex-ratio_by-year")
 )
 ```
-  
-  
-  
-## Prediction of proportion
+
+### Prediction of proportion
 
 ```{r}
-#| label: fig-pro_male_pred
+#| label: fig-0191
 #| fig-cap: predicted mean proportion of sexes by year
-
-name <- ifelse(isTRUE(params$pdf_output), "0191_sex-ratio_by-year_with-mean", "")
 
 sszplot(pro_male,
   aes_x = "year", aes_y = "pro_male",
@@ -762,7 +638,7 @@ sszplot(pro_male,
   i_x = year5,
   labs_y = "proportion male in %",
   scale_y = c(0, 70), breaks = seq(0, 70, 10),
-  name = name,
+  name = plot_name("0191_sex-ratio_by-year_with-mean"),
   quotes = quote(geom_hline(
     yintercept = pred_mean$pred_mean,
     col = col_6[1],

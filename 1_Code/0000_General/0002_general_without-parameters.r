@@ -19,6 +19,7 @@ library(rlang) # for functions: symbols, quasiquotation (!!, !!!, :=)
 library(gtools) # invalid function (to check for NA, NULL, NaN), e.g. in constrained regression
 library(this.path) # to extract the current file name
 library(modelr) # add_predictions
+library(quarto) #for programmatically rendering quarto
 
 
 
@@ -36,9 +37,9 @@ log_file <- paste0(here::here(), "/2_Data/6_Log/log.txt")
 # temporary path (since data not on open data yet)
 car_path <- paste0(here::here(), "/2_Data/1_Input/KaReB.csv")
 
-# import parameter
-para <- read_delim(paste0(data_path, "3_Parameter/parameter.csv"), ";", lazy = FALSE) %>%
-  select(parameter, lower, middle, upper)
+# # import parameter
+# para <- read_delim(paste0(data_path, "3_Parameter/parameter.csv"), ";", lazy = FALSE) %>%
+#   select(parameter, lower, middle, upper)
 
 
 # general functions -------------------------------------------------------
