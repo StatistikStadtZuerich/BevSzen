@@ -181,7 +181,7 @@ pred <- ims_prop_a_dyso
 #| label: fig-0312
 #| fig-cap: immigration* age proportion per district, year, sex, origin; focus on age
 #| fig-keep: all
-#| fig-subcap: !expr paste("District of", levels(uni_d))
+# #| fig-subcap: !expr paste("District of", levels(uni_d))
 #| fig-width: 11
 #| fig-height: 7
 
@@ -206,7 +206,7 @@ pred <- ims_prop_a_dyso
 #| label: fig-0313
 #| fig-cap: immigration* age proportion per district, year, sex, origin; focus on years
 #| fig-keep: all
-#| fig-subcap: !expr paste("District of", levels(uni_d))
+# #| fig-subcap: !expr paste("District of", levels(uni_d))
 #| fig-width: 11
 #| fig-height: 7
 
@@ -231,7 +231,7 @@ pred <- ims_prop_a_dyso
 #| label: fig-0314
 #| fig-cap: immigration* smoothed over year; focus on age
 #| fig-keep: all
-#| fig-subcap: !expr paste("District of", levels(uni_d))
+# #| fig-subcap: !expr paste("District of", levels(uni_d))
 #| fig-width: 11
 #| fig-height: 7
 
@@ -261,7 +261,7 @@ pred <- ims_prop_a_dyso
 #| label: fig-0315
 #| fig-cap: immigration* smoothed over year; focus on years
 #| fig-keep: all
-#| fig-subcap: !expr paste("District of", levels(uni_d))
+# #| fig-subcap: !expr paste("District of", levels(uni_d))
 #| fig-width: 11
 #| fig-height: 7
 
@@ -287,7 +287,7 @@ pred <- ims_prop_a_dyso
 #| label: fig-0316
 #| fig-cap: immigration* age proportion after smoothing; focus on age
 #| fig-keep: all
-#| fig-subcap: !expr paste("District of", levels(uni_d))
+# #| fig-subcap: !expr paste("District of", levels(uni_d))
 #| fig-width: 11
 #| fig-height: 7
 
@@ -307,7 +307,7 @@ pred <- ims_prop_a_dyso
 #| label: fig-0317
 #| fig-cap: immigration* age proportion after smoothing; focus on years
 #| fig-keep: all
-#| fig-subcap: !expr paste("District of", levels(uni_d))
+# #| fig-subcap: !expr paste("District of", levels(uni_d))
 #| fig-width: 11
 #| fig-height: 7
 
@@ -332,7 +332,7 @@ pred <- ims_prop_a_dyso
 #| label: fig-0318
 #| fig-cap: immigration* proportion smoothed; focus on age
 #| fig-keep: all
-#| fig-subcap: !expr paste("District of", levels(uni_d))
+# #| fig-subcap: !expr paste("District of", levels(uni_d))
 #| fig-width: 11
 #| fig-height: 7
   
@@ -361,7 +361,7 @@ pred <- ims_prop_a_dyso
 #| label: fig-0319
 #| fig-cap: immigration* age proportion by district, year, sex, origin; past and future
 #| fig-keep: all
-#| fig-subcap: !expr paste("District of", levels(uni_d))
+# #| fig-subcap: !expr paste("District of", levels(uni_d))
 #| fig-width: 11
 #| fig-height: 7
 
@@ -383,7 +383,7 @@ pred <- ims_prop_a_dyso
 #| label: fig-0320
 #| fig-cap: immigration* age proportion by district, year, sex, origin; past and future, focus on age
 #| fig-keep: all
-#| fig-subcap: !expr paste("District of", levels(uni_d))
+# #| fig-subcap: !expr paste("District of", levels(uni_d))
 #| fig-width: 11
 #| fig-height: 7
 
@@ -415,7 +415,7 @@ pred <- ims_prop_a_dyso
 #| label: fig-0321
 #| fig-cap: immigration* age proportion by district, year, sex, origin; past and future, focus on years
 #| fig-keep: all
-#| fig-subcap: !expr paste("District of", levels(uni_d))
+# #| fig-subcap: !expr paste("District of", levels(uni_d))
 #| fig-width: 11
 #| fig-height: 7
 
