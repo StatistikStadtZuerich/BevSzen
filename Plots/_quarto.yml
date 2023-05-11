@@ -30,7 +30,7 @@ book:
     - 15_model_output.qmd
     - references.qmd
 
-bibliography: references.bib
+# bibliography: references.bib
 
 
 toc: true
