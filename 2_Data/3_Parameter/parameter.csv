@@ -162,7 +162,7 @@ capacity and reserves;car_plot;kareb.areal;0;50;100;percent;high;"Proportion of 
 capacity and reserves;car_uti_input;no parameter in previous model;85;85;85;percent;high;degree of utilization used to calculate the input data
 capacity and reserves;car_uti;kareb.ausbau;75;85;95;percent;high;"degree of utilization; linear influence on the capacity"
 capacity and reserves;car_pp;kareb.ina.prozentpunkte;0;0;0;percent points;medium;usage: less or more percentage points (parameter between -100 and +100)
-capacity and reserves;car_y;kareb.ina.jahr;2047;2047;2047;year;low;Reference year of the usage values
+capacity and reserves;car_y;kareb.ina.jahr;2048;2048;2048;year;low;Reference year of the usage values
 capacity and reserves;car_lambda;kareb.ina.lambda;-0.04;-0.04;-0.04;per year;high;"lambda value of an exponential function exp(lambda * time since start of scenario); proportion of utilization per year"
 living space;spa_apart;wf.anzwohn;500;500;500;apartments;low;"Amount of apartments per district and owner; if less apartments, then the value of the entire city (by owner) is used"
 living space;spa_prop_trend;wf.anteil.trend;0;20;50;percent;high;"living space: trend in addition to the mean; 20% means, 20% of the difference between trend and mean is added to the mean."
