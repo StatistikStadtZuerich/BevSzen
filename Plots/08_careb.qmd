@@ -74,7 +74,7 @@ sszplot(car_yepw,
 #| fig-width: 12
 #| fig-height: 10
 #| fig-keep: all
-#| fig-subcap: !expr paste("District of", levels(uni_d))
+# #| fig-subcap: !expr paste("District of", levels(uni_d))
 
 # aggregate (district, year, residence, plot)
 car_dyep <- group_by(car_dat, district, year, residence, plot, cat) %>%
@@ -101,7 +101,7 @@ sszplot(car_dyep,
 #| fig-width: 12
 #| fig-height: 10
 #| fig-keep: all
-#| fig-subcap: !expr paste("District of", levels(uni_d))
+# #| fig-subcap: !expr paste("District of", levels(uni_d))
 
 # plot
 sszplot(car_dyepw,
