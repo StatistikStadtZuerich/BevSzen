@@ -1,5 +1,5 @@
 project:
-  output-dir: "../3_Results/Plots"
+  output-dir: "../3_Results/books"
   execute-dir: project
   type: book
 
