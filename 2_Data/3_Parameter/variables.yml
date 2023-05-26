@@ -1,0 +1,125 @@
+# plots -----------------------------------------------------------
+pdf_output: FALSE
+
+
+# Paths -----------------------------------------------------------
+# path for code
+code_path: !expr paste0(here::here(), "/1_Code/")
+
+# path for data
+data_path: !expr paste0(here::here(), "/2_Data/")
+
+# log file
+log_file: !expr paste0(here::here(), "/2_Data/6_Log/log.txt")
+
+# temporary path (since data not on open data yet)
+car_path: !expr paste0(here::here(), "/2_Data/1_Input/KaReB.csv")
+
+# path for results (graphics)
+res_path: !expr paste0(here::here(), "/3_Results/")
+
+# path for exports (rates)
+exp_path: "4_Rates/"
+
+# path for outputs (future: population and demographic processes)
+out_path: "5_Outputs/"
+
+
+# values -----------------------------------------------------------
+# capacity, reserves (car)
+car_initial: ["Kapazitaet", "Bestand", "Reserve", "Inanspruchnahme"]
+car_category: ["capacity", "buildings", "reserve", "usage"]
+
+# project status
+pro_initial: ["projektiert, Infoplan", "projektiert, andere", "eingereicht", "bewilligt", "Bau begonnen", "fertiggestellt", "sistiert"]
+pro_category: ["scheduled, Infoplan", "scheduled, other", "submitted", "approved", "construction started", "completed", "on hold"]
+
+
+# unique levels -----------------------------------------------------------
+
+# sex
+text_s: ["male", "female"]
+
+# origin
+text_o: ["Swiss", "foreign"]
+
+# region
+text_r: ["Zurich", "Switzerland"]
+
+# residence portion
+text_e: ["minimum portion", "real portion", "maximum portion"]
+
+# plot construction
+text_p: ["with plot construction", "without plot construction"]
+
+# property owner
+text_w: ["cooperative housing", "private housing"]
+
+# indicator (new or removed apartments)8
+text_i: ["new", "removed"]
+
+# past and scenarios
+text_c: ["past", "lower", "middle", "upper"]
+
+
+# categories (t = text) and associated lookup tables ----------------------
+# age category 1
+age_1: [30, 40]
+age_1t: ["15-29", "30-39", "40-49"]
+
+# age category 2
+age_2: !expr seq(25, 40, by = 5)
+age_2t: ["15-24", "25-29", "30-34", "35-39", "40-49"]
+
+# age category 3
+age_3: !expr seq(0, 90, by = 10)
+age_3t: ["0-9", "10-19", "20-29", "30-39", "40-49", "50-59", "60-69", "70-79", "80-89", "90+"]
+
+# age category 4
+age_4: !expr seq(0, 80, by = 20)
+age_4t: ["0-19", "20-39", "40-59", "60-79", "80+"]
+
+
+# colors, graphics --------------------------------------------------------
+# colors (e.g. for sex, origin)
+col_6: ["#005CA9", "#83072A", "#EB5E04", "#FBBA00", "#007229", "#9B9B9B"]
+
+# grey
+col_grey: "grey90"
+
+
+# open data (od) ----------------------------------------------------------
+
+# population (pop)
+pop_od: "https://data.stadt-zuerich.ch/dataset/80d5c8af-b389-41d2-b6d8-d0deb1639f00/resource/b2abdef7-3e3f-4883-8033-6787a1561987/download/bev390od3903.csv"
+
+# birth (bir)
+bir_od: "https://data.stadt-zuerich.ch/dataset/aef0654e-1691-49a2-b5fd-2fb220b78bfd/resource/6b066954-c9ce-4438-be0a-6ab01b3e525b/download/bev570od5702.csv"
+
+# death (dea)
+dea_od: "https://data.stadt-zuerich.ch/dataset/bev_todesfaelle_jahr_alter_geschlecht_herkunft_quartier_od5703/download/BEV570OD5703.csv"
+
+# death (dea, data of the Federal Statistical Office FSO)
+dea_fso_od: "https://data.stadt-zuerich.ch/dataset/bfs_bev_sterberaten_jahr_alter_geschlecht_herkunft_od5708/download/BEV570OD5708.csv"
+
+# immigration (imm)
+# migration in the City of Zurich; across the city border
+imm_od: "https://data.stadt-zuerich.ch/dataset/bev_zuz_jahr_quartier_alter_geschlecht_herkunft_od5704/download/BEV570OD5704.csv"
+
+# emigration (emi)
+# migration out of the City of Zurich; across the city border
+emi_od: "https://data.stadt-zuerich.ch/dataset/bev_wegz_jahr_quartier_alter_geschlecht_herkunft_od5705/download/BEV570OD5705.csv"
+
+# relocation (rel)
+# migration within the City of Zurich; inside the city border
+rel_od: "https://data.stadt-zuerich.ch/dataset/bev_umzuege_jahr_quartier_alter_geschlecht_herkunft_od5706/download/BEV570OD5706.csv"
+
+# naturalization (nat)
+# on the open data platform the data consist both of naturalization and denaturalization
+nat_od: "https://data.stadt-zuerich.ch/dataset/bev_brw_jahr_alter_geschlecht_herkunft_quartier_od5707/download/BEV570OD5707.csv"
+
+# living space (spa)
+spa_od: "https://data.stadt-zuerich.ch/dataset/bau_best_whg_geb_gebmwhg_wfl_pers_statzone_jahr_od6981/download/BAU698OD6981.csv"
+
+# population scenarios on open data (sce)
+sce_od: "https://data.stadt-zuerich.ch/dataset/bev_szenarien_od3440/download/BEV344OD3440.csv"
