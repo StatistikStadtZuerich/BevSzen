@@ -12,7 +12,7 @@ source(paste0(here::here(), "/1_code/0000_general/general_utils.R"))
 params <- yaml::read_yaml(paste0(here::here(), "/Plots/_variables.yml"))
 
 # source utility functions
-run_scen(params$scen, "ree")
+run_scen(i_scen, "ree")
 
 # assign the return values of the migration functions so they can be used inside the quarto environment
 rate <- ems_rel_prop
