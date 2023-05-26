@@ -24,6 +24,12 @@ exp_path: "4_Rates/"
 # path for outputs (future: population and demographic processes)
 out_path: "5_Outputs/"
 
+# district file
+dis_file: "/2_Data/2_Lookup/lookupDistrict.csv"
+
+# parameter file
+para_file: "/2_Data/3_Parameter/parameter.csv"
+
 
 # values -----------------------------------------------------------
 # capacity, reserves (car)
