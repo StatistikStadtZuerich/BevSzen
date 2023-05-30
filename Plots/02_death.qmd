@@ -222,6 +222,8 @@ sszplot(ratio_as,
 ```{r}
 #| label: fig-0210
 #| fig-cap: mortality prediction by year, age and sex
+#| fig-width: 11
+#| fig-height: 7
 
 # plot
 sszplot(mor_zh_yas_past_future,
@@ -276,6 +278,8 @@ sszplot(le_ysr_model,
 ```{r}
 #| label: fig-0212
 #| fig-cap: "life expectancy at birth by year, region, sex; with model"
+#| fig-width: 8
+#| fig-height: 4.5
 
 sszplot(le_ysr_model,
   aes_x = "year", aes_y = "le_ysr", aes_col = "region",
