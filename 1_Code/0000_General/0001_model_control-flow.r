@@ -1,5 +1,5 @@
 source("1_code/0000_general/general_init.R")
-params <- init()
+params <- init("middle")
 
 time_start <- Sys.time()
 

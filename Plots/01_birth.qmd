@@ -5,7 +5,10 @@
 #| output: false
 
 # source general functions
-source(paste0(here::here(), "/1_code/0000_general/general_utils.R"))
+if (!exists("i_scen")) {
+  source(paste0(here::here(), "/1_code/0000_general/general_init.R"))
+  params <- init("middle")
+}
 
 # run the scenario
 run_scen(i_scen, "bir")
