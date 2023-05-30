@@ -199,7 +199,7 @@ sszplot(aca_comb,
 #| fig-width: 10
 #| fig-height: 5
 #| fig-keep: all
-#| fig-subcap: !expr paste("District of", levels(uni_d))
+# #| fig-subcap: !expr paste("District of", levels(uni_d))
 
 names_before <- c("aca_dyw", "aca_yw", "aca")
 names_plot <- c("by district", "entire city", "prediction")

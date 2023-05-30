@@ -181,7 +181,7 @@ pred <- ems_prop_a_dyso
 #| label: fig-0412
 #| fig-cap: emigration* age proportion per district, year, sex, origin; focus on age
 #| fig-keep: all
-#| fig-subcap: !expr paste("District of", levels(uni_d))
+# #| fig-subcap: !expr paste("District of", levels(uni_d))
 #| fig-width: 11
 #| fig-height: 7
 
@@ -206,7 +206,7 @@ pred <- ems_prop_a_dyso
 #| label: fig-0413
 #| fig-cap: emigration* age proportion per district, year, sex, origin; focus on years
 #| fig-keep: all
-#| fig-subcap: !expr paste("District of", levels(uni_d))
+# #| fig-subcap: !expr paste("District of", levels(uni_d))
 #| fig-width: 11
 #| fig-height: 7
 
@@ -231,7 +231,7 @@ pred <- ems_prop_a_dyso
 #| label: fig-0414
 #| fig-cap: emigration* smoothed over year; focus on age
 #| fig-keep: all
-#| fig-subcap: !expr paste("District of", levels(uni_d))
+# #| fig-subcap: !expr paste("District of", levels(uni_d))
 #| fig-width: 11
 #| fig-height: 7
 
@@ -261,7 +261,7 @@ pred <- ems_prop_a_dyso
 #| label: fig-0415
 #| fig-cap: emigration* smoothed over year; focus on years
 #| fig-keep: all
-#| fig-subcap: !expr paste("District of", levels(uni_d))
+# #| fig-subcap: !expr paste("District of", levels(uni_d))
 #| fig-width: 11
 #| fig-height: 7
 
@@ -287,7 +287,7 @@ pred <- ems_prop_a_dyso
 #| label: fig-0416
 #| fig-cap: emigration* age proportion after smoothing; focus on age
 #| fig-keep: all
-#| fig-subcap: !expr paste("District of", levels(uni_d))
+# #| fig-subcap: !expr paste("District of", levels(uni_d))
 #| fig-width: 11
 #| fig-height: 7
 
@@ -307,7 +307,7 @@ pred <- ems_prop_a_dyso
 #| label: fig-0417
 #| fig-cap: emigration* age proportion after smoothing; focus on years
 #| fig-keep: all
-#| fig-subcap: !expr paste("District of", levels(uni_d))
+# #| fig-subcap: !expr paste("District of", levels(uni_d))
 #| fig-width: 11
 #| fig-height: 7
 
@@ -332,7 +332,7 @@ pred <- ems_prop_a_dyso
 #| label: fig-0418
 #| fig-cap: emigration* proportion smoothed; focus on age
 #| fig-keep: all
-#| fig-subcap: !expr paste("District of", levels(uni_d))
+# #| fig-subcap: !expr paste("District of", levels(uni_d))
 #| fig-width: 11
 #| fig-height: 7
   
@@ -361,7 +361,7 @@ pred <- ems_prop_a_dyso
 #| label: fig-0419
 #| fig-cap: emigration* age proportion by district, year, sex, origin; past and future
 #| fig-keep: all
-#| fig-subcap: !expr paste("District of", levels(uni_d))
+# #| fig-subcap: !expr paste("District of", levels(uni_d))
 #| fig-width: 11
 #| fig-height: 7
 
@@ -383,7 +383,7 @@ pred <- ems_prop_a_dyso
 #| label: fig-0420
 #| fig-cap: emigration* age proportion by district, year, sex, origin; past and future, focus on age
 #| fig-keep: all
-#| fig-subcap: !expr paste("District of", levels(uni_d))
+# #| fig-subcap: !expr paste("District of", levels(uni_d))
 #| fig-width: 11
 #| fig-height: 7
 
@@ -415,7 +415,7 @@ pred <- ems_prop_a_dyso
 #| label: fig-0421
 #| fig-cap: emigration* age proportion by district, year, sex, origin; past and future, focus on years
 #| fig-keep: all
-#| fig-subcap: !expr paste("District of", levels(uni_d))
+# #| fig-subcap: !expr paste("District of", levels(uni_d))
 #| fig-width: 11
 #| fig-height: 7
 

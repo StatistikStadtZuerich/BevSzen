@@ -151,7 +151,7 @@ sszplot(tfr_ya2o,
 #| label: fig-0110
 #| fig-cap: "fertility by district, year, age, origin"
 #| fig-keep: all
-#| fig-subcap: !expr paste("District of", levels(uni_d))
+# # | fig-subcap: !expr paste("District of", levels(uni_d))
 #| fig-width: 11
 #| fig-height: 7
 
@@ -200,7 +200,7 @@ sszplot(filter(fer_ya, year >= bir_base_begin),
 ```{r}
 #| label: fig-0120
 #| fig-cap: "initial vs. corrected fertility"
-#| fig-subcap: !expr paste("District of", levels(uni_d))
+# #| fig-subcap: !expr paste("District of", levels(uni_d))
 #| fig-width: 13
 #| fig-height: 8
 
@@ -226,7 +226,7 @@ sszplot(fer_cor,
 ```{r}
 #| label: fig-0121
 #| fig-cap: "cumulative population from the tails"
-#| fig-subcap: !expr paste("District of", levels(uni_d))
+# #| fig-subcap: !expr paste("District of", levels(uni_d))
 #| fig-width: 13
 #| fig-height: 8
 
@@ -245,7 +245,7 @@ sszplot(fer_tail,
 ```{r}
 #| label: fig-0122
 #| fig-cap: smooth the corrected fertility rate"
-#| fig-subcap: !expr paste("District of", levels(uni_d))
+# #| fig-subcap: !expr paste("District of", levels(uni_d))
 #| fig-width: 13
 #| fig-height: 8
 
@@ -274,7 +274,7 @@ sszplot(fit_dat,
 ```{r}
 #| label: fig-0140
 #| fig-cap: "plot the predictions: age distribution by district and year"
-#| fig-subcap: !expr paste("Origin", levels(uni_o))
+# #| fig-subcap: !expr paste("Origin", levels(uni_o))
 #| fig-width: 12
 #| fig-height: 14
 
@@ -294,7 +294,7 @@ swiss
 ```{r}
 #| label: fig-0141
 #| fig-cap: "predictions: along year, for selected age"
-#| fig-subcap: !expr paste("District of", levels(uni_d))
+# #| fig-subcap: !expr paste("District of", levels(uni_d))
 #| fig-width: 11
 #| fig-height: 5
 
@@ -326,7 +326,7 @@ foreign
 ```{r}
 #| label: fig-0142
 #| fig-cap: "predictions: along year, for selected age"
-#| fig-subcap: !expr paste("District of", levels(uni_d))
+# #| fig-subcap: !expr paste("District of", levels(uni_d))
 #| fig-width: 11
 #| fig-height: 5
 
@@ -355,7 +355,7 @@ smoothed (only the prediction years)
 ```{r}
 #| label: fig-0150
 #| fig-cap: prediction of fertility rates, smoothed
-#| fig-subcap: !expr paste("District of", levels(uni_d))
+# #| fig-subcap: !expr paste("District of", levels(uni_d))
 #| fig-width: 10
 #| fig-height: 6
 
@@ -409,7 +409,7 @@ sszplot(tfr_dyo,
 ```{r}
 #| label: fig-0161
 #| fig-cap: TFR by year and age class (3 groups)
-#| fig-subcap: !expr paste("Origin", levels(uni_o))
+# #| fig-subcap: !expr paste("Origin", levels(uni_o))
 #| fig-width: 12
 #| fig-height: 14
 
@@ -437,7 +437,7 @@ sszplot(tfr_a1,
 ```{r}
 #| label: fig-0162
 #| fig-cap: TFR by year and age class (5 groups)
-#| fig-subcap: !expr paste("Origin", levels(uni_o))
+# #| fig-subcap: !expr paste("Origin", levels(uni_o))
 #| fig-width: 12
 #| fig-height: 14
 

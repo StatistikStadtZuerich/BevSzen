@@ -1,5 +1,5 @@
 project:
-  output-dir: "../3_Results/Plots"
+  output-dir: "../3_Results/books"
   execute-dir: project
   type: book
 
@@ -28,9 +28,9 @@ book:
     - 13_housing.qmd
     - 14_dem_house.qmd
     - 15_model_output.qmd
-    - references.qmd
+    # - references.qmd
 
-bibliography: references.bib
+# bibliography: references.bib
 
 
 toc: true
