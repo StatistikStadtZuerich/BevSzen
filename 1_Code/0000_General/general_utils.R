@@ -229,10 +229,7 @@ cat_log <- function(...) {
     log_file,
     regexpr(".*[\\/]", log_file)
   )
-  if (!dir.exists(sub_path)) {
-    dir.create(sub_path, recursive = TRUE
-    )
-  }
+  dir_ex_create(sub_path)
   
   cat(...,
       file = log_file, sep = "\n", append = TRUE
