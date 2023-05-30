@@ -186,10 +186,10 @@ init <- function(i_scen = "middle"){
   vars$look_not <- tibble(
     status = factor(vars$pro_category, levels = vars$pro_category),
     not_realized = c(
-      vars$pro_not_scheduled_ip, vars$pro_not_scheduled_other,
-      vars$pro_not_submitted,
-      vars$pro_not_approved, vars$pro_not_started,
-      vars$pro_not_completed, vars$pro_not_onhold
+      para$pro_not_scheduled_ip, para$pro_not_scheduled_other,
+      para$pro_not_submitted,
+      para$pro_not_approved, para$pro_not_started,
+      para$pro_not_completed, para$pro_not_onhold
     )
   )
   
