@@ -494,6 +494,8 @@ pop_yc_new_prev <- pop_yc_new %>%
   bind_rows(pop_yc_prev) %>% 
   filter(year <= scen_end_public)
 
+min(scen_end_public, max(pop_yc_prev$year))
+
 # sszplot(pop_yc_new_prev,
 #   aes_x = "year", aes_y = "pop",
 #   aes_col = "scenario", aes_ltyp = "cat",
@@ -503,16 +505,19 @@ pop_yc_new_prev <- pop_yc_new %>%
 #   name = "1510_pop_new-prev_yc"
 # )
 
-# text to plot
+# comparison: for the last year in the previous prediction
+comp_year <- min(scen_end_public, max(pop_yc_prev$year))
+
+# text to plot 
 text_yc_new_prev <- pop_yc_new_prev %>% 
-  filter(year == scen_end_public) %>% 
+  filter(year == comp_year) %>% 
   pivot_wider(names_from = "cat", values_from = "pop") %>% 
   mutate(diff = new - previous,
     previous_round = round(previous / round_people_scen) * round_people_scen,
     new_round = round(new / round_people_scen) * round_people_scen,
     diff_round = round(diff / round_people_scen) * round_people_scen,          
     text = paste0(scenario, " scenario: ", previous_round, " (", scen_begin-1, "), ", 
-                  new_round, " (", scen_begin, ", ", diff_round, ")"),
+                  new_round, " (", scen_begin, ", ", diff_round, "), comparison for year ", comp_year),
     plot = "1510") %>% 
   arrange(desc(scenario)) %>% 
   select(plot, text)
