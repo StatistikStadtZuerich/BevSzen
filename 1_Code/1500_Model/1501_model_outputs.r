@@ -515,9 +515,12 @@ text_yc_new_prev <- pop_yc_new_prev %>%
   mutate(diff = new - previous,
     previous_round = round(previous / round_people_scen) * round_people_scen,
     new_round = round(new / round_people_scen) * round_people_scen,
-    diff_round = round(diff / round_people_scen) * round_people_scen,          
+    diff_round = round(diff / round_people_scen) * round_people_scen, 
+    percent = diff / previous * 100,
+    percent_round = round(percent, round_prop_scen_a),
     text = paste0(scenario, " scenario: ", previous_round, " (", scen_begin-1, "), ", 
-                  new_round, " (", scen_begin, ", ", diff_round, "), comparison for year ", comp_year),
+                  new_round, " (", scen_begin, ", ", diff_round, ", ", 
+                  percent_round, "%), comparison for year ", comp_year),
     plot = "1510") %>% 
   arrange(desc(scenario)) %>% 
   select(plot, text)
