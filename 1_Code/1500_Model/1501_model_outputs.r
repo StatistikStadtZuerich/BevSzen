@@ -494,7 +494,6 @@ pop_yc_new_prev <- pop_yc_new %>%
   bind_rows(pop_yc_prev) %>% 
   filter(year <= scen_end_public)
 
-min(scen_end_public, max(pop_yc_prev$year))
 
 # sszplot(pop_yc_new_prev,
 #   aes_x = "year", aes_y = "pop",
@@ -617,11 +616,11 @@ pop_age_new_prev <- pop_age_new %>%
 
 # text to plot
 text_pop_age_new_prev <- pop_age_new_prev %>% 
-  filter(year == scen_end_public) %>%
+  filter(year == comp_year) %>%
   pivot_wider(names_from = "cat", values_from = "pop") %>%  
   mutate(percent = (new - previous) / previous * 100, 
     percent_round = round(percent, round_prop_scen_a),
-    text = paste0(age_class, ": ", percent_round, "%"), 
+    text = paste0(age_class, ": ", percent_round, "%, comparison for year ", comp_year), 
     plot = "1513") %>%
   select(plot, text)
 
@@ -648,20 +647,20 @@ text_pop_age_new_prev <- pop_age_new_prev %>%
 #   name = "1515_pop_new_prev_a_elderly"
 # )
 # 
-# # new and previous: by dy (selected years only)
-# pop_dy_new_sel <- pop_dy %>%
-#   filter(year %in% c(date_end, scen_end_public)) %>% 
-#   mutate(cat = if_else(year == date_end, 
-#                        paste0(date_end, " (past)"),
-#                        paste0(scen_end_public, " (new)")))
-# 
-# pop_dy_prev_sel <- sce %>%
-#   filter((scenario == text_c[3]) &
-#            (year == scen_end_public)) %>%
-#   group_by(district, year) %>%
-#     summarize(pop = sum_NA(pop),
-#               .groups = "drop") %>%
-#   mutate(cat = paste0(scen_end_public, " (previous)"))
+# new and previous: by dy (selected years only)
+pop_dy_new_sel <- pop_dy %>%
+  filter(year %in% c(date_end, scen_end_public)) %>%
+  mutate(cat = if_else(year == date_end,
+                       paste0(date_end, " (past)"),
+                       paste0(scen_end_public, " (new)")))
+
+pop_dy_prev_sel <- sce %>%
+  filter((scenario == text_c[3]) &
+           (year == scen_end_public)) %>%
+  group_by(district, year) %>%
+    summarize(pop = sum_NA(pop),
+              .groups = "drop") %>%
+  mutate(cat = paste0(scen_end_public, " (previous)"))
 # 
 # levels_cate <- c(paste0(date_end, " (past)"), 
 #                  paste0(scen_end_public, " (previous)"),                  
