@@ -4,12 +4,13 @@
 #' and assigns them to the global environment. It has to be loaded at the very beginning.
 #'
 #' @param i_scen which scenario should be run
+#' @param var_file location of the variables file relative to project path
 #'
 #' @return list of parameters and variables
 #' @export
 #'
 #' @examples util_gf("lower")
-init <- function(i_scen = "middle"){
+init <- function(i_scen = "middle", var_file = "/2_Data/3_Parameter/variables.yml"){
   # packages
   require(tidyverse)
   require(dvmisc) # for expand_grid
@@ -32,7 +33,7 @@ init <- function(i_scen = "middle"){
     
   # general stuff (without dependency on parameters) ----------------------------------
   # read general variables for common use
-  vars <- yaml::read_yaml(paste0(here::here(), "/2_Data/3_Parameter/variables.yml"), eval.expr = TRUE)
+  vars <- yaml::read_yaml(paste0(here::here(), var_file), eval.expr = TRUE)
   vars$i_scen <- i_scen
   
   # import parameters
