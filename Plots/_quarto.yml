@@ -56,3 +56,9 @@ execute:
   echo: false
   warning: false
   cache: true
+
+
+knitr:
+  opts_chunk:
+    R.options:
+      scipen: 999
