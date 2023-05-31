@@ -23,13 +23,14 @@
 #' deh (demography and housing model)  
 #' out (model outputs)  
 #' how (housing without output: hom, hou, deh)  
-#' alw (all without output: since 'out' needs lower/middle/upper scenario)  
+#' alw (all without output: since 'out' needs lower/middle/upper scenario)
+#' @param keep_log boolean. Log is kept if parameter is TRUE. Default TRUE
 #'
 #' @return no return value
 #' @export
 #'
 #' @examples run_scen(scenarios = c("lower", "middle", "upper"), modules = c("all"))
-run_scen <- function(scenarios, modules) {
+run_scen <- function(scenarios, modules, keep_log = TRUE) {
   
   # different scenarios
   for (i_scen in scenarios) {
@@ -37,12 +38,12 @@ run_scen <- function(scenarios, modules) {
     # scenario specific: assign values to parameters to global environment
     init(i_scen)
     
-    # scenario in the log file
-    cat_log(paste0("------ scenario ", i_scen, " ------"))
-
     # start with a new log file (delete the previous file)
-    if (file.exists(log_file) && i_scen == scenarios[1])
+    if (file.exists(log_file) && i_scen == scenarios[1] && keep_log == FALSE)
       file.remove(log_file)
+    
+    # scenario in the log file
+    cat_log(" ------ scenario ", i_scen, " ------")
     
     # birth
     if (modules %in% c("all", "alw", "dem", "bir")) {
@@ -179,11 +180,11 @@ plot_name <- function(name){
 #'
 #' @examples render_book()
 render_book <- function(cache_refresh = TRUE){
-    run_scen(scenarios = c("lower", "middle", "upper"), modules = "all")
+    run_scen(scenarios = c("lower", "middle", "upper"), modules = "all", keep_log = TRUE)
     
     quarto_render(input = "./Plots",
                   execute_params = list(scen = "middle",
-                                        output_dir = paste("./3_Results/books")),
+                                        output_dir = paste(book_path)),
                   cache_refresh = cache_refresh,
                   as_job = FALSE)
 }
@@ -230,7 +231,7 @@ cat_log <- function(...) {
   )
   dir_ex_create(sub_path)
   
-  cat(...,
+  cat(paste(Sys.time(), ":", ...) ,
       file = log_file, sep = "\n", append = TRUE
   )
 }
