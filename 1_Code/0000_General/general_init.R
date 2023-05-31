@@ -1,7 +1,7 @@
 #' load general functions and parameters
 #' 
-#' this function loads all necessary parameters and variables, creates paths, lookup tables etc.
-#' and assign them to the global environment. It has to be loaded at the very beginning.
+#' this function loads all necessary functions, parameters and variables, creates paths, lookup tables etc.
+#' and assigns them to the global environment. It has to be loaded at the very beginning.
 #'
 #' @param i_scen which scenario should be run
 #'

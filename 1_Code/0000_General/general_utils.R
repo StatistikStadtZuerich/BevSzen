@@ -1,10 +1,9 @@
-
-#' model control
+#' running separate modules of the scenario
 #' 
 #' This function runs parts of or the whole population model by calling respective functions and creates data and plot outputs.
 #'
-#' @param scenarios Character vector. Valid values: "lower", "middle", "upper"
-#' @param modules Character vector. Valid values:
+#' @param scenarios character vector. Valid values: "lower", "middle", "upper"
+#' @param modules character vector. Valid values:
 #' all  
 #' dem (demography-modules)  
 #' bir (birth)  
@@ -154,9 +153,9 @@ run_scen <- function(scenarios, modules) {
 #' PDF file in this case.
 #' If not, an empty string is returned. No PDF is generated; this is used when creating a quarto file with all plots.
 #'
-#' @param name 
+#' @param name string for name of plot output file
 #'
-#' @return String
+#' @return string
 #' @export
 #'
 #' @examples plot_name("my_plot")
