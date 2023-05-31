@@ -30,6 +30,9 @@ dis_file: "/2_Data/2_Lookup/lookupDistrict.csv"
 # parameter file
 para_file: "/2_Data/3_Parameter/parameter.csv"
 
+# output path for quarto book
+book path: "/3_Results/book"
+
 
 # values -----------------------------------------------------------
 # capacity, reserves (car)
