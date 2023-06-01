@@ -360,7 +360,7 @@ pop_age_new_prev %>%
 #| label: fig-1516
 #| fig-cap: previous and new population by district
 #| fig-width: 10
-#| fig-height: 6
+#| fig-height: 5
 
 pop_dy_new_sel <- pop_dy %>%
   filter(year %in% c(date_end, comp_year)) %>%
