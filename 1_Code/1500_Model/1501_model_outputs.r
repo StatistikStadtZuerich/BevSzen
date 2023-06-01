@@ -648,20 +648,20 @@ text_pop_age_new_prev <- pop_age_new_prev %>%
 # )
 # 
 # new and previous: by dy (selected years only)
-pop_dy_new_sel <- pop_dy %>%
-  filter(year %in% c(date_end, comp_year)) %>%
-  mutate(cat = if_else(year == date_end,
-                       paste0(date_end, " (past)"),
-                       paste0(comp_year, " (new)")))
-
-pop_dy_prev_sel <- sce %>%
-  filter((scenario == text_c[3]) &
-           (year == comp_year)) %>%
-  group_by(district, year) %>%
-    summarize(pop = sum_NA(pop),
-              .groups = "drop") %>%
-  mutate(cat = paste0(comp_year, " (previous)"))
-
+# pop_dy_new_sel <- pop_dy %>%
+#   filter(year %in% c(date_end, comp_year)) %>%
+#   mutate(cat = if_else(year == date_end,
+#                        paste0(date_end, " (past)"),
+#                        paste0(comp_year, " (new)")))
+# 
+# pop_dy_prev_sel <- sce %>%
+#   filter((scenario == text_c[3]) &
+#            (year == comp_year)) %>%
+#   group_by(district, year) %>%
+#     summarize(pop = sum_NA(pop),
+#               .groups = "drop") %>%
+#   mutate(cat = paste0(comp_year, " (previous)"))
+# 
 # levels_cate <- c(paste0(date_end, " (past)"), 
 #                  paste0(comp_year, " (previous)"),                  
 #                  paste0(comp_year, " (new)")) 
