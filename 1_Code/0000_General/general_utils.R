@@ -43,6 +43,8 @@ run_scen <- function(scenarios, modules, keep_log = TRUE) {
       file.remove(log_file)
     
     # scenario in the log file
+    # start time
+    t0 <- Sys.time()
     cat_log(" ------ scenario ", i_scen, " ------")
     
     # birth
@@ -119,6 +121,8 @@ run_scen <- function(scenarios, modules, keep_log = TRUE) {
     
     # end: different scenarios
   }
+  
+  cat_log(paste0("total runtime scenario ", i_scen, ": ", capture.output(Sys.time() - t0)))
   
   # model outputs: only to be run after all 3 scenarios are computed
   for (i_scen in scenarios) {
