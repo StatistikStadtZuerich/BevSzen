@@ -160,8 +160,8 @@ sszplot(usage_prop,
 ```{r}
 #| label: fig-0806
 #| fig-cap: usage area by district
-#| fig-width: 12
-#| fig-height: 10
+#| fig-width: 10
+#| fig-height: 6
 
 sszplot(usage_prop,
   aes_x = "district", aes_y = "usage", aes_fill = "owner",

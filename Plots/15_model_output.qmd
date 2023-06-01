@@ -23,8 +23,8 @@ run_scen(params$scen, "out")
 ```{r}
 #| label: fig-1500
 #| fig-cap: population by year and scenario
-#| fig-width: 10
-#| fig-height: 6
+#| fig-width: 8
+#| fig-height: 5
 
 sszplot(pop_yc,
   aes_x = "year", aes_y = "pop", aes_col = "scenario",
@@ -40,8 +40,8 @@ sszplot(pop_yc,
 ```{r}
 #| label: fig-1501
 #| fig-cap: population by year, age and sex
-#| fig-width: 10
-#| fig-height: 10
+#| fig-width: 7
+#| fig-height: 7
 
 sszplot(pop_yas,
   aes_x = "age", aes_y = "pop_pyramid", aes_col = "sex",
@@ -233,8 +233,8 @@ pop %>%
 ```{r}
 #| label: fig-1510
 #| fig-cap:  previous and new population by year, scenario
-#| fig-width: 10
-#| fig-height: 10
+#| fig-width: 8
+#| fig-height: 5
 
 sszplot(pop_yc_new_prev,
   aes_x = "year", aes_y = "pop",
@@ -305,7 +305,7 @@ one category for 80+
 ```{r}
 #| label: fig-1513
 #| fig-cap: previous and new population by age categories
-#| fig-width: 10
+#| fig-width: 9
 #| fig-height: 6
 
 sszplot(pop_age_new_prev,

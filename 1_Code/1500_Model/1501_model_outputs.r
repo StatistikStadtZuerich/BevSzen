@@ -494,6 +494,7 @@ pop_yc_new_prev <- pop_yc_new %>%
   bind_rows(pop_yc_prev) %>% 
   filter(year <= scen_end_public)
 
+
 # sszplot(pop_yc_new_prev,
 #   aes_x = "year", aes_y = "pop",
 #   aes_col = "scenario", aes_ltyp = "cat",
@@ -503,16 +504,22 @@ pop_yc_new_prev <- pop_yc_new %>%
 #   name = "1510_pop_new-prev_yc"
 # )
 
-# text to plot
+# comparison: for the last year in the previous prediction
+comp_year <- min(scen_end_public, max(pop_yc_prev$year))
+
+# text to plot 
 text_yc_new_prev <- pop_yc_new_prev %>% 
-  filter(year == scen_end_public) %>% 
+  filter(year == comp_year) %>% 
   pivot_wider(names_from = "cat", values_from = "pop") %>% 
   mutate(diff = new - previous,
     previous_round = round(previous / round_people_scen) * round_people_scen,
     new_round = round(new / round_people_scen) * round_people_scen,
-    diff_round = round(diff / round_people_scen) * round_people_scen,          
+    diff_round = round(diff / round_people_scen) * round_people_scen, 
+    percent = diff / previous * 100,
+    percent_round = round(percent, round_prop_scen_a),
     text = paste0(scenario, " scenario: ", previous_round, " (", scen_begin-1, "), ", 
-                  new_round, " (", scen_begin, ", ", diff_round, ")"),
+                  new_round, " (", scen_begin, ", ", diff_round, ", ", 
+                  percent_round, "%), comparison for year ", comp_year),
     plot = "1510") %>% 
   arrange(desc(scenario)) %>% 
   select(plot, text)
@@ -609,11 +616,11 @@ pop_age_new_prev <- pop_age_new %>%
 
 # text to plot
 text_pop_age_new_prev <- pop_age_new_prev %>% 
-  filter(year == scen_end_public) %>%
+  filter(year == comp_year) %>%
   pivot_wider(names_from = "cat", values_from = "pop") %>%  
   mutate(percent = (new - previous) / previous * 100, 
     percent_round = round(percent, round_prop_scen_a),
-    text = paste0(age_class, ": ", percent_round, "%"), 
+    text = paste0(age_class, ": ", percent_round, "%, comparison for year ", comp_year), 
     plot = "1513") %>%
   select(plot, text)
 
@@ -640,24 +647,24 @@ text_pop_age_new_prev <- pop_age_new_prev %>%
 #   name = "1515_pop_new_prev_a_elderly"
 # )
 # 
-# # new and previous: by dy (selected years only)
-# pop_dy_new_sel <- pop_dy %>%
-#   filter(year %in% c(date_end, scen_end_public)) %>% 
-#   mutate(cat = if_else(year == date_end, 
-#                        paste0(date_end, " (past)"),
-#                        paste0(scen_end_public, " (new)")))
-# 
-# pop_dy_prev_sel <- sce %>%
-#   filter((scenario == text_c[3]) &
-#            (year == scen_end_public)) %>%
-#   group_by(district, year) %>%
-#     summarize(pop = sum_NA(pop),
-#               .groups = "drop") %>%
-#   mutate(cat = paste0(scen_end_public, " (previous)"))
-# 
+# new and previous: by dy (selected years only)
+pop_dy_new_sel <- pop_dy %>%
+  filter(year %in% c(date_end, comp_year)) %>%
+  mutate(cat = if_else(year == date_end,
+                       paste0(date_end, " (past)"),
+                       paste0(comp_year, " (new)")))
+
+pop_dy_prev_sel <- sce %>%
+  filter((scenario == text_c[3]) &
+           (year == comp_year)) %>%
+  group_by(district, year) %>%
+    summarize(pop = sum_NA(pop),
+              .groups = "drop") %>%
+  mutate(cat = paste0(comp_year, " (previous)"))
+
 # levels_cate <- c(paste0(date_end, " (past)"), 
-#                  paste0(scen_end_public, " (previous)"),                  
-#                  paste0(scen_end_public, " (new)")) 
+#                  paste0(comp_year, " (previous)"),                  
+#                  paste0(comp_year, " (new)")) 
 #          
 # pop_dy_new_sel %>%
 #   bind_rows(pop_dy_prev_sel) %>% 

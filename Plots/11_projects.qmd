@@ -23,8 +23,8 @@ run_scen(params$scen, "pro")
 ```{r}
 #| label: fig-1100
 #| fig-cap: projects by year
-#| fig-width: 10
-#| fig-height: 7
+#| fig-width: 7.5
+#| fig-height: 4.5
 
 pro_y <- group_by(pro_all, year, indicator) %>%
   summarize(
@@ -218,6 +218,7 @@ sszplot(pro_y_both,
   labs_x = "",
   grid = c(".", "indicator"),
   name = plot_name("1107_projects-not-realized-delayed_by-year"),
+  quotes = quote(theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1))),
   width = 12, height = 5
 )
 ```

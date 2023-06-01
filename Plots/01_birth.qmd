@@ -80,6 +80,8 @@ sszplot(tfr_ya1,
 ```{r}
 #| label: fig-0103
 #| fig-cap: "total fertility rate by year and age class (5)"
+#| fig-width: 8
+#| fig-height: 4.5
 
 tfr_ya2 <- left_join(fer_ya, look_a2, by = "age") %>%
   group_by(year, age_2) %>%
@@ -274,9 +276,10 @@ sszplot(fit_dat,
 ```{r}
 #| label: fig-0140
 #| fig-cap: "plot the predictions: age distribution by district and year"
+#| fig-width: 10
+#| fig-height: 11
 # #| fig-subcap: !expr paste("Origin", levels(uni_o))
-#| fig-width: 12
-#| fig-height: 14
+
 
 sszplot(fer_pred,
   aes_x = "age", aes_y = "fer_all", aes_col = "year",
