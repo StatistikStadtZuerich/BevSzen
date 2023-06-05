@@ -149,7 +149,7 @@ uni_c <- factor(text_c, levels = text_c)
 
 # age category 1
 age_1 <- c(30, 40)
-age_1t <- c("15-29", "30-39", "40-49")
+age_1t <- c("15–29", "30–39", "40–49")
 
 look_a1 <- tibble(age = 15:49) %>%
   mutate(age_1 = factor(if_else(age < age_1[1], age_1t[1],
@@ -158,7 +158,7 @@ look_a1 <- tibble(age = 15:49) %>%
 
 # age category 2
 age_2 <- seq(25, 40, by = 5)
-age_2t <- c("15-24", "25-29", "30-34", "35-39", "40-49")
+age_2t <- c("15–24", "25–29", "30–34", "35–39", "40–49")
 
 look_a2 <- tibble(age = 15:49) %>%
   mutate(age_2 = factor(if_else(age < age_2[1], age_2t[1],
@@ -174,8 +174,8 @@ look_a2 <- tibble(age = 15:49) %>%
 age_3 <- seq(0, 90, by = 10)
 
 age_3t <- c(
-  "0-9", "10-19", "20-29", "30-39", "40-49",
-  "50-59", "60-69", "70-79", "80-89", "90+"
+  "0–9", "10–19", "20–29", "30–39", "40–49",
+  "50–59", "60–69", "70–79", "80–89", "90+"
 )
 
 look_a3 <- tibble(age = 0:120) %>%
@@ -195,7 +195,7 @@ look_a3 <- tibble(age = 0:120) %>%
 # age category 4
 age_4 <- seq(0, 80, by = 20)
 
-age_4t <- c("0-19", "20-39", "40-59", "60-79", "80+")
+age_4t <- c("0–19", "20–39", "40–59", "60–79", "80+")
 
 look_a4 <- tibble(age = 0:120) %>%
   mutate(age_4 = factor(case_when(
