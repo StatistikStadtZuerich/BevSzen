@@ -285,10 +285,10 @@ sszplot(fer_pred,
   aes_x = "age", aes_y = "fer_all", aes_col = "year",
   wrap = "district",
   labs_y = "fertility rate (in % per year)",
-  scale_y = c(0, bir_plot_lim),
   name = plot_name("0140_fertility-prediction_by-district"),
   width = 12, height = 14,
-  multi = uni_o
+  multi = uni_o,
+  quotes = quote(ylim(c(0, bir_plot_lim)))
 )
 ```
 
