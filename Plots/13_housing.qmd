@@ -6,10 +6,10 @@
 #| output: false
 
 # source general functions
-source(paste0(here::here(), "/1_code/0000_general/general_utils.R"))
-
-# read general variables for common use
-params <- yaml::read_yaml(paste0(here::here(), "/Plots/_variables.yml"))
+if (!exists("i_scen")) {
+  source(paste0(here::here(), "/1_code/0000_general/general_init.R"))
+  params <- init("middle")
+}
 
 # source utility functions
 run_scen(i_scen, "hou")
