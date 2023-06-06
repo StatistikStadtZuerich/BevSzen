@@ -55,7 +55,7 @@
 #' @import tidyr
 #' @import magrittr
 #'
-#' @return NULL
+#' @return plot object
 #' @export
 #'
 #' @examples  
