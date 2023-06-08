@@ -138,10 +138,8 @@ sszplot <- function(data,
   
   if (!is.null(name)) {
     target <- paste(res_path, sub_path, sep = "/")
-    if (!file.exists(paste(getwd(), target, sep = "/"))) {
-      dir.create(paste(getwd(), target, sep = "/"),
-                 recursive = TRUE
-      )
+    if (!file.exists(target)) {
+      dir.create(target, recursive = TRUE)
     }
     target <- paste(target, paste0(name, ".", file_type), sep = "/")
   }
