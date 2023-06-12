@@ -163,7 +163,7 @@ init <- function(i_scen = "middle", var_file = "/2_Data/3_Parameter/variables.ym
   # general stuff (with dependency on parameters) ----------------------------------
   
   # path for results
-  vars$res_path <- paste0(vars$res_path, i_scen, "/")
+  vars$res_path <- paste0(vars$res_path, i_scen)
   dir_ex_create(vars$res_path)
   
   # path for exports (rates)
