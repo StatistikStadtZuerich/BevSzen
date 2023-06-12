@@ -9,7 +9,7 @@
 if (!exists("i_scen")) i_scen <- "middle"
 
 # path for results (graphics)
-res_path <- paste0(here::here(), "/3_Results/", i_scen, "/")
+res_path <- paste0(here::here(), "/3_Results/", i_scen)
 
 if (!dir.exists(res_path)) {
   dir.create(res_path, recursive = TRUE
