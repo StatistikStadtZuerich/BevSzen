@@ -225,7 +225,7 @@ sszplot <- function(data,
       # it uses embracing ({...}) and := from the glue package as well as indirection (.data[[...]])
       if (is.numeric(eval(str2lang(paste0("data$", def_col))))) {
         if (!is.null(aes_col)) {
-          colour_col <- data %>% select(aes_col) %>% distinct() %>% pull()
+          colour_col <- data %>% select(all_of(aes_col)) %>% distinct() %>% pull()
           if (!is.factor(colour_col))
             data <- data %>% mutate("{aes_col}" := as.factor(.data[[aes_col]]))
         }
