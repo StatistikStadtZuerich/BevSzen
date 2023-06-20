@@ -7,8 +7,7 @@
 # for the years 2021, 2037, 2040, 2045, 2050
 
 # prep work ---------------------------------------------------------------
-
-util_gf()
+params <- init("middle")
 
 # exchange KaReB file
 inp_path <- paste0(data_path, "1_Input/")
