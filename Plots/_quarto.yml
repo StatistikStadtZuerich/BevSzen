@@ -37,7 +37,7 @@ format:
     # theme: cosmo
     code-fold: true
     df-print: kable
-    embed-resources: true
+    embed-resources: false
     css: "sszTheme.css"
     fig-format: svg
     page-layout: full
