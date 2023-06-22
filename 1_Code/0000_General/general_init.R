@@ -33,7 +33,7 @@ init <- function(i_scen = "middle", var_file = "/2_Data/3_Parameter/variables.ym
     
   # general stuff (without dependency on parameters) ----------------------------------
   # read general variables for common use
-  vars <- yaml::read_yaml(paste0(here::here(), var_file), eval.expr = TRUE)
+  vars <- yaml::read_yaml(paste0(here::here(), var_file), eval.expr = TRUE, fileEncoding = "UTF-8")
   vars$i_scen <- i_scen
   
   # import parameters
