@@ -28,10 +28,6 @@ book:
     - 13_housing.qmd
     - 14_dem_house.qmd
     - 15_model_output.qmd
-    # - references.qmd
-
-# bibliography: references.bib
-
 
 toc: true
 toc-depth: 4
