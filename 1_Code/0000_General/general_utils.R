@@ -1,8 +1,4 @@
 
-# run_scen ----------------------------------------------------------------
-
-
-
 #' model control
 #' 
 #' This function runs parts of or the whole population model by calling respective functions and creates data and plot outputs.
@@ -40,7 +36,7 @@ run_scen <- function(scenarios, modules) {
   for (i_scen in scenarios) {
     # i_scen <- "middle"
     # scenario specific: assign values to parameters to global environment
-    util_gf(i_scen)
+    init(i_scen)
     
     # scenario in the log file
     cat_log(paste0("------ scenario ", i_scen, " ------"))
@@ -140,7 +136,7 @@ run_scen <- function(scenarios, modules) {
       
       # same with the scenario name
       # assign("i_scen", i_scen, envir = .GlobalEnv)
-      util_gf(i_scen)
+      init(i_scen)
       
       # general functions (with dependence on parameters)
       source(paste0(code_path, "0000_General/0003_general_with-parameters.r"))
@@ -149,42 +145,6 @@ run_scen <- function(scenarios, modules) {
   }
   
   # end of scenario function
-}
-
-
-
-# util_gf -----------------------------------------------------------------
-
-
-
-#' load general functions and parameters
-#'
-#' @param i_scen 
-#'
-#' @return NULL
-#' @export
-#'
-#' @examples util_gf("lower")
-util_gf <- function(i_scen = "middle"){
-  # general functions already available?
-  if (!exists("code_path", envir = .GlobalEnv)) {
-    
-    # general functions (without dependence on parameters)
-    source(paste0(here::here(), "/1_Code/0000_General/0002_general_without-parameters.r"))
-  }
-  
-  # import parameter
-  para <- read_delim(paste0(data_path, "3_Parameter/parameter.csv"), ";", lazy = FALSE) %>%
-    select(parameter, lower, middle, upper)
-  # parameters (depend on scenario)
-  for (i_para in 1:nrow(para)) {
-    assign(para$parameter[i_para], para[[i_scen]][i_para], envir = .GlobalEnv)
-  }
-  
-  assign("i_scen", i_scen, envir = .GlobalEnv)
-  
-  # general functions (with dependence on parameters)
-  source(paste0(code_path, "0000_General/0003_general_with-parameters.r"))
 }
 
 
@@ -215,7 +175,7 @@ plot_name <- function(name){
 #'
 #' @param cache_refresh should cache of quarto rendering be completely dropped? Defaults to TRUE
 #'
-#' @return
+#' @return no visible return value
 #' @export
 #'
 #' @examples render_book()
@@ -224,8 +184,78 @@ render_book <- function(cache_refresh = TRUE){
     
     quarto_render(input = "./Plots",
                   execute_params = list(scen = "middle",
-                                        output_dir = paste("./3_Results/Plots/middle")),
+                                        output_dir = paste("./3_Results/books")),
                   cache_refresh = cache_refresh,
                   as_job = FALSE)
 }
 
+
+#' calculate sum after removing NA values
+#'
+#' @param x vector of values
+#'
+#' @return sum of x after removing NA's
+#' @export
+#'
+#' @examples sum_NA(c(1,2,3,NA))
+sum_NA <- function(x) {
+  sum(x, na.rm = TRUE)
+}
+
+#' calculate max value after removing NA values
+#'
+#' @param x vector of values
+#'
+#' @return max of vector x after removing NA's
+#' @export
+#'
+#' @examples max_NA(c(1,2,3,NA))
+max_NA <- function(x) {
+  max(x, na.rm = TRUE)
+}
+
+#' cat to log file
+#' 
+#' appends input to a log file
+#'
+#' @param ... text to be added to log
+#'
+#' @return no return value
+#' @export
+#'
+#' @examples
+cat_log <- function(...) {
+  sub_path <- regmatches(
+    log_file,
+    regexpr(".*[\\/]", log_file)
+  )
+  if (!dir.exists(sub_path)) {
+    dir.create(sub_path, recursive = TRUE
+    )
+  }
+  
+  cat(...,
+      file = log_file, sep = "\n", append = TRUE
+  )
+}
+
+
+
+#' check and create file directories
+#' 
+#' @description checks if a certain directory is existing; if not, 
+#'
+#' @param path 
+#'
+#' @return message of success
+#' @export
+#'
+#' @examples dir_ex_create("results")
+dir_ex_create <- function(path){
+  if (!dir.exists(path)) {
+    dir.create(path, recursive = TRUE
+    )
+    paste(path, "created successfully")
+  } else
+    paste(path, "already exists")
+}
