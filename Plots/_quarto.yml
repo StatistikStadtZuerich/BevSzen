@@ -53,8 +53,7 @@ execute:
   warning: false
   cache: true
 
-
 knitr:
-  opts_chunk:
+  opts_chunk: 
     R.options:
       scipen: 999
