@@ -80,7 +80,7 @@ births <-
 # read population data and adapt structure --------------------------------
 
 # past data
-pop_past <- read_csv(pop_od, lazy = FALSE)%>%
+pop_past <- read_csv(pop_od, lazy = FALSE) %>%
   left_join(look_dis, by = "QuarCd") %>%
   rename("Jahr" = StichtagDatJahr,
          "district" = distr) %>%
@@ -370,10 +370,7 @@ PersProWhg
 files_rate <- paste0(paste0(data_path, "4_Rates/"),
                      list.files(path = paste0(data_path, "4_Rates/"), recursive = TRUE))
 
-# space data
-flaeche <- read_csv(paste0(dwh_path, "DM_KAREB.csv"))
-
-# consumption data
+# consumption rate
 read_files <- files_rate[str_detect(files_rate, "living-space_future")]
 stop_3(read_files)
 
@@ -390,6 +387,35 @@ consumption <- read_csv(read_files[1]) %>%
          QuarCd = distnum) %>%
   rename(Jahr = year,
          WohnungsflProPers = spa_dyw) %>%
-  select(Jahr, PublJahr, VersionArtCd, BasisSzenarienCd, QuarCd, EigentumGrundstkCd, WohnungsflProPers)
+  select(PublJahr, Jahr, VersionArtCd, BasisSzenarienCd, QuarCd, EigentumGrundstkCd, WohnungsflProPers)
+
+# occupancy rate 
+read_files <- files_rate[str_detect(files_rate, "allocation_future")]
+stop_3(read_files)
+
+occupancy <- read_csv(read_files[1]) %>%
+  mutate(VersionArtCd = 1) %>%
+  add_row(read_csv(read_files[2]) %>%
+            mutate(VersionArtCd = 2)) %>%
+  add_row(read_csv(read_files[3]) %>%
+            mutate(VersionArtCd = 3)) %>%
+  left_join(look_reg, by = "district") %>%
+  left_join(look_own, by = "owner") %>%
+  mutate(BasisSzenarienCd = if_else(year < scen_begin, basis_fact, basis_scen), # calculated scenario value
+         PublJahr = scen_begin,
+         QuarCd = distnum) %>%
+  rename(Jahr = year,
+         PersProWhg = aca_dyw) %>%
+  select(PublJahr, Jahr, VersionArtCd, BasisSzenarienCd, QuarCd, EigentumGrundstkCd, PersProWhg)
+
+# population data
+pop_ <- pop %>%
+  group_by(Jahr, BasisSzenarienCd, VersionArtCd, district) %>%
+  summarise(AnzBestWir = sum(AnzBestWir))
+
+# area data
+Anz. Personen * Wohnflächenkonsum
 
 
+# apartments data
+Anz. Personen / Belegungsquote
