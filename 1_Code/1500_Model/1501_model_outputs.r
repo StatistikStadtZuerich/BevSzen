@@ -1190,3 +1190,8 @@ text_yc %>%
   write_csv(paste0(out_path, "/text_plots.csv"))  
 
 
+# log info
+cat_log(paste0(
+  "model outputs: ",
+  capture.output(Sys.time() - t0)
+))

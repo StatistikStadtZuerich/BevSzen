@@ -55,7 +55,7 @@
 #' @import tidyr
 #' @import magrittr
 #'
-#' @return NULL
+#' @return plot object
 #' @export
 #'
 #' @examples  
@@ -124,19 +124,18 @@ sszplot <- function(data,
   ## "[res_path]/(current folder name)/[name].[file_type]", where
   ## (current folder name) means e.g. 0100_birth.
   ## creates the folder first if it is missing (for saving)
-  
-  # determine path to location of current file
-  current_file <- normalizePath(this.dir(), winslash = "/")
-  # reduce to the last part of the path
-  sub_path <- regmatches(
-    current_file,
-    regexpr("[^\\/]*$", current_file)
-  )
 
   # create target path and create corresponding folder if not yet existing
   if (!is.null(name) && name == "") name <- NULL
   
   if (!is.null(name)) {
+    # determine path to location of current file
+    current_file <- normalizePath(this.dir(), winslash = "/")
+    # reduce to the last part of the path
+    sub_path <- regmatches(
+      current_file,
+      regexpr("[^\\/]*$", current_file)
+    )
     target <- paste(res_path, sub_path, sep = "/")
     if (!file.exists(target)) {
       dir.create(target, recursive = TRUE)
@@ -226,7 +225,7 @@ sszplot <- function(data,
       # it uses embracing ({...}) and := from the glue package as well as indirection (.data[[...]])
       if (is.numeric(eval(str2lang(paste0("data$", def_col))))) {
         if (!is.null(aes_col)) {
-          colour_col <- data %>% select(aes_col) %>% distinct() %>% pull()
+          colour_col <- data %>% select(all_of(aes_col)) %>% distinct() %>% pull()
           if (!is.factor(colour_col))
             data <- data %>% mutate("{aes_col}" := as.factor(.data[[aes_col]]))
         }

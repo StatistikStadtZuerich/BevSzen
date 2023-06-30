@@ -3,17 +3,18 @@
 
 
 # prep work ---------------------------------------------------------------
+params <- init("middle")
 
-util_gf()
+#functions
+stop_3 <- function(files){
+  stopifnot("missing files;\
+            make sure to run the whole model (0001_model_control-flow.r) beforehand" = 
+              length(read_files) == 3)
+}
 
 # output path creation
 dwh_path <- paste0(data_path, "7_DWH/")
-if (!dir.exists(dwh_path)) {
-  dir.create(dwh_path, recursive = TRUE)
-}
-
-if (exists("i_scen")) rm(i_scen)
-source(paste0(code_path, "/0000_General/0003_general_with-parameters.r"))
+dir_ex_create(dwh_path)
 
 # population data ---------------------------------------------------------
 
@@ -43,10 +44,7 @@ bir_past <- read_csv(bir_od, lazy = FALSE) %>%
 
 # scenario data
 read_files <- files[str_detect(files, "births_future")]
-
-stopifnot("missing files;\
-          make sure to run the whole model (0001_model_control-flow.r) beforehand" = 
-            length(read_files) == 3)
+stop_3(read_files)
 
 births <-
   # lower scenario (VersionArtCd = 1)
@@ -98,10 +96,7 @@ pop_past <- read_csv(pop_od, lazy = FALSE)%>%
 
 #scenario data
 read_files <- files[str_detect(files, "population_future")]
-
-stopifnot("missing files;\
-          make sure to run the whole model (0001_model_control-flow.r) beforehand" = 
-            length(read_files) == 3)
+stop_3(read_files)
 
 pop <-
   # lower scenario
@@ -154,10 +149,7 @@ nat_past <- read_csv(nat_od, lazy = FALSE) %>%
 
 # scenario data 
 read_files <- files[str_detect(files, "naturalization_future")]
-
-stopifnot("missing files;\
-          make sure to run the whole model (0001_model_control-flow.r) beforehand"= 
-            length(read_files) == 3)
+stop_3(read_files)
 
 nat <-
   # lower scenario
@@ -217,10 +209,7 @@ demo_past <- read_csv(dea_od, lazy = FALSE) %>%
 
 # scenario data
 read_files <- files[str_detect(files, "demographic")]
-
-stopifnot("missing files;\
-          make sure to run the whole model (0001_model_control-flow.r) beforehand" = 
-            length(read_files) == 3)
+stop_3(read_files)
   
 demo <-
   # lower scenario
@@ -260,22 +249,22 @@ births %>%
   group_by(Jahr, VersionArtCd) %>%
   summarise(birth = sum_NA(AnzGebuWir), .groups = "drop") %>%
   sszplot(aes_x = "Jahr", aes_y = "birth", aes_col = "VersionArtCd",
-          labs_x = "year", labs_y = "frequency",
-          name = "1590_bir_yc")
+          labs_x = "year", labs_y = "frequency")
+         # name = "1590_bir_yc")
 
 pop %>%
   group_by(Jahr, VersionArtCd) %>%
   summarise(pop = sum_NA(AnzBestWir), .groups = "drop") %>%
   sszplot(aes_x = "Jahr", aes_y = "pop", aes_col = "VersionArtCd",
-          labs_x = "year", labs_y = "frequency",
-          name = "1591_pop_yc")
+          labs_x = "year", labs_y = "frequency")
+          # name = "1591_pop_yc")
 
 nat %>%
   group_by(Jahr, VersionArtCd) %>%
   summarise(nat = sum_NA(AnzEinbWir), .groups = "drop") %>%
   sszplot(aes_x = "Jahr", aes_y = "nat", aes_col = "VersionArtCd",
-          labs_x = "year", labs_y = "frequency",
-          name = "1592_nat_yc")
+          labs_x = "year", labs_y = "frequency")
+          # name = "1592_nat_yc")
 
 demo %>%
   group_by(Jahr, VersionArtCd) %>%
@@ -289,8 +278,8 @@ demo %>%
           wrap = "type",
           labs_x = "year", labs_y = "frequency",
           gridscale = "free",
-          width = 10, height = 5,
-          name = "1593_demo_yc")
+          width = 10, height = 5)
+          # name = "1593_demo_yc")
 
 # combine population data -------------------------------------------------
 
@@ -358,5 +347,5 @@ read_csv("2_Data/1_Input/KaReB.csv", lazy = FALSE) %>%
           wrap = "BereichCd", ncol = 2, gridscale = "free",
           labs_x = "publication year", labs_y = "area (ha)",
           scale_y = c(0, NA),
-          width = 10, height = 8,
-          name = "1594_cap_res")
+          width = 10, height = 8)
+          #name = "1594_cap_res")

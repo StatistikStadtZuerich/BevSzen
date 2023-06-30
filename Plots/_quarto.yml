@@ -1,5 +1,5 @@
 project:
-  output-dir: "../3_Results/books"
+  output-dir: "../3_Results/book"
   execute-dir: project
   type: book
 
@@ -28,10 +28,6 @@ book:
     - 13_housing.qmd
     - 14_dem_house.qmd
     - 15_model_output.qmd
-    # - references.qmd
-
-# bibliography: references.bib
-
 
 toc: true
 toc-depth: 4
@@ -41,7 +37,7 @@ format:
     # theme: cosmo
     code-fold: true
     df-print: kable
-    embed-resources: true
+    embed-resources: false
     css: "sszTheme.css"
     fig-format: svg
     page-layout: full
@@ -57,8 +53,7 @@ execute:
   warning: false
   cache: true
 
-
 knitr:
-  opts_chunk:
+  opts_chunk: 
     R.options:
       scipen: 999

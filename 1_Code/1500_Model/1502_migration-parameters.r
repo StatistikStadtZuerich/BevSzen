@@ -821,6 +821,6 @@ mig_plot <- model_output %>%
     panel.border = element_rect(colour = "grey85")
   )
 
-ggsave(paste0(res_path, "1500_Model/1590-migration-parameters.pdf"),
+ggsave(paste0(res_path, "/1500_Model/1590-migration-parameters.pdf"),
   plot = mig_plot, width = 10, height = 7
 )

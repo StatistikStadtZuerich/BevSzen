@@ -1,14 +1,9 @@
-
-# run_scen ----------------------------------------------------------------
-
-
-
-#' model control
+#' running separate modules of the scenario
 #' 
 #' This function runs parts of or the whole population model by calling respective functions and creates data and plot outputs.
 #'
-#' @param scenarios Character vector. Valid values: "lower", "middle", "upper"
-#' @param modules Character vector. Valid values:
+#' @param scenarios character vector. Valid values: "lower", "middle", "upper"
+#' @param modules character vector. Valid values:
 #' all  
 #' dem (demography-modules)  
 #' bir (birth)  
@@ -28,26 +23,29 @@
 #' deh (demography and housing model)  
 #' out (model outputs)  
 #' how (housing without output: hom, hou, deh)  
-#' alw (all without output: since 'out' needs lower/middle/upper scenario)  
+#' alw (all without output: since 'out' needs lower/middle/upper scenario)
+#' @param keep_log boolean. Log is kept if parameter is TRUE. Default TRUE
 #'
 #' @return no return value
 #' @export
 #'
 #' @examples run_scen(scenarios = c("lower", "middle", "upper"), modules = c("all"))
-run_scen <- function(scenarios, modules) {
+run_scen <- function(scenarios, modules, keep_log = TRUE) {
   
   # different scenarios
   for (i_scen in scenarios) {
     # i_scen <- "middle"
     # scenario specific: assign values to parameters to global environment
-    util_gf(i_scen)
+    init(i_scen)
+    
+    # start with a new log file (delete the previous file)
+    if (file.exists(log_file) && i_scen == scenarios[1] && keep_log == FALSE)
+      file.remove(log_file)
     
     # scenario in the log file
-    cat_log(paste0("------ scenario ", i_scen, " ------"))
-
-    # start with a new log file (delete the previous file)
-    if (file.exists(log_file) && i_scen == scenarios[1])
-      file.remove(log_file)
+    # start time
+    t0 <- Sys.time()
+    cat_log(" ------ scenario ", i_scen, " ------")
     
     # birth
     if (modules %in% c("all", "alw", "dem", "bir")) {
@@ -121,6 +119,7 @@ run_scen <- function(scenarios, modules) {
       source(paste0(code_path, "1400_Demography-Housing/1400_demography-housing.r"))
     }
     
+    cat_log(paste0("total runtime scenario ", i_scen, ": ", capture.output(Sys.time() - t0)))   
     # end: different scenarios
   }
   
@@ -129,62 +128,11 @@ run_scen <- function(scenarios, modules) {
     if (modules %in% c("all", "out")) {
       # scenario in the log file
       cat_log(paste0("------ scenario ", i_scen, " ------"))
+      init(i_scen)
       
-      # assign values to parameters
-      # to global environment
-      # WHY? will be used in functions outside this function
-      # for (i_para in 1:nrow(para)) {
-      #   assign(para$parameter[i_para], para[[i_scen]][i_para], envir = .GlobalEnv
-      #   )
-      # }
-      
-      # same with the scenario name
-      # assign("i_scen", i_scen, envir = .GlobalEnv)
-      util_gf(i_scen)
-      
-      # general functions (with dependence on parameters)
-      source(paste0(code_path, "0000_General/0003_general_with-parameters.r"))
       source(paste0(code_path, "1500_Model/1501_model_outputs.r"))
     }
   }
-  
-  # end of scenario function
-}
-
-
-
-# util_gf -----------------------------------------------------------------
-
-
-
-#' load general functions and parameters
-#'
-#' @param i_scen 
-#'
-#' @return NULL
-#' @export
-#'
-#' @examples util_gf("lower")
-util_gf <- function(i_scen = "middle"){
-  # general functions already available?
-  if (!exists("code_path", envir = .GlobalEnv)) {
-    
-    # general functions (without dependence on parameters)
-    source(paste0(here::here(), "/1_Code/0000_General/0002_general_without-parameters.r"))
-  }
-  
-  # import parameter
-  para <- read_delim(paste0(data_path, "3_Parameter/parameter.csv"), ";", lazy = FALSE) %>%
-    select(parameter, lower, middle, upper)
-  # parameters (depend on scenario)
-  for (i_para in 1:nrow(para)) {
-    assign(para$parameter[i_para], para[[i_scen]][i_para], envir = .GlobalEnv)
-  }
-  
-  assign("i_scen", i_scen, envir = .GlobalEnv)
-  
-  # general functions (with dependence on parameters)
-  source(paste0(code_path, "0000_General/0003_general_with-parameters.r"))
 }
 
 
@@ -194,9 +142,9 @@ util_gf <- function(i_scen = "middle"){
 #' PDF file in this case.
 #' If not, an empty string is returned. No PDF is generated; this is used when creating a quarto file with all plots.
 #'
-#' @param name 
+#' @param name string for name of plot output file
 #'
-#' @return String
+#' @return string
 #' @export
 #'
 #' @examples plot_name("my_plot")
@@ -215,17 +163,84 @@ plot_name <- function(name){
 #'
 #' @param cache_refresh should cache of quarto rendering be completely dropped? Defaults to TRUE
 #'
-#' @return
+#' @return no visible return value
 #' @export
 #'
 #' @examples render_book()
 render_book <- function(cache_refresh = TRUE){
-    run_scen(scenarios = c("lower", "middle", "upper"), modules = "all")
+    run_scen(scenarios = c("lower", "middle", "upper"), modules = "all", keep_log = TRUE)
     
     quarto_render(input = "./Plots",
                   execute_params = list(scen = "middle",
-                                        output_dir = paste("./3_Results/Plots/middle")),
+                                        output_dir = paste(book_path)),
                   cache_refresh = cache_refresh,
                   as_job = FALSE)
 }
 
+
+#' calculate sum after removing NA values
+#'
+#' @param x vector of values
+#'
+#' @return sum of x after removing NA's
+#' @export
+#'
+#' @examples sum_NA(c(1,2,3,NA))
+sum_NA <- function(x) {
+  sum(x, na.rm = TRUE)
+}
+
+#' calculate max value after removing NA values
+#'
+#' @param x vector of values
+#'
+#' @return max of vector x after removing NA's
+#' @export
+#'
+#' @examples max_NA(c(1,2,3,NA))
+max_NA <- function(x) {
+  max(x, na.rm = TRUE)
+}
+
+#' cat to log file
+#' 
+#' appends input to a log file
+#'
+#' @param ... text to be added to log
+#'
+#' @return no return value
+#' @export
+#'
+#' @examples
+cat_log <- function(...) {
+  sub_path <- regmatches(
+    log_file,
+    regexpr(".*[\\/]", log_file)
+  )
+  dir_ex_create(sub_path)
+  
+  cat(paste(Sys.time(), ":", ...) ,
+      file = log_file, sep = "\n", append = TRUE
+  )
+}
+
+
+
+#' check and create file directories
+#' 
+#' @description checks if a certain directory is existing; if not, 
+#'
+#' @param path 
+#'
+#' @return message of success
+#' @export
+#'
+#' @examples dir_ex_create("results")
+dir_ex_create <- function(path){
+  if (!dir.exists(path)) {
+    dir.create(path, recursive = TRUE
+    )
+    paste(path, "created successfully")
+  } else
+    paste(path, "already exists")
+}
