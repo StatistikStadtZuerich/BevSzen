@@ -66,6 +66,8 @@ init <- function(i_scen = "middle", var_file = "/2_Data/3_Parameter/variables.ym
   vars$look_pro <- tibble(code = as.double(1:7), initial = vars$pro_initial, category = vars$pro_category) %>%
     mutate(status = factor(category, levels = vars$pro_category))
   
+  vars$look_own <- tibble(EigentumGrundstkCd = as.integer(labels(uni_w)), owner = levels(uni_w))
+  
   vars$look_a1 <- tibble(age = 15:49) %>%
     mutate(age_1 = factor(if_else(age < vars$age_1[1], vars$age_1t[1],
                                   if_else(age < vars$age_1[2], vars$age_1t[2], vars$age_1t[3])
@@ -208,5 +210,6 @@ init <- function(i_scen = "middle", var_file = "/2_Data/3_Parameter/variables.ym
     assign(labels(vars[i_var]), vars[[i_var]], envir = .GlobalEnv)
   }
   
+  # combine all parameters into one list
   append(para, vars)
 }
