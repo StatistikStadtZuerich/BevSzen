@@ -354,18 +354,6 @@ read_csv(car_path, lazy = FALSE) %>%
 
 # habitation --------------------------------------------------------------
 
-Jahr
-PublJahr
-VersionArtCd
-BasisSzenarienCd
-QuarCd
-EigentumGrundstkCd
-BruttoGeschFlaeche
-AnzWhgStat
-WohnungsflProPers
-PersProWhg
-
-
 # get list of model output files as input data for DWH
 files_rate <- paste0(paste0(data_path, "4_Rates/"),
                      list.files(path = paste0(data_path, "4_Rates/"), recursive = TRUE))
@@ -409,13 +397,44 @@ occupancy <- read_csv(read_files[1]) %>%
   select(PublJahr, Jahr, VersionArtCd, BasisSzenarienCd, QuarCd, EigentumGrundstkCd, PersProWhg)
 
 # population data
-pop_ <- pop %>%
-  group_by(Jahr, BasisSzenarienCd, VersionArtCd, district) %>%
-  summarise(AnzBestWir = sum(AnzBestWir))
+read_files <- files_rate[str_detect(files_rate, "housing_model_population_dw")]
+stop_3(read_files)
+
+pop_dw <- read_csv(read_files[1]) %>%
+  mutate(VersionArtCd = 1) %>%
+  add_row(read_csv(read_files[2]) %>%
+            mutate(VersionArtCd = 2)) %>%
+  add_row(read_csv(read_files[3]) %>%
+            mutate(VersionArtCd = 3)) %>%
+  left_join(look_reg, by = "district") %>%
+  left_join(look_own, by = "owner") %>%
+  mutate(BasisSzenarienCd = if_else(year < scen_begin, basis_fact, basis_scen), # calculated scenario value
+         PublJahr = scen_begin,
+         QuarCd = distnum) %>%
+  rename(Jahr = year) %>%
+  select(PublJahr, Jahr, VersionArtCd, BasisSzenarienCd, QuarCd, EigentumGrundstkCd, pop)
+  
 
 # area data
-Anz. Personen * Wohnflächenkonsum
-
+join_cond <- c("Jahr", "PublJahr", "VersionArtCd", "BasisSzenarienCd", "QuarCd", "EigentumGrundstkCd")
+area <- consumption %>%
+  left_join(pop_dw, by = join_cond) %>%
+  mutate(BruttoGeschFlaeche = pop * WohnungsflProPers / 10000) %>%
+  select(-c(WohnungsflProPers, pop))
 
 # apartments data
-Anz. Personen / Belegungsquote
+apartments <- occupancy %>%
+  left_join(pop_dw, by = join_cond) %>%
+  mutate(AnzWhgStat = pop / PersProWhg) %>%
+  select(-c(PersProWhg, pop))
+
+# combine datasets and write output
+area %>%
+  left_join(apartments, by = join_cond) %>%
+  left_join(consumption, by = join_cond) %>%
+  left_join(occupancy, by = join_cond) %>%
+  mutate(BruttoGeschFlaeche = round(BruttoGeschFlaeche, round_rate),
+         AnzWhgStat = round(AnzWhgStat, round_rate),
+         WohnungsflProPers = round(WohnungsflProPers, round_rate),
+         PersProWhg = round(PersProWhg, round_rate)) %>%
+  write_delim(paste0(dwh_path, "DM_WOHNEN.csv"), delim = ";")
