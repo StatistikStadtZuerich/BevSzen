@@ -507,6 +507,10 @@ pop_all <- pop_fut_past %>%
 
 # export the results ------------------------------------------------------
 
+# per district and ownership
+write_csv(pop_fut_past %>% arrange(district, year, ownership),
+          paste0(exp_path, "/housing_model_population_dw"))
+
 # per district
 ex_data_d <- arrange(pop_d, district, year)
 write_csv(ex_data_d, paste0(exp_path, "/housing-model_population_d.csv"))
