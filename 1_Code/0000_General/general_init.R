@@ -43,7 +43,7 @@ init <- function(i_scen = "middle", var_file = "/2_Data/3_Parameter/variables.ym
     filter(scenario == i_scen) %>%
     select(parameter, value)
   
-  # parameters (depend on scenario)
+  # read parameters (depend on scenario)
   for (i_para in 1:nrow(para)) {
     assign(para$parameter[i_para], para$value[i_para], envir = .GlobalEnv)
   }
@@ -51,9 +51,12 @@ init <- function(i_scen = "middle", var_file = "/2_Data/3_Parameter/variables.ym
     pivot_wider(names_from = parameter) %>%
     as.list()
   
+
+  # create variables --------------------------------------------------------
   # lookup tables
   vars$look_dis <- read_csv2(paste0(here::here(), vars$dis_file), lazy = FALSE) %>%
     select(QuarCd, distr)
+
   
   vars$look_reg <- mutate(vars$look_dis, distnum = if_else(distr == "Kreis 1", 10, as.numeric(QuarCd))) %>%
     select(distnum, distr) %>%
@@ -65,8 +68,6 @@ init <- function(i_scen = "middle", var_file = "/2_Data/3_Parameter/variables.ym
   
   vars$look_pro <- tibble(code = as.double(1:7), initial = vars$pro_initial, category = vars$pro_category) %>%
     mutate(status = factor(category, levels = vars$pro_category))
-  
-  vars$look_own <- tibble(EigentumGrundstkCd = as.integer(labels(uni_w)), owner = levels(uni_w))
   
   vars$look_a1 <- tibble(age = 15:49) %>%
     mutate(age_1 = factor(if_else(age < vars$age_1[1], vars$age_1t[1],
@@ -104,7 +105,7 @@ init <- function(i_scen = "middle", var_file = "/2_Data/3_Parameter/variables.ym
       age < vars$age_4[5] ~ vars$age_4t[4],
       TRUE ~ vars$age_4t[5]
     ), levels = vars$age_4t))
-  
+
   # unique levels
   vars$text_d <- unique(vars$look_dis$distr)
   vars$uni_d <- factor(vars$text_d, levels = vars$text_d)
@@ -117,6 +118,8 @@ init <- function(i_scen = "middle", var_file = "/2_Data/3_Parameter/variables.ym
   vars$uni_t <- factor(vars$pro_category, levels = vars$pro_category)
   vars$uni_i <- factor(vars$text_i, levels = vars$text_i)
   vars$uni_c <- factor(vars$text_c, levels = vars$text_c)
+  
+  vars$look_own <- tibble(EigentumGrundstkCd = as.integer(labels(vars$uni_w)), owner = levels(vars$uni_w))
   
   # colors
   vars$col_d <- colorRampPalette(vars$col_6)(31)
