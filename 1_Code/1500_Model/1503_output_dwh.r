@@ -5,13 +5,6 @@
 # prep work ---------------------------------------------------------------
 params <- init("middle")
 
-#functions
-stop_3 <- function(files){
-  stopifnot("missing files;\
-            make sure to run the whole model (0001_model_control-flow.r) beforehand" = 
-              length(read_files) == 3)
-}
-
 # output path creation
 dwh_path <- paste0(data_path, "7_DWH/")
 dir_ex_create(dwh_path)
@@ -22,7 +15,16 @@ dir_ex_create(dwh_path)
 files_output <- paste0(paste0(data_path, "5_Outputs/"),
                        list.files(path = paste0(data_path, "5_Outputs/"), recursive = TRUE))
 
+# read birth data and adapt structure -------------------------------------
 
+dwh_path <- paste0(data_path, "7_DWH/")
+dir_ex_create(dwh_path)
+
+# population data ---------------------------------------------------------
+
+# get list of model output files as input data for DWH
+files_output <- paste0(paste0(data_path, "5_Outputs/"),
+                       list.files(path = paste0(data_path, "5_Outputs/"), recursive = TRUE))
 
 # read birth data and adapt structure -------------------------------------
 
@@ -368,14 +370,8 @@ consumption <- read_csv(read_files[1]) %>%
             mutate(VersionArtCd = 2)) %>%
   add_row(read_csv(read_files[3]) %>%
             mutate(VersionArtCd = 3)) %>%
-  left_join(look_reg, by = "district") %>%
-  left_join(look_own, by = "owner") %>%
-  mutate(BasisSzenarienCd = if_else(year < scen_begin, basis_fact, basis_scen), # calculated scenario value
-         PublJahr = scen_begin,
-         QuarCd = distnum) %>%
-  rename(Jahr = year,
-         WohnungsflProPers = spa_dyw) %>%
-  select(PublJahr, Jahr, VersionArtCd, BasisSzenarienCd, QuarCd, EigentumGrundstkCd, WohnungsflProPers)
+  rename(WohnungsflProPers = spa_dyw)
+
 
 # occupancy rate 
 read_files <- files_rate[str_detect(files_rate, "allocation_future")]
@@ -387,16 +383,9 @@ occupancy <- read_csv(read_files[1]) %>%
             mutate(VersionArtCd = 2)) %>%
   add_row(read_csv(read_files[3]) %>%
             mutate(VersionArtCd = 3)) %>%
-  left_join(look_reg, by = "district") %>%
-  left_join(look_own, by = "owner") %>%
-  mutate(BasisSzenarienCd = if_else(year < scen_begin, basis_fact, basis_scen), # calculated scenario value
-         PublJahr = scen_begin,
-         QuarCd = distnum) %>%
-  rename(Jahr = year,
-         PersProWhg = aca_dyw) %>%
-  select(PublJahr, Jahr, VersionArtCd, BasisSzenarienCd, QuarCd, EigentumGrundstkCd, PersProWhg)
+  rename(PersProWhg = aca_dyw)
 
-# population data
+# population data (needed for calculation of area and apartments)
 read_files <- files_rate[str_detect(files_rate, "housing_model_population_dw")]
 stop_3(read_files)
 
@@ -405,36 +394,63 @@ pop_dw <- read_csv(read_files[1]) %>%
   add_row(read_csv(read_files[2]) %>%
             mutate(VersionArtCd = 2)) %>%
   add_row(read_csv(read_files[3]) %>%
-            mutate(VersionArtCd = 3)) %>%
-  left_join(look_reg, by = "district") %>%
-  left_join(look_own, by = "owner") %>%
-  mutate(BasisSzenarienCd = if_else(year < scen_begin, basis_fact, basis_scen), # calculated scenario value
-         PublJahr = scen_begin,
-         QuarCd = distnum) %>%
-  rename(Jahr = year) %>%
-  select(PublJahr, Jahr, VersionArtCd, BasisSzenarienCd, QuarCd, EigentumGrundstkCd, pop)
-  
+            mutate(VersionArtCd = 3))
 
 # area data
-join_cond <- c("Jahr", "PublJahr", "VersionArtCd", "BasisSzenarienCd", "QuarCd", "EigentumGrundstkCd")
+join_cond <- c("year", "VersionArtCd", "district", "owner")
 area <- consumption %>%
   left_join(pop_dw, by = join_cond) %>%
-  mutate(BruttoGeschFlaeche = pop * WohnungsflProPers / 10000) %>%
-  select(-c(WohnungsflProPers, pop))
+  mutate(BruttoGeschFlaeche = pop * WohnungsflProPers / 10000) # in ha
 
 # apartments data
 apartments <- occupancy %>%
   left_join(pop_dw, by = join_cond) %>%
-  mutate(AnzWhgStat = pop / PersProWhg) %>%
-  select(-c(PersProWhg, pop))
+  mutate(AnzWhgStat = pop / PersProWhg)
+
+
+# plausibility plots
+consumption %>%
+  sszplot(aes_x = "year", aes_y = "WohnungsflProPers", aes_col = "VersionArtCd", aes_ltyp = "owner",
+          labs_x = "year", labs_y = "m2/person", labs_col = "Scenario",
+          quotes = quote(scale_color_manual(labels = c("lower", "middle", "upper"),
+                                            values = c("blue", "green", "red"))),
+          wrap = "district")
+
+occupancy %>%
+  sszplot(aes_x = "year", aes_y = "PersProWhg ", aes_col = "VersionArtCd", aes_ltyp = "owner",
+          labs_x = "year", labs_y = "persons/apartment",
+          quotes = quote(scale_color_manual(labels = c("lower", "middle", "upper"),
+                                            values = c("blue", "green", "red"))),
+          wrap = "district")
+
+area %>%
+  sszplot(aes_x = "year", aes_y = "BruttoGeschFlaeche ", aes_col = "VersionArtCd", aes_ltyp = "owner",
+          labs_x = "year", labs_y = "area (ha)",
+          quotes = quote(scale_color_manual(labels = c("lower", "middle", "upper"),
+                                            values = c("blue", "green", "red"))),
+          wrap = "district")
+
+apartments %>%
+  sszplot(aes_x = "year", aes_y = "AnzWhgStat ", aes_col = "VersionArtCd", aes_ltyp = "owner",
+          labs_x = "year", labs_y = "apartments",
+          quotes = quote(scale_color_manual(labels = c("lower", "middle", "upper"),
+                                            values = c("blue", "green", "red"))),
+          wrap = "district")
+
 
 # combine datasets and write output
 area %>%
   left_join(apartments, by = join_cond) %>%
-  left_join(consumption, by = join_cond) %>%
-  left_join(occupancy, by = join_cond) %>%
+  left_join(look_reg, by = "district") %>%
+  left_join(look_own, by = "owner") %>%
+  rename(Jahr = year) %>%
+  mutate(BasisSzenarienCd = if_else(Jahr < scen_begin, basis_fact, basis_scen), # calculated scenario value
+         PublJahr = scen_begin,
+         QuarCd = distnum) %>%
   mutate(BruttoGeschFlaeche = round(BruttoGeschFlaeche, round_rate),
          AnzWhgStat = round(AnzWhgStat, round_rate),
          WohnungsflProPers = round(WohnungsflProPers, round_rate),
          PersProWhg = round(PersProWhg, round_rate)) %>%
+  select(PublJahr, Jahr, VersionArtCd, BasisSzenarienCd, QuarCd, EigentumGrundstkCd,
+         WohnungsflProPers, PersProWhg, BruttoGeschFlaeche, AnzWhgStat) %>%
   write_delim(paste0(dwh_path, "DM_WOHNEN.csv"), delim = ";")
