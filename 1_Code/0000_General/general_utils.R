@@ -228,7 +228,7 @@ cat_log <- function(...) {
 
 #' check and create file directories
 #' 
-#' @description checks if a certain directory is existing; if not, 
+#' @description checks if a certain directory is existing; if not, creates it
 #'
 #' @param path 
 #'
@@ -243,4 +243,21 @@ dir_ex_create <- function(path){
     paste(path, "created successfully")
   } else
     paste(path, "already exists")
+}
+
+
+#' check if 3 files are present
+#' 
+#' @description checks if the input contains 3 values and stops execution if this is not the case
+#'
+#' @param files character vector
+#'
+#' @return stops execution if condition is not met
+#' @export
+#'
+#' @examples stop_3(c("a.csv", "b.csv", "c.csv"))
+stop_3 <- function(files){
+  stopifnot("missing files;\
+            make sure to run the whole model (0001_model_control-flow.r) beforehand" = 
+              length(read_files) == 3)
 }

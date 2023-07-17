@@ -5,13 +5,6 @@
 # prep work ---------------------------------------------------------------
 params <- init("middle")
 
-#functions
-stop_3 <- function(files){
-  stopifnot("missing files;\
-            make sure to run the whole model (0001_model_control-flow.r) beforehand" = 
-              length(read_files) == 3)
-}
-
 # output path creation
 dwh_path <- paste0(data_path, "7_DWH/")
 dir_ex_create(dwh_path)
@@ -19,10 +12,19 @@ dir_ex_create(dwh_path)
 # population data ---------------------------------------------------------
 
 # get list of model output files as input data for DWH
-files <- paste0(paste0(data_path, "5_Outputs/"),
-                list.files(path = paste0(data_path, "5_Outputs/"), recursive = TRUE))
+files_output <- paste0(paste0(data_path, "5_Outputs/"),
+                       list.files(path = paste0(data_path, "5_Outputs/"), recursive = TRUE))
 
+# read birth data and adapt structure -------------------------------------
 
+dwh_path <- paste0(data_path, "7_DWH/")
+dir_ex_create(dwh_path)
+
+# population data ---------------------------------------------------------
+
+# get list of model output files as input data for DWH
+files_output <- paste0(paste0(data_path, "5_Outputs/"),
+                       list.files(path = paste0(data_path, "5_Outputs/"), recursive = TRUE))
 
 # read birth data and adapt structure -------------------------------------
 
@@ -43,7 +45,7 @@ bir_past <- read_csv(bir_od, lazy = FALSE) %>%
             .groups = "drop")
 
 # scenario data
-read_files <- files[str_detect(files, "births_future")]
+read_files <- files_output[str_detect(files_output, "births_future")]
 stop_3(read_files)
 
 births <-
@@ -52,10 +54,10 @@ births <-
   mutate(VersionArtCd = 1) %>%
   # middle scenario
   bind_rows(read_csv(read_files[2], lazy = FALSE) %>%
-    mutate(VersionArtCd = 2)) %>%
+              mutate(VersionArtCd = 2)) %>%
   # upper scenario
   bind_rows(read_csv(read_files[3], lazy = FALSE) %>%
-    mutate(VersionArtCd = 3)) %>%
+              mutate(VersionArtCd = 3)) %>%
   mutate(BasisSzenarienCd = basis_scen,  # calculated scenario value
          AlterVCd = 0) %>%
   # get codes instead of text
@@ -80,7 +82,7 @@ births <-
 # read population data and adapt structure --------------------------------
 
 # past data
-pop_past <- read_csv(pop_od, lazy = FALSE)%>%
+pop_past <- read_csv(pop_od, lazy = FALSE) %>%
   left_join(look_dis, by = "QuarCd") %>%
   rename("Jahr" = StichtagDatJahr,
          "district" = distr) %>%
@@ -95,7 +97,7 @@ pop_past <- read_csv(pop_od, lazy = FALSE)%>%
             .groups = "drop") 
 
 #scenario data
-read_files <- files[str_detect(files, "population_future")]
+read_files <- files_output[str_detect(files_output, "population_future")]
 stop_3(read_files)
 
 pop <-
@@ -104,10 +106,10 @@ pop <-
   mutate(VersionArtCd = 1) %>%
   # middle scenario
   bind_rows(read_csv(read_files[2], lazy = FALSE) %>%
-    mutate(VersionArtCd = 2)) %>%
+              mutate(VersionArtCd = 2)) %>%
   # upper scenario
   bind_rows(read_csv(read_files[3], lazy = FALSE) %>%
-    mutate(VersionArtCd = 3)) %>%
+              mutate(VersionArtCd = 3)) %>%
   mutate(BasisSzenarienCd = basis_scen) %>%
   # get codes instead of text
   left_join(tibble(sex = levels(uni_s),
@@ -148,7 +150,7 @@ nat_past <- read_csv(nat_od, lazy = FALSE) %>%
             .groups = "drop") 
 
 # scenario data 
-read_files <- files[str_detect(files, "naturalization_future")]
+read_files <- files_output[str_detect(files_output, "naturalization_future")]
 stop_3(read_files)
 
 nat <-
@@ -157,10 +159,10 @@ nat <-
   mutate(VersionArtCd = 1) %>%
   # middle scenario
   bind_rows(read_csv(read_files[2], lazy = FALSE) %>%
-    mutate(VersionArtCd = 2)) %>%
+              mutate(VersionArtCd = 2)) %>%
   # upper scenario
   bind_rows(read_csv(read_files[3], lazy = FALSE) %>%
-    mutate(VersionArtCd = 3)) %>%
+              mutate(VersionArtCd = 3)) %>%
   mutate(BasisSzenarienCd = basis_scen, 
          HerkunftCd = 1) %>%
   # get codes instead of text
@@ -208,19 +210,19 @@ demo_past <- read_csv(dea_od, lazy = FALSE) %>%
             .groups = "drop")
 
 # scenario data
-read_files <- files[str_detect(files, "demographic")]
+read_files <- files_output[str_detect(files_output, "demographic")]
 stop_3(read_files)
-  
+
 demo <-
   # lower scenario
   read_csv(read_files[1], lazy = FALSE) %>%
   mutate(VersionArtCd = 1) %>%
   # middle scenario
   bind_rows(read_csv(read_files[2], lazy = FALSE) %>%
-    mutate(VersionArtCd = 2)) %>%
+              mutate(VersionArtCd = 2)) %>%
   # upper scenario
   bind_rows(read_csv(read_files[3], lazy = FALSE) %>%
-    mutate(VersionArtCd = 3)) %>%
+              mutate(VersionArtCd = 3)) %>%
   mutate(BasisSzenarienCd = basis_scen) %>%
   # get codes instead of text
   left_join(tibble(sex = levels(uni_s),
@@ -250,21 +252,21 @@ births %>%
   summarise(birth = sum_NA(AnzGebuWir), .groups = "drop") %>%
   sszplot(aes_x = "Jahr", aes_y = "birth", aes_col = "VersionArtCd",
           labs_x = "year", labs_y = "frequency")
-         # name = "1590_bir_yc")
+# name = "1590_bir_yc")
 
 pop %>%
   group_by(Jahr, VersionArtCd) %>%
   summarise(pop = sum_NA(AnzBestWir), .groups = "drop") %>%
   sszplot(aes_x = "Jahr", aes_y = "pop", aes_col = "VersionArtCd",
           labs_x = "year", labs_y = "frequency")
-          # name = "1591_pop_yc")
+# name = "1591_pop_yc")
 
 nat %>%
   group_by(Jahr, VersionArtCd) %>%
   summarise(nat = sum_NA(AnzEinbWir), .groups = "drop") %>%
   sszplot(aes_x = "Jahr", aes_y = "nat", aes_col = "VersionArtCd",
           labs_x = "year", labs_y = "frequency")
-          # name = "1592_nat_yc")
+# name = "1592_nat_yc")
 
 demo %>%
   group_by(Jahr, VersionArtCd) %>%
@@ -279,7 +281,7 @@ demo %>%
           labs_x = "year", labs_y = "frequency",
           gridscale = "free",
           width = 10, height = 5)
-          # name = "1593_demo_yc")
+# name = "1593_demo_yc")
 
 # combine population data -------------------------------------------------
 
@@ -314,7 +316,7 @@ pop %>%
 # capacity and reserves ---------------------------------------------------
 
 # read data, bring to long format and adjust BereichCd
-read_csv("2_Data/1_Input/KaReB.csv", lazy = FALSE) %>%
+read_csv(car_path, lazy = FALSE) %>%
   pivot_longer(
     cols = car_initial,
     names_to = "BereichCd",
@@ -348,4 +350,107 @@ read_csv("2_Data/1_Input/KaReB.csv", lazy = FALSE) %>%
           labs_x = "publication year", labs_y = "area (ha)",
           scale_y = c(0, NA),
           width = 10, height = 8)
-          #name = "1594_cap_res")
+#name = "1594_cap_res")
+
+
+
+# habitation --------------------------------------------------------------
+
+# get list of model output files as input data for DWH
+files_rate <- paste0(paste0(data_path, "4_Rates/"),
+                     list.files(path = paste0(data_path, "4_Rates/"), recursive = TRUE))
+
+# consumption rate
+read_files <- files_rate[str_detect(files_rate, "living-space_future")]
+stop_3(read_files)
+
+consumption <- read_csv(read_files[1]) %>%
+  mutate(VersionArtCd = 1) %>%
+  add_row(read_csv(read_files[2]) %>%
+            mutate(VersionArtCd = 2)) %>%
+  add_row(read_csv(read_files[3]) %>%
+            mutate(VersionArtCd = 3)) %>%
+  rename(WohnungsflProPers = spa_dyw)
+
+
+# occupancy rate 
+read_files <- files_rate[str_detect(files_rate, "allocation_future")]
+stop_3(read_files)
+
+occupancy <- read_csv(read_files[1]) %>%
+  mutate(VersionArtCd = 1) %>%
+  add_row(read_csv(read_files[2]) %>%
+            mutate(VersionArtCd = 2)) %>%
+  add_row(read_csv(read_files[3]) %>%
+            mutate(VersionArtCd = 3)) %>%
+  rename(PersProWhg = aca_dyw)
+
+# population data (needed for calculation of area and apartments)
+read_files <- files_rate[str_detect(files_rate, "housing_model_population_dw")]
+stop_3(read_files)
+
+pop_dw <- read_csv(read_files[1]) %>%
+  mutate(VersionArtCd = 1) %>%
+  add_row(read_csv(read_files[2]) %>%
+            mutate(VersionArtCd = 2)) %>%
+  add_row(read_csv(read_files[3]) %>%
+            mutate(VersionArtCd = 3))
+
+# area data
+join_cond <- c("year", "VersionArtCd", "district", "owner")
+area <- consumption %>%
+  left_join(pop_dw, by = join_cond) %>%
+  mutate(BruttoGeschFlaeche = pop * WohnungsflProPers / 10000) # in ha
+
+# apartments data
+apartments <- occupancy %>%
+  left_join(pop_dw, by = join_cond) %>%
+  mutate(AnzWhgStat = pop / PersProWhg)
+
+
+# plausibility plots
+consumption %>%
+  sszplot(aes_x = "year", aes_y = "WohnungsflProPers", aes_col = "VersionArtCd", aes_ltyp = "owner",
+          labs_x = "year", labs_y = "m2/person", labs_col = "Scenario",
+          quotes = quote(scale_color_manual(labels = c("lower", "middle", "upper"),
+                                            values = c("blue", "green", "red"))),
+          wrap = "district")
+
+occupancy %>%
+  sszplot(aes_x = "year", aes_y = "PersProWhg ", aes_col = "VersionArtCd", aes_ltyp = "owner",
+          labs_x = "year", labs_y = "persons/apartment",
+          quotes = quote(scale_color_manual(labels = c("lower", "middle", "upper"),
+                                            values = c("blue", "green", "red"))),
+          wrap = "district")
+
+area %>%
+  sszplot(aes_x = "year", aes_y = "BruttoGeschFlaeche ", aes_col = "VersionArtCd", aes_ltyp = "owner",
+          labs_x = "year", labs_y = "area (ha)",
+          quotes = quote(scale_color_manual(labels = c("lower", "middle", "upper"),
+                                            values = c("blue", "green", "red"))),
+          wrap = "district")
+
+apartments %>%
+  sszplot(aes_x = "year", aes_y = "AnzWhgStat ", aes_col = "VersionArtCd", aes_ltyp = "owner",
+          labs_x = "year", labs_y = "apartments",
+          quotes = quote(scale_color_manual(labels = c("lower", "middle", "upper"),
+                                            values = c("blue", "green", "red"))),
+          wrap = "district")
+
+
+# combine datasets and write output
+area %>%
+  left_join(apartments, by = join_cond) %>%
+  left_join(look_reg, by = "district") %>%
+  left_join(look_own, by = "owner") %>%
+  rename(Jahr = year) %>%
+  mutate(BasisSzenarienCd = if_else(Jahr < scen_begin, basis_fact, basis_scen), # calculated scenario value
+         PublJahr = scen_begin,
+         QuarCd = distnum) %>%
+  mutate(BruttoGeschFlaeche = round(BruttoGeschFlaeche, round_rate),
+         AnzWhgStat = round(AnzWhgStat, round_rate),
+         WohnungsflProPers = round(WohnungsflProPers, round_rate),
+         PersProWhg = round(PersProWhg, round_rate)) %>%
+  select(PublJahr, Jahr, VersionArtCd, BasisSzenarienCd, QuarCd, EigentumGrundstkCd,
+         WohnungsflProPers, PersProWhg, BruttoGeschFlaeche, AnzWhgStat) %>%
+  write_delim(paste0(dwh_path, "DM_WOHNEN.csv"), delim = ";")
