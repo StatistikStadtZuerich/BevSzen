@@ -451,6 +451,6 @@ area %>%
          AnzWhgStat = round(AnzWhgStat, round_rate),
          WohnungsflProPers = round(WohnungsflProPers, round_rate),
          PersProWhg = round(PersProWhg, round_rate)) %>%
-  select(PublJahr, Jahr, VersionArtCd, BasisSzenarienCd, QuarCd, EigentumGrundstkCd,
-         WohnungsflProPers, PersProWhg, BruttoGeschFlaeche, AnzWhgStat) %>%
+  select(Jahr, PublJahr, VersionArtCd, BasisSzenarienCd, QuarCd, EigentumGrundstkCd,
+         BruttoGeschFlaeche, AnzWhgStat, PersProWhg, WohnungsflProPers) %>%
   write_delim(paste0(dwh_path, "DM_WOHNEN.csv"), delim = ";")
