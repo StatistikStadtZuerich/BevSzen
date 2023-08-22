@@ -446,11 +446,19 @@ area %>%
   rename(Jahr = year) %>%
   mutate(BasisSzenarienCd = if_else(Jahr < scen_begin, basis_fact, basis_scen), # calculated scenario value
          PublJahr = scen_begin,
-         QuarCd = distnum) %>%
+         QuarCd = distnum)  %>%
   mutate(BruttoGeschFlaeche = round(BruttoGeschFlaeche, round_rate),
          AnzWhgStat = round(AnzWhgStat, round_rate),
          WohnungsflProPers = round(WohnungsflProPers, round_rate),
          PersProWhg = round(PersProWhg, round_rate)) %>%
-  select(PublJahr, Jahr, VersionArtCd, BasisSzenarienCd, QuarCd, EigentumGrundstkCd,
-         WohnungsflProPers, PersProWhg, BruttoGeschFlaeche, AnzWhgStat) %>%
+  # DWH requirement: NAs as 0
+  mutate(across(everything(), ~ replace_na(.x, replace = 0))) %>%
+  # as.character to avoid things like 9.12e-04 etc. in csv file
+  mutate(across(everything(), as.character)) %>%
+  mutate(QuarCd = case_when(
+    nchar(QuarCd) == 2 ~ paste0("0", QuarCd),
+    nchar(QuarCd) == 3 ~ QuarCd
+  )) %>%
+  select(Jahr, PublJahr, VersionArtCd, BasisSzenarienCd, QuarCd, EigentumGrundstkCd,
+         BruttoGeschFlaeche, AnzWhgStat, PersProWhg, WohnungsflProPers) %>%
   write_delim(paste0(dwh_path, "DM_WOHNEN.csv"), delim = ";")
