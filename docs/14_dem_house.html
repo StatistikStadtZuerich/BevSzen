@@ -1,0 +1,1549 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.3.361">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>Plots for population scenarios - 14&nbsp; Demography Housing</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+</style>
+
+
+<script src="site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="site_libs/quarto-nav/headroom.min.js"></script>
+<script src="site_libs/clipboard/clipboard.min.js"></script>
+<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="site_libs/quarto-search/fuse.min.js"></script>
+<script src="site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="./">
+<link href="./15_model_output.html" rel="next">
+<link href="./13_housing.html" rel="prev">
+<script src="site_libs/quarto-html/quarto.js"></script>
+<script src="site_libs/quarto-html/popper.min.js"></script>
+<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="site_libs/quarto-html/anchor.min.js"></script>
+<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "sidebar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "start",
+  "type": "textbox",
+  "limit": 20,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+<style>html{ scroll-behavior: smooth; }</style>
+
+
+<link rel="stylesheet" href="sszTheme.css">
+</head>
+
+<body class="nav-sidebar docked">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+      <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./14_dem_house.html"><span class="chapter-number">14</span>&nbsp; <span class="chapter-title">Demography Housing</span></a></li></ol></nav>
+      <a class="flex-grow-1" role="button" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+      </a>
+      <button type="button" class="btn quarto-search-button" aria-label="" onclick="window.quartoOpenSearch();">
+        <i class="bi bi-search"></i>
+      </button>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-full">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal sidebar-navigation docked overflow-auto">
+    <div class="pt-lg-2 mt-2 text-left sidebar-header">
+    <div class="sidebar-title mb-0 py-0">
+      <a href="./">Plots for population scenarios</a> 
+    </div>
+      </div>
+        <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="sidebar-search">
+        <div id="quarto-search" class="" title="Search"></div>
+        </div>
+        </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Preface</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./01_birth.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Birth</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./02_death.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Death</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./03_immigration.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Immigration</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./04_emigration.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Emigration</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./05_reloc_immigration.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Relocation on immigration</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./06_reloc_emigration.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Relocation on emigration</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./07_naturalization.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Naturalization</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./08_careb.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Capacity reserves</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./09_living_space.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Living spaces</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./10_allocation.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Allocation</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./11_projects.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Projects</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./12_ownership.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">Ownership</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./13_housing.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">Housing model</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./14_dem_house.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text"><span class="chapter-number">14</span>&nbsp; <span class="chapter-title">Demography Housing</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./15_model_output.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">15</span>&nbsp; <span class="chapter-title">Model outputs</span></span></a>
+  </div>
+</li>
+    </ul>
+    </div>
+</nav>
+<div id="quarto-sidebar-glass" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Table of contents</h2>
+   
+  <ul>
+  <li><a href="#population-limit" id="toc-population-limit" class="nav-link active" data-scroll-target="#population-limit"><span class="header-section-number">14.1</span> population limit</a>
+  <ul>
+  <li><a href="#balance-checks" id="toc-balance-checks" class="nav-link" data-scroll-target="#balance-checks"><span class="header-section-number">14.1.1</span> balance checks</a></li>
+  <li><a href="#absolute-difference" id="toc-absolute-difference" class="nav-link" data-scroll-target="#absolute-difference"><span class="header-section-number">14.1.2</span> absolute difference</a></li>
+  <li><a href="#relative-difference" id="toc-relative-difference" class="nav-link" data-scroll-target="#relative-difference"><span class="header-section-number">14.1.3</span> relative difference</a></li>
+  </ul></li>
+  <li><a href="#migration-correction" id="toc-migration-correction" class="nav-link" data-scroll-target="#migration-correction"><span class="header-section-number">14.2</span> migration correction</a></li>
+  <li><a href="#smoothing-over-age" id="toc-smoothing-over-age" class="nav-link" data-scroll-target="#smoothing-over-age"><span class="header-section-number">14.3</span> smoothing over age</a></li>
+  <li><a href="#wollishofen-population-and-migration" id="toc-wollishofen-population-and-migration" class="nav-link" data-scroll-target="#wollishofen-population-and-migration"><span class="header-section-number">14.4</span> Wollishofen, population and migration</a>
+  <ul>
+  <li><a href="#by-year-age-and-origin" id="toc-by-year-age-and-origin" class="nav-link" data-scroll-target="#by-year-age-and-origin"><span class="header-section-number">14.4.1</span> by year, age and origin</a></li>
+  <li><a href="#by-year-and-age" id="toc-by-year-and-age" class="nav-link" data-scroll-target="#by-year-and-age"><span class="header-section-number">14.4.2</span> by year and age</a></li>
+  </ul></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content page-columns page-full column-body" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title"><span class="chapter-number">14</span>&nbsp; <span class="chapter-title">Demography Housing</span></h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+</header>
+
+<div class="cell" data-hash="14_dem_house_cache/html/prep_f6b461ea28c61faf7be025951008e617">
+
+</div>
+<div class="cell" data-hash="14_dem_house_cache/html/data_preparation_e9267a8e2c3e511db931fb9251da3d64">
+
+</div>
+<section id="population-limit" class="level2 page-columns page-full" data-number="14.1">
+<h2 data-number="14.1" class="anchored" data-anchor-id="population-limit"><span class="header-section-number">14.1</span> population limit</h2>
+<section id="balance-checks" class="level3" data-number="14.1.1">
+<h3 data-number="14.1.1" class="anchored" data-anchor-id="balance-checks"><span class="header-section-number">14.1.1</span> balance checks</h3>
+<div class="cell" data-hash="14_dem_house_cache/html/enough_094e11e58730059e5a9767dc9f061792">
+
+</div>
+<p>enough immigration* and/or emigration* for correction?<br>
+There are <strong>0 records</strong>.<br>
+If no records: new_ims and new_ems were enough<br>
+-&gt; no need to use new_ims2/new_ems2 and new_ims3/new/ems3</p>
+<p>balance: check = pop_bir_dea + new_ims3 - new_ems3 - pop_limit<br>
+if the balance works, the new population should be the population-limit<br>
+i.e.&nbsp;the result should be zero and is in the range of <strong>-7.2759576^{-12}, 7.2759576^{-12}</strong>.<br>
+</p>
+</section>
+<section id="absolute-difference" class="level3 page-columns page-full" data-number="14.1.2">
+<h3 data-number="14.1.2" class="anchored" data-anchor-id="absolute-difference"><span class="header-section-number">14.1.2</span> absolute difference</h3>
+<p>difference: population limit minus population (based on migration trends)<br>
+negative value: not enough space (immigration decreased, emigration increased)<br>
+positive value: too much space (immigration increased, emigration decreased)<br>
+</p>
+<div class="cell page-columns page-full" data-hash="14_dem_house_cache/html/fig-1400_39fcdac13e23cf846e5ec2b7ca79793c">
+<div class="cell-output-display column-body page-columns page-full">
+<div id="fig-1400" class="quarto-figure quarto-figure-center column-body anchored page-columns page-full">
+<figure class="figure page-columns page-full">
+<p class="page-columns page-full"><img src="14_dem_house_files/figure-html/fig-1400-1.svg" class="column-body img-fluid figure-img"></p>
+<figcaption class="figure-caption">Figure&nbsp;14.1: absolute difference of population limit</figcaption>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="relative-difference" class="level3 page-columns page-full" data-number="14.1.3">
+<h3 data-number="14.1.3" class="anchored" data-anchor-id="relative-difference"><span class="header-section-number">14.1.3</span> relative difference</h3>
+<div class="cell page-columns page-full" data-hash="14_dem_house_cache/html/fig-1401_4c52111b4cd06a10966867bde950f1d9">
+<div class="cell-output-display column-body page-columns page-full">
+<div id="fig-1401" class="quarto-figure quarto-figure-center column-body anchored page-columns page-full">
+<figure class="figure page-columns page-full">
+<p class="page-columns page-full"><img src="14_dem_house_files/figure-html/fig-1401-1.svg" class="column-body img-fluid figure-img"></p>
+<figcaption class="figure-caption">Figure&nbsp;14.2: relative difference of population limit</figcaption>
+</figure>
+</div>
+</div>
+</div>
+</section>
+</section>
+<section id="migration-correction" class="level2 page-columns page-full" data-number="14.2">
+<h2 data-number="14.2" class="anchored" data-anchor-id="migration-correction"><span class="header-section-number">14.2</span> migration correction</h2>
+<div id="fig-1402" class="quarto-figure quarto-figure-center anchored page-columns page-full">
+<figure class="figure page-columns page-full">
+<div class="cell-output-display column-body page-columns page-full">
+<div id="fig-1402-1" class="quarto-figure quarto-figure-center column-body anchored page-columns page-full">
+<figure class="figure page-columns page-full">
+<p class="page-columns page-full"><img src="14_dem_house_files/figure-html/fig-1402-1.svg" class="column-body img-fluid figure-img" data-ref-parent="fig-1402"></p>
+<figcaption class="figure-caption">(a) District of Kreis 1</figcaption>
+</figure>
+</div>
+</div>
+<div class="cell-output-display column-body page-columns page-full">
+<div id="fig-1402-2" class="quarto-figure quarto-figure-center column-body anchored page-columns page-full">
+<figure class="figure page-columns page-full">
+<p class="page-columns page-full"><img src="14_dem_house_files/figure-html/fig-1402-2.svg" class="column-body img-fluid figure-img" data-ref-parent="fig-1402"></p>
+<figcaption class="figure-caption">(b) District of Wollishofen</figcaption>
+</figure>
+</div>
+</div>
+<div class="cell-output-display column-body page-columns page-full">
+<div id="fig-1402-3" class="quarto-figure quarto-figure-center column-body anchored page-columns page-full">
+<figure class="figure page-columns page-full">
+<p class="page-columns page-full"><img src="14_dem_house_files/figure-html/fig-1402-3.svg" class="column-body img-fluid figure-img" data-ref-parent="fig-1402"></p>
+<figcaption class="figure-caption">(c) District of Leimbach</figcaption>
+</figure>
+</div>
+</div>
+<div class="cell-output-display column-body page-columns page-full">
+<div id="fig-1402-4" class="quarto-figure quarto-figure-center column-body anchored page-columns page-full">
+<figure class="figure page-columns page-full">
+<p class="page-columns page-full"><img src="14_dem_house_files/figure-html/fig-1402-4.svg" class="column-body img-fluid figure-img" data-ref-parent="fig-1402"></p>
+<figcaption class="figure-caption">(d) District of Enge</figcaption>
+</figure>
+</div>
+</div>
+<div class="cell-output-display column-body page-columns page-full">
+<div id="fig-1402-5" class="quarto-figure quarto-figure-center column-body anchored page-columns page-full">
+<figure class="figure page-columns page-full">
+<p class="page-columns page-full"><img src="14_dem_house_files/figure-html/fig-1402-5.svg" class="column-body img-fluid figure-img" data-ref-parent="fig-1402"></p>
+<figcaption class="figure-caption">(e) District of Alt-Wiedikon</figcaption>
+</figure>
+</div>
+</div>
+<div class="cell-output-display column-body page-columns page-full">
+<div id="fig-1402-6" class="quarto-figure quarto-figure-center column-body anchored page-columns page-full">
+<figure class="figure page-columns page-full">
+<p class="page-columns page-full"><img src="14_dem_house_files/figure-html/fig-1402-6.svg" class="column-body img-fluid figure-img" data-ref-parent="fig-1402"></p>
+<figcaption class="figure-caption">(f) District of Friesenberg</figcaption>
+</figure>
+</div>
+</div>
+<div class="cell-output-display column-body page-columns page-full">
+<div id="fig-1402-7" class="quarto-figure quarto-figure-center column-body anchored page-columns page-full">
+<figure class="figure page-columns page-full">
+<p class="page-columns page-full"><img src="14_dem_house_files/figure-html/fig-1402-7.svg" class="column-body img-fluid figure-img" data-ref-parent="fig-1402"></p>
+<figcaption class="figure-caption">(g) District of Sihlfeld</figcaption>
+</figure>
+</div>
+</div>
+<div class="cell-output-display column-body page-columns page-full">
+<div id="fig-1402-8" class="quarto-figure quarto-figure-center column-body anchored page-columns page-full">
+<figure class="figure page-columns page-full">
+<p class="page-columns page-full"><img src="14_dem_house_files/figure-html/fig-1402-8.svg" class="column-body img-fluid figure-img" data-ref-parent="fig-1402"></p>
+<figcaption class="figure-caption">(h) District of Werd</figcaption>
+</figure>
+</div>
+</div>
+<div class="cell-output-display column-body page-columns page-full">
+<div id="fig-1402-9" class="quarto-figure quarto-figure-center column-body anchored page-columns page-full">
+<figure class="figure page-columns page-full">
+<p class="page-columns page-full"><img src="14_dem_house_files/figure-html/fig-1402-9.svg" class="column-body img-fluid figure-img" data-ref-parent="fig-1402"></p>
+<figcaption class="figure-caption">(i) District of Langstrasse</figcaption>
+</figure>
+</div>
+</div>
+<div class="cell-output-display column-body page-columns page-full">
+<div id="fig-1402-10" class="quarto-figure quarto-figure-center column-body anchored page-columns page-full">
+<figure class="figure page-columns page-full">
+<p class="page-columns page-full"><img src="14_dem_house_files/figure-html/fig-1402-10.svg" class="column-body img-fluid figure-img" data-ref-parent="fig-1402"></p>
+<figcaption class="figure-caption">(j) District of Hard</figcaption>
+</figure>
+</div>
+</div>
+<div class="cell-output-display column-body page-columns page-full">
+<div id="fig-1402-11" class="quarto-figure quarto-figure-center column-body anchored page-columns page-full">
+<figure class="figure page-columns page-full">
+<p class="page-columns page-full"><img src="14_dem_house_files/figure-html/fig-1402-11.svg" class="column-body img-fluid figure-img" data-ref-parent="fig-1402"></p>
+<figcaption class="figure-caption">(k) District of Gewerbeschule</figcaption>
+</figure>
+</div>
+</div>
+<div class="cell-output-display column-body page-columns page-full">
+<div id="fig-1402-12" class="quarto-figure quarto-figure-center column-body anchored page-columns page-full">
+<figure class="figure page-columns page-full">
+<p class="page-columns page-full"><img src="14_dem_house_files/figure-html/fig-1402-12.svg" class="column-body img-fluid figure-img" data-ref-parent="fig-1402"></p>
+<figcaption class="figure-caption">(l) District of Escher Wyss</figcaption>
+</figure>
+</div>
+</div>
+<div class="cell-output-display column-body page-columns page-full">
+<div id="fig-1402-13" class="quarto-figure quarto-figure-center column-body anchored page-columns page-full">
+<figure class="figure page-columns page-full">
+<p class="page-columns page-full"><img src="14_dem_house_files/figure-html/fig-1402-13.svg" class="column-body img-fluid figure-img" data-ref-parent="fig-1402"></p>
+<figcaption class="figure-caption">(m) District of Unterstrass</figcaption>
+</figure>
+</div>
+</div>
+<div class="cell-output-display column-body page-columns page-full">
+<div id="fig-1402-14" class="quarto-figure quarto-figure-center column-body anchored page-columns page-full">
+<figure class="figure page-columns page-full">
+<p class="page-columns page-full"><img src="14_dem_house_files/figure-html/fig-1402-14.svg" class="column-body img-fluid figure-img" data-ref-parent="fig-1402"></p>
+<figcaption class="figure-caption">(n) District of Oberstrass</figcaption>
+</figure>
+</div>
+</div>
+<div class="cell-output-display column-body page-columns page-full">
+<div id="fig-1402-15" class="quarto-figure quarto-figure-center column-body anchored page-columns page-full">
+<figure class="figure page-columns page-full">
+<p class="page-columns page-full"><img src="14_dem_house_files/figure-html/fig-1402-15.svg" class="column-body img-fluid figure-img" data-ref-parent="fig-1402"></p>
+<figcaption class="figure-caption">(o) District of Fluntern</figcaption>
+</figure>
+</div>
+</div>
+<div class="cell-output-display column-body page-columns page-full">
+<div id="fig-1402-16" class="quarto-figure quarto-figure-center column-body anchored page-columns page-full">
+<figure class="figure page-columns page-full">
+<p class="page-columns page-full"><img src="14_dem_house_files/figure-html/fig-1402-16.svg" class="column-body img-fluid figure-img" data-ref-parent="fig-1402"></p>
+<figcaption class="figure-caption">(p) District of Hottingen</figcaption>
+</figure>
+</div>
+</div>
+<div class="cell-output-display column-body page-columns page-full">
+<div id="fig-1402-17" class="quarto-figure quarto-figure-center column-body anchored page-columns page-full">
+<figure class="figure page-columns page-full">
+<p class="page-columns page-full"><img src="14_dem_house_files/figure-html/fig-1402-17.svg" class="column-body img-fluid figure-img" data-ref-parent="fig-1402"></p>
+<figcaption class="figure-caption">(q) District of Hirslanden</figcaption>
+</figure>
+</div>
+</div>
+<div class="cell-output-display column-body page-columns page-full">
+<div id="fig-1402-18" class="quarto-figure quarto-figure-center column-body anchored page-columns page-full">
+<figure class="figure page-columns page-full">
+<p class="page-columns page-full"><img src="14_dem_house_files/figure-html/fig-1402-18.svg" class="column-body img-fluid figure-img" data-ref-parent="fig-1402"></p>
+<figcaption class="figure-caption">(r) District of Witikon</figcaption>
+</figure>
+</div>
+</div>
+<div class="cell-output-display column-body page-columns page-full">
+<div id="fig-1402-19" class="quarto-figure quarto-figure-center column-body anchored page-columns page-full">
+<figure class="figure page-columns page-full">
+<p class="page-columns page-full"><img src="14_dem_house_files/figure-html/fig-1402-19.svg" class="column-body img-fluid figure-img" data-ref-parent="fig-1402"></p>
+<figcaption class="figure-caption">(s) District of Seefeld</figcaption>
+</figure>
+</div>
+</div>
+<div class="cell-output-display column-body page-columns page-full">
+<div id="fig-1402-20" class="quarto-figure quarto-figure-center column-body anchored page-columns page-full">
+<figure class="figure page-columns page-full">
+<p class="page-columns page-full"><img src="14_dem_house_files/figure-html/fig-1402-20.svg" class="column-body img-fluid figure-img" data-ref-parent="fig-1402"></p>
+<figcaption class="figure-caption">(t) District of Muehlebach</figcaption>
+</figure>
+</div>
+</div>
+<div class="cell-output-display column-body page-columns page-full">
+<div id="fig-1402-21" class="quarto-figure quarto-figure-center column-body anchored page-columns page-full">
+<figure class="figure page-columns page-full">
+<p class="page-columns page-full"><img src="14_dem_house_files/figure-html/fig-1402-21.svg" class="column-body img-fluid figure-img" data-ref-parent="fig-1402"></p>
+<figcaption class="figure-caption">(u) District of Weinegg</figcaption>
+</figure>
+</div>
+</div>
+<div class="cell-output-display column-body page-columns page-full">
+<div id="fig-1402-22" class="quarto-figure quarto-figure-center column-body anchored page-columns page-full">
+<figure class="figure page-columns page-full">
+<p class="page-columns page-full"><img src="14_dem_house_files/figure-html/fig-1402-22.svg" class="column-body img-fluid figure-img" data-ref-parent="fig-1402"></p>
+<figcaption class="figure-caption">(v) District of Albisrieden</figcaption>
+</figure>
+</div>
+</div>
+<div class="cell-output-display column-body page-columns page-full">
+<div id="fig-1402-23" class="quarto-figure quarto-figure-center column-body anchored page-columns page-full">
+<figure class="figure page-columns page-full">
+<p class="page-columns page-full"><img src="14_dem_house_files/figure-html/fig-1402-23.svg" class="column-body img-fluid figure-img" data-ref-parent="fig-1402"></p>
+<figcaption class="figure-caption">(w) District of Altstetten</figcaption>
+</figure>
+</div>
+</div>
+<div class="cell-output-display column-body page-columns page-full">
+<div id="fig-1402-24" class="quarto-figure quarto-figure-center column-body anchored page-columns page-full">
+<figure class="figure page-columns page-full">
+<p class="page-columns page-full"><img src="14_dem_house_files/figure-html/fig-1402-24.svg" class="column-body img-fluid figure-img" data-ref-parent="fig-1402"></p>
+<figcaption class="figure-caption">(x) District of Hoengg</figcaption>
+</figure>
+</div>
+</div>
+<div class="cell-output-display column-body page-columns page-full">
+<div id="fig-1402-25" class="quarto-figure quarto-figure-center column-body anchored page-columns page-full">
+<figure class="figure page-columns page-full">
+<p class="page-columns page-full"><img src="14_dem_house_files/figure-html/fig-1402-25.svg" class="column-body img-fluid figure-img" data-ref-parent="fig-1402"></p>
+<figcaption class="figure-caption">(y) District of Wipkingen</figcaption>
+</figure>
+</div>
+</div>
+<div class="cell-output-display column-body page-columns page-full">
+<div id="fig-1402-26" class="quarto-figure quarto-figure-center column-body anchored page-columns page-full">
+<figure class="figure page-columns page-full">
+<p class="page-columns page-full"><img src="14_dem_house_files/figure-html/fig-1402-26.svg" class="column-body img-fluid figure-img" data-ref-parent="fig-1402"></p>
+<figcaption class="figure-caption">(z) District of Affoltern</figcaption>
+</figure>
+</div>
+</div>
+<div class="cell-output-display column-body page-columns page-full">
+<div id="fig-1402-27" class="quarto-figure quarto-figure-center column-body anchored page-columns page-full">
+<figure class="figure page-columns page-full">
+<p class="page-columns page-full"><img src="14_dem_house_files/figure-html/fig-1402-27.svg" class="column-body img-fluid figure-img" data-ref-parent="fig-1402"></p>
+<figcaption class="figure-caption">({) District of Oerlikon</figcaption>
+</figure>
+</div>
+</div>
+<div class="cell-output-display column-body page-columns page-full">
+<div id="fig-1402-28" class="quarto-figure quarto-figure-center column-body anchored page-columns page-full">
+<figure class="figure page-columns page-full">
+<p class="page-columns page-full"><img src="14_dem_house_files/figure-html/fig-1402-28.svg" class="column-body img-fluid figure-img" data-ref-parent="fig-1402"></p>
+<figcaption class="figure-caption">(|) District of Seebach</figcaption>
+</figure>
+</div>
+</div>
+<div class="cell-output-display column-body page-columns page-full">
+<div id="fig-1402-29" class="quarto-figure quarto-figure-center column-body anchored page-columns page-full">
+<figure class="figure page-columns page-full">
+<p class="page-columns page-full"><img src="14_dem_house_files/figure-html/fig-1402-29.svg" class="column-body img-fluid figure-img" data-ref-parent="fig-1402"></p>
+<figcaption class="figure-caption">(}) District of Saatlen</figcaption>
+</figure>
+</div>
+</div>
+<div class="cell-output-display column-body page-columns page-full">
+<div id="fig-1402-30" class="quarto-figure quarto-figure-center column-body anchored page-columns page-full">
+<figure class="figure page-columns page-full">
+<p class="page-columns page-full"><img src="14_dem_house_files/figure-html/fig-1402-30.svg" class="column-body img-fluid figure-img" data-ref-parent="fig-1402"></p>
+<figcaption class="figure-caption">(~) District of Schwamendingen-Mitte</figcaption>
+</figure>
+</div>
+</div>
+<div class="cell-output-display column-body page-columns page-full">
+<div id="fig-1402-31" class="quarto-figure quarto-figure-center column-body anchored page-columns page-full">
+<figure class="figure page-columns page-full">
+<p class="page-columns page-full"><img src="14_dem_house_files/figure-html/fig-1402-31.svg" class="column-body img-fluid figure-img" data-ref-parent="fig-1402"></p>
+<figcaption class="figure-caption">() District of Hirzenbach</figcaption>
+</figure>
+</div>
+</div>
+<figcaption class="figure-caption">Figure&nbsp;14.3: migation correction</figcaption>
+</figure>
+</div>
+</section>
+<section id="smoothing-over-age" class="level2 page-columns page-full" data-number="14.3">
+<h2 data-number="14.3" class="anchored" data-anchor-id="smoothing-over-age"><span class="header-section-number">14.3</span> smoothing over age</h2>
+<div id="fig-1403" class="quarto-figure quarto-figure-center anchored page-columns page-full">
+<figure class="figure page-columns page-full">
+<div class="cell-output-display column-body page-columns page-full">
+<div id="fig-1403-1" class="quarto-figure quarto-figure-center column-body anchored page-columns page-full">
+<figure class="figure page-columns page-full">
+<p class="page-columns page-full"><img src="14_dem_house_files/figure-html/fig-1403-1.svg" class="column-body img-fluid figure-img" data-ref-parent="fig-1403"></p>
+<figcaption class="figure-caption">(a) District of Kreis 1</figcaption>
+</figure>
+</div>
+</div>
+<div class="cell-output-display column-body page-columns page-full">
+<div id="fig-1403-2" class="quarto-figure quarto-figure-center column-body anchored page-columns page-full">
+<figure class="figure page-columns page-full">
+<p class="page-columns page-full"><img src="14_dem_house_files/figure-html/fig-1403-2.svg" class="column-body img-fluid figure-img" data-ref-parent="fig-1403"></p>
+<figcaption class="figure-caption">(b) District of Wollishofen</figcaption>
+</figure>
+</div>
+</div>
+<div class="cell-output-display column-body page-columns page-full">
+<div id="fig-1403-3" class="quarto-figure quarto-figure-center column-body anchored page-columns page-full">
+<figure class="figure page-columns page-full">
+<p class="page-columns page-full"><img src="14_dem_house_files/figure-html/fig-1403-3.svg" class="column-body img-fluid figure-img" data-ref-parent="fig-1403"></p>
+<figcaption class="figure-caption">(c) District of Leimbach</figcaption>
+</figure>
+</div>
+</div>
+<div class="cell-output-display column-body page-columns page-full">
+<div id="fig-1403-4" class="quarto-figure quarto-figure-center column-body anchored page-columns page-full">
+<figure class="figure page-columns page-full">
+<p class="page-columns page-full"><img src="14_dem_house_files/figure-html/fig-1403-4.svg" class="column-body img-fluid figure-img" data-ref-parent="fig-1403"></p>
+<figcaption class="figure-caption">(d) District of Enge</figcaption>
+</figure>
+</div>
+</div>
+<div class="cell-output-display column-body page-columns page-full">
+<div id="fig-1403-5" class="quarto-figure quarto-figure-center column-body anchored page-columns page-full">
+<figure class="figure page-columns page-full">
+<p class="page-columns page-full"><img src="14_dem_house_files/figure-html/fig-1403-5.svg" class="column-body img-fluid figure-img" data-ref-parent="fig-1403"></p>
+<figcaption class="figure-caption">(e) District of Alt-Wiedikon</figcaption>
+</figure>
+</div>
+</div>
+<div class="cell-output-display column-body page-columns page-full">
+<div id="fig-1403-6" class="quarto-figure quarto-figure-center column-body anchored page-columns page-full">
+<figure class="figure page-columns page-full">
+<p class="page-columns page-full"><img src="14_dem_house_files/figure-html/fig-1403-6.svg" class="column-body img-fluid figure-img" data-ref-parent="fig-1403"></p>
+<figcaption class="figure-caption">(f) District of Friesenberg</figcaption>
+</figure>
+</div>
+</div>
+<div class="cell-output-display column-body page-columns page-full">
+<div id="fig-1403-7" class="quarto-figure quarto-figure-center column-body anchored page-columns page-full">
+<figure class="figure page-columns page-full">
+<p class="page-columns page-full"><img src="14_dem_house_files/figure-html/fig-1403-7.svg" class="column-body img-fluid figure-img" data-ref-parent="fig-1403"></p>
+<figcaption class="figure-caption">(g) District of Sihlfeld</figcaption>
+</figure>
+</div>
+</div>
+<div class="cell-output-display column-body page-columns page-full">
+<div id="fig-1403-8" class="quarto-figure quarto-figure-center column-body anchored page-columns page-full">
+<figure class="figure page-columns page-full">
+<p class="page-columns page-full"><img src="14_dem_house_files/figure-html/fig-1403-8.svg" class="column-body img-fluid figure-img" data-ref-parent="fig-1403"></p>
+<figcaption class="figure-caption">(h) District of Werd</figcaption>
+</figure>
+</div>
+</div>
+<div class="cell-output-display column-body page-columns page-full">
+<div id="fig-1403-9" class="quarto-figure quarto-figure-center column-body anchored page-columns page-full">
+<figure class="figure page-columns page-full">
+<p class="page-columns page-full"><img src="14_dem_house_files/figure-html/fig-1403-9.svg" class="column-body img-fluid figure-img" data-ref-parent="fig-1403"></p>
+<figcaption class="figure-caption">(i) District of Langstrasse</figcaption>
+</figure>
+</div>
+</div>
+<div class="cell-output-display column-body page-columns page-full">
+<div id="fig-1403-10" class="quarto-figure quarto-figure-center column-body anchored page-columns page-full">
+<figure class="figure page-columns page-full">
+<p class="page-columns page-full"><img src="14_dem_house_files/figure-html/fig-1403-10.svg" class="column-body img-fluid figure-img" data-ref-parent="fig-1403"></p>
+<figcaption class="figure-caption">(j) District of Hard</figcaption>
+</figure>
+</div>
+</div>
+<div class="cell-output-display column-body page-columns page-full">
+<div id="fig-1403-11" class="quarto-figure quarto-figure-center column-body anchored page-columns page-full">
+<figure class="figure page-columns page-full">
+<p class="page-columns page-full"><img src="14_dem_house_files/figure-html/fig-1403-11.svg" class="column-body img-fluid figure-img" data-ref-parent="fig-1403"></p>
+<figcaption class="figure-caption">(k) District of Gewerbeschule</figcaption>
+</figure>
+</div>
+</div>
+<div class="cell-output-display column-body page-columns page-full">
+<div id="fig-1403-12" class="quarto-figure quarto-figure-center column-body anchored page-columns page-full">
+<figure class="figure page-columns page-full">
+<p class="page-columns page-full"><img src="14_dem_house_files/figure-html/fig-1403-12.svg" class="column-body img-fluid figure-img" data-ref-parent="fig-1403"></p>
+<figcaption class="figure-caption">(l) District of Escher Wyss</figcaption>
+</figure>
+</div>
+</div>
+<div class="cell-output-display column-body page-columns page-full">
+<div id="fig-1403-13" class="quarto-figure quarto-figure-center column-body anchored page-columns page-full">
+<figure class="figure page-columns page-full">
+<p class="page-columns page-full"><img src="14_dem_house_files/figure-html/fig-1403-13.svg" class="column-body img-fluid figure-img" data-ref-parent="fig-1403"></p>
+<figcaption class="figure-caption">(m) District of Unterstrass</figcaption>
+</figure>
+</div>
+</div>
+<div class="cell-output-display column-body page-columns page-full">
+<div id="fig-1403-14" class="quarto-figure quarto-figure-center column-body anchored page-columns page-full">
+<figure class="figure page-columns page-full">
+<p class="page-columns page-full"><img src="14_dem_house_files/figure-html/fig-1403-14.svg" class="column-body img-fluid figure-img" data-ref-parent="fig-1403"></p>
+<figcaption class="figure-caption">(n) District of Oberstrass</figcaption>
+</figure>
+</div>
+</div>
+<div class="cell-output-display column-body page-columns page-full">
+<div id="fig-1403-15" class="quarto-figure quarto-figure-center column-body anchored page-columns page-full">
+<figure class="figure page-columns page-full">
+<p class="page-columns page-full"><img src="14_dem_house_files/figure-html/fig-1403-15.svg" class="column-body img-fluid figure-img" data-ref-parent="fig-1403"></p>
+<figcaption class="figure-caption">(o) District of Fluntern</figcaption>
+</figure>
+</div>
+</div>
+<div class="cell-output-display column-body page-columns page-full">
+<div id="fig-1403-16" class="quarto-figure quarto-figure-center column-body anchored page-columns page-full">
+<figure class="figure page-columns page-full">
+<p class="page-columns page-full"><img src="14_dem_house_files/figure-html/fig-1403-16.svg" class="column-body img-fluid figure-img" data-ref-parent="fig-1403"></p>
+<figcaption class="figure-caption">(p) District of Hottingen</figcaption>
+</figure>
+</div>
+</div>
+<div class="cell-output-display column-body page-columns page-full">
+<div id="fig-1403-17" class="quarto-figure quarto-figure-center column-body anchored page-columns page-full">
+<figure class="figure page-columns page-full">
+<p class="page-columns page-full"><img src="14_dem_house_files/figure-html/fig-1403-17.svg" class="column-body img-fluid figure-img" data-ref-parent="fig-1403"></p>
+<figcaption class="figure-caption">(q) District of Hirslanden</figcaption>
+</figure>
+</div>
+</div>
+<div class="cell-output-display column-body page-columns page-full">
+<div id="fig-1403-18" class="quarto-figure quarto-figure-center column-body anchored page-columns page-full">
+<figure class="figure page-columns page-full">
+<p class="page-columns page-full"><img src="14_dem_house_files/figure-html/fig-1403-18.svg" class="column-body img-fluid figure-img" data-ref-parent="fig-1403"></p>
+<figcaption class="figure-caption">(r) District of Witikon</figcaption>
+</figure>
+</div>
+</div>
+<div class="cell-output-display column-body page-columns page-full">
+<div id="fig-1403-19" class="quarto-figure quarto-figure-center column-body anchored page-columns page-full">
+<figure class="figure page-columns page-full">
+<p class="page-columns page-full"><img src="14_dem_house_files/figure-html/fig-1403-19.svg" class="column-body img-fluid figure-img" data-ref-parent="fig-1403"></p>
+<figcaption class="figure-caption">(s) District of Seefeld</figcaption>
+</figure>
+</div>
+</div>
+<div class="cell-output-display column-body page-columns page-full">
+<div id="fig-1403-20" class="quarto-figure quarto-figure-center column-body anchored page-columns page-full">
+<figure class="figure page-columns page-full">
+<p class="page-columns page-full"><img src="14_dem_house_files/figure-html/fig-1403-20.svg" class="column-body img-fluid figure-img" data-ref-parent="fig-1403"></p>
+<figcaption class="figure-caption">(t) District of Muehlebach</figcaption>
+</figure>
+</div>
+</div>
+<div class="cell-output-display column-body page-columns page-full">
+<div id="fig-1403-21" class="quarto-figure quarto-figure-center column-body anchored page-columns page-full">
+<figure class="figure page-columns page-full">
+<p class="page-columns page-full"><img src="14_dem_house_files/figure-html/fig-1403-21.svg" class="column-body img-fluid figure-img" data-ref-parent="fig-1403"></p>
+<figcaption class="figure-caption">(u) District of Weinegg</figcaption>
+</figure>
+</div>
+</div>
+<div class="cell-output-display column-body page-columns page-full">
+<div id="fig-1403-22" class="quarto-figure quarto-figure-center column-body anchored page-columns page-full">
+<figure class="figure page-columns page-full">
+<p class="page-columns page-full"><img src="14_dem_house_files/figure-html/fig-1403-22.svg" class="column-body img-fluid figure-img" data-ref-parent="fig-1403"></p>
+<figcaption class="figure-caption">(v) District of Albisrieden</figcaption>
+</figure>
+</div>
+</div>
+<div class="cell-output-display column-body page-columns page-full">
+<div id="fig-1403-23" class="quarto-figure quarto-figure-center column-body anchored page-columns page-full">
+<figure class="figure page-columns page-full">
+<p class="page-columns page-full"><img src="14_dem_house_files/figure-html/fig-1403-23.svg" class="column-body img-fluid figure-img" data-ref-parent="fig-1403"></p>
+<figcaption class="figure-caption">(w) District of Altstetten</figcaption>
+</figure>
+</div>
+</div>
+<div class="cell-output-display column-body page-columns page-full">
+<div id="fig-1403-24" class="quarto-figure quarto-figure-center column-body anchored page-columns page-full">
+<figure class="figure page-columns page-full">
+<p class="page-columns page-full"><img src="14_dem_house_files/figure-html/fig-1403-24.svg" class="column-body img-fluid figure-img" data-ref-parent="fig-1403"></p>
+<figcaption class="figure-caption">(x) District of Hoengg</figcaption>
+</figure>
+</div>
+</div>
+<div class="cell-output-display column-body page-columns page-full">
+<div id="fig-1403-25" class="quarto-figure quarto-figure-center column-body anchored page-columns page-full">
+<figure class="figure page-columns page-full">
+<p class="page-columns page-full"><img src="14_dem_house_files/figure-html/fig-1403-25.svg" class="column-body img-fluid figure-img" data-ref-parent="fig-1403"></p>
+<figcaption class="figure-caption">(y) District of Wipkingen</figcaption>
+</figure>
+</div>
+</div>
+<div class="cell-output-display column-body page-columns page-full">
+<div id="fig-1403-26" class="quarto-figure quarto-figure-center column-body anchored page-columns page-full">
+<figure class="figure page-columns page-full">
+<p class="page-columns page-full"><img src="14_dem_house_files/figure-html/fig-1403-26.svg" class="column-body img-fluid figure-img" data-ref-parent="fig-1403"></p>
+<figcaption class="figure-caption">(z) District of Affoltern</figcaption>
+</figure>
+</div>
+</div>
+<div class="cell-output-display column-body page-columns page-full">
+<div id="fig-1403-27" class="quarto-figure quarto-figure-center column-body anchored page-columns page-full">
+<figure class="figure page-columns page-full">
+<p class="page-columns page-full"><img src="14_dem_house_files/figure-html/fig-1403-27.svg" class="column-body img-fluid figure-img" data-ref-parent="fig-1403"></p>
+<figcaption class="figure-caption">({) District of Oerlikon</figcaption>
+</figure>
+</div>
+</div>
+<div class="cell-output-display column-body page-columns page-full">
+<div id="fig-1403-28" class="quarto-figure quarto-figure-center column-body anchored page-columns page-full">
+<figure class="figure page-columns page-full">
+<p class="page-columns page-full"><img src="14_dem_house_files/figure-html/fig-1403-28.svg" class="column-body img-fluid figure-img" data-ref-parent="fig-1403"></p>
+<figcaption class="figure-caption">(|) District of Seebach</figcaption>
+</figure>
+</div>
+</div>
+<div class="cell-output-display column-body page-columns page-full">
+<div id="fig-1403-29" class="quarto-figure quarto-figure-center column-body anchored page-columns page-full">
+<figure class="figure page-columns page-full">
+<p class="page-columns page-full"><img src="14_dem_house_files/figure-html/fig-1403-29.svg" class="column-body img-fluid figure-img" data-ref-parent="fig-1403"></p>
+<figcaption class="figure-caption">(}) District of Saatlen</figcaption>
+</figure>
+</div>
+</div>
+<div class="cell-output-display column-body page-columns page-full">
+<div id="fig-1403-30" class="quarto-figure quarto-figure-center column-body anchored page-columns page-full">
+<figure class="figure page-columns page-full">
+<p class="page-columns page-full"><img src="14_dem_house_files/figure-html/fig-1403-30.svg" class="column-body img-fluid figure-img" data-ref-parent="fig-1403"></p>
+<figcaption class="figure-caption">(~) District of Schwamendingen-Mitte</figcaption>
+</figure>
+</div>
+</div>
+<div class="cell-output-display column-body page-columns page-full">
+<div id="fig-1403-31" class="quarto-figure quarto-figure-center column-body anchored page-columns page-full">
+<figure class="figure page-columns page-full">
+<p class="page-columns page-full"><img src="14_dem_house_files/figure-html/fig-1403-31.svg" class="column-body img-fluid figure-img" data-ref-parent="fig-1403"></p>
+<figcaption class="figure-caption">() District of Hirzenbach</figcaption>
+</figure>
+</div>
+</div>
+<figcaption class="figure-caption">Figure&nbsp;14.4: population by age, smoothed</figcaption>
+</figure>
+</div>
+</section>
+<section id="wollishofen-population-and-migration" class="level2 page-columns page-full" data-number="14.4">
+<h2 data-number="14.4" class="anchored" data-anchor-id="wollishofen-population-and-migration"><span class="header-section-number">14.4</span> Wollishofen, population and migration</h2>
+<section id="by-year-age-and-origin" class="level3 page-columns page-full" data-number="14.4.1">
+<h3 data-number="14.4.1" class="anchored" data-anchor-id="by-year-age-and-origin"><span class="header-section-number">14.4.1</span> by year, age and origin</h3>
+<p>why Wollishofen? need to check age patterns of this district why named d21? 21 is the number for district Wollishofen</p>
+<div id="fig-1404" class="quarto-figure quarto-figure-center anchored page-columns page-full">
+<figure class="figure page-columns page-full">
+<div class="cell-output-display column-body page-columns page-full">
+<div id="fig-1404-1" class="quarto-figure quarto-figure-center column-body anchored page-columns page-full">
+<figure class="figure page-columns page-full">
+<p class="page-columns page-full"><img src="14_dem_house_files/figure-html/fig-1404-1.svg" class="column-body img-fluid figure-img" data-ref-parent="fig-1404"></p>
+<figcaption class="figure-caption">(a) Year 2022</figcaption>
+</figure>
+</div>
+</div>
+<div class="cell-output-display column-body page-columns page-full">
+<div id="fig-1404-2" class="quarto-figure quarto-figure-center column-body anchored page-columns page-full">
+<figure class="figure page-columns page-full">
+<p class="page-columns page-full"><img src="14_dem_house_files/figure-html/fig-1404-2.svg" class="column-body img-fluid figure-img" data-ref-parent="fig-1404"></p>
+<figcaption class="figure-caption">(b) Year 2023</figcaption>
+</figure>
+</div>
+</div>
+<div class="cell-output-display column-body page-columns page-full">
+<div id="fig-1404-3" class="quarto-figure quarto-figure-center column-body anchored page-columns page-full">
+<figure class="figure page-columns page-full">
+<p class="page-columns page-full"><img src="14_dem_house_files/figure-html/fig-1404-3.svg" class="column-body img-fluid figure-img" data-ref-parent="fig-1404"></p>
+<figcaption class="figure-caption">(c) Year 2024</figcaption>
+</figure>
+</div>
+</div>
+<div class="cell-output-display column-body page-columns page-full">
+<div id="fig-1404-4" class="quarto-figure quarto-figure-center column-body anchored page-columns page-full">
+<figure class="figure page-columns page-full">
+<p class="page-columns page-full"><img src="14_dem_house_files/figure-html/fig-1404-4.svg" class="column-body img-fluid figure-img" data-ref-parent="fig-1404"></p>
+<figcaption class="figure-caption">(d) Year 2025</figcaption>
+</figure>
+</div>
+</div>
+<div class="cell-output-display column-body page-columns page-full">
+<div id="fig-1404-5" class="quarto-figure quarto-figure-center column-body anchored page-columns page-full">
+<figure class="figure page-columns page-full">
+<p class="page-columns page-full"><img src="14_dem_house_files/figure-html/fig-1404-5.svg" class="column-body img-fluid figure-img" data-ref-parent="fig-1404"></p>
+<figcaption class="figure-caption">(e) Year 2026</figcaption>
+</figure>
+</div>
+</div>
+<div class="cell-output-display column-body page-columns page-full">
+<div id="fig-1404-6" class="quarto-figure quarto-figure-center column-body anchored page-columns page-full">
+<figure class="figure page-columns page-full">
+<p class="page-columns page-full"><img src="14_dem_house_files/figure-html/fig-1404-6.svg" class="column-body img-fluid figure-img" data-ref-parent="fig-1404"></p>
+<figcaption class="figure-caption">(f) Year 2027</figcaption>
+</figure>
+</div>
+</div>
+<div class="cell-output-display column-body page-columns page-full">
+<div id="fig-1404-7" class="quarto-figure quarto-figure-center column-body anchored page-columns page-full">
+<figure class="figure page-columns page-full">
+<p class="page-columns page-full"><img src="14_dem_house_files/figure-html/fig-1404-7.svg" class="column-body img-fluid figure-img" data-ref-parent="fig-1404"></p>
+<figcaption class="figure-caption">(g) Year 2028</figcaption>
+</figure>
+</div>
+</div>
+<div class="cell-output-display column-body page-columns page-full">
+<div id="fig-1404-8" class="quarto-figure quarto-figure-center column-body anchored page-columns page-full">
+<figure class="figure page-columns page-full">
+<p class="page-columns page-full"><img src="14_dem_house_files/figure-html/fig-1404-8.svg" class="column-body img-fluid figure-img" data-ref-parent="fig-1404"></p>
+<figcaption class="figure-caption">(h) Year 2029</figcaption>
+</figure>
+</div>
+</div>
+<div class="cell-output-display column-body page-columns page-full">
+<div id="fig-1404-9" class="quarto-figure quarto-figure-center column-body anchored page-columns page-full">
+<figure class="figure page-columns page-full">
+<p class="page-columns page-full"><img src="14_dem_house_files/figure-html/fig-1404-9.svg" class="column-body img-fluid figure-img" data-ref-parent="fig-1404"></p>
+<figcaption class="figure-caption">(i) Year 2030</figcaption>
+</figure>
+</div>
+</div>
+<div class="cell-output-display column-body page-columns page-full">
+<div id="fig-1404-10" class="quarto-figure quarto-figure-center column-body anchored page-columns page-full">
+<figure class="figure page-columns page-full">
+<p class="page-columns page-full"><img src="14_dem_house_files/figure-html/fig-1404-10.svg" class="column-body img-fluid figure-img" data-ref-parent="fig-1404"></p>
+<figcaption class="figure-caption">(j) Year 2031</figcaption>
+</figure>
+</div>
+</div>
+<div class="cell-output-display column-body page-columns page-full">
+<div id="fig-1404-11" class="quarto-figure quarto-figure-center column-body anchored page-columns page-full">
+<figure class="figure page-columns page-full">
+<p class="page-columns page-full"><img src="14_dem_house_files/figure-html/fig-1404-11.svg" class="column-body img-fluid figure-img" data-ref-parent="fig-1404"></p>
+<figcaption class="figure-caption">(k) Year 2032</figcaption>
+</figure>
+</div>
+</div>
+<div class="cell-output-display column-body page-columns page-full">
+<div id="fig-1404-12" class="quarto-figure quarto-figure-center column-body anchored page-columns page-full">
+<figure class="figure page-columns page-full">
+<p class="page-columns page-full"><img src="14_dem_house_files/figure-html/fig-1404-12.svg" class="column-body img-fluid figure-img" data-ref-parent="fig-1404"></p>
+<figcaption class="figure-caption">(l) Year 2033</figcaption>
+</figure>
+</div>
+</div>
+<div class="cell-output-display column-body page-columns page-full">
+<div id="fig-1404-13" class="quarto-figure quarto-figure-center column-body anchored page-columns page-full">
+<figure class="figure page-columns page-full">
+<p class="page-columns page-full"><img src="14_dem_house_files/figure-html/fig-1404-13.svg" class="column-body img-fluid figure-img" data-ref-parent="fig-1404"></p>
+<figcaption class="figure-caption">(m) Year 2034</figcaption>
+</figure>
+</div>
+</div>
+<div class="cell-output-display column-body page-columns page-full">
+<div id="fig-1404-14" class="quarto-figure quarto-figure-center column-body anchored page-columns page-full">
+<figure class="figure page-columns page-full">
+<p class="page-columns page-full"><img src="14_dem_house_files/figure-html/fig-1404-14.svg" class="column-body img-fluid figure-img" data-ref-parent="fig-1404"></p>
+<figcaption class="figure-caption">(n) Year 2035</figcaption>
+</figure>
+</div>
+</div>
+<div class="cell-output-display column-body page-columns page-full">
+<div id="fig-1404-15" class="quarto-figure quarto-figure-center column-body anchored page-columns page-full">
+<figure class="figure page-columns page-full">
+<p class="page-columns page-full"><img src="14_dem_house_files/figure-html/fig-1404-15.svg" class="column-body img-fluid figure-img" data-ref-parent="fig-1404"></p>
+<figcaption class="figure-caption">(o) Year 2036</figcaption>
+</figure>
+</div>
+</div>
+<div class="cell-output-display column-body page-columns page-full">
+<div id="fig-1404-16" class="quarto-figure quarto-figure-center column-body anchored page-columns page-full">
+<figure class="figure page-columns page-full">
+<p class="page-columns page-full"><img src="14_dem_house_files/figure-html/fig-1404-16.svg" class="column-body img-fluid figure-img" data-ref-parent="fig-1404"></p>
+<figcaption class="figure-caption">(p) Year 2037</figcaption>
+</figure>
+</div>
+</div>
+<div class="cell-output-display column-body page-columns page-full">
+<div id="fig-1404-17" class="quarto-figure quarto-figure-center column-body anchored page-columns page-full">
+<figure class="figure page-columns page-full">
+<p class="page-columns page-full"><img src="14_dem_house_files/figure-html/fig-1404-17.svg" class="column-body img-fluid figure-img" data-ref-parent="fig-1404"></p>
+<figcaption class="figure-caption">(q) Year 2038</figcaption>
+</figure>
+</div>
+</div>
+<div class="cell-output-display column-body page-columns page-full">
+<div id="fig-1404-18" class="quarto-figure quarto-figure-center column-body anchored page-columns page-full">
+<figure class="figure page-columns page-full">
+<p class="page-columns page-full"><img src="14_dem_house_files/figure-html/fig-1404-18.svg" class="column-body img-fluid figure-img" data-ref-parent="fig-1404"></p>
+<figcaption class="figure-caption">(r) Year 2039</figcaption>
+</figure>
+</div>
+</div>
+<div class="cell-output-display column-body page-columns page-full">
+<div id="fig-1404-19" class="quarto-figure quarto-figure-center column-body anchored page-columns page-full">
+<figure class="figure page-columns page-full">
+<p class="page-columns page-full"><img src="14_dem_house_files/figure-html/fig-1404-19.svg" class="column-body img-fluid figure-img" data-ref-parent="fig-1404"></p>
+<figcaption class="figure-caption">(s) Year 2040</figcaption>
+</figure>
+</div>
+</div>
+<div class="cell-output-display column-body page-columns page-full">
+<div id="fig-1404-20" class="quarto-figure quarto-figure-center column-body anchored page-columns page-full">
+<figure class="figure page-columns page-full">
+<p class="page-columns page-full"><img src="14_dem_house_files/figure-html/fig-1404-20.svg" class="column-body img-fluid figure-img" data-ref-parent="fig-1404"></p>
+<figcaption class="figure-caption">(t) Year 2041</figcaption>
+</figure>
+</div>
+</div>
+<div class="cell-output-display column-body page-columns page-full">
+<div id="fig-1404-21" class="quarto-figure quarto-figure-center column-body anchored page-columns page-full">
+<figure class="figure page-columns page-full">
+<p class="page-columns page-full"><img src="14_dem_house_files/figure-html/fig-1404-21.svg" class="column-body img-fluid figure-img" data-ref-parent="fig-1404"></p>
+<figcaption class="figure-caption">(u) Year 2042</figcaption>
+</figure>
+</div>
+</div>
+<div class="cell-output-display column-body page-columns page-full">
+<div id="fig-1404-22" class="quarto-figure quarto-figure-center column-body anchored page-columns page-full">
+<figure class="figure page-columns page-full">
+<p class="page-columns page-full"><img src="14_dem_house_files/figure-html/fig-1404-22.svg" class="column-body img-fluid figure-img" data-ref-parent="fig-1404"></p>
+<figcaption class="figure-caption">(v) Year 2043</figcaption>
+</figure>
+</div>
+</div>
+<div class="cell-output-display column-body page-columns page-full">
+<div id="fig-1404-23" class="quarto-figure quarto-figure-center column-body anchored page-columns page-full">
+<figure class="figure page-columns page-full">
+<p class="page-columns page-full"><img src="14_dem_house_files/figure-html/fig-1404-23.svg" class="column-body img-fluid figure-img" data-ref-parent="fig-1404"></p>
+<figcaption class="figure-caption">(w) Year 2044</figcaption>
+</figure>
+</div>
+</div>
+<div class="cell-output-display column-body page-columns page-full">
+<div id="fig-1404-24" class="quarto-figure quarto-figure-center column-body anchored page-columns page-full">
+<figure class="figure page-columns page-full">
+<p class="page-columns page-full"><img src="14_dem_house_files/figure-html/fig-1404-24.svg" class="column-body img-fluid figure-img" data-ref-parent="fig-1404"></p>
+<figcaption class="figure-caption">(x) Year 2045</figcaption>
+</figure>
+</div>
+</div>
+<div class="cell-output-display column-body page-columns page-full">
+<div id="fig-1404-25" class="quarto-figure quarto-figure-center column-body anchored page-columns page-full">
+<figure class="figure page-columns page-full">
+<p class="page-columns page-full"><img src="14_dem_house_files/figure-html/fig-1404-25.svg" class="column-body img-fluid figure-img" data-ref-parent="fig-1404"></p>
+<figcaption class="figure-caption">(y) Year 2046</figcaption>
+</figure>
+</div>
+</div>
+<div class="cell-output-display column-body page-columns page-full">
+<div id="fig-1404-26" class="quarto-figure quarto-figure-center column-body anchored page-columns page-full">
+<figure class="figure page-columns page-full">
+<p class="page-columns page-full"><img src="14_dem_house_files/figure-html/fig-1404-26.svg" class="column-body img-fluid figure-img" data-ref-parent="fig-1404"></p>
+<figcaption class="figure-caption">(z) Year 2047</figcaption>
+</figure>
+</div>
+</div>
+<div class="cell-output-display column-body page-columns page-full">
+<div id="fig-1404-27" class="quarto-figure quarto-figure-center column-body anchored page-columns page-full">
+<figure class="figure page-columns page-full">
+<p class="page-columns page-full"><img src="14_dem_house_files/figure-html/fig-1404-27.svg" class="column-body img-fluid figure-img" data-ref-parent="fig-1404"></p>
+<figcaption class="figure-caption">({) Year 2048</figcaption>
+</figure>
+</div>
+</div>
+<div class="cell-output-display column-body page-columns page-full">
+<div id="fig-1404-28" class="quarto-figure quarto-figure-center column-body anchored page-columns page-full">
+<figure class="figure page-columns page-full">
+<p class="page-columns page-full"><img src="14_dem_house_files/figure-html/fig-1404-28.svg" class="column-body img-fluid figure-img" data-ref-parent="fig-1404"></p>
+<figcaption class="figure-caption">(|) Year 2049</figcaption>
+</figure>
+</div>
+</div>
+<div class="cell-output-display column-body page-columns page-full">
+<div id="fig-1404-29" class="quarto-figure quarto-figure-center column-body anchored page-columns page-full">
+<figure class="figure page-columns page-full">
+<p class="page-columns page-full"><img src="14_dem_house_files/figure-html/fig-1404-29.svg" class="column-body img-fluid figure-img" data-ref-parent="fig-1404"></p>
+<figcaption class="figure-caption">(}) Year 2050</figcaption>
+</figure>
+</div>
+</div>
+<figcaption class="figure-caption">Figure&nbsp;14.5: Wollishofen population and migration, by year, age, origin</figcaption>
+</figure>
+</div>
+</section>
+<section id="by-year-and-age" class="level3 page-columns page-full" data-number="14.4.2">
+<h3 data-number="14.4.2" class="anchored" data-anchor-id="by-year-and-age"><span class="header-section-number">14.4.2</span> by year and age</h3>
+<div id="fig-1405" class="quarto-figure quarto-figure-center anchored page-columns page-full">
+<figure class="figure page-columns page-full">
+<div class="cell-output-display column-body page-columns page-full">
+<div id="fig-1405-1" class="quarto-figure quarto-figure-center column-body anchored page-columns page-full">
+<figure class="figure page-columns page-full">
+<p class="page-columns page-full"><img src="14_dem_house_files/figure-html/fig-1405-1.svg" class="column-body img-fluid figure-img" data-ref-parent="fig-1405"></p>
+<figcaption class="figure-caption">(a) Year 2022</figcaption>
+</figure>
+</div>
+</div>
+<div class="cell-output-display column-body page-columns page-full">
+<div id="fig-1405-2" class="quarto-figure quarto-figure-center column-body anchored page-columns page-full">
+<figure class="figure page-columns page-full">
+<p class="page-columns page-full"><img src="14_dem_house_files/figure-html/fig-1405-2.svg" class="column-body img-fluid figure-img" data-ref-parent="fig-1405"></p>
+<figcaption class="figure-caption">(b) Year 2023</figcaption>
+</figure>
+</div>
+</div>
+<div class="cell-output-display column-body page-columns page-full">
+<div id="fig-1405-3" class="quarto-figure quarto-figure-center column-body anchored page-columns page-full">
+<figure class="figure page-columns page-full">
+<p class="page-columns page-full"><img src="14_dem_house_files/figure-html/fig-1405-3.svg" class="column-body img-fluid figure-img" data-ref-parent="fig-1405"></p>
+<figcaption class="figure-caption">(c) Year 2024</figcaption>
+</figure>
+</div>
+</div>
+<div class="cell-output-display column-body page-columns page-full">
+<div id="fig-1405-4" class="quarto-figure quarto-figure-center column-body anchored page-columns page-full">
+<figure class="figure page-columns page-full">
+<p class="page-columns page-full"><img src="14_dem_house_files/figure-html/fig-1405-4.svg" class="column-body img-fluid figure-img" data-ref-parent="fig-1405"></p>
+<figcaption class="figure-caption">(d) Year 2025</figcaption>
+</figure>
+</div>
+</div>
+<div class="cell-output-display column-body page-columns page-full">
+<div id="fig-1405-5" class="quarto-figure quarto-figure-center column-body anchored page-columns page-full">
+<figure class="figure page-columns page-full">
+<p class="page-columns page-full"><img src="14_dem_house_files/figure-html/fig-1405-5.svg" class="column-body img-fluid figure-img" data-ref-parent="fig-1405"></p>
+<figcaption class="figure-caption">(e) Year 2026</figcaption>
+</figure>
+</div>
+</div>
+<div class="cell-output-display column-body page-columns page-full">
+<div id="fig-1405-6" class="quarto-figure quarto-figure-center column-body anchored page-columns page-full">
+<figure class="figure page-columns page-full">
+<p class="page-columns page-full"><img src="14_dem_house_files/figure-html/fig-1405-6.svg" class="column-body img-fluid figure-img" data-ref-parent="fig-1405"></p>
+<figcaption class="figure-caption">(f) Year 2027</figcaption>
+</figure>
+</div>
+</div>
+<div class="cell-output-display column-body page-columns page-full">
+<div id="fig-1405-7" class="quarto-figure quarto-figure-center column-body anchored page-columns page-full">
+<figure class="figure page-columns page-full">
+<p class="page-columns page-full"><img src="14_dem_house_files/figure-html/fig-1405-7.svg" class="column-body img-fluid figure-img" data-ref-parent="fig-1405"></p>
+<figcaption class="figure-caption">(g) Year 2028</figcaption>
+</figure>
+</div>
+</div>
+<div class="cell-output-display column-body page-columns page-full">
+<div id="fig-1405-8" class="quarto-figure quarto-figure-center column-body anchored page-columns page-full">
+<figure class="figure page-columns page-full">
+<p class="page-columns page-full"><img src="14_dem_house_files/figure-html/fig-1405-8.svg" class="column-body img-fluid figure-img" data-ref-parent="fig-1405"></p>
+<figcaption class="figure-caption">(h) Year 2029</figcaption>
+</figure>
+</div>
+</div>
+<div class="cell-output-display column-body page-columns page-full">
+<div id="fig-1405-9" class="quarto-figure quarto-figure-center column-body anchored page-columns page-full">
+<figure class="figure page-columns page-full">
+<p class="page-columns page-full"><img src="14_dem_house_files/figure-html/fig-1405-9.svg" class="column-body img-fluid figure-img" data-ref-parent="fig-1405"></p>
+<figcaption class="figure-caption">(i) Year 2030</figcaption>
+</figure>
+</div>
+</div>
+<div class="cell-output-display column-body page-columns page-full">
+<div id="fig-1405-10" class="quarto-figure quarto-figure-center column-body anchored page-columns page-full">
+<figure class="figure page-columns page-full">
+<p class="page-columns page-full"><img src="14_dem_house_files/figure-html/fig-1405-10.svg" class="column-body img-fluid figure-img" data-ref-parent="fig-1405"></p>
+<figcaption class="figure-caption">(j) Year 2031</figcaption>
+</figure>
+</div>
+</div>
+<div class="cell-output-display column-body page-columns page-full">
+<div id="fig-1405-11" class="quarto-figure quarto-figure-center column-body anchored page-columns page-full">
+<figure class="figure page-columns page-full">
+<p class="page-columns page-full"><img src="14_dem_house_files/figure-html/fig-1405-11.svg" class="column-body img-fluid figure-img" data-ref-parent="fig-1405"></p>
+<figcaption class="figure-caption">(k) Year 2032</figcaption>
+</figure>
+</div>
+</div>
+<div class="cell-output-display column-body page-columns page-full">
+<div id="fig-1405-12" class="quarto-figure quarto-figure-center column-body anchored page-columns page-full">
+<figure class="figure page-columns page-full">
+<p class="page-columns page-full"><img src="14_dem_house_files/figure-html/fig-1405-12.svg" class="column-body img-fluid figure-img" data-ref-parent="fig-1405"></p>
+<figcaption class="figure-caption">(l) Year 2033</figcaption>
+</figure>
+</div>
+</div>
+<div class="cell-output-display column-body page-columns page-full">
+<div id="fig-1405-13" class="quarto-figure quarto-figure-center column-body anchored page-columns page-full">
+<figure class="figure page-columns page-full">
+<p class="page-columns page-full"><img src="14_dem_house_files/figure-html/fig-1405-13.svg" class="column-body img-fluid figure-img" data-ref-parent="fig-1405"></p>
+<figcaption class="figure-caption">(m) Year 2034</figcaption>
+</figure>
+</div>
+</div>
+<div class="cell-output-display column-body page-columns page-full">
+<div id="fig-1405-14" class="quarto-figure quarto-figure-center column-body anchored page-columns page-full">
+<figure class="figure page-columns page-full">
+<p class="page-columns page-full"><img src="14_dem_house_files/figure-html/fig-1405-14.svg" class="column-body img-fluid figure-img" data-ref-parent="fig-1405"></p>
+<figcaption class="figure-caption">(n) Year 2035</figcaption>
+</figure>
+</div>
+</div>
+<div class="cell-output-display column-body page-columns page-full">
+<div id="fig-1405-15" class="quarto-figure quarto-figure-center column-body anchored page-columns page-full">
+<figure class="figure page-columns page-full">
+<p class="page-columns page-full"><img src="14_dem_house_files/figure-html/fig-1405-15.svg" class="column-body img-fluid figure-img" data-ref-parent="fig-1405"></p>
+<figcaption class="figure-caption">(o) Year 2036</figcaption>
+</figure>
+</div>
+</div>
+<div class="cell-output-display column-body page-columns page-full">
+<div id="fig-1405-16" class="quarto-figure quarto-figure-center column-body anchored page-columns page-full">
+<figure class="figure page-columns page-full">
+<p class="page-columns page-full"><img src="14_dem_house_files/figure-html/fig-1405-16.svg" class="column-body img-fluid figure-img" data-ref-parent="fig-1405"></p>
+<figcaption class="figure-caption">(p) Year 2037</figcaption>
+</figure>
+</div>
+</div>
+<div class="cell-output-display column-body page-columns page-full">
+<div id="fig-1405-17" class="quarto-figure quarto-figure-center column-body anchored page-columns page-full">
+<figure class="figure page-columns page-full">
+<p class="page-columns page-full"><img src="14_dem_house_files/figure-html/fig-1405-17.svg" class="column-body img-fluid figure-img" data-ref-parent="fig-1405"></p>
+<figcaption class="figure-caption">(q) Year 2038</figcaption>
+</figure>
+</div>
+</div>
+<div class="cell-output-display column-body page-columns page-full">
+<div id="fig-1405-18" class="quarto-figure quarto-figure-center column-body anchored page-columns page-full">
+<figure class="figure page-columns page-full">
+<p class="page-columns page-full"><img src="14_dem_house_files/figure-html/fig-1405-18.svg" class="column-body img-fluid figure-img" data-ref-parent="fig-1405"></p>
+<figcaption class="figure-caption">(r) Year 2039</figcaption>
+</figure>
+</div>
+</div>
+<div class="cell-output-display column-body page-columns page-full">
+<div id="fig-1405-19" class="quarto-figure quarto-figure-center column-body anchored page-columns page-full">
+<figure class="figure page-columns page-full">
+<p class="page-columns page-full"><img src="14_dem_house_files/figure-html/fig-1405-19.svg" class="column-body img-fluid figure-img" data-ref-parent="fig-1405"></p>
+<figcaption class="figure-caption">(s) Year 2040</figcaption>
+</figure>
+</div>
+</div>
+<div class="cell-output-display column-body page-columns page-full">
+<div id="fig-1405-20" class="quarto-figure quarto-figure-center column-body anchored page-columns page-full">
+<figure class="figure page-columns page-full">
+<p class="page-columns page-full"><img src="14_dem_house_files/figure-html/fig-1405-20.svg" class="column-body img-fluid figure-img" data-ref-parent="fig-1405"></p>
+<figcaption class="figure-caption">(t) Year 2041</figcaption>
+</figure>
+</div>
+</div>
+<div class="cell-output-display column-body page-columns page-full">
+<div id="fig-1405-21" class="quarto-figure quarto-figure-center column-body anchored page-columns page-full">
+<figure class="figure page-columns page-full">
+<p class="page-columns page-full"><img src="14_dem_house_files/figure-html/fig-1405-21.svg" class="column-body img-fluid figure-img" data-ref-parent="fig-1405"></p>
+<figcaption class="figure-caption">(u) Year 2042</figcaption>
+</figure>
+</div>
+</div>
+<div class="cell-output-display column-body page-columns page-full">
+<div id="fig-1405-22" class="quarto-figure quarto-figure-center column-body anchored page-columns page-full">
+<figure class="figure page-columns page-full">
+<p class="page-columns page-full"><img src="14_dem_house_files/figure-html/fig-1405-22.svg" class="column-body img-fluid figure-img" data-ref-parent="fig-1405"></p>
+<figcaption class="figure-caption">(v) Year 2043</figcaption>
+</figure>
+</div>
+</div>
+<div class="cell-output-display column-body page-columns page-full">
+<div id="fig-1405-23" class="quarto-figure quarto-figure-center column-body anchored page-columns page-full">
+<figure class="figure page-columns page-full">
+<p class="page-columns page-full"><img src="14_dem_house_files/figure-html/fig-1405-23.svg" class="column-body img-fluid figure-img" data-ref-parent="fig-1405"></p>
+<figcaption class="figure-caption">(w) Year 2044</figcaption>
+</figure>
+</div>
+</div>
+<div class="cell-output-display column-body page-columns page-full">
+<div id="fig-1405-24" class="quarto-figure quarto-figure-center column-body anchored page-columns page-full">
+<figure class="figure page-columns page-full">
+<p class="page-columns page-full"><img src="14_dem_house_files/figure-html/fig-1405-24.svg" class="column-body img-fluid figure-img" data-ref-parent="fig-1405"></p>
+<figcaption class="figure-caption">(x) Year 2045</figcaption>
+</figure>
+</div>
+</div>
+<div class="cell-output-display column-body page-columns page-full">
+<div id="fig-1405-25" class="quarto-figure quarto-figure-center column-body anchored page-columns page-full">
+<figure class="figure page-columns page-full">
+<p class="page-columns page-full"><img src="14_dem_house_files/figure-html/fig-1405-25.svg" class="column-body img-fluid figure-img" data-ref-parent="fig-1405"></p>
+<figcaption class="figure-caption">(y) Year 2046</figcaption>
+</figure>
+</div>
+</div>
+<div class="cell-output-display column-body page-columns page-full">
+<div id="fig-1405-26" class="quarto-figure quarto-figure-center column-body anchored page-columns page-full">
+<figure class="figure page-columns page-full">
+<p class="page-columns page-full"><img src="14_dem_house_files/figure-html/fig-1405-26.svg" class="column-body img-fluid figure-img" data-ref-parent="fig-1405"></p>
+<figcaption class="figure-caption">(z) Year 2047</figcaption>
+</figure>
+</div>
+</div>
+<div class="cell-output-display column-body page-columns page-full">
+<div id="fig-1405-27" class="quarto-figure quarto-figure-center column-body anchored page-columns page-full">
+<figure class="figure page-columns page-full">
+<p class="page-columns page-full"><img src="14_dem_house_files/figure-html/fig-1405-27.svg" class="column-body img-fluid figure-img" data-ref-parent="fig-1405"></p>
+<figcaption class="figure-caption">({) Year 2048</figcaption>
+</figure>
+</div>
+</div>
+<div class="cell-output-display column-body page-columns page-full">
+<div id="fig-1405-28" class="quarto-figure quarto-figure-center column-body anchored page-columns page-full">
+<figure class="figure page-columns page-full">
+<p class="page-columns page-full"><img src="14_dem_house_files/figure-html/fig-1405-28.svg" class="column-body img-fluid figure-img" data-ref-parent="fig-1405"></p>
+<figcaption class="figure-caption">(|) Year 2049</figcaption>
+</figure>
+</div>
+</div>
+<div class="cell-output-display column-body page-columns page-full">
+<div id="fig-1405-29" class="quarto-figure quarto-figure-center column-body anchored page-columns page-full">
+<figure class="figure page-columns page-full">
+<p class="page-columns page-full"><img src="14_dem_house_files/figure-html/fig-1405-29.svg" class="column-body img-fluid figure-img" data-ref-parent="fig-1405"></p>
+<figcaption class="figure-caption">(}) Year 2050</figcaption>
+</figure>
+</div>
+</div>
+<figcaption class="figure-caption">Figure&nbsp;14.6: Wollishofen population and migration, by year, age</figcaption>
+</figure>
+</div>
+
+
+</section>
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    text: function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+  function tippyHover(el, contentFn) {
+    const config = {
+      allowHTML: true,
+      content: contentFn,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start'
+    };
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      return note.innerHTML;
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+<nav class="page-navigation column-body">
+  <div class="nav-page nav-page-previous">
+      <a href="./13_housing.html" class="pagination-link">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">Housing model</span></span>
+      </a>          
+  </div>
+  <div class="nav-page nav-page-next">
+      <a href="./15_model_output.html" class="pagination-link">
+        <span class="nav-page-text"><span class="chapter-number">15</span>&nbsp; <span class="chapter-title">Model outputs</span></span> <i class="bi bi-arrow-right-short"></i>
+      </a>
+  </div>
+</nav>
+</div> <!-- /content -->
+
+
+
+<script src="site_libs/quarto-html/zenscroll-min.js"></script>
+</body></html>
