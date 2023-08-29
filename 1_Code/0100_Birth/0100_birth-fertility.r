@@ -1,18 +1,13 @@
 # header ------------------------------------------------------------------
 # birth: fertility rate
 
-
-
-
 # paths, general ----------------------------------------------------------
 
-# source(paste0(here::here(),"/1_code/0000_general/general_utils.R"))
-# util_gf()
+# source(paste0(here::here(),"/1_code/0000_general/general_init.R"))
+# init()
 
 # start time
 t0 <- Sys.time()
-
-
 
 # import and data preparation ---------------------------------------------
 
@@ -35,7 +30,6 @@ bir <- read_csv(bir_od) %>%
     .groups = "drop"
   )
 
-
 # population
 # year: begin of year population (therefore: StichtagDatJahr + 1)
 # age: only women at 'fertile age'
@@ -55,8 +49,6 @@ pop <- read_csv(pop_od) %>%
     pop = sum(pop),
     .groups = "drop"
   )
-
-
 
 # fertility ---------------------------------------------------------------
 
@@ -100,143 +92,13 @@ fer_yao <- group_by(cas, year, age, origin) %>%
 # is already aggregated by district, year, age, origin
 fer_dyao <- mutate(cas, fer_dyao = if_else(pop == 0, NA_real_, round(bir / pop * 100, round_rate)))
 
-
-
 # TFR (total fertility rate) ----------------------------------------------
 
 # WHY? plots to define the base period for fertility prediction
+# plots 0100, 0101, 0102, 0103, 0104, 0105
 
-# TFR by year
-# tfr_y <- group_by(fer_ya, year) %>%
-#   summarize(
-#     tfr_y = sum_NA(fer_ya / 100),
-#     .groups = "drop"
-#   )
-# 
-# sszplot(tfr_y,
-#   aes_x = "year", aes_y = "tfr_y",
-#   labs_y = "TFR", i_x = "5",
-#   geom = c("line", "point"),
-#   name = "0100_TFR_by-year"
-# )
-
-
-# TFR by year, origin
-# tfr_yo <- group_by(fer_yao, year, origin) %>%
-#   summarize(
-#     tfr_yo = sum_NA(fer_yao / 100),
-#     .groups = "drop"
-#   )
-# 
-# sszplot(tfr_yo,
-#   aes_x = "year", aes_y = "tfr_yo", aes_col = "origin",
-#   labs_y = "TFR", i_x = "5",
-#   geom = c("line", "point"),
-#   name = "0101_TFR_by-year-origin"
-# )
-
-
-# # TFR by year, age1
-# tfr_ya1 <- left_join(fer_ya, look_a1, by = "age") %>%
-#   group_by(year, age_1) %>%
-#   summarize(
-#     tfr_ya1 = sum_NA(fer_ya / 100),
-#     .groups = "drop"
-#   ) %>%
-#   rename(age = age_1)
-# 
-# sszplot(tfr_ya1,
-#   aes_x = "year", aes_y = "tfr_ya1", aes_col = "age",
-#   i_x = "5", labs_y = "TFR",
-#   geom = c("line", "point"),
-#   name = "0102_TFR_by-year-age1"
-# )
-# 
-# 
-# # TFR by year, age2
-# tfr_ya2 <- left_join(fer_ya, look_a2, by = "age") %>%
-#   group_by(year, age_2) %>%
-#   summarize(
-#     tfr_ya2 = sum_NA(fer_ya / 100),
-#     .groups = "drop"
-#   ) %>%
-#   rename(age = age_2)
-# 
-# sszplot(tfr_ya2,
-#   aes_x = "year", aes_y = "tfr_ya2", aes_col = "age",
-#   i_x = "5", labs_y = "TFR",
-#   geom = c("line", "point"),
-#   name = "0103_TFR_by-year-age2"
-# )
-# 
-# 
-# # TFR by year, age1, origin
-# tfr_ya1o <- left_join(fer_yao, look_a1, by = "age") %>%
-#   group_by(year, age_1, origin) %>%
-#   summarize(
-#     tfr_ya1o = sum_NA(fer_yao / 100),
-#     .groups = "drop"
-#   ) %>%
-#   rename(age = age_1)
-# 
-# sszplot(tfr_ya1o,
-#   aes_x = "year", aes_y = "tfr_ya1o", aes_col = "origin",
-#   wrap = "age", ncol = nlevels(tfr_ya1o$age),
-#   labs_y = "TFR", i_x = "5",
-#   geom = c("line", "point"),
-#   name = "0104_TFR_by-year-age1-origin",
-#   width = 16, height = 5
-# )
-# 
-# 
-# # TFR by year, age2, origin
-# tfr_ya2o <- left_join(fer_yao, look_a2, by = "age") %>%
-#   group_by(year, age_2, origin) %>%
-#   summarize(
-#     tfr_ya2o = sum_NA(fer_yao / 100),
-#     .groups = "drop"
-#   ) %>%
-#   rename(age = age_2)
-# 
-# sszplot(tfr_ya2o,
-#   aes_x = "year", aes_y = "tfr_ya2o", aes_col = "origin",
-#   wrap = "age", ncol = nlevels(tfr_ya2o$age),
-#   labs_y = "TFR", i_x = "5",
-#   geom = c("line", "point"),
-#   name = "0105_TFR_by-year-age2",
-#   width = 16, height = 5
-# )
-
-
-
-# # fertility plots (before any corrections) --------------------------------
-# 
-# # plot: fertility by district, year, age, origin
-# sszplot(filter(fer_dyao, year >= bir_base_begin),
-#   aes_x = "age", aes_y = "fer_dyao", aes_col = "origin",
-#   wrap = "as.factor(year)", labs_y = "fertility rate (in % per year)",
-#   name = "0110_fertility_by-district-year-age-origin",
-#   width = 11, height = 7,
-#   multi = uni_d
-# )
-# 
-# # plot: fertility by year, age, origin
-# sszplot(filter(fer_yao, year >= bir_base_begin),
-#   aes_x = "age", aes_y = "fer_yao", aes_col = "origin",
-#   wrap = "as.factor(year)", labs_y = "fertility rate (in % per year)",
-#   name = "0111_fertility_by-year-age-origin",
-#   width = 11, height = 7
-# )
-# 
-# # plot: fertility by year, age
-# sszplot(filter(fer_ya, year >= bir_base_begin),
-#   aes_x = "age", aes_y = "fer_ya", wrap = "as.factor(year)",
-#   labs_y = "fertility rate (in % per year)",
-#   name = "0112_fertility_by-year-age",
-#   width = 11, height = 7
-# )
-
-
+# fertility plots (before any corrections) --------------------------------
+# plots 0110, 0111, 0112
 
 # fertility: replace values in tails, base period only --------------------
 
@@ -263,39 +125,9 @@ fer_tail <- filter(fer_dyao, year >= bir_base_begin) %>%
     )
   )
 
-# # corrected fertility: plot preparation
-# cor_level <- c("initial", "corrected")
-# 
-# fer_cor <- select(fer_tail, district, year, origin, age, fer_dyao, fer) %>%
-#   pivot_longer(c(fer_dyao, fer), names_to = "category", values_to = "fer") %>%
-#   mutate(cat = factor(if_else(category == "fer_dyao",
-#     cor_level[1], cor_level[2]
-#   ), levels = cor_level)) %>%
-#   select(district, year, origin, age, cat, fer)
-# 
-# # plot: initial vs. corrected fertility
-# sszplot(fer_cor,
-#   aes_x = "age", aes_y = "fer", aes_col = "origin", aes_ltyp = "cat",
-#   wrap = "as.factor(year)",
-#   labs_y = "fertility rate (in % per year)",
-#   name = "0120_fertility_tail-correction",
-#   width = 13, height = 8,
-#   multi = uni_d
-# )
-# 
-# # plot: cumulative population from the tails
-# sszplot(fer_tail,
-#   aes_x = "age", aes_y = "low_cum", aes_col = "origin",
-#   wrap = "as.factor(year)",
-#   i_y = c(bir_thres_origin, bir_thres_overall, bir_thres_const),
-#   labs_y = "cumulative population from tails",
-#   multi = uni_d,
-#   name = "0121_cumulative-population-from_tails",
-#   width = 13, height = 8,
-#   quotes = quote(geom_line(aes(x = age, y = up_cum, color = origin)))
-# )
-
-
+# corrected fertility:
+# plot 0120: initial vs. corrected fertility
+# plot 0121: cumulative population from the tails
 
 # smooth the corrected fertility rate -------------------------------------
 
@@ -307,26 +139,7 @@ fer_fit <- arrange(fer_tail, district, year, origin, age) %>%
   ))) %>%
   ungroup()
 
-# plot preparation
-# fit_lev <- c("initial", "smoothed")
-# 
-# fit_dat <- select(fer_fit, district, year, origin, age, fer, fer_fit) %>%
-#   pivot_longer(c(fer, fer_fit), names_to = "category", values_to = "fer") %>%
-#   mutate(cat = factor(if_else(category == "fer",
-#     fit_lev[1], fit_lev[2]
-#   ), levels = fit_lev)) %>%
-#   select(district, year, age, origin, cat, fer)
-# 
-# # plot:
-# sszplot(fit_dat,
-#   aes_x = "age", aes_y = "fer", aes_col = "origin", aes_ltyp = "cat",
-#   wrap = "as.factor(year)",
-#   labs_y = "fertility rate (in % per year)",
-#   name = "0130_fertility_fit",
-#   width = 13, height = 8,
-#   multi = uni_d
-# )
-
+# plot 0130
 
 # prediction --------------------------------------------------------------
 
@@ -351,68 +164,9 @@ fer_pred <- con_reg(
   ) %>%
   mutate(fer_all = if_else(year <= bir_base_end, fer_dyao, pred_roll))
 
+# plot 0140: the predictions: age distribution by district and year
 
-
-# plot the predictions: age distribution by district and year -------------
-
-# plot
-# sszplot(fer_pred,
-#   aes_x = "age", aes_y = "fer_all", aes_col = "year",
-#   wrap = "district",
-#   labs_y = "fertility rate (in % per year)",
-#   scale_y = c(0, bir_plot_lim),
-#   name = "0140_fertility-prediction_by-district",
-#   width = 12, height = 14,
-#   multi = uni_o
-# )
-
-
-
-# # plot the predictions: along year, for selected age ----------------------
-# 
-# # selected age
-# uni_age <- sort(unique(fer_pred$age))
-# sel_age <- uni_age[(uni_age %% 5) == 0]
-# 
-# # plot: Swiss
-# age_dat <- filter(fer_pred, (origin == uni_o[1]) & (age %in% sel_age))
-# sszplot(age_dat,
-#   aes_x = "year", aes_y = "fer_fit",
-#   labs_y = "fertility rate (in % per year)",
-#   wrap = "age", ncol = 4,
-#   scale_y = c(0, bir_plot_lim),
-#   title = paste0("as.character(paste0('", levels(uni_o)[uni_o == uni_o[1]], ": ', x))"),
-#   geom = "point",
-#   name = "0141_fertility-prediction_by-district_along-year_Swiss",
-#   width = 11, height = 5,
-#   multi = uni_d,
-#   quotes = c(
-#     quote(geom_line(aes(x = year, y = pred), linetype = 2)),
-#     quote(geom_line(aes(x = year, y = pred_mean), linetype = 3)),
-#     quote(geom_line(aes(x = year, y = pred_roll), linetype = 1))
-#   )
-# )
-# 
-# # plot: foreign
-# age_dat <- filter(fer_pred, (origin == uni_o[2]) & (age %in% sel_age))
-# sszplot(age_dat,
-#   aes_x = "year", aes_y = "fer_fit",
-#   labs_y = "fertility rate (in % per year)",
-#   wrap = "age", ncol = 4,
-#   scale_y = c(0, bir_plot_lim),
-#   title = paste0("as.character(paste0('", levels(uni_o)[uni_o == uni_o[2]], ": ', x))"),
-#   geom = "point",
-#   name = "0142_fertility-prediction_by-district_along-year_foreign",
-#   width = 11, height = 5,
-#   multi = uni_d,
-#   quotes = c(
-#     quote(geom_line(aes(x = year, y = pred), linetype = 2)),
-#     quote(geom_line(aes(x = year, y = pred_mean), linetype = 3)),
-#     quote(geom_line(aes(x = year, y = pred_roll), linetype = 1))
-#   )
-# )
-
-
+# plots 0141, 0142 the predictions: along year, for selected age
 
 # smooth the future fertility rates ---------------------------------------
 
@@ -425,28 +179,7 @@ pred_fit <- filter(fer_pred, year >= scen_begin) %>%
   ))) %>%
   ungroup()
 
-# # plot prediction for selected years
-# sel_years <- uniy_scen[(uniy_scen %% 10) == 0]
-# 
-# sel_lev <- c("initial", "smoothed")
-# 
-# sel_dat <- pred_fit %>%
-#   pivot_longer(c(pred_fit, pred_roll), names_to = "category", values_to = "fer") %>%
-#   mutate(cat = factor(if_else(category == "pred_roll",
-#     sel_lev[1], sel_lev[2]
-#   ), levels = sel_lev)) %>%
-#   filter(year %in% sel_years)
-# 
-# # plot
-# sszplot(sel_dat,
-#   aes_x = "age", aes_y = "fer", aes_col = "cat",
-#   grid = c("origin", "year"),
-#   labs_y = "fertility rate (in % per year)",
-#   name = "0150_fertility-prediction_before-after-fit",
-#   width = 10, height = 6,
-#   multi = uni_d
-# )
-
+# # plot 0150: prediction for selected years
 
 # export fertility rates --------------------------------------------------
 
@@ -459,8 +192,6 @@ fer_ex <- mutate(pred_fit, fer = round(pred_fit, round_rate)) %>%
 # export
 write_csv(fer_ex, paste0(exp_path, "/birth_fertility_future.csv"))
 
-
-
 # TFR (total fertility rate) ----------------------------------------------
 
 # fertility rate of past and future
@@ -471,76 +202,14 @@ fer_ex_past <- rename(fer_dyao, fer = fer_dyao) %>%
 # export the data of the past (for model evaluation later on)
 write_csv(fer_ex_past, paste0(exp_path, "/birth_fertility_past.csv"))
 
-# # TFR
-# tfr_dyo <- bind_rows(fer_ex_past, fer_ex) %>%
-#   group_by(district, year, origin) %>%
-#   summarize(
-#     TFR = sum_NA(fer / 100),
-#     .groups = "drop"
-#   )
-# 
-# # plot
-# sszplot(tfr_dyo,
-#   aes_x = "year", aes_y = "TFR", aes_col = "origin",
-#   i_x = c(bir_base_begin, scen_begin),
-#   wrap = "district", ncol = 4,
-#   name = "0160_TFR_by-district-origin",
-#   width = 12, height = 14
-# )
+# plot 0160
 
+# plot 0161: TFR by age class
 
-
-# # TFR by age class --------------------------------------------------------
-# 
-# # TFR by age class
-# tfr_a1 <- bind_rows(fer_ex_past, fer_ex) %>%
-#   left_join(look_a1, by = "age") %>%
-#   group_by(district, year, origin, age_1) %>%
-#   summarize(
-#     TFR = sum_NA(fer / 100),
-#     .groups = "drop"
-#   ) %>%
-#   rename(age = age_1)
-# 
-# # plot
-# sszplot(tfr_a1,
-#   aes_x = "year", aes_y = "TFR", aes_col = "age",
-#   i_x = c(bir_base_begin, scen_begin),
-#   labs_col = "age",
-#   wrap = "district", ncol = 4,
-#   name = "0161_TFR_by-district-origin-age1",
-#   width = 12, height = 14,
-#   multi = uni_o
-# )
-
-
-# # TFR by age class (more detailled) ---------------------------------------
-# 
-# # TFR by age class
-# tfr_a2 <- bind_rows(fer_ex_past, fer_ex) %>%
-#   left_join(look_a2, by = "age") %>%
-#   group_by(district, year, origin, age_2) %>%
-#   summarize(
-#     TFR = sum_NA(fer / 100),
-#     .groups = "drop"
-#   ) %>%
-#   rename(age = age_2)
-# 
-# # plot
-# sszplot(tfr_a2,
-#   aes_x = "year", aes_y = "TFR", aes_col = "age",
-#   i_x = c(bir_base_begin, scen_begin),
-#   labs_col = "age",
-#   wrap = "district", ncol = 4,
-#   name = "0162_TFR_by-district-origin-age2",
-#   width = 12, height = 14,
-#   multi = uni_o
-# )
+# plot 0162: TFR by age class (more detailled) 
 
 # log info
 cat_log(paste0(
   "fertility rate: ",
   capture.output(Sys.time() - t0)
 ))
-
-

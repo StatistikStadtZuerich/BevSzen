@@ -3,16 +3,13 @@
 
 # birth: origin of the babies
 
-
-
 # paths, general ----------------------------------------------------------
 
-# source(paste0(here::here(),"/1_code/0000_general/general_utils.R"))
-# util_gf()
+# source(paste0(here::here(),"/1_code/0000_general/general_init.R"))
+# init()
 
 # start time
 t0 <- Sys.time()
-
 
 # import and data preparation ---------------------------------------------
 
@@ -37,7 +34,6 @@ bir <- read_csv(bir_od) %>%
     .groups = "drop"
   )
 
-
 # origin change: plots ----------------------------------------------------
 
 # WHY plots?
@@ -53,69 +49,7 @@ cha <- bir %>%
     total = change + nochange
   )
 
-# # change by year, origin
-# cha_yo <- group_by(cha, year, origin) %>%
-#   summarize(
-#     change = sum(change),
-#     total = sum(total),
-#     .groups = "drop"
-#   ) %>%
-#   mutate(cha_yo = if_else(total == 0, NA_real_, round(change / total * 100, round_rate)))
-# 
-# year5 <- cha_yo$year[cha_yo$year %% 5 == 0]
-# 
-# sszplot(cha_yo,
-#   aes_x = "year", aes_y = "cha_yo", aes_col = "origin",
-#   geom = c("line", "point"),
-#   i_x = year5,
-#   labs_y = "origin change in %",
-#   name = "0170_origin-change_by-year-origin"
-# )
-
-
-# # change by year, age1, origin
-# cha_ya1o <- left_join(cha, look_a1, by = "age") %>%
-#   group_by(year, age_1, origin) %>%
-#   summarize(
-#     change = sum(change),
-#     total = sum(total),
-#     .groups = "drop"
-#   ) %>%
-#   mutate(cha_ya1o = if_else(total == 0, NA_real_, round(change / total * 100, round_rate))) %>%
-#   rename(age = age_1)
-# 
-# sszplot(cha_ya1o,
-#   aes_x = "year", aes_y = "cha_ya1o", aes_col = "origin",
-#   geom = c("line", "point"),
-#   i_x = year5,
-#   labs_y = "origin change in %",
-#   wrap = "age",
-#   name = "0171_origin-change_by-year-age1-origin",
-#   width = 12
-# )
-
-
-# # change by year, age2, origin
-# cha_ya2o <- left_join(cha, look_a2, by = "age") %>%
-#   group_by(year, age_2, origin) %>%
-#   summarize(
-#     change = sum(change),
-#     total = sum(total),
-#     .groups = "drop"
-#   ) %>%
-#   mutate(cha_ya2o = if_else(total == 0, NA_real_, round(change / total * 100, round_rate))) %>%
-#   rename(age = age_2)
-# 
-# sszplot(cha_ya2o,
-#   aes_x = "year", aes_y = "cha_ya2o", aes_col = "origin",
-#   geom = c("line", "point"),
-#   i_x = year5,
-#   labs_y = "origin change in %",
-#   wrap = "age", ncol = nlevels(cha_ya2o$age),
-#   name = "0172_origin-change_by-year-age2-origin",
-#   width = 12
-# )
-
+# plots 0170, 0171, 0172
 
 # change by district, year, origin
 cha_dyo <- group_by(cha, district, year, origin) %>%
@@ -126,40 +60,7 @@ cha_dyo <- group_by(cha, district, year, origin) %>%
   ) %>%
   mutate(cha_dyo = if_else(total == 0, NA_real_, round(change / total * 100, round_rate)))
 
-# sszplot(cha_dyo,
-#         aes_x = "year", aes_y = "cha_dyo", aes_col = "origin",
-#         geom = c("line", "point"),
-#         i_x = year5,
-#         labs_y = "origin change in %",
-#         wrap = "district", ncol = 4,
-#         name = "0173_origin-change_by-district-year-origin",
-#         width = 12, height = 14
-# )
-
-
-# # change by district, year, age1 (foreign only, since few cases for Swiss)
-# cha_dya1f <- left_join(cha, look_a1, by = "age") %>%
-#   filter(origin == "foreign") %>%
-#   group_by(district, year, age_1) %>%
-#   summarize(
-#     change = sum(change),
-#     total = sum(total),
-#     .groups = "drop"
-#   ) %>%
-#   mutate(cha_dya1f = if_else(total == 0, NA_real_, round(change / total * 100, round_rate))) %>%
-#   rename(age = age_1)
-# 
-# 
-# sszplot(cha_dya1f,
-#   aes_x = "year", aes_y = "cha_dya1f", aes_col = "age",
-#   geom = c("line", "point"),
-#   i_x = year5,
-#   labs_y = "origin change in %",
-#   wrap = "district", ncol = 4,
-#   name = "0174_origin-change_by-district-year-age1-foreign",
-#   width = 12, height = 14
-# )
-
+# plots 0173, 0174
 
 # origin change (cha): model ----------------------------------------------
 
@@ -185,17 +86,7 @@ cha_pred <- con_reg(
   mutate(cha_all = if_else(year <= bir_cha_base_end, cha_dyo, pred_roll)) %>%
   arrange(district, year, origin)
 
-# # plot
-# sszplot(cha_pred,
-#   aes_x = "year", aes_y = "cha_all", aes_col = "origin",
-#   i_x = c(bir_cha_base_begin, bir_cha_base_end),
-#   labs_y = "origin change in %",
-#   wrap = "district", ncol = 4,
-#   name = "0175_origin-change_by-district-year-origin_past-future",
-#   width = 12, height = 14
-# )
-
-
+# plot 0175
 
 # export the results ------------------------------------------------------
 
@@ -213,5 +104,3 @@ cat_log(paste0(
   "origin change at birth: ",
   capture.output(Sys.time() - t0)
 ))
-
-

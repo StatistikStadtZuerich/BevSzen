@@ -3,8 +3,8 @@
 
 # paths, general ----------------------------------------------------------
 
-# source(paste0(here::here(), "/1_code/0000_general/general_utils.R"))
-# util_gf()
+# source(paste0(here::here(),"/1_code/0000_general/general_init.R"))
+# init()
 
 # start time
 t0 <- Sys.time()
@@ -26,8 +26,6 @@ own_dat <- read_csv(spa_od) %>%
     people = sum_NA(people),
     .groups = "drop")
 
-
-
 # proportion of cooperative housing ---------------------------------------
 
 # proportions (based on apartments and people)
@@ -43,17 +41,7 @@ own_prop <- group_by(own_dat, district, year) %>%
     names_to = "category", values_to = "prop"
   )
 
-# # plot
-# sszplot(own_prop,
-#   aes_x = "year", aes_y = "prop", aes_col = "category",
-#   labs_y = "proportion of cooperative housing (in %)",
-#   wrap = "district", ncol = 4,
-#   scale_y = c(0, NA),
-#   name = "1200_proportion-cooperative-housing",
-#   width = 12, height = 14
-# )
-
-
+# plot 1200
 
 # prediction --------------------------------------------------------------
 
@@ -94,18 +82,7 @@ own_past_pred <- as_tibble(expand_grid(
   ) %>%
   mutate(own_all = if_else(year < scen_begin, prop, pred_roll))
 
-# # plot
-# sszplot(own_past_pred,
-#   aes_x = "year", aes_y = "own_all",
-#   labs_y = "proportion of cooperative housing (in %)",
-#   wrap = "district", ncol = 4,
-#   i_x = c(own_base_begin, own_base_end),
-#   scale_y = c(0, NA),
-#   name = "1201_proportion-cooperative-housing_prediction",
-#   width = 12, height = 14
-# )
-
-
+# plot 1201
 
 # export the results ------------------------------------------------------
 

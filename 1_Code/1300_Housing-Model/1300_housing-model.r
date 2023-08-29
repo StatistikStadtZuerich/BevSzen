@@ -3,13 +3,11 @@
 
 # paths, general ----------------------------------------------------------
 
-# source(paste0(here::here(), "/1_code/0000_general/general_utils.R"))
-# util_gf()
+# source(paste0(here::here(),"/1_code/0000_general/general_init.R"))
+# init()
 
 # start time
 t0 <- Sys.time()
-
-
 
 # import, data preparation ------------------------------------------------
 
@@ -28,7 +26,6 @@ spa_dat <- read_csv(paste0(exp_path, "/living-space_future.csv"), lazy = FALSE)
 # ownership (% cooperative housing)
 own_dat <- read_csv(paste0(exp_path, "/ownership_past_future.csv"), lazy = FALSE)
 
-
 # population
 # why population not from the housing open data file?
 # there only people in apartments (and not in care centers etc)
@@ -46,7 +43,6 @@ pop <- read_csv(pop_od, lazy = FALSE) %>%
     .groups = "drop"
   )
 
-
 # projects and allocation (from apartments to people; future) -------------
 
 # calculate amount of people
@@ -60,7 +56,6 @@ pro_aca <- left_join(pro_dat, aca_dat,
 # if additional information is available on new projects (e.g. amount of people)
 # this could be incorporated here
 
-
 # capacity/reserves and living space (from m2 to people; future) ----------
 
 # combine: calculate amount of people
@@ -71,7 +66,6 @@ car_spa <- left_join(car_dat, spa_dat,
 ) %>%
   mutate(car = usage_ha * 10000 / spa_dyw) %>%
   select(district, year, owner, car)
-
 
 # population by ownership (past) ------------------------------------------
 
@@ -94,8 +88,6 @@ pop_w <- left_join(own_dat, pop, by = c("district", "year")) %>%
 # last year of data
 pop_last <- filter(pop_w, year == date_end)
 
-
-
 # combine: capacity/reserves and ownership prediction ---------------------
 
 # proportion of cooperative housing according to capacity/reserves
@@ -114,7 +106,6 @@ pop_total <- car_spa %>%
   select(district, year, owner, total) %>%
   rename(pop = total)
 
-
 # with past (for plot)
 # why? for plotting
 # why a plot? to check if capacity/reserves population values are...
@@ -125,17 +116,7 @@ pop_with_past <- bind_rows(pop_w, pop_total) %>%
   mutate(district = factor(distr, uni_d)) %>%
   select(district, year, owner, pop)
 
-# # plot
-# sszplot(pop_with_past,
-#   aes_x = "year", aes_y = "pop", aes_col = "owner",
-#   labs_y = "people",
-#   wrap = "district", ncol = 4,
-#   scale_y = c(0, NA),
-#   i_x = c(NA, date_end),
-#   name = "1300_people_capacity-reserves",
-#   width = 12, height = 14
-# )
-
+# plot 1300
 
 # proportion cooperative housing (according to capacity/reserves vs. district trends)
 prop_coop <- pop_with_past %>%
@@ -147,30 +128,7 @@ prop_coop <- pop_with_past %>%
   left_join(own_dat, by = c("district", "year")) %>%
   rename(prop_trend = prop)
 
-# # plot preparation
-# prop_coop_plot <- prop_coop %>%
-#   pivot_longer(
-#     cols = c("prop_car", "prop_trend"),
-#     names_prefix = "prop_",
-#     names_to = "category", values_to = "prop"
-#   ) %>%
-#   mutate(
-#     cat = if_else(category == "car",
-#       "capacity/reserves", "district trends"
-#     ),
-#     district = factor(district, levels = uni_d)
-#   )
-# 
-# # plot
-# sszplot(prop_coop_plot,
-#   aes_x = "year", aes_y = "prop", aes_col = "cat",
-#   labs_y = "proportion of cooperative housing (in %)",
-#   wrap = "district", ncol = 4,
-#   scale_y = c(0, NA),
-#   i_x = c(NA, date_end),
-#   name = "1301_proportion-cooperative-housing_data-sources",
-#   width = 12, height = 14
-# )
+# plot 1301
 
 # new proportion of cooperative housing; apply the parameter (% from capacity/reserves)
 new_prop <- prop_coop %>%
@@ -211,8 +169,6 @@ pro_car <- as_tibble(expand_grid(
   replace_na(list(new = 0, removed = 0)) %>%
   select(district, owner, year, pop, new, removed, car) %>%
   arrange(district, owner, year)
-
-
 
 # function: consider projects and reserves --------------------------------
 
@@ -292,13 +248,10 @@ project_reserves <- function(x, ...) {
 
 }
 
-
-
 # Check
 x <- filter(pro_car, (district == "Escher Wyss") & (owner == "private housing"))
 plot(x$year, x$car, type = "o")
 project_reserves(x)
-
 
 # consider projects and reserves (apply the function)
 pro_res_all <- pro_car %>%
@@ -317,8 +270,6 @@ pro_res <- pro_res_all %>%
   select(district, year, owner, pop_new) %>%
   rename(pop = pop_new)
 
-
-
 # plots -------------------------------------------------------------------
 
 # with the past
@@ -326,16 +277,7 @@ pop_fut_past <- bind_rows(pop_w, pro_res) %>%
   mutate(district = factor(district, uni_d)) %>%
   select(district, year, owner, pop)
 
-# # plot
-# sszplot(pop_fut_past,
-#   aes_x = "year", aes_y = "pop", aes_col = "owner",
-#   labs_y = "people",
-#   wrap = "district", ncol = 4,
-#   scale_y = c(0, NA),
-#   i_x = c(NA, date_end),
-#   name = "1302_population_district-owner",
-#   width = 12, height = 14
-# )
+# plot 1302
 
 # by district (without owner)
 pop_d <- pop_fut_past %>%
@@ -343,16 +285,7 @@ pop_d <- pop_fut_past %>%
   summarize(pop = sum(pop)) %>%
   ungroup()
 
-# # plot
-# sszplot(pop_d,
-#   aes_x = "year", aes_y = "pop",
-#   labs_y = "people",
-#   wrap = "district", ncol = 4,
-#   scale_y = c(0, NA),
-#   i_x = c(NA, date_end),
-#   name = "1303_population_district",
-#   width = 12, height = 14
-# )
+# plot 1303
 
 # all (entire city)
 pop_all <- pop_fut_past %>%
@@ -360,150 +293,9 @@ pop_all <- pop_fut_past %>%
   summarize(pop = sum(pop)) %>%
   ungroup()
 
-# sszplot(pop_all,
-#   aes_x = "year", aes_y = "pop",
-#   labs_y = "people",
-#   scale_y = c(0, NA),
-#   i_x = c(NA, date_end),
-#   name = "1304_population",
-#   width = 7, height = 5
-# )
+# plot 1304
 
-
-# compare projects and reserves -------------------------------------------
-
-# # projects and reserves (cumulative amount of people)
-# comp_pro_car <- pro_car %>% 
-#   replace_na(list(pop = 0, car = 0)) %>% 
-#   mutate(car_cum = if_else(year == date_end, pop, car),
-#          pro_y = if_else(year == date_end, pop, new - removed)) %>% 
-#   group_by(district, owner) %>% 
-#       arrange(year) %>% 
-#       mutate(pro_cum = cumsum(pro_y)) %>% 
-#   ungroup() %>% 
-#   arrange(district, owner, year) %>% 
-#   select(district, owner, year, pro_cum, car_cum)
-# 
-# #with final amount of people
-# cat_level <- c("projects", "reserves", "final")
-# 
-# pro_res_all %>%
-#   left_join(comp_pro_car, by = c("district", "year", "owner")) %>%
-#   pivot_longer(c(pro_cum, car_cum, pop), names_to = "category", values_to = "people") %>%
-#   mutate(
-#     district = factor(district, levels = uni_d),
-#     cat = factor(case_when(
-#       category == "pro_cum" ~ cat_level[1],
-#       category == "car_cum" ~ cat_level[2],
-#       TRUE ~ cat_level[3]
-#     ), levels = cat_level)
-#   ) %>%
-#   select(district, year, owner, cat, people) %>%
-#   # plot
-#   sszplot(
-#     aes_x = "year", aes_y = "people", aes_col = "cat",
-#     labs_y = "people",
-#     wrap = "district", ncol = 4, gridscale = "free_y",
-#     scale_y = c(0, NA),
-#     name = "1305_projects_reserves_final",
-#     width = 12, height = 14,
-#     multi = uni_w
-#   )
-
-# # total per district and owner
-# # WHY not with the object car_spa?
-# # it is easier to calculate totals with the original objects
-# # and closer to 'raw' data, i.e. ownership trends not considered
-# 
-# pro_res_level <- c("projects", "reserves")
-# 
-# pro_dw <- pro_aca %>% 
-#   group_by(district, owner) %>% 
-#     summarize(new = sum_NA(new), 
-#               removed = sum_NA(removed),
-#               .groups = "drop") %>% 
-#   mutate(pro = new - removed) %>% 
-#   select(district, owner, pro)
-# 
-# pro_car_dw <- car_spa %>% 
-#   group_by(district, owner) %>% 
-#     summarize(car = sum_NA(car), 
-#               .groups = "drop") %>% 
-#   left_join(pro_dw, by = c("district", "owner")) %>% 
-#   pivot_longer(c(car, pro), names_to = "category", values_to = "people") %>% 
-#   mutate(district = factor(district, levels = uni_d),
-#          owner = factor(owner, levels = uni_w),
-#          cat = factor(if_else(category == "pro", 
-#                               pro_res_level[1], pro_res_level[2]), 
-#                       levels = pro_res_level)) %>% 
-#   select(district, owner, cat, people)
-# 
-# # WHY not piped to the plot?
-# # data of pro_car_dw will be used for a plot by district only (without owner)
-# 
-# # plot: dw (people)
-# sszplot(pro_car_dw,
-#   aes_x = "district", aes_y = "people", aes_fill = "cat",
-#   geom = "col",
-#   labs_x = "", labs_y = "people",
-#   wrap = "owner", ncol = 2,  
-#   scale_x = rev(uni_d),
-#   name = "1306_projects_reserves_dw_people",
-#   width = 8, height = 8
-# )
-# 
-# # plot: dw (proportion)
-# # WHY with aes_fill?
-# # is needed in the plot function
-# pro_car_dw %>% 
-#   group_by(district, owner) %>% 
-#   mutate(prop = people / sum_NA(people) * 100) %>% 
-#   filter(cat == pro_res_level[1]) %>% 
-#   sszplot(
-#     aes_x = "district", aes_y = "prop",
-#     fix_col = 1, 
-#     geom = "col",
-#     labs_x = "", labs_y = "proportion in % (projects on reserves)",
-#     wrap = "owner", ncol = 2,      
-#     scale_x = rev(uni_d),
-#     name = "1307_projects_reserves_dw_prop",
-#     width = 8, height = 6
-#   )
-# 
-# # plot: d (people)
-# pro_car_dw %>% 
-#   group_by(district, cat) %>% 
-#   summarize(people = sum_NA(people),
-#             .groups = "drop") %>% 
-#   sszplot(
-#     aes_x = "district", aes_y = "people", aes_fill = "cat",
-#     geom = "col",
-#     labs_x = "", labs_y = "people",
-#     scale_x = rev(uni_d),
-#     name = "1308_projects_reserves_d_people",
-#     width = 8, height = 8
-#   )
-# 
-# # plot: d (proportion)
-# # WHY with aes_fill?
-# # is needed in the plot function
-# pro_car_dw %>% 
-#   group_by(district, cat) %>% 
-#   summarize(people = sum_NA(people),
-#             .groups = "drop") %>% 
-#   group_by(district) %>% 
-#   mutate(prop = people / sum_NA(people) * 100) %>% 
-#   filter(cat == pro_res_level[1]) %>% 
-#   sszplot(
-#     aes_x = "district", aes_y = "prop",
-#     fix_col = 1, 
-#     geom = "col",
-#     labs_x = "", labs_y = "proportion in % (projects on reserves)",
-#     scale_x = rev(uni_d),
-#     name = "1309_projects_reserves_d_prop",
-#     width = 8, height = 8
-#   )
-
+# plots 1305, 1306, 1307, 1308, 1309: compare projects and reserves
 
 # export the results ------------------------------------------------------
 

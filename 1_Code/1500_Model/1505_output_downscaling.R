@@ -1,4 +1,3 @@
-
 # header ------------------------------------------------------------------
 
 # calculate values for downscaling request by AfS
@@ -10,6 +9,7 @@
 # KaReB, see below.
 
 # prep work ---------------------------------------------------------------
+# source(paste0(here::here(),"/1_code/0000_general/general_init.R"))
 params <- init("middle")
 
 # exchange KaReB file
@@ -26,14 +26,12 @@ if (!dir.exists(req_path)) {
 }
 req_path <- paste0(req_path, "pop_scen_downscaling.csv")
 
-
 # run the model with bzo2040 -------------------------------------
 
 run_scen(
   scenarios = c("middle"),
   modules = c("all"))
 source(paste0(code_path, "1500/1501_model_outputs.r"))
-
 
 # load data ---------------------------------------------------------------
 kareb <- read_csv("2_Data/1_Input/KaReB.csv") %>%
@@ -113,11 +111,9 @@ downscale_long <- downscale %>%
   pivot_longer(cols =  c(wohnflaeche, flaeche.ina, flaeche.ina.eff, ratio.ina, bq, wfp, anz.wohn, anz.pers),
                names_to = "type")
 
-
 # write output
 downscale_long %>%
   write_delim(req_path, delim = ";")
-
 
 # create some plots for plausibility testing ------------------------------
 # show the 8 variables over time (summarised)
@@ -150,7 +146,6 @@ downscale_long %>%
           wrap = "type", ncol = 3,
           quotes = quote(expand_limits(y = 0)),
           multi = uni_d)
-
 
 # cleanup work ------------------------------------------------------------
 
