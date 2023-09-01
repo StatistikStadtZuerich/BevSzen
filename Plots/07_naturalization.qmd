@@ -27,9 +27,7 @@ processes <- c("nat", "denat")
 
 # processes
 proc <- filter(nat_denat, origin_prev != origin) %>%
-  mutate(proc = factor(if_else(origin_prev == uni_o[2],
-    processes[1], processes[2]
-  ), levels = processes)) %>%
+  mutate(proc = fact_if(origin_prev, processes, uni_o[2])) %>%
   group_by(year, proc) %>%
   summarize(
     count = sum(nat),
@@ -218,18 +216,14 @@ smooth_lev <- c("initial", "smoothed")
 
 temp_initial <- gather(nat_pop_das_smooth, `nat`, `pop`, key = category, value = count) %>%
   mutate(
-    cat = factor(if_else(category == "nat",
-      process_lev[1], process_lev[2]
-    ), levels = process_lev),
+    cat = fact_if(category, process_lev, "nat"),
     smooth = factor(smooth_lev[1], levels = smooth_lev)
   ) %>%
   select(district, age, sex, cat, smooth, count)
 
 temp_smooth <- gather(nat_pop_das_smooth, `nat_a`, `pop_a`, key = category, value = count) %>%
   mutate(
-    cat = factor(if_else(category == "nat_a",
-      process_lev[1], process_lev[2]
-    ), levels = process_lev),
+    cat = fact_if(category, process_lev, "nat_a"),
     smooth = factor(smooth_lev[2], levels = smooth_lev)
   ) %>%
   select(district, age, sex, cat, smooth, count)
@@ -260,9 +254,7 @@ sszplot(smooth_plot,
 
 # plot preparation
 rate_plot <- gather(nat_rate_das, `rate_thres`, `rate_smooth`, key = category, value = count) %>%
-  mutate(cat = factor(if_else(category == "rate_thres",
-    smooth_lev[1], smooth_lev[2]
-  ), levels = smooth_lev)) %>%
+  mutate(cat = fact_if(category, smooth_lev, "rate_thres")) %>%
   select(district, age, sex, cat, count)
 
 # plot
@@ -288,18 +280,14 @@ sszplot(rate_plot,
 # plot preparation
 temp_initial_ya <- gather(nat_ya, `nat`, `pop`, key = category, value = count) %>%
   mutate(
-    cat = factor(if_else(category == "nat",
-      process_lev[1], process_lev[2]
-    ), levels = process_lev),
+    cat = fact_if(category, process_lev, "nat"),
     smooth = factor(smooth_lev[1], levels = smooth_lev)
   ) %>%
   select(year, age, cat, smooth, count)
 
 temp_smooth_ya <- gather(nat_ya, `nat_a`, `pop_a`, key = category, value = count) %>%
   mutate(
-    cat = factor(if_else(category == "nat_a",
-      process_lev[1], process_lev[2]
-    ), levels = process_lev),
+    cat = fact_if(category, process_lev, "nat_a"),
     smooth = factor(smooth_lev[2], levels = smooth_lev)
   ) %>%
   select(year, age, cat, smooth, count)
@@ -346,9 +334,7 @@ sszplot(filter(smooth_plot_ya, age %in% age_plot),
 
 # plot preparation
 rate_ya_plot <- gather(nat_rate_ya, `rate_thres`, `rate_smooth`, key = category, value = count) %>%
-  mutate(cat = factor(if_else(category == "rate_thres",
-    smooth_lev[1], smooth_lev[2]
-  ), levels = smooth_lev)) %>%
+  mutate(cat = fact_if(category, smooth_lev, "rate_thres")) %>%
   select(year, age, cat, count)
 
 # years (subjectively, but last year in the plot)
@@ -432,18 +418,14 @@ sszplot(filter(rate_ya_past_pred, age %in% age_plot),
 # plot preparation
 temp_initial_a <- gather(nat_a, `nat`, `pop`, key = category, value = count) %>%
   mutate(
-    cat = factor(if_else(category == "nat",
-      process_lev[1], process_lev[2]
-    ), levels = process_lev),
+    cat = fact_if(category, process_lev, "nat"),
     smooth = factor(smooth_lev[1], levels = smooth_lev)
   ) %>%
   select(age, cat, smooth, count)
 
 temp_smooth_a <- gather(nat_a, `nat_a`, `pop_a`, key = category, value = count) %>%
   mutate(
-    cat = factor(if_else(category == "nat_a",
-      process_lev[1], process_lev[2]
-    ), levels = process_lev),
+    cat = fact_if(category, process_lev, "nat_a"),
     smooth = factor(smooth_lev[2], levels = smooth_lev)
   ) %>%
   select(age, cat, smooth, count)
@@ -472,9 +454,7 @@ sszplot(smooth_plot_a,
 
 # plot preparation
 rate_a_plot <- gather(nat_rate_a, `rate_thres`, `rate_smooth`, key = category, value = count) %>%
-  mutate(cat = factor(if_else(category == "rate_thres",
-    smooth_lev[1], smooth_lev[2]
-  ), levels = smooth_lev)) %>%
+  mutate(cat = fact_if(category, smooth_lev, "rate_thres")) %>%
   select(age, cat, count)
 
 # plots
@@ -535,9 +515,7 @@ sszplot(filter(tf_ya, age %in% age_plot),
 # plot preparation
 plot_pred_smooth <- select(rate_dyas_future, district, year, age, sex, rate_dyas, rate_smoothed) %>%
   gather(`rate_dyas`, `rate_smoothed`, key = category, value = count) %>%
-  mutate(cat = factor(if_else(category == "rate_dyas",
-    smooth_lev[1], smooth_lev[2]
-  ), levels = smooth_lev)) %>%
+  mutate(cat = fact_if(category, smooth_lev, "rate_dyas")) %>%
   select(district, year, age, sex, cat, count)
 
 # base years (subjectively)

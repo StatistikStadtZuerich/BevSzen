@@ -261,3 +261,20 @@ stop_3 <- function(files){
             make sure to run the whole model (0001_model_control-flow.r) beforehand" = 
               length(read_files) == 3)
 }
+
+
+
+#' shortcut function to create a one dimensional factor
+#' 
+#' @description This is a shortcut and replaces code like fact_if(SexCd, uni_s).
+#'
+#' @param cd Which value should be checked for 1
+#' @param uni factor on which to base the new factor
+#'
+#' @return factor with 1 label and all original levels
+#' @export
+#'
+#' @examples fact_if(SexCd, uni_s)
+fact_if <- function(cd, uni, equals = 1, lev1 = 1, lev2 = 2) {
+  factor(if_else(cd == equals, uni[lev1], uni[lev2]), uni)
+}

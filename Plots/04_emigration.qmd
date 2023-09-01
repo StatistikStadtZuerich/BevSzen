@@ -239,9 +239,7 @@ pred <- ems_prop_a_dyso
   fit_lev <- c("initial", "smoothed")  
   mis_smooth_plot <- pred$mis_smooth %>% 
     pivot_longer(c(mis_dyaso, mis_smooth), names_to = "category", values_to = "mis") %>% 
-    mutate(cat = factor(if_else(category == "mis_dyaso",
-      fit_lev[1], fit_lev[2]
-    ), levels = fit_lev)) %>%
+    mutate(cat = fact_if(category, fit_lev, "mis_dyaso")) %>%
     select(district, year, age, sex, origin, cat, mis)
 
   # plot: focus age distribution
@@ -339,9 +337,7 @@ pred <- ems_prop_a_dyso
   # plot preparation
   mis_fit_plot <- pred$prop_fit %>% 
     pivot_longer(c(prop_a_smooth, prop_fit), names_to = "category", values_to = "prop") %>% 
-    mutate(cat = factor(if_else(category == "prop_a_smooth",
-      fit_lev[1], fit_lev[2]
-    ), levels = fit_lev)) %>%
+    mutate(cat = fact_if(category, fit_lev, "prop_a_smooth")) %>%
     select(district, year, age, sex, origin, cat, prop)    
     
 

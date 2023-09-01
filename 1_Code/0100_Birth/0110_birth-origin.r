@@ -23,8 +23,8 @@ bir <- read_csv(bir_od) %>%
   filter((age >= bir_age_begin) & (age <= bir_age_end)) %>%
   left_join(look_dis, by = "QuarCd") %>%
   mutate(
-    originb = factor(if_else(HerkunftCd == 1, uni_o[1], uni_o[2]), uni_o),
-    origin = factor(if_else(HerkunftMutterCd == 1, uni_o[1], uni_o[2]), uni_o),
+    originb = fact_if(HerkunftCd, uni_o),
+    origin = fact_if(HerkunftMutterCd, uni_o),
     district = factor(distr, uni_d)
   ) %>%
   select(district, year, age, originb, origin, bir) %>%

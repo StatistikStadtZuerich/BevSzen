@@ -20,13 +20,13 @@ pro_dat <- read_csv(pro_path) %>%
   left_join(look_pro, by = c("StatusCd" = "code")) %>%
   mutate(distnum = as.numeric(QuarCd)) %>%
   left_join(look_reg, by = "distnum") %>%
-  mutate(owner = factor(if_else(EigentumCd == 1, uni_w[1], uni_w[2]), uni_w)) %>%
+  mutate(owner = fact_if(EigentumCd, uni_w)) %>%
   select(district, year, owner, status, WhgNeu, WhgAbbruch) %>%
   pivot_longer(
     cols = c("WhgNeu", "WhgAbbruch"), names_to = "ind",
     values_to = "apartments"
   ) %>%
-  mutate(indicator = factor(if_else(ind == "WhgNeu", uni_i[1], uni_i[2]), uni_i)) %>%
+  mutate(indicator = fact_if(ind, uni_i, "WhgNeu")) %>%
   select(district, year, owner, status, indicator, apartments)
 
 # with all possible cases

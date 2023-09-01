@@ -14,7 +14,7 @@ t0 <- Sys.time()
 # death
 dea <- read_csv(dea_od) %>%
   rename(year = EreignisDatJahr, age = AlterVCd, dea = AnzSterWir) %>%
-  mutate(sex = factor(if_else(SexCd == 1, uni_s[1], uni_s[2]), uni_s)) %>%
+  mutate(sex = fact_if(SexCd, uni_s)) %>%
   group_by(year, age, sex) %>%
   summarize(
     dea = sum(dea),
@@ -26,7 +26,7 @@ bir <- read_csv(bir_od) %>%
   rename(year = EreignisDatJahr, bir = AnzGebuWir) %>%
   mutate(
     age = 0,
-    sex = factor(if_else(SexCd == 1, uni_s[1], uni_s[2]), uni_s)
+    sex = fact_if(SexCd, uni_s)
   ) %>%
   group_by(year, age, sex) %>%
   summarize(
@@ -40,7 +40,7 @@ pop <- read_csv(pop_od) %>%
   rename(age = AlterVCd, pop = AnzBestWir) %>%
   mutate(
     year = StichtagDatJahr + 1,
-    sex = factor(if_else(SexCd == 1, uni_s[1], uni_s[2]), uni_s)
+    sex = fact_if(SexCd, uni_s)
   ) %>%
   group_by(year, age, sex) %>%
   summarize(
@@ -54,7 +54,7 @@ mor_fso <- read_csv(dea_fso_od) %>%
   rename(year = EreignisDatJahr, age = AlterVCd) %>%
   filter(HerkunftCd == 0) %>%
   mutate(
-    sex = factor(if_else(SexCd == 1, uni_s[1], uni_s[2]), uni_s),
+    sex = fact_if(SexCd, uni_s),
     region = factor(text_r[2], uni_r),
     mor_yas = RateSterSta * 100
   ) %>%

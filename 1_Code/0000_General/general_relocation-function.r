@@ -48,8 +48,8 @@ rel_prop <- function(mig_path, mig_vari, mig_district,
     rename(year = EreignisDatJahr, age = AlterVCd, mig = mig_vari) %>%
     left_join(look_dis, by = "QuarCd") %>%
     mutate(
-      sex = factor(if_else(SexCd == 1, uni_s[1], uni_s[2]), uni_s),
-      origin = factor(if_else(HerkunftCd == 1, uni_o[1], uni_o[2]), uni_o),
+      sex = fact_if(SexCd, uni_s),
+      origin = fact_if(HerkunftCd, uni_o),
       district = factor(distr, uni_d)
     ) %>%
     select(district, year, age, sex, origin, mig) %>%
@@ -67,8 +67,8 @@ rel_prop <- function(mig_path, mig_vari, mig_district,
     rename(year = EreignisDatJahr, age = AlterVCd, dis = mig_district, rel = AnzUmzuWir) %>%
     left_join(look_dis, c("dis" = "QuarCd")) %>%
     mutate(
-      sex = factor(if_else(SexCd == 1, uni_s[1], uni_s[2]), uni_s),
-      origin = factor(if_else(HerkunftCd == 1, uni_o[1], uni_o[2]), uni_o),
+      sex = fact_if(SexCd, uni_s),
+      origin = fact_if(HerkunftCd, uni_o),
       district = factor(distr, uni_d)
     ) %>%
     select(district, year, age, sex, origin, rel) %>%

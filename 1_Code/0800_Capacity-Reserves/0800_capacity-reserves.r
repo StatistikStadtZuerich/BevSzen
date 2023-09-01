@@ -31,8 +31,8 @@ car_dat <- read_csv(car_path) %>%
         TRUE ~ uni_e[3]
       )
     ),
-    plot = factor(if_else(ArealCd == 1, uni_p[1], uni_p[2]), uni_p),
-    owner = factor(if_else(EigentumGrundstkCd == 1, uni_w[1], uni_w[2]), uni_w),
+    plot = fact_if(ArealCd, uni_p),
+    owner = fact_if(EigentumGrundstkCd, uni_w),
     ha = area / 10000
   ) %>%
   select(year, residence, plot, district, owner, cat, ha)

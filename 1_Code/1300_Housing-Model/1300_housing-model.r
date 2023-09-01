@@ -80,9 +80,7 @@ pop_w <- left_join(own_dat, pop, by = c("district", "year")) %>%
   pivot_longer(c(cooperative, other),
     names_to = "owner_text", values_to = "pop"
   ) %>%
-  mutate(owner = factor(if_else(owner_text == "cooperative",
-    uni_w[1], uni_w[2]
-  ), levels = uni_w)) %>%
+  mutate(owner = fact_if(owner_text, uni_w, "cooperative")) %>%
   select(district, year, owner, pop)
 
 # last year of data

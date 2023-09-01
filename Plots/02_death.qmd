@@ -185,9 +185,7 @@ fit_lev <- c("initial", "smoothed")
 # plot data
 plot_dat_fit <- mor_fit %>%
   pivot_longer(c(mor_asr, mor_fit), names_to = "category", values_to = "mor") %>%
-  mutate(cat = factor(if_else(category == "mor_asr",
-    fit_lev[1], fit_lev[2]
-  ), levels = fit_lev))
+  mutate(cat = fact_if(category, fit_lev, "mor_asr"))
 
 # plot
 sszplot(plot_dat_fit,

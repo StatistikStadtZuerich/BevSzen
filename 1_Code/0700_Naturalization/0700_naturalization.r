@@ -16,9 +16,9 @@ nat_denat <- read_csv(nat_od) %>%
   rename(year = EreignisDatJahr, age = AlterVCd, nat = AnzEinbWir) %>%
   left_join(look_dis, by = "QuarCd") %>%
   mutate(
-    sex = factor(if_else(SexCd == 1, uni_s[1], uni_s[2]), uni_s),
-    origin_prev = factor(if_else(HerkunftBisherCd == 1, uni_o[1], uni_o[2]), uni_o),
-    origin = factor(if_else(HerkunftCd == 1, uni_o[1], uni_o[2]), uni_o),
+    sex = fact_if(SexCd, uni_s),
+    origin_prev = fact_if(HerkunftBisherCd, uni_o),
+    origin = fact_if(HerkunftCd, uni_o),
     district = factor(distr, uni_d)
   ) %>%
   select(district, year, age, sex, origin_prev, origin, nat)
@@ -40,7 +40,7 @@ pop <- read_csv(pop_od) %>%
   left_join(look_dis, by = "QuarCd") %>%
   mutate(
     year = StichtagDatJahr + 1,
-    sex = factor(if_else(SexCd == 1, uni_s[1], uni_s[2]), uni_s),
+    sex = fact_if(SexCd, uni_s),
     district = factor(distr, uni_d)
   ) %>%
   select(district, year, age, sex, pop) %>%

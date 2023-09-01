@@ -210,9 +210,7 @@ cor_level <- c("initial", "corrected")
 
 fer_cor <- select(fer_tail, district, year, origin, age, fer_dyao, fer) %>%
   pivot_longer(c(fer_dyao, fer), names_to = "category", values_to = "fer") %>%
-  mutate(cat = factor(if_else(category == "fer_dyao",
-    cor_level[1], cor_level[2]
-  ), levels = cor_level)) %>%
+  mutate(cat = fact_if(category, cor_level, "fer_dyao")) %>%
   select(district, year, origin, age, cat, fer)
 
 sszplot(fer_cor,
@@ -255,9 +253,7 @@ fit_lev <- c("initial", "smoothed")
 
 fit_dat <- select(fer_fit, district, year, origin, age, fer, fer_fit) %>%
   pivot_longer(c(fer, fer_fit), names_to = "category", values_to = "fer") %>%
-  mutate(cat = factor(if_else(category == "fer",
-    fit_lev[1], fit_lev[2]
-  ), levels = fit_lev)) %>%
+  mutate(cat = fact_if(category, fit_lev, "fer")) %>%
   select(district, year, age, origin, cat, fer)
 
 # plot:
@@ -367,9 +363,7 @@ sel_lev <- c("initial", "smoothed")
 
 sel_dat <- pred_fit %>%
   pivot_longer(c(pred_fit, pred_roll), names_to = "category", values_to = "fer") %>%
-  mutate(cat = factor(if_else(category == "pred_roll",
-    sel_lev[1], sel_lev[2]
-  ), levels = sel_lev)) %>%
+  mutate(cat = fact_if(category, sel_lev, "pred_roll")) %>%
   filter(year %in% sel_years)
 
 # plot

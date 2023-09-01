@@ -14,7 +14,7 @@ t0 <- Sys.time()
 # proportion male
 pro_male <- read_csv(bir_od) %>%
   rename(year = EreignisDatJahr, bir = AnzGebuWir) %>%
-  mutate(sex = factor(if_else(SexCd == 1, uni_s[1], uni_s[2]), uni_s)) %>%
+  mutate(sex = fact_if(SexCd, uni_s)) %>%
   select(year, sex, bir) %>%
   group_by(year, sex) %>%
   summarize(

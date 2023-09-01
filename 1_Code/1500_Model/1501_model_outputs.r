@@ -15,8 +15,8 @@ pop_past <- read_csv(pop_od) %>%
   left_join(look_dis, by = "QuarCd") %>%
   mutate(
     district = factor(distr, uni_d),
-    sex = factor(if_else(SexCd == 1, uni_s[1], uni_s[2]), uni_s),
-    origin = factor(if_else(HerkunftCd == 1, uni_o[1], uni_o[2]), uni_o)
+    sex = fact_if(SexCd, uni_s),
+    origin = fact_if(HerkunftCd, uni_o)
   ) %>%
   select(district, year, age, sex, origin, pop) %>%
   group_by(district, year, age, sex, origin) %>%
@@ -30,8 +30,8 @@ bir_past <- read_csv(bir_od) %>%
   left_join(look_dis, by = "QuarCd") %>%
   mutate(
     district = factor(distr, uni_d),
-    sex = factor(if_else(SexCd == 1, uni_s[1], uni_s[2]), uni_s),
-    origin = factor(if_else(HerkunftCd == 1, uni_o[1], uni_o[2]), uni_o)
+    sex = fact_if(SexCd, uni_s),
+    origin = fact_if(HerkunftCd, uni_o)
   ) %>%
   select(district, year, sex, origin, bir) %>%
   group_by(district, year, sex, origin) %>%
@@ -42,7 +42,7 @@ bir_past <- read_csv(bir_od) %>%
 # deaths
 dea_past <- read_csv(dea_od) %>%
   rename(year = EreignisDatJahr, age = AlterVCd, dea = AnzSterWir) %>%
-  mutate(sex = factor(if_else(SexCd == 1, uni_s[1], uni_s[2]), uni_s)) %>%
+  mutate(sex = fact_if(SexCd, uni_s)) %>%
   group_by(year, age, sex) %>%
   summarize(dea = sum(dea),
             .groups = "drop") %>%
@@ -53,8 +53,8 @@ imm_past <- read_csv(imm_od) %>%
   rename(year = EreignisDatJahr, age = AlterVCd, imm = AnzZuzuWir) %>%
   left_join(look_dis, by = "QuarCd") %>%
   mutate(
-    sex = factor(if_else(SexCd == 1, uni_s[1], uni_s[2]), uni_s),
-    origin = factor(if_else(HerkunftCd == 1, uni_o[1], uni_o[2]), uni_o),
+    sex = fact_if(SexCd, uni_s),
+    origin = fact_if(HerkunftCd, uni_o),
     district = factor(distr, uni_d)
   ) %>%
   select(district, year, age, sex, origin, imm) %>%
@@ -68,8 +68,8 @@ emi_past <- read_csv(emi_od) %>%
   rename(year = EreignisDatJahr, age = AlterVCd, emi = AnzWezuWir) %>%
   left_join(look_dis, by = "QuarCd") %>%
   mutate(
-    sex = factor(if_else(SexCd == 1, uni_s[1], uni_s[2]), uni_s),
-    origin = factor(if_else(HerkunftCd == 1, uni_o[1], uni_o[2]), uni_o),
+    sex = fact_if(SexCd, uni_s),
+    origin = fact_if(HerkunftCd, uni_o),
     district = factor(distr, uni_d)
   ) %>%
   select(district, year, age, sex, origin, emi) %>%
@@ -86,8 +86,8 @@ rel_past <- read_csv(rel_od) %>%
   left_join(look_dis, by = c("QuarBisherCd" = "QuarCd")) %>%
   rename(distr_before = distr) %>%
   mutate(
-    sex = factor(if_else(SexCd == 1, uni_s[1], uni_s[2]), uni_s),
-    origin = factor(if_else(HerkunftCd == 1, uni_o[1], uni_o[2]), uni_o),
+    sex = fact_if(SexCd, uni_s),
+    origin = fact_if(HerkunftCd, uni_o),
     district_before = factor(distr_before, uni_d),
     district_after = factor(distr_after, uni_d)
   ) %>%
@@ -103,7 +103,7 @@ nat_past <- read_csv(nat_od) %>%
   rename(year = EreignisDatJahr, age = AlterVCd, nat = AnzEinbWir) %>%
   left_join(look_dis, by = "QuarCd") %>%
   mutate(
-    sex = factor(if_else(SexCd == 1, uni_s[1], uni_s[2]), uni_s),
+    sex = fact_if(SexCd, uni_s),
     district = factor(distr, uni_d)
   ) %>%
   select(district, year, age, sex, nat) %>%
@@ -136,8 +136,8 @@ sce <- read_csv(sce_od) %>%
     AlterV10Sort == 8 ~ age_3t[8],         
     AlterV10Sort == 9 ~ age_3t[9],     
     TRUE ~ age_3t[10]), levels = age_3t),
-    sex = factor(if_else(SexSort == 1, uni_s[1], uni_s[2]), uni_s),
-    origin = factor(if_else(HerkunftSort == 1, uni_o[1], uni_o[2]), uni_o),
+    sex = fact_if(SexSort, uni_s),
+    origin = fact_if(HerkunftSort, uni_o),
     district = factor(distr, uni_d),
     scenario = case_when(
       VersionArtSort == 1 ~ uni_c[2],

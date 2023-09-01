@@ -31,8 +31,8 @@ pop_import <- read_csv(pop_od) %>%
   left_join(look_dis, by = "QuarCd") %>%
   mutate(
     district = factor(distr, uni_d),
-    sex = factor(if_else(SexCd == 1, uni_s[1], uni_s[2]), uni_s),
-    origin = factor(if_else(HerkunftCd == 1, uni_o[1], uni_o[2]), uni_o)
+    sex = fact_if(SexCd, uni_s),
+    origin = fact_if(HerkunftCd, uni_o)
   ) %>%
   select(district, year, age, sex, origin, pop) %>%
   group_by(district, year, age, sex, origin) %>%
@@ -151,8 +151,8 @@ imm_past <- read_csv(imm_od) %>%
   rename(year = EreignisDatJahr, age = AlterVCd, imm = AnzZuzuWir) %>%
   left_join(look_dis, by = "QuarCd") %>%
   mutate(
-    sex = factor(if_else(SexCd == 1, uni_s[1], uni_s[2]), uni_s),
-    origin = factor(if_else(HerkunftCd == 1, uni_o[1], uni_o[2]), uni_o),
+    sex = fact_if(SexCd, uni_s),
+    origin = fact_if(HerkunftCd, uni_o),
     district = factor(distr, uni_d)
   ) %>%
   select(district, year, age, sex, origin, imm) %>%
@@ -169,8 +169,8 @@ rei_past <- read_csv(rel_od) %>%
   rename(year = EreignisDatJahr, age = AlterVCd, dis = QuarCd, rei = AnzUmzuWir) %>%
   left_join(look_dis, c("dis" = "QuarCd")) %>%
   mutate(
-    sex = factor(if_else(SexCd == 1, uni_s[1], uni_s[2]), uni_s),
-    origin = factor(if_else(HerkunftCd == 1, uni_o[1], uni_o[2]), uni_o),
+    sex = fact_if(SexCd, uni_s),
+    origin = fact_if(HerkunftCd, uni_o),
     district = factor(distr, uni_d)
   ) %>%
   select(district, year, age, sex, origin, rei) %>%
@@ -196,8 +196,8 @@ emi_past <- read_csv(emi_od) %>%
   rename(year = EreignisDatJahr, age = AlterVCd, emi = AnzWezuWir) %>%
   left_join(look_dis, by = "QuarCd") %>%
   mutate(
-    sex = factor(if_else(SexCd == 1, uni_s[1], uni_s[2]), uni_s),
-    origin = factor(if_else(HerkunftCd == 1, uni_o[1], uni_o[2]), uni_o),
+    sex = fact_if(SexCd, uni_s),
+    origin = fact_if(HerkunftCd, uni_o),
     district = factor(distr, uni_d)
   ) %>%
   select(district, year, age, sex, origin, emi) %>%
@@ -210,8 +210,8 @@ ree_past <- read_csv(rel_od) %>%
   rename(year = EreignisDatJahr, age = AlterVCd, dis = QuarBisherCd, ree = AnzUmzuWir) %>%
   left_join(look_dis, c("dis" = "QuarCd")) %>%
   mutate(
-    sex = factor(if_else(SexCd == 1, uni_s[1], uni_s[2]), uni_s),
-    origin = factor(if_else(HerkunftCd == 1, uni_o[1], uni_o[2]), uni_o),
+    sex = fact_if(SexCd, uni_s),
+    origin = fact_if(HerkunftCd, uni_o),
     district = factor(distr, uni_d)
   ) %>%
   select(district, year, age, sex, origin, ree) %>%
@@ -778,7 +778,7 @@ model_output <- read_csv(paste0(out_path, "/migration-parameters.csv")) %>%
   select(process, di_fir, di_sec, less_ims, more_ims) %>%
   pivot_longer(cols = c("di_fir", "di_sec"), values_to = "of", names_to = "categories") %>%
   mutate(
-    cat = factor(if_else(categories == "di_fir", cat_of[1], cat_of[2]), levels = cat_of),
+    cat = fact_if(categories, cat_of, "di_fir"),
     process = factor(process, levels = uni_process)
   )
 

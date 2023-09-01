@@ -21,8 +21,8 @@ pop_import <- read_csv(pop_od, lazy = FALSE) %>%
   left_join(look_dis, by = "QuarCd") %>%
   mutate(
     district = factor(distr, uni_d),
-    sex = factor(if_else(SexCd == 1, uni_s[1], uni_s[2]), uni_s),
-    origin = factor(if_else(HerkunftCd == 1, uni_o[1], uni_o[2]), uni_o)
+    sex = fact_if(SexCd, uni_s),
+    origin = fact_if(HerkunftCd, uni_o)
   ) %>%
   select(district, year, age, sex, origin, pop) %>%
   group_by(district, year, age, sex, origin) %>%
