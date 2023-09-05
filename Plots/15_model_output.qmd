@@ -929,7 +929,7 @@ rel_future_yaso <- dem_future %>%
   group_by(year, age, sex, origin, scenario) %>%
   summarize(rei = sum(rei), ree = sum(ree), .groups = "drop") %>%
   pivot_longer(cols = c("rei", "ree"), values_to = "rel", names_to = "category") %>%
-  mutate(cat = factor(if_else(category == "rei", uni_cat[2], uni_cat[3]), levels = uni_cat)) %>%
+  mutate(cat = fact_if(category, uni_cat, equals = "rei", 2, 3)) %>%
   select(year, age, sex, origin, scenario, rel, cat)
 
 # past and future combined

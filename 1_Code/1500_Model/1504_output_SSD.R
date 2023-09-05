@@ -1,4 +1,3 @@
-
 # header ------------------------------------------------------------------
 
 # calculate values for Schulraumplanung according request by SSD
@@ -7,6 +6,7 @@
 # for the years 2021, 2037, 2040, 2045, 2050
 
 # prep work ---------------------------------------------------------------
+# source(paste0(here::here(),"/1_code/0000_general/general_init.R"))
 params <- init("middle")
 
 # exchange KaReB file
@@ -55,7 +55,6 @@ pop %>%
   select(-QuarCd, -QuarSort) %>%
   write_delim(req_path, delim = ";")
 
-
 # checks ------------------------------------------------------------------
 
 # input data
@@ -81,8 +80,8 @@ car_dat_comb <- read_csv(paste0(inp_path, "KaReB_2016.csv")) %>%
         TRUE ~ uni_e[3]
       )
     ),
-    plot = factor(if_else(ArealCd == 1, uni_p[1], uni_p[2]), uni_p),
-    owner = factor(if_else(EigentumGrundstkCd == 1, uni_w[1], uni_w[2]), uni_w),
+    plot = fact_if(ArealCd, uni_p),
+    owner = fact_if(EigentumGrundstkCd, uni_w),
     ha = area / 10000
   ) %>%
   select(year, residence, plot, district, owner, cat, ha, bzo)
@@ -188,7 +187,6 @@ pop_middle_16 %>%
           width = 20, height = 14,
           wrap = "age_group", ncol = 3)
 
-
 # scenario results from last year and this year in comparison
 xlp <- "//szh.loc/ssz/data/Projekte/BevSzen/2021_BZO2040/3_Resultate/3000_Auswertungen/3_Zukuenftige-Bevoelkerungsentwicklung_BZO2040_nach-Altersklasse-Quartier-Jahr.xlsx"
 sheets <- readxl::excel_sheets(xlp)
@@ -211,9 +209,6 @@ for (i in sheets) {
     pop_middle_prevyear <- pop_middle_prevyear %>% union(readin)
   }
 }
-
-
-
 
 pop_prev_current <- pop_middle %>%
   mutate(model_year = 22) %>%
@@ -260,8 +255,6 @@ pop_prev_current %>%
           name = "15B1_pop_ya_bzo40_21_vs_22",
           width = 20, height = 14,
           wrap = "age_group", ncol = 3)
-
-
 
 # cleanup work ------------------------------------------------------------
 

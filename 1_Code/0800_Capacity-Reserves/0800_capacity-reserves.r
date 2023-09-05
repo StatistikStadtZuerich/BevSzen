@@ -3,12 +3,11 @@
 
 # paths, general ----------------------------------------------------------
 
-# source(paste0(here::here(), "/1_code/0000_general/general_utils.R"))
-# util_gf()
+# source(paste0(here::here(),"/1_code/0000_general/general_init.R"))
+# init()
 
 # start time
 t0 <- Sys.time()
-
 
 # import and data preparation ---------------------------------------------
 
@@ -32,68 +31,14 @@ car_dat <- read_csv(car_path) %>%
         TRUE ~ uni_e[3]
       )
     ),
-    plot = factor(if_else(ArealCd == 1, uni_p[1], uni_p[2]), uni_p),
-    owner = factor(if_else(EigentumGrundstkCd == 1, uni_w[1], uni_w[2]), uni_w),
+    plot = fact_if(ArealCd, uni_p),
+    owner = fact_if(EigentumGrundstkCd, uni_w),
     ha = area / 10000
   ) %>%
   select(year, residence, plot, district, owner, cat, ha)
 
-
-
 # # plot (entire city, all owner categories) --------------------------------
-# 
-# # aggregate (year, residence, plot)
-# car_yep <- group_by(car_dat, year, residence, plot, cat) %>%
-#   summarize(ha = sum(ha), .groups = "drop")
-# 
-# # plot
-# sszplot(car_yep,
-#   aes_x = "year", aes_y = "ha", aes_col = "residence", aes_ltyp = "plot",
-#   geom = c("line", "point"),
-#   wrap = "cat", ncol = 2, gridscale = "free",
-#   labs_x = "year of data delivery", labs_y = "area (in ha)",
-#   scale_y = c(0, NA),
-#   name = "0800_entire-city",
-#   width = 10, height = 8
-# )
-# 
-# 
-# # plot (entire city, by owner) --------------------------------------------
-# 
-# # aggregate (year, residence, plot, owner)
-# car_yepw <- group_by(car_dat, year, residence, plot, owner, cat) %>%
-#   summarize(ha = sum(ha), .groups = "drop")
-# 
-# # plot
-# sszplot(car_yepw,
-#   aes_x = "year", aes_y = "ha", aes_col = "residence", aes_ltyp = "plot",
-#   geom = c("line", "point"),
-#   grid = c("cat", "owner"), gridscale = "free_y",
-#   labs_x = "year of data delivery", labs_y = "area (in ha)",
-#   scale_y = c(0, NA),
-#   name = "0801_entire-city_by-owner",
-#   width = 10, height = 10
-# )
-# 
-# 
-# # plot (by district, all owner categories) --------------------------------
-# 
-# # aggregate (district, year, residence, plot)
-# car_dyep <- group_by(car_dat, district, year, residence, plot, cat) %>%
-#   summarize(ha = sum(ha), .groups = "drop")
-# 
-# # plot
-# sszplot(car_dyep,
-#   aes_x = "year", aes_y = "ha", aes_col = "residence", aes_ltyp = "plot",
-#   geom = c("line", "point"),
-#   wrap = "cat", gridscale = "free", ncol = 2,
-#   labs_x = "year of data delivery", labs_y = "area (in ha)",
-#   scale_y = c(0, NA),
-#   name = "0802_districts",
-#   width = 10, height = 8,
-#   multi = uni_d
-# )
-
+# plots 0800, 0801, 0802
 
 # plot (by district, by owner) --------------------------------------------
 
@@ -101,22 +46,7 @@ car_dat <- read_csv(car_path) %>%
 car_dyepw <- group_by(car_dat, district, year, residence, plot, owner, cat) %>%
   summarize(ha = sum(ha), .groups = "drop")
 
-
-
-
-# # plot
-# sszplot(car_dyepw,
-#   aes_x = "year", aes_y = "ha", aes_col = "residence", aes_ltyp = "plot",
-#   geom = c("line", "point"),
-#   grid = c("cat", "owner"), gridscale = "free_y",
-#   labs_x = "year of data delivery", labs_y = "area (in ha)",
-#   scale_y = c(0, NA),
-#   name = "0803_districts_by-owner",
-#   width = 10, height = 8,
-#   multi = uni_d
-# )
-
-
+#plot 0803
 
 # combine information (with the parameters) -------------------------------
 
@@ -166,16 +96,7 @@ usage_prop <- mutate(living, area = if_else(cat %in% car_category[c(1, 4)],
     ))
   )
 
-# # plot: reserves (area)
-# sszplot(usage_prop,
-#   aes_x = "district", aes_y = "reserve_new", aes_fill = "owner",
-#   geom = "col",
-#   labs_x = "", labs_y = "reserves (in ha)",
-#   scale_x = rev(uni_d),
-#   flip_coor = TRUE,
-#   name = "0804_reserves_by-district",
-#   width = 8, height = 7
-# )
+# plot 0804: reserves (area)
 
 # check: reserves and usage in the entire city (city area approx. 8800 ha)
 entire_city <- usage_prop %>%
@@ -185,31 +106,7 @@ entire_city <- usage_prop %>%
   ) %>%
   mutate(prop = usage / reserve_new * 100)
 
-
-# # plot: usage (proportion)
-# sszplot(usage_prop,
-#   aes_x = "district", aes_y = "usage_prop", aes_fill = "owner",
-#   geom = "col",
-#   labs_x = "", labs_y = "usage proportion (in % of the reserves)",
-#   scale_x = rev(uni_d),
-#   flip_coor = TRUE,
-#   name = "0805_usage-proportion_by-district",
-#   width = 8, height = 7
-# )
-# 
-# 
-# # plot: usage (area)
-# sszplot(usage_prop,
-#   aes_x = "district", aes_y = "usage", aes_fill = "owner",
-#   geom = "col",
-#   labs_x = "", labs_y = "usage area (in ha)",
-#   scale_x = rev(uni_d),
-#   flip_coor = TRUE,  
-#   name = "0806_usage-area_by-district",
-#   width = 8, height = 7
-# )
-
-
+# plots 0805, 0806: usage
 
 # usage per year ----------------------------------------------------------
 
@@ -288,30 +185,7 @@ check_total <- total %>%
   summarize(usage_area = sum(usage_area))
 sum(check_total$usage_area)
 
-
-# # plot: usage (proportion)
-# sszplot(total,
-#   aes_x = "year", aes_y = "usage_prop", aes_col = "owner",
-#   wrap = "district", ncol = 4,
-#   labs_x = "", labs_y = "usage proportion (in % of the reserves per year)",
-#   scale_y = c(0, NA),
-#   name = "0807_usage-proportion_by-district-year",
-#   width = 12, height = 14
-# )
-# 
-# 
-# # plot: usage (area)
-# sszplot(total,
-#   aes_x = "year", aes_y = "usage_area", aes_col = "owner",
-#   wrap = "district", ncol = 4,
-#   labs_x = "", labs_y = "usage area (in ha per year)",
-#   scale_y = c(0, NA),
-#   name = "0808_usage-area_by-district-year",
-#   width = 12, height = 14
-# )
-
-
-
+# # plots 0807, 0808: usage
 
 # export the results ------------------------------------------------------
 

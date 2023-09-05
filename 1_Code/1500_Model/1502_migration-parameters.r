@@ -1,14 +1,12 @@
 # header -------------------------------------------------------------------
 # Migration Parameters
 
-
 # paths, general ----------------------------------------------------------
-
-util_gf()
+# source(paste0(here::here(),"/1_code/0000_general/general_init.R"))
+# init()
 
 # start time
 t0 <- Sys.time()
-
 
 # time spans (used for the objective functions) ---------------------------
 
@@ -20,7 +18,6 @@ future_10_1st <- szen_begin:(szen_begin + 9)
 
 # second 10 years of the prediction
 future_10_2nd <- (szen_begin + 10):(szen_begin + 19)
-
 
 # import, data preparation ------------------------------------------------
 
@@ -34,8 +31,8 @@ pop_import <- read_csv(pop_od) %>%
   left_join(look_dis, by = "QuarCd") %>%
   mutate(
     district = factor(distr, uni_d),
-    sex = factor(if_else(SexCd == 1, uni_s[1], uni_s[2]), uni_s),
-    origin = factor(if_else(HerkunftCd == 1, uni_o[1], uni_o[2]), uni_o)
+    sex = fact_if(SexCd, uni_s),
+    origin = fact_if(HerkunftCd, uni_o)
   ) %>%
   select(district, year, age, sex, origin, pop) %>%
   group_by(district, year, age, sex, origin) %>%
@@ -145,7 +142,6 @@ hou <- read_csv(paste0(exp_path, "/housing-model_population_d.csv")) %>%
   mutate(district = factor(district, levels = uni_d)) %>%
   rename(pop_limit = pop)
 
-
 # immigration: past -------------------------------------------------------
 
 # WHY? to calculate objective functions
@@ -155,8 +151,8 @@ imm_past <- read_csv(imm_od) %>%
   rename(year = EreignisDatJahr, age = AlterVCd, imm = AnzZuzuWir) %>%
   left_join(look_dis, by = "QuarCd") %>%
   mutate(
-    sex = factor(if_else(SexCd == 1, uni_s[1], uni_s[2]), uni_s),
-    origin = factor(if_else(HerkunftCd == 1, uni_o[1], uni_o[2]), uni_o),
+    sex = fact_if(SexCd, uni_s),
+    origin = fact_if(HerkunftCd, uni_o),
     district = factor(distr, uni_d)
   ) %>%
   select(district, year, age, sex, origin, imm) %>%
@@ -173,8 +169,8 @@ rei_past <- read_csv(rel_od) %>%
   rename(year = EreignisDatJahr, age = AlterVCd, dis = QuarCd, rei = AnzUmzuWir) %>%
   left_join(look_dis, c("dis" = "QuarCd")) %>%
   mutate(
-    sex = factor(if_else(SexCd == 1, uni_s[1], uni_s[2]), uni_s),
-    origin = factor(if_else(HerkunftCd == 1, uni_o[1], uni_o[2]), uni_o),
+    sex = fact_if(SexCd, uni_s),
+    origin = fact_if(HerkunftCd, uni_o),
     district = factor(distr, uni_d)
   ) %>%
   select(district, year, age, sex, origin, rei) %>%
@@ -191,7 +187,6 @@ ims_past <- bind_rows(
   summarize(ims = sum(ims)) %>%
   ungroup()
 
-
 # emigration: past --------------------------------------------------------
 
 # WHY? to calculate objective functions
@@ -201,8 +196,8 @@ emi_past <- read_csv(emi_od) %>%
   rename(year = EreignisDatJahr, age = AlterVCd, emi = AnzWezuWir) %>%
   left_join(look_dis, by = "QuarCd") %>%
   mutate(
-    sex = factor(if_else(SexCd == 1, uni_s[1], uni_s[2]), uni_s),
-    origin = factor(if_else(HerkunftCd == 1, uni_o[1], uni_o[2]), uni_o),
+    sex = fact_if(SexCd, uni_s),
+    origin = fact_if(HerkunftCd, uni_o),
     district = factor(distr, uni_d)
   ) %>%
   select(district, year, age, sex, origin, emi) %>%
@@ -215,8 +210,8 @@ ree_past <- read_csv(rel_od) %>%
   rename(year = EreignisDatJahr, age = AlterVCd, dis = QuarBisherCd, ree = AnzUmzuWir) %>%
   left_join(look_dis, c("dis" = "QuarCd")) %>%
   mutate(
-    sex = factor(if_else(SexCd == 1, uni_s[1], uni_s[2]), uni_s),
-    origin = factor(if_else(HerkunftCd == 1, uni_o[1], uni_o[2]), uni_o),
+    sex = fact_if(SexCd, uni_s),
+    origin = fact_if(HerkunftCd, uni_o),
     district = factor(distr, uni_d)
   ) %>%
   select(district, year, age, sex, origin, ree) %>%
@@ -233,7 +228,6 @@ ems_past <- bind_rows(
   summarize(ems = sum(ems)) %>%
   ungroup()
 
-
 # all: past
 all_past <- as_tibble(expand_grid(
   district = uni_d,
@@ -247,7 +241,6 @@ all_past <- as_tibble(expand_grid(
   left_join(ems_past, by = c("district", "year", "age", "sex", "origin")) %>%
   left_join(emi_past, by = c("district", "year", "age", "sex", "origin")) %>%
   replace_na(list(ims = 0, imm = 0, ems = 0, emi = 0))
-
 
 # objective function: preparation (mean per year)
 # WHY with variable 'city'?
@@ -272,8 +265,6 @@ of_past_prep <- all_past %>%
     emi_past = mean(emi)
   ) %>%
   ungroup()
-
-
 
 # Loop over years ---------------------------------------------------------
 
@@ -410,9 +401,7 @@ imm_emi_fun <- function(less_i, more_i, years_end = szen_end) {
       select(district, age, sex, origin, ims)
     # result: immigration* by district, age, sex, origin (31*121*2*2 = 15004 rows)
 
-
     # sum(ims$ims)
-
 
     # emigration*
     ems <- popu %>%
@@ -433,9 +422,7 @@ imm_emi_fun <- function(less_i, more_i, years_end = szen_end) {
       select(district, age, sex, origin, ems)
     # result: emigration* by district, age, sex, origin (31*121*2*2 = 15004 rows)
 
-
     # sum(ems$ems)
-
 
     # combine the demographic processes
 
@@ -462,7 +449,6 @@ imm_emi_fun <- function(less_i, more_i, years_end = szen_end) {
     # sum(bir$bir) - sum(dea$dea)
     # sum(dem$pop_bir_dea)
     # sum(dem$pop) + sum(bir$bir) - sum(dea$dea)
-
 
     # balance (on district level)
     # if not enough space: decrease immigration, increase emigration
@@ -701,7 +687,6 @@ imm_emi_fun <- function(less_i, more_i, years_end = szen_end) {
     ) %>%
     ungroup()
 
-
   # of: second 10 years of the prediction
   of_future_10_2nd <- of_future_prep %>%
     filter(year %in% future_10_2nd) %>%
@@ -740,14 +725,10 @@ imm_emi_fun <- function(less_i, more_i, years_end = szen_end) {
   # end: function to generate immigration and emigration
 }
 
-
 # test the function (duration: 7.5 seconds per run)
 t0 <- Sys.time()
 test <- imm_emi_fun(less_i = 70, more_i = 40, years_end = max(future_10_sec))
 Sys.time() - t0
-
-
-
 
 # model results for different parameter combinations ----------------------
 
@@ -771,8 +752,6 @@ Sys.time() - t0
 # output (due to high duration)
 mod_out %>%
   write_csv(paste0(out_path, "/migration-parameters.csv"))
-
-
 
 # plots -------------------------------------------------------------------
 
@@ -799,7 +778,7 @@ model_output <- read_csv(paste0(out_path, "/migration-parameters.csv")) %>%
   select(process, di_fir, di_sec, less_ims, more_ims) %>%
   pivot_longer(cols = c("di_fir", "di_sec"), values_to = "of", names_to = "categories") %>%
   mutate(
-    cat = factor(if_else(categories == "di_fir", cat_of[1], cat_of[2]), levels = cat_of),
+    cat = fact_if(categories, cat_of, "di_fir"),
     process = factor(process, levels = uni_process)
   )
 

@@ -165,9 +165,7 @@ This plot is the starting point (before smoothing, age corrections)
   process_lev <- c("relocation", "immigration*")
 
   process_plot <- rate$rem_dyao %>% gather(`rel`, `mis`, key = category, value = count) %>%
-    mutate(cat = factor(if_else(category == "rel",
-      process_lev[1], process_lev[2]
-    ), levels = process_lev)) %>%
+    mutate(cat = fact_if(category, process_lev, "rel")) %>%
     select(district, year, age, origin, cat, count)
 
 
@@ -230,18 +228,14 @@ This plot is the starting point (before smoothing, age corrections)
 
   temp_initial <- gather(rate$dyao_smooth, `rel`, `mis`, key = category, value = count) %>%
     mutate(
-      cat = factor(if_else(category == "rel",
-        process_lev[1], process_lev[2]
-      ), levels = process_lev),
+      cat = fact_if(category, process_lev, "rel"),
       smooth = factor(smooth_lev[1], levels = smooth_lev)
     ) %>%
     select(district, year, age, origin, cat, smooth, count)
 
   temp_smooth <- gather(rate$dyao_smooth, `rel_a`, `mis_a`, key = category, value = count) %>%
     mutate(
-      cat = factor(if_else(category == "rel_a",
-        process_lev[1], process_lev[2]
-      ), levels = process_lev),
+      cat = fact_if(category, process_lev, "rel_a"),
       smooth = factor(smooth_lev[2], levels = smooth_lev)
     ) %>%
     select(district, year, age, origin, cat, smooth, count)
@@ -348,18 +342,14 @@ This plot is the starting point (before smoothing, age corrections)
   # plot preparation
   temp_initial <- gather(rate$dao_smooth, `rel`, `mis`, key = category, value = count) %>%
     mutate(
-      cat = factor(if_else(category == "rel",
-        process_lev[1], process_lev[2]
-      ), levels = process_lev),
+      cat = fact_if(category, process_lev, "rel"),
       smooth = factor(smooth_lev[1], levels = smooth_lev)
     ) %>%
     select(district, age, origin, cat, smooth, count)
 
   temp_smooth <- gather(rate$dao_smooth, `rel_a`, `mis_a`, key = category, value = count) %>%
     mutate(
-      cat = factor(if_else(category == "rel_a",
-        process_lev[1], process_lev[2]
-      ), levels = process_lev),
+      cat = fact_if(category, process_lev, "rel_a"),
       smooth = factor(smooth_lev[2], levels = smooth_lev)
     ) %>%
     select(district, age, origin, cat, smooth, count)
@@ -484,9 +474,7 @@ This plot is the starting point (before smoothing, age corrections)
 
   # plot preparation
   plot_agg_smooth <- gather(rate$prop_agg_smooth, `rel_prop`, `prop_smooth`, key = category, value = count) %>%
-    mutate(cat = factor(if_else(category == "rel_prop",
-      smooth_lev[1], smooth_lev[2]
-    ), levels = smooth_lev)) %>%
+    mutate(cat = fact_if(category, smooth_lev, "rel_prop")) %>%
     select(district, year, age, origin, cat, count)
 
   # plot
@@ -534,9 +522,7 @@ This plot is the starting point (before smoothing, age corrections)
   # plot preparation
   plot_pred_smooth <- select(rate$pred_smooth, district, year, age, origin, pred_all_age, pred_smooth) %>%
     gather(pred_smooth, `pred_all_age`, `pred_smooth`, key = category, value = count) %>%
-    mutate(cat = factor(if_else(category == "pred_all_age",
-      smooth_lev[1], smooth_lev[2]
-    ), levels = smooth_lev)) %>%
+    mutate(cat = fact_if(category, smooth_lev, "pred_all_age")) %>%
     select(district, year, age, origin, cat, count)
 
   # plot: focus age

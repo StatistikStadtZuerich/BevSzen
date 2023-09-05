@@ -196,8 +196,7 @@ sel_lev <- c("initial", "smoothed")
 
 out_pop_smooth %>%
   pivot_longer(c(pop_end_year, pop), names_to = "category", values_to = "pop") %>%
-  mutate(cat = factor(if_else(category == "pop_end_year",
-    sel_lev[1], sel_lev[2]), levels = sel_lev),
+  mutate(cat = fact_if(category, sel_lev, equals = "pop_end_year"),
     pop_pyramid = if_else(sex == uni_s[1], -pop, pop),) %>%
   filter(year %in% sel_years) %>% 
   sszplot(

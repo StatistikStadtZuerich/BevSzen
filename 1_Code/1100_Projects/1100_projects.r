@@ -1,19 +1,16 @@
 # header ------------------------------------------------------------------
 # projects (i.e. construction projects)
 
-
 # paths, general ----------------------------------------------------------
 
-# source(paste0(here::here(), "/1_code/0000_general/general_utils.R"))
-# util_gf()
+# source(paste0(here::here(),"/1_code/0000_general/general_init.R"))
+# init()
 
 # temporary path (since data not on open data yet)
 pro_path <- paste0(here::here(), "/2_Data/1_Input/BEV347OD3470.csv")
 
 # start time
 t0 <- Sys.time()
-
-
 
 # import, data preparation ------------------------------------------------
 
@@ -23,13 +20,13 @@ pro_dat <- read_csv(pro_path) %>%
   left_join(look_pro, by = c("StatusCd" = "code")) %>%
   mutate(distnum = as.numeric(QuarCd)) %>%
   left_join(look_reg, by = "distnum") %>%
-  mutate(owner = factor(if_else(EigentumCd == 1, uni_w[1], uni_w[2]), uni_w)) %>%
+  mutate(owner = fact_if(EigentumCd, uni_w)) %>%
   select(district, year, owner, status, WhgNeu, WhgAbbruch) %>%
   pivot_longer(
     cols = c("WhgNeu", "WhgAbbruch"), names_to = "ind",
     values_to = "apartments"
   ) %>%
-  mutate(indicator = factor(if_else(ind == "WhgNeu", uni_i[1], uni_i[2]), uni_i)) %>%
+  mutate(indicator = fact_if(ind, uni_i, "WhgNeu")) %>%
   select(district, year, owner, status, indicator, apartments)
 
 # with all possible cases
@@ -44,130 +41,7 @@ pro_all <- as_tibble(expand_grid(
   replace_na(list(apartments = 0))
 
 
-# # indicators (new/removed apartments) by year -----------------------------
-# 
-# # by year
-# pro_y <- group_by(pro_all, year, indicator) %>%
-#   summarize(
-#     apartments = sum_NA(apartments),
-#     .groups = "drop"
-#   )
-# 
-# # plot
-# sszplot(pro_y,
-#   aes_x = "year", aes_y = "apartments", aes_fill = "indicator",
-#   geom = "col",
-#   labs_x = "",
-#   name = "1100_projects_by-year",
-#   width = 7, height = 4
-# )
-# 
-# 
-# # indicators by year and status -------------------------------------------
-# 
-# # by year, status
-# pro_yt <- group_by(pro_all, year, status, indicator) %>%
-#   summarize(
-#     apartments = sum_NA(apartments),
-#     .groups = "drop"
-#   )
-# 
-# # plot
-# sszplot(pro_yt,
-#   aes_x = "year", aes_y = "apartments", aes_fill = "indicator",
-#   geom = "col",
-#   labs_x = "",
-#   grid = c("status", "."),
-#   name = "1101_projects_by-year-status",
-#   width = 8, height = 12
-# )
-# 
-# 
-# 
-# # indicators by year and owner --------------------------------------------
-# 
-# # by year, owner
-# pro_yw <- group_by(pro_all, year, owner, indicator) %>%
-#   summarize(
-#     apartments = sum_NA(apartments),
-#     .groups = "drop"
-#   )
-# 
-# # plot
-# sszplot(pro_yw,
-#   aes_x = "year", aes_y = "apartments", aes_fill = "indicator",
-#   geom = "col",
-#   labs_x = "",
-#   grid = c(".", "owner"),
-#   name = "1102_projects_by-year-owner",
-#   width = 12, height = 5
-# )
-# 
-# 
-# 
-# # indicators by year, owner, and status -----------------------------------
-# 
-# # by year, owner, status
-# pro_ywt <- group_by(pro_all, year, owner, status, indicator) %>%
-#   summarize(
-#     apartments = sum_NA(apartments),
-#     .groups = "drop"
-#   )
-# 
-# # plot
-# sszplot(pro_ywt,
-#   aes_x = "year", aes_y = "apartments", aes_fill = "indicator",
-#   geom = "col",
-#   labs_x = "",
-#   grid = c("status", "owner"),
-#   name = "1103_projects_by-year-owner-status",
-#   width = 12, height = 12
-# )
-# 
-# 
-# 
-# # indicators by district and year -----------------------------------------
-# 
-# # by district, year
-# pro_dy <- group_by(pro_all, district, year, indicator) %>%
-#   summarize(
-#     apartments = sum_NA(apartments),
-#     .groups = "drop"
-#   )
-# 
-# # plot
-# sszplot(pro_dy,
-#   aes_x = "year", aes_y = "apartments", aes_fill = "indicator",
-#   geom = "col",
-#   labs_x = "", angle = 90,
-#   wrap = "district", ncol = 4,
-#   name = "1104_projects_by-district-year",
-#   width = 10, height = 12
-# )
-# 
-# 
-# 
-# # indicators by district, year, and owner ---------------------------------
-# 
-# # by district, year, owner
-# pro_dyw <- group_by(pro_all, district, year, owner, indicator) %>%
-#   summarize(
-#     apartments = sum_NA(apartments),
-#     .groups = "drop"
-#   )
-# 
-# # plot
-# sszplot(pro_dyw,
-#   aes_x = "year", aes_y = "apartments", aes_fill = "indicator",
-#   geom = "col",
-#   labs_x = "", angle = 90,
-#   wrap = "district", ncol = 4,
-#   name = "1105_projects_by-district-year-owner",
-#   width = 10, height = 11,
-#   multi = uni_w
-# )
-
-
+# plots 1100, 1101, 1102, 1103, 1104, 1105: indicators
 
 # not all projects realized -----------------------------------------------
 
@@ -217,14 +91,7 @@ delay <- as_tibble(expand_grid(
   mutate(ynorm = y / sum(y) * 100) %>%
   ungroup()
 
-# # plot
-# sszplot(delay,
-#   aes_x = "year", aes_y = "ynorm", aes_fill = "delayText",
-#   geom = "col",
-#   labs_x = "", labs_y = "percent (of the apartments)",
-#   name = "1106_projects_delay-by-year",
-#   width = 7, height = 4.5
-# )
+# plot 1106
 
 # projects and delay
 pro_delay <- as_tibble(expand_grid(
@@ -256,42 +123,7 @@ pro_delay <- as_tibble(expand_grid(
 sum(pro_not$realized)
 sum(pro_delay$apartments)
 
-
-
-# # initial vs. 'not realized'/'delayed' ------------------------------------
-# 
-# # after corrections
-# text_corr <- c("initial", "not realized, delayed")
-# uni_corr <- factor(text_corr, levels = text_corr)
-# 
-# pro_y_nd <- group_by(pro_delay, year, indicator) %>%
-#   summarize(
-#     apartments = sum_NA(apartments),
-#     .groups = "drop"
-#   ) %>%
-#   mutate(corr = uni_corr[2])
-# 
-# # with initial
-# pro_y_both <- mutate(pro_y, corr = uni_corr[1]) %>%
-#   bind_rows(pro_y_nd)
-# 
-# # check (difference, since parameter for 'not realized')
-# check <- group_by(pro_y_both, corr) %>%
-#   summarize(
-#     apartments = sum(apartments),
-#     .groups = "drop"
-#   )
-# 
-# # plot
-# sszplot(pro_y_both,
-#   aes_x = "year", aes_y = "apartments", aes_fill = "corr",
-#   geom = "col",
-#   labs_x = "",
-#   grid = c(".", "indicator"),
-#   name = "1107_projects-not-realized-delayed_by-year",
-#   width = 12, height = 5
-# )
-
+# plot 1107: initial vs. 'not realized'/'delayed' 
 
 # summarize (status not needed anymore) -----------------------------------
 

@@ -8,8 +8,8 @@
 # preliminary work --------------------------------------------------------
 
 # load necessary variables first
-source(paste0(here::here(),"/1_code/0000_general/general_utils.R"))
-util_gf()
+# source(paste0(here::here(),"/1_code/0000_general/general_init.R"))
+# init()
 
 
 # functions ---------------------------------------------------------------
@@ -71,7 +71,9 @@ check_eq <- function(current, freeze) {
 # analysis ----------------------------------------------------------------
 
 # compare rates
-eq_rates <- check_eq(get_filelist("4_rates"), get_filelist("data_freeze/2_Data/4_rates", freeze = TRUE))
+eq_rates <- check_eq(get_filelist("4_rates"),
+                     get_filelist("data_freeze/2_Data/4_rates", freeze = TRUE))
 
 # compare outputs
-eq_outputs <- check_eq(get_filelist("5_outputs"), get_filelist("data_freeze/2_Data/5_outputs", freeze = TRUE))
+eq_outputs <- check_eq(get_filelist("5_outputs"),
+                       get_filelist("data_freeze/2_Data/5_outputs", freeze = TRUE))

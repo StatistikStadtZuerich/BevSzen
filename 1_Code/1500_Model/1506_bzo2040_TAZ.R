@@ -1,4 +1,3 @@
-
 # header ------------------------------------------------------------------
 
 # calculate values for TAZ according request 5881
@@ -6,6 +5,7 @@
 # for the years 2022-2040
 
 # prep work ---------------------------------------------------------------
+# source(paste0(here::here(),"/1_code/0000_general/general_init.R"))
 params <- init("middle")
 
 # exchange KaReB file
@@ -49,8 +49,6 @@ pop_middle %>%
 # checks ------------------------------------------------------------------
 # this is all very similar to request by SSD (file 1504_output_SSD) except for the age groups.
 # Therefore no new checks necessary.
-
-
 
 # cleanup work ------------------------------------------------------------
 

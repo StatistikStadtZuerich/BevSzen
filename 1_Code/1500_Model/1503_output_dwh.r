@@ -1,6 +1,8 @@
 # header -------------------------------------------------------------------
 # prepare data for csv output files which are later loaded into a DWH
 
+# source(paste0(here::here(),"/1_code/0000_general/general_init.R"))
+# init()
 
 # prep work ---------------------------------------------------------------
 params <- init("middle")
@@ -77,8 +79,6 @@ births <-
   select(Jahr, BasisSzenarienCd, VersionArtCd, AlterVCd, SexCd,
          HerkunftCd, district, AnzGebuWir)
 
-
-
 # read population data and adapt structure --------------------------------
 
 # past data
@@ -129,8 +129,6 @@ pop <-
   select(Jahr, BasisSzenarienCd, VersionArtCd, AlterVCd, SexCd, 
          HerkunftCd, district, AnzBestWir)
 
-
-
 # read naturalization data and adapt structure ----------------------------
 
 # past data
@@ -180,8 +178,6 @@ nat <-
               mutate(VersionArtCd = 3)) %>%
   select(Jahr, BasisSzenarienCd, VersionArtCd, AlterVCd, SexCd, 
          HerkunftCd, district, AnzEinbWir)
-
-
 
 # read demographic data and adapt structure -------------------------------
 
@@ -243,7 +239,6 @@ demo <-
               mutate(VersionArtCd = 3)) %>%
   select(Jahr, BasisSzenarienCd, VersionArtCd, AlterVCd, SexCd, 
          HerkunftCd, district, AnzZuzuWir, AnzWezuWir, AnzSterWir)
-
 
 # control plots -----------------------------------------------------------
 
@@ -312,7 +307,6 @@ pop %>%
   )) %>%
   write_delim(paste0(dwh_path, "DM_BEV.csv"), delim = ";")
 
-
 # capacity and reserves ---------------------------------------------------
 
 # read data, bring to long format and adjust BereichCd
@@ -352,8 +346,6 @@ read_csv(car_path, lazy = FALSE) %>%
           width = 10, height = 8)
 #name = "1594_cap_res")
 
-
-
 # habitation --------------------------------------------------------------
 
 # get list of model output files as input data for DWH
@@ -371,7 +363,6 @@ consumption <- read_csv(read_files[1]) %>%
   add_row(read_csv(read_files[3]) %>%
             mutate(VersionArtCd = 3)) %>%
   rename(WohnungsflProPers = spa_dyw)
-
 
 # occupancy rate 
 read_files <- files_rate[str_detect(files_rate, "allocation_future")]
@@ -407,7 +398,6 @@ apartments <- occupancy %>%
   left_join(pop_dw, by = join_cond) %>%
   mutate(AnzWhgStat = pop / PersProWhg)
 
-
 # plausibility plots
 consumption %>%
   sszplot(aes_x = "year", aes_y = "WohnungsflProPers", aes_col = "VersionArtCd", aes_ltyp = "owner",
@@ -436,7 +426,6 @@ apartments %>%
           quotes = quote(scale_color_manual(labels = c("lower", "middle", "upper"),
                                             values = c("blue", "green", "red"))),
           wrap = "district")
-
 
 # combine datasets and write output
 area %>%

@@ -1,15 +1,13 @@
 # header ------------------------------------------------------------------
 # allocation
 
-
 # paths, general ----------------------------------------------------------
 
-# source(paste0(here::here(), "/1_code/0000_general/general_utils.R"))
-# util_gf()
+# source(paste0(here::here(),"/1_code/0000_general/general_init.R"))
+# init()
 
 # start time
 t0 <- Sys.time()
-
 
 # import, data preparation ------------------------------------------------
 
@@ -19,7 +17,7 @@ aca_dat <- read_csv(spa_od) %>%
   rename(year = StichtagDatJahr, apartments = AnzWhgStat, people = AnzBestWir) %>%
   left_join(look_dis, by = "QuarCd") %>%
   mutate(
-    owner = factor(if_else(EigentuemerSSZPubl3Cd == 1, uni_w[1], uni_w[2]), uni_w),
+    owner = fact_if(EigentuemerSSZPubl3Cd, uni_w),
     district = factor(distr, uni_d)
   ) %>% 
   group_by(year, district, owner) %>% 
@@ -29,30 +27,7 @@ aca_dat <- read_csv(spa_od) %>%
     .groups = "drop") %>% 
   select(year, district, owner, apartments, people)
 
-
-
-# # allocation by year ------------------------------------------------------
-# 
-# # allocation (y)
-# # WHY? e.g. to support the base year decision
-# 
-# aca_y <- group_by(aca_dat, year) %>%
-#   summarize(
-#     apartments = sum_NA(apartments),
-#     people = sum_NA(people)
-#   ) %>%
-#   ungroup() %>%
-#   mutate(aca_y = round(people / apartments, round_aca))
-# 
-# sszplot(aca_y,
-#   aes_x = "year", aes_y = "aca_y",
-#   labs_y = "allocation (people per apartment)",
-#   scale_y = c(0, NA),
-#   name = "1000_allocation_y",
-#   width = 8, height = 5
-# )
-
-
+# plot 1000
 
 # allocation by year and owner --------------------------------------------
 
@@ -65,16 +40,7 @@ aca_yw <- group_by(aca_dat, year, owner) %>%
   ungroup() %>%
   mutate(aca_yw = round(people / apartments, round_aca))
 
-
-# sszplot(aca_yw,
-#   aes_x = "year", aes_y = "aca_yw", aes_col = "owner",
-#   labs_y = "allocation (people per apartment)",
-#   scale_y = c(0, NA),
-#   name = "1001_allocation_yw",
-#   width = 8, height = 5
-# )
-
-
+# plot 1001
 
 # allocation (and apartments, people, by dyw)  ----------------------------
 
@@ -87,36 +53,7 @@ aca_dyw <- group_by(aca_dat, district, year, owner) %>%
   ungroup() %>%
   mutate(aca_dyw = round(people / apartments, round_aca))
 
-# # plot: allocation
-# sszplot(aca_dyw,
-#   aes_x = "year", aes_y = "aca_dyw", aes_col = "owner",
-#   labs_y = "allocation (people per apartment)",
-#   wrap = "district", ncol = 4,
-#   scale_y = c(0, NA),
-#   name = "1002_allocation_dyw",
-#   width = 12, height = 14
-# )
-# 
-# # plot: apartments
-# sszplot(aca_dyw,
-#   aes_x = "year", aes_y = "apartments", aes_col = "owner",
-#   labs_y = "apartments",
-#   wrap = "district", ncol = 4,
-#   scale_y = c(0, NA),
-#   name = "1003_apartments_dyw",
-#   width = 12, height = 14
-# )
-# 
-# # plot: people
-# sszplot(aca_dyw,
-#   aes_x = "year", aes_y = "people", aes_col = "owner",
-#   labs_y = "people",
-#   wrap = "district", ncol = 4,
-#   scale_y = c(0, NA),
-#   name = "1004_people_dyw",
-#   width = 12, height = 14
-# )
-
+# plot 1002, 1003, 1004
 
 # prediction: entire city, by owner ---------------------------------------
 
@@ -148,16 +85,7 @@ aca_yw_past_pred <- as_tibble(expand_grid(
   ) %>%
   mutate(aca_yw_all = if_else(year < scen_begin, aca_yw, pred_roll))
 
-# # plot
-# sszplot(aca_yw_past_pred,
-#   aes_x = "year", aes_y = "aca_yw_all", aes_col = "owner",
-#   labs_y = "allocation (people per apartment)",
-#   i_x = c(aca_base_begin, aca_base_end),
-#   scale_y = c(0, NA),
-#   name = "1005_allocation_prediction_yw",
-#   width = 10, height = 7
-# )
-
+# plot 1005
 
 # prediction: by district and owner ---------------------------------------
 
@@ -190,23 +118,12 @@ aca_dyw_past_pred <- as_tibble(expand_grid(
   ) %>%
   mutate(aca_dyw_all = if_else(year < scen_begin, aca_dyw, pred_roll))
 
-# # plot
-# sszplot(aca_dyw_past_pred,
-#   aes_x = "year", aes_y = "aca_dyw_all", aes_col = "owner",
-#   labs_y = "allocation (people per apartment)",
-#   wrap = "district", ncol = 4,
-#   i_x = c(aca_base_begin, aca_base_end),
-#   scale_y = c(0, NA),
-#   name = "1006_allocation_prediction_dyw",
-#   width = 12, height = 14
-# )
-
+# plot 1006
 
 # prediction: Escher Wyss, by owner ---------------------------------------
 
 # WHY a different approach for the Escher Wyss district, private housing?
 # same approach as in the living space model (see living space code)
-
 # WHY with owner?
 # con_reg function needs groups (so far)
 
@@ -244,17 +161,7 @@ aca_yw_past_pred_52 <- as_tibble(expand_grid(
     district = uni_d[uni_d == "Escher Wyss"]
   )
 
-# # plot
-# sszplot(aca_yw_past_pred_52,
-#   aes_x = "year", aes_y = "aca_dyw_all", aes_col = "owner",
-#   labs_y = "allocation (people per apartment)",
-#   i_x = c(aca_base_begin_52p, aca_base_end),
-#   scale_y = c(0, NA),
-#   name = "1007_allocation_prediction_52yw",
-#   width = 10, height = 7
-# )
-
-
+# plot 1007
 
 # combine the different data sets -----------------------------------------
 
@@ -300,43 +207,7 @@ aca_comb <- aca_prep_dyw %>%
     )
   ))
 
-# # plot: past and prediction
-# sszplot(aca_comb,
-#   aes_x = "year", aes_y = "aca", aes_col = "owner",
-#   labs_y = "allocation (people per apartment)",
-#   wrap = "district", ncol = 4,
-#   i_x = c(spa_base_begin, spa_base_end),
-#   scale_y = c(0, NA),
-#   name = "1008_allocation_prediction_dyw_different-datasets",
-#   width = 12, height = 14
-# )
-# 
-# # plot both (i.e. per district, and entire city)
-# 
-# names_before <- c("aca_dyw", "aca_yw", "aca")
-# names_plot <- c("by district", "entire city", "prediction")
-# 
-# aca_both <- select(aca_comb, district, year, owner, aca_dyw, aca_yw, aca) %>%
-#   pivot_longer(cols = names_before, names_to = "category", values_to = "aca") %>%
-#   mutate(cat = factor(case_when(
-#     category == names_before[1] ~ names_plot[1],
-#     category == names_before[2] ~ names_plot[2],
-#     TRUE ~ names_plot[3]
-#   ), levels = names_plot))
-# 
-# # same content, different plot
-# sszplot(aca_both,
-#   aes_x = "year", aes_y = "aca", aes_col = "cat",
-#   grid = c(".", "owner"),
-#   labs_y = "allocation (people per apartment)",
-#   i_x = c(spa_base_begin, spa_base_end),
-#   scale_y = c(0, NA),
-#   name = "1009_allocation_dyw-yw",
-#   width = 8, height = 4,
-#   multi = uni_d
-# )
-
-
+# plots 1008, 1009
 
 # export the results ------------------------------------------------------
 
