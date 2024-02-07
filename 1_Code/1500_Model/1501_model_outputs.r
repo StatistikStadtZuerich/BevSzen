@@ -6,6 +6,9 @@
 # source(paste0(here::here(),"/1_code/0000_general/general_init.R"))
 # init()
 
+# start time
+t0 <- Sys.time()
+
 # data import: past -------------------------------------------------------
 
 # population
