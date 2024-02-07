@@ -46,7 +46,12 @@ check_eq <- function(current, freeze) {
     a <- read_csv(current[i], show_col_types = FALSE)
     b <- read_csv(freeze[i], show_col_types = FALSE)
     
-    check <- all_equal(a, b, ignore_row_order = FALSE)
+    a <- a %>%
+      mutate(across(where(is.numeric), \(x) round(x, digits = 10)))
+    b <- b %>%
+      mutate(across(where(is.numeric), \(x) round(x, digits = 10)))
+    
+    check <- all.equal(a, b, ignore_row_order = FALSE)
     
     if (!isTRUE(check)) {
       out[i] <- paste("files not equal:",
