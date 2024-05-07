@@ -1,4 +1,4 @@
-﻿category;parameter;parameter_old;lower;middle;middle_birth_low;middle_birth_up;upper;unit;relevance;description
+﻿category;parameter;parameter_old;lower;middle;middle_birth_lower;middle_birth_upper;upper;unit;relevance;description
 time;date_start;daten.beginn;1993;1993;1993;1993;1993;year;no parameter (strictly speaking);begin of data
 time;date_end;daten.ende;2023;2023;2023;2023;2023;year;no parameter (strictly speaking);end of data
 time;scen_begin;szen.beginn;2024;2024;2024;2024;2024;year;no parameter (strictly speaking);future: begin
@@ -61,8 +61,8 @@ birth;bir_thres_const;geb.anz.rate.const;25;25;25;25;25;persons;low;age distribu
 birth;bir_thres_value;geb.wert.rate.const;0;0;0;0;0;birth per woman and year in %;low;birth rate: if there are less women than a certain threshold (bir_thres_const)  a constant fertility rate is used. The values is chosen with this parameter.
 birth;bir_fer_span;no parameter in previous model;0.3;0.3;0.3;0.3;0.3;no unit;low;"proportion of data points used in the LOESS regressions of fertility by age; groups: district, year, origin"
 birth;bir_prop_trend;geb.anteil.trend;0;0;0;0;0;percent;medium;"trend in addition to the mean; 20% means, 20% of the difference between trend and mean is added to the mean."
-birth;bir_thres_percent;geb.grenze.prozent;30;30;30;30;30;percent;low;"It is not realistic that the fertility rate changes dramatically (i.e. tenfold increase). Therefore, this threshold regulates the range of potential future fertility rates (change in percent of mean; e.g. +/- 20%)."
-birth;bir_mult;;1;1;0.9;1.1;1;no unit;medium;"birth rate multiplier; the future birth rates are multiplied by this factor (with OFS TFR: 1.55/1.4 = 1.1; 1.25/1.4 = 0.9)"
+birth;bir_thres_percent;geb.grenze.prozent;20;20;20;20;20;percent;low;"It is not realistic that the fertility rate changes dramatically (i.e. tenfold increase). Therefore, this threshold regulates the range of potential future fertility rates (change in percent of mean; e.g. +/- 20%)."
+birth;bir_mult;;1;1;0.8;1.2;1;no unit;medium;"birth rate multiplier; the future birth rates are multiplied by this factor (compare to OFS TFR prediction run 2024 for the year 2050: 1.55/1.4 = 1.1; 1.25/1.4 = 0.9)"
 birth;bir_window_thres;geb.window.grenz;13;13;13;13;13;years;low;filter over years (to smooth a potential break in the curve due to range of future fertility rates: bir_thres_percent).
 birth;bir_lower_thres;no parameter in previous model;0;0;0;0;0;percent per year;low;lower threshold for the rate (e.g. the birth rate should not be negative), NA if there is no lower threshold
 birth;bir_upper_thres;no parameter in previous model;NA;NA;NA;NA;NA;percent per year;low;upper threshold for the rate, NA if there is no upper threshold
@@ -199,10 +199,3 @@ housing model;empty_private;similar to wohn.modell.anteil.leerwhg;0;0;0;0;0;perc
 demography and housing model;less_ims;similar to mod.ant.zuz (in the previous model only one parameter for both situations: less or more living space available);75;75;75;75;75;percent;high;less living space available (according to reserves, compared to trend calcuation). Then immigration* is decreased, and emigration* increased. This parameter determines how much of the difference is compensated by changes of immigration* (the remainder is corrected with emigration*)
 demography and housing model;more_ims;similar to mod.ant.zuz (in the previous model only one parameter for both situations: less or more living space available);50;50;50;50;50;percent;high;more living space available (according to reserves, compared to trend calcuation). Then immigration* is increased, and emigration* decreased. This parameter determines how much of the difference is compensated by changes of immigration* (the remainder is corrected with emigration*)
 demography and housing model;deh_span;no parameter in previous model;0.04;0.04;0.04;0.04;0.04;no unit;medium;"in future population: proportion of data points used in the LOESS regressions by age; groups: district, year, sex, origin"
-;;;;;;;;;;
-;;;;;;;;;;
-;;;;;;;;;;
-;;;;;;;;;;
-;;;;;;;;;;
-;;;;1.55;1.4;0.15;1.107142857;;;
-;;;;1.25;1.4;-0.15;0.892857143;;;
