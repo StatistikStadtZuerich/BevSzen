@@ -3,7 +3,7 @@
 
 # paths, general ----------------------------------------------------------
 
-# source(paste0(here::here(),"/1_code/0000_general/general_init.R"))
+source(paste0(here::here(),"/1_code/0000_general/general_init.R"))
 # init()
 
 # start time
