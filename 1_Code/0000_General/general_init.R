@@ -11,6 +11,7 @@
 #'
 #' @examples util_gf("lower")
 init <- function(i_scen = "middle", var_file = "/2_Data/3_Parameter/variables.yml"){
+  
   # packages
   require(tidyverse)
   require(dvmisc) # for expand_grid
@@ -38,7 +39,7 @@ init <- function(i_scen = "middle", var_file = "/2_Data/3_Parameter/variables.ym
   
   # import parameters
   para <- read_delim(paste0(here::here(), vars$para_file), ";", lazy = FALSE) %>%
-    select(parameter, lower, middle, upper) %>%
+    select(parameter, lower, middle, middle_birth_lower, middle_birth_upper, upper) %>%
     pivot_longer(cols = lower:upper, names_to = "scenario") %>%
     filter(scenario == i_scen) %>%
     select(parameter, value)
