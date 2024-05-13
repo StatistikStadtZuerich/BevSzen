@@ -44,7 +44,7 @@ init <- function(i_scen = "middle", var_file = "/2_Data/3_Parameter/variables.ym
     filter(scenario == i_scen) %>%
     select(parameter, value)
   
-  # read parameters (depend on scenario)
+  # read parameters (depending on scenario)
   for (i_para in 1:nrow(para)) {
     assign(para$parameter[i_para], para$value[i_para], envir = .GlobalEnv)
   }
@@ -166,7 +166,7 @@ init <- function(i_scen = "middle", var_file = "/2_Data/3_Parameter/variables.ym
   # relocation functions
   source(paste0(vars$code_path, "/0000_general/general_relocation-function.r"))
      
-  # general stuff (with dependency on parameters) ----------------------------------
+  # general objects with dependency on parameters ----------------------------------
   
   # path for results
   vars$res_path <- paste0(vars$res_path, i_scen)
