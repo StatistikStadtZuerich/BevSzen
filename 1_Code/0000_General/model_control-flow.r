@@ -5,7 +5,7 @@ time_start <- Sys.time()
 
 # run_scen(
 #     scenarios = c("lower", "middle", "upper"),
-#     modules = c("all"))
+#     modules = c("bir"))
 
 # run_scen(
 #     scenarios = c("lower", "middle", "upper"),
