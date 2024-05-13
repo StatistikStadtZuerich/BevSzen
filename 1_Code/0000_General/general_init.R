@@ -27,6 +27,7 @@ init <- function(i_scen = "middle", var_file = "/2_Data/3_Parameter/variables.ym
   require(quarto) #for programmatically rendering quarto
   require(rlang) # for functions: symbols, quasiquotation (!!, !!!, :=)  
   require(scales) # for pretty axis breaks  
+  require(this.path) #for this.dir function
   require(tidyverse) #tidyverse functionality
   require(zoo) # moving average (no confusion with filter function in base R)  
 
@@ -61,7 +62,6 @@ init <- function(i_scen = "middle", var_file = "/2_Data/3_Parameter/variables.ym
   vars$look_dis <- read_csv2(paste0(here::here(), vars$dis_file), lazy = FALSE) %>%
     select(QuarCd, distr)
 
-  
   vars$look_reg <- mutate(vars$look_dis, distnum = if_else(distr == "Kreis 1", 10, as.numeric(QuarCd))) %>%
     select(distnum, distr) %>%
     unique() %>%
@@ -169,6 +169,9 @@ init <- function(i_scen = "middle", var_file = "/2_Data/3_Parameter/variables.ym
   # relocation functions
   source(paste0(vars$code_path, "/0000_general/general_relocation-function.r"))
      
+  
+  
+  
   # general objects with dependency on parameters ----------------------------------
   
   # path for results
