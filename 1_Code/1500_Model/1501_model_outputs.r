@@ -42,6 +42,7 @@ bir_past <- read_csv(bir_od) %>%
             .groups = "drop") %>%
   mutate(scenario = uni_c[1])
 
+
 # deaths
 dea_past <- read_csv(dea_od) %>%
   rename(year = EreignisDatJahr, age = AlterVCd, dea = AnzSterWir) %>%
@@ -174,6 +175,7 @@ bir_middle <- read_csv(paste0(data_path, "5_Outputs/middle/births_future.csv")) 
 
 bir_upper <- read_csv(paste0(data_path, "5_Outputs/upper/births_future.csv")) %>%
   mutate(scenario = uni_c[4])
+
 
 # demographic processes
 dem_lower <- read_csv(paste0(data_path, "5_Outputs/lower/demographic-processes_future.csv")) %>%
