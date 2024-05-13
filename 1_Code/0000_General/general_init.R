@@ -13,21 +13,21 @@
 init <- function(i_scen = "middle", var_file = "/2_Data/3_Parameter/variables.yml"){
   
   # packages
-  require(tidyverse)
+  require(ckanr) # download of open data directly from ckan  
   require(dvmisc) # for expand_grid
-  require(gridExtra) # for ggplot on multiple pages
-  require(nlme) # needed for mgcv, see below
-  require(mgcv) # for gam
-  require(flexclust) # weighted kmeans clustering
-  require(ggrepel) # to label lines (when too many for a normal legend)
-  require(zoo) # moving average (no confusion with filter function in base R)
-  require(ckanr) # download of open data directly from ckan
-  require(scales) # for pretty axis breaks
-  require(rlang) # for functions: symbols, quasiquotation (!!, !!!, :=)
-  require(gtools) # invalid function (to check for NA, NULL, NaN), e.g. in constrained regression
-  # require(this.path) # to extract the current file name
-  require(modelr) # add_predictions
+  require(flexclust) # weighted kmeans clustering  
+  require(ggrepel) # to label lines (when too many for a normal legend)  
+  require(gridExtra) # for ggplot on multiple pages  
+  require(gtools) # invalid function (to check for NA, NULL, NaN), e.g. in constrained regression  
+  require(mgcv) # for gam   
+  require(modelr) # add_predictions  
+  require(nlme) # needed for mgcv  
   require(quarto) #for programmatically rendering quarto
+  require(rlang) # for functions: symbols, quasiquotation (!!, !!!, :=)  
+  require(scales) # for pretty axis breaks  
+  require(tidyverse) #tidyverse functionality
+  require(zoo) # moving average (no confusion with filter function in base R)  
+
   
   # no scientic notation
   options(scipen = 999)
