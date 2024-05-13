@@ -10,6 +10,8 @@
 #' @export
 #'
 #' @examples util_gf("lower")
+
+
 init <- function(i_scen = "middle", var_file = "/2_Data/3_Parameter/variables.yml"){
   
   # packages
@@ -54,6 +56,7 @@ init <- function(i_scen = "middle", var_file = "/2_Data/3_Parameter/variables.ym
   
 
   # create variables --------------------------------------------------------
+  
   # lookup tables
   vars$look_dis <- read_csv2(paste0(here::here(), vars$dis_file), lazy = FALSE) %>%
     select(QuarCd, distr)
@@ -203,7 +206,7 @@ init <- function(i_scen = "middle", var_file = "/2_Data/3_Parameter/variables.ym
   # color for year (base period)
   vars$col_y_base <- colorRampPalette(vars$col_6)(length(vars$uniy_bir_base))
   
-  # colour for time distributions
+  # colors for time distributions
   vars$col_time <- c(
     rep(vars$col_grey, length(vars$uniy_bir_base)),
     colorRampPalette(vars$col_6[1:5])(length(vars$uniy_scen))
