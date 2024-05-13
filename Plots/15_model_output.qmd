@@ -394,7 +394,7 @@ pop_dy_new_sel %>%
 
 ## birth
 
-### by year and scenario
+### by year and scenario (main scenarios)
 
 ```{r}
 #| label: fig-1520
@@ -418,6 +418,22 @@ bir %>%
           name = plot_name("1520_bir_yc")
   )
 ```
+
+
+### by year an version (middle scenario)
+
+```{r}
+#| label: fig-1520a
+#| fig-cap: births by year and version 
+
+
+
+
+
+```
+
+
+
 
 ### by year, origin and scenario
 
