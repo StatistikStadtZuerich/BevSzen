@@ -3,9 +3,9 @@ params <- init("middle_birth_upper")
 
 time_start <- Sys.time()
 
-# run_scen(
-#     scenarios = c("lower", "middle", "middle_birth_lower", "middle_birth_upper", "upper"),
-#     modules = c("out"))
+run_scen(
+    scenarios = c("middle"),
+    modules = c("pro"))
 
 Sys.time() - time_start
 
