@@ -28,7 +28,7 @@ own_dat <- read_csv(paste0(exp_path, "/ownership_past_future.csv"), lazy = FALSE
 
 # population
 # why population not from the housing open data file?
-# there only people in apartments (and not in care centers etc)
+# this file only contains people in apartments (and not in care centers etc)
 # the population number in the housing open data is below the total
 # amount of people in Zurich
 
