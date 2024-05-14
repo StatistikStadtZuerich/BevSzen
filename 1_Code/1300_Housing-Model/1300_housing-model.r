@@ -28,7 +28,7 @@ own_dat <- read_csv(paste0(exp_path, "/ownership_past_future.csv"), lazy = FALSE
 
 # population
 # why population not from the housing open data file?
-# there only people in apartments (and not in care centers etc)
+# this file only contains people in apartments (and not in care centers etc)
 # the population number in the housing open data is below the total
 # amount of people in Zurich
 
@@ -299,7 +299,7 @@ pop_all <- pop_fut_past %>%
 
 # per district and ownership
 write_csv(pop_fut_past %>% arrange(district, year, owner),
-          paste0(exp_path, "/housing_model_population_dw"))
+          paste0(exp_path, "/housing_model_population_dw.csv"))
 
 # per district
 ex_data_d <- arrange(pop_d, district, year)

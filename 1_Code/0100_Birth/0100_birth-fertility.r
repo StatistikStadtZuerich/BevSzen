@@ -3,7 +3,7 @@
 
 # paths, general ----------------------------------------------------------
 
-# source(paste0(here::here(),"/1_code/0000_general/general_init.R"))
+source(paste0(here::here(),"/1_code/0000_general/general_init.R"))
 # init()
 
 # start time
@@ -162,7 +162,9 @@ fer_pred <- con_reg(
   left_join(select(fer_dyao, district, year, age, origin, fer_dyao),
     by = c("district", "year", "age", "origin")
   ) %>%
-  mutate(fer_all = if_else(year <= bir_base_end, fer_dyao, pred_roll))
+  mutate(fer_all = if_else(year <= bir_base_end, fer_dyao, pred_roll * bir_mult))
+
+
 
 # plot 0140: the predictions: age distribution by district and year
 
