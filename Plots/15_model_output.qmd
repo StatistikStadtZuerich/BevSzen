@@ -420,21 +420,6 @@ bir %>%
 ```
 
 
-### by year an version (middle scenario)
-
-```{r}
-#| label: fig-1520a
-#| fig-cap: births by year and version 
-
-
-
-
-
-```
-
-
-
-
 ### by year, origin and scenario
 
 ```{r}
@@ -452,6 +437,37 @@ bir %>%
           name = plot_name("1521_bir_yoc")
   )
 ```
+
+### by year and birth version (middle scenario)
+
+```{r}
+#| label: fig-1521a
+#| fig-cap: births by year and birth version (middle scenario)
+
+# past and future (birth versions)
+bir_ver <- bir_past |> 
+  bind_rows(bir_middle) |> 
+  bind_rows(bir_middle_birth_lower) |> 
+  bind_rows(bir_middle_birth_upper) |> 
+  mutate(scenario = factor(scenario, levels = uni_cb),
+         sex = factor(sex, levels = uni_s),
+         origin = factor(origin, levels = uni_o))
+
+bir_ver |> 
+  group_by(year, scenario) |> 
+  summarize(bir = sum(bir), .groups = "drop") |> 
+  sszplot(aes_x = "year", aes_y = "bir", aes_col = "scenario",
+          labs_y = "births per year",
+          scale_y = c(0, NA),
+          name = plot_name("1521a_bir_ver_yc")
+  )
+
+```
+
+
+
+
+
 
 ### by district, year and origin
 
