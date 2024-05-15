@@ -146,7 +146,7 @@ fer_fit <- arrange(fer_tail, district, year, origin, age) %>%
 # constrained regression
 # (proportion of linear model and mean, within bandwidth)
 
-fer_pred <- con_reg(
+fer_pred_temp <- con_reg(
   data = fer_fit, x = "year", y = "fer_fit",
   group_cols = c("district", "age", "origin"),
   window = bir_window_thres, base_t0 = bir_base_begin,
@@ -162,8 +162,22 @@ fer_pred <- con_reg(
   left_join(select(fer_dyao, district, year, age, origin, fer_dyao),
     by = c("district", "year", "age", "origin")
   ) %>%
-  mutate(fer_all = if_else(year <= bir_base_end, fer_dyao, pred_roll * bir_mult))
+  mutate(fer_all_temp = if_else(year <= bir_base_end, fer_dyao, pred_roll))
 
+
+# fertility multiplier ----------------------------------------------------
+
+# multiplier by year
+fer_mult_dat <- tibble(year = c(scen_begin, scen_end),
+                       mult = c(bir_mult_begin, bir_mult_end))
+
+fer_mult <- tibble(year = scen_begin:scen_end) |> 
+  add_predictions(lm(mult ~ year, data = fer_mult_dat), var = "mult")
+
+# fertility rates with multiplier
+fer_pred <- fer_pred_temp |> 
+  left_join(fer_mult, by = "year") |> 
+  mutate(fer_all = fer_all_temp * mult)
 
 
 # plot 0140: the predictions: age distribution by district and year
