@@ -479,6 +479,12 @@ pop_ver <- pop_past |>
          origin = factor(origin, levels = uni_o)) |> 
   select(-sex)
 
+# TFR by year and birth version
+
+
+
+
+
 
 ```
 
