@@ -3,7 +3,7 @@
 
 # paths, general ----------------------------------------------------------
 
-source(paste0(here::here(),"/1_code/0000_general/general_init.R"))
+# source(paste0(here::here(),"/1_code/0000_general/general_init.R"))
 # init()
 
 # start time
@@ -177,7 +177,7 @@ pred_fit <- filter(fer_pred, year >= scen_begin) %>%
   arrange(district, year, origin, age) %>%
   group_by(district, year, origin) %>%
   mutate(pred_fit = pmax(0, predict(
-    loess(pred_roll ~ age, span = bir_fer_span_pred, degree = 1, na.action = na.aggregate)
+    loess(fer_all ~ age, span = bir_fer_span_pred, degree = 1, na.action = na.aggregate)
   ))) %>%
   ungroup()
 
