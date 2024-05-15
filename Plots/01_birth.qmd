@@ -7,7 +7,7 @@
 # source general functions
 if (!exists("i_scen")) {
   source(paste0(here::here(), "/1_code/0000_general/general_init.R"))
-  params <- init("middle_birth_upper")
+  params <- init("middle_birth_lower")
 }
 
 # run the scenario
