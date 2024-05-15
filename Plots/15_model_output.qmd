@@ -467,21 +467,34 @@ bir_ver |>
 ```{r}
 
 #| label: fig-1521b
-#| fig-cap: TFR by year and birth version (middle scenario)
+#| fig-cap: fertility rate by year and birth version (middle scenario)
 
-# population: past and future (birth versions)
-pop_ver <- pop_past |> 
+# population: past and future (for birth versions)
+pop_ver_yc <- pop_past |> 
   bind_rows(pop_middle) |> 
   bind_rows(pop_middle_birth_lower) |> 
   bind_rows(pop_middle_birth_upper) |> 
   filter((sex == uni_s[2]) & (age >= bir_age_begin) & (age <= bir_age_end)) |> 
-  mutate(scenario = factor(scenario, levels = uni_cb),
-         origin = factor(origin, levels = uni_o)) |> 
-  select(-sex)
+  mutate(scenario = factor(scenario, levels = uni_cb)) |> 
+  group_by(year, scenario) |> 
+  summarize(pop = sum_NA(pop), .groups = "drop")
+  
 
-# TFR by year and birth version
+# births (for birth versions)
+bir_ver_yc <- bir_ver |> 
+  group_by(year, scenario) |> 
+  summarize(bir = sum_NA(bir), .groups = "drop")  
 
-
+# fertility rate
+pop_ver_yc |> 
+  left_join(bir_ver_yc, by = c("year", "scenario")) |> 
+  mutate(fer_yc = bir / pop * 100) |> 
+  sszplot(
+    aes_x = "year", aes_y = "fer_yc", aes_col = "scenario",
+    labs_y = "fertility rate (in % per year)", 
+    scale_y = c(0, NA),
+    name = plot_name("1521b_fer_ver_yc")
+  )
 
 
 
