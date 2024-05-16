@@ -13,12 +13,26 @@ t0 <- Sys.time()
 
 # projects (apartments, dyw)
 pro_dat <- read_csv(paste0(exp_path, "/projects_future.csv"), lazy = FALSE)
+# pro_dat[pro_dat$district == "Seebach" & pro_dat$year == 2024,]$apartments <- 1000 # test input
 
 # allocation (persons per apartment, dyw)
 aca_dat <- read_csv(paste0(exp_path, "/allocation_future.csv"), lazy = FALSE)
 
-# capacity/reserves (m2, dyw)
-car_dat <- read_csv(paste0(exp_path, "/usage_area.csv"), lazy = FALSE)
+# ---- for testing reasons: new car_dat ------- 
+which_car_dat <- "cut"
+
+if(which_car_dat == "mixed"){
+  car_dat <- read_csv(paste0(exp_path, "/usage_area.csv"), lazy = FALSE)
+  car_suffix  = "mixed"
+} else if(which_car_dat == "cutout"){
+  car_dat <- read_csv(paste0(exp_path, "/usage_area_cut.csv"), lazy = FALSE)
+  car_dat <- car_dat %>% filter(year != 2023)
+  car_suffix  = "cut"
+} else if(which_car_dat == "plain"){
+  car_dat <- read_csv(paste0(exp_path, "/usage_area.csv"), lazy = FALSE)
+  car_suffix  = "plain"
+}
+# ---- for testing reasons: new car_dat ------- 
 
 # living space (m2 per person, dyw)
 spa_dat <- read_csv(paste0(exp_path, "/living-space_future.csv"), lazy = FALSE)
@@ -32,6 +46,7 @@ own_dat <- read_csv(paste0(exp_path, "/ownership_past_future.csv"), lazy = FALSE
 # the population number in the housing open data is below the total
 # amount of people in Zurich
 
+# dy (y=past years)
 pop <- read_csv(pop_od, lazy = FALSE) %>%
   rename(year = StichtagDatJahr, pop = AnzBestWir) %>%
   left_join(look_dis, by = "QuarCd") %>%
@@ -45,7 +60,9 @@ pop <- read_csv(pop_od, lazy = FALSE) %>%
 
 # projects and allocation (from apartments to people; future) -------------
 
-# calculate amount of people
+# calculate amount of people from 
+# - projects 'pro' (num of apartments)
+# - allocation 'aca' (number of pop per apartment)
 pro_aca <- left_join(pro_dat, aca_dat,
   by = c("district", "year", "owner")
 ) %>%
@@ -61,6 +78,9 @@ pro_aca <- left_join(pro_dat, aca_dat,
 # combine: calculate amount of people
 # units: ha * 10,000 m2/ha / (m2/person) = person
 
+# calculate amount of people from ...
+# - capacity 'car' (area)
+# - living space 'spa' (area consumption)
 car_spa <- left_join(car_dat, spa_dat,
   by = c("district", "year", "owner")
 ) %>%
@@ -90,8 +110,7 @@ pop_last <- filter(pop_w, year == date_end)
 
 # proportion of cooperative housing according to capacity/reserves
 # capacity/reserves contains only people due to additional (!) yearly (!) usage of reserves
-# therefore, add the cumulative values to the past population
-
+# __therefore, add the cumulative values to the past population__
 pop_total <- car_spa %>%
   arrange(district, owner, year) %>%
   group_by(district, owner) %>%
@@ -104,11 +123,8 @@ pop_total <- car_spa %>%
   select(district, year, owner, total) %>%
   rename(pop = total)
 
-# with past (for plot)
-# why? for plotting
-# why a plot? to check if capacity/reserves population values are...
-# ...meaningful in comparison to the past
-
+# row-binding past_pop and pop_total (which is today's pop + cumulative car_spa)
+# Why doing so? > For plotting reasons, to for plotting to check if capacity/reserves population values are meaningful in comparison to the past
 pop_with_past <- bind_rows(pop_w, pop_total) %>%
   rename(distr = district) %>%
   mutate(district = factor(distr, uni_d)) %>%
@@ -116,7 +132,8 @@ pop_with_past <- bind_rows(pop_w, pop_total) %>%
 
 # plot 1300
 
-# proportion cooperative housing (according to capacity/reserves vs. district trends)
+# Calculating proportion of cooperative housing from pop_with past and compare it to district trends
+# Out: past-future years with proportion of cooperative housing
 prop_coop <- pop_with_past %>%
   mutate(simple = if_else(owner == uni_w[1], "cooperative", "private")) %>%
   select(-owner) %>%
@@ -128,13 +145,15 @@ prop_coop <- pop_with_past %>%
 
 # plot 1301
 
-# new proportion of cooperative housing; apply the parameter (% from capacity/reserves)
+# Calculating new proportion of cooperative housing based on parameter 'car_coop'
+# car_coop > (% from capacity/reserves)
 new_prop <- prop_coop %>%
   mutate(prop = prop_car * car_coop / 100 + prop_trend * (1 - car_coop / 100)) %>%
   filter(year >= scen_begin) %>%
   select(district, year, prop)
 
-# apply the new proportion
+
+# Apply the new proportion to pop_total (which is today's pop + cumulative car_spa)
 new_pop_car <- pop_total %>%
   group_by(district, year) %>%
   summarize(pop = sum(pop),
@@ -155,7 +174,8 @@ new_pop_car <- pop_total %>%
 
 # combine: projects and capacity (with new prop of cooperative) -----------
 
-# combine
+# Combining all prepared data in one tibble
+# doy with pop (current year), new, removed and car (from capacity)
 pro_car <- as_tibble(expand_grid(
   district = uni_d,
   year = date_end:scen_end,
@@ -168,9 +188,11 @@ pro_car <- as_tibble(expand_grid(
   select(district, owner, year, pop, new, removed, car) %>%
   arrange(district, owner, year)
 
+
 # function: consider projects and reserves --------------------------------
 
 # consider projects and reserves
+# 
 project_reserves <- function(x, ...) {
 
   # maximum usage of the capacity, plus population
@@ -251,11 +273,48 @@ x <- filter(pro_car, (district == "Escher Wyss") & (owner == "private housing"))
 plot(x$year, x$car, type = "o")
 project_reserves(x)
 
-# consider projects and reserves (apply the function)
-pro_res_all <- pro_car %>%
-  group_split(district, owner) %>%
-  map(project_reserves) %>%
-  bind_rows()
+if(which_car_dat == "mixed"){
+  # consider projects and reserves (apply the function)
+  pro_res_all <- pro_car %>%
+    group_split(district, owner) %>%
+    map(project_reserves) %>%
+    bind_rows()
+  pro_res_all$variant <- "mixed"
+  pro_res_all_mixed <- pro_res_all
+  
+} else if(which_car_dat == "cut"){
+  
+  pro_res_all <- pro_car %>%
+    arrange(district, owner, year) %>%
+    mutate_all(~replace_na(., 0)) %>%
+    mutate(pop_new = pop + new - removed + car) %>%
+    select(-pop, - new, -removed,-car) %>%
+    rename(pop = pop_new) 
+  
+  pro_res_all$variant <- "cutout"
+  pro_res_all_cutout <- pro_res_all
+  
+} else if(which_car_dat == "plain"){
+  pro_res_all <-  pro_car %>%
+    select(-pop) %>%
+    rename(pop = car) %>% 
+    select( - new, -removed)
+  
+  pro_res_all$variant <- "plain"
+  pro_res_all_plain <- pro_res_all
+  
+}
+
+
+# testing variants -------------------------------------------------------->
+
+pro_res_all <- rbind(pro_res_all_mixed, pro_res_all_cutout, pro_res_all_plain)
+
+ggplot(pro_res_all %>% filter(owner == "cooperative housing") , aes(year, pop, color = variant)) + 
+  geom_line() + facet_wrap(~district) + theme_minimal()
+
+# testing variants --------------------------------------------------------<
+
 
 # apply the parameter of empty apartments ---------------------------------
 
@@ -297,18 +356,20 @@ pop_all <- pop_fut_past %>%
 
 # export the results ------------------------------------------------------
 
+
+
 # per district and ownership
 write_csv(pop_fut_past %>% arrange(district, year, owner),
-          paste0(exp_path, "/housing_model_population_dw"))
+          paste0(exp_path, "/housing_model_population_dw",car_suffix,".csv"))
 
 # per district
 ex_data_d <- arrange(pop_d, district, year)
-write_csv(ex_data_d, paste0(exp_path, "/housing-model_population_d.csv"))
+write_csv(ex_data_d, paste0(exp_path, "/housing-model_population_d",car_suffix,".csv"))
 
 
 # entire city (to compare with past publications)
 ex_data_all <- arrange(pop_all, year)
-write_csv(ex_data_all, paste0(exp_path, "/housing-model_population_all.csv"))
+write_csv(ex_data_all, paste0(exp_path, "/housing-model_population_all",car_suffix,".csv"))
 
 # log info
 cat_log(paste0(
