@@ -169,10 +169,17 @@ fer_pred_temp <- con_reg(
 
 # multiplier by year
 fer_mult_dat <- tibble(year = c(scen_begin, scen_end),
-                       mult = c(bir_mult_begin, bir_mult_end))
+                       mult = c(bir_mult_begin, bir_mult_end)) |> 
+  mutate(year_new = (year - scen_begin + 1)^bir_mult_exp)
 
 fer_mult <- tibble(year = scen_begin:scen_end) |> 
-  add_predictions(lm(mult ~ year, data = fer_mult_dat), var = "mult")
+  mutate(year_new = (year - scen_begin + 1)^bir_mult_exp) |> 
+  add_predictions(lm(mult ~ year_new, data = fer_mult_dat), var = "mult")
+
+# ggplot(fer_mult) + 
+#   geom_point(aes(x = year, y = mult))
+
+
 
 # fertility rates with multiplier
 fer_pred <- fer_pred_temp |> 
