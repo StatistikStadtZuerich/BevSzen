@@ -438,7 +438,7 @@ bir %>%
   )
 ```
 
-### by year and birth versions (middle scenario)
+### births by year and birth versions (middle scenario)
 
 ```{r}
 #| label: fig-1521a
@@ -463,6 +463,8 @@ bir_ver |>
   )
 
 ```
+
+### fertility rate by year and birth versions (middle scenario)
 
 ```{r}
 
@@ -501,6 +503,47 @@ pop_ver_yc |>
 
 ```
 
+### TFR by year and birth versions (middle scenario)
+
+```{r}
+#| label: fig-1521c
+#| fig-cap: TFR by year and birth version (middle scenario)
+
+# population: past and future (for birth versions)
+pop_ver_yac <- pop_past |> 
+  bind_rows(pop_middle) |> 
+  bind_rows(pop_middle_birth_lower) |> 
+  bind_rows(pop_middle_birth_upper) |> 
+  filter((sex == uni_s[2]) & (age >= bir_age_begin) & (age <= bir_age_end)) |> 
+  mutate(scenario = factor(scenario, levels = uni_cb)) |> 
+  group_by(year, age, scenario) |> 
+  summarize(pop = sum_NA(pop), .groups = "drop")
+
+# births (for birth versions)
+bir_ver_yac <- bir_ver |> 
+  rename(age = age_mother) |> 
+  group_by(year, age, scenario) |> 
+  summarize(bir = sum_NA(bir), .groups = "drop")  
+
+
+# TFR
+pop_ver_yac |> 
+  left_join(bir_ver_yac, by = c("year", "age", "scenario")) |> 
+  replace_na(list(bir = 0)) |>  
+  mutate(fer_yac = bir / pop) |> 
+  group_by(year, scenario) |> 
+  summarize(tfr = sum_NA(fer_yac), .groups = "drop") |>   
+  sszplot(
+    aes_x = "year", aes_y = "tfr", aes_col = "scenario",
+    labs_y = "TFR", 
+    scale_y = c(0, NA),
+    name = plot_name("1521c_tfr_ver_yc")
+  )
+
+
+
+
+```
 
 
 
