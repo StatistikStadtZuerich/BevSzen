@@ -29,15 +29,15 @@ pop_past <- read_csv(pop_od) %>%
 
 # births
 bir_past <- read_csv(bir_od) %>%
-  rename(year = EreignisDatJahr, bir = AnzGebuWir) %>%
+  rename(year = EreignisDatJahr, age_mother = AlterVMutterCd, bir = AnzGebuWir) %>%
   left_join(look_dis, by = "QuarCd") %>%
   mutate(
     district = factor(distr, uni_d),
     sex = fact_if(SexCd, uni_s),
     origin = fact_if(HerkunftCd, uni_o)
   ) %>%
-  select(district, year, sex, origin, bir) %>%
-  group_by(district, year, sex, origin) %>%
+  select(district, year, age_mother, sex, origin, bir) %>%
+  group_by(district, year, age_mother, sex, origin) %>%
   summarize(bir = sum(bir),
             .groups = "drop") %>%
   mutate(scenario = uni_c[1])
