@@ -29,15 +29,15 @@ pop_past <- read_csv(pop_od) %>%
 
 # births
 bir_past <- read_csv(bir_od) %>%
-  rename(year = EreignisDatJahr, bir = AnzGebuWir) %>%
+  rename(year = EreignisDatJahr, age_mother = AlterVMutterCd, bir = AnzGebuWir) %>%
   left_join(look_dis, by = "QuarCd") %>%
   mutate(
     district = factor(distr, uni_d),
     sex = fact_if(SexCd, uni_s),
     origin = fact_if(HerkunftCd, uni_o)
   ) %>%
-  select(district, year, sex, origin, bir) %>%
-  group_by(district, year, sex, origin) %>%
+  select(district, year, age_mother, sex, origin, bir) %>%
+  group_by(district, year, age_mother, sex, origin) %>%
   summarize(bir = sum(bir),
             .groups = "drop") %>%
   mutate(scenario = uni_c[1])
@@ -166,6 +166,16 @@ pop_middle <- read_csv(paste0(data_path, "5_Outputs/middle/population_future.csv
 pop_upper <- read_csv(paste0(data_path, "5_Outputs/upper/population_future.csv")) %>%
   mutate(scenario = uni_c[4])
 
+
+# population for birth scenarios
+pop_middle_birth_lower <- read_csv(paste0(data_path, "5_Outputs/middle_birth_lower/population_future.csv")) %>%
+  mutate(scenario = uni_cb[2])
+
+pop_middle_birth_upper <- read_csv(paste0(data_path, "5_Outputs/middle_birth_upper/population_future.csv")) %>%
+  mutate(scenario = uni_cb[4])
+
+
+
 # births
 bir_lower <- read_csv(paste0(data_path, "5_Outputs/lower/births_future.csv")) %>%
   mutate(scenario = uni_c[2])
@@ -175,6 +185,14 @@ bir_middle <- read_csv(paste0(data_path, "5_Outputs/middle/births_future.csv")) 
 
 bir_upper <- read_csv(paste0(data_path, "5_Outputs/upper/births_future.csv")) %>%
   mutate(scenario = uni_c[4])
+
+
+# births for birth scenarios
+bir_middle_birth_lower <- read_csv(paste0(data_path, "5_Outputs/middle_birth_lower/births_future.csv")) %>%
+  mutate(scenario = uni_cb[2])
+
+bir_middle_birth_upper <- read_csv(paste0(data_path, "5_Outputs/middle_birth_upper/births_future.csv")) %>%
+  mutate(scenario = uni_cb[4])
 
 
 # demographic processes

@@ -51,7 +51,7 @@ pop <- read_csv(pop_od) %>%
 # FSO data (used in the prediction)
 # rate is converted to percent
 mor_fso <- read_csv(dea_fso_od) %>%
-  rename(year = EreignisDatJahr, age = AlterVCd) %>%
+  rename(year = EreignisDatJahr, age = AlterVCd, KategorieCd = KategorieDatenBFSCd) %>%
   filter(HerkunftCd == 0) %>%
   mutate(
     sex = fact_if(SexCd, uni_s),

@@ -69,6 +69,7 @@ text_i: ["new", "removed"]
 
 # past and scenarios
 text_c: ["past", "lower", "middle", "upper"]
+text_cb: ["past", "middle_birth_lower", "middle", "middle_birth_upper"]
 
 
 # categories (t = text) and associated lookup tables ----------------------
