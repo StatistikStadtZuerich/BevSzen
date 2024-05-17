@@ -3,10 +3,8 @@ params <- init("middle_birth_lower")
 
 time_start <- Sys.time()
 
-run_scen(scenarios = c("middle", "middle_birth_lower", "middle_birth_upper"), modules = c("bir"))
-run_scen(scenarios = c("middle", "middle_birth_lower", "middle_birth_upper"), modules = c("deh"))
-
-
+run_scen(scenarios = c("middle", "middle_birth_lower", "middle_birth_upper"), 
+         modules = c("alw"))
 
 Sys.time() - time_start
 
