@@ -151,7 +151,7 @@ out_pop_smooth <- NULL # WHY? for smoothing checks
 # loop over years
 for (iyear in future) {
 
-  # iyear <- 2022
+  # iyear <- 2024
 
   # population at the begin of the year = population at the end of the previous year
   if (iyear == min(future)) {
