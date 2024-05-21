@@ -3,7 +3,7 @@ params <- init("middle") # inits assign directly to global env > doenst need to 
 
 time_start <- Sys.time()
 
-run_scen(scenarios = c("middle"), modules = c("hou"))
+# run_scen(scenarios = c("middle"), modules = c("hou"))
 
 run_scen(scenarios = c("middle"), modules = c("car"))
 run_scen(scenarios = c("middle"), modules = c("spa"))

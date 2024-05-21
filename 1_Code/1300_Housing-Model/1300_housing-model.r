@@ -18,13 +18,14 @@ pro_dat <- read_csv(paste0(exp_path, "/projects_future.csv"), lazy = FALSE)
 # allocation (persons per apartment, dyw)
 aca_dat <- read_csv(paste0(exp_path, "/allocation_future.csv"), lazy = FALSE)
 
-# ---- for testing reasons: new car_dat ------- 
-which_car_dat <- "cut"
+# ---- for testing reasons: new car_dat -------
+
+which_car_dat <- "plain" # mixed # cut # plain
 
 if(which_car_dat == "mixed"){
   car_dat <- read_csv(paste0(exp_path, "/usage_area.csv"), lazy = FALSE)
   car_suffix  = "mixed"
-} else if(which_car_dat == "cutout"){
+} else if(which_car_dat == "cut"){
   car_dat <- read_csv(paste0(exp_path, "/usage_area_cut.csv"), lazy = FALSE)
   car_dat <- car_dat %>% filter(year != 2023)
   car_suffix  = "cut"
@@ -32,6 +33,7 @@ if(which_car_dat == "mixed"){
   car_dat <- read_csv(paste0(exp_path, "/usage_area.csv"), lazy = FALSE)
   car_suffix  = "plain"
 }
+
 # ---- for testing reasons: new car_dat ------- 
 
 # living space (m2 per person, dyw)
@@ -291,8 +293,8 @@ if(which_car_dat == "mixed"){
     select(-pop, - new, -removed,-car) %>%
     rename(pop = pop_new) 
   
-  pro_res_all$variant <- "cutout"
-  pro_res_all_cutout <- pro_res_all
+  pro_res_all$variant <- "cut"
+  pro_res_all_cut <- pro_res_all
   
 } else if(which_car_dat == "plain"){
   pro_res_all <-  pro_car %>%
@@ -302,16 +304,18 @@ if(which_car_dat == "mixed"){
   
   pro_res_all$variant <- "plain"
   pro_res_all_plain <- pro_res_all
-  
 }
 
 
 # testing variants -------------------------------------------------------->
 
-pro_res_all <- rbind(pro_res_all_mixed, pro_res_all_cutout, pro_res_all_plain)
+pro_res_all <- rbind(pro_res_all_mixed, pro_res_all_cut, pro_res_all_plain)
 
 ggplot(pro_res_all %>% filter(owner == "cooperative housing") , aes(year, pop, color = variant)) + 
-  geom_line() + facet_wrap(~district) + theme_minimal()
+  geom_line() + facet_wrap(~district, scales = "free") + theme_minimal()
+
+ggplot(pro_res_all %>% filter(owner == "private housing") , aes(year, pop, color = variant)) + 
+  geom_line() + facet_wrap(~district, scales = "free") + theme_minimal()
 
 # testing variants --------------------------------------------------------<
 
