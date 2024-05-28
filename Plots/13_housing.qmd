@@ -275,6 +275,29 @@ pro_car_dw %>%
   )
 ```
 
+### total people by district comparing variants
+
+```{r}
+#| label: fig-1308
+#| fig-cap: projects and reserves by district; people
+#| fig-width: 10
+#| fig-height: 10
+
+pro_car_dw %>% 
+  group_by(district, cat) %>% 
+  summarize(people = sum_NA(people),
+            .groups = "drop") %>% 
+  sszplot(
+    aes_x = "district", aes_y = "people", aes_fill = "cat",
+    geom = "col",
+    labs_x = "", labs_y = "people",
+    scale_x = rev(uni_d),
+    name = plot_name("1308_projects_reserves_d_people"),
+    width = 8, height = 8
+  )
+```
+
+
 ### total proportion by district
 
 ```{r}
@@ -302,3 +325,4 @@ pro_car_dw %>%
     width = 8, height = 8
   )
 ```
+
