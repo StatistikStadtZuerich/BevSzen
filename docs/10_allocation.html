@@ -1,0 +1,893 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.3.361">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>Plots for population scenarios - 10&nbsp; Allocation</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+</style>
+
+
+<script src="site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="site_libs/quarto-nav/headroom.min.js"></script>
+<script src="site_libs/clipboard/clipboard.min.js"></script>
+<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="site_libs/quarto-search/fuse.min.js"></script>
+<script src="site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="./">
+<link href="./11_projects.html" rel="next">
+<link href="./09_living_space.html" rel="prev">
+<script src="site_libs/quarto-html/quarto.js"></script>
+<script src="site_libs/quarto-html/popper.min.js"></script>
+<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="site_libs/quarto-html/anchor.min.js"></script>
+<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "sidebar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "start",
+  "type": "textbox",
+  "limit": 20,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+<style>html{ scroll-behavior: smooth; }</style>
+
+
+<link rel="stylesheet" href="sszTheme.css">
+</head>
+
+<body class="nav-sidebar docked">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+      <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./10_allocation.html"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Allocation</span></a></li></ol></nav>
+      <a class="flex-grow-1" role="button" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+      </a>
+      <button type="button" class="btn quarto-search-button" aria-label="" onclick="window.quartoOpenSearch();">
+        <i class="bi bi-search"></i>
+      </button>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-full">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal sidebar-navigation docked overflow-auto">
+    <div class="pt-lg-2 mt-2 text-left sidebar-header">
+    <div class="sidebar-title mb-0 py-0">
+      <a href="./">Plots for population scenarios</a> 
+    </div>
+      </div>
+        <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="sidebar-search">
+        <div id="quarto-search" class="" title="Search"></div>
+        </div>
+        </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Preface</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./01_birth.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Birth</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./02_death.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Death</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./03_immigration.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Immigration</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./04_emigration.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Emigration</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./05_reloc_immigration.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Relocation on immigration</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./06_reloc_emigration.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Relocation on emigration</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./07_naturalization.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Naturalization</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./08_careb.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Capacity reserves</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./09_living_space.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Living spaces</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./10_allocation.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Allocation</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./11_projects.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Projects</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./12_ownership.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">Ownership</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./13_housing.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">Housing model</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./14_dem_house.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">14</span>&nbsp; <span class="chapter-title">Demography Housing</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./15_model_output.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">15</span>&nbsp; <span class="chapter-title">Model outputs</span></span></a>
+  </div>
+</li>
+    </ul>
+    </div>
+</nav>
+<div id="quarto-sidebar-glass" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Table of contents</h2>
+   
+  <ul>
+  <li><a href="#allocation-yearly" id="toc-allocation-yearly" class="nav-link active" data-scroll-target="#allocation-yearly"><span class="header-section-number">10.1</span> allocation yearly</a>
+  <ul>
+  <li><a href="#entire-city-by-year" id="toc-entire-city-by-year" class="nav-link" data-scroll-target="#entire-city-by-year"><span class="header-section-number">10.1.1</span> entire city by year</a></li>
+  <li><a href="#entire-city-by-year-and-owner" id="toc-entire-city-by-year-and-owner" class="nav-link" data-scroll-target="#entire-city-by-year-and-owner"><span class="header-section-number">10.1.2</span> entire city by year and owner</a></li>
+  <li><a href="#allocation-by-district-year-owner" id="toc-allocation-by-district-year-owner" class="nav-link" data-scroll-target="#allocation-by-district-year-owner"><span class="header-section-number">10.1.3</span> allocation by district, year, owner</a></li>
+  <li><a href="#apartments-by-district-year-owner" id="toc-apartments-by-district-year-owner" class="nav-link" data-scroll-target="#apartments-by-district-year-owner"><span class="header-section-number">10.1.4</span> apartments by district, year, owner</a></li>
+  <li><a href="#people-by-district-year-owner" id="toc-people-by-district-year-owner" class="nav-link" data-scroll-target="#people-by-district-year-owner"><span class="header-section-number">10.1.5</span> people by district, year, owner</a></li>
+  </ul></li>
+  <li><a href="#predictions" id="toc-predictions" class="nav-link" data-scroll-target="#predictions"><span class="header-section-number">10.2</span> predictions</a>
+  <ul>
+  <li><a href="#entire-city-by-owner" id="toc-entire-city-by-owner" class="nav-link" data-scroll-target="#entire-city-by-owner"><span class="header-section-number">10.2.1</span> entire city, by owner</a></li>
+  <li><a href="#entire-city-by-district-and-owner" id="toc-entire-city-by-district-and-owner" class="nav-link" data-scroll-target="#entire-city-by-district-and-owner"><span class="header-section-number">10.2.2</span> entire city, by district and owner</a></li>
+  <li><a href="#escher-wyss-by-owner" id="toc-escher-wyss-by-owner" class="nav-link" data-scroll-target="#escher-wyss-by-owner"><span class="header-section-number">10.2.3</span> Escher Wyss, by owner</a></li>
+  </ul></li>
+  <li><a href="#combine-datasets" id="toc-combine-datasets" class="nav-link" data-scroll-target="#combine-datasets"><span class="header-section-number">10.3</span> combine datasets</a>
+  <ul>
+  <li><a href="#past-and-prediction" id="toc-past-and-prediction" class="nav-link" data-scroll-target="#past-and-prediction"><span class="header-section-number">10.3.1</span> past and prediction</a></li>
+  <li><a href="#plot-both-i.e.-per-district-and-entire-city" id="toc-plot-both-i.e.-per-district-and-entire-city" class="nav-link" data-scroll-target="#plot-both-i.e.-per-district-and-entire-city"><span class="header-section-number">10.3.2</span> plot both (i.e.&nbsp;per district, and entire city)</a></li>
+  </ul></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content page-columns page-full column-body" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Allocation</span></h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+</header>
+
+<div class="cell" data-hash="10_allocation_cache/html/prep_62080647b0fd7b22ae085da86afc9fed">
+
+</div>
+<section id="allocation-yearly" class="level2 page-columns page-full" data-number="10.1">
+<h2 data-number="10.1" class="anchored" data-anchor-id="allocation-yearly"><span class="header-section-number">10.1</span> allocation yearly</h2>
+<section id="entire-city-by-year" class="level3 page-columns page-full" data-number="10.1.1">
+<h3 data-number="10.1.1" class="anchored" data-anchor-id="entire-city-by-year"><span class="header-section-number">10.1.1</span> entire city by year</h3>
+<p>WHY? e.g.&nbsp;to support the base year decision</p>
+<div class="cell page-columns page-full" data-hash="10_allocation_cache/html/fig-1000_7d0014281d619701be9c94af2a06d16c">
+<div class="cell-output-display column-body page-columns page-full">
+<div id="fig-1000" class="quarto-figure quarto-figure-center column-body anchored page-columns page-full">
+<figure class="figure page-columns page-full">
+<p class="page-columns page-full"><img src="10_allocation_files/figure-html/fig-1000-1.svg" class="column-body img-fluid figure-img"></p>
+<figcaption class="figure-caption">Figure&nbsp;10.1: allocation by year</figcaption>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="entire-city-by-year-and-owner" class="level3 page-columns page-full" data-number="10.1.2">
+<h3 data-number="10.1.2" class="anchored" data-anchor-id="entire-city-by-year-and-owner"><span class="header-section-number">10.1.2</span> entire city by year and owner</h3>
+<div class="cell page-columns page-full" data-hash="10_allocation_cache/html/fig-1001_21e14bec18d2fc8de00771a4b9f67cfe">
+<div class="cell-output-display column-body page-columns page-full">
+<div id="fig-1001" class="quarto-figure quarto-figure-center column-body anchored page-columns page-full">
+<figure class="figure page-columns page-full">
+<p class="page-columns page-full"><img src="10_allocation_files/figure-html/fig-1001-1.svg" class="column-body img-fluid figure-img"></p>
+<figcaption class="figure-caption">Figure&nbsp;10.2: allocation by year and ownership</figcaption>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="allocation-by-district-year-owner" class="level3 page-columns page-full" data-number="10.1.3">
+<h3 data-number="10.1.3" class="anchored" data-anchor-id="allocation-by-district-year-owner"><span class="header-section-number">10.1.3</span> allocation by district, year, owner</h3>
+<div class="cell page-columns page-full" data-hash="10_allocation_cache/html/fig-1002_6500f585f2aa9721b051d73f7c53a3b1">
+<div class="cell-output-display column-body page-columns page-full">
+<div id="fig-1002" class="quarto-figure quarto-figure-center column-body anchored page-columns page-full">
+<figure class="figure page-columns page-full">
+<p class="page-columns page-full"><img src="10_allocation_files/figure-html/fig-1002-1.svg" class="column-body img-fluid figure-img"></p>
+<figcaption class="figure-caption">Figure&nbsp;10.3: allocation by district, year and ownership</figcaption>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="apartments-by-district-year-owner" class="level3 page-columns page-full" data-number="10.1.4">
+<h3 data-number="10.1.4" class="anchored" data-anchor-id="apartments-by-district-year-owner"><span class="header-section-number">10.1.4</span> apartments by district, year, owner</h3>
+<div class="cell page-columns page-full" data-hash="10_allocation_cache/html/fig-1003_65693bb09b60fa808423718d282efe4a">
+<div class="cell-output-display column-body page-columns page-full">
+<div id="fig-1003" class="quarto-figure quarto-figure-center column-body anchored page-columns page-full">
+<figure class="figure page-columns page-full">
+<p class="page-columns page-full"><img src="10_allocation_files/figure-html/fig-1003-1.svg" class="column-body img-fluid figure-img"></p>
+<figcaption class="figure-caption">Figure&nbsp;10.4: apartments by district, year and ownership</figcaption>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="people-by-district-year-owner" class="level3 page-columns page-full" data-number="10.1.5">
+<h3 data-number="10.1.5" class="anchored" data-anchor-id="people-by-district-year-owner"><span class="header-section-number">10.1.5</span> people by district, year, owner</h3>
+<div class="cell page-columns page-full" data-hash="10_allocation_cache/html/fig-1004_648cd5e1bb3b37ffd67710bce336e888">
+<div class="cell-output-display column-body page-columns page-full">
+<div id="fig-1004" class="quarto-figure quarto-figure-center column-body anchored page-columns page-full">
+<figure class="figure page-columns page-full">
+<p class="page-columns page-full"><img src="10_allocation_files/figure-html/fig-1004-1.svg" class="column-body img-fluid figure-img"></p>
+<figcaption class="figure-caption">Figure&nbsp;10.5: people by district, year and ownership</figcaption>
+</figure>
+</div>
+</div>
+</div>
+</section>
+</section>
+<section id="predictions" class="level2 page-columns page-full" data-number="10.2">
+<h2 data-number="10.2" class="anchored" data-anchor-id="predictions"><span class="header-section-number">10.2</span> predictions</h2>
+<section id="entire-city-by-owner" class="level3 page-columns page-full" data-number="10.2.1">
+<h3 data-number="10.2.1" class="anchored" data-anchor-id="entire-city-by-owner"><span class="header-section-number">10.2.1</span> entire city, by owner</h3>
+<div class="cell page-columns page-full" data-hash="10_allocation_cache/html/fig-1005_bec0e88821b21d0c13060688107338f1">
+<div class="cell-output-display column-body page-columns page-full">
+<div id="fig-1005" class="quarto-figure quarto-figure-center column-body anchored page-columns page-full">
+<figure class="figure page-columns page-full">
+<p class="page-columns page-full"><img src="10_allocation_files/figure-html/fig-1005-1.svg" class="column-body img-fluid figure-img"></p>
+<figcaption class="figure-caption">Figure&nbsp;10.6: allocation prediction by year and ownership</figcaption>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="entire-city-by-district-and-owner" class="level3 page-columns page-full" data-number="10.2.2">
+<h3 data-number="10.2.2" class="anchored" data-anchor-id="entire-city-by-district-and-owner"><span class="header-section-number">10.2.2</span> entire city, by district and owner</h3>
+<div class="cell page-columns page-full" data-hash="10_allocation_cache/html/fig-1006_01dbfecbbaa741b44a3533898ad64153">
+<div class="cell-output-display column-body page-columns page-full">
+<div id="fig-1006" class="quarto-figure quarto-figure-center column-body anchored page-columns page-full">
+<figure class="figure page-columns page-full">
+<p class="page-columns page-full"><img src="10_allocation_files/figure-html/fig-1006-1.svg" class="column-body img-fluid figure-img"></p>
+<figcaption class="figure-caption">Figure&nbsp;10.7: allocation prediction by district, year and ownership</figcaption>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="escher-wyss-by-owner" class="level3 page-columns page-full" data-number="10.2.3">
+<h3 data-number="10.2.3" class="anchored" data-anchor-id="escher-wyss-by-owner"><span class="header-section-number">10.2.3</span> Escher Wyss, by owner</h3>
+<p>WHY a different approach for the Escher Wyss district, private housing? same approach as in the living space model (see <a href="09_living_space.html#sec-escherwyss_ls"><span>Section&nbsp;9.3.3</span></a>)</p>
+<div class="cell page-columns page-full" data-hash="10_allocation_cache/html/fig-1007_7200b3fe98ef61fafb8f63e97845741e">
+<div class="cell-output-display column-body page-columns page-full">
+<div id="fig-1007" class="quarto-figure quarto-figure-center column-body anchored page-columns page-full">
+<figure class="figure page-columns page-full">
+<p class="page-columns page-full"><img src="10_allocation_files/figure-html/fig-1007-1.svg" class="column-body img-fluid figure-img"></p>
+<figcaption class="figure-caption">Figure&nbsp;10.8: allocation prediction for Escher Wyss district, by year and ownership</figcaption>
+</figure>
+</div>
+</div>
+</div>
+</section>
+</section>
+<section id="combine-datasets" class="level2 page-columns page-full" data-number="10.3">
+<h2 data-number="10.3" class="anchored" data-anchor-id="combine-datasets"><span class="header-section-number">10.3</span> combine datasets</h2>
+<section id="past-and-prediction" class="level3 page-columns page-full" data-number="10.3.1">
+<h3 data-number="10.3.1" class="anchored" data-anchor-id="past-and-prediction"><span class="header-section-number">10.3.1</span> past and prediction</h3>
+<div class="cell page-columns page-full" data-hash="10_allocation_cache/html/fig-1008_4eaf0c8b53d54864ab3362705aadfe55">
+<div class="cell-output-display column-body page-columns page-full">
+<div id="fig-1008" class="quarto-figure quarto-figure-center column-body anchored page-columns page-full">
+<figure class="figure page-columns page-full">
+<p class="page-columns page-full"><img src="10_allocation_files/figure-html/fig-1008-1.svg" class="column-body img-fluid figure-img"></p>
+<figcaption class="figure-caption">Figure&nbsp;10.9: allocation prediction by district, year and owner; different datasets</figcaption>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="plot-both-i.e.-per-district-and-entire-city" class="level3 page-columns page-full" data-number="10.3.2">
+<h3 data-number="10.3.2" class="anchored" data-anchor-id="plot-both-i.e.-per-district-and-entire-city"><span class="header-section-number">10.3.2</span> plot both (i.e.&nbsp;per district, and entire city)</h3>
+<div id="fig-1009" class="quarto-figure quarto-figure-center anchored page-columns page-full">
+<figure class="figure page-columns page-full">
+<div class="cell-output-display column-body page-columns page-full">
+<div id="fig-1009-1" class="quarto-figure quarto-figure-center column-body anchored page-columns page-full">
+<figure class="figure page-columns page-full">
+<p class="page-columns page-full"><img src="10_allocation_files/figure-html/fig-1009-1.svg" class="column-body img-fluid figure-img" data-ref-parent="fig-1009"></p>
+<figcaption class="figure-caption">(a) District of Kreis 1</figcaption>
+</figure>
+</div>
+</div>
+<div class="cell-output-display column-body page-columns page-full">
+<div id="fig-1009-2" class="quarto-figure quarto-figure-center column-body anchored page-columns page-full">
+<figure class="figure page-columns page-full">
+<p class="page-columns page-full"><img src="10_allocation_files/figure-html/fig-1009-2.svg" class="column-body img-fluid figure-img" data-ref-parent="fig-1009"></p>
+<figcaption class="figure-caption">(b) District of Wollishofen</figcaption>
+</figure>
+</div>
+</div>
+<div class="cell-output-display column-body page-columns page-full">
+<div id="fig-1009-3" class="quarto-figure quarto-figure-center column-body anchored page-columns page-full">
+<figure class="figure page-columns page-full">
+<p class="page-columns page-full"><img src="10_allocation_files/figure-html/fig-1009-3.svg" class="column-body img-fluid figure-img" data-ref-parent="fig-1009"></p>
+<figcaption class="figure-caption">(c) District of Leimbach</figcaption>
+</figure>
+</div>
+</div>
+<div class="cell-output-display column-body page-columns page-full">
+<div id="fig-1009-4" class="quarto-figure quarto-figure-center column-body anchored page-columns page-full">
+<figure class="figure page-columns page-full">
+<p class="page-columns page-full"><img src="10_allocation_files/figure-html/fig-1009-4.svg" class="column-body img-fluid figure-img" data-ref-parent="fig-1009"></p>
+<figcaption class="figure-caption">(d) District of Enge</figcaption>
+</figure>
+</div>
+</div>
+<div class="cell-output-display column-body page-columns page-full">
+<div id="fig-1009-5" class="quarto-figure quarto-figure-center column-body anchored page-columns page-full">
+<figure class="figure page-columns page-full">
+<p class="page-columns page-full"><img src="10_allocation_files/figure-html/fig-1009-5.svg" class="column-body img-fluid figure-img" data-ref-parent="fig-1009"></p>
+<figcaption class="figure-caption">(e) District of Alt-Wiedikon</figcaption>
+</figure>
+</div>
+</div>
+<div class="cell-output-display column-body page-columns page-full">
+<div id="fig-1009-6" class="quarto-figure quarto-figure-center column-body anchored page-columns page-full">
+<figure class="figure page-columns page-full">
+<p class="page-columns page-full"><img src="10_allocation_files/figure-html/fig-1009-6.svg" class="column-body img-fluid figure-img" data-ref-parent="fig-1009"></p>
+<figcaption class="figure-caption">(f) District of Friesenberg</figcaption>
+</figure>
+</div>
+</div>
+<div class="cell-output-display column-body page-columns page-full">
+<div id="fig-1009-7" class="quarto-figure quarto-figure-center column-body anchored page-columns page-full">
+<figure class="figure page-columns page-full">
+<p class="page-columns page-full"><img src="10_allocation_files/figure-html/fig-1009-7.svg" class="column-body img-fluid figure-img" data-ref-parent="fig-1009"></p>
+<figcaption class="figure-caption">(g) District of Sihlfeld</figcaption>
+</figure>
+</div>
+</div>
+<div class="cell-output-display column-body page-columns page-full">
+<div id="fig-1009-8" class="quarto-figure quarto-figure-center column-body anchored page-columns page-full">
+<figure class="figure page-columns page-full">
+<p class="page-columns page-full"><img src="10_allocation_files/figure-html/fig-1009-8.svg" class="column-body img-fluid figure-img" data-ref-parent="fig-1009"></p>
+<figcaption class="figure-caption">(h) District of Werd</figcaption>
+</figure>
+</div>
+</div>
+<div class="cell-output-display column-body page-columns page-full">
+<div id="fig-1009-9" class="quarto-figure quarto-figure-center column-body anchored page-columns page-full">
+<figure class="figure page-columns page-full">
+<p class="page-columns page-full"><img src="10_allocation_files/figure-html/fig-1009-9.svg" class="column-body img-fluid figure-img" data-ref-parent="fig-1009"></p>
+<figcaption class="figure-caption">(i) District of Langstrasse</figcaption>
+</figure>
+</div>
+</div>
+<div class="cell-output-display column-body page-columns page-full">
+<div id="fig-1009-10" class="quarto-figure quarto-figure-center column-body anchored page-columns page-full">
+<figure class="figure page-columns page-full">
+<p class="page-columns page-full"><img src="10_allocation_files/figure-html/fig-1009-10.svg" class="column-body img-fluid figure-img" data-ref-parent="fig-1009"></p>
+<figcaption class="figure-caption">(j) District of Hard</figcaption>
+</figure>
+</div>
+</div>
+<div class="cell-output-display column-body page-columns page-full">
+<div id="fig-1009-11" class="quarto-figure quarto-figure-center column-body anchored page-columns page-full">
+<figure class="figure page-columns page-full">
+<p class="page-columns page-full"><img src="10_allocation_files/figure-html/fig-1009-11.svg" class="column-body img-fluid figure-img" data-ref-parent="fig-1009"></p>
+<figcaption class="figure-caption">(k) District of Gewerbeschule</figcaption>
+</figure>
+</div>
+</div>
+<div class="cell-output-display column-body page-columns page-full">
+<div id="fig-1009-12" class="quarto-figure quarto-figure-center column-body anchored page-columns page-full">
+<figure class="figure page-columns page-full">
+<p class="page-columns page-full"><img src="10_allocation_files/figure-html/fig-1009-12.svg" class="column-body img-fluid figure-img" data-ref-parent="fig-1009"></p>
+<figcaption class="figure-caption">(l) District of Escher Wyss</figcaption>
+</figure>
+</div>
+</div>
+<div class="cell-output-display column-body page-columns page-full">
+<div id="fig-1009-13" class="quarto-figure quarto-figure-center column-body anchored page-columns page-full">
+<figure class="figure page-columns page-full">
+<p class="page-columns page-full"><img src="10_allocation_files/figure-html/fig-1009-13.svg" class="column-body img-fluid figure-img" data-ref-parent="fig-1009"></p>
+<figcaption class="figure-caption">(m) District of Unterstrass</figcaption>
+</figure>
+</div>
+</div>
+<div class="cell-output-display column-body page-columns page-full">
+<div id="fig-1009-14" class="quarto-figure quarto-figure-center column-body anchored page-columns page-full">
+<figure class="figure page-columns page-full">
+<p class="page-columns page-full"><img src="10_allocation_files/figure-html/fig-1009-14.svg" class="column-body img-fluid figure-img" data-ref-parent="fig-1009"></p>
+<figcaption class="figure-caption">(n) District of Oberstrass</figcaption>
+</figure>
+</div>
+</div>
+<div class="cell-output-display column-body page-columns page-full">
+<div id="fig-1009-15" class="quarto-figure quarto-figure-center column-body anchored page-columns page-full">
+<figure class="figure page-columns page-full">
+<p class="page-columns page-full"><img src="10_allocation_files/figure-html/fig-1009-15.svg" class="column-body img-fluid figure-img" data-ref-parent="fig-1009"></p>
+<figcaption class="figure-caption">(o) District of Fluntern</figcaption>
+</figure>
+</div>
+</div>
+<div class="cell-output-display column-body page-columns page-full">
+<div id="fig-1009-16" class="quarto-figure quarto-figure-center column-body anchored page-columns page-full">
+<figure class="figure page-columns page-full">
+<p class="page-columns page-full"><img src="10_allocation_files/figure-html/fig-1009-16.svg" class="column-body img-fluid figure-img" data-ref-parent="fig-1009"></p>
+<figcaption class="figure-caption">(p) District of Hottingen</figcaption>
+</figure>
+</div>
+</div>
+<div class="cell-output-display column-body page-columns page-full">
+<div id="fig-1009-17" class="quarto-figure quarto-figure-center column-body anchored page-columns page-full">
+<figure class="figure page-columns page-full">
+<p class="page-columns page-full"><img src="10_allocation_files/figure-html/fig-1009-17.svg" class="column-body img-fluid figure-img" data-ref-parent="fig-1009"></p>
+<figcaption class="figure-caption">(q) District of Hirslanden</figcaption>
+</figure>
+</div>
+</div>
+<div class="cell-output-display column-body page-columns page-full">
+<div id="fig-1009-18" class="quarto-figure quarto-figure-center column-body anchored page-columns page-full">
+<figure class="figure page-columns page-full">
+<p class="page-columns page-full"><img src="10_allocation_files/figure-html/fig-1009-18.svg" class="column-body img-fluid figure-img" data-ref-parent="fig-1009"></p>
+<figcaption class="figure-caption">(r) District of Witikon</figcaption>
+</figure>
+</div>
+</div>
+<div class="cell-output-display column-body page-columns page-full">
+<div id="fig-1009-19" class="quarto-figure quarto-figure-center column-body anchored page-columns page-full">
+<figure class="figure page-columns page-full">
+<p class="page-columns page-full"><img src="10_allocation_files/figure-html/fig-1009-19.svg" class="column-body img-fluid figure-img" data-ref-parent="fig-1009"></p>
+<figcaption class="figure-caption">(s) District of Seefeld</figcaption>
+</figure>
+</div>
+</div>
+<div class="cell-output-display column-body page-columns page-full">
+<div id="fig-1009-20" class="quarto-figure quarto-figure-center column-body anchored page-columns page-full">
+<figure class="figure page-columns page-full">
+<p class="page-columns page-full"><img src="10_allocation_files/figure-html/fig-1009-20.svg" class="column-body img-fluid figure-img" data-ref-parent="fig-1009"></p>
+<figcaption class="figure-caption">(t) District of Muehlebach</figcaption>
+</figure>
+</div>
+</div>
+<div class="cell-output-display column-body page-columns page-full">
+<div id="fig-1009-21" class="quarto-figure quarto-figure-center column-body anchored page-columns page-full">
+<figure class="figure page-columns page-full">
+<p class="page-columns page-full"><img src="10_allocation_files/figure-html/fig-1009-21.svg" class="column-body img-fluid figure-img" data-ref-parent="fig-1009"></p>
+<figcaption class="figure-caption">(u) District of Weinegg</figcaption>
+</figure>
+</div>
+</div>
+<div class="cell-output-display column-body page-columns page-full">
+<div id="fig-1009-22" class="quarto-figure quarto-figure-center column-body anchored page-columns page-full">
+<figure class="figure page-columns page-full">
+<p class="page-columns page-full"><img src="10_allocation_files/figure-html/fig-1009-22.svg" class="column-body img-fluid figure-img" data-ref-parent="fig-1009"></p>
+<figcaption class="figure-caption">(v) District of Albisrieden</figcaption>
+</figure>
+</div>
+</div>
+<div class="cell-output-display column-body page-columns page-full">
+<div id="fig-1009-23" class="quarto-figure quarto-figure-center column-body anchored page-columns page-full">
+<figure class="figure page-columns page-full">
+<p class="page-columns page-full"><img src="10_allocation_files/figure-html/fig-1009-23.svg" class="column-body img-fluid figure-img" data-ref-parent="fig-1009"></p>
+<figcaption class="figure-caption">(w) District of Altstetten</figcaption>
+</figure>
+</div>
+</div>
+<div class="cell-output-display column-body page-columns page-full">
+<div id="fig-1009-24" class="quarto-figure quarto-figure-center column-body anchored page-columns page-full">
+<figure class="figure page-columns page-full">
+<p class="page-columns page-full"><img src="10_allocation_files/figure-html/fig-1009-24.svg" class="column-body img-fluid figure-img" data-ref-parent="fig-1009"></p>
+<figcaption class="figure-caption">(x) District of Hoengg</figcaption>
+</figure>
+</div>
+</div>
+<div class="cell-output-display column-body page-columns page-full">
+<div id="fig-1009-25" class="quarto-figure quarto-figure-center column-body anchored page-columns page-full">
+<figure class="figure page-columns page-full">
+<p class="page-columns page-full"><img src="10_allocation_files/figure-html/fig-1009-25.svg" class="column-body img-fluid figure-img" data-ref-parent="fig-1009"></p>
+<figcaption class="figure-caption">(y) District of Wipkingen</figcaption>
+</figure>
+</div>
+</div>
+<div class="cell-output-display column-body page-columns page-full">
+<div id="fig-1009-26" class="quarto-figure quarto-figure-center column-body anchored page-columns page-full">
+<figure class="figure page-columns page-full">
+<p class="page-columns page-full"><img src="10_allocation_files/figure-html/fig-1009-26.svg" class="column-body img-fluid figure-img" data-ref-parent="fig-1009"></p>
+<figcaption class="figure-caption">(z) District of Affoltern</figcaption>
+</figure>
+</div>
+</div>
+<div class="cell-output-display column-body page-columns page-full">
+<div id="fig-1009-27" class="quarto-figure quarto-figure-center column-body anchored page-columns page-full">
+<figure class="figure page-columns page-full">
+<p class="page-columns page-full"><img src="10_allocation_files/figure-html/fig-1009-27.svg" class="column-body img-fluid figure-img" data-ref-parent="fig-1009"></p>
+<figcaption class="figure-caption">({) District of Oerlikon</figcaption>
+</figure>
+</div>
+</div>
+<div class="cell-output-display column-body page-columns page-full">
+<div id="fig-1009-28" class="quarto-figure quarto-figure-center column-body anchored page-columns page-full">
+<figure class="figure page-columns page-full">
+<p class="page-columns page-full"><img src="10_allocation_files/figure-html/fig-1009-28.svg" class="column-body img-fluid figure-img" data-ref-parent="fig-1009"></p>
+<figcaption class="figure-caption">(|) District of Seebach</figcaption>
+</figure>
+</div>
+</div>
+<div class="cell-output-display column-body page-columns page-full">
+<div id="fig-1009-29" class="quarto-figure quarto-figure-center column-body anchored page-columns page-full">
+<figure class="figure page-columns page-full">
+<p class="page-columns page-full"><img src="10_allocation_files/figure-html/fig-1009-29.svg" class="column-body img-fluid figure-img" data-ref-parent="fig-1009"></p>
+<figcaption class="figure-caption">(}) District of Saatlen</figcaption>
+</figure>
+</div>
+</div>
+<div class="cell-output-display column-body page-columns page-full">
+<div id="fig-1009-30" class="quarto-figure quarto-figure-center column-body anchored page-columns page-full">
+<figure class="figure page-columns page-full">
+<p class="page-columns page-full"><img src="10_allocation_files/figure-html/fig-1009-30.svg" class="column-body img-fluid figure-img" data-ref-parent="fig-1009"></p>
+<figcaption class="figure-caption">(~) District of Schwamendingen-Mitte</figcaption>
+</figure>
+</div>
+</div>
+<div class="cell-output-display column-body page-columns page-full">
+<div id="fig-1009-31" class="quarto-figure quarto-figure-center column-body anchored page-columns page-full">
+<figure class="figure page-columns page-full">
+<p class="page-columns page-full"><img src="10_allocation_files/figure-html/fig-1009-31.svg" class="column-body img-fluid figure-img" data-ref-parent="fig-1009"></p>
+<figcaption class="figure-caption">() District of Hirzenbach</figcaption>
+</figure>
+</div>
+</div>
+<figcaption class="figure-caption">Figure&nbsp;10.10: allocation prediction by district, year and owner plus entire city</figcaption>
+</figure>
+</div>
+
+
+</section>
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    text: function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+  function tippyHover(el, contentFn) {
+    const config = {
+      allowHTML: true,
+      content: contentFn,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start'
+    };
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      return note.innerHTML;
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+<nav class="page-navigation column-body">
+  <div class="nav-page nav-page-previous">
+      <a href="./09_living_space.html" class="pagination-link">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Living spaces</span></span>
+      </a>          
+  </div>
+  <div class="nav-page nav-page-next">
+      <a href="./11_projects.html" class="pagination-link">
+        <span class="nav-page-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Projects</span></span> <i class="bi bi-arrow-right-short"></i>
+      </a>
+  </div>
+</nav>
+</div> <!-- /content -->
+
+
+
+<script src="site_libs/quarto-html/zenscroll-min.js"></script>
+</body></html>

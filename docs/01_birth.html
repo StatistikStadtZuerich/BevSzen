@@ -1,0 +1,2559 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.3.361">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>Plots for population scenarios - 1&nbsp; Birth</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+</style>
+
+
+<script src="site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="site_libs/quarto-nav/headroom.min.js"></script>
+<script src="site_libs/clipboard/clipboard.min.js"></script>
+<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="site_libs/quarto-search/fuse.min.js"></script>
+<script src="site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="./">
+<link href="./02_death.html" rel="next">
+<link href="./index.html" rel="prev">
+<script src="site_libs/quarto-html/quarto.js"></script>
+<script src="site_libs/quarto-html/popper.min.js"></script>
+<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="site_libs/quarto-html/anchor.min.js"></script>
+<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "sidebar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "start",
+  "type": "textbox",
+  "limit": 20,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+<style>html{ scroll-behavior: smooth; }</style>
+
+
+<link rel="stylesheet" href="sszTheme.css">
+</head>
+
+<body class="nav-sidebar docked">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+      <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./01_birth.html"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Birth</span></a></li></ol></nav>
+      <a class="flex-grow-1" role="button" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+      </a>
+      <button type="button" class="btn quarto-search-button" aria-label="" onclick="window.quartoOpenSearch();">
+        <i class="bi bi-search"></i>
+      </button>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-full">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal sidebar-navigation docked overflow-auto">
+    <div class="pt-lg-2 mt-2 text-left sidebar-header">
+    <div class="sidebar-title mb-0 py-0">
+      <a href="./">Plots for population scenarios</a> 
+    </div>
+      </div>
+        <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="sidebar-search">
+        <div id="quarto-search" class="" title="Search"></div>
+        </div>
+        </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Preface</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./01_birth.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Birth</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./02_death.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Death</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./03_immigration.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Immigration</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./04_emigration.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Emigration</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./05_reloc_immigration.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Relocation on immigration</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./06_reloc_emigration.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Relocation on emigration</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./07_naturalization.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Naturalization</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./08_careb.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Capacity reserves</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./09_living_space.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Living spaces</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./10_allocation.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Allocation</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./11_projects.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Projects</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./12_ownership.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">Ownership</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./13_housing.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">Housing model</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./14_dem_house.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">14</span>&nbsp; <span class="chapter-title">Demography Housing</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./15_model_output.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">15</span>&nbsp; <span class="chapter-title">Model outputs</span></span></a>
+  </div>
+</li>
+    </ul>
+    </div>
+</nav>
+<div id="quarto-sidebar-glass" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Table of contents</h2>
+   
+  <ul>
+  <li><a href="#fertility" id="toc-fertility" class="nav-link active" data-scroll-target="#fertility"><span class="header-section-number">1.1</span> Fertility</a>
+  <ul>
+  <li><a href="#tfr-total-fertility-rate" id="toc-tfr-total-fertility-rate" class="nav-link" data-scroll-target="#tfr-total-fertility-rate"><span class="header-section-number">1.1.1</span> TFR (total fertility rate)</a>
+  <ul class="collapse">
+  <li><a href="#plots-to-define-the-base-period-for-fertility-prediction" id="toc-plots-to-define-the-base-period-for-fertility-prediction" class="nav-link" data-scroll-target="#plots-to-define-the-base-period-for-fertility-prediction"><span class="header-section-number">1.1.1.1</span> plots to define the base period for fertility prediction</a></li>
+  <li><a href="#fertility-plots-before-any-corrections" id="toc-fertility-plots-before-any-corrections" class="nav-link" data-scroll-target="#fertility-plots-before-any-corrections"><span class="header-section-number">1.1.1.2</span> fertility plots (before any corrections)</a></li>
+  </ul></li>
+  <li><a href="#corrected-fertility" id="toc-corrected-fertility" class="nav-link" data-scroll-target="#corrected-fertility"><span class="header-section-number">1.1.2</span> corrected fertility:</a></li>
+  <li><a href="#prediction" id="toc-prediction" class="nav-link" data-scroll-target="#prediction"><span class="header-section-number">1.1.3</span> Prediction</a>
+  <ul class="collapse">
+  <li><a href="#tfr-total-fertility-rate-of-past-and-future" id="toc-tfr-total-fertility-rate-of-past-and-future" class="nav-link" data-scroll-target="#tfr-total-fertility-rate-of-past-and-future"><span class="header-section-number">1.1.3.1</span> TFR (total fertility rate) of past and future</a></li>
+  </ul></li>
+  </ul></li>
+  <li><a href="#origin" id="toc-origin" class="nav-link" data-scroll-target="#origin"><span class="header-section-number">1.2</span> Origin</a>
+  <ul>
+  <li><a href="#origin-change" id="toc-origin-change" class="nav-link" data-scroll-target="#origin-change"><span class="header-section-number">1.2.1</span> Origin change</a></li>
+  <li><a href="#prediction-of-origin-change" id="toc-prediction-of-origin-change" class="nav-link" data-scroll-target="#prediction-of-origin-change"><span class="header-section-number">1.2.2</span> Prediction of origin change</a></li>
+  </ul></li>
+  <li><a href="#sex-ratio" id="toc-sex-ratio" class="nav-link" data-scroll-target="#sex-ratio"><span class="header-section-number">1.3</span> Sex ratio</a>
+  <ul>
+  <li><a href="#current-proportion" id="toc-current-proportion" class="nav-link" data-scroll-target="#current-proportion"><span class="header-section-number">1.3.1</span> Current proportion</a></li>
+  <li><a href="#prediction-of-proportion" id="toc-prediction-of-proportion" class="nav-link" data-scroll-target="#prediction-of-proportion"><span class="header-section-number">1.3.2</span> Prediction of proportion</a></li>
+  </ul></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content page-columns page-full column-body" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Birth</span></h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+</header>
+
+<div class="cell" data-hash="01_birth_cache/html/prep_9460f8cef40bd75ba7ad9037be9b6a61">
+
+</div>
+<section id="fertility" class="level2 page-columns page-full" data-number="1.1">
+<h2 data-number="1.1" class="anchored" data-anchor-id="fertility"><span class="header-section-number">1.1</span> Fertility</h2>
+<section id="tfr-total-fertility-rate" class="level3 page-columns page-full" data-number="1.1.1">
+<h3 data-number="1.1.1" class="anchored" data-anchor-id="tfr-total-fertility-rate"><span class="header-section-number">1.1.1</span> TFR (total fertility rate)</h3>
+<section id="plots-to-define-the-base-period-for-fertility-prediction" class="level4 page-columns page-full" data-number="1.1.1.1">
+<h4 data-number="1.1.1.1" class="anchored" data-anchor-id="plots-to-define-the-base-period-for-fertility-prediction"><span class="header-section-number">1.1.1.1</span> plots to define the base period for fertility prediction</h4>
+<div class="cell page-columns page-full" data-hash="01_birth_cache/html/fig-0100_e24486b381b53e85796b85ecf3e4a820">
+<div class="cell-output-display column-body page-columns page-full">
+<div id="fig-0100" class="quarto-figure quarto-figure-center column-body anchored page-columns page-full">
+<figure class="figure page-columns page-full">
+<p class="page-columns page-full"><img src="01_birth_files/figure-html/fig-0100-1.svg" class="column-body img-fluid figure-img"></p>
+<figcaption class="figure-caption">Figure&nbsp;1.1: total fertility rate by year</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<div class="cell page-columns page-full" data-hash="01_birth_cache/html/fig-0101_56395a6a512583fb2cc0fc223cb6390c">
+<div class="cell-output-display column-body page-columns page-full">
+<div id="fig-0101" class="quarto-figure quarto-figure-center column-body anchored page-columns page-full">
+<figure class="figure page-columns page-full">
+<p class="page-columns page-full"><img src="01_birth_files/figure-html/fig-0101-1.svg" class="column-body img-fluid figure-img"></p>
+<figcaption class="figure-caption">Figure&nbsp;1.2: total fertility rate by year and origin</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<div class="cell page-columns page-full" data-hash="01_birth_cache/html/fig-0102_d4b4f5eb2a4a01b494ed9fc7cdb86648">
+<div class="cell-output-display column-body page-columns page-full">
+<div id="fig-0102" class="quarto-figure quarto-figure-center column-body anchored page-columns page-full">
+<figure class="figure page-columns page-full">
+<p class="page-columns page-full"><img src="01_birth_files/figure-html/fig-0102-1.svg" class="column-body img-fluid figure-img"></p>
+<figcaption class="figure-caption">Figure&nbsp;1.3: total fertility rate by year and age class (3)</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<div class="cell page-columns page-full" data-hash="01_birth_cache/html/fig-0103_fe9b1a5d393ae89738693d5a0885366e">
+<div class="cell-output-display column-body page-columns page-full">
+<div id="fig-0103" class="quarto-figure quarto-figure-center column-body anchored page-columns page-full">
+<figure class="figure page-columns page-full">
+<p class="page-columns page-full"><img src="01_birth_files/figure-html/fig-0103-1.svg" class="column-body img-fluid figure-img"></p>
+<figcaption class="figure-caption">Figure&nbsp;1.4: total fertility rate by year and age class (5)</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<div class="cell page-columns page-full" data-hash="01_birth_cache/html/fig-0104_115300b04ee2126cd4e6a157ff747faf">
+<div class="cell-output-display column-body page-columns page-full">
+<div id="fig-0104" class="quarto-figure quarto-figure-center column-body anchored page-columns page-full">
+<figure class="figure page-columns page-full">
+<p class="page-columns page-full"><img src="01_birth_files/figure-html/fig-0104-1.svg" class="column-body img-fluid figure-img"></p>
+<figcaption class="figure-caption">Figure&nbsp;1.5: total fertility rate by year, origin and age class (3)</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<div class="cell page-columns page-full" data-hash="01_birth_cache/html/fig-0105_6d1fc4ed37aa624da8402423b7431cd4">
+<div class="cell-output-display column-body page-columns page-full">
+<div id="fig-0105" class="quarto-figure quarto-figure-center column-body anchored page-columns page-full">
+<figure class="figure page-columns page-full">
+<p class="page-columns page-full"><img src="01_birth_files/figure-html/fig-0105-1.svg" class="column-body img-fluid figure-img"></p>
+<figcaption class="figure-caption">Figure&nbsp;1.6: total fertility rate by year, origin and age class (5)</figcaption>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="fertility-plots-before-any-corrections" class="level4 page-columns page-full" data-number="1.1.1.2">
+<h4 data-number="1.1.1.2" class="anchored" data-anchor-id="fertility-plots-before-any-corrections"><span class="header-section-number">1.1.1.2</span> fertility plots (before any corrections)</h4>
+<div id="fig-0110" class="quarto-figure quarto-figure-center anchored page-columns page-full">
+<figure class="figure page-columns page-full">
+<div class="cell-output-display column-body page-columns page-full">
+<div id="fig-0110-1" class="quarto-figure quarto-figure-center column-body anchored page-columns page-full">
+<figure class="figure page-columns page-full">
+<p class="page-columns page-full"><img src="01_birth_files/figure-html/fig-0110-1.svg" class="column-body img-fluid figure-img" data-ref-parent="fig-0110"></p>
+<figcaption class="figure-caption">(a) District of Kreis 1</figcaption>
+</figure>
+</div>
+</div>
+<div class="cell-output-display column-body page-columns page-full">
+<div id="fig-0110-2" class="quarto-figure quarto-figure-center column-body anchored page-columns page-full">
+<figure class="figure page-columns page-full">
+<p class="page-columns page-full"><img src="01_birth_files/figure-html/fig-0110-2.svg" class="column-body img-fluid figure-img" data-ref-parent="fig-0110"></p>
+<figcaption class="figure-caption">(b) District of Wollishofen</figcaption>
+</figure>
+</div>
+</div>
+<div class="cell-output-display column-body page-columns page-full">
+<div id="fig-0110-3" class="quarto-figure quarto-figure-center column-body anchored page-columns page-full">
+<figure class="figure page-columns page-full">
+<p class="page-columns page-full"><img src="01_birth_files/figure-html/fig-0110-3.svg" class="column-body img-fluid figure-img" data-ref-parent="fig-0110"></p>
+<figcaption class="figure-caption">(c) District of Leimbach</figcaption>
+</figure>
+</div>
+</div>
+<div class="cell-output-display column-body page-columns page-full">
+<div id="fig-0110-4" class="quarto-figure quarto-figure-center column-body anchored page-columns page-full">
+<figure class="figure page-columns page-full">
+<p class="page-columns page-full"><img src="01_birth_files/figure-html/fig-0110-4.svg" class="column-body img-fluid figure-img" data-ref-parent="fig-0110"></p>
+<figcaption class="figure-caption">(d) District of Enge</figcaption>
+</figure>
+</div>
+</div>
+<div class="cell-output-display column-body page-columns page-full">
+<div id="fig-0110-5" class="quarto-figure quarto-figure-center column-body anchored page-columns page-full">
+<figure class="figure page-columns page-full">
+<p class="page-columns page-full"><img src="01_birth_files/figure-html/fig-0110-5.svg" class="column-body img-fluid figure-img" data-ref-parent="fig-0110"></p>
+<figcaption class="figure-caption">(e) District of Alt-Wiedikon</figcaption>
+</figure>
+</div>
+</div>
+<div class="cell-output-display column-body page-columns page-full">
+<div id="fig-0110-6" class="quarto-figure quarto-figure-center column-body anchored page-columns page-full">
+<figure class="figure page-columns page-full">
+<p class="page-columns page-full"><img src="01_birth_files/figure-html/fig-0110-6.svg" class="column-body img-fluid figure-img" data-ref-parent="fig-0110"></p>
+<figcaption class="figure-caption">(f) District of Friesenberg</figcaption>
+</figure>
+</div>
+</div>
+<div class="cell-output-display column-body page-columns page-full">
+<div id="fig-0110-7" class="quarto-figure quarto-figure-center column-body anchored page-columns page-full">
+<figure class="figure page-columns page-full">
+<p class="page-columns page-full"><img src="01_birth_files/figure-html/fig-0110-7.svg" class="column-body img-fluid figure-img" data-ref-parent="fig-0110"></p>
+<figcaption class="figure-caption">(g) District of Sihlfeld</figcaption>
+</figure>
+</div>
+</div>
+<div class="cell-output-display column-body page-columns page-full">
+<div id="fig-0110-8" class="quarto-figure quarto-figure-center column-body anchored page-columns page-full">
+<figure class="figure page-columns page-full">
+<p class="page-columns page-full"><img src="01_birth_files/figure-html/fig-0110-8.svg" class="column-body img-fluid figure-img" data-ref-parent="fig-0110"></p>
+<figcaption class="figure-caption">(h) District of Werd</figcaption>
+</figure>
+</div>
+</div>
+<div class="cell-output-display column-body page-columns page-full">
+<div id="fig-0110-9" class="quarto-figure quarto-figure-center column-body anchored page-columns page-full">
+<figure class="figure page-columns page-full">
+<p class="page-columns page-full"><img src="01_birth_files/figure-html/fig-0110-9.svg" class="column-body img-fluid figure-img" data-ref-parent="fig-0110"></p>
+<figcaption class="figure-caption">(i) District of Langstrasse</figcaption>
+</figure>
+</div>
+</div>
+<div class="cell-output-display column-body page-columns page-full">
+<div id="fig-0110-10" class="quarto-figure quarto-figure-center column-body anchored page-columns page-full">
+<figure class="figure page-columns page-full">
+<p class="page-columns page-full"><img src="01_birth_files/figure-html/fig-0110-10.svg" class="column-body img-fluid figure-img" data-ref-parent="fig-0110"></p>
+<figcaption class="figure-caption">(j) District of Hard</figcaption>
+</figure>
+</div>
+</div>
+<div class="cell-output-display column-body page-columns page-full">
+<div id="fig-0110-11" class="quarto-figure quarto-figure-center column-body anchored page-columns page-full">
+<figure class="figure page-columns page-full">
+<p class="page-columns page-full"><img src="01_birth_files/figure-html/fig-0110-11.svg" class="column-body img-fluid figure-img" data-ref-parent="fig-0110"></p>
+<figcaption class="figure-caption">(k) District of Gewerbeschule</figcaption>
+</figure>
+</div>
+</div>
+<div class="cell-output-display column-body page-columns page-full">
+<div id="fig-0110-12" class="quarto-figure quarto-figure-center column-body anchored page-columns page-full">
+<figure class="figure page-columns page-full">
+<p class="page-columns page-full"><img src="01_birth_files/figure-html/fig-0110-12.svg" class="column-body img-fluid figure-img" data-ref-parent="fig-0110"></p>
+<figcaption class="figure-caption">(l) District of Escher Wyss</figcaption>
+</figure>
+</div>
+</div>
+<div class="cell-output-display column-body page-columns page-full">
+<div id="fig-0110-13" class="quarto-figure quarto-figure-center column-body anchored page-columns page-full">
+<figure class="figure page-columns page-full">
+<p class="page-columns page-full"><img src="01_birth_files/figure-html/fig-0110-13.svg" class="column-body img-fluid figure-img" data-ref-parent="fig-0110"></p>
+<figcaption class="figure-caption">(m) District of Unterstrass</figcaption>
+</figure>
+</div>
+</div>
+<div class="cell-output-display column-body page-columns page-full">
+<div id="fig-0110-14" class="quarto-figure quarto-figure-center column-body anchored page-columns page-full">
+<figure class="figure page-columns page-full">
+<p class="page-columns page-full"><img src="01_birth_files/figure-html/fig-0110-14.svg" class="column-body img-fluid figure-img" data-ref-parent="fig-0110"></p>
+<figcaption class="figure-caption">(n) District of Oberstrass</figcaption>
+</figure>
+</div>
+</div>
+<div class="cell-output-display column-body page-columns page-full">
+<div id="fig-0110-15" class="quarto-figure quarto-figure-center column-body anchored page-columns page-full">
+<figure class="figure page-columns page-full">
+<p class="page-columns page-full"><img src="01_birth_files/figure-html/fig-0110-15.svg" class="column-body img-fluid figure-img" data-ref-parent="fig-0110"></p>
+<figcaption class="figure-caption">(o) District of Fluntern</figcaption>
+</figure>
+</div>
+</div>
+<div class="cell-output-display column-body page-columns page-full">
+<div id="fig-0110-16" class="quarto-figure quarto-figure-center column-body anchored page-columns page-full">
+<figure class="figure page-columns page-full">
+<p class="page-columns page-full"><img src="01_birth_files/figure-html/fig-0110-16.svg" class="column-body img-fluid figure-img" data-ref-parent="fig-0110"></p>
+<figcaption class="figure-caption">(p) District of Hottingen</figcaption>
+</figure>
+</div>
+</div>
+<div class="cell-output-display column-body page-columns page-full">
+<div id="fig-0110-17" class="quarto-figure quarto-figure-center column-body anchored page-columns page-full">
+<figure class="figure page-columns page-full">
+<p class="page-columns page-full"><img src="01_birth_files/figure-html/fig-0110-17.svg" class="column-body img-fluid figure-img" data-ref-parent="fig-0110"></p>
+<figcaption class="figure-caption">(q) District of Hirslanden</figcaption>
+</figure>
+</div>
+</div>
+<div class="cell-output-display column-body page-columns page-full">
+<div id="fig-0110-18" class="quarto-figure quarto-figure-center column-body anchored page-columns page-full">
+<figure class="figure page-columns page-full">
+<p class="page-columns page-full"><img src="01_birth_files/figure-html/fig-0110-18.svg" class="column-body img-fluid figure-img" data-ref-parent="fig-0110"></p>
+<figcaption class="figure-caption">(r) District of Witikon</figcaption>
+</figure>
+</div>
+</div>
+<div class="cell-output-display column-body page-columns page-full">
+<div id="fig-0110-19" class="quarto-figure quarto-figure-center column-body anchored page-columns page-full">
+<figure class="figure page-columns page-full">
+<p class="page-columns page-full"><img src="01_birth_files/figure-html/fig-0110-19.svg" class="column-body img-fluid figure-img" data-ref-parent="fig-0110"></p>
+<figcaption class="figure-caption">(s) District of Seefeld</figcaption>
+</figure>
+</div>
+</div>
+<div class="cell-output-display column-body page-columns page-full">
+<div id="fig-0110-20" class="quarto-figure quarto-figure-center column-body anchored page-columns page-full">
+<figure class="figure page-columns page-full">
+<p class="page-columns page-full"><img src="01_birth_files/figure-html/fig-0110-20.svg" class="column-body img-fluid figure-img" data-ref-parent="fig-0110"></p>
+<figcaption class="figure-caption">(t) District of Muehlebach</figcaption>
+</figure>
+</div>
+</div>
+<div class="cell-output-display column-body page-columns page-full">
+<div id="fig-0110-21" class="quarto-figure quarto-figure-center column-body anchored page-columns page-full">
+<figure class="figure page-columns page-full">
+<p class="page-columns page-full"><img src="01_birth_files/figure-html/fig-0110-21.svg" class="column-body img-fluid figure-img" data-ref-parent="fig-0110"></p>
+<figcaption class="figure-caption">(u) District of Weinegg</figcaption>
+</figure>
+</div>
+</div>
+<div class="cell-output-display column-body page-columns page-full">
+<div id="fig-0110-22" class="quarto-figure quarto-figure-center column-body anchored page-columns page-full">
+<figure class="figure page-columns page-full">
+<p class="page-columns page-full"><img src="01_birth_files/figure-html/fig-0110-22.svg" class="column-body img-fluid figure-img" data-ref-parent="fig-0110"></p>
+<figcaption class="figure-caption">(v) District of Albisrieden</figcaption>
+</figure>
+</div>
+</div>
+<div class="cell-output-display column-body page-columns page-full">
+<div id="fig-0110-23" class="quarto-figure quarto-figure-center column-body anchored page-columns page-full">
+<figure class="figure page-columns page-full">
+<p class="page-columns page-full"><img src="01_birth_files/figure-html/fig-0110-23.svg" class="column-body img-fluid figure-img" data-ref-parent="fig-0110"></p>
+<figcaption class="figure-caption">(w) District of Altstetten</figcaption>
+</figure>
+</div>
+</div>
+<div class="cell-output-display column-body page-columns page-full">
+<div id="fig-0110-24" class="quarto-figure quarto-figure-center column-body anchored page-columns page-full">
+<figure class="figure page-columns page-full">
+<p class="page-columns page-full"><img src="01_birth_files/figure-html/fig-0110-24.svg" class="column-body img-fluid figure-img" data-ref-parent="fig-0110"></p>
+<figcaption class="figure-caption">(x) District of Hoengg</figcaption>
+</figure>
+</div>
+</div>
+<div class="cell-output-display column-body page-columns page-full">
+<div id="fig-0110-25" class="quarto-figure quarto-figure-center column-body anchored page-columns page-full">
+<figure class="figure page-columns page-full">
+<p class="page-columns page-full"><img src="01_birth_files/figure-html/fig-0110-25.svg" class="column-body img-fluid figure-img" data-ref-parent="fig-0110"></p>
+<figcaption class="figure-caption">(y) District of Wipkingen</figcaption>
+</figure>
+</div>
+</div>
+<div class="cell-output-display column-body page-columns page-full">
+<div id="fig-0110-26" class="quarto-figure quarto-figure-center column-body anchored page-columns page-full">
+<figure class="figure page-columns page-full">
+<p class="page-columns page-full"><img src="01_birth_files/figure-html/fig-0110-26.svg" class="column-body img-fluid figure-img" data-ref-parent="fig-0110"></p>
+<figcaption class="figure-caption">(z) District of Affoltern</figcaption>
+</figure>
+</div>
+</div>
+<div class="cell-output-display column-body page-columns page-full">
+<div id="fig-0110-27" class="quarto-figure quarto-figure-center column-body anchored page-columns page-full">
+<figure class="figure page-columns page-full">
+<p class="page-columns page-full"><img src="01_birth_files/figure-html/fig-0110-27.svg" class="column-body img-fluid figure-img" data-ref-parent="fig-0110"></p>
+<figcaption class="figure-caption">({) District of Oerlikon</figcaption>
+</figure>
+</div>
+</div>
+<div class="cell-output-display column-body page-columns page-full">
+<div id="fig-0110-28" class="quarto-figure quarto-figure-center column-body anchored page-columns page-full">
+<figure class="figure page-columns page-full">
+<p class="page-columns page-full"><img src="01_birth_files/figure-html/fig-0110-28.svg" class="column-body img-fluid figure-img" data-ref-parent="fig-0110"></p>
+<figcaption class="figure-caption">(|) District of Seebach</figcaption>
+</figure>
+</div>
+</div>
+<div class="cell-output-display column-body page-columns page-full">
+<div id="fig-0110-29" class="quarto-figure quarto-figure-center column-body anchored page-columns page-full">
+<figure class="figure page-columns page-full">
+<p class="page-columns page-full"><img src="01_birth_files/figure-html/fig-0110-29.svg" class="column-body img-fluid figure-img" data-ref-parent="fig-0110"></p>
+<figcaption class="figure-caption">(}) District of Saatlen</figcaption>
+</figure>
+</div>
+</div>
+<div class="cell-output-display column-body page-columns page-full">
+<div id="fig-0110-30" class="quarto-figure quarto-figure-center column-body anchored page-columns page-full">
+<figure class="figure page-columns page-full">
+<p class="page-columns page-full"><img src="01_birth_files/figure-html/fig-0110-30.svg" class="column-body img-fluid figure-img" data-ref-parent="fig-0110"></p>
+<figcaption class="figure-caption">(~) District of Schwamendingen-Mitte</figcaption>
+</figure>
+</div>
+</div>
+<div class="cell-output-display column-body page-columns page-full">
+<div id="fig-0110-31" class="quarto-figure quarto-figure-center column-body anchored page-columns page-full">
+<figure class="figure page-columns page-full">
+<p class="page-columns page-full"><img src="01_birth_files/figure-html/fig-0110-31.svg" class="column-body img-fluid figure-img" data-ref-parent="fig-0110"></p>
+<figcaption class="figure-caption">() District of Hirzenbach</figcaption>
+</figure>
+</div>
+</div>
+<figcaption class="figure-caption">Figure&nbsp;1.7: fertility by district, year, age, origin</figcaption>
+</figure>
+</div>
+<div class="cell page-columns page-full" data-hash="01_birth_cache/html/fig-0111_6610e1ec5e68272b244bd20b762a0ae6">
+<div class="cell-output-display column-body page-columns page-full">
+<div id="fig-0111" class="quarto-figure quarto-figure-center column-body anchored page-columns page-full">
+<figure class="figure page-columns page-full">
+<p class="page-columns page-full"><img src="01_birth_files/figure-html/fig-0111-1.svg" class="column-body img-fluid figure-img"></p>
+<figcaption class="figure-caption">Figure&nbsp;1.8: fertility by year, age, origin</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<div class="cell page-columns page-full" data-hash="01_birth_cache/html/fig-0112_7e556e980f5ec449e8f11705bceb643e">
+<div class="cell-output-display column-body page-columns page-full">
+<div id="fig-0112" class="quarto-figure quarto-figure-center column-body anchored page-columns page-full">
+<figure class="figure page-columns page-full">
+<p class="page-columns page-full"><img src="01_birth_files/figure-html/fig-0112-1.svg" class="column-body img-fluid figure-img"></p>
+<figcaption class="figure-caption">Figure&nbsp;1.9: fertility by year, age</figcaption>
+</figure>
+</div>
+</div>
+</div>
+</section>
+</section>
+<section id="corrected-fertility" class="level3 page-columns page-full" data-number="1.1.2">
+<h3 data-number="1.1.2" class="anchored" data-anchor-id="corrected-fertility"><span class="header-section-number">1.1.2</span> corrected fertility:</h3>
+<div id="fig-0120" class="quarto-figure quarto-figure-center anchored page-columns page-full">
+<figure class="figure page-columns page-full">
+<div class="cell-output-display column-body page-columns page-full">
+<div id="fig-0120-1" class="quarto-figure quarto-figure-center column-body anchored page-columns page-full">
+<figure class="figure page-columns page-full">
+<p class="page-columns page-full"><img src="01_birth_files/figure-html/fig-0120-1.svg" class="column-body img-fluid figure-img" data-ref-parent="fig-0120"></p>
+<figcaption class="figure-caption">(a) District of Kreis 1</figcaption>
+</figure>
+</div>
+</div>
+<div class="cell-output-display column-body page-columns page-full">
+<div id="fig-0120-2" class="quarto-figure quarto-figure-center column-body anchored page-columns page-full">
+<figure class="figure page-columns page-full">
+<p class="page-columns page-full"><img src="01_birth_files/figure-html/fig-0120-2.svg" class="column-body img-fluid figure-img" data-ref-parent="fig-0120"></p>
+<figcaption class="figure-caption">(b) District of Wollishofen</figcaption>
+</figure>
+</div>
+</div>
+<div class="cell-output-display column-body page-columns page-full">
+<div id="fig-0120-3" class="quarto-figure quarto-figure-center column-body anchored page-columns page-full">
+<figure class="figure page-columns page-full">
+<p class="page-columns page-full"><img src="01_birth_files/figure-html/fig-0120-3.svg" class="column-body img-fluid figure-img" data-ref-parent="fig-0120"></p>
+<figcaption class="figure-caption">(c) District of Leimbach</figcaption>
+</figure>
+</div>
+</div>
+<div class="cell-output-display column-body page-columns page-full">
+<div id="fig-0120-4" class="quarto-figure quarto-figure-center column-body anchored page-columns page-full">
+<figure class="figure page-columns page-full">
+<p class="page-columns page-full"><img src="01_birth_files/figure-html/fig-0120-4.svg" class="column-body img-fluid figure-img" data-ref-parent="fig-0120"></p>
+<figcaption class="figure-caption">(d) District of Enge</figcaption>
+</figure>
+</div>
+</div>
+<div class="cell-output-display column-body page-columns page-full">
+<div id="fig-0120-5" class="quarto-figure quarto-figure-center column-body anchored page-columns page-full">
+<figure class="figure page-columns page-full">
+<p class="page-columns page-full"><img src="01_birth_files/figure-html/fig-0120-5.svg" class="column-body img-fluid figure-img" data-ref-parent="fig-0120"></p>
+<figcaption class="figure-caption">(e) District of Alt-Wiedikon</figcaption>
+</figure>
+</div>
+</div>
+<div class="cell-output-display column-body page-columns page-full">
+<div id="fig-0120-6" class="quarto-figure quarto-figure-center column-body anchored page-columns page-full">
+<figure class="figure page-columns page-full">
+<p class="page-columns page-full"><img src="01_birth_files/figure-html/fig-0120-6.svg" class="column-body img-fluid figure-img" data-ref-parent="fig-0120"></p>
+<figcaption class="figure-caption">(f) District of Friesenberg</figcaption>
+</figure>
+</div>
+</div>
+<div class="cell-output-display column-body page-columns page-full">
+<div id="fig-0120-7" class="quarto-figure quarto-figure-center column-body anchored page-columns page-full">
+<figure class="figure page-columns page-full">
+<p class="page-columns page-full"><img src="01_birth_files/figure-html/fig-0120-7.svg" class="column-body img-fluid figure-img" data-ref-parent="fig-0120"></p>
+<figcaption class="figure-caption">(g) District of Sihlfeld</figcaption>
+</figure>
+</div>
+</div>
+<div class="cell-output-display column-body page-columns page-full">
+<div id="fig-0120-8" class="quarto-figure quarto-figure-center column-body anchored page-columns page-full">
+<figure class="figure page-columns page-full">
+<p class="page-columns page-full"><img src="01_birth_files/figure-html/fig-0120-8.svg" class="column-body img-fluid figure-img" data-ref-parent="fig-0120"></p>
+<figcaption class="figure-caption">(h) District of Werd</figcaption>
+</figure>
+</div>
+</div>
+<div class="cell-output-display column-body page-columns page-full">
+<div id="fig-0120-9" class="quarto-figure quarto-figure-center column-body anchored page-columns page-full">
+<figure class="figure page-columns page-full">
+<p class="page-columns page-full"><img src="01_birth_files/figure-html/fig-0120-9.svg" class="column-body img-fluid figure-img" data-ref-parent="fig-0120"></p>
+<figcaption class="figure-caption">(i) District of Langstrasse</figcaption>
+</figure>
+</div>
+</div>
+<div class="cell-output-display column-body page-columns page-full">
+<div id="fig-0120-10" class="quarto-figure quarto-figure-center column-body anchored page-columns page-full">
+<figure class="figure page-columns page-full">
+<p class="page-columns page-full"><img src="01_birth_files/figure-html/fig-0120-10.svg" class="column-body img-fluid figure-img" data-ref-parent="fig-0120"></p>
+<figcaption class="figure-caption">(j) District of Hard</figcaption>
+</figure>
+</div>
+</div>
+<div class="cell-output-display column-body page-columns page-full">
+<div id="fig-0120-11" class="quarto-figure quarto-figure-center column-body anchored page-columns page-full">
+<figure class="figure page-columns page-full">
+<p class="page-columns page-full"><img src="01_birth_files/figure-html/fig-0120-11.svg" class="column-body img-fluid figure-img" data-ref-parent="fig-0120"></p>
+<figcaption class="figure-caption">(k) District of Gewerbeschule</figcaption>
+</figure>
+</div>
+</div>
+<div class="cell-output-display column-body page-columns page-full">
+<div id="fig-0120-12" class="quarto-figure quarto-figure-center column-body anchored page-columns page-full">
+<figure class="figure page-columns page-full">
+<p class="page-columns page-full"><img src="01_birth_files/figure-html/fig-0120-12.svg" class="column-body img-fluid figure-img" data-ref-parent="fig-0120"></p>
+<figcaption class="figure-caption">(l) District of Escher Wyss</figcaption>
+</figure>
+</div>
+</div>
+<div class="cell-output-display column-body page-columns page-full">
+<div id="fig-0120-13" class="quarto-figure quarto-figure-center column-body anchored page-columns page-full">
+<figure class="figure page-columns page-full">
+<p class="page-columns page-full"><img src="01_birth_files/figure-html/fig-0120-13.svg" class="column-body img-fluid figure-img" data-ref-parent="fig-0120"></p>
+<figcaption class="figure-caption">(m) District of Unterstrass</figcaption>
+</figure>
+</div>
+</div>
+<div class="cell-output-display column-body page-columns page-full">
+<div id="fig-0120-14" class="quarto-figure quarto-figure-center column-body anchored page-columns page-full">
+<figure class="figure page-columns page-full">
+<p class="page-columns page-full"><img src="01_birth_files/figure-html/fig-0120-14.svg" class="column-body img-fluid figure-img" data-ref-parent="fig-0120"></p>
+<figcaption class="figure-caption">(n) District of Oberstrass</figcaption>
+</figure>
+</div>
+</div>
+<div class="cell-output-display column-body page-columns page-full">
+<div id="fig-0120-15" class="quarto-figure quarto-figure-center column-body anchored page-columns page-full">
+<figure class="figure page-columns page-full">
+<p class="page-columns page-full"><img src="01_birth_files/figure-html/fig-0120-15.svg" class="column-body img-fluid figure-img" data-ref-parent="fig-0120"></p>
+<figcaption class="figure-caption">(o) District of Fluntern</figcaption>
+</figure>
+</div>
+</div>
+<div class="cell-output-display column-body page-columns page-full">
+<div id="fig-0120-16" class="quarto-figure quarto-figure-center column-body anchored page-columns page-full">
+<figure class="figure page-columns page-full">
+<p class="page-columns page-full"><img src="01_birth_files/figure-html/fig-0120-16.svg" class="column-body img-fluid figure-img" data-ref-parent="fig-0120"></p>
+<figcaption class="figure-caption">(p) District of Hottingen</figcaption>
+</figure>
+</div>
+</div>
+<div class="cell-output-display column-body page-columns page-full">
+<div id="fig-0120-17" class="quarto-figure quarto-figure-center column-body anchored page-columns page-full">
+<figure class="figure page-columns page-full">
+<p class="page-columns page-full"><img src="01_birth_files/figure-html/fig-0120-17.svg" class="column-body img-fluid figure-img" data-ref-parent="fig-0120"></p>
+<figcaption class="figure-caption">(q) District of Hirslanden</figcaption>
+</figure>
+</div>
+</div>
+<div class="cell-output-display column-body page-columns page-full">
+<div id="fig-0120-18" class="quarto-figure quarto-figure-center column-body anchored page-columns page-full">
+<figure class="figure page-columns page-full">
+<p class="page-columns page-full"><img src="01_birth_files/figure-html/fig-0120-18.svg" class="column-body img-fluid figure-img" data-ref-parent="fig-0120"></p>
+<figcaption class="figure-caption">(r) District of Witikon</figcaption>
+</figure>
+</div>
+</div>
+<div class="cell-output-display column-body page-columns page-full">
+<div id="fig-0120-19" class="quarto-figure quarto-figure-center column-body anchored page-columns page-full">
+<figure class="figure page-columns page-full">
+<p class="page-columns page-full"><img src="01_birth_files/figure-html/fig-0120-19.svg" class="column-body img-fluid figure-img" data-ref-parent="fig-0120"></p>
+<figcaption class="figure-caption">(s) District of Seefeld</figcaption>
+</figure>
+</div>
+</div>
+<div class="cell-output-display column-body page-columns page-full">
+<div id="fig-0120-20" class="quarto-figure quarto-figure-center column-body anchored page-columns page-full">
+<figure class="figure page-columns page-full">
+<p class="page-columns page-full"><img src="01_birth_files/figure-html/fig-0120-20.svg" class="column-body img-fluid figure-img" data-ref-parent="fig-0120"></p>
+<figcaption class="figure-caption">(t) District of Muehlebach</figcaption>
+</figure>
+</div>
+</div>
+<div class="cell-output-display column-body page-columns page-full">
+<div id="fig-0120-21" class="quarto-figure quarto-figure-center column-body anchored page-columns page-full">
+<figure class="figure page-columns page-full">
+<p class="page-columns page-full"><img src="01_birth_files/figure-html/fig-0120-21.svg" class="column-body img-fluid figure-img" data-ref-parent="fig-0120"></p>
+<figcaption class="figure-caption">(u) District of Weinegg</figcaption>
+</figure>
+</div>
+</div>
+<div class="cell-output-display column-body page-columns page-full">
+<div id="fig-0120-22" class="quarto-figure quarto-figure-center column-body anchored page-columns page-full">
+<figure class="figure page-columns page-full">
+<p class="page-columns page-full"><img src="01_birth_files/figure-html/fig-0120-22.svg" class="column-body img-fluid figure-img" data-ref-parent="fig-0120"></p>
+<figcaption class="figure-caption">(v) District of Albisrieden</figcaption>
+</figure>
+</div>
+</div>
+<div class="cell-output-display column-body page-columns page-full">
+<div id="fig-0120-23" class="quarto-figure quarto-figure-center column-body anchored page-columns page-full">
+<figure class="figure page-columns page-full">
+<p class="page-columns page-full"><img src="01_birth_files/figure-html/fig-0120-23.svg" class="column-body img-fluid figure-img" data-ref-parent="fig-0120"></p>
+<figcaption class="figure-caption">(w) District of Altstetten</figcaption>
+</figure>
+</div>
+</div>
+<div class="cell-output-display column-body page-columns page-full">
+<div id="fig-0120-24" class="quarto-figure quarto-figure-center column-body anchored page-columns page-full">
+<figure class="figure page-columns page-full">
+<p class="page-columns page-full"><img src="01_birth_files/figure-html/fig-0120-24.svg" class="column-body img-fluid figure-img" data-ref-parent="fig-0120"></p>
+<figcaption class="figure-caption">(x) District of Hoengg</figcaption>
+</figure>
+</div>
+</div>
+<div class="cell-output-display column-body page-columns page-full">
+<div id="fig-0120-25" class="quarto-figure quarto-figure-center column-body anchored page-columns page-full">
+<figure class="figure page-columns page-full">
+<p class="page-columns page-full"><img src="01_birth_files/figure-html/fig-0120-25.svg" class="column-body img-fluid figure-img" data-ref-parent="fig-0120"></p>
+<figcaption class="figure-caption">(y) District of Wipkingen</figcaption>
+</figure>
+</div>
+</div>
+<div class="cell-output-display column-body page-columns page-full">
+<div id="fig-0120-26" class="quarto-figure quarto-figure-center column-body anchored page-columns page-full">
+<figure class="figure page-columns page-full">
+<p class="page-columns page-full"><img src="01_birth_files/figure-html/fig-0120-26.svg" class="column-body img-fluid figure-img" data-ref-parent="fig-0120"></p>
+<figcaption class="figure-caption">(z) District of Affoltern</figcaption>
+</figure>
+</div>
+</div>
+<div class="cell-output-display column-body page-columns page-full">
+<div id="fig-0120-27" class="quarto-figure quarto-figure-center column-body anchored page-columns page-full">
+<figure class="figure page-columns page-full">
+<p class="page-columns page-full"><img src="01_birth_files/figure-html/fig-0120-27.svg" class="column-body img-fluid figure-img" data-ref-parent="fig-0120"></p>
+<figcaption class="figure-caption">({) District of Oerlikon</figcaption>
+</figure>
+</div>
+</div>
+<div class="cell-output-display column-body page-columns page-full">
+<div id="fig-0120-28" class="quarto-figure quarto-figure-center column-body anchored page-columns page-full">
+<figure class="figure page-columns page-full">
+<p class="page-columns page-full"><img src="01_birth_files/figure-html/fig-0120-28.svg" class="column-body img-fluid figure-img" data-ref-parent="fig-0120"></p>
+<figcaption class="figure-caption">(|) District of Seebach</figcaption>
+</figure>
+</div>
+</div>
+<div class="cell-output-display column-body page-columns page-full">
+<div id="fig-0120-29" class="quarto-figure quarto-figure-center column-body anchored page-columns page-full">
+<figure class="figure page-columns page-full">
+<p class="page-columns page-full"><img src="01_birth_files/figure-html/fig-0120-29.svg" class="column-body img-fluid figure-img" data-ref-parent="fig-0120"></p>
+<figcaption class="figure-caption">(}) District of Saatlen</figcaption>
+</figure>
+</div>
+</div>
+<div class="cell-output-display column-body page-columns page-full">
+<div id="fig-0120-30" class="quarto-figure quarto-figure-center column-body anchored page-columns page-full">
+<figure class="figure page-columns page-full">
+<p class="page-columns page-full"><img src="01_birth_files/figure-html/fig-0120-30.svg" class="column-body img-fluid figure-img" data-ref-parent="fig-0120"></p>
+<figcaption class="figure-caption">(~) District of Schwamendingen-Mitte</figcaption>
+</figure>
+</div>
+</div>
+<div class="cell-output-display column-body page-columns page-full">
+<div id="fig-0120-31" class="quarto-figure quarto-figure-center column-body anchored page-columns page-full">
+<figure class="figure page-columns page-full">
+<p class="page-columns page-full"><img src="01_birth_files/figure-html/fig-0120-31.svg" class="column-body img-fluid figure-img" data-ref-parent="fig-0120"></p>
+<figcaption class="figure-caption">() District of Hirzenbach</figcaption>
+</figure>
+</div>
+</div>
+<figcaption class="figure-caption">Figure&nbsp;1.10: initial vs.&nbsp;corrected fertility</figcaption>
+</figure>
+</div>
+<div id="fig-0121" class="quarto-figure quarto-figure-center anchored page-columns page-full">
+<figure class="figure page-columns page-full">
+<div class="cell-output-display column-body page-columns page-full">
+<div id="fig-0121-1" class="quarto-figure quarto-figure-center column-body anchored page-columns page-full">
+<figure class="figure page-columns page-full">
+<p class="page-columns page-full"><img src="01_birth_files/figure-html/fig-0121-1.svg" class="column-body img-fluid figure-img" data-ref-parent="fig-0121"></p>
+<figcaption class="figure-caption">(a) District of Kreis 1</figcaption>
+</figure>
+</div>
+</div>
+<div class="cell-output-display column-body page-columns page-full">
+<div id="fig-0121-2" class="quarto-figure quarto-figure-center column-body anchored page-columns page-full">
+<figure class="figure page-columns page-full">
+<p class="page-columns page-full"><img src="01_birth_files/figure-html/fig-0121-2.svg" class="column-body img-fluid figure-img" data-ref-parent="fig-0121"></p>
+<figcaption class="figure-caption">(b) District of Wollishofen</figcaption>
+</figure>
+</div>
+</div>
+<div class="cell-output-display column-body page-columns page-full">
+<div id="fig-0121-3" class="quarto-figure quarto-figure-center column-body anchored page-columns page-full">
+<figure class="figure page-columns page-full">
+<p class="page-columns page-full"><img src="01_birth_files/figure-html/fig-0121-3.svg" class="column-body img-fluid figure-img" data-ref-parent="fig-0121"></p>
+<figcaption class="figure-caption">(c) District of Leimbach</figcaption>
+</figure>
+</div>
+</div>
+<div class="cell-output-display column-body page-columns page-full">
+<div id="fig-0121-4" class="quarto-figure quarto-figure-center column-body anchored page-columns page-full">
+<figure class="figure page-columns page-full">
+<p class="page-columns page-full"><img src="01_birth_files/figure-html/fig-0121-4.svg" class="column-body img-fluid figure-img" data-ref-parent="fig-0121"></p>
+<figcaption class="figure-caption">(d) District of Enge</figcaption>
+</figure>
+</div>
+</div>
+<div class="cell-output-display column-body page-columns page-full">
+<div id="fig-0121-5" class="quarto-figure quarto-figure-center column-body anchored page-columns page-full">
+<figure class="figure page-columns page-full">
+<p class="page-columns page-full"><img src="01_birth_files/figure-html/fig-0121-5.svg" class="column-body img-fluid figure-img" data-ref-parent="fig-0121"></p>
+<figcaption class="figure-caption">(e) District of Alt-Wiedikon</figcaption>
+</figure>
+</div>
+</div>
+<div class="cell-output-display column-body page-columns page-full">
+<div id="fig-0121-6" class="quarto-figure quarto-figure-center column-body anchored page-columns page-full">
+<figure class="figure page-columns page-full">
+<p class="page-columns page-full"><img src="01_birth_files/figure-html/fig-0121-6.svg" class="column-body img-fluid figure-img" data-ref-parent="fig-0121"></p>
+<figcaption class="figure-caption">(f) District of Friesenberg</figcaption>
+</figure>
+</div>
+</div>
+<div class="cell-output-display column-body page-columns page-full">
+<div id="fig-0121-7" class="quarto-figure quarto-figure-center column-body anchored page-columns page-full">
+<figure class="figure page-columns page-full">
+<p class="page-columns page-full"><img src="01_birth_files/figure-html/fig-0121-7.svg" class="column-body img-fluid figure-img" data-ref-parent="fig-0121"></p>
+<figcaption class="figure-caption">(g) District of Sihlfeld</figcaption>
+</figure>
+</div>
+</div>
+<div class="cell-output-display column-body page-columns page-full">
+<div id="fig-0121-8" class="quarto-figure quarto-figure-center column-body anchored page-columns page-full">
+<figure class="figure page-columns page-full">
+<p class="page-columns page-full"><img src="01_birth_files/figure-html/fig-0121-8.svg" class="column-body img-fluid figure-img" data-ref-parent="fig-0121"></p>
+<figcaption class="figure-caption">(h) District of Werd</figcaption>
+</figure>
+</div>
+</div>
+<div class="cell-output-display column-body page-columns page-full">
+<div id="fig-0121-9" class="quarto-figure quarto-figure-center column-body anchored page-columns page-full">
+<figure class="figure page-columns page-full">
+<p class="page-columns page-full"><img src="01_birth_files/figure-html/fig-0121-9.svg" class="column-body img-fluid figure-img" data-ref-parent="fig-0121"></p>
+<figcaption class="figure-caption">(i) District of Langstrasse</figcaption>
+</figure>
+</div>
+</div>
+<div class="cell-output-display column-body page-columns page-full">
+<div id="fig-0121-10" class="quarto-figure quarto-figure-center column-body anchored page-columns page-full">
+<figure class="figure page-columns page-full">
+<p class="page-columns page-full"><img src="01_birth_files/figure-html/fig-0121-10.svg" class="column-body img-fluid figure-img" data-ref-parent="fig-0121"></p>
+<figcaption class="figure-caption">(j) District of Hard</figcaption>
+</figure>
+</div>
+</div>
+<div class="cell-output-display column-body page-columns page-full">
+<div id="fig-0121-11" class="quarto-figure quarto-figure-center column-body anchored page-columns page-full">
+<figure class="figure page-columns page-full">
+<p class="page-columns page-full"><img src="01_birth_files/figure-html/fig-0121-11.svg" class="column-body img-fluid figure-img" data-ref-parent="fig-0121"></p>
+<figcaption class="figure-caption">(k) District of Gewerbeschule</figcaption>
+</figure>
+</div>
+</div>
+<div class="cell-output-display column-body page-columns page-full">
+<div id="fig-0121-12" class="quarto-figure quarto-figure-center column-body anchored page-columns page-full">
+<figure class="figure page-columns page-full">
+<p class="page-columns page-full"><img src="01_birth_files/figure-html/fig-0121-12.svg" class="column-body img-fluid figure-img" data-ref-parent="fig-0121"></p>
+<figcaption class="figure-caption">(l) District of Escher Wyss</figcaption>
+</figure>
+</div>
+</div>
+<div class="cell-output-display column-body page-columns page-full">
+<div id="fig-0121-13" class="quarto-figure quarto-figure-center column-body anchored page-columns page-full">
+<figure class="figure page-columns page-full">
+<p class="page-columns page-full"><img src="01_birth_files/figure-html/fig-0121-13.svg" class="column-body img-fluid figure-img" data-ref-parent="fig-0121"></p>
+<figcaption class="figure-caption">(m) District of Unterstrass</figcaption>
+</figure>
+</div>
+</div>
+<div class="cell-output-display column-body page-columns page-full">
+<div id="fig-0121-14" class="quarto-figure quarto-figure-center column-body anchored page-columns page-full">
+<figure class="figure page-columns page-full">
+<p class="page-columns page-full"><img src="01_birth_files/figure-html/fig-0121-14.svg" class="column-body img-fluid figure-img" data-ref-parent="fig-0121"></p>
+<figcaption class="figure-caption">(n) District of Oberstrass</figcaption>
+</figure>
+</div>
+</div>
+<div class="cell-output-display column-body page-columns page-full">
+<div id="fig-0121-15" class="quarto-figure quarto-figure-center column-body anchored page-columns page-full">
+<figure class="figure page-columns page-full">
+<p class="page-columns page-full"><img src="01_birth_files/figure-html/fig-0121-15.svg" class="column-body img-fluid figure-img" data-ref-parent="fig-0121"></p>
+<figcaption class="figure-caption">(o) District of Fluntern</figcaption>
+</figure>
+</div>
+</div>
+<div class="cell-output-display column-body page-columns page-full">
+<div id="fig-0121-16" class="quarto-figure quarto-figure-center column-body anchored page-columns page-full">
+<figure class="figure page-columns page-full">
+<p class="page-columns page-full"><img src="01_birth_files/figure-html/fig-0121-16.svg" class="column-body img-fluid figure-img" data-ref-parent="fig-0121"></p>
+<figcaption class="figure-caption">(p) District of Hottingen</figcaption>
+</figure>
+</div>
+</div>
+<div class="cell-output-display column-body page-columns page-full">
+<div id="fig-0121-17" class="quarto-figure quarto-figure-center column-body anchored page-columns page-full">
+<figure class="figure page-columns page-full">
+<p class="page-columns page-full"><img src="01_birth_files/figure-html/fig-0121-17.svg" class="column-body img-fluid figure-img" data-ref-parent="fig-0121"></p>
+<figcaption class="figure-caption">(q) District of Hirslanden</figcaption>
+</figure>
+</div>
+</div>
+<div class="cell-output-display column-body page-columns page-full">
+<div id="fig-0121-18" class="quarto-figure quarto-figure-center column-body anchored page-columns page-full">
+<figure class="figure page-columns page-full">
+<p class="page-columns page-full"><img src="01_birth_files/figure-html/fig-0121-18.svg" class="column-body img-fluid figure-img" data-ref-parent="fig-0121"></p>
+<figcaption class="figure-caption">(r) District of Witikon</figcaption>
+</figure>
+</div>
+</div>
+<div class="cell-output-display column-body page-columns page-full">
+<div id="fig-0121-19" class="quarto-figure quarto-figure-center column-body anchored page-columns page-full">
+<figure class="figure page-columns page-full">
+<p class="page-columns page-full"><img src="01_birth_files/figure-html/fig-0121-19.svg" class="column-body img-fluid figure-img" data-ref-parent="fig-0121"></p>
+<figcaption class="figure-caption">(s) District of Seefeld</figcaption>
+</figure>
+</div>
+</div>
+<div class="cell-output-display column-body page-columns page-full">
+<div id="fig-0121-20" class="quarto-figure quarto-figure-center column-body anchored page-columns page-full">
+<figure class="figure page-columns page-full">
+<p class="page-columns page-full"><img src="01_birth_files/figure-html/fig-0121-20.svg" class="column-body img-fluid figure-img" data-ref-parent="fig-0121"></p>
+<figcaption class="figure-caption">(t) District of Muehlebach</figcaption>
+</figure>
+</div>
+</div>
+<div class="cell-output-display column-body page-columns page-full">
+<div id="fig-0121-21" class="quarto-figure quarto-figure-center column-body anchored page-columns page-full">
+<figure class="figure page-columns page-full">
+<p class="page-columns page-full"><img src="01_birth_files/figure-html/fig-0121-21.svg" class="column-body img-fluid figure-img" data-ref-parent="fig-0121"></p>
+<figcaption class="figure-caption">(u) District of Weinegg</figcaption>
+</figure>
+</div>
+</div>
+<div class="cell-output-display column-body page-columns page-full">
+<div id="fig-0121-22" class="quarto-figure quarto-figure-center column-body anchored page-columns page-full">
+<figure class="figure page-columns page-full">
+<p class="page-columns page-full"><img src="01_birth_files/figure-html/fig-0121-22.svg" class="column-body img-fluid figure-img" data-ref-parent="fig-0121"></p>
+<figcaption class="figure-caption">(v) District of Albisrieden</figcaption>
+</figure>
+</div>
+</div>
+<div class="cell-output-display column-body page-columns page-full">
+<div id="fig-0121-23" class="quarto-figure quarto-figure-center column-body anchored page-columns page-full">
+<figure class="figure page-columns page-full">
+<p class="page-columns page-full"><img src="01_birth_files/figure-html/fig-0121-23.svg" class="column-body img-fluid figure-img" data-ref-parent="fig-0121"></p>
+<figcaption class="figure-caption">(w) District of Altstetten</figcaption>
+</figure>
+</div>
+</div>
+<div class="cell-output-display column-body page-columns page-full">
+<div id="fig-0121-24" class="quarto-figure quarto-figure-center column-body anchored page-columns page-full">
+<figure class="figure page-columns page-full">
+<p class="page-columns page-full"><img src="01_birth_files/figure-html/fig-0121-24.svg" class="column-body img-fluid figure-img" data-ref-parent="fig-0121"></p>
+<figcaption class="figure-caption">(x) District of Hoengg</figcaption>
+</figure>
+</div>
+</div>
+<div class="cell-output-display column-body page-columns page-full">
+<div id="fig-0121-25" class="quarto-figure quarto-figure-center column-body anchored page-columns page-full">
+<figure class="figure page-columns page-full">
+<p class="page-columns page-full"><img src="01_birth_files/figure-html/fig-0121-25.svg" class="column-body img-fluid figure-img" data-ref-parent="fig-0121"></p>
+<figcaption class="figure-caption">(y) District of Wipkingen</figcaption>
+</figure>
+</div>
+</div>
+<div class="cell-output-display column-body page-columns page-full">
+<div id="fig-0121-26" class="quarto-figure quarto-figure-center column-body anchored page-columns page-full">
+<figure class="figure page-columns page-full">
+<p class="page-columns page-full"><img src="01_birth_files/figure-html/fig-0121-26.svg" class="column-body img-fluid figure-img" data-ref-parent="fig-0121"></p>
+<figcaption class="figure-caption">(z) District of Affoltern</figcaption>
+</figure>
+</div>
+</div>
+<div class="cell-output-display column-body page-columns page-full">
+<div id="fig-0121-27" class="quarto-figure quarto-figure-center column-body anchored page-columns page-full">
+<figure class="figure page-columns page-full">
+<p class="page-columns page-full"><img src="01_birth_files/figure-html/fig-0121-27.svg" class="column-body img-fluid figure-img" data-ref-parent="fig-0121"></p>
+<figcaption class="figure-caption">({) District of Oerlikon</figcaption>
+</figure>
+</div>
+</div>
+<div class="cell-output-display column-body page-columns page-full">
+<div id="fig-0121-28" class="quarto-figure quarto-figure-center column-body anchored page-columns page-full">
+<figure class="figure page-columns page-full">
+<p class="page-columns page-full"><img src="01_birth_files/figure-html/fig-0121-28.svg" class="column-body img-fluid figure-img" data-ref-parent="fig-0121"></p>
+<figcaption class="figure-caption">(|) District of Seebach</figcaption>
+</figure>
+</div>
+</div>
+<div class="cell-output-display column-body page-columns page-full">
+<div id="fig-0121-29" class="quarto-figure quarto-figure-center column-body anchored page-columns page-full">
+<figure class="figure page-columns page-full">
+<p class="page-columns page-full"><img src="01_birth_files/figure-html/fig-0121-29.svg" class="column-body img-fluid figure-img" data-ref-parent="fig-0121"></p>
+<figcaption class="figure-caption">(}) District of Saatlen</figcaption>
+</figure>
+</div>
+</div>
+<div class="cell-output-display column-body page-columns page-full">
+<div id="fig-0121-30" class="quarto-figure quarto-figure-center column-body anchored page-columns page-full">
+<figure class="figure page-columns page-full">
+<p class="page-columns page-full"><img src="01_birth_files/figure-html/fig-0121-30.svg" class="column-body img-fluid figure-img" data-ref-parent="fig-0121"></p>
+<figcaption class="figure-caption">(~) District of Schwamendingen-Mitte</figcaption>
+</figure>
+</div>
+</div>
+<div class="cell-output-display column-body page-columns page-full">
+<div id="fig-0121-31" class="quarto-figure quarto-figure-center column-body anchored page-columns page-full">
+<figure class="figure page-columns page-full">
+<p class="page-columns page-full"><img src="01_birth_files/figure-html/fig-0121-31.svg" class="column-body img-fluid figure-img" data-ref-parent="fig-0121"></p>
+<figcaption class="figure-caption">() District of Hirzenbach</figcaption>
+</figure>
+</div>
+</div>
+<figcaption class="figure-caption">Figure&nbsp;1.11: cumulative population from the tails</figcaption>
+</figure>
+</div>
+<div id="fig-0122" class="quarto-figure quarto-figure-center anchored page-columns page-full">
+<figure class="figure page-columns page-full">
+<div class="cell-output-display column-body page-columns page-full">
+<div id="fig-0122-1" class="quarto-figure quarto-figure-center column-body anchored page-columns page-full">
+<figure class="figure page-columns page-full">
+<p class="page-columns page-full"><img src="01_birth_files/figure-html/fig-0122-1.svg" class="column-body img-fluid figure-img" data-ref-parent="fig-0122"></p>
+<figcaption class="figure-caption">(a) District of Kreis 1</figcaption>
+</figure>
+</div>
+</div>
+<div class="cell-output-display column-body page-columns page-full">
+<div id="fig-0122-2" class="quarto-figure quarto-figure-center column-body anchored page-columns page-full">
+<figure class="figure page-columns page-full">
+<p class="page-columns page-full"><img src="01_birth_files/figure-html/fig-0122-2.svg" class="column-body img-fluid figure-img" data-ref-parent="fig-0122"></p>
+<figcaption class="figure-caption">(b) District of Wollishofen</figcaption>
+</figure>
+</div>
+</div>
+<div class="cell-output-display column-body page-columns page-full">
+<div id="fig-0122-3" class="quarto-figure quarto-figure-center column-body anchored page-columns page-full">
+<figure class="figure page-columns page-full">
+<p class="page-columns page-full"><img src="01_birth_files/figure-html/fig-0122-3.svg" class="column-body img-fluid figure-img" data-ref-parent="fig-0122"></p>
+<figcaption class="figure-caption">(c) District of Leimbach</figcaption>
+</figure>
+</div>
+</div>
+<div class="cell-output-display column-body page-columns page-full">
+<div id="fig-0122-4" class="quarto-figure quarto-figure-center column-body anchored page-columns page-full">
+<figure class="figure page-columns page-full">
+<p class="page-columns page-full"><img src="01_birth_files/figure-html/fig-0122-4.svg" class="column-body img-fluid figure-img" data-ref-parent="fig-0122"></p>
+<figcaption class="figure-caption">(d) District of Enge</figcaption>
+</figure>
+</div>
+</div>
+<div class="cell-output-display column-body page-columns page-full">
+<div id="fig-0122-5" class="quarto-figure quarto-figure-center column-body anchored page-columns page-full">
+<figure class="figure page-columns page-full">
+<p class="page-columns page-full"><img src="01_birth_files/figure-html/fig-0122-5.svg" class="column-body img-fluid figure-img" data-ref-parent="fig-0122"></p>
+<figcaption class="figure-caption">(e) District of Alt-Wiedikon</figcaption>
+</figure>
+</div>
+</div>
+<div class="cell-output-display column-body page-columns page-full">
+<div id="fig-0122-6" class="quarto-figure quarto-figure-center column-body anchored page-columns page-full">
+<figure class="figure page-columns page-full">
+<p class="page-columns page-full"><img src="01_birth_files/figure-html/fig-0122-6.svg" class="column-body img-fluid figure-img" data-ref-parent="fig-0122"></p>
+<figcaption class="figure-caption">(f) District of Friesenberg</figcaption>
+</figure>
+</div>
+</div>
+<div class="cell-output-display column-body page-columns page-full">
+<div id="fig-0122-7" class="quarto-figure quarto-figure-center column-body anchored page-columns page-full">
+<figure class="figure page-columns page-full">
+<p class="page-columns page-full"><img src="01_birth_files/figure-html/fig-0122-7.svg" class="column-body img-fluid figure-img" data-ref-parent="fig-0122"></p>
+<figcaption class="figure-caption">(g) District of Sihlfeld</figcaption>
+</figure>
+</div>
+</div>
+<div class="cell-output-display column-body page-columns page-full">
+<div id="fig-0122-8" class="quarto-figure quarto-figure-center column-body anchored page-columns page-full">
+<figure class="figure page-columns page-full">
+<p class="page-columns page-full"><img src="01_birth_files/figure-html/fig-0122-8.svg" class="column-body img-fluid figure-img" data-ref-parent="fig-0122"></p>
+<figcaption class="figure-caption">(h) District of Werd</figcaption>
+</figure>
+</div>
+</div>
+<div class="cell-output-display column-body page-columns page-full">
+<div id="fig-0122-9" class="quarto-figure quarto-figure-center column-body anchored page-columns page-full">
+<figure class="figure page-columns page-full">
+<p class="page-columns page-full"><img src="01_birth_files/figure-html/fig-0122-9.svg" class="column-body img-fluid figure-img" data-ref-parent="fig-0122"></p>
+<figcaption class="figure-caption">(i) District of Langstrasse</figcaption>
+</figure>
+</div>
+</div>
+<div class="cell-output-display column-body page-columns page-full">
+<div id="fig-0122-10" class="quarto-figure quarto-figure-center column-body anchored page-columns page-full">
+<figure class="figure page-columns page-full">
+<p class="page-columns page-full"><img src="01_birth_files/figure-html/fig-0122-10.svg" class="column-body img-fluid figure-img" data-ref-parent="fig-0122"></p>
+<figcaption class="figure-caption">(j) District of Hard</figcaption>
+</figure>
+</div>
+</div>
+<div class="cell-output-display column-body page-columns page-full">
+<div id="fig-0122-11" class="quarto-figure quarto-figure-center column-body anchored page-columns page-full">
+<figure class="figure page-columns page-full">
+<p class="page-columns page-full"><img src="01_birth_files/figure-html/fig-0122-11.svg" class="column-body img-fluid figure-img" data-ref-parent="fig-0122"></p>
+<figcaption class="figure-caption">(k) District of Gewerbeschule</figcaption>
+</figure>
+</div>
+</div>
+<div class="cell-output-display column-body page-columns page-full">
+<div id="fig-0122-12" class="quarto-figure quarto-figure-center column-body anchored page-columns page-full">
+<figure class="figure page-columns page-full">
+<p class="page-columns page-full"><img src="01_birth_files/figure-html/fig-0122-12.svg" class="column-body img-fluid figure-img" data-ref-parent="fig-0122"></p>
+<figcaption class="figure-caption">(l) District of Escher Wyss</figcaption>
+</figure>
+</div>
+</div>
+<div class="cell-output-display column-body page-columns page-full">
+<div id="fig-0122-13" class="quarto-figure quarto-figure-center column-body anchored page-columns page-full">
+<figure class="figure page-columns page-full">
+<p class="page-columns page-full"><img src="01_birth_files/figure-html/fig-0122-13.svg" class="column-body img-fluid figure-img" data-ref-parent="fig-0122"></p>
+<figcaption class="figure-caption">(m) District of Unterstrass</figcaption>
+</figure>
+</div>
+</div>
+<div class="cell-output-display column-body page-columns page-full">
+<div id="fig-0122-14" class="quarto-figure quarto-figure-center column-body anchored page-columns page-full">
+<figure class="figure page-columns page-full">
+<p class="page-columns page-full"><img src="01_birth_files/figure-html/fig-0122-14.svg" class="column-body img-fluid figure-img" data-ref-parent="fig-0122"></p>
+<figcaption class="figure-caption">(n) District of Oberstrass</figcaption>
+</figure>
+</div>
+</div>
+<div class="cell-output-display column-body page-columns page-full">
+<div id="fig-0122-15" class="quarto-figure quarto-figure-center column-body anchored page-columns page-full">
+<figure class="figure page-columns page-full">
+<p class="page-columns page-full"><img src="01_birth_files/figure-html/fig-0122-15.svg" class="column-body img-fluid figure-img" data-ref-parent="fig-0122"></p>
+<figcaption class="figure-caption">(o) District of Fluntern</figcaption>
+</figure>
+</div>
+</div>
+<div class="cell-output-display column-body page-columns page-full">
+<div id="fig-0122-16" class="quarto-figure quarto-figure-center column-body anchored page-columns page-full">
+<figure class="figure page-columns page-full">
+<p class="page-columns page-full"><img src="01_birth_files/figure-html/fig-0122-16.svg" class="column-body img-fluid figure-img" data-ref-parent="fig-0122"></p>
+<figcaption class="figure-caption">(p) District of Hottingen</figcaption>
+</figure>
+</div>
+</div>
+<div class="cell-output-display column-body page-columns page-full">
+<div id="fig-0122-17" class="quarto-figure quarto-figure-center column-body anchored page-columns page-full">
+<figure class="figure page-columns page-full">
+<p class="page-columns page-full"><img src="01_birth_files/figure-html/fig-0122-17.svg" class="column-body img-fluid figure-img" data-ref-parent="fig-0122"></p>
+<figcaption class="figure-caption">(q) District of Hirslanden</figcaption>
+</figure>
+</div>
+</div>
+<div class="cell-output-display column-body page-columns page-full">
+<div id="fig-0122-18" class="quarto-figure quarto-figure-center column-body anchored page-columns page-full">
+<figure class="figure page-columns page-full">
+<p class="page-columns page-full"><img src="01_birth_files/figure-html/fig-0122-18.svg" class="column-body img-fluid figure-img" data-ref-parent="fig-0122"></p>
+<figcaption class="figure-caption">(r) District of Witikon</figcaption>
+</figure>
+</div>
+</div>
+<div class="cell-output-display column-body page-columns page-full">
+<div id="fig-0122-19" class="quarto-figure quarto-figure-center column-body anchored page-columns page-full">
+<figure class="figure page-columns page-full">
+<p class="page-columns page-full"><img src="01_birth_files/figure-html/fig-0122-19.svg" class="column-body img-fluid figure-img" data-ref-parent="fig-0122"></p>
+<figcaption class="figure-caption">(s) District of Seefeld</figcaption>
+</figure>
+</div>
+</div>
+<div class="cell-output-display column-body page-columns page-full">
+<div id="fig-0122-20" class="quarto-figure quarto-figure-center column-body anchored page-columns page-full">
+<figure class="figure page-columns page-full">
+<p class="page-columns page-full"><img src="01_birth_files/figure-html/fig-0122-20.svg" class="column-body img-fluid figure-img" data-ref-parent="fig-0122"></p>
+<figcaption class="figure-caption">(t) District of Muehlebach</figcaption>
+</figure>
+</div>
+</div>
+<div class="cell-output-display column-body page-columns page-full">
+<div id="fig-0122-21" class="quarto-figure quarto-figure-center column-body anchored page-columns page-full">
+<figure class="figure page-columns page-full">
+<p class="page-columns page-full"><img src="01_birth_files/figure-html/fig-0122-21.svg" class="column-body img-fluid figure-img" data-ref-parent="fig-0122"></p>
+<figcaption class="figure-caption">(u) District of Weinegg</figcaption>
+</figure>
+</div>
+</div>
+<div class="cell-output-display column-body page-columns page-full">
+<div id="fig-0122-22" class="quarto-figure quarto-figure-center column-body anchored page-columns page-full">
+<figure class="figure page-columns page-full">
+<p class="page-columns page-full"><img src="01_birth_files/figure-html/fig-0122-22.svg" class="column-body img-fluid figure-img" data-ref-parent="fig-0122"></p>
+<figcaption class="figure-caption">(v) District of Albisrieden</figcaption>
+</figure>
+</div>
+</div>
+<div class="cell-output-display column-body page-columns page-full">
+<div id="fig-0122-23" class="quarto-figure quarto-figure-center column-body anchored page-columns page-full">
+<figure class="figure page-columns page-full">
+<p class="page-columns page-full"><img src="01_birth_files/figure-html/fig-0122-23.svg" class="column-body img-fluid figure-img" data-ref-parent="fig-0122"></p>
+<figcaption class="figure-caption">(w) District of Altstetten</figcaption>
+</figure>
+</div>
+</div>
+<div class="cell-output-display column-body page-columns page-full">
+<div id="fig-0122-24" class="quarto-figure quarto-figure-center column-body anchored page-columns page-full">
+<figure class="figure page-columns page-full">
+<p class="page-columns page-full"><img src="01_birth_files/figure-html/fig-0122-24.svg" class="column-body img-fluid figure-img" data-ref-parent="fig-0122"></p>
+<figcaption class="figure-caption">(x) District of Hoengg</figcaption>
+</figure>
+</div>
+</div>
+<div class="cell-output-display column-body page-columns page-full">
+<div id="fig-0122-25" class="quarto-figure quarto-figure-center column-body anchored page-columns page-full">
+<figure class="figure page-columns page-full">
+<p class="page-columns page-full"><img src="01_birth_files/figure-html/fig-0122-25.svg" class="column-body img-fluid figure-img" data-ref-parent="fig-0122"></p>
+<figcaption class="figure-caption">(y) District of Wipkingen</figcaption>
+</figure>
+</div>
+</div>
+<div class="cell-output-display column-body page-columns page-full">
+<div id="fig-0122-26" class="quarto-figure quarto-figure-center column-body anchored page-columns page-full">
+<figure class="figure page-columns page-full">
+<p class="page-columns page-full"><img src="01_birth_files/figure-html/fig-0122-26.svg" class="column-body img-fluid figure-img" data-ref-parent="fig-0122"></p>
+<figcaption class="figure-caption">(z) District of Affoltern</figcaption>
+</figure>
+</div>
+</div>
+<div class="cell-output-display column-body page-columns page-full">
+<div id="fig-0122-27" class="quarto-figure quarto-figure-center column-body anchored page-columns page-full">
+<figure class="figure page-columns page-full">
+<p class="page-columns page-full"><img src="01_birth_files/figure-html/fig-0122-27.svg" class="column-body img-fluid figure-img" data-ref-parent="fig-0122"></p>
+<figcaption class="figure-caption">({) District of Oerlikon</figcaption>
+</figure>
+</div>
+</div>
+<div class="cell-output-display column-body page-columns page-full">
+<div id="fig-0122-28" class="quarto-figure quarto-figure-center column-body anchored page-columns page-full">
+<figure class="figure page-columns page-full">
+<p class="page-columns page-full"><img src="01_birth_files/figure-html/fig-0122-28.svg" class="column-body img-fluid figure-img" data-ref-parent="fig-0122"></p>
+<figcaption class="figure-caption">(|) District of Seebach</figcaption>
+</figure>
+</div>
+</div>
+<div class="cell-output-display column-body page-columns page-full">
+<div id="fig-0122-29" class="quarto-figure quarto-figure-center column-body anchored page-columns page-full">
+<figure class="figure page-columns page-full">
+<p class="page-columns page-full"><img src="01_birth_files/figure-html/fig-0122-29.svg" class="column-body img-fluid figure-img" data-ref-parent="fig-0122"></p>
+<figcaption class="figure-caption">(}) District of Saatlen</figcaption>
+</figure>
+</div>
+</div>
+<div class="cell-output-display column-body page-columns page-full">
+<div id="fig-0122-30" class="quarto-figure quarto-figure-center column-body anchored page-columns page-full">
+<figure class="figure page-columns page-full">
+<p class="page-columns page-full"><img src="01_birth_files/figure-html/fig-0122-30.svg" class="column-body img-fluid figure-img" data-ref-parent="fig-0122"></p>
+<figcaption class="figure-caption">(~) District of Schwamendingen-Mitte</figcaption>
+</figure>
+</div>
+</div>
+<div class="cell-output-display column-body page-columns page-full">
+<div id="fig-0122-31" class="quarto-figure quarto-figure-center column-body anchored page-columns page-full">
+<figure class="figure page-columns page-full">
+<p class="page-columns page-full"><img src="01_birth_files/figure-html/fig-0122-31.svg" class="column-body img-fluid figure-img" data-ref-parent="fig-0122"></p>
+<figcaption class="figure-caption">() District of Hirzenbach</figcaption>
+</figure>
+</div>
+</div>
+<figcaption class="figure-caption">Figure&nbsp;1.12: smooth the corrected fertility rate”</figcaption>
+</figure>
+</div>
+</section>
+<section id="prediction" class="level3 page-columns page-full" data-number="1.1.3">
+<h3 data-number="1.1.3" class="anchored" data-anchor-id="prediction"><span class="header-section-number">1.1.3</span> Prediction</h3>
+<div id="fig-0140" class="quarto-figure quarto-figure-center anchored page-columns page-full">
+<figure class="figure page-columns page-full">
+<div class="cell-output-display column-body page-columns page-full">
+<div id="fig-0140-1" class="quarto-figure quarto-figure-center column-body anchored page-columns page-full">
+<figure class="figure page-columns page-full">
+<p class="page-columns page-full"><img src="01_birth_files/figure-html/fig-0140-1.svg" class="column-body img-fluid figure-img" data-ref-parent="fig-0140"></p>
+<figcaption class="figure-caption">(a) Origin Swiss</figcaption>
+</figure>
+</div>
+</div>
+<div class="cell-output-display column-body page-columns page-full">
+<div id="fig-0140-2" class="quarto-figure quarto-figure-center column-body anchored page-columns page-full">
+<figure class="figure page-columns page-full">
+<p class="page-columns page-full"><img src="01_birth_files/figure-html/fig-0140-2.svg" class="column-body img-fluid figure-img" data-ref-parent="fig-0140"></p>
+<figcaption class="figure-caption">(b) Origin foreign</figcaption>
+</figure>
+</div>
+</div>
+<figcaption class="figure-caption">Figure&nbsp;1.13: plot the predictions: age distribution by district and year</figcaption>
+</figure>
+</div>
+<p>swiss</p>
+<div id="fig-0141" class="quarto-figure quarto-figure-center anchored page-columns page-full">
+<figure class="figure page-columns page-full">
+<div class="cell-output-display column-body page-columns page-full">
+<div id="fig-0141-1" class="quarto-figure quarto-figure-center column-body anchored page-columns page-full">
+<figure class="figure page-columns page-full">
+<p class="page-columns page-full"><img src="01_birth_files/figure-html/fig-0141-1.svg" class="column-body img-fluid figure-img" data-ref-parent="fig-0141"></p>
+<figcaption class="figure-caption">(a) District of Kreis 1</figcaption>
+</figure>
+</div>
+</div>
+<div class="cell-output-display column-body page-columns page-full">
+<div id="fig-0141-2" class="quarto-figure quarto-figure-center column-body anchored page-columns page-full">
+<figure class="figure page-columns page-full">
+<p class="page-columns page-full"><img src="01_birth_files/figure-html/fig-0141-2.svg" class="column-body img-fluid figure-img" data-ref-parent="fig-0141"></p>
+<figcaption class="figure-caption">(b) District of Wollishofen</figcaption>
+</figure>
+</div>
+</div>
+<div class="cell-output-display column-body page-columns page-full">
+<div id="fig-0141-3" class="quarto-figure quarto-figure-center column-body anchored page-columns page-full">
+<figure class="figure page-columns page-full">
+<p class="page-columns page-full"><img src="01_birth_files/figure-html/fig-0141-3.svg" class="column-body img-fluid figure-img" data-ref-parent="fig-0141"></p>
+<figcaption class="figure-caption">(c) District of Leimbach</figcaption>
+</figure>
+</div>
+</div>
+<div class="cell-output-display column-body page-columns page-full">
+<div id="fig-0141-4" class="quarto-figure quarto-figure-center column-body anchored page-columns page-full">
+<figure class="figure page-columns page-full">
+<p class="page-columns page-full"><img src="01_birth_files/figure-html/fig-0141-4.svg" class="column-body img-fluid figure-img" data-ref-parent="fig-0141"></p>
+<figcaption class="figure-caption">(d) District of Enge</figcaption>
+</figure>
+</div>
+</div>
+<div class="cell-output-display column-body page-columns page-full">
+<div id="fig-0141-5" class="quarto-figure quarto-figure-center column-body anchored page-columns page-full">
+<figure class="figure page-columns page-full">
+<p class="page-columns page-full"><img src="01_birth_files/figure-html/fig-0141-5.svg" class="column-body img-fluid figure-img" data-ref-parent="fig-0141"></p>
+<figcaption class="figure-caption">(e) District of Alt-Wiedikon</figcaption>
+</figure>
+</div>
+</div>
+<div class="cell-output-display column-body page-columns page-full">
+<div id="fig-0141-6" class="quarto-figure quarto-figure-center column-body anchored page-columns page-full">
+<figure class="figure page-columns page-full">
+<p class="page-columns page-full"><img src="01_birth_files/figure-html/fig-0141-6.svg" class="column-body img-fluid figure-img" data-ref-parent="fig-0141"></p>
+<figcaption class="figure-caption">(f) District of Friesenberg</figcaption>
+</figure>
+</div>
+</div>
+<div class="cell-output-display column-body page-columns page-full">
+<div id="fig-0141-7" class="quarto-figure quarto-figure-center column-body anchored page-columns page-full">
+<figure class="figure page-columns page-full">
+<p class="page-columns page-full"><img src="01_birth_files/figure-html/fig-0141-7.svg" class="column-body img-fluid figure-img" data-ref-parent="fig-0141"></p>
+<figcaption class="figure-caption">(g) District of Sihlfeld</figcaption>
+</figure>
+</div>
+</div>
+<div class="cell-output-display column-body page-columns page-full">
+<div id="fig-0141-8" class="quarto-figure quarto-figure-center column-body anchored page-columns page-full">
+<figure class="figure page-columns page-full">
+<p class="page-columns page-full"><img src="01_birth_files/figure-html/fig-0141-8.svg" class="column-body img-fluid figure-img" data-ref-parent="fig-0141"></p>
+<figcaption class="figure-caption">(h) District of Werd</figcaption>
+</figure>
+</div>
+</div>
+<div class="cell-output-display column-body page-columns page-full">
+<div id="fig-0141-9" class="quarto-figure quarto-figure-center column-body anchored page-columns page-full">
+<figure class="figure page-columns page-full">
+<p class="page-columns page-full"><img src="01_birth_files/figure-html/fig-0141-9.svg" class="column-body img-fluid figure-img" data-ref-parent="fig-0141"></p>
+<figcaption class="figure-caption">(i) District of Langstrasse</figcaption>
+</figure>
+</div>
+</div>
+<div class="cell-output-display column-body page-columns page-full">
+<div id="fig-0141-10" class="quarto-figure quarto-figure-center column-body anchored page-columns page-full">
+<figure class="figure page-columns page-full">
+<p class="page-columns page-full"><img src="01_birth_files/figure-html/fig-0141-10.svg" class="column-body img-fluid figure-img" data-ref-parent="fig-0141"></p>
+<figcaption class="figure-caption">(j) District of Hard</figcaption>
+</figure>
+</div>
+</div>
+<div class="cell-output-display column-body page-columns page-full">
+<div id="fig-0141-11" class="quarto-figure quarto-figure-center column-body anchored page-columns page-full">
+<figure class="figure page-columns page-full">
+<p class="page-columns page-full"><img src="01_birth_files/figure-html/fig-0141-11.svg" class="column-body img-fluid figure-img" data-ref-parent="fig-0141"></p>
+<figcaption class="figure-caption">(k) District of Gewerbeschule</figcaption>
+</figure>
+</div>
+</div>
+<div class="cell-output-display column-body page-columns page-full">
+<div id="fig-0141-12" class="quarto-figure quarto-figure-center column-body anchored page-columns page-full">
+<figure class="figure page-columns page-full">
+<p class="page-columns page-full"><img src="01_birth_files/figure-html/fig-0141-12.svg" class="column-body img-fluid figure-img" data-ref-parent="fig-0141"></p>
+<figcaption class="figure-caption">(l) District of Escher Wyss</figcaption>
+</figure>
+</div>
+</div>
+<div class="cell-output-display column-body page-columns page-full">
+<div id="fig-0141-13" class="quarto-figure quarto-figure-center column-body anchored page-columns page-full">
+<figure class="figure page-columns page-full">
+<p class="page-columns page-full"><img src="01_birth_files/figure-html/fig-0141-13.svg" class="column-body img-fluid figure-img" data-ref-parent="fig-0141"></p>
+<figcaption class="figure-caption">(m) District of Unterstrass</figcaption>
+</figure>
+</div>
+</div>
+<div class="cell-output-display column-body page-columns page-full">
+<div id="fig-0141-14" class="quarto-figure quarto-figure-center column-body anchored page-columns page-full">
+<figure class="figure page-columns page-full">
+<p class="page-columns page-full"><img src="01_birth_files/figure-html/fig-0141-14.svg" class="column-body img-fluid figure-img" data-ref-parent="fig-0141"></p>
+<figcaption class="figure-caption">(n) District of Oberstrass</figcaption>
+</figure>
+</div>
+</div>
+<div class="cell-output-display column-body page-columns page-full">
+<div id="fig-0141-15" class="quarto-figure quarto-figure-center column-body anchored page-columns page-full">
+<figure class="figure page-columns page-full">
+<p class="page-columns page-full"><img src="01_birth_files/figure-html/fig-0141-15.svg" class="column-body img-fluid figure-img" data-ref-parent="fig-0141"></p>
+<figcaption class="figure-caption">(o) District of Fluntern</figcaption>
+</figure>
+</div>
+</div>
+<div class="cell-output-display column-body page-columns page-full">
+<div id="fig-0141-16" class="quarto-figure quarto-figure-center column-body anchored page-columns page-full">
+<figure class="figure page-columns page-full">
+<p class="page-columns page-full"><img src="01_birth_files/figure-html/fig-0141-16.svg" class="column-body img-fluid figure-img" data-ref-parent="fig-0141"></p>
+<figcaption class="figure-caption">(p) District of Hottingen</figcaption>
+</figure>
+</div>
+</div>
+<div class="cell-output-display column-body page-columns page-full">
+<div id="fig-0141-17" class="quarto-figure quarto-figure-center column-body anchored page-columns page-full">
+<figure class="figure page-columns page-full">
+<p class="page-columns page-full"><img src="01_birth_files/figure-html/fig-0141-17.svg" class="column-body img-fluid figure-img" data-ref-parent="fig-0141"></p>
+<figcaption class="figure-caption">(q) District of Hirslanden</figcaption>
+</figure>
+</div>
+</div>
+<div class="cell-output-display column-body page-columns page-full">
+<div id="fig-0141-18" class="quarto-figure quarto-figure-center column-body anchored page-columns page-full">
+<figure class="figure page-columns page-full">
+<p class="page-columns page-full"><img src="01_birth_files/figure-html/fig-0141-18.svg" class="column-body img-fluid figure-img" data-ref-parent="fig-0141"></p>
+<figcaption class="figure-caption">(r) District of Witikon</figcaption>
+</figure>
+</div>
+</div>
+<div class="cell-output-display column-body page-columns page-full">
+<div id="fig-0141-19" class="quarto-figure quarto-figure-center column-body anchored page-columns page-full">
+<figure class="figure page-columns page-full">
+<p class="page-columns page-full"><img src="01_birth_files/figure-html/fig-0141-19.svg" class="column-body img-fluid figure-img" data-ref-parent="fig-0141"></p>
+<figcaption class="figure-caption">(s) District of Seefeld</figcaption>
+</figure>
+</div>
+</div>
+<div class="cell-output-display column-body page-columns page-full">
+<div id="fig-0141-20" class="quarto-figure quarto-figure-center column-body anchored page-columns page-full">
+<figure class="figure page-columns page-full">
+<p class="page-columns page-full"><img src="01_birth_files/figure-html/fig-0141-20.svg" class="column-body img-fluid figure-img" data-ref-parent="fig-0141"></p>
+<figcaption class="figure-caption">(t) District of Muehlebach</figcaption>
+</figure>
+</div>
+</div>
+<div class="cell-output-display column-body page-columns page-full">
+<div id="fig-0141-21" class="quarto-figure quarto-figure-center column-body anchored page-columns page-full">
+<figure class="figure page-columns page-full">
+<p class="page-columns page-full"><img src="01_birth_files/figure-html/fig-0141-21.svg" class="column-body img-fluid figure-img" data-ref-parent="fig-0141"></p>
+<figcaption class="figure-caption">(u) District of Weinegg</figcaption>
+</figure>
+</div>
+</div>
+<div class="cell-output-display column-body page-columns page-full">
+<div id="fig-0141-22" class="quarto-figure quarto-figure-center column-body anchored page-columns page-full">
+<figure class="figure page-columns page-full">
+<p class="page-columns page-full"><img src="01_birth_files/figure-html/fig-0141-22.svg" class="column-body img-fluid figure-img" data-ref-parent="fig-0141"></p>
+<figcaption class="figure-caption">(v) District of Albisrieden</figcaption>
+</figure>
+</div>
+</div>
+<div class="cell-output-display column-body page-columns page-full">
+<div id="fig-0141-23" class="quarto-figure quarto-figure-center column-body anchored page-columns page-full">
+<figure class="figure page-columns page-full">
+<p class="page-columns page-full"><img src="01_birth_files/figure-html/fig-0141-23.svg" class="column-body img-fluid figure-img" data-ref-parent="fig-0141"></p>
+<figcaption class="figure-caption">(w) District of Altstetten</figcaption>
+</figure>
+</div>
+</div>
+<div class="cell-output-display column-body page-columns page-full">
+<div id="fig-0141-24" class="quarto-figure quarto-figure-center column-body anchored page-columns page-full">
+<figure class="figure page-columns page-full">
+<p class="page-columns page-full"><img src="01_birth_files/figure-html/fig-0141-24.svg" class="column-body img-fluid figure-img" data-ref-parent="fig-0141"></p>
+<figcaption class="figure-caption">(x) District of Hoengg</figcaption>
+</figure>
+</div>
+</div>
+<div class="cell-output-display column-body page-columns page-full">
+<div id="fig-0141-25" class="quarto-figure quarto-figure-center column-body anchored page-columns page-full">
+<figure class="figure page-columns page-full">
+<p class="page-columns page-full"><img src="01_birth_files/figure-html/fig-0141-25.svg" class="column-body img-fluid figure-img" data-ref-parent="fig-0141"></p>
+<figcaption class="figure-caption">(y) District of Wipkingen</figcaption>
+</figure>
+</div>
+</div>
+<div class="cell-output-display column-body page-columns page-full">
+<div id="fig-0141-26" class="quarto-figure quarto-figure-center column-body anchored page-columns page-full">
+<figure class="figure page-columns page-full">
+<p class="page-columns page-full"><img src="01_birth_files/figure-html/fig-0141-26.svg" class="column-body img-fluid figure-img" data-ref-parent="fig-0141"></p>
+<figcaption class="figure-caption">(z) District of Affoltern</figcaption>
+</figure>
+</div>
+</div>
+<div class="cell-output-display column-body page-columns page-full">
+<div id="fig-0141-27" class="quarto-figure quarto-figure-center column-body anchored page-columns page-full">
+<figure class="figure page-columns page-full">
+<p class="page-columns page-full"><img src="01_birth_files/figure-html/fig-0141-27.svg" class="column-body img-fluid figure-img" data-ref-parent="fig-0141"></p>
+<figcaption class="figure-caption">({) District of Oerlikon</figcaption>
+</figure>
+</div>
+</div>
+<div class="cell-output-display column-body page-columns page-full">
+<div id="fig-0141-28" class="quarto-figure quarto-figure-center column-body anchored page-columns page-full">
+<figure class="figure page-columns page-full">
+<p class="page-columns page-full"><img src="01_birth_files/figure-html/fig-0141-28.svg" class="column-body img-fluid figure-img" data-ref-parent="fig-0141"></p>
+<figcaption class="figure-caption">(|) District of Seebach</figcaption>
+</figure>
+</div>
+</div>
+<div class="cell-output-display column-body page-columns page-full">
+<div id="fig-0141-29" class="quarto-figure quarto-figure-center column-body anchored page-columns page-full">
+<figure class="figure page-columns page-full">
+<p class="page-columns page-full"><img src="01_birth_files/figure-html/fig-0141-29.svg" class="column-body img-fluid figure-img" data-ref-parent="fig-0141"></p>
+<figcaption class="figure-caption">(}) District of Saatlen</figcaption>
+</figure>
+</div>
+</div>
+<div class="cell-output-display column-body page-columns page-full">
+<div id="fig-0141-30" class="quarto-figure quarto-figure-center column-body anchored page-columns page-full">
+<figure class="figure page-columns page-full">
+<p class="page-columns page-full"><img src="01_birth_files/figure-html/fig-0141-30.svg" class="column-body img-fluid figure-img" data-ref-parent="fig-0141"></p>
+<figcaption class="figure-caption">(~) District of Schwamendingen-Mitte</figcaption>
+</figure>
+</div>
+</div>
+<div class="cell-output-display column-body page-columns page-full">
+<div id="fig-0141-31" class="quarto-figure quarto-figure-center column-body anchored page-columns page-full">
+<figure class="figure page-columns page-full">
+<p class="page-columns page-full"><img src="01_birth_files/figure-html/fig-0141-31.svg" class="column-body img-fluid figure-img" data-ref-parent="fig-0141"></p>
+<figcaption class="figure-caption">() District of Hirzenbach</figcaption>
+</figure>
+</div>
+</div>
+<figcaption class="figure-caption">Figure&nbsp;1.14: predictions: along year, for selected age</figcaption>
+</figure>
+</div>
+<p>foreign</p>
+<div id="fig-0142" class="quarto-figure quarto-figure-center anchored page-columns page-full">
+<figure class="figure page-columns page-full">
+<div class="cell-output-display column-body page-columns page-full">
+<div id="fig-0142-1" class="quarto-figure quarto-figure-center column-body anchored page-columns page-full">
+<figure class="figure page-columns page-full">
+<p class="page-columns page-full"><img src="01_birth_files/figure-html/fig-0142-1.svg" class="column-body img-fluid figure-img" data-ref-parent="fig-0142"></p>
+<figcaption class="figure-caption">(a) District of Kreis 1</figcaption>
+</figure>
+</div>
+</div>
+<div class="cell-output-display column-body page-columns page-full">
+<div id="fig-0142-2" class="quarto-figure quarto-figure-center column-body anchored page-columns page-full">
+<figure class="figure page-columns page-full">
+<p class="page-columns page-full"><img src="01_birth_files/figure-html/fig-0142-2.svg" class="column-body img-fluid figure-img" data-ref-parent="fig-0142"></p>
+<figcaption class="figure-caption">(b) District of Wollishofen</figcaption>
+</figure>
+</div>
+</div>
+<div class="cell-output-display column-body page-columns page-full">
+<div id="fig-0142-3" class="quarto-figure quarto-figure-center column-body anchored page-columns page-full">
+<figure class="figure page-columns page-full">
+<p class="page-columns page-full"><img src="01_birth_files/figure-html/fig-0142-3.svg" class="column-body img-fluid figure-img" data-ref-parent="fig-0142"></p>
+<figcaption class="figure-caption">(c) District of Leimbach</figcaption>
+</figure>
+</div>
+</div>
+<div class="cell-output-display column-body page-columns page-full">
+<div id="fig-0142-4" class="quarto-figure quarto-figure-center column-body anchored page-columns page-full">
+<figure class="figure page-columns page-full">
+<p class="page-columns page-full"><img src="01_birth_files/figure-html/fig-0142-4.svg" class="column-body img-fluid figure-img" data-ref-parent="fig-0142"></p>
+<figcaption class="figure-caption">(d) District of Enge</figcaption>
+</figure>
+</div>
+</div>
+<div class="cell-output-display column-body page-columns page-full">
+<div id="fig-0142-5" class="quarto-figure quarto-figure-center column-body anchored page-columns page-full">
+<figure class="figure page-columns page-full">
+<p class="page-columns page-full"><img src="01_birth_files/figure-html/fig-0142-5.svg" class="column-body img-fluid figure-img" data-ref-parent="fig-0142"></p>
+<figcaption class="figure-caption">(e) District of Alt-Wiedikon</figcaption>
+</figure>
+</div>
+</div>
+<div class="cell-output-display column-body page-columns page-full">
+<div id="fig-0142-6" class="quarto-figure quarto-figure-center column-body anchored page-columns page-full">
+<figure class="figure page-columns page-full">
+<p class="page-columns page-full"><img src="01_birth_files/figure-html/fig-0142-6.svg" class="column-body img-fluid figure-img" data-ref-parent="fig-0142"></p>
+<figcaption class="figure-caption">(f) District of Friesenberg</figcaption>
+</figure>
+</div>
+</div>
+<div class="cell-output-display column-body page-columns page-full">
+<div id="fig-0142-7" class="quarto-figure quarto-figure-center column-body anchored page-columns page-full">
+<figure class="figure page-columns page-full">
+<p class="page-columns page-full"><img src="01_birth_files/figure-html/fig-0142-7.svg" class="column-body img-fluid figure-img" data-ref-parent="fig-0142"></p>
+<figcaption class="figure-caption">(g) District of Sihlfeld</figcaption>
+</figure>
+</div>
+</div>
+<div class="cell-output-display column-body page-columns page-full">
+<div id="fig-0142-8" class="quarto-figure quarto-figure-center column-body anchored page-columns page-full">
+<figure class="figure page-columns page-full">
+<p class="page-columns page-full"><img src="01_birth_files/figure-html/fig-0142-8.svg" class="column-body img-fluid figure-img" data-ref-parent="fig-0142"></p>
+<figcaption class="figure-caption">(h) District of Werd</figcaption>
+</figure>
+</div>
+</div>
+<div class="cell-output-display column-body page-columns page-full">
+<div id="fig-0142-9" class="quarto-figure quarto-figure-center column-body anchored page-columns page-full">
+<figure class="figure page-columns page-full">
+<p class="page-columns page-full"><img src="01_birth_files/figure-html/fig-0142-9.svg" class="column-body img-fluid figure-img" data-ref-parent="fig-0142"></p>
+<figcaption class="figure-caption">(i) District of Langstrasse</figcaption>
+</figure>
+</div>
+</div>
+<div class="cell-output-display column-body page-columns page-full">
+<div id="fig-0142-10" class="quarto-figure quarto-figure-center column-body anchored page-columns page-full">
+<figure class="figure page-columns page-full">
+<p class="page-columns page-full"><img src="01_birth_files/figure-html/fig-0142-10.svg" class="column-body img-fluid figure-img" data-ref-parent="fig-0142"></p>
+<figcaption class="figure-caption">(j) District of Hard</figcaption>
+</figure>
+</div>
+</div>
+<div class="cell-output-display column-body page-columns page-full">
+<div id="fig-0142-11" class="quarto-figure quarto-figure-center column-body anchored page-columns page-full">
+<figure class="figure page-columns page-full">
+<p class="page-columns page-full"><img src="01_birth_files/figure-html/fig-0142-11.svg" class="column-body img-fluid figure-img" data-ref-parent="fig-0142"></p>
+<figcaption class="figure-caption">(k) District of Gewerbeschule</figcaption>
+</figure>
+</div>
+</div>
+<div class="cell-output-display column-body page-columns page-full">
+<div id="fig-0142-12" class="quarto-figure quarto-figure-center column-body anchored page-columns page-full">
+<figure class="figure page-columns page-full">
+<p class="page-columns page-full"><img src="01_birth_files/figure-html/fig-0142-12.svg" class="column-body img-fluid figure-img" data-ref-parent="fig-0142"></p>
+<figcaption class="figure-caption">(l) District of Escher Wyss</figcaption>
+</figure>
+</div>
+</div>
+<div class="cell-output-display column-body page-columns page-full">
+<div id="fig-0142-13" class="quarto-figure quarto-figure-center column-body anchored page-columns page-full">
+<figure class="figure page-columns page-full">
+<p class="page-columns page-full"><img src="01_birth_files/figure-html/fig-0142-13.svg" class="column-body img-fluid figure-img" data-ref-parent="fig-0142"></p>
+<figcaption class="figure-caption">(m) District of Unterstrass</figcaption>
+</figure>
+</div>
+</div>
+<div class="cell-output-display column-body page-columns page-full">
+<div id="fig-0142-14" class="quarto-figure quarto-figure-center column-body anchored page-columns page-full">
+<figure class="figure page-columns page-full">
+<p class="page-columns page-full"><img src="01_birth_files/figure-html/fig-0142-14.svg" class="column-body img-fluid figure-img" data-ref-parent="fig-0142"></p>
+<figcaption class="figure-caption">(n) District of Oberstrass</figcaption>
+</figure>
+</div>
+</div>
+<div class="cell-output-display column-body page-columns page-full">
+<div id="fig-0142-15" class="quarto-figure quarto-figure-center column-body anchored page-columns page-full">
+<figure class="figure page-columns page-full">
+<p class="page-columns page-full"><img src="01_birth_files/figure-html/fig-0142-15.svg" class="column-body img-fluid figure-img" data-ref-parent="fig-0142"></p>
+<figcaption class="figure-caption">(o) District of Fluntern</figcaption>
+</figure>
+</div>
+</div>
+<div class="cell-output-display column-body page-columns page-full">
+<div id="fig-0142-16" class="quarto-figure quarto-figure-center column-body anchored page-columns page-full">
+<figure class="figure page-columns page-full">
+<p class="page-columns page-full"><img src="01_birth_files/figure-html/fig-0142-16.svg" class="column-body img-fluid figure-img" data-ref-parent="fig-0142"></p>
+<figcaption class="figure-caption">(p) District of Hottingen</figcaption>
+</figure>
+</div>
+</div>
+<div class="cell-output-display column-body page-columns page-full">
+<div id="fig-0142-17" class="quarto-figure quarto-figure-center column-body anchored page-columns page-full">
+<figure class="figure page-columns page-full">
+<p class="page-columns page-full"><img src="01_birth_files/figure-html/fig-0142-17.svg" class="column-body img-fluid figure-img" data-ref-parent="fig-0142"></p>
+<figcaption class="figure-caption">(q) District of Hirslanden</figcaption>
+</figure>
+</div>
+</div>
+<div class="cell-output-display column-body page-columns page-full">
+<div id="fig-0142-18" class="quarto-figure quarto-figure-center column-body anchored page-columns page-full">
+<figure class="figure page-columns page-full">
+<p class="page-columns page-full"><img src="01_birth_files/figure-html/fig-0142-18.svg" class="column-body img-fluid figure-img" data-ref-parent="fig-0142"></p>
+<figcaption class="figure-caption">(r) District of Witikon</figcaption>
+</figure>
+</div>
+</div>
+<div class="cell-output-display column-body page-columns page-full">
+<div id="fig-0142-19" class="quarto-figure quarto-figure-center column-body anchored page-columns page-full">
+<figure class="figure page-columns page-full">
+<p class="page-columns page-full"><img src="01_birth_files/figure-html/fig-0142-19.svg" class="column-body img-fluid figure-img" data-ref-parent="fig-0142"></p>
+<figcaption class="figure-caption">(s) District of Seefeld</figcaption>
+</figure>
+</div>
+</div>
+<div class="cell-output-display column-body page-columns page-full">
+<div id="fig-0142-20" class="quarto-figure quarto-figure-center column-body anchored page-columns page-full">
+<figure class="figure page-columns page-full">
+<p class="page-columns page-full"><img src="01_birth_files/figure-html/fig-0142-20.svg" class="column-body img-fluid figure-img" data-ref-parent="fig-0142"></p>
+<figcaption class="figure-caption">(t) District of Muehlebach</figcaption>
+</figure>
+</div>
+</div>
+<div class="cell-output-display column-body page-columns page-full">
+<div id="fig-0142-21" class="quarto-figure quarto-figure-center column-body anchored page-columns page-full">
+<figure class="figure page-columns page-full">
+<p class="page-columns page-full"><img src="01_birth_files/figure-html/fig-0142-21.svg" class="column-body img-fluid figure-img" data-ref-parent="fig-0142"></p>
+<figcaption class="figure-caption">(u) District of Weinegg</figcaption>
+</figure>
+</div>
+</div>
+<div class="cell-output-display column-body page-columns page-full">
+<div id="fig-0142-22" class="quarto-figure quarto-figure-center column-body anchored page-columns page-full">
+<figure class="figure page-columns page-full">
+<p class="page-columns page-full"><img src="01_birth_files/figure-html/fig-0142-22.svg" class="column-body img-fluid figure-img" data-ref-parent="fig-0142"></p>
+<figcaption class="figure-caption">(v) District of Albisrieden</figcaption>
+</figure>
+</div>
+</div>
+<div class="cell-output-display column-body page-columns page-full">
+<div id="fig-0142-23" class="quarto-figure quarto-figure-center column-body anchored page-columns page-full">
+<figure class="figure page-columns page-full">
+<p class="page-columns page-full"><img src="01_birth_files/figure-html/fig-0142-23.svg" class="column-body img-fluid figure-img" data-ref-parent="fig-0142"></p>
+<figcaption class="figure-caption">(w) District of Altstetten</figcaption>
+</figure>
+</div>
+</div>
+<div class="cell-output-display column-body page-columns page-full">
+<div id="fig-0142-24" class="quarto-figure quarto-figure-center column-body anchored page-columns page-full">
+<figure class="figure page-columns page-full">
+<p class="page-columns page-full"><img src="01_birth_files/figure-html/fig-0142-24.svg" class="column-body img-fluid figure-img" data-ref-parent="fig-0142"></p>
+<figcaption class="figure-caption">(x) District of Hoengg</figcaption>
+</figure>
+</div>
+</div>
+<div class="cell-output-display column-body page-columns page-full">
+<div id="fig-0142-25" class="quarto-figure quarto-figure-center column-body anchored page-columns page-full">
+<figure class="figure page-columns page-full">
+<p class="page-columns page-full"><img src="01_birth_files/figure-html/fig-0142-25.svg" class="column-body img-fluid figure-img" data-ref-parent="fig-0142"></p>
+<figcaption class="figure-caption">(y) District of Wipkingen</figcaption>
+</figure>
+</div>
+</div>
+<div class="cell-output-display column-body page-columns page-full">
+<div id="fig-0142-26" class="quarto-figure quarto-figure-center column-body anchored page-columns page-full">
+<figure class="figure page-columns page-full">
+<p class="page-columns page-full"><img src="01_birth_files/figure-html/fig-0142-26.svg" class="column-body img-fluid figure-img" data-ref-parent="fig-0142"></p>
+<figcaption class="figure-caption">(z) District of Affoltern</figcaption>
+</figure>
+</div>
+</div>
+<div class="cell-output-display column-body page-columns page-full">
+<div id="fig-0142-27" class="quarto-figure quarto-figure-center column-body anchored page-columns page-full">
+<figure class="figure page-columns page-full">
+<p class="page-columns page-full"><img src="01_birth_files/figure-html/fig-0142-27.svg" class="column-body img-fluid figure-img" data-ref-parent="fig-0142"></p>
+<figcaption class="figure-caption">({) District of Oerlikon</figcaption>
+</figure>
+</div>
+</div>
+<div class="cell-output-display column-body page-columns page-full">
+<div id="fig-0142-28" class="quarto-figure quarto-figure-center column-body anchored page-columns page-full">
+<figure class="figure page-columns page-full">
+<p class="page-columns page-full"><img src="01_birth_files/figure-html/fig-0142-28.svg" class="column-body img-fluid figure-img" data-ref-parent="fig-0142"></p>
+<figcaption class="figure-caption">(|) District of Seebach</figcaption>
+</figure>
+</div>
+</div>
+<div class="cell-output-display column-body page-columns page-full">
+<div id="fig-0142-29" class="quarto-figure quarto-figure-center column-body anchored page-columns page-full">
+<figure class="figure page-columns page-full">
+<p class="page-columns page-full"><img src="01_birth_files/figure-html/fig-0142-29.svg" class="column-body img-fluid figure-img" data-ref-parent="fig-0142"></p>
+<figcaption class="figure-caption">(}) District of Saatlen</figcaption>
+</figure>
+</div>
+</div>
+<div class="cell-output-display column-body page-columns page-full">
+<div id="fig-0142-30" class="quarto-figure quarto-figure-center column-body anchored page-columns page-full">
+<figure class="figure page-columns page-full">
+<p class="page-columns page-full"><img src="01_birth_files/figure-html/fig-0142-30.svg" class="column-body img-fluid figure-img" data-ref-parent="fig-0142"></p>
+<figcaption class="figure-caption">(~) District of Schwamendingen-Mitte</figcaption>
+</figure>
+</div>
+</div>
+<div class="cell-output-display column-body page-columns page-full">
+<div id="fig-0142-31" class="quarto-figure quarto-figure-center column-body anchored page-columns page-full">
+<figure class="figure page-columns page-full">
+<p class="page-columns page-full"><img src="01_birth_files/figure-html/fig-0142-31.svg" class="column-body img-fluid figure-img" data-ref-parent="fig-0142"></p>
+<figcaption class="figure-caption">() District of Hirzenbach</figcaption>
+</figure>
+</div>
+</div>
+<figcaption class="figure-caption">Figure&nbsp;1.15: predictions: along year, for selected age</figcaption>
+</figure>
+</div>
+<p>smoothed (only the prediction years)</p>
+<div id="fig-0150" class="quarto-figure quarto-figure-center anchored page-columns page-full">
+<figure class="figure page-columns page-full">
+<div class="cell-output-display column-body page-columns page-full">
+<div id="fig-0150-1" class="quarto-figure quarto-figure-center column-body anchored page-columns page-full">
+<figure class="figure page-columns page-full">
+<p class="page-columns page-full"><img src="01_birth_files/figure-html/fig-0150-1.svg" class="column-body img-fluid figure-img" data-ref-parent="fig-0150"></p>
+<figcaption class="figure-caption">(a) District of Kreis 1</figcaption>
+</figure>
+</div>
+</div>
+<div class="cell-output-display column-body page-columns page-full">
+<div id="fig-0150-2" class="quarto-figure quarto-figure-center column-body anchored page-columns page-full">
+<figure class="figure page-columns page-full">
+<p class="page-columns page-full"><img src="01_birth_files/figure-html/fig-0150-2.svg" class="column-body img-fluid figure-img" data-ref-parent="fig-0150"></p>
+<figcaption class="figure-caption">(b) District of Wollishofen</figcaption>
+</figure>
+</div>
+</div>
+<div class="cell-output-display column-body page-columns page-full">
+<div id="fig-0150-3" class="quarto-figure quarto-figure-center column-body anchored page-columns page-full">
+<figure class="figure page-columns page-full">
+<p class="page-columns page-full"><img src="01_birth_files/figure-html/fig-0150-3.svg" class="column-body img-fluid figure-img" data-ref-parent="fig-0150"></p>
+<figcaption class="figure-caption">(c) District of Leimbach</figcaption>
+</figure>
+</div>
+</div>
+<div class="cell-output-display column-body page-columns page-full">
+<div id="fig-0150-4" class="quarto-figure quarto-figure-center column-body anchored page-columns page-full">
+<figure class="figure page-columns page-full">
+<p class="page-columns page-full"><img src="01_birth_files/figure-html/fig-0150-4.svg" class="column-body img-fluid figure-img" data-ref-parent="fig-0150"></p>
+<figcaption class="figure-caption">(d) District of Enge</figcaption>
+</figure>
+</div>
+</div>
+<div class="cell-output-display column-body page-columns page-full">
+<div id="fig-0150-5" class="quarto-figure quarto-figure-center column-body anchored page-columns page-full">
+<figure class="figure page-columns page-full">
+<p class="page-columns page-full"><img src="01_birth_files/figure-html/fig-0150-5.svg" class="column-body img-fluid figure-img" data-ref-parent="fig-0150"></p>
+<figcaption class="figure-caption">(e) District of Alt-Wiedikon</figcaption>
+</figure>
+</div>
+</div>
+<div class="cell-output-display column-body page-columns page-full">
+<div id="fig-0150-6" class="quarto-figure quarto-figure-center column-body anchored page-columns page-full">
+<figure class="figure page-columns page-full">
+<p class="page-columns page-full"><img src="01_birth_files/figure-html/fig-0150-6.svg" class="column-body img-fluid figure-img" data-ref-parent="fig-0150"></p>
+<figcaption class="figure-caption">(f) District of Friesenberg</figcaption>
+</figure>
+</div>
+</div>
+<div class="cell-output-display column-body page-columns page-full">
+<div id="fig-0150-7" class="quarto-figure quarto-figure-center column-body anchored page-columns page-full">
+<figure class="figure page-columns page-full">
+<p class="page-columns page-full"><img src="01_birth_files/figure-html/fig-0150-7.svg" class="column-body img-fluid figure-img" data-ref-parent="fig-0150"></p>
+<figcaption class="figure-caption">(g) District of Sihlfeld</figcaption>
+</figure>
+</div>
+</div>
+<div class="cell-output-display column-body page-columns page-full">
+<div id="fig-0150-8" class="quarto-figure quarto-figure-center column-body anchored page-columns page-full">
+<figure class="figure page-columns page-full">
+<p class="page-columns page-full"><img src="01_birth_files/figure-html/fig-0150-8.svg" class="column-body img-fluid figure-img" data-ref-parent="fig-0150"></p>
+<figcaption class="figure-caption">(h) District of Werd</figcaption>
+</figure>
+</div>
+</div>
+<div class="cell-output-display column-body page-columns page-full">
+<div id="fig-0150-9" class="quarto-figure quarto-figure-center column-body anchored page-columns page-full">
+<figure class="figure page-columns page-full">
+<p class="page-columns page-full"><img src="01_birth_files/figure-html/fig-0150-9.svg" class="column-body img-fluid figure-img" data-ref-parent="fig-0150"></p>
+<figcaption class="figure-caption">(i) District of Langstrasse</figcaption>
+</figure>
+</div>
+</div>
+<div class="cell-output-display column-body page-columns page-full">
+<div id="fig-0150-10" class="quarto-figure quarto-figure-center column-body anchored page-columns page-full">
+<figure class="figure page-columns page-full">
+<p class="page-columns page-full"><img src="01_birth_files/figure-html/fig-0150-10.svg" class="column-body img-fluid figure-img" data-ref-parent="fig-0150"></p>
+<figcaption class="figure-caption">(j) District of Hard</figcaption>
+</figure>
+</div>
+</div>
+<div class="cell-output-display column-body page-columns page-full">
+<div id="fig-0150-11" class="quarto-figure quarto-figure-center column-body anchored page-columns page-full">
+<figure class="figure page-columns page-full">
+<p class="page-columns page-full"><img src="01_birth_files/figure-html/fig-0150-11.svg" class="column-body img-fluid figure-img" data-ref-parent="fig-0150"></p>
+<figcaption class="figure-caption">(k) District of Gewerbeschule</figcaption>
+</figure>
+</div>
+</div>
+<div class="cell-output-display column-body page-columns page-full">
+<div id="fig-0150-12" class="quarto-figure quarto-figure-center column-body anchored page-columns page-full">
+<figure class="figure page-columns page-full">
+<p class="page-columns page-full"><img src="01_birth_files/figure-html/fig-0150-12.svg" class="column-body img-fluid figure-img" data-ref-parent="fig-0150"></p>
+<figcaption class="figure-caption">(l) District of Escher Wyss</figcaption>
+</figure>
+</div>
+</div>
+<div class="cell-output-display column-body page-columns page-full">
+<div id="fig-0150-13" class="quarto-figure quarto-figure-center column-body anchored page-columns page-full">
+<figure class="figure page-columns page-full">
+<p class="page-columns page-full"><img src="01_birth_files/figure-html/fig-0150-13.svg" class="column-body img-fluid figure-img" data-ref-parent="fig-0150"></p>
+<figcaption class="figure-caption">(m) District of Unterstrass</figcaption>
+</figure>
+</div>
+</div>
+<div class="cell-output-display column-body page-columns page-full">
+<div id="fig-0150-14" class="quarto-figure quarto-figure-center column-body anchored page-columns page-full">
+<figure class="figure page-columns page-full">
+<p class="page-columns page-full"><img src="01_birth_files/figure-html/fig-0150-14.svg" class="column-body img-fluid figure-img" data-ref-parent="fig-0150"></p>
+<figcaption class="figure-caption">(n) District of Oberstrass</figcaption>
+</figure>
+</div>
+</div>
+<div class="cell-output-display column-body page-columns page-full">
+<div id="fig-0150-15" class="quarto-figure quarto-figure-center column-body anchored page-columns page-full">
+<figure class="figure page-columns page-full">
+<p class="page-columns page-full"><img src="01_birth_files/figure-html/fig-0150-15.svg" class="column-body img-fluid figure-img" data-ref-parent="fig-0150"></p>
+<figcaption class="figure-caption">(o) District of Fluntern</figcaption>
+</figure>
+</div>
+</div>
+<div class="cell-output-display column-body page-columns page-full">
+<div id="fig-0150-16" class="quarto-figure quarto-figure-center column-body anchored page-columns page-full">
+<figure class="figure page-columns page-full">
+<p class="page-columns page-full"><img src="01_birth_files/figure-html/fig-0150-16.svg" class="column-body img-fluid figure-img" data-ref-parent="fig-0150"></p>
+<figcaption class="figure-caption">(p) District of Hottingen</figcaption>
+</figure>
+</div>
+</div>
+<div class="cell-output-display column-body page-columns page-full">
+<div id="fig-0150-17" class="quarto-figure quarto-figure-center column-body anchored page-columns page-full">
+<figure class="figure page-columns page-full">
+<p class="page-columns page-full"><img src="01_birth_files/figure-html/fig-0150-17.svg" class="column-body img-fluid figure-img" data-ref-parent="fig-0150"></p>
+<figcaption class="figure-caption">(q) District of Hirslanden</figcaption>
+</figure>
+</div>
+</div>
+<div class="cell-output-display column-body page-columns page-full">
+<div id="fig-0150-18" class="quarto-figure quarto-figure-center column-body anchored page-columns page-full">
+<figure class="figure page-columns page-full">
+<p class="page-columns page-full"><img src="01_birth_files/figure-html/fig-0150-18.svg" class="column-body img-fluid figure-img" data-ref-parent="fig-0150"></p>
+<figcaption class="figure-caption">(r) District of Witikon</figcaption>
+</figure>
+</div>
+</div>
+<div class="cell-output-display column-body page-columns page-full">
+<div id="fig-0150-19" class="quarto-figure quarto-figure-center column-body anchored page-columns page-full">
+<figure class="figure page-columns page-full">
+<p class="page-columns page-full"><img src="01_birth_files/figure-html/fig-0150-19.svg" class="column-body img-fluid figure-img" data-ref-parent="fig-0150"></p>
+<figcaption class="figure-caption">(s) District of Seefeld</figcaption>
+</figure>
+</div>
+</div>
+<div class="cell-output-display column-body page-columns page-full">
+<div id="fig-0150-20" class="quarto-figure quarto-figure-center column-body anchored page-columns page-full">
+<figure class="figure page-columns page-full">
+<p class="page-columns page-full"><img src="01_birth_files/figure-html/fig-0150-20.svg" class="column-body img-fluid figure-img" data-ref-parent="fig-0150"></p>
+<figcaption class="figure-caption">(t) District of Muehlebach</figcaption>
+</figure>
+</div>
+</div>
+<div class="cell-output-display column-body page-columns page-full">
+<div id="fig-0150-21" class="quarto-figure quarto-figure-center column-body anchored page-columns page-full">
+<figure class="figure page-columns page-full">
+<p class="page-columns page-full"><img src="01_birth_files/figure-html/fig-0150-21.svg" class="column-body img-fluid figure-img" data-ref-parent="fig-0150"></p>
+<figcaption class="figure-caption">(u) District of Weinegg</figcaption>
+</figure>
+</div>
+</div>
+<div class="cell-output-display column-body page-columns page-full">
+<div id="fig-0150-22" class="quarto-figure quarto-figure-center column-body anchored page-columns page-full">
+<figure class="figure page-columns page-full">
+<p class="page-columns page-full"><img src="01_birth_files/figure-html/fig-0150-22.svg" class="column-body img-fluid figure-img" data-ref-parent="fig-0150"></p>
+<figcaption class="figure-caption">(v) District of Albisrieden</figcaption>
+</figure>
+</div>
+</div>
+<div class="cell-output-display column-body page-columns page-full">
+<div id="fig-0150-23" class="quarto-figure quarto-figure-center column-body anchored page-columns page-full">
+<figure class="figure page-columns page-full">
+<p class="page-columns page-full"><img src="01_birth_files/figure-html/fig-0150-23.svg" class="column-body img-fluid figure-img" data-ref-parent="fig-0150"></p>
+<figcaption class="figure-caption">(w) District of Altstetten</figcaption>
+</figure>
+</div>
+</div>
+<div class="cell-output-display column-body page-columns page-full">
+<div id="fig-0150-24" class="quarto-figure quarto-figure-center column-body anchored page-columns page-full">
+<figure class="figure page-columns page-full">
+<p class="page-columns page-full"><img src="01_birth_files/figure-html/fig-0150-24.svg" class="column-body img-fluid figure-img" data-ref-parent="fig-0150"></p>
+<figcaption class="figure-caption">(x) District of Hoengg</figcaption>
+</figure>
+</div>
+</div>
+<div class="cell-output-display column-body page-columns page-full">
+<div id="fig-0150-25" class="quarto-figure quarto-figure-center column-body anchored page-columns page-full">
+<figure class="figure page-columns page-full">
+<p class="page-columns page-full"><img src="01_birth_files/figure-html/fig-0150-25.svg" class="column-body img-fluid figure-img" data-ref-parent="fig-0150"></p>
+<figcaption class="figure-caption">(y) District of Wipkingen</figcaption>
+</figure>
+</div>
+</div>
+<div class="cell-output-display column-body page-columns page-full">
+<div id="fig-0150-26" class="quarto-figure quarto-figure-center column-body anchored page-columns page-full">
+<figure class="figure page-columns page-full">
+<p class="page-columns page-full"><img src="01_birth_files/figure-html/fig-0150-26.svg" class="column-body img-fluid figure-img" data-ref-parent="fig-0150"></p>
+<figcaption class="figure-caption">(z) District of Affoltern</figcaption>
+</figure>
+</div>
+</div>
+<div class="cell-output-display column-body page-columns page-full">
+<div id="fig-0150-27" class="quarto-figure quarto-figure-center column-body anchored page-columns page-full">
+<figure class="figure page-columns page-full">
+<p class="page-columns page-full"><img src="01_birth_files/figure-html/fig-0150-27.svg" class="column-body img-fluid figure-img" data-ref-parent="fig-0150"></p>
+<figcaption class="figure-caption">({) District of Oerlikon</figcaption>
+</figure>
+</div>
+</div>
+<div class="cell-output-display column-body page-columns page-full">
+<div id="fig-0150-28" class="quarto-figure quarto-figure-center column-body anchored page-columns page-full">
+<figure class="figure page-columns page-full">
+<p class="page-columns page-full"><img src="01_birth_files/figure-html/fig-0150-28.svg" class="column-body img-fluid figure-img" data-ref-parent="fig-0150"></p>
+<figcaption class="figure-caption">(|) District of Seebach</figcaption>
+</figure>
+</div>
+</div>
+<div class="cell-output-display column-body page-columns page-full">
+<div id="fig-0150-29" class="quarto-figure quarto-figure-center column-body anchored page-columns page-full">
+<figure class="figure page-columns page-full">
+<p class="page-columns page-full"><img src="01_birth_files/figure-html/fig-0150-29.svg" class="column-body img-fluid figure-img" data-ref-parent="fig-0150"></p>
+<figcaption class="figure-caption">(}) District of Saatlen</figcaption>
+</figure>
+</div>
+</div>
+<div class="cell-output-display column-body page-columns page-full">
+<div id="fig-0150-30" class="quarto-figure quarto-figure-center column-body anchored page-columns page-full">
+<figure class="figure page-columns page-full">
+<p class="page-columns page-full"><img src="01_birth_files/figure-html/fig-0150-30.svg" class="column-body img-fluid figure-img" data-ref-parent="fig-0150"></p>
+<figcaption class="figure-caption">(~) District of Schwamendingen-Mitte</figcaption>
+</figure>
+</div>
+</div>
+<div class="cell-output-display column-body page-columns page-full">
+<div id="fig-0150-31" class="quarto-figure quarto-figure-center column-body anchored page-columns page-full">
+<figure class="figure page-columns page-full">
+<p class="page-columns page-full"><img src="01_birth_files/figure-html/fig-0150-31.svg" class="column-body img-fluid figure-img" data-ref-parent="fig-0150"></p>
+<figcaption class="figure-caption">() District of Hirzenbach</figcaption>
+</figure>
+</div>
+</div>
+<figcaption class="figure-caption">Figure&nbsp;1.16: prediction of fertility rates, smoothed</figcaption>
+</figure>
+</div>
+<section id="tfr-total-fertility-rate-of-past-and-future" class="level4 page-columns page-full" data-number="1.1.3.1">
+<h4 data-number="1.1.3.1" class="anchored" data-anchor-id="tfr-total-fertility-rate-of-past-and-future"><span class="header-section-number">1.1.3.1</span> TFR (total fertility rate) of past and future</h4>
+<div class="cell page-columns page-full" data-hash="01_birth_cache/html/fig-0160_cd807c226fae095887d66b1731f6a216">
+<div class="cell-output-display column-body page-columns page-full">
+<div id="fig-0160" class="quarto-figure quarto-figure-center column-body anchored page-columns page-full">
+<figure class="figure page-columns page-full">
+<p class="page-columns page-full"><img src="01_birth_files/figure-html/fig-0160-1.svg" class="column-body img-fluid figure-img"></p>
+<figcaption class="figure-caption">Figure&nbsp;1.17: TFR by year and origin</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<div id="fig-0161" class="quarto-figure quarto-figure-center anchored page-columns page-full">
+<figure class="figure page-columns page-full">
+<div class="cell-output-display column-body page-columns page-full">
+<div id="fig-0161-1" class="quarto-figure quarto-figure-center column-body anchored page-columns page-full">
+<figure class="figure page-columns page-full">
+<p class="page-columns page-full"><img src="01_birth_files/figure-html/fig-0161-1.svg" class="column-body img-fluid figure-img" data-ref-parent="fig-0161"></p>
+<figcaption class="figure-caption">(a) Origin Swiss</figcaption>
+</figure>
+</div>
+</div>
+<div class="cell-output-display column-body page-columns page-full">
+<div id="fig-0161-2" class="quarto-figure quarto-figure-center column-body anchored page-columns page-full">
+<figure class="figure page-columns page-full">
+<p class="page-columns page-full"><img src="01_birth_files/figure-html/fig-0161-2.svg" class="column-body img-fluid figure-img" data-ref-parent="fig-0161"></p>
+<figcaption class="figure-caption">(b) Origin foreign</figcaption>
+</figure>
+</div>
+</div>
+<figcaption class="figure-caption">Figure&nbsp;1.18: TFR by year and age class (3 groups)</figcaption>
+</figure>
+</div>
+<div id="fig-0162" class="quarto-figure quarto-figure-center anchored page-columns page-full">
+<figure class="figure page-columns page-full">
+<div class="cell-output-display column-body page-columns page-full">
+<div id="fig-0162-1" class="quarto-figure quarto-figure-center column-body anchored page-columns page-full">
+<figure class="figure page-columns page-full">
+<p class="page-columns page-full"><img src="01_birth_files/figure-html/fig-0162-1.svg" class="column-body img-fluid figure-img" data-ref-parent="fig-0162"></p>
+<figcaption class="figure-caption">(a) Origin Swiss</figcaption>
+</figure>
+</div>
+</div>
+<div class="cell-output-display column-body page-columns page-full">
+<div id="fig-0162-2" class="quarto-figure quarto-figure-center column-body anchored page-columns page-full">
+<figure class="figure page-columns page-full">
+<p class="page-columns page-full"><img src="01_birth_files/figure-html/fig-0162-2.svg" class="column-body img-fluid figure-img" data-ref-parent="fig-0162"></p>
+<figcaption class="figure-caption">(b) Origin foreign</figcaption>
+</figure>
+</div>
+</div>
+<figcaption class="figure-caption">Figure&nbsp;1.19: TFR by year and age class (5 groups)</figcaption>
+</figure>
+</div>
+</section>
+</section>
+</section>
+<section id="origin" class="level2 page-columns page-full" data-number="1.2">
+<h2 data-number="1.2" class="anchored" data-anchor-id="origin"><span class="header-section-number">1.2</span> Origin</h2>
+<section id="origin-change" class="level3 page-columns page-full" data-number="1.2.1">
+<h3 data-number="1.2.1" class="anchored" data-anchor-id="origin-change"><span class="header-section-number">1.2.1</span> Origin change</h3>
+<div class="cell page-columns page-full" data-hash="01_birth_cache/html/fig-0170_8fab3560d0ceb5c056025ad288d8843d">
+<div class="cell-output-display column-body page-columns page-full">
+<div id="fig-0170" class="quarto-figure quarto-figure-center column-body anchored page-columns page-full">
+<figure class="figure page-columns page-full">
+<p class="page-columns page-full"><img src="01_birth_files/figure-html/fig-0170-1.svg" class="column-body img-fluid figure-img"></p>
+<figcaption class="figure-caption">Figure&nbsp;1.20: origin change by year, origin</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<div class="cell page-columns page-full" data-hash="01_birth_cache/html/fig-0171_aacca12adec66053324309d4a86c891b">
+<div class="cell-output-display column-body page-columns page-full">
+<div id="fig-0171" class="quarto-figure quarto-figure-center column-body anchored page-columns page-full">
+<figure class="figure page-columns page-full">
+<p class="page-columns page-full"><img src="01_birth_files/figure-html/fig-0171-1.svg" class="column-body img-fluid figure-img"></p>
+<figcaption class="figure-caption">Figure&nbsp;1.21: origin change by year, age class (3), origin</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<div class="cell page-columns page-full" data-hash="01_birth_cache/html/fig-0172_0c502836095515f2fa69e9f130703f62">
+<div class="cell-output-display column-body page-columns page-full">
+<div id="fig-0172" class="quarto-figure quarto-figure-center column-body anchored page-columns page-full">
+<figure class="figure page-columns page-full">
+<p class="page-columns page-full"><img src="01_birth_files/figure-html/fig-0172-1.svg" class="column-body img-fluid figure-img"></p>
+<figcaption class="figure-caption">Figure&nbsp;1.22: origin change by year, age class (5), origin</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<div class="cell page-columns page-full" data-hash="01_birth_cache/html/fig-0173_616f34177adb473babde2e4221dd495f">
+<div class="cell-output-display column-body page-columns page-full">
+<div id="fig-0173" class="quarto-figure quarto-figure-center column-body anchored page-columns page-full">
+<figure class="figure page-columns page-full">
+<p class="page-columns page-full"><img src="01_birth_files/figure-html/fig-0173-1.svg" class="column-body img-fluid figure-img"></p>
+<figcaption class="figure-caption">Figure&nbsp;1.23: origin change by district, year, origin</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<div class="cell page-columns page-full" data-hash="01_birth_cache/html/fig-0174_d258f30dcfd140467f0fd712867aaff4">
+<div class="cell-output-display column-body page-columns page-full">
+<div id="fig-0174" class="quarto-figure quarto-figure-center column-body anchored page-columns page-full">
+<figure class="figure page-columns page-full">
+<p class="page-columns page-full"><img src="01_birth_files/figure-html/fig-0174-1.svg" class="column-body img-fluid figure-img"></p>
+<figcaption class="figure-caption">Figure&nbsp;1.24: origin change by district, year, age1 (foreign only, since few cases for Swiss)</figcaption>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="prediction-of-origin-change" class="level3 page-columns page-full" data-number="1.2.2">
+<h3 data-number="1.2.2" class="anchored" data-anchor-id="prediction-of-origin-change"><span class="header-section-number">1.2.2</span> Prediction of origin change</h3>
+<div class="cell page-columns page-full" data-hash="01_birth_cache/html/fig-0175_94f3121f88062d3cb0f661f47094a84a">
+<div class="cell-output-display column-body page-columns page-full">
+<div id="fig-0175" class="quarto-figure quarto-figure-center column-body anchored page-columns page-full">
+<figure class="figure page-columns page-full">
+<p class="page-columns page-full"><img src="01_birth_files/figure-html/fig-0175-1.svg" class="column-body img-fluid figure-img"></p>
+<figcaption class="figure-caption">Figure&nbsp;1.25: predicted origin change by year and origin</figcaption>
+</figure>
+</div>
+</div>
+</div>
+</section>
+</section>
+<section id="sex-ratio" class="level2 page-columns page-full" data-number="1.3">
+<h2 data-number="1.3" class="anchored" data-anchor-id="sex-ratio"><span class="header-section-number">1.3</span> Sex ratio</h2>
+<section id="current-proportion" class="level3 page-columns page-full" data-number="1.3.1">
+<h3 data-number="1.3.1" class="anchored" data-anchor-id="current-proportion"><span class="header-section-number">1.3.1</span> Current proportion</h3>
+<div class="cell page-columns page-full" data-hash="01_birth_cache/html/fig-0190_20a842c287e2d72288177416ab70e598">
+<div class="cell-output-display column-body page-columns page-full">
+<div id="fig-0190" class="quarto-figure quarto-figure-center column-body anchored page-columns page-full">
+<figure class="figure page-columns page-full">
+<p class="page-columns page-full"><img src="01_birth_files/figure-html/fig-0190-1.svg" class="column-body img-fluid figure-img"></p>
+<figcaption class="figure-caption">Figure&nbsp;1.26: proportion of sexes by year</figcaption>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="prediction-of-proportion" class="level3 page-columns page-full" data-number="1.3.2">
+<h3 data-number="1.3.2" class="anchored" data-anchor-id="prediction-of-proportion"><span class="header-section-number">1.3.2</span> Prediction of proportion</h3>
+<div class="cell page-columns page-full" data-hash="01_birth_cache/html/fig-0191_0c2cff86c6004c4985dce564eab2943b">
+<div class="cell-output-display column-body page-columns page-full">
+<div id="fig-0191" class="quarto-figure quarto-figure-center column-body anchored page-columns page-full">
+<figure class="figure page-columns page-full">
+<p class="page-columns page-full"><img src="01_birth_files/figure-html/fig-0191-1.svg" class="column-body img-fluid figure-img"></p>
+<figcaption class="figure-caption">Figure&nbsp;1.27: predicted mean proportion of sexes by year</figcaption>
+</figure>
+</div>
+</div>
+</div>
+
+
+</section>
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    text: function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+  function tippyHover(el, contentFn) {
+    const config = {
+      allowHTML: true,
+      content: contentFn,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start'
+    };
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      return note.innerHTML;
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+<nav class="page-navigation column-body">
+  <div class="nav-page nav-page-previous">
+      <a href="./index.html" class="pagination-link">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text">Preface</span>
+      </a>          
+  </div>
+  <div class="nav-page nav-page-next">
+      <a href="./02_death.html" class="pagination-link">
+        <span class="nav-page-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Death</span></span> <i class="bi bi-arrow-right-short"></i>
+      </a>
+  </div>
+</nav>
+</div> <!-- /content -->
+
+
+
+<script src="site_libs/quarto-html/zenscroll-min.js"></script>
+</body></html>

@@ -1,0 +1,703 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.3.361">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>Plots for population scenarios - 2&nbsp; Death</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+</style>
+
+
+<script src="site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="site_libs/quarto-nav/headroom.min.js"></script>
+<script src="site_libs/clipboard/clipboard.min.js"></script>
+<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="site_libs/quarto-search/fuse.min.js"></script>
+<script src="site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="./">
+<link href="./03_immigration.html" rel="next">
+<link href="./01_birth.html" rel="prev">
+<script src="site_libs/quarto-html/quarto.js"></script>
+<script src="site_libs/quarto-html/popper.min.js"></script>
+<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="site_libs/quarto-html/anchor.min.js"></script>
+<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "sidebar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "start",
+  "type": "textbox",
+  "limit": 20,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+<style>html{ scroll-behavior: smooth; }</style>
+
+
+<link rel="stylesheet" href="sszTheme.css">
+</head>
+
+<body class="nav-sidebar docked">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+      <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./02_death.html"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Death</span></a></li></ol></nav>
+      <a class="flex-grow-1" role="button" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+      </a>
+      <button type="button" class="btn quarto-search-button" aria-label="" onclick="window.quartoOpenSearch();">
+        <i class="bi bi-search"></i>
+      </button>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-full">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal sidebar-navigation docked overflow-auto">
+    <div class="pt-lg-2 mt-2 text-left sidebar-header">
+    <div class="sidebar-title mb-0 py-0">
+      <a href="./">Plots for population scenarios</a> 
+    </div>
+      </div>
+        <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="sidebar-search">
+        <div id="quarto-search" class="" title="Search"></div>
+        </div>
+        </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Preface</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./01_birth.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Birth</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./02_death.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Death</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./03_immigration.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Immigration</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./04_emigration.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Emigration</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./05_reloc_immigration.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Relocation on immigration</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./06_reloc_emigration.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Relocation on emigration</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./07_naturalization.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Naturalization</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./08_careb.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Capacity reserves</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./09_living_space.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Living spaces</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./10_allocation.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Allocation</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./11_projects.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Projects</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./12_ownership.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">Ownership</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./13_housing.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">Housing model</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./14_dem_house.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">14</span>&nbsp; <span class="chapter-title">Demography Housing</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./15_model_output.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">15</span>&nbsp; <span class="chapter-title">Model outputs</span></span></a>
+  </div>
+</li>
+    </ul>
+    </div>
+</nav>
+<div id="quarto-sidebar-glass" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Table of contents</h2>
+   
+  <ul>
+  <li><a href="#mortality" id="toc-mortality" class="nav-link active" data-scroll-target="#mortality"><span class="header-section-number">2.1</span> Mortality</a>
+  <ul>
+  <li><a href="#age-plots" id="toc-age-plots" class="nav-link" data-scroll-target="#age-plots"><span class="header-section-number">2.1.1</span> age plots</a>
+  <ul class="collapse">
+  <li><a href="#focus-difference-in-mortality-by-sex" id="toc-focus-difference-in-mortality-by-sex" class="nav-link" data-scroll-target="#focus-difference-in-mortality-by-sex"><span class="header-section-number">2.1.1.1</span> focus: difference in mortality by sex</a></li>
+  <li><a href="#focus-difference-in-mortality-by-region" id="toc-focus-difference-in-mortality-by-region" class="nav-link" data-scroll-target="#focus-difference-in-mortality-by-region"><span class="header-section-number">2.1.1.2</span> focus: difference in mortality by region</a></li>
+  </ul></li>
+  <li><a href="#year-plots" id="toc-year-plots" class="nav-link" data-scroll-target="#year-plots"><span class="header-section-number">2.1.2</span> year plots</a>
+  <ul class="collapse">
+  <li><a href="#focus-difference-in-mortality-by-sex-1" id="toc-focus-difference-in-mortality-by-sex-1" class="nav-link" data-scroll-target="#focus-difference-in-mortality-by-sex-1"><span class="header-section-number">2.1.2.1</span> focus: difference in mortality by sex</a></li>
+  <li><a href="#focus-difference-in-mortality-by-region-1" id="toc-focus-difference-in-mortality-by-region-1" class="nav-link" data-scroll-target="#focus-difference-in-mortality-by-region-1"><span class="header-section-number">2.1.2.2</span> focus: difference in mortality by region</a></li>
+  </ul></li>
+  <li><a href="#method-comparison-based-on-rate-vs.-deathbirthpopulation" id="toc-method-comparison-based-on-rate-vs.-deathbirthpopulation" class="nav-link" data-scroll-target="#method-comparison-based-on-rate-vs.-deathbirthpopulation"><span class="header-section-number">2.1.3</span> method comparison (based on rate vs.&nbsp;death/birth/population)</a></li>
+  <li><a href="#life-expectancy" id="toc-life-expectancy" class="nav-link" data-scroll-target="#life-expectancy"><span class="header-section-number">2.1.4</span> life expectancy</a>
+  <ul class="collapse">
+  <li><a href="#focus-differences-by-sex" id="toc-focus-differences-by-sex" class="nav-link" data-scroll-target="#focus-differences-by-sex"><span class="header-section-number">2.1.4.1</span> focus: differences by sex</a></li>
+  <li><a href="#focus-differences-by-region" id="toc-focus-differences-by-region" class="nav-link" data-scroll-target="#focus-differences-by-region"><span class="header-section-number">2.1.4.2</span> focus: differences by region</a></li>
+  </ul></li>
+  <li><a href="#mortality-over-base-years-including-tail-correction" id="toc-mortality-over-base-years-including-tail-correction" class="nav-link" data-scroll-target="#mortality-over-base-years-including-tail-correction"><span class="header-section-number">2.1.5</span> mortality over base years (including tail correction)</a></li>
+  <li><a href="#smoothing-with-loess" id="toc-smoothing-with-loess" class="nav-link" data-scroll-target="#smoothing-with-loess"><span class="header-section-number">2.1.6</span> smoothing with LOESS</a></li>
+  <li><a href="#ratio-zurich-switzerland" id="toc-ratio-zurich-switzerland" class="nav-link" data-scroll-target="#ratio-zurich-switzerland"><span class="header-section-number">2.1.7</span> ratio Zurich / Switzerland</a></li>
+  <li><a href="#zurich-future-mortality-rate" id="toc-zurich-future-mortality-rate" class="nav-link" data-scroll-target="#zurich-future-mortality-rate"><span class="header-section-number">2.1.8</span> Zurich: future mortality rate</a></li>
+  <li><a href="#zurich-life-expectancy-including-the-model-data" id="toc-zurich-life-expectancy-including-the-model-data" class="nav-link" data-scroll-target="#zurich-life-expectancy-including-the-model-data"><span class="header-section-number">2.1.9</span> Zurich: life expectancy (including the model data)</a>
+  <ul class="collapse">
+  <li><a href="#focus-differences-by-sex-1" id="toc-focus-differences-by-sex-1" class="nav-link" data-scroll-target="#focus-differences-by-sex-1"><span class="header-section-number">2.1.9.1</span> focus: differences by sex</a></li>
+  <li><a href="#focus-differences-by-region-1" id="toc-focus-differences-by-region-1" class="nav-link" data-scroll-target="#focus-differences-by-region-1"><span class="header-section-number">2.1.9.2</span> focus: differences by region</a></li>
+  </ul></li>
+  </ul></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content page-columns page-full column-body" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Death</span></h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+</header>
+
+<div class="cell" data-hash="02_death_cache/html/prep_b5bd33f3f615324c3f30c9a569409630">
+
+</div>
+<section id="mortality" class="level2 page-columns page-full" data-number="2.1">
+<h2 data-number="2.1" class="anchored" data-anchor-id="mortality"><span class="header-section-number">2.1</span> Mortality</h2>
+<section id="age-plots" class="level3 page-columns page-full" data-number="2.1.1">
+<h3 data-number="2.1.1" class="anchored" data-anchor-id="age-plots"><span class="header-section-number">2.1.1</span> age plots</h3>
+<section id="focus-difference-in-mortality-by-sex" class="level4 page-columns page-full" data-number="2.1.1.1">
+<h4 data-number="2.1.1.1" class="anchored" data-anchor-id="focus-difference-in-mortality-by-sex"><span class="header-section-number">2.1.1.1</span> focus: difference in mortality by sex</h4>
+<div class="cell page-columns page-full" data-hash="02_death_cache/html/fig-0200_a9eb20b9b71de0b1159dbedc8fa1498c">
+<div class="cell-output-display column-body page-columns page-full">
+<div id="fig-0200" class="quarto-figure quarto-figure-center column-body anchored page-columns page-full">
+<figure class="figure page-columns page-full">
+<p class="page-columns page-full"><img src="02_death_files/figure-html/fig-0200-1.svg" class="column-body img-fluid figure-img"></p>
+<figcaption class="figure-caption">Figure&nbsp;2.1: mortality by age, year, sex, region</figcaption>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="focus-difference-in-mortality-by-region" class="level4 page-columns page-full" data-number="2.1.1.2">
+<h4 data-number="2.1.1.2" class="anchored" data-anchor-id="focus-difference-in-mortality-by-region"><span class="header-section-number">2.1.1.2</span> focus: difference in mortality by region</h4>
+<div class="cell page-columns page-full" data-hash="02_death_cache/html/fig-0201_e3bb32113eb13780682e5811ecce684b">
+<div class="cell-output-display column-body page-columns page-full">
+<div id="fig-0201" class="quarto-figure quarto-figure-center column-body anchored page-columns page-full">
+<figure class="figure page-columns page-full">
+<p class="page-columns page-full"><img src="02_death_files/figure-html/fig-0201-1.svg" class="column-body img-fluid figure-img"></p>
+<figcaption class="figure-caption">Figure&nbsp;2.2: mortality by age, year, region, sex</figcaption>
+</figure>
+</div>
+</div>
+</div>
+</section>
+</section>
+<section id="year-plots" class="level3 page-columns page-full" data-number="2.1.2">
+<h3 data-number="2.1.2" class="anchored" data-anchor-id="year-plots"><span class="header-section-number">2.1.2</span> year plots</h3>
+<section id="focus-difference-in-mortality-by-sex-1" class="level4 page-columns page-full" data-number="2.1.2.1">
+<h4 data-number="2.1.2.1" class="anchored" data-anchor-id="focus-difference-in-mortality-by-sex-1"><span class="header-section-number">2.1.2.1</span> focus: difference in mortality by sex</h4>
+<div class="cell page-columns page-full" data-hash="02_death_cache/html/fig-0202_922da56ffc35b9d92e6cae03d3faf364">
+<div class="cell-output-display column-body page-columns page-full">
+<div id="fig-0202" class="quarto-figure quarto-figure-center column-body anchored page-columns page-full">
+<figure class="figure page-columns page-full">
+<p class="page-columns page-full"><img src="02_death_files/figure-html/fig-0202-1.svg" class="column-body img-fluid figure-img"></p>
+<figcaption class="figure-caption">Figure&nbsp;2.3: mortality by year, age, sex, region</figcaption>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="focus-difference-in-mortality-by-region-1" class="level4 page-columns page-full" data-number="2.1.2.2">
+<h4 data-number="2.1.2.2" class="anchored" data-anchor-id="focus-difference-in-mortality-by-region-1"><span class="header-section-number">2.1.2.2</span> focus: difference in mortality by region</h4>
+<div class="cell page-columns page-full" data-hash="02_death_cache/html/fig-0203_9c303917e2a94a072da3392c6fba0049">
+<div class="cell-output-display column-body page-columns page-full">
+<div id="fig-0203" class="quarto-figure quarto-figure-center column-body anchored page-columns page-full">
+<figure class="figure page-columns page-full">
+<p class="page-columns page-full"><img src="02_death_files/figure-html/fig-0203-1.svg" class="column-body img-fluid figure-img"></p>
+<figcaption class="figure-caption">Figure&nbsp;2.4: mortality by year, age, region, sex</figcaption>
+</figure>
+</div>
+</div>
+</div>
+</section>
+</section>
+<section id="method-comparison-based-on-rate-vs.-deathbirthpopulation" class="level3 page-columns page-full" data-number="2.1.3">
+<h3 data-number="2.1.3" class="anchored" data-anchor-id="method-comparison-based-on-rate-vs.-deathbirthpopulation"><span class="header-section-number">2.1.3</span> method comparison (based on rate vs.&nbsp;death/birth/population)</h3>
+<p>method differences (rate vs.&nbsp;deaths/births/population) details: see life expectancy function definition</p>
+<div class="cell page-columns page-full" data-hash="02_death_cache/html/fig-0204_50729c2d625faa12453cb28c09de754f">
+<div class="cell-output-display column-body page-columns page-full">
+<div id="fig-0204" class="quarto-figure quarto-figure-center column-body anchored page-columns page-full">
+<figure class="figure page-columns page-full">
+<p class="page-columns page-full"><img src="02_death_files/figure-html/fig-0204-1.svg" class="column-body img-fluid figure-img"></p>
+<figcaption class="figure-caption">Figure&nbsp;2.5: life expectancy at birth by year and method</figcaption>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="life-expectancy" class="level3 page-columns page-full" data-number="2.1.4">
+<h3 data-number="2.1.4" class="anchored" data-anchor-id="life-expectancy"><span class="header-section-number">2.1.4</span> life expectancy</h3>
+<section id="focus-differences-by-sex" class="level4 page-columns page-full" data-number="2.1.4.1">
+<h4 data-number="2.1.4.1" class="anchored" data-anchor-id="focus-differences-by-sex"><span class="header-section-number">2.1.4.1</span> focus: differences by sex</h4>
+<div class="cell page-columns page-full" data-hash="02_death_cache/html/fig-0205_483f7255c078341631ebc301cf187800">
+<div class="cell-output-display column-body page-columns page-full">
+<div id="fig-0205" class="quarto-figure quarto-figure-center column-body anchored page-columns page-full">
+<figure class="figure page-columns page-full">
+<p class="page-columns page-full"><img src="02_death_files/figure-html/fig-0205-1.svg" class="column-body img-fluid figure-img"></p>
+<figcaption class="figure-caption">Figure&nbsp;2.6: life expecancy at birth by year, sex and region</figcaption>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="focus-differences-by-region" class="level4 page-columns page-full" data-number="2.1.4.2">
+<h4 data-number="2.1.4.2" class="anchored" data-anchor-id="focus-differences-by-region"><span class="header-section-number">2.1.4.2</span> focus: differences by region</h4>
+<div class="cell page-columns page-full" data-hash="02_death_cache/html/fig-0206_cb8e73e87d53457f8df3158346884566">
+<div class="cell-output-display column-body page-columns page-full">
+<div id="fig-0206" class="quarto-figure quarto-figure-center column-body anchored page-columns page-full">
+<figure class="figure page-columns page-full">
+<p class="page-columns page-full"><img src="02_death_files/figure-html/fig-0206-1.svg" class="column-body img-fluid figure-img"></p>
+<figcaption class="figure-caption">Figure&nbsp;2.7: life expecancy at birth by year, region and sex</figcaption>
+</figure>
+</div>
+</div>
+</div>
+</section>
+</section>
+<section id="mortality-over-base-years-including-tail-correction" class="level3 page-columns page-full" data-number="2.1.5">
+<h3 data-number="2.1.5" class="anchored" data-anchor-id="mortality-over-base-years-including-tail-correction"><span class="header-section-number">2.1.5</span> mortality over base years (including tail correction)</h3>
+<div class="cell page-columns page-full" data-hash="02_death_cache/html/fig-0207_a3a618f69ba94c4493f7f67d57d491e5">
+<div class="cell-output-display column-body page-columns page-full">
+<div id="fig-0207" class="quarto-figure quarto-figure-center column-body anchored page-columns page-full">
+<figure class="figure page-columns page-full">
+<p class="page-columns page-full"><img src="02_death_files/figure-html/fig-0207-1.svg" class="column-body img-fluid figure-img"></p>
+<figcaption class="figure-caption">Figure&nbsp;2.8: mortality by age, sex, region; tails corrected</figcaption>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="smoothing-with-loess" class="level3 page-columns page-full" data-number="2.1.6">
+<h3 data-number="2.1.6" class="anchored" data-anchor-id="smoothing-with-loess"><span class="header-section-number">2.1.6</span> smoothing with LOESS</h3>
+<div class="cell page-columns page-full" data-hash="02_death_cache/html/fig-0208_58e37049c8acda91cf96008fc56af08d">
+<div class="cell-output-display column-body page-columns page-full">
+<div id="fig-0208" class="quarto-figure quarto-figure-center column-body anchored page-columns page-full">
+<figure class="figure page-columns page-full">
+<p class="page-columns page-full"><img src="02_death_files/figure-html/fig-0208-1.svg" class="column-body img-fluid figure-img"></p>
+<figcaption class="figure-caption">Figure&nbsp;2.9: mortality bby age, sex and region; fitted</figcaption>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="ratio-zurich-switzerland" class="level3 page-columns page-full" data-number="2.1.7">
+<h3 data-number="2.1.7" class="anchored" data-anchor-id="ratio-zurich-switzerland"><span class="header-section-number">2.1.7</span> ratio Zurich / Switzerland</h3>
+<div class="cell page-columns page-full" data-hash="02_death_cache/html/fig-0209_1d161b739e02c06ff5e0714dcf25717c">
+<div class="cell-output-display column-body page-columns page-full">
+<div id="fig-0209" class="quarto-figure quarto-figure-center column-body anchored page-columns page-full">
+<figure class="figure page-columns page-full">
+<p class="page-columns page-full"><img src="02_death_files/figure-html/fig-0209-1.svg" class="column-body img-fluid figure-img"></p>
+<figcaption class="figure-caption">Figure&nbsp;2.10: ratio Zurich/Switzerland by age and sex</figcaption>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="zurich-future-mortality-rate" class="level3 page-columns page-full" data-number="2.1.8">
+<h3 data-number="2.1.8" class="anchored" data-anchor-id="zurich-future-mortality-rate"><span class="header-section-number">2.1.8</span> Zurich: future mortality rate</h3>
+<div class="cell page-columns page-full" data-hash="02_death_cache/html/fig-0210_af80f626d711ed97d29ee13de0d2fa50">
+<div class="cell-output-display column-body page-columns page-full">
+<div id="fig-0210" class="quarto-figure quarto-figure-center column-body anchored page-columns page-full">
+<figure class="figure page-columns page-full">
+<p class="page-columns page-full"><img src="02_death_files/figure-html/fig-0210-1.svg" class="column-body img-fluid figure-img"></p>
+<figcaption class="figure-caption">Figure&nbsp;2.11: mortality prediction by year, age and sex</figcaption>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="zurich-life-expectancy-including-the-model-data" class="level3 page-columns page-full" data-number="2.1.9">
+<h3 data-number="2.1.9" class="anchored" data-anchor-id="zurich-life-expectancy-including-the-model-data"><span class="header-section-number">2.1.9</span> Zurich: life expectancy (including the model data)</h3>
+<section id="focus-differences-by-sex-1" class="level4 page-columns page-full" data-number="2.1.9.1">
+<h4 data-number="2.1.9.1" class="anchored" data-anchor-id="focus-differences-by-sex-1"><span class="header-section-number">2.1.9.1</span> focus: differences by sex</h4>
+<div class="cell page-columns page-full" data-hash="02_death_cache/html/fig-0211_dbf4d0f43a22ad3c886969868d441dc3">
+<div class="cell-output-display column-body page-columns page-full">
+<div id="fig-0211" class="quarto-figure quarto-figure-center column-body anchored page-columns page-full">
+<figure class="figure page-columns page-full">
+<p class="page-columns page-full"><img src="02_death_files/figure-html/fig-0211-1.svg" class="column-body img-fluid figure-img"></p>
+<figcaption class="figure-caption">Figure&nbsp;2.12: life expectancy at birth by year, sex, region; with model</figcaption>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="focus-differences-by-region-1" class="level4 page-columns page-full" data-number="2.1.9.2">
+<h4 data-number="2.1.9.2" class="anchored" data-anchor-id="focus-differences-by-region-1"><span class="header-section-number">2.1.9.2</span> focus: differences by region</h4>
+<div class="cell page-columns page-full" data-hash="02_death_cache/html/fig-0212_311353a9179f82608c5a65db3f12f36c">
+<div class="cell-output-display column-body page-columns page-full">
+<div id="fig-0212" class="quarto-figure quarto-figure-center column-body anchored page-columns page-full">
+<figure class="figure page-columns page-full">
+<p class="page-columns page-full"><img src="02_death_files/figure-html/fig-0212-1.svg" class="column-body img-fluid figure-img"></p>
+<figcaption class="figure-caption">Figure&nbsp;2.13: life expectancy at birth by year, region, sex; with model</figcaption>
+</figure>
+</div>
+</div>
+</div>
+
+
+</section>
+</section>
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    text: function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+  function tippyHover(el, contentFn) {
+    const config = {
+      allowHTML: true,
+      content: contentFn,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start'
+    };
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      return note.innerHTML;
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+<nav class="page-navigation column-body">
+  <div class="nav-page nav-page-previous">
+      <a href="./01_birth.html" class="pagination-link">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Birth</span></span>
+      </a>          
+  </div>
+  <div class="nav-page nav-page-next">
+      <a href="./03_immigration.html" class="pagination-link">
+        <span class="nav-page-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Immigration</span></span> <i class="bi bi-arrow-right-short"></i>
+      </a>
+  </div>
+</nav>
+</div> <!-- /content -->
+
+
+
+<script src="site_libs/quarto-html/zenscroll-min.js"></script>
+</body></html>
