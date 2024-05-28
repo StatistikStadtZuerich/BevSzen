@@ -18,23 +18,8 @@ pro_dat <- read_csv(paste0(exp_path, "/projects_future.csv"), lazy = FALSE)
 # allocation (persons per apartment, dyw)
 aca_dat <- read_csv(paste0(exp_path, "/allocation_future.csv"), lazy = FALSE)
 
-# ---- for testing reasons: new car_dat -------
-
-which_car_dat <- "plain" # mixed # cut # plain
-
-if(which_car_dat == "mixed"){
-  car_dat <- read_csv(paste0(exp_path, "/usage_area.csv"), lazy = FALSE)
-  car_suffix  = "mixed"
-} else if(which_car_dat == "cut"){
-  car_dat <- read_csv(paste0(exp_path, "/usage_area_cut.csv"), lazy = FALSE)
-  car_dat <- car_dat %>% filter(year != 2023)
-  car_suffix  = "cut"
-} else if(which_car_dat == "plain"){
-  car_dat <- read_csv(paste0(exp_path, "/usage_area.csv"), lazy = FALSE)
-  car_suffix  = "plain"
-}
-
-# ---- for testing reasons: new car_dat ------- 
+# car_dat (kareb: decided to go with the mixed variant)
+car_dat <- read_csv(paste0(exp_path, "/usage_area.csv"), lazy = FALSE)
 
 # living space (m2 per person, dyw)
 spa_dat <- read_csv(paste0(exp_path, "/living-space_future.csv"), lazy = FALSE)
@@ -270,54 +255,46 @@ project_reserves <- function(x, ...) {
 
 }
 
-# Check
-x <- filter(pro_car, (district == "Escher Wyss") & (owner == "private housing"))
-plot(x$year, x$car, type = "o")
-project_reserves(x)
-
-if(which_car_dat == "mixed"){
-  # consider projects and reserves (apply the function)
-  pro_res_all <- pro_car %>%
-    group_split(district, owner) %>%
-    map(project_reserves) %>%
-    bind_rows()
-  pro_res_all$variant <- "mixed"
-  pro_res_all_mixed <- pro_res_all
-  
-} else if(which_car_dat == "cut"){
-  
-  pro_res_all <- pro_car %>%
-    arrange(district, owner, year) %>%
-    mutate_all(~replace_na(., 0)) %>%
-    mutate(pop_new = pop + new - removed + car) %>%
-    select(-pop, - new, -removed,-car) %>%
-    rename(pop = pop_new) 
-  
-  pro_res_all$variant <- "cut"
-  pro_res_all_cut <- pro_res_all
-  
-} else if(which_car_dat == "plain"){
-  pro_res_all <-  pro_car %>%
-    select(-pop) %>%
-    rename(pop = car) %>% 
-    select( - new, -removed)
-  
-  pro_res_all$variant <- "plain"
-  pro_res_all_plain <- pro_res_all
-}
+# consider projects and reserves (apply the function)
+pro_res_all <- pro_car %>%
+  group_split(district, owner) %>%
+  map(project_reserves) %>%
+  bind_rows()
 
 
-# testing variants -------------------------------------------------------->
+# pro_res_all$variant <- "mixed"
+# pro_res_all_mixed <- pro_res_all
 
-pro_res_all <- rbind(pro_res_all_mixed, pro_res_all_cut, pro_res_all_plain)
-
-ggplot(pro_res_all %>% filter(owner == "cooperative housing") , aes(year, pop, color = variant)) + 
-  geom_line() + facet_wrap(~district, scales = "free") + theme_minimal()
-
-ggplot(pro_res_all %>% filter(owner == "private housing") , aes(year, pop, color = variant)) + 
-  geom_line() + facet_wrap(~district, scales = "free") + theme_minimal()
-
-# testing variants --------------------------------------------------------<
+# 
+# # Check
+# x <- filter(pro_car, (district == "Escher Wyss") & (owner == "private housing"))
+# plot(x$year, x$car, type = "o")
+# project_reserves(x)
+# 
+# if(which_car_dat == "mixed"){
+# 
+#   
+# } else if(which_car_dat == "cut"){
+#   
+#   pro_res_all <- pro_car %>%
+#     arrange(district, owner, year) %>%
+#     mutate_all(~replace_na(., 0)) %>%
+#     mutate(pop_new = pop + new - removed + car) %>%
+#     select(-pop, - new, -removed,-car) %>%
+#     rename(pop = pop_new) 
+#   
+#   pro_res_all$variant <- "cut"
+#   pro_res_all_cut <- pro_res_all
+#   
+# } else if(which_car_dat == "plain"){
+#   pro_res_all <-  pro_car %>%
+#     select(-pop) %>%
+#     rename(pop = car) %>% 
+#     select( - new, -removed)
+#   
+#   pro_res_all$variant <- "plain"
+#   pro_res_all_plain <- pro_res_all
+# }
 
 
 # apply the parameter of empty apartments ---------------------------------
@@ -364,16 +341,16 @@ pop_all <- pop_fut_past %>%
 
 # per district and ownership
 write_csv(pop_fut_past %>% arrange(district, year, owner),
-          paste0(exp_path, "/housing_model_population_dw",car_suffix,".csv"))
+          paste0(exp_path, "/housing_model_population_dw",".csv"))
 
 # per district
 ex_data_d <- arrange(pop_d, district, year)
-write_csv(ex_data_d, paste0(exp_path, "/housing-model_population_d",car_suffix,".csv"))
+write_csv(ex_data_d, paste0(exp_path, "/housing-model_population_d",".csv"))
 
 
 # entire city (to compare with past publications)
 ex_data_all <- arrange(pop_all, year)
-write_csv(ex_data_all, paste0(exp_path, "/housing-model_population_all",car_suffix,".csv"))
+write_csv(ex_data_all, paste0(exp_path, "/housing-model_population_all",".csv"))
 
 # log info
 cat_log(paste0(
