@@ -25,8 +25,41 @@ car_dat <- read_csv(paste0(exp_path, "/usage_area.csv"), lazy = FALSE)
 spa_dat <- read_csv(paste0(exp_path, "/living-space_future.csv"), lazy = FALSE)
 
 # ownership (% cooperative housing)
-# EXCL OWN: Past ownership information are still necessary
-own_dat <- read_csv(paste0(exp_path, "/ownership_past_future.csv"), lazy = FALSE)
+# this is the remaing of the own module > building a tibble with past information about the share of people living in coop. housing
+own_dat <- read_csv(spa_od) %>%
+  rename(year = StichtagDatJahr, apartments = AnzWhgStat, people = AnzBestWir) %>%
+  left_join(look_dis, by = "QuarCd") %>%
+  mutate(
+    owner = fact_if(EigentuemerSSZPubl3Cd_noDM, uni_w),
+    district = factor(distr, uni_d)
+  ) %>%
+  select(year, district, owner, people) %>%
+  group_by(district, year, owner) %>%
+  summarize(
+    people = sum_NA(people),
+    .groups = "drop") %>%
+  group_by(district, year) %>%
+  mutate(
+    prop = round(people / sum_NA(people) * 100, round_prop),
+    .groups = "drop"
+  ) %>%
+  filter(owner == uni_w[1]) %>%
+  select(district, year, prop)
+
+# proportions (based on apartments and people)
+own_prop <- group_by(own_dat, district, year) %>%
+  mutate(
+    prop_apartments = round(apartments / sum_NA(apartments) * 100, round_prop),
+    prop_people = round(people / sum_NA(people) * 100, round_prop)
+  ) %>%
+  filter(owner == uni_w[1]) %>%
+  select(district, year, prop_apartments, prop_people) %>%
+  pivot_longer(
+    cols = starts_with("prop"), names_prefix = "prop_",
+    names_to = "category", values_to = "prop"
+  )
+
+
 
 # EXCL OWN REPLACEMENT
 # just load ownership_past
@@ -339,15 +372,35 @@ write_csv(pop_fut_past %>% arrange(district, year, owner),
 
 # per district
 ex_data_d <- arrange(pop_d, district, year)
-write_csv(ex_data_d, paste0(exp_path, "/housing-model_population_d_woown",".csv"))
+write_csv(ex_data_d, paste0(exp_path, "/housing-model_population_d_woown.csv"))
 
 
 # entire city (to compare with past publications)
 ex_data_all <- arrange(pop_all, year)
-write_csv(ex_data_all, paste0(exp_path, "/housing-model_population_all_woown",".csv"))
+write_csv(ex_data_all, paste0(exp_path, "/housing-model_population_all_woown.csv"))
 
 # log info
 cat_log(paste0(
   "housing model: ",
   capture.output(Sys.time() - t0)
 ))
+
+
+# CHECK (TODELETE) --------------------------------------------------------
+
+test1new <- read_csv(paste0(exp_path, "/housing-model_population_all_woown.csv"))
+test1old <- read_csv(paste0(exp_path, "/housing-model_population_all.csv"))
+
+test1new <- read_csv(paste0(exp_path, "/housing-model_population_d_woown.csv"))
+test1old <- read_csv(paste0(exp_path, "/housing-model_population_d.csv"))
+
+test1new <- read_csv(paste0(exp_path, "/housing_model_population_dw_woown.csv"))
+test1old <- read_csv(paste0(exp_path, "/housing_model_population_dw.csv"))
+
+
+
+write_csv(ex_data_all, paste0(exp_path, "/housing-model_population_all_woown",".csv"))
+
+# check output
+
+
