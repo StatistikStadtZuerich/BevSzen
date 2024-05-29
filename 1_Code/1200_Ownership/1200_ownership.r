@@ -12,6 +12,7 @@ t0 <- Sys.time()
 # import, data preparation ------------------------------------------------
 
 # ownership: data
+# OUT owner, apartments, people for past years and distric
 own_dat <- read_csv(spa_od) %>%
   rename(year = StichtagDatJahr, apartments = AnzWhgStat, people = AnzBestWir) %>%
   left_join(look_dis, by = "QuarCd") %>%

@@ -46,24 +46,6 @@ own_dat <- read_csv(spa_od) %>%
   filter(owner == uni_w[1]) %>%
   select(district, year, prop)
 
-# proportions (based on apartments and people)
-own_prop <- group_by(own_dat, district, year) %>%
-  mutate(
-    prop_apartments = round(apartments / sum_NA(apartments) * 100, round_prop),
-    prop_people = round(people / sum_NA(people) * 100, round_prop)
-  ) %>%
-  filter(owner == uni_w[1]) %>%
-  select(district, year, prop_apartments, prop_people) %>%
-  pivot_longer(
-    cols = starts_with("prop"), names_prefix = "prop_",
-    names_to = "category", values_to = "prop"
-  )
-
-
-
-# EXCL OWN REPLACEMENT
-# just load ownership_past
-
 # population
 # why population not from the housing open data file?
 # this file only contains people in apartments (and not in care centers etc)
@@ -93,9 +75,6 @@ pro_aca <- left_join(pro_dat, aca_dat,
   mutate(people = apartments * aca_dyw) %>%
   select(district, year, owner, indicator, people) %>%
   pivot_wider(names_from = indicator, values_from = people)
-
-# if additional information is available on new projects (e.g. amount of people)
-# this could be incorporated here
 
 # capacity/reserves and living space (from m2 to people; future) ----------
 
@@ -155,64 +134,8 @@ pop_with_past <- bind_rows(pop_w, pop_total) %>%
   mutate(district = factor(distr, uni_d)) %>%
   select(district, year, owner, pop)
 
-# plot 1300
 
-# Calculating proportion of cooperative housing from pop_with past and compare it to district trends
-# OUT: past-future years with proportion of cooperative housing according to 
-# 1) cumulative car_spa and as prop_car
-# 2) according to own_dat as prop_trend
-
-# prop_coop <- pop_with_past %>%
-#   mutate(simple = if_else(owner == uni_w[1], "cooperative", "private")) %>%
-#   select(-owner) %>%
-#   pivot_wider(names_from = simple, values_from = pop) %>%
-#   mutate(prop_car = cooperative / (cooperative + private) * 100) %>%
-#   select(district, year, prop_car) %>%
-#   left_join(own_dat, by = c("district", "year")) %>%
-#   rename(prop_trend = prop)
-
-# EXCL OWN REPLACEMENT:
-# delete above code
-
-# plot 1301
-
-# Calculating new proportion of cooperative housing based on parameter 'car_coop'
-# OUT: future proportion of coop-housing for every year and district
-# car_coop > (% from capacity/reserves)
-# if car_coop = 100 > prop_trend is set to 0! NO INFLUENCE at all!
-
-# new_prop <- prop_coop %>%
-#   mutate(prop = prop_car * car_coop / 100 + prop_trend * (1 - car_coop / 100)) %>%
-#   filter(year >= scen_begin) %>%
-#   select(district, year, prop)
-
-# EXCL OWN REPLACEMENT
-# delete above code
-
-
-# Apply the new proportion to pop_total (which is today's pop + cumulative car_spa)
-# EXCL OWN: NOT NECESSARY AT ALL
-
-# new_pop_car <- pop_total %>%
-#   group_by(district, year) %>%
-#   summarize(pop = sum(pop),
-#             .groups = "drop") %>%
-#   left_join(new_prop, by = c("district", "year")) %>%
-#   mutate(
-#     pop_cooperative = pop * prop / 100,
-#     pop_private = pop * (1 - prop / 100)
-#   ) %>%
-#   select(-c(pop, prop)) %>%
-#   pivot_longer(
-#     cols = c("pop_cooperative", "pop_private"),
-#     names_prefix = "pop_",
-#     names_to = "category", values_to = "car"
-#   ) %>%
-#   mutate(owner = if_else(category == "cooperative", uni_w[1], uni_w[2])) %>%
-#   select(district, year, owner, car)
-
-# EXCL OWN REPLACEMENT
-# delete above code, replace by
+# factorize & subset - form final output tibble
 new_pop_car <- pop_total %>%
   mutate(owner = if_else(owner == "cooperative housing", uni_w[1], uni_w[2])) %>%
   select(district, year, owner, pop) %>%
@@ -222,7 +145,6 @@ new_pop_car <- pop_total %>%
 # combine: projects and capacity (with new prop of cooperative) -----------
 
 # Combining all prepared data in one tibble
-
 # doy with pop (current year), new, removed and car (from capacity)
 pro_car <- as_tibble(expand_grid(
   district = uni_d,
@@ -236,13 +158,9 @@ pro_car <- as_tibble(expand_grid(
   select(district, owner, year, pop, new, removed, car) %>%
   arrange(district, owner, year)
 
-# EXCL OWN REPLACEMENT:
-
-
 # function: consider projects and reserves --------------------------------
 
 # consider projects and reserves
-# 
 project_reserves <- function(x, ...) {
 
   # maximum usage of the capacity, plus population
@@ -364,43 +282,21 @@ pop_all <- pop_fut_past %>%
 
 # export the results ------------------------------------------------------
 
-
-
 # per district and ownership
 write_csv(pop_fut_past %>% arrange(district, year, owner),
-          paste0(exp_path, "/housing_model_population_dw_woown.csv"))
+          paste0(exp_path, "/housing_model_population_dw.csv"))
 
 # per district
 ex_data_d <- arrange(pop_d, district, year)
-write_csv(ex_data_d, paste0(exp_path, "/housing-model_population_d_woown.csv"))
+write_csv(ex_data_d, paste0(exp_path, "/housing-model_population_d.csv"))
 
 
 # entire city (to compare with past publications)
 ex_data_all <- arrange(pop_all, year)
-write_csv(ex_data_all, paste0(exp_path, "/housing-model_population_all_woown.csv"))
+write_csv(ex_data_all, paste0(exp_path, "/housing-model_population_all.csv"))
 
 # log info
 cat_log(paste0(
   "housing model: ",
   capture.output(Sys.time() - t0)
 ))
-
-
-# CHECK (TODELETE) --------------------------------------------------------
-
-test1new <- read_csv(paste0(exp_path, "/housing-model_population_all_woown.csv"))
-test1old <- read_csv(paste0(exp_path, "/housing-model_population_all.csv"))
-
-test1new <- read_csv(paste0(exp_path, "/housing-model_population_d_woown.csv"))
-test1old <- read_csv(paste0(exp_path, "/housing-model_population_d.csv"))
-
-test1new <- read_csv(paste0(exp_path, "/housing_model_population_dw_woown.csv"))
-test1old <- read_csv(paste0(exp_path, "/housing_model_population_dw.csv"))
-
-
-
-write_csv(ex_data_all, paste0(exp_path, "/housing-model_population_all_woown",".csv"))
-
-# check output
-
-
