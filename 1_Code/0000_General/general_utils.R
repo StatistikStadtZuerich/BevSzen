@@ -18,7 +18,6 @@
 #' spa (living space)  
 #' aca (allocation)  
 #' pro (projects)  
-#' own (ownership)  
 #' hou (housing model)  
 #' deh (demography and housing model)  
 #' out (model outputs)  
@@ -102,11 +101,6 @@ run_scen <- function(scenarios, modules, keep_log = TRUE) {
     # projects
     if (modules %in% c("all", "alw", "how", "hom", "pro")) {
       source(paste0(code_path, "1100_Projects/1100_projects.r"))
-    }
-    
-    # ownership
-    if (modules %in% c("all", "alw", "how", "hom", "own")) {
-      source(paste0(code_path, "1200_Ownership/1200_ownership.r"))
     }
     
     # housing model

@@ -25,7 +25,26 @@ car_dat <- read_csv(paste0(exp_path, "/usage_area.csv"), lazy = FALSE)
 spa_dat <- read_csv(paste0(exp_path, "/living-space_future.csv"), lazy = FALSE)
 
 # ownership (% cooperative housing)
-own_dat <- read_csv(paste0(exp_path, "/ownership_past_future.csv"), lazy = FALSE)
+# this is the remaing of the own module > building a tibble with past information about the share of people living in coop. housing
+own_dat <- read_csv(spa_od) %>%
+  rename(year = StichtagDatJahr, apartments = AnzWhgStat, people = AnzBestWir) %>%
+  left_join(look_dis, by = "QuarCd") %>%
+  mutate(
+    owner = fact_if(EigentuemerSSZPubl3Cd_noDM, uni_w),
+    district = factor(distr, uni_d)
+  ) %>%
+  select(year, district, owner, people) %>%
+  group_by(district, year, owner) %>%
+  summarize(
+    people = sum_NA(people),
+    .groups = "drop") %>%
+  group_by(district, year) %>%
+  mutate(
+    prop = round(people / sum_NA(people) * 100, round_prop),
+    .groups = "drop"
+  ) %>%
+  filter(owner == uni_w[1]) %>%
+  select(district, year, prop)
 
 # population
 # why population not from the housing open data file?
@@ -57,9 +76,6 @@ pro_aca <- left_join(pro_dat, aca_dat,
   select(district, year, owner, indicator, people) %>%
   pivot_wider(names_from = indicator, values_from = people)
 
-# if additional information is available on new projects (e.g. amount of people)
-# this could be incorporated here
-
 # capacity/reserves and living space (from m2 to people; future) ----------
 
 # combine: calculate amount of people
@@ -77,6 +93,7 @@ car_spa <- left_join(car_dat, spa_dat,
 # population by ownership (past) ------------------------------------------
 
 # join pop on ownership (since this data set begins later)
+# OUT: population of past year per ownership > this ownership information is still necessary
 pop_w <- left_join(own_dat, pop, by = c("district", "year")) %>%
   filter(year <= date_end) %>%
   mutate(
@@ -117,47 +134,13 @@ pop_with_past <- bind_rows(pop_w, pop_total) %>%
   mutate(district = factor(distr, uni_d)) %>%
   select(district, year, owner, pop)
 
-# plot 1300
 
-# Calculating proportion of cooperative housing from pop_with past and compare it to district trends
-# Out: past-future years with proportion of cooperative housing
-prop_coop <- pop_with_past %>%
-  mutate(simple = if_else(owner == uni_w[1], "cooperative", "private")) %>%
-  select(-owner) %>%
-  pivot_wider(names_from = simple, values_from = pop) %>%
-  mutate(prop_car = cooperative / (cooperative + private) * 100) %>%
-  select(district, year, prop_car) %>%
-  left_join(own_dat, by = c("district", "year")) %>%
-  rename(prop_trend = prop)
-
-# plot 1301
-
-# Calculating new proportion of cooperative housing based on parameter 'car_coop'
-# car_coop > (% from capacity/reserves)
-new_prop <- prop_coop %>%
-  mutate(prop = prop_car * car_coop / 100 + prop_trend * (1 - car_coop / 100)) %>%
-  filter(year >= scen_begin) %>%
-  select(district, year, prop)
-
-
-# Apply the new proportion to pop_total (which is today's pop + cumulative car_spa)
+# factorize & subset - form final output tibble
 new_pop_car <- pop_total %>%
-  group_by(district, year) %>%
-  summarize(pop = sum(pop),
-            .groups = "drop") %>%
-  left_join(new_prop, by = c("district", "year")) %>%
-  mutate(
-    pop_cooperative = pop * prop / 100,
-    pop_private = pop * (1 - prop / 100)
-  ) %>%
-  select(-c(pop, prop)) %>%
-  pivot_longer(
-    cols = c("pop_cooperative", "pop_private"),
-    names_prefix = "pop_",
-    names_to = "category", values_to = "car"
-  ) %>%
-  mutate(owner = if_else(category == "cooperative", uni_w[1], uni_w[2])) %>%
-  select(district, year, owner, car)
+  mutate(owner = if_else(owner == "cooperative housing", uni_w[1], uni_w[2])) %>%
+  select(district, year, owner, pop) %>%
+  mutate(car = pop) %>%
+  select(-pop)
 
 # combine: projects and capacity (with new prop of cooperative) -----------
 
@@ -175,11 +158,9 @@ pro_car <- as_tibble(expand_grid(
   select(district, owner, year, pop, new, removed, car) %>%
   arrange(district, owner, year)
 
-
 # function: consider projects and reserves --------------------------------
 
 # consider projects and reserves
-# 
 project_reserves <- function(x, ...) {
 
   # maximum usage of the capacity, plus population
@@ -261,42 +242,6 @@ pro_res_all <- pro_car %>%
   map(project_reserves) %>%
   bind_rows()
 
-
-# pro_res_all$variant <- "mixed"
-# pro_res_all_mixed <- pro_res_all
-
-# 
-# # Check
-# x <- filter(pro_car, (district == "Escher Wyss") & (owner == "private housing"))
-# plot(x$year, x$car, type = "o")
-# project_reserves(x)
-# 
-# if(which_car_dat == "mixed"){
-# 
-#   
-# } else if(which_car_dat == "cut"){
-#   
-#   pro_res_all <- pro_car %>%
-#     arrange(district, owner, year) %>%
-#     mutate_all(~replace_na(., 0)) %>%
-#     mutate(pop_new = pop + new - removed + car) %>%
-#     select(-pop, - new, -removed,-car) %>%
-#     rename(pop = pop_new) 
-#   
-#   pro_res_all$variant <- "cut"
-#   pro_res_all_cut <- pro_res_all
-#   
-# } else if(which_car_dat == "plain"){
-#   pro_res_all <-  pro_car %>%
-#     select(-pop) %>%
-#     rename(pop = car) %>% 
-#     select( - new, -removed)
-#   
-#   pro_res_all$variant <- "plain"
-#   pro_res_all_plain <- pro_res_all
-# }
-
-
 # apply the parameter of empty apartments ---------------------------------
 
 # parameter can be applied directly to the population
@@ -337,20 +282,17 @@ pop_all <- pop_fut_past %>%
 
 # export the results ------------------------------------------------------
 
-
-
 # per district and ownership
-write_csv(pop_fut_past %>% arrange(district, year, owner),
-          paste0(exp_path, "/housing_model_population_dw.csv"))
+write_csv(pop_fut_past %>% arrange(district, year, owner),paste0(exp_path, "/housing_model_population_dw.csv"))
 
 # per district
 ex_data_d <- arrange(pop_d, district, year)
-write_csv(ex_data_d, paste0(exp_path, "/housing-model_population_d",".csv"))
+write_csv(ex_data_d, paste0(exp_path, "/housing-model_population_d.csv"))
 
 
 # entire city (to compare with past publications)
 ex_data_all <- arrange(pop_all, year)
-write_csv(ex_data_all, paste0(exp_path, "/housing-model_population_all",".csv"))
+write_csv(ex_data_all, paste0(exp_path, "/housing-model_population_all.csv"))
 
 # log info
 cat_log(paste0(
