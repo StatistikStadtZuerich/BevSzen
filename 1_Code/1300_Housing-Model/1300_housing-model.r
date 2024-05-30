@@ -52,7 +52,7 @@ own_dat <- read_csv(spa_od) %>%
 # the population number in the housing open data is below the total
 # amount of people in Zurich
 
-# dy (y=past years)
+# dy (past years)
 pop <- read_csv(pop_od, lazy = FALSE) %>%
   rename(year = StichtagDatJahr, pop = AnzBestWir) %>%
   left_join(look_dis, by = "QuarCd") %>%
@@ -116,7 +116,7 @@ pop_last <- pop_w %>%
 
 # proportion of cooperative housing according to capacity/reserves
 # capacity/reserves contains only people due to additional (!) yearly (!) usage of reserves
-# __therefore, add the cumulative values to the past population__
+# therefore, add the cumulative values to the past population
 pop_total <- car_spa %>%
   arrange(district, owner, year) %>%
   group_by(district, owner) %>%
@@ -130,14 +130,16 @@ pop_total <- car_spa %>%
   rename(pop = total)
 
 # row-binding past_pop and pop_total (which is today's pop + cumulative car_spa)
-# Why doing so? > For plotting reasons, to for plotting to check if capacity/reserves population values are meaningful in comparison to the past
+# Why doing so? 
+# For plotting reasons, to for plotting to check if capacity/reserves population 
+# values are meaningful in comparison to the past
 pop_with_past <- bind_rows(pop_w, pop_total) %>%
   rename(distr = district) %>%
   mutate(district = factor(distr, uni_d)) %>%
   select(district, year, owner, pop)
 
 
-# factorize & subset - form final output tibble
+# factorize and subset - form final output tibble
 new_pop_car <- pop_total %>%
   mutate(owner = if_else(owner == "cooperative housing", uni_w[1], uni_w[2])) %>%
   select(district, year, owner, pop) %>%
@@ -147,7 +149,7 @@ new_pop_car <- pop_total %>%
 # combine: projects and capacity (with new prop of cooperative) -----------
 
 # Combining all prepared data in one tibble
-# doy with pop (current year), new, removed and car (from capacity)
+# dyo with pop (current year), new, removed and car (from capacity)
 pro_car <- as_tibble(expand_grid(
   district = uni_d,
   year = date_end:scen_end,
