@@ -7,9 +7,9 @@ time_start <- Sys.time()
 #     scenarios = c("middle"),
 #     modules = c("alw"))
 
-# run_scen(
-#     scenarios = c("lower", "middle", "middle_birth_lower", "middle_birth_upper", "upper"),
-#     modules = c("all"))
+run_scen(
+    scenarios = c("lower", "middle", "middle_birth_lower", "middle_birth_upper", "upper"),
+    modules = c("all"))
 
 Sys.time() - time_start
 
