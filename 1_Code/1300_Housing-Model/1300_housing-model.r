@@ -107,8 +107,11 @@ pop_w <- left_join(own_dat, pop, by = c("district", "year")) %>%
   mutate(owner = fact_if(owner_text, uni_w, "cooperative")) %>%
   select(district, year, owner, pop)
 
-# last year of data
-pop_last <- filter(pop_w, year == date_end)
+# last year of data 
+pop_last <- pop_w %>%
+  ungroup() %>%
+  filter(year == date_end) %>%
+  dplyr::select(-year)
 
 # combine: capacity/reserves and ownership prediction ---------------------
 
