@@ -65,7 +65,7 @@ sszplot(filter(mor_yasr, year %in% year_5),
 #| fig-cap: "mortality by year, age, sex, region"
 
 # age
-age_select <- c(0, 20, 40, 50, 60, 70, 80)
+age_select <- c(0, 20, 40, 50, 60, 70, 75, 80, 85)
 
 sszplot(filter(mor_yasr, age %in% age_select),
   aes_x = "year", aes_y = "mor_yasr", aes_col = "sex",
@@ -233,6 +233,33 @@ sszplot(mor_zh_yas_past_future,
   width = 12, height = 8
 )
 ```
+
+### Zurich and Switzerland: future mortality rate
+
+
+```{r}
+#| label: fig-0210a
+#| fig-cap: mortality by year, age, sex, region
+
+# age
+age_select <- c(0, 20, 40, 50, 60, 70, 75, 80, 85, 90)
+
+sszplot(filter(mor_zh_ch_yas_past_future, age %in% age_select),
+  aes_x = "year", aes_y = "mor_yasr", aes_col = "sex",
+  labs_y = "mortality rate (in % per year)",
+  scale_y = "log",
+  grid = c("region", "age"),
+  name = plot_name("0210a_mortality_by-year-age-sex-region_focus-year-sex"),
+  width = 14, height = 7,
+  angle = 90
+)
+
+
+
+```
+
+
+
 
 ### Zurich: life expectancy (including the model data)
 
