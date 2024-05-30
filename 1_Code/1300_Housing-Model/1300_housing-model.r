@@ -110,6 +110,13 @@ pop_w <- left_join(own_dat, pop, by = c("district", "year")) %>%
 # last year of data
 pop_last <- filter(pop_w, year == date_end)
 
+
+pop_w %>%
+  filter(year == date_end) %>%
+  dplyr::select(-year)
+
+
+
 # combine: capacity/reserves and ownership prediction ---------------------
 
 # proportion of cooperative housing according to capacity/reserves
