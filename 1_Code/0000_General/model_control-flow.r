@@ -13,8 +13,6 @@ time_start <- Sys.time()
 
 Sys.time() - time_start
 
-
 render_book(cache_refresh = TRUE)
-
 
 
