@@ -23,8 +23,7 @@ car_dat <- read_csv(paste0(exp_path, "/usage_area.csv"), lazy = FALSE)
 # living space (m2 per person, dyw)
 spa_dat <- read_csv(paste0(exp_path, "/living-space_future.csv"), lazy = FALSE)
 
-# ownership (% cooperative housing)
-# past: proportion of people living in cooperative housing
+# ownership (proportion of people living in cooperative housing, past)
 own_dat <- read_csv(spa_od) %>%
   rename(year = StichtagDatJahr, apartments = AnzWhgStat, people = AnzBestWir) %>%
   left_join(look_dis, by = "QuarCd") %>%
