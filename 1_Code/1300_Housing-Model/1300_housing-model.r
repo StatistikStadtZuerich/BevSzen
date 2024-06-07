@@ -17,7 +17,7 @@ pro_dat <- read_csv(paste0(exp_path, "/projects_future.csv"), lazy = FALSE)
 # allocation (persons per apartment, dyw)
 aca_dat <- read_csv(paste0(exp_path, "/allocation_future.csv"), lazy = FALSE)
 
-# car_dat (kareb: decided to go with the mixed variant)
+# car_dat
 car_dat <- read_csv(paste0(exp_path, "/usage_area.csv"), lazy = FALSE)
 
 # living space (m2 per person, dyw)
