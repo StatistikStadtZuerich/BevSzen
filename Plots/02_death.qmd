@@ -312,5 +312,5 @@ sszplot(le_ysr_model,
   grid = c(".", "sex"),
   name = plot_name("0212_life-expectancy-at-birth_by-year-sex-region_focus-region_model"),
   width = 8, height = 4.5
-)
+) 
 ```

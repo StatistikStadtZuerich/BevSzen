@@ -13,19 +13,17 @@ t0 <- Sys.time()
 
 # projects (apartments, dyw)
 pro_dat <- read_csv(paste0(exp_path, "/projects_future.csv"), lazy = FALSE)
-# pro_dat[pro_dat$district == "Seebach" & pro_dat$year == 2024,]$apartments <- 1000 # test input
 
 # allocation (persons per apartment, dyw)
 aca_dat <- read_csv(paste0(exp_path, "/allocation_future.csv"), lazy = FALSE)
 
-# car_dat (kareb: decided to go with the mixed variant)
+# car_dat
 car_dat <- read_csv(paste0(exp_path, "/usage_area.csv"), lazy = FALSE)
 
 # living space (m2 per person, dyw)
 spa_dat <- read_csv(paste0(exp_path, "/living-space_future.csv"), lazy = FALSE)
 
-# ownership (% cooperative housing)
-# this is the remaing of the own module > building a tibble with past information about the share of people living in coop. housing
+# ownership (proportion of people living in cooperative housing, past)
 own_dat <- read_csv(spa_od) %>%
   rename(year = StichtagDatJahr, apartments = AnzWhgStat, people = AnzBestWir) %>%
   left_join(look_dis, by = "QuarCd") %>%
@@ -246,6 +244,24 @@ pro_res_all <- pro_car %>%
   map(project_reserves) %>%
   bind_rows()
 
+# check: car vs. car/projects
+car_pop_y <- new_pop_car |> 
+  left_join(pro_res_all, by = c("district", "year", "owner")) |>
+  group_by(year) |>
+  summarize(car = sum(car),
+            pop = sum(pop), .groups = "drop") |>
+  mutate(diff = pop - car)
+
+tail(car_pop_y)
+
+ggplot(car_pop_y) +
+  geom_line(aes(x = year, y = diff))
+
+
+
+
+
+
 # apply the parameter of empty apartments ---------------------------------
 
 # parameter can be applied directly to the population
@@ -283,6 +299,9 @@ pop_all <- pop_fut_past %>%
 # plot 1304
 
 # plots 1305, 1306, 1307, 1308, 1309: compare projects and reserves
+
+
+
 
 # export the results ------------------------------------------------------
 
