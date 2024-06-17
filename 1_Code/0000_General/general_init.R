@@ -109,6 +109,16 @@ init <- function(i_scen = "middle", var_file = "/2_Data/3_Parameter/variables.ym
       age < vars$age_4[5] ~ vars$age_4t[4],
       TRUE ~ vars$age_4t[5]
     ), levels = vars$age_4t))
+  
+  vars$look_a5 <- tibble(age = 0:120) %>%
+    mutate(age_5 = factor(case_when(
+      age < vars$age_5[1] ~ vars$age_5t[1],
+      age < vars$age_5[2] ~ vars$age_5t[2],
+      age < vars$age_5[3] ~ vars$age_5t[3],
+      TRUE ~ vars$age_5t[4]
+    ), levels = vars$age_5t))  
+  
+  
 
   # unique levels
   vars$text_d <- unique(vars$look_dis$distr)
