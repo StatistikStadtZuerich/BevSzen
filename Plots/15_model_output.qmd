@@ -227,8 +227,13 @@ pop %>%
 
 ### year, age, scenario (children)
 
-
 ```{r}
+
+#| label: fig-1509a
+#| fig-cap: year, age, scenario (children)
+#| fig-width: 8
+#| fig-height: 5
+
 sszplot(pop_yac_children,
   aes_x = "year", aes_y = "pop", aes_col = "scenario",
   labs_y = "population",
@@ -242,6 +247,26 @@ sszplot(pop_yac_children,
 ```
 
 
+### year, age, birth version (children)
+
+```{r}
+
+#| label: fig-1509a
+#| fig-cap: year, age, birth version (children)
+#| fig-width: 8
+#| fig-height: 5
+
+sszplot(pop_yav_children,
+  aes_x = "year", aes_y = "pop", aes_col = "scenario",
+  labs_y = "population",
+  grid = c(".", "age_5"),
+  scale_y = c(0, NA),
+  name = plot_name("1509b_pop_yac_children")
+)
+
+
+
+```
 
 
 ## population: new and previous scenarios

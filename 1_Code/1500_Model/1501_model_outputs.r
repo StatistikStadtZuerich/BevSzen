@@ -226,7 +226,7 @@ nat_future <- nat_lower %>%
 
 # population --------------------------------------------------------------
 
-# past and future
+# past and future (scenarios)
 pop <- pop_past %>%
   bind_rows(pop_lower) %>%
   bind_rows(pop_middle) %>%
@@ -236,6 +236,19 @@ pop <- pop_past %>%
     sex = factor(sex, levels = uni_s),
     origin = factor(origin, levels = uni_o)
   )
+
+# past and future (birth versions)
+pop_birth_versions <- pop_past %>%
+  bind_rows(pop_middle_birth_lower) %>%
+  bind_rows(pop_middle) %>%
+  bind_rows(pop_middle_birth_upper) %>%
+  mutate(
+    district = factor(district, uni_d),
+    sex = factor(sex, levels = uni_s),
+    origin = factor(origin, levels = uni_o)
+  )
+
+
 
 # selected years (e.g. for population pyramids)
 y_sel1 <- c(date_end, scen_end_public)
@@ -347,7 +360,7 @@ text_pop_dy_prep %>%
 
 # plot 1509
 
-# children
+# population (children) for the scenarios 
 pop_yac_children <- pop |> 
   filter(age < vars$age_5[3]) |> 
   left_join(vars$look_a5, by = "age") |> 
@@ -355,6 +368,17 @@ pop_yac_children <- pop |>
     summarize(pop = sum_NA(pop), .groups = "drop")
 
 # plot 1509a
+
+# population (children) for the birth versions 
+pop_yav_children <- pop_birth_versions |> 
+  filter(age < vars$age_5[3]) |> 
+  mutate(scenario = factor(scenario, levels = uni_cb)) |> 
+  left_join(vars$look_a5, by = "age") |> 
+  group_by(year, scenario, age_5) |> 
+    summarize(pop = sum_NA(pop), .groups = "drop")
+
+# plot 1509b
+
 
 # population: new and previous scenarios ----------------------------------
 
