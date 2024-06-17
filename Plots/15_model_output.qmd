@@ -225,6 +225,25 @@ pop %>%
   )
 ```
 
+### year, age, scenario (children)
+
+
+```{r}
+sszplot(pop_yac_children,
+  aes_x = "year", aes_y = "pop", aes_col = "scenario",
+  labs_y = "population",
+  grid = c(".", "age_5"),
+  scale_y = c(0, NA),
+  name = plot_name("1509a_pop_yac_children")
+)
+
+
+
+```
+
+
+
+
 ## population: new and previous scenarios
 
 ### by year and scenario

@@ -154,6 +154,7 @@ sce <- read_csv(sce_od) %>%
   summarize(pop = sum(pop),
             .groups = "drop")
 
+
 # data import: future (lower, middle, upper scenario) ---------------------
 
 # population
@@ -167,7 +168,7 @@ pop_upper <- read_csv(paste0(data_path, "5_Outputs/upper/population_future.csv")
   mutate(scenario = uni_c[4])
 
 
-# population for birth scenarios
+# population for birth versions
 pop_middle_birth_lower <- read_csv(paste0(data_path, "5_Outputs/middle_birth_lower/population_future.csv")) %>%
   mutate(scenario = uni_cb[2])
 
@@ -187,7 +188,7 @@ bir_upper <- read_csv(paste0(data_path, "5_Outputs/upper/births_future.csv")) %>
   mutate(scenario = uni_c[4])
 
 
-# births for birth scenarios
+# births for birth versions
 bir_middle_birth_lower <- read_csv(paste0(data_path, "5_Outputs/middle_birth_lower/births_future.csv")) %>%
   mutate(scenario = uni_cb[2])
 
@@ -223,8 +224,8 @@ nat_future <- nat_lower %>%
   bind_rows(nat_middle) %>%
   bind_rows(nat_upper)
 
-# # population --------------------------------------------------------------
-# 
+# population --------------------------------------------------------------
+
 # past and future
 pop <- pop_past %>%
   bind_rows(pop_lower) %>%
@@ -345,6 +346,15 @@ text_pop_dy_prep %>%
   write_csv(paste0(out_path, "/map_pop_dy.csv"))
 
 # plot 1509
+
+# children
+pop_yac_children <- pop |> 
+  filter(age < vars$age_5[3]) |> 
+  left_join(vars$look_a5, by = "age") |> 
+  group_by(year, scenario, age_5) |> 
+    summarize(pop = sum_NA(pop), .groups = "drop")
+
+# plot 1509a
 
 # population: new and previous scenarios ----------------------------------
 
