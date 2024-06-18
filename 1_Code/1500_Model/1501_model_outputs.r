@@ -362,8 +362,8 @@ text_pop_dy_prep %>%
 
 # population (children) for the scenarios 
 pop_yac_children <- pop |> 
-  filter(age < vars$age_5[3]) |> 
-  left_join(vars$look_a5, by = "age") |> 
+  filter(age < age_5[3]) |> 
+  left_join(look_a5, by = "age") |> 
   group_by(year, scenario, age_5) |> 
     summarize(pop = sum_NA(pop), .groups = "drop")
 
@@ -371,9 +371,9 @@ pop_yac_children <- pop |>
 
 # population (children) for the birth versions 
 pop_yav_children <- pop_birth_versions |> 
-  filter(age < vars$age_5[3]) |> 
+  filter(age < age_5[3]) |> 
   mutate(scenario = factor(scenario, levels = uni_cb)) |> 
-  left_join(vars$look_a5, by = "age") |> 
+  left_join(look_a5, by = "age") |> 
   group_by(year, scenario, age_5) |> 
     summarize(pop = sum_NA(pop), .groups = "drop")
 
