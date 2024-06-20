@@ -225,6 +225,50 @@ pop %>%
   )
 ```
 
+### year, age, scenario (children)
+
+```{r}
+
+#| label: fig-1509a
+#| fig-cap: year, age, scenario (children)
+#| fig-width: 8
+#| fig-height: 5
+
+sszplot(pop_yac_children,
+  aes_x = "year", aes_y = "pop", aes_col = "scenario",
+  labs_y = "population",
+  grid = c(".", "age_5"),
+  scale_y = c(0, NA),
+  name = plot_name("1509a_pop_yac_children")
+)
+
+
+
+```
+
+
+### year, age, birth version (children)
+
+```{r}
+
+#| label: fig-1509a
+#| fig-cap: year, age, birth version (children)
+#| fig-width: 8
+#| fig-height: 5
+
+sszplot(pop_yav_children,
+  aes_x = "year", aes_y = "pop", aes_col = "scenario",
+  labs_y = "population",
+  grid = c(".", "age_5"),
+  scale_y = c(0, NA),
+  name = plot_name("1509b_pop_yac_children")
+)
+
+
+
+```
+
+
 ## population: new and previous scenarios
 
 ### by year and scenario
@@ -707,6 +751,35 @@ imm %>%
   )
 ```
 
+### by year, age (children) and scenario
+
+```{r}
+#| label: fig-1541a
+#| fig-cap: immigration by year, age (children) and scenario
+
+imm_a5 <- imm |> 
+  filter(age < age_5[3]) |> 
+  left_join(look_a5, by = "age") |>   
+  group_by(year, age_5, scenario) %>%
+  summarize(imm = sum(imm), .groups = "drop")
+
+imm_a5 |> 
+  sszplot(aes_x = "year", aes_y = "imm", aes_col = "scenario",
+          labs_y = "immigration per year",
+          wrap = "age_5", ncol = 3,
+          scale_y = c(0, NA),
+          i_x = scen_begin,
+          width = 12, height = 6,
+          name = plot_name("1541a_imm_ya")
+  )
+
+
+```
+
+
+
+
+
 ### by year, age and origin
 
 ```{r}
@@ -809,7 +882,7 @@ emi %>%
 emi %>%
   filter(scenario %in% uni_c[c(1, 3)]) %>%
   group_by(year, age_3) %>%
-  summarize(emi = sum(emi), .groups = "drop") %>%
+  summarize(emi = sum(emi), .groups = "drop") |> 
   sszplot(aes_x = "year", aes_y = "emi",
           labs_y = "emigration per year",
           wrap = "age_3", ncol = 5,
@@ -818,6 +891,30 @@ emi %>%
           width = 12, height = 6,
           name = plot_name("1551_emi_ya")
   )
+```
+### by year, age (children) and scenario
+
+```{r}
+#| label: fig-1551a
+#| fig-cap: emigration by year, age (children) and scenario
+
+emi_a5 <- emi |> 
+  filter(age < age_5[3]) |> 
+  left_join(look_a5, by = "age") |>   
+  group_by(year, age_5, scenario) %>%
+  summarize(emi = sum(emi), .groups = "drop") 
+  
+emi_a5 |> 
+  sszplot(aes_x = "year", aes_y = "emi", aes_col = "scenario",
+          labs_y = "emigration per year",
+          wrap = "age_5", ncol = 3,
+          scale_y = c(0, NA),
+          i_x = scen_begin,
+          width = 12, height = 6,
+          name = plot_name("1551a_imm_ya")
+  )
+
+
 ```
 
 ### by year, age and origin
@@ -945,6 +1042,27 @@ net %>%
 foreign proportion: not possible to calculate for net migration
 cannot be applied here
 e.g. low values in the denominator if negative and positive value
+
+### by year, age (children) and scenario
+
+```{r}
+#| label: fig-1562
+#| fig-cap: net migration by year and age (children)
+
+imm_a5 |> 
+  left_join(emi_a5, by = c("year", "age_5", "scenario")) |> 
+  mutate(net = imm - emi) |> 
+  sszplot(aes_x = "year", aes_y = "net", aes_col = "scenario",
+          labs_y = "net migration per year",
+          wrap = "age_5", ncol = 3,
+          scale_y = c(0, NA),
+          i_x = scen_begin,
+          width = 12, height = 6,
+          name = plot_name("1562_net_ya")
+  )
+
+```
+
 
 ## naturalization
 
