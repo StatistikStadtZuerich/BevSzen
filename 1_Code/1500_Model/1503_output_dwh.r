@@ -40,6 +40,15 @@ bir_past <- read_csv(bir_od, lazy = FALSE) %>%
 read_files <- files_output[str_detect(files_output, "births_future")]
 stop_5(read_files)
 
+# VersionArtCd (in all publication years)
+# 1: lower scenario
+# 2: middle scenario
+# 3: upper scenario
+
+# VersionArtCd (as of publication year 2024)
+# 4: lower birth version
+# 5: upper birth versions
+
 births <-
   # lower scenario
   read_csv(read_files[1], lazy = FALSE) %>%
@@ -48,8 +57,12 @@ births <-
   bind_rows(read_csv(read_files[2], lazy = FALSE) %>%
               mutate(VersionArtCd = 2)) %>%
   # upper scenario
-  bind_rows(read_csv(read_files[3], lazy = FALSE) %>%
+  bind_rows(read_csv(read_files[5], lazy = FALSE) %>%
               mutate(VersionArtCd = 3)) %>%
+  
+  
+  
+  
   mutate(BasisSzenarienCd = basis_scen,  # calculated scenario value
          AlterVCd = 0) %>%
   # get codes instead of text
