@@ -25,7 +25,7 @@ bir_past <- read_csv(bir_od, lazy = FALSE) %>%
   left_join(look_dis, by = "QuarCd") %>%
   rename("Jahr" = EreignisDatJahr,
          "district" = distr) %>%
-  mutate(BasisSzenarienCd = basis_fact, # de facto value from past
+  mutate(BasisSzenarienCd = as.numeric(uni_t[1]), # de facto value from past
          AlterVCd = 0) %>%
   group_by(Jahr,
            SexCd,
