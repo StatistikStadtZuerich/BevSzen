@@ -25,7 +25,7 @@ bir_past <- read_csv(bir_od, lazy = FALSE) %>%
   left_join(look_dis, by = "QuarCd") %>%
   rename("Jahr" = EreignisDatJahr,
          "district" = distr) %>%
-  mutate(BasisSzenarienCd = as.numeric(uni_t[1]), # de facto value from past
+  mutate(BasisSzenarienCd = 1, # de facto value from past
          AlterVCd = 0) %>%
   group_by(Jahr,
            SexCd,
@@ -65,7 +65,7 @@ births <-
   # upper birth version
   bind_rows(read_csv(read_files[4], lazy = FALSE) %>%
               mutate(VersionArtCd = 5)) %>%  
-  mutate(BasisSzenarienCd = as.numeric(uni_t[2]),  # calculated scenario value
+  mutate(BasisSzenarienCd = 2,  # calculated scenario value
          AlterVCd = 0) %>%
   # get codes instead of text
   left_join(tibble(sex = levels(uni_s),
@@ -96,7 +96,7 @@ pop_past <- read_csv(pop_od, lazy = FALSE) %>%
   left_join(look_dis, by = "QuarCd") %>%
   rename("Jahr" = StichtagDatJahr,
          "district" = distr) %>%
-  mutate(BasisSzenarienCd = as.numeric(uni_t[1])) %>%
+  mutate(BasisSzenarienCd = 1) %>%
   group_by(Jahr,
            AlterVCd,
            SexCd,
@@ -126,7 +126,7 @@ pop <-
   # upper birth version
   bind_rows(read_csv(read_files[4], lazy = FALSE) %>%
               mutate(VersionArtCd = 5)) %>%    
-  mutate(BasisSzenarienCd = as.numeric(uni_t[2])) %>%
+  mutate(BasisSzenarienCd = 2) %>%
   # get codes instead of text
   left_join(tibble(sex = levels(uni_s),
                    SexCd = as.numeric(labels(uni_s)))) %>%
@@ -157,7 +157,7 @@ nat_past <- read_csv(nat_od, lazy = FALSE) %>%
   left_join(look_dis, by = "QuarCd") %>%
   rename("Jahr" = EreignisDatJahr,
          "district" = distr) %>%
-  mutate(BasisSzenarienCd = as.numeric(uni_t[1])) %>%
+  mutate(BasisSzenarienCd = 1) %>%
   group_by(Jahr,
            AlterVCd,
            SexCd,
@@ -187,7 +187,7 @@ nat <-
   # upper birth version
   bind_rows(read_csv(read_files[4], lazy = FALSE) %>%
               mutate(VersionArtCd = 5)) %>%    
-  mutate(BasisSzenarienCd = as.numeric(uni_t[2]), 
+  mutate(BasisSzenarienCd = 2), 
          HerkunftCd = 1) %>%
   # get codes instead of text
   left_join(tibble(sex = levels(uni_s),
@@ -223,7 +223,7 @@ demo_past <- read_csv(dea_od, lazy = FALSE) %>%
   left_join(look_dis, by = "QuarCd") %>%
   rename("Jahr" = EreignisDatJahr,
          "district" = distr) %>%
-  mutate(BasisSzenarienCd = as.numeric(uni_t[1])) %>%
+  mutate(BasisSzenarienCd = 1) %>%
   group_by(Jahr,
            AlterVCd,
            SexCd,
@@ -255,7 +255,7 @@ demo <-
   # upper birth version
   bind_rows(read_csv(read_files[4], lazy = FALSE) %>%
               mutate(VersionArtCd = 5)) %>%    
-  mutate(BasisSzenarienCd = as.numeric(uni_t[2])) %>%
+  mutate(BasisSzenarienCd = 2) %>%
   # get codes instead of text
   left_join(tibble(sex = levels(uni_s),
                    SexCd = as.numeric(labels(uni_s)))) %>%
@@ -478,8 +478,7 @@ area %>%
   left_join(look_reg, by = "district") %>%
   left_join(look_own, by = "owner") %>%
   rename(Jahr = year) %>%
-  mutate(BasisSzenarienCd = if_else(Jahr < scen_begin, 
-                                    as.numeric(uni_t[1]), as.numeric(uni_t[2])), # calculated scenario value
+  mutate(BasisSzenarienCd = if_else(Jahr < scen_begin, 1, 2), # calculated scenario value
          PublJahr = scen_begin,
          QuarCd = distnum)  %>%
   mutate(BruttoGeschFlaeche = round(BruttoGeschFlaeche, round_rate),

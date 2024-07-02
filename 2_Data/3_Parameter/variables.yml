@@ -71,9 +71,6 @@ text_i: ["new", "removed"]
 text_c: ["past", "lower", "middle", "upper"]
 text_cb: ["past", "middle_birth_lower", "middle", "middle_birth_upper"]
 
-# time: past and future values in dwh
-text_t: ["Basis", "Szenario"]
-
 
 # categories (t = text) and associated lookup tables ----------------------
 # age category 1

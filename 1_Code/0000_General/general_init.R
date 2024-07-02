@@ -133,7 +133,6 @@ init <- function(i_scen = "middle", var_file = "/2_Data/3_Parameter/variables.ym
   vars$uni_i <- factor(vars$text_i, levels = vars$text_i)
   vars$uni_c <- factor(vars$text_c, levels = vars$text_c)
   vars$uni_cb <- factor(vars$text_cb, levels = vars$text_cb) 
-  vars$uni_t <- factor(vars$text_t, levels = vars$text_t)  
   
   vars$look_own <- tibble(EigentumGrundstkCd = as.integer(labels(vars$uni_w)), owner = levels(vars$uni_w))
   
