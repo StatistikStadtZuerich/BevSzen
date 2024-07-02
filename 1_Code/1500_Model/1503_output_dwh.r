@@ -12,11 +12,6 @@ dwh_path <- paste0(data_path, "7_DWH/")
 dir_ex_create(dwh_path)
 
 
-# read birth data and adapt structure -------------------------------------
-
-dwh_path <- paste0(data_path, "7_DWH/")
-dir_ex_create(dwh_path)
-
 # population data ---------------------------------------------------------
 
 # get list of model output files as input data for DWH
