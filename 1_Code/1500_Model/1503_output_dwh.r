@@ -187,7 +187,7 @@ nat <-
   # upper birth version
   bind_rows(read_csv(read_files[4], lazy = FALSE) %>%
               mutate(VersionArtCd = 5)) %>%    
-  mutate(BasisSzenarienCd = 2), 
+  mutate(BasisSzenarienCd = 2, 
          HerkunftCd = 1) %>%
   # get codes instead of text
   left_join(tibble(sex = levels(uni_s),
