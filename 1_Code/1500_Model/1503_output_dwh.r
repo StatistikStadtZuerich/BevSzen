@@ -38,10 +38,10 @@ bir_past <- read_csv(bir_od, lazy = FALSE) %>%
 
 # scenario data
 read_files <- files_output[str_detect(files_output, "births_future")]
-stop_3(read_files)
+stop_5(read_files)
 
 births <-
-  # lower scenario (VersionArtCd = 1)
+  # lower scenario
   read_csv(read_files[1], lazy = FALSE) %>%
   mutate(VersionArtCd = 1) %>%
   # middle scenario
