@@ -410,26 +410,35 @@ consumption <- read_csv(read_files[1]) %>%
 
 # occupancy rate 
 read_files <- files_rate[str_detect(files_rate, "allocation_future")]
-stop_3(read_files)
+stop_5(read_files)
 
 occupancy <- read_csv(read_files[1]) %>%
   mutate(VersionArtCd = 1) %>%
   add_row(read_csv(read_files[2]) %>%
             mutate(VersionArtCd = 2)) %>%
-  add_row(read_csv(read_files[3]) %>%
+  add_row(read_csv(read_files[5]) %>%
             mutate(VersionArtCd = 3)) %>%
+  add_row(read_csv(read_files[3]) %>%
+            mutate(VersionArtCd = 4)) %>%  
+  add_row(read_csv(read_files[4]) %>%
+            mutate(VersionArtCd = 5)) %>%    
   rename(PersProWhg = aca_dyw)
 
 # population data (needed for calculation of area and apartments)
 read_files <- files_rate[str_detect(files_rate, "housing_model_population_dw")]
-stop_3(read_files)
+stop_5(read_files)
 
 pop_dw <- read_csv(read_files[1]) %>%
   mutate(VersionArtCd = 1) %>%
   add_row(read_csv(read_files[2]) %>%
             mutate(VersionArtCd = 2)) %>%
-  add_row(read_csv(read_files[3]) %>%
+  add_row(read_csv(read_files[5]) %>%
             mutate(VersionArtCd = 3))
+  add_row(read_csv(read_files[3]) %>%
+            mutate(VersionArtCd = 4))
+  add_row(read_csv(read_files[4]) %>%
+            mutate(VersionArtCd = 5))
+  
 
 # area data
 join_cond <- c("year", "VersionArtCd", "district", "owner")
@@ -446,29 +455,21 @@ apartments <- occupancy %>%
 consumption %>%
   sszplot(aes_x = "year", aes_y = "WohnungsflProPers", aes_col = "VersionArtCd", aes_ltyp = "owner",
           labs_x = "year", labs_y = "m2/person", labs_col = "Scenario",
-          quotes = quote(scale_color_manual(labels = c("lower", "middle", "upper"),
-                                            values = c("blue", "green", "red"))),
           wrap = "district")
 
 occupancy %>%
   sszplot(aes_x = "year", aes_y = "PersProWhg ", aes_col = "VersionArtCd", aes_ltyp = "owner",
           labs_x = "year", labs_y = "persons/apartment",
-          quotes = quote(scale_color_manual(labels = c("lower", "middle", "upper"),
-                                            values = c("blue", "green", "red"))),
           wrap = "district")
 
 area %>%
   sszplot(aes_x = "year", aes_y = "BruttoGeschFlaeche ", aes_col = "VersionArtCd", aes_ltyp = "owner",
           labs_x = "year", labs_y = "area (ha)",
-          quotes = quote(scale_color_manual(labels = c("lower", "middle", "upper"),
-                                            values = c("blue", "green", "red"))),
           wrap = "district")
 
 apartments %>%
   sszplot(aes_x = "year", aes_y = "AnzWhgStat ", aes_col = "VersionArtCd", aes_ltyp = "owner",
           labs_x = "year", labs_y = "apartments",
-          quotes = quote(scale_color_manual(labels = c("lower", "middle", "upper"),
-                                            values = c("blue", "green", "red"))),
           wrap = "district")
 
 # combine datasets and write output
