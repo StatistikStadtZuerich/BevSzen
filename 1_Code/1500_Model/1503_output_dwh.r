@@ -59,10 +59,12 @@ births <-
   # upper scenario
   bind_rows(read_csv(read_files[5], lazy = FALSE) %>%
               mutate(VersionArtCd = 3)) %>%
-  
-  
-  
-  
+  # lower birth version
+  bind_rows(read_csv(read_files[3], lazy = FALSE) %>%
+              mutate(VersionArtCd = 4)) %>%  
+  # upper birth version
+  bind_rows(read_csv(read_files[4], lazy = FALSE) %>%
+              mutate(VersionArtCd = 5)) %>%  
   mutate(BasisSzenarienCd = basis_scen,  # calculated scenario value
          AlterVCd = 0) %>%
   # get codes instead of text
