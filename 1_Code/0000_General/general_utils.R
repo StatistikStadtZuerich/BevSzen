@@ -253,7 +253,7 @@ dir_ex_create <- function(path){
 stop_3 <- function(files){
   stopifnot("missing files;\
             make sure to run the whole model (0001_model_control-flow.r) beforehand" = 
-              length(read_files) == 3)
+              length(read_files) == 5)
 }
 
 
