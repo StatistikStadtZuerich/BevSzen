@@ -81,8 +81,13 @@ births <-
               mutate(VersionArtCd = 2)) %>%
   bind_rows(bir_past %>%
               mutate(VersionArtCd = 3)) %>%
+  bind_rows(bir_past %>%
+              mutate(VersionArtCd = 4)) %>%
+  bind_rows(bir_past %>%
+              mutate(VersionArtCd = 5)) %>%
   select(Jahr, BasisSzenarienCd, VersionArtCd, AlterVCd, SexCd,
          HerkunftCd, district, AnzGebuWir)
+
 
 # read population data and adapt structure --------------------------------
 
@@ -91,7 +96,7 @@ pop_past <- read_csv(pop_od, lazy = FALSE) %>%
   left_join(look_dis, by = "QuarCd") %>%
   rename("Jahr" = StichtagDatJahr,
          "district" = distr) %>%
-  mutate(BasisSzenarienCd = basis_fact) %>%
+  mutate(BasisSzenarienCd = as.numeric(uni_t[1])) %>%
   group_by(Jahr,
            AlterVCd,
            SexCd,
