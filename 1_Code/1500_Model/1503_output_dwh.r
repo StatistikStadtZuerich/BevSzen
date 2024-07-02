@@ -478,7 +478,8 @@ area %>%
   left_join(look_reg, by = "district") %>%
   left_join(look_own, by = "owner") %>%
   rename(Jahr = year) %>%
-  mutate(BasisSzenarienCd = if_else(Jahr < scen_begin, basis_fact, basis_scen), # calculated scenario value
+  mutate(BasisSzenarienCd = if_else(Jahr < scen_begin, 
+                                    as.numeric(uni_t[1]), as.numeric(uni_t[2])), # calculated scenario value
          PublJahr = scen_begin,
          QuarCd = distnum)  %>%
   mutate(BruttoGeschFlaeche = round(BruttoGeschFlaeche, round_rate),
