@@ -126,7 +126,7 @@ pop <-
   # upper birth version
   bind_rows(read_csv(read_files[4], lazy = FALSE) %>%
               mutate(VersionArtCd = 5)) %>%    
-  mutate(BasisSzenarienCd = basis_scen) %>%
+  mutate(BasisSzenarienCd = as.numeric(uni_t[2])) %>%
   # get codes instead of text
   left_join(tibble(sex = levels(uni_s),
                    SexCd = as.numeric(labels(uni_s)))) %>%
