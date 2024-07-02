@@ -394,14 +394,18 @@ files_rate <- paste0(paste0(data_path, "4_Rates/"),
 
 # consumption rate
 read_files <- files_rate[str_detect(files_rate, "living-space_future")]
-stop_3(read_files)
+stop_5(read_files)
 
 consumption <- read_csv(read_files[1]) %>%
   mutate(VersionArtCd = 1) %>%
   add_row(read_csv(read_files[2]) %>%
             mutate(VersionArtCd = 2)) %>%
-  add_row(read_csv(read_files[3]) %>%
+  add_row(read_csv(read_files[5]) %>%
             mutate(VersionArtCd = 3)) %>%
+  add_row(read_csv(read_files[3]) %>%
+            mutate(VersionArtCd = 4)) %>%  
+  add_row(read_csv(read_files[4]) %>%
+            mutate(VersionArtCd = 5)) %>%    
   rename(WohnungsflProPers = spa_dyw)
 
 # occupancy rate 
