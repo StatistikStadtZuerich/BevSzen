@@ -142,6 +142,10 @@ pop <-
               mutate(VersionArtCd = 2)) %>%
   bind_rows(pop_past %>%
               mutate(VersionArtCd = 3)) %>%
+  bind_rows(pop_past %>%
+              mutate(VersionArtCd = 4)) %>%  
+  bind_rows(pop_past %>%
+              mutate(VersionArtCd = 5)) %>%  
   select(Jahr, BasisSzenarienCd, VersionArtCd, AlterVCd, SexCd, 
          HerkunftCd, district, AnzBestWir)
 
