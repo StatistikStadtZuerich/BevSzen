@@ -223,7 +223,7 @@ demo_past <- read_csv(dea_od, lazy = FALSE) %>%
   left_join(look_dis, by = "QuarCd") %>%
   rename("Jahr" = EreignisDatJahr,
          "district" = distr) %>%
-  mutate(BasisSzenarienCd = basis_fact) %>%
+  mutate(BasisSzenarienCd = as.numeric(uni_t[1])) %>%
   group_by(Jahr,
            AlterVCd,
            SexCd,
@@ -237,7 +237,7 @@ demo_past <- read_csv(dea_od, lazy = FALSE) %>%
 
 # scenario data
 read_files <- files_output[str_detect(files_output, "demographic")]
-stop_3(read_files)
+stop_5(read_files)
 
 demo <-
   # lower scenario
@@ -247,9 +247,15 @@ demo <-
   bind_rows(read_csv(read_files[2], lazy = FALSE) %>%
               mutate(VersionArtCd = 2)) %>%
   # upper scenario
-  bind_rows(read_csv(read_files[3], lazy = FALSE) %>%
+  bind_rows(read_csv(read_files[5], lazy = FALSE) %>%
               mutate(VersionArtCd = 3)) %>%
-  mutate(BasisSzenarienCd = basis_scen) %>%
+  # lower birth version
+  bind_rows(read_csv(read_files[3], lazy = FALSE) %>%
+              mutate(VersionArtCd = 4)) %>%  
+  # upper birth version
+  bind_rows(read_csv(read_files[4], lazy = FALSE) %>%
+              mutate(VersionArtCd = 5)) %>%    
+  mutate(BasisSzenarienCd = as.numeric(uni_t[2])) %>%
   # get codes instead of text
   left_join(tibble(sex = levels(uni_s),
                    SexCd = as.numeric(labels(uni_s)))) %>%
@@ -267,6 +273,10 @@ demo <-
               mutate(VersionArtCd = 2)) %>%
   bind_rows(demo_past %>%
               mutate(VersionArtCd = 3)) %>%
+  bind_rows(demo_past %>%
+              mutate(VersionArtCd = 4)) %>%  
+  bind_rows(demo_past %>%
+              mutate(VersionArtCd = 5)) %>%  
   select(Jahr, BasisSzenarienCd, VersionArtCd, AlterVCd, SexCd, 
          HerkunftCd, district, AnzZuzuWir, AnzWezuWir, AnzSterWir)
 
