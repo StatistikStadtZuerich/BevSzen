@@ -11,11 +11,6 @@ params <- init("middle")
 dwh_path <- paste0(data_path, "7_DWH/")
 dir_ex_create(dwh_path)
 
-# population data ---------------------------------------------------------
-
-# get list of model output files as input data for DWH
-files_output <- paste0(paste0(data_path, "5_Outputs/"),
-                       list.files(path = paste0(data_path, "5_Outputs/"), recursive = TRUE))
 
 # read birth data and adapt structure -------------------------------------
 
