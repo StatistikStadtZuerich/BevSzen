@@ -240,20 +240,20 @@ dir_ex_create <- function(path){
 }
 
 
-#' check if 3 files are present
+#' check if 5 files are present
 #' 
-#' @description checks if the input contains 3 values and stops execution if this is not the case
+#' @description checks if the input contains 5 values and stops execution if this is not the case
 #'
 #' @param files character vector
 #'
 #' @return stops execution if condition is not met
 #' @export
 #'
-#' @examples stop_3(c("a.csv", "b.csv", "c.csv"))
-stop_3 <- function(files){
+#' @examples stop_5(c("a.csv", "b.csv", "c.csv", "d.csv", "e.csv"))
+stop_5 <- function(files){
   stopifnot("missing files;\
             make sure to run the whole model (0001_model_control-flow.r) beforehand" = 
-              length(read_files) == 3)
+              length(read_files) == 5)
 }
 
 
