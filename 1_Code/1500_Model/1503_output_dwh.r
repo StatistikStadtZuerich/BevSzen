@@ -65,6 +65,9 @@ births <-
   # upper birth version
   bind_rows(read_csv(read_files[4], lazy = FALSE) %>%
               mutate(VersionArtCd = 5)) %>%  
+  # aggregate (without age of mother)
+  group_by(district, year, sex, origin, VersionArtCd) %>% 
+    summarize(bir = sum_NA(bir), groups. = "drop") %>%   
   mutate(BasisSzenarienCd = 2,  # calculated scenario value
          AlterVCd = 0) %>%
   # get codes instead of text
