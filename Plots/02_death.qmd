@@ -287,7 +287,6 @@ le_ysr_model <- filter(le_ysr, region != "Zurich") %>%
   bind_rows(le_ys_ZH) %>%
   arrange(year, sex, region)
 
-
 sszplot(le_ysr_model,
   aes_x = "year", aes_y = "le_ysr", aes_col = "sex",
   labs_y = "life expectancy at birth",
@@ -314,3 +313,63 @@ sszplot(le_ysr_model,
   width = 8, height = 4.5
 ) 
 ```
+
+
+### Zurich: life expectancy at different age
+
+```{r}
+#| label: fig-0213
+#| fig-cap: "life expectancy at different age (0 and 65), by year, region, sex"
+#| fig-width: 8
+#| fig-height: 7
+
+# mortality preparation (CH)
+mor_prep_ch <- mor_yasr |> 
+  filter(region == uni_r[2])
+
+# mortality preparation (ZH/CH, past/future)
+mor_prep <- mor_zh_yas_past_future |> 
+  mutate(region = factor(text_r[1], uni_r)) |> 
+  rename(mor_yasr = mor_yas) |> 
+  select(year, age, sex, region, mor_yasr) |> 
+  bind_rows(mor_prep_ch)
+
+# life expectancy at different age (0 and 65)
+le_ysr_a0 <- life_exp(
+  data = mor_prep, mor = "mor_yasr",
+  age = "age", group_cols = c("year", "sex", "region"),
+  age_max = dea_age_max_le, qx_NA = dea_qx_NA_le,
+  age_at = 0, radix = dea_radix
+) |> 
+  mutate(age = 0)
+
+le_ysr_a65 <- life_exp(
+  data = mor_prep, mor = "mor_yasr",
+  age = "age", group_cols = c("year", "sex", "region"),
+  age_max = dea_age_max_le, qx_NA = dea_qx_NA_le,
+  age_at = 65, radix = dea_radix
+) |> 
+  mutate(age = 65)
+
+# life expectancy for all combinations (ZH/CH, past/future, sex, region)
+
+# correction for Switzerland: latest values not available yet
+# the same correction as before (see 0200_death.r)
+le_yasr <- le_ysr_a0 |> 
+  bind_rows(le_ysr_a65) |> 
+  mutate(le_yasr = if_else((region == uni_r[2]) & 
+           !(year %in% c(dea_fso_date_start:dea_fso_date_end, 
+                         scen_begin:scen_end)),
+      NA_real_, life_exp))
+
+sszplot(le_yasr,
+  aes_x = "year", aes_y = "le_yasr", aes_col = "age",
+  labs_y = "life expectancy",
+  grid = c("region", "sex"),
+  name = plot_name("0213_life-expectancy-at-different-age_by-year-sex-region"),
+  width = 8, height = 7
+) 
+
+```
+
+
