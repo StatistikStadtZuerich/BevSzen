@@ -2,12 +2,12 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.3.361">
+<meta name="generator" content="quarto-1.3.433">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>Plots for population scenarios - 14&nbsp; Demography Housing</title>
+<title>Plots for population scenarios - 13&nbsp; Demography Housing</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -76,7 +76,7 @@ ul.task-list li input[type="checkbox"] {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-      <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./14_dem_house.html"><span class="chapter-number">14</span>&nbsp; <span class="chapter-title">Demography Housing</span></a></li></ol></nav>
+      <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./14_dem_house.html"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">Demography Housing</span></a></li></ol></nav>
       <a class="flex-grow-1" role="button" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
       </a>
       <button type="button" class="btn quarto-search-button" aria-label="" onclick="window.quartoOpenSearch();">
@@ -175,26 +175,20 @@ ul.task-list li input[type="checkbox"] {
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./12_ownership.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">Ownership</span></span></a>
-  </div>
-</li>
-        <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
   <a href="./13_housing.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">Housing model</span></span></a>
+ <span class="menu-text"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">Housing model</span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./14_dem_house.html" class="sidebar-item-text sidebar-link active">
- <span class="menu-text"><span class="chapter-number">14</span>&nbsp; <span class="chapter-title">Demography Housing</span></span></a>
+ <span class="menu-text"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">Demography Housing</span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./15_model_output.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">15</span>&nbsp; <span class="chapter-title">Model outputs</span></span></a>
+ <span class="menu-text"><span class="chapter-number">14</span>&nbsp; <span class="chapter-title">Model outputs</span></span></a>
   </div>
 </li>
     </ul>
@@ -207,18 +201,18 @@ ul.task-list li input[type="checkbox"] {
     <h2 id="toc-title">Table of contents</h2>
    
   <ul>
-  <li><a href="#population-limit" id="toc-population-limit" class="nav-link active" data-scroll-target="#population-limit"><span class="header-section-number">14.1</span> population limit</a>
+  <li><a href="#population-limit" id="toc-population-limit" class="nav-link active" data-scroll-target="#population-limit"><span class="header-section-number">13.1</span> population limit</a>
   <ul>
-  <li><a href="#balance-checks" id="toc-balance-checks" class="nav-link" data-scroll-target="#balance-checks"><span class="header-section-number">14.1.1</span> balance checks</a></li>
-  <li><a href="#absolute-difference" id="toc-absolute-difference" class="nav-link" data-scroll-target="#absolute-difference"><span class="header-section-number">14.1.2</span> absolute difference</a></li>
-  <li><a href="#relative-difference" id="toc-relative-difference" class="nav-link" data-scroll-target="#relative-difference"><span class="header-section-number">14.1.3</span> relative difference</a></li>
+  <li><a href="#balance-checks" id="toc-balance-checks" class="nav-link" data-scroll-target="#balance-checks"><span class="header-section-number">13.1.1</span> balance checks</a></li>
+  <li><a href="#absolute-difference" id="toc-absolute-difference" class="nav-link" data-scroll-target="#absolute-difference"><span class="header-section-number">13.1.2</span> absolute difference</a></li>
+  <li><a href="#relative-difference" id="toc-relative-difference" class="nav-link" data-scroll-target="#relative-difference"><span class="header-section-number">13.1.3</span> relative difference</a></li>
   </ul></li>
-  <li><a href="#migration-correction" id="toc-migration-correction" class="nav-link" data-scroll-target="#migration-correction"><span class="header-section-number">14.2</span> migration correction</a></li>
-  <li><a href="#smoothing-over-age" id="toc-smoothing-over-age" class="nav-link" data-scroll-target="#smoothing-over-age"><span class="header-section-number">14.3</span> smoothing over age</a></li>
-  <li><a href="#wollishofen-population-and-migration" id="toc-wollishofen-population-and-migration" class="nav-link" data-scroll-target="#wollishofen-population-and-migration"><span class="header-section-number">14.4</span> Wollishofen, population and migration</a>
+  <li><a href="#migration-correction" id="toc-migration-correction" class="nav-link" data-scroll-target="#migration-correction"><span class="header-section-number">13.2</span> migration correction</a></li>
+  <li><a href="#smoothing-over-age" id="toc-smoothing-over-age" class="nav-link" data-scroll-target="#smoothing-over-age"><span class="header-section-number">13.3</span> smoothing over age</a></li>
+  <li><a href="#wollishofen-population-and-migration" id="toc-wollishofen-population-and-migration" class="nav-link" data-scroll-target="#wollishofen-population-and-migration"><span class="header-section-number">13.4</span> Wollishofen, population and migration</a>
   <ul>
-  <li><a href="#by-year-age-and-origin" id="toc-by-year-age-and-origin" class="nav-link" data-scroll-target="#by-year-age-and-origin"><span class="header-section-number">14.4.1</span> by year, age and origin</a></li>
-  <li><a href="#by-year-and-age" id="toc-by-year-and-age" class="nav-link" data-scroll-target="#by-year-and-age"><span class="header-section-number">14.4.2</span> by year and age</a></li>
+  <li><a href="#by-year-age-and-origin" id="toc-by-year-age-and-origin" class="nav-link" data-scroll-target="#by-year-age-and-origin"><span class="header-section-number">13.4.1</span> by year, age and origin</a></li>
+  <li><a href="#by-year-and-age" id="toc-by-year-and-age" class="nav-link" data-scroll-target="#by-year-and-age"><span class="header-section-number">13.4.2</span> by year and age</a></li>
   </ul></li>
   </ul>
 </nav>
@@ -228,7 +222,7 @@ ul.task-list li input[type="checkbox"] {
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title"><span class="chapter-number">14</span>&nbsp; <span class="chapter-title">Demography Housing</span></h1>
+<h1 class="title"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">Demography Housing</span></h1>
 </div>
 
 
@@ -243,17 +237,17 @@ ul.task-list li input[type="checkbox"] {
 
 </header>
 
-<div class="cell" data-hash="14_dem_house_cache/html/prep_f6b461ea28c61faf7be025951008e617">
+<div class="cell" data-hash="14_dem_house_cache/html/prep_704733e14e7c9fb628d2297903ce321a">
 
 </div>
-<div class="cell" data-hash="14_dem_house_cache/html/data_preparation_e9267a8e2c3e511db931fb9251da3d64">
+<div class="cell" data-hash="14_dem_house_cache/html/data_preparation_65bf751bcfb1e623f3de838c86f71db6">
 
 </div>
-<section id="population-limit" class="level2 page-columns page-full" data-number="14.1">
-<h2 data-number="14.1" class="anchored" data-anchor-id="population-limit"><span class="header-section-number">14.1</span> population limit</h2>
-<section id="balance-checks" class="level3" data-number="14.1.1">
-<h3 data-number="14.1.1" class="anchored" data-anchor-id="balance-checks"><span class="header-section-number">14.1.1</span> balance checks</h3>
-<div class="cell" data-hash="14_dem_house_cache/html/enough_094e11e58730059e5a9767dc9f061792">
+<section id="population-limit" class="level2 page-columns page-full" data-number="13.1">
+<h2 data-number="13.1" class="anchored" data-anchor-id="population-limit"><span class="header-section-number">13.1</span> population limit</h2>
+<section id="balance-checks" class="level3" data-number="13.1.1">
+<h3 data-number="13.1.1" class="anchored" data-anchor-id="balance-checks"><span class="header-section-number">13.1.1</span> balance checks</h3>
+<div class="cell" data-hash="14_dem_house_cache/html/enough_2056ee392335144d0ee38e033d14d7eb">
 
 </div>
 <p>enough immigration* and/or emigration* for correction?<br>
@@ -265,1030 +259,986 @@ if the balance works, the new population should be the population-limit<br>
 i.e.&nbsp;the result should be zero and is in the range of <strong>-7.2759576^{-12}, 7.2759576^{-12}</strong>.<br>
 </p>
 </section>
-<section id="absolute-difference" class="level3 page-columns page-full" data-number="14.1.2">
-<h3 data-number="14.1.2" class="anchored" data-anchor-id="absolute-difference"><span class="header-section-number">14.1.2</span> absolute difference</h3>
+<section id="absolute-difference" class="level3 page-columns page-full" data-number="13.1.2">
+<h3 data-number="13.1.2" class="anchored" data-anchor-id="absolute-difference"><span class="header-section-number">13.1.2</span> absolute difference</h3>
 <p>difference: population limit minus population (based on migration trends)<br>
 negative value: not enough space (immigration decreased, emigration increased)<br>
 positive value: too much space (immigration increased, emigration decreased)<br>
 </p>
-<div class="cell page-columns page-full" data-hash="14_dem_house_cache/html/fig-1400_39fcdac13e23cf846e5ec2b7ca79793c">
+<div class="cell page-columns page-full" data-hash="14_dem_house_cache/html/fig-1400_973d72679c9141200ff6d8005c054c97">
 <div class="cell-output-display column-body page-columns page-full">
 <div id="fig-1400" class="quarto-figure quarto-figure-center column-body anchored page-columns page-full">
 <figure class="figure page-columns page-full">
 <p class="page-columns page-full"><img src="14_dem_house_files/figure-html/fig-1400-1.svg" class="column-body img-fluid figure-img"></p>
-<figcaption class="figure-caption">Figure&nbsp;14.1: absolute difference of population limit</figcaption>
+<figcaption class="figure-caption">Figure&nbsp;13.1: absolute difference of population limit</figcaption>
 </figure>
 </div>
 </div>
 </div>
 </section>
-<section id="relative-difference" class="level3 page-columns page-full" data-number="14.1.3">
-<h3 data-number="14.1.3" class="anchored" data-anchor-id="relative-difference"><span class="header-section-number">14.1.3</span> relative difference</h3>
-<div class="cell page-columns page-full" data-hash="14_dem_house_cache/html/fig-1401_4c52111b4cd06a10966867bde950f1d9">
+<section id="relative-difference" class="level3 page-columns page-full" data-number="13.1.3">
+<h3 data-number="13.1.3" class="anchored" data-anchor-id="relative-difference"><span class="header-section-number">13.1.3</span> relative difference</h3>
+<div class="cell page-columns page-full" data-hash="14_dem_house_cache/html/fig-1401_acce645ae3d87687eee07e345d63859e">
 <div class="cell-output-display column-body page-columns page-full">
 <div id="fig-1401" class="quarto-figure quarto-figure-center column-body anchored page-columns page-full">
 <figure class="figure page-columns page-full">
 <p class="page-columns page-full"><img src="14_dem_house_files/figure-html/fig-1401-1.svg" class="column-body img-fluid figure-img"></p>
-<figcaption class="figure-caption">Figure&nbsp;14.2: relative difference of population limit</figcaption>
+<figcaption class="figure-caption">Figure&nbsp;13.2: relative difference of population limit</figcaption>
 </figure>
 </div>
 </div>
 </div>
 </section>
 </section>
-<section id="migration-correction" class="level2 page-columns page-full" data-number="14.2">
-<h2 data-number="14.2" class="anchored" data-anchor-id="migration-correction"><span class="header-section-number">14.2</span> migration correction</h2>
-<div id="fig-1402" class="quarto-figure quarto-figure-center anchored page-columns page-full">
-<figure class="figure page-columns page-full">
+<section id="migration-correction" class="level2 page-columns page-full" data-number="13.2">
+<h2 data-number="13.2" class="anchored" data-anchor-id="migration-correction"><span class="header-section-number">13.2</span> migration correction</h2>
+<div class="cell page-columns page-full" data-hash="14_dem_house_cache/html/fig-1402_0d11fcd796dc5f696ef7451e92bff72a">
 <div class="cell-output-display column-body page-columns page-full">
 <div id="fig-1402-1" class="quarto-figure quarto-figure-center column-body anchored page-columns page-full">
 <figure class="figure page-columns page-full">
-<p class="page-columns page-full"><img src="14_dem_house_files/figure-html/fig-1402-1.svg" class="column-body img-fluid figure-img" data-ref-parent="fig-1402"></p>
-<figcaption class="figure-caption">(a) District of Kreis 1</figcaption>
+<p class="page-columns page-full"><img src="14_dem_house_files/figure-html/fig-1402-1.svg" class="column-body img-fluid figure-img"></p>
+<figcaption class="figure-caption">Figure&nbsp;13.3: migation correction</figcaption>
 </figure>
 </div>
 </div>
 <div class="cell-output-display column-body page-columns page-full">
 <div id="fig-1402-2" class="quarto-figure quarto-figure-center column-body anchored page-columns page-full">
 <figure class="figure page-columns page-full">
-<p class="page-columns page-full"><img src="14_dem_house_files/figure-html/fig-1402-2.svg" class="column-body img-fluid figure-img" data-ref-parent="fig-1402"></p>
-<figcaption class="figure-caption">(b) District of Wollishofen</figcaption>
+<p class="page-columns page-full"><img src="14_dem_house_files/figure-html/fig-1402-2.svg" class="column-body img-fluid figure-img"></p>
+<figcaption class="figure-caption">Figure&nbsp;13.4: migation correction</figcaption>
 </figure>
 </div>
 </div>
 <div class="cell-output-display column-body page-columns page-full">
 <div id="fig-1402-3" class="quarto-figure quarto-figure-center column-body anchored page-columns page-full">
 <figure class="figure page-columns page-full">
-<p class="page-columns page-full"><img src="14_dem_house_files/figure-html/fig-1402-3.svg" class="column-body img-fluid figure-img" data-ref-parent="fig-1402"></p>
-<figcaption class="figure-caption">(c) District of Leimbach</figcaption>
+<p class="page-columns page-full"><img src="14_dem_house_files/figure-html/fig-1402-3.svg" class="column-body img-fluid figure-img"></p>
+<figcaption class="figure-caption">Figure&nbsp;13.5: migation correction</figcaption>
 </figure>
 </div>
 </div>
 <div class="cell-output-display column-body page-columns page-full">
 <div id="fig-1402-4" class="quarto-figure quarto-figure-center column-body anchored page-columns page-full">
 <figure class="figure page-columns page-full">
-<p class="page-columns page-full"><img src="14_dem_house_files/figure-html/fig-1402-4.svg" class="column-body img-fluid figure-img" data-ref-parent="fig-1402"></p>
-<figcaption class="figure-caption">(d) District of Enge</figcaption>
+<p class="page-columns page-full"><img src="14_dem_house_files/figure-html/fig-1402-4.svg" class="column-body img-fluid figure-img"></p>
+<figcaption class="figure-caption">Figure&nbsp;13.6: migation correction</figcaption>
 </figure>
 </div>
 </div>
 <div class="cell-output-display column-body page-columns page-full">
 <div id="fig-1402-5" class="quarto-figure quarto-figure-center column-body anchored page-columns page-full">
 <figure class="figure page-columns page-full">
-<p class="page-columns page-full"><img src="14_dem_house_files/figure-html/fig-1402-5.svg" class="column-body img-fluid figure-img" data-ref-parent="fig-1402"></p>
-<figcaption class="figure-caption">(e) District of Alt-Wiedikon</figcaption>
+<p class="page-columns page-full"><img src="14_dem_house_files/figure-html/fig-1402-5.svg" class="column-body img-fluid figure-img"></p>
+<figcaption class="figure-caption">Figure&nbsp;13.7: migation correction</figcaption>
 </figure>
 </div>
 </div>
 <div class="cell-output-display column-body page-columns page-full">
 <div id="fig-1402-6" class="quarto-figure quarto-figure-center column-body anchored page-columns page-full">
 <figure class="figure page-columns page-full">
-<p class="page-columns page-full"><img src="14_dem_house_files/figure-html/fig-1402-6.svg" class="column-body img-fluid figure-img" data-ref-parent="fig-1402"></p>
-<figcaption class="figure-caption">(f) District of Friesenberg</figcaption>
+<p class="page-columns page-full"><img src="14_dem_house_files/figure-html/fig-1402-6.svg" class="column-body img-fluid figure-img"></p>
+<figcaption class="figure-caption">Figure&nbsp;13.8: migation correction</figcaption>
 </figure>
 </div>
 </div>
 <div class="cell-output-display column-body page-columns page-full">
 <div id="fig-1402-7" class="quarto-figure quarto-figure-center column-body anchored page-columns page-full">
 <figure class="figure page-columns page-full">
-<p class="page-columns page-full"><img src="14_dem_house_files/figure-html/fig-1402-7.svg" class="column-body img-fluid figure-img" data-ref-parent="fig-1402"></p>
-<figcaption class="figure-caption">(g) District of Sihlfeld</figcaption>
+<p class="page-columns page-full"><img src="14_dem_house_files/figure-html/fig-1402-7.svg" class="column-body img-fluid figure-img"></p>
+<figcaption class="figure-caption">Figure&nbsp;13.9: migation correction</figcaption>
 </figure>
 </div>
 </div>
 <div class="cell-output-display column-body page-columns page-full">
 <div id="fig-1402-8" class="quarto-figure quarto-figure-center column-body anchored page-columns page-full">
 <figure class="figure page-columns page-full">
-<p class="page-columns page-full"><img src="14_dem_house_files/figure-html/fig-1402-8.svg" class="column-body img-fluid figure-img" data-ref-parent="fig-1402"></p>
-<figcaption class="figure-caption">(h) District of Werd</figcaption>
+<p class="page-columns page-full"><img src="14_dem_house_files/figure-html/fig-1402-8.svg" class="column-body img-fluid figure-img"></p>
+<figcaption class="figure-caption">Figure&nbsp;13.10: migation correction</figcaption>
 </figure>
 </div>
 </div>
 <div class="cell-output-display column-body page-columns page-full">
 <div id="fig-1402-9" class="quarto-figure quarto-figure-center column-body anchored page-columns page-full">
 <figure class="figure page-columns page-full">
-<p class="page-columns page-full"><img src="14_dem_house_files/figure-html/fig-1402-9.svg" class="column-body img-fluid figure-img" data-ref-parent="fig-1402"></p>
-<figcaption class="figure-caption">(i) District of Langstrasse</figcaption>
+<p class="page-columns page-full"><img src="14_dem_house_files/figure-html/fig-1402-9.svg" class="column-body img-fluid figure-img"></p>
+<figcaption class="figure-caption">Figure&nbsp;13.11: migation correction</figcaption>
 </figure>
 </div>
 </div>
 <div class="cell-output-display column-body page-columns page-full">
 <div id="fig-1402-10" class="quarto-figure quarto-figure-center column-body anchored page-columns page-full">
 <figure class="figure page-columns page-full">
-<p class="page-columns page-full"><img src="14_dem_house_files/figure-html/fig-1402-10.svg" class="column-body img-fluid figure-img" data-ref-parent="fig-1402"></p>
-<figcaption class="figure-caption">(j) District of Hard</figcaption>
+<p class="page-columns page-full"><img src="14_dem_house_files/figure-html/fig-1402-10.svg" class="column-body img-fluid figure-img"></p>
+<figcaption class="figure-caption">Figure&nbsp;13.12: migation correction</figcaption>
 </figure>
 </div>
 </div>
 <div class="cell-output-display column-body page-columns page-full">
 <div id="fig-1402-11" class="quarto-figure quarto-figure-center column-body anchored page-columns page-full">
 <figure class="figure page-columns page-full">
-<p class="page-columns page-full"><img src="14_dem_house_files/figure-html/fig-1402-11.svg" class="column-body img-fluid figure-img" data-ref-parent="fig-1402"></p>
-<figcaption class="figure-caption">(k) District of Gewerbeschule</figcaption>
+<p class="page-columns page-full"><img src="14_dem_house_files/figure-html/fig-1402-11.svg" class="column-body img-fluid figure-img"></p>
+<figcaption class="figure-caption">Figure&nbsp;13.13: migation correction</figcaption>
 </figure>
 </div>
 </div>
 <div class="cell-output-display column-body page-columns page-full">
 <div id="fig-1402-12" class="quarto-figure quarto-figure-center column-body anchored page-columns page-full">
 <figure class="figure page-columns page-full">
-<p class="page-columns page-full"><img src="14_dem_house_files/figure-html/fig-1402-12.svg" class="column-body img-fluid figure-img" data-ref-parent="fig-1402"></p>
-<figcaption class="figure-caption">(l) District of Escher Wyss</figcaption>
+<p class="page-columns page-full"><img src="14_dem_house_files/figure-html/fig-1402-12.svg" class="column-body img-fluid figure-img"></p>
+<figcaption class="figure-caption">Figure&nbsp;13.14: migation correction</figcaption>
 </figure>
 </div>
 </div>
 <div class="cell-output-display column-body page-columns page-full">
 <div id="fig-1402-13" class="quarto-figure quarto-figure-center column-body anchored page-columns page-full">
 <figure class="figure page-columns page-full">
-<p class="page-columns page-full"><img src="14_dem_house_files/figure-html/fig-1402-13.svg" class="column-body img-fluid figure-img" data-ref-parent="fig-1402"></p>
-<figcaption class="figure-caption">(m) District of Unterstrass</figcaption>
+<p class="page-columns page-full"><img src="14_dem_house_files/figure-html/fig-1402-13.svg" class="column-body img-fluid figure-img"></p>
+<figcaption class="figure-caption">Figure&nbsp;13.15: migation correction</figcaption>
 </figure>
 </div>
 </div>
 <div class="cell-output-display column-body page-columns page-full">
 <div id="fig-1402-14" class="quarto-figure quarto-figure-center column-body anchored page-columns page-full">
 <figure class="figure page-columns page-full">
-<p class="page-columns page-full"><img src="14_dem_house_files/figure-html/fig-1402-14.svg" class="column-body img-fluid figure-img" data-ref-parent="fig-1402"></p>
-<figcaption class="figure-caption">(n) District of Oberstrass</figcaption>
+<p class="page-columns page-full"><img src="14_dem_house_files/figure-html/fig-1402-14.svg" class="column-body img-fluid figure-img"></p>
+<figcaption class="figure-caption">Figure&nbsp;13.16: migation correction</figcaption>
 </figure>
 </div>
 </div>
 <div class="cell-output-display column-body page-columns page-full">
 <div id="fig-1402-15" class="quarto-figure quarto-figure-center column-body anchored page-columns page-full">
 <figure class="figure page-columns page-full">
-<p class="page-columns page-full"><img src="14_dem_house_files/figure-html/fig-1402-15.svg" class="column-body img-fluid figure-img" data-ref-parent="fig-1402"></p>
-<figcaption class="figure-caption">(o) District of Fluntern</figcaption>
+<p class="page-columns page-full"><img src="14_dem_house_files/figure-html/fig-1402-15.svg" class="column-body img-fluid figure-img"></p>
+<figcaption class="figure-caption">Figure&nbsp;13.17: migation correction</figcaption>
 </figure>
 </div>
 </div>
 <div class="cell-output-display column-body page-columns page-full">
 <div id="fig-1402-16" class="quarto-figure quarto-figure-center column-body anchored page-columns page-full">
 <figure class="figure page-columns page-full">
-<p class="page-columns page-full"><img src="14_dem_house_files/figure-html/fig-1402-16.svg" class="column-body img-fluid figure-img" data-ref-parent="fig-1402"></p>
-<figcaption class="figure-caption">(p) District of Hottingen</figcaption>
+<p class="page-columns page-full"><img src="14_dem_house_files/figure-html/fig-1402-16.svg" class="column-body img-fluid figure-img"></p>
+<figcaption class="figure-caption">Figure&nbsp;13.18: migation correction</figcaption>
 </figure>
 </div>
 </div>
 <div class="cell-output-display column-body page-columns page-full">
 <div id="fig-1402-17" class="quarto-figure quarto-figure-center column-body anchored page-columns page-full">
 <figure class="figure page-columns page-full">
-<p class="page-columns page-full"><img src="14_dem_house_files/figure-html/fig-1402-17.svg" class="column-body img-fluid figure-img" data-ref-parent="fig-1402"></p>
-<figcaption class="figure-caption">(q) District of Hirslanden</figcaption>
+<p class="page-columns page-full"><img src="14_dem_house_files/figure-html/fig-1402-17.svg" class="column-body img-fluid figure-img"></p>
+<figcaption class="figure-caption">Figure&nbsp;13.19: migation correction</figcaption>
 </figure>
 </div>
 </div>
 <div class="cell-output-display column-body page-columns page-full">
 <div id="fig-1402-18" class="quarto-figure quarto-figure-center column-body anchored page-columns page-full">
 <figure class="figure page-columns page-full">
-<p class="page-columns page-full"><img src="14_dem_house_files/figure-html/fig-1402-18.svg" class="column-body img-fluid figure-img" data-ref-parent="fig-1402"></p>
-<figcaption class="figure-caption">(r) District of Witikon</figcaption>
+<p class="page-columns page-full"><img src="14_dem_house_files/figure-html/fig-1402-18.svg" class="column-body img-fluid figure-img"></p>
+<figcaption class="figure-caption">Figure&nbsp;13.20: migation correction</figcaption>
 </figure>
 </div>
 </div>
 <div class="cell-output-display column-body page-columns page-full">
 <div id="fig-1402-19" class="quarto-figure quarto-figure-center column-body anchored page-columns page-full">
 <figure class="figure page-columns page-full">
-<p class="page-columns page-full"><img src="14_dem_house_files/figure-html/fig-1402-19.svg" class="column-body img-fluid figure-img" data-ref-parent="fig-1402"></p>
-<figcaption class="figure-caption">(s) District of Seefeld</figcaption>
+<p class="page-columns page-full"><img src="14_dem_house_files/figure-html/fig-1402-19.svg" class="column-body img-fluid figure-img"></p>
+<figcaption class="figure-caption">Figure&nbsp;13.21: migation correction</figcaption>
 </figure>
 </div>
 </div>
 <div class="cell-output-display column-body page-columns page-full">
 <div id="fig-1402-20" class="quarto-figure quarto-figure-center column-body anchored page-columns page-full">
 <figure class="figure page-columns page-full">
-<p class="page-columns page-full"><img src="14_dem_house_files/figure-html/fig-1402-20.svg" class="column-body img-fluid figure-img" data-ref-parent="fig-1402"></p>
-<figcaption class="figure-caption">(t) District of Muehlebach</figcaption>
+<p class="page-columns page-full"><img src="14_dem_house_files/figure-html/fig-1402-20.svg" class="column-body img-fluid figure-img"></p>
+<figcaption class="figure-caption">Figure&nbsp;13.22: migation correction</figcaption>
 </figure>
 </div>
 </div>
 <div class="cell-output-display column-body page-columns page-full">
 <div id="fig-1402-21" class="quarto-figure quarto-figure-center column-body anchored page-columns page-full">
 <figure class="figure page-columns page-full">
-<p class="page-columns page-full"><img src="14_dem_house_files/figure-html/fig-1402-21.svg" class="column-body img-fluid figure-img" data-ref-parent="fig-1402"></p>
-<figcaption class="figure-caption">(u) District of Weinegg</figcaption>
+<p class="page-columns page-full"><img src="14_dem_house_files/figure-html/fig-1402-21.svg" class="column-body img-fluid figure-img"></p>
+<figcaption class="figure-caption">Figure&nbsp;13.23: migation correction</figcaption>
 </figure>
 </div>
 </div>
 <div class="cell-output-display column-body page-columns page-full">
 <div id="fig-1402-22" class="quarto-figure quarto-figure-center column-body anchored page-columns page-full">
 <figure class="figure page-columns page-full">
-<p class="page-columns page-full"><img src="14_dem_house_files/figure-html/fig-1402-22.svg" class="column-body img-fluid figure-img" data-ref-parent="fig-1402"></p>
-<figcaption class="figure-caption">(v) District of Albisrieden</figcaption>
+<p class="page-columns page-full"><img src="14_dem_house_files/figure-html/fig-1402-22.svg" class="column-body img-fluid figure-img"></p>
+<figcaption class="figure-caption">Figure&nbsp;13.24: migation correction</figcaption>
 </figure>
 </div>
 </div>
 <div class="cell-output-display column-body page-columns page-full">
 <div id="fig-1402-23" class="quarto-figure quarto-figure-center column-body anchored page-columns page-full">
 <figure class="figure page-columns page-full">
-<p class="page-columns page-full"><img src="14_dem_house_files/figure-html/fig-1402-23.svg" class="column-body img-fluid figure-img" data-ref-parent="fig-1402"></p>
-<figcaption class="figure-caption">(w) District of Altstetten</figcaption>
+<p class="page-columns page-full"><img src="14_dem_house_files/figure-html/fig-1402-23.svg" class="column-body img-fluid figure-img"></p>
+<figcaption class="figure-caption">Figure&nbsp;13.25: migation correction</figcaption>
 </figure>
 </div>
 </div>
 <div class="cell-output-display column-body page-columns page-full">
 <div id="fig-1402-24" class="quarto-figure quarto-figure-center column-body anchored page-columns page-full">
 <figure class="figure page-columns page-full">
-<p class="page-columns page-full"><img src="14_dem_house_files/figure-html/fig-1402-24.svg" class="column-body img-fluid figure-img" data-ref-parent="fig-1402"></p>
-<figcaption class="figure-caption">(x) District of Hoengg</figcaption>
+<p class="page-columns page-full"><img src="14_dem_house_files/figure-html/fig-1402-24.svg" class="column-body img-fluid figure-img"></p>
+<figcaption class="figure-caption">Figure&nbsp;13.26: migation correction</figcaption>
 </figure>
 </div>
 </div>
 <div class="cell-output-display column-body page-columns page-full">
 <div id="fig-1402-25" class="quarto-figure quarto-figure-center column-body anchored page-columns page-full">
 <figure class="figure page-columns page-full">
-<p class="page-columns page-full"><img src="14_dem_house_files/figure-html/fig-1402-25.svg" class="column-body img-fluid figure-img" data-ref-parent="fig-1402"></p>
-<figcaption class="figure-caption">(y) District of Wipkingen</figcaption>
+<p class="page-columns page-full"><img src="14_dem_house_files/figure-html/fig-1402-25.svg" class="column-body img-fluid figure-img"></p>
+<figcaption class="figure-caption">Figure&nbsp;13.27: migation correction</figcaption>
 </figure>
 </div>
 </div>
 <div class="cell-output-display column-body page-columns page-full">
 <div id="fig-1402-26" class="quarto-figure quarto-figure-center column-body anchored page-columns page-full">
 <figure class="figure page-columns page-full">
-<p class="page-columns page-full"><img src="14_dem_house_files/figure-html/fig-1402-26.svg" class="column-body img-fluid figure-img" data-ref-parent="fig-1402"></p>
-<figcaption class="figure-caption">(z) District of Affoltern</figcaption>
+<p class="page-columns page-full"><img src="14_dem_house_files/figure-html/fig-1402-26.svg" class="column-body img-fluid figure-img"></p>
+<figcaption class="figure-caption">Figure&nbsp;13.28: migation correction</figcaption>
 </figure>
 </div>
 </div>
 <div class="cell-output-display column-body page-columns page-full">
 <div id="fig-1402-27" class="quarto-figure quarto-figure-center column-body anchored page-columns page-full">
 <figure class="figure page-columns page-full">
-<p class="page-columns page-full"><img src="14_dem_house_files/figure-html/fig-1402-27.svg" class="column-body img-fluid figure-img" data-ref-parent="fig-1402"></p>
-<figcaption class="figure-caption">({) District of Oerlikon</figcaption>
+<p class="page-columns page-full"><img src="14_dem_house_files/figure-html/fig-1402-27.svg" class="column-body img-fluid figure-img"></p>
+<figcaption class="figure-caption">Figure&nbsp;13.29: migation correction</figcaption>
 </figure>
 </div>
 </div>
 <div class="cell-output-display column-body page-columns page-full">
 <div id="fig-1402-28" class="quarto-figure quarto-figure-center column-body anchored page-columns page-full">
 <figure class="figure page-columns page-full">
-<p class="page-columns page-full"><img src="14_dem_house_files/figure-html/fig-1402-28.svg" class="column-body img-fluid figure-img" data-ref-parent="fig-1402"></p>
-<figcaption class="figure-caption">(|) District of Seebach</figcaption>
+<p class="page-columns page-full"><img src="14_dem_house_files/figure-html/fig-1402-28.svg" class="column-body img-fluid figure-img"></p>
+<figcaption class="figure-caption">Figure&nbsp;13.30: migation correction</figcaption>
 </figure>
 </div>
 </div>
 <div class="cell-output-display column-body page-columns page-full">
 <div id="fig-1402-29" class="quarto-figure quarto-figure-center column-body anchored page-columns page-full">
 <figure class="figure page-columns page-full">
-<p class="page-columns page-full"><img src="14_dem_house_files/figure-html/fig-1402-29.svg" class="column-body img-fluid figure-img" data-ref-parent="fig-1402"></p>
-<figcaption class="figure-caption">(}) District of Saatlen</figcaption>
+<p class="page-columns page-full"><img src="14_dem_house_files/figure-html/fig-1402-29.svg" class="column-body img-fluid figure-img"></p>
+<figcaption class="figure-caption">Figure&nbsp;13.31: migation correction</figcaption>
 </figure>
 </div>
 </div>
 <div class="cell-output-display column-body page-columns page-full">
 <div id="fig-1402-30" class="quarto-figure quarto-figure-center column-body anchored page-columns page-full">
 <figure class="figure page-columns page-full">
-<p class="page-columns page-full"><img src="14_dem_house_files/figure-html/fig-1402-30.svg" class="column-body img-fluid figure-img" data-ref-parent="fig-1402"></p>
-<figcaption class="figure-caption">(~) District of Schwamendingen-Mitte</figcaption>
+<p class="page-columns page-full"><img src="14_dem_house_files/figure-html/fig-1402-30.svg" class="column-body img-fluid figure-img"></p>
+<figcaption class="figure-caption">Figure&nbsp;13.32: migation correction</figcaption>
 </figure>
 </div>
 </div>
 <div class="cell-output-display column-body page-columns page-full">
 <div id="fig-1402-31" class="quarto-figure quarto-figure-center column-body anchored page-columns page-full">
 <figure class="figure page-columns page-full">
-<p class="page-columns page-full"><img src="14_dem_house_files/figure-html/fig-1402-31.svg" class="column-body img-fluid figure-img" data-ref-parent="fig-1402"></p>
-<figcaption class="figure-caption">() District of Hirzenbach</figcaption>
+<p class="page-columns page-full"><img src="14_dem_house_files/figure-html/fig-1402-31.svg" class="column-body img-fluid figure-img"></p>
+<figcaption class="figure-caption">Figure&nbsp;13.33: migation correction</figcaption>
 </figure>
 </div>
 </div>
-<figcaption class="figure-caption">Figure&nbsp;14.3: migation correction</figcaption>
-</figure>
 </div>
 </section>
-<section id="smoothing-over-age" class="level2 page-columns page-full" data-number="14.3">
-<h2 data-number="14.3" class="anchored" data-anchor-id="smoothing-over-age"><span class="header-section-number">14.3</span> smoothing over age</h2>
-<div id="fig-1403" class="quarto-figure quarto-figure-center anchored page-columns page-full">
-<figure class="figure page-columns page-full">
+<section id="smoothing-over-age" class="level2 page-columns page-full" data-number="13.3">
+<h2 data-number="13.3" class="anchored" data-anchor-id="smoothing-over-age"><span class="header-section-number">13.3</span> smoothing over age</h2>
+<div class="cell page-columns page-full" data-hash="14_dem_house_cache/html/fig-1403_77203012c52d361144b668beaa0d903d">
 <div class="cell-output-display column-body page-columns page-full">
 <div id="fig-1403-1" class="quarto-figure quarto-figure-center column-body anchored page-columns page-full">
 <figure class="figure page-columns page-full">
-<p class="page-columns page-full"><img src="14_dem_house_files/figure-html/fig-1403-1.svg" class="column-body img-fluid figure-img" data-ref-parent="fig-1403"></p>
-<figcaption class="figure-caption">(a) District of Kreis 1</figcaption>
+<p class="page-columns page-full"><img src="14_dem_house_files/figure-html/fig-1403-1.svg" class="column-body img-fluid figure-img"></p>
+<figcaption class="figure-caption">Figure&nbsp;13.34: population by age, smoothed</figcaption>
 </figure>
 </div>
 </div>
 <div class="cell-output-display column-body page-columns page-full">
 <div id="fig-1403-2" class="quarto-figure quarto-figure-center column-body anchored page-columns page-full">
 <figure class="figure page-columns page-full">
-<p class="page-columns page-full"><img src="14_dem_house_files/figure-html/fig-1403-2.svg" class="column-body img-fluid figure-img" data-ref-parent="fig-1403"></p>
-<figcaption class="figure-caption">(b) District of Wollishofen</figcaption>
+<p class="page-columns page-full"><img src="14_dem_house_files/figure-html/fig-1403-2.svg" class="column-body img-fluid figure-img"></p>
+<figcaption class="figure-caption">Figure&nbsp;13.35: population by age, smoothed</figcaption>
 </figure>
 </div>
 </div>
 <div class="cell-output-display column-body page-columns page-full">
 <div id="fig-1403-3" class="quarto-figure quarto-figure-center column-body anchored page-columns page-full">
 <figure class="figure page-columns page-full">
-<p class="page-columns page-full"><img src="14_dem_house_files/figure-html/fig-1403-3.svg" class="column-body img-fluid figure-img" data-ref-parent="fig-1403"></p>
-<figcaption class="figure-caption">(c) District of Leimbach</figcaption>
+<p class="page-columns page-full"><img src="14_dem_house_files/figure-html/fig-1403-3.svg" class="column-body img-fluid figure-img"></p>
+<figcaption class="figure-caption">Figure&nbsp;13.36: population by age, smoothed</figcaption>
 </figure>
 </div>
 </div>
 <div class="cell-output-display column-body page-columns page-full">
 <div id="fig-1403-4" class="quarto-figure quarto-figure-center column-body anchored page-columns page-full">
 <figure class="figure page-columns page-full">
-<p class="page-columns page-full"><img src="14_dem_house_files/figure-html/fig-1403-4.svg" class="column-body img-fluid figure-img" data-ref-parent="fig-1403"></p>
-<figcaption class="figure-caption">(d) District of Enge</figcaption>
+<p class="page-columns page-full"><img src="14_dem_house_files/figure-html/fig-1403-4.svg" class="column-body img-fluid figure-img"></p>
+<figcaption class="figure-caption">Figure&nbsp;13.37: population by age, smoothed</figcaption>
 </figure>
 </div>
 </div>
 <div class="cell-output-display column-body page-columns page-full">
 <div id="fig-1403-5" class="quarto-figure quarto-figure-center column-body anchored page-columns page-full">
 <figure class="figure page-columns page-full">
-<p class="page-columns page-full"><img src="14_dem_house_files/figure-html/fig-1403-5.svg" class="column-body img-fluid figure-img" data-ref-parent="fig-1403"></p>
-<figcaption class="figure-caption">(e) District of Alt-Wiedikon</figcaption>
+<p class="page-columns page-full"><img src="14_dem_house_files/figure-html/fig-1403-5.svg" class="column-body img-fluid figure-img"></p>
+<figcaption class="figure-caption">Figure&nbsp;13.38: population by age, smoothed</figcaption>
 </figure>
 </div>
 </div>
 <div class="cell-output-display column-body page-columns page-full">
 <div id="fig-1403-6" class="quarto-figure quarto-figure-center column-body anchored page-columns page-full">
 <figure class="figure page-columns page-full">
-<p class="page-columns page-full"><img src="14_dem_house_files/figure-html/fig-1403-6.svg" class="column-body img-fluid figure-img" data-ref-parent="fig-1403"></p>
-<figcaption class="figure-caption">(f) District of Friesenberg</figcaption>
+<p class="page-columns page-full"><img src="14_dem_house_files/figure-html/fig-1403-6.svg" class="column-body img-fluid figure-img"></p>
+<figcaption class="figure-caption">Figure&nbsp;13.39: population by age, smoothed</figcaption>
 </figure>
 </div>
 </div>
 <div class="cell-output-display column-body page-columns page-full">
 <div id="fig-1403-7" class="quarto-figure quarto-figure-center column-body anchored page-columns page-full">
 <figure class="figure page-columns page-full">
-<p class="page-columns page-full"><img src="14_dem_house_files/figure-html/fig-1403-7.svg" class="column-body img-fluid figure-img" data-ref-parent="fig-1403"></p>
-<figcaption class="figure-caption">(g) District of Sihlfeld</figcaption>
+<p class="page-columns page-full"><img src="14_dem_house_files/figure-html/fig-1403-7.svg" class="column-body img-fluid figure-img"></p>
+<figcaption class="figure-caption">Figure&nbsp;13.40: population by age, smoothed</figcaption>
 </figure>
 </div>
 </div>
 <div class="cell-output-display column-body page-columns page-full">
 <div id="fig-1403-8" class="quarto-figure quarto-figure-center column-body anchored page-columns page-full">
 <figure class="figure page-columns page-full">
-<p class="page-columns page-full"><img src="14_dem_house_files/figure-html/fig-1403-8.svg" class="column-body img-fluid figure-img" data-ref-parent="fig-1403"></p>
-<figcaption class="figure-caption">(h) District of Werd</figcaption>
+<p class="page-columns page-full"><img src="14_dem_house_files/figure-html/fig-1403-8.svg" class="column-body img-fluid figure-img"></p>
+<figcaption class="figure-caption">Figure&nbsp;13.41: population by age, smoothed</figcaption>
 </figure>
 </div>
 </div>
 <div class="cell-output-display column-body page-columns page-full">
 <div id="fig-1403-9" class="quarto-figure quarto-figure-center column-body anchored page-columns page-full">
 <figure class="figure page-columns page-full">
-<p class="page-columns page-full"><img src="14_dem_house_files/figure-html/fig-1403-9.svg" class="column-body img-fluid figure-img" data-ref-parent="fig-1403"></p>
-<figcaption class="figure-caption">(i) District of Langstrasse</figcaption>
+<p class="page-columns page-full"><img src="14_dem_house_files/figure-html/fig-1403-9.svg" class="column-body img-fluid figure-img"></p>
+<figcaption class="figure-caption">Figure&nbsp;13.42: population by age, smoothed</figcaption>
 </figure>
 </div>
 </div>
 <div class="cell-output-display column-body page-columns page-full">
 <div id="fig-1403-10" class="quarto-figure quarto-figure-center column-body anchored page-columns page-full">
 <figure class="figure page-columns page-full">
-<p class="page-columns page-full"><img src="14_dem_house_files/figure-html/fig-1403-10.svg" class="column-body img-fluid figure-img" data-ref-parent="fig-1403"></p>
-<figcaption class="figure-caption">(j) District of Hard</figcaption>
+<p class="page-columns page-full"><img src="14_dem_house_files/figure-html/fig-1403-10.svg" class="column-body img-fluid figure-img"></p>
+<figcaption class="figure-caption">Figure&nbsp;13.43: population by age, smoothed</figcaption>
 </figure>
 </div>
 </div>
 <div class="cell-output-display column-body page-columns page-full">
 <div id="fig-1403-11" class="quarto-figure quarto-figure-center column-body anchored page-columns page-full">
 <figure class="figure page-columns page-full">
-<p class="page-columns page-full"><img src="14_dem_house_files/figure-html/fig-1403-11.svg" class="column-body img-fluid figure-img" data-ref-parent="fig-1403"></p>
-<figcaption class="figure-caption">(k) District of Gewerbeschule</figcaption>
+<p class="page-columns page-full"><img src="14_dem_house_files/figure-html/fig-1403-11.svg" class="column-body img-fluid figure-img"></p>
+<figcaption class="figure-caption">Figure&nbsp;13.44: population by age, smoothed</figcaption>
 </figure>
 </div>
 </div>
 <div class="cell-output-display column-body page-columns page-full">
 <div id="fig-1403-12" class="quarto-figure quarto-figure-center column-body anchored page-columns page-full">
 <figure class="figure page-columns page-full">
-<p class="page-columns page-full"><img src="14_dem_house_files/figure-html/fig-1403-12.svg" class="column-body img-fluid figure-img" data-ref-parent="fig-1403"></p>
-<figcaption class="figure-caption">(l) District of Escher Wyss</figcaption>
+<p class="page-columns page-full"><img src="14_dem_house_files/figure-html/fig-1403-12.svg" class="column-body img-fluid figure-img"></p>
+<figcaption class="figure-caption">Figure&nbsp;13.45: population by age, smoothed</figcaption>
 </figure>
 </div>
 </div>
 <div class="cell-output-display column-body page-columns page-full">
 <div id="fig-1403-13" class="quarto-figure quarto-figure-center column-body anchored page-columns page-full">
 <figure class="figure page-columns page-full">
-<p class="page-columns page-full"><img src="14_dem_house_files/figure-html/fig-1403-13.svg" class="column-body img-fluid figure-img" data-ref-parent="fig-1403"></p>
-<figcaption class="figure-caption">(m) District of Unterstrass</figcaption>
+<p class="page-columns page-full"><img src="14_dem_house_files/figure-html/fig-1403-13.svg" class="column-body img-fluid figure-img"></p>
+<figcaption class="figure-caption">Figure&nbsp;13.46: population by age, smoothed</figcaption>
 </figure>
 </div>
 </div>
 <div class="cell-output-display column-body page-columns page-full">
 <div id="fig-1403-14" class="quarto-figure quarto-figure-center column-body anchored page-columns page-full">
 <figure class="figure page-columns page-full">
-<p class="page-columns page-full"><img src="14_dem_house_files/figure-html/fig-1403-14.svg" class="column-body img-fluid figure-img" data-ref-parent="fig-1403"></p>
-<figcaption class="figure-caption">(n) District of Oberstrass</figcaption>
+<p class="page-columns page-full"><img src="14_dem_house_files/figure-html/fig-1403-14.svg" class="column-body img-fluid figure-img"></p>
+<figcaption class="figure-caption">Figure&nbsp;13.47: population by age, smoothed</figcaption>
 </figure>
 </div>
 </div>
 <div class="cell-output-display column-body page-columns page-full">
 <div id="fig-1403-15" class="quarto-figure quarto-figure-center column-body anchored page-columns page-full">
 <figure class="figure page-columns page-full">
-<p class="page-columns page-full"><img src="14_dem_house_files/figure-html/fig-1403-15.svg" class="column-body img-fluid figure-img" data-ref-parent="fig-1403"></p>
-<figcaption class="figure-caption">(o) District of Fluntern</figcaption>
+<p class="page-columns page-full"><img src="14_dem_house_files/figure-html/fig-1403-15.svg" class="column-body img-fluid figure-img"></p>
+<figcaption class="figure-caption">Figure&nbsp;13.48: population by age, smoothed</figcaption>
 </figure>
 </div>
 </div>
 <div class="cell-output-display column-body page-columns page-full">
 <div id="fig-1403-16" class="quarto-figure quarto-figure-center column-body anchored page-columns page-full">
 <figure class="figure page-columns page-full">
-<p class="page-columns page-full"><img src="14_dem_house_files/figure-html/fig-1403-16.svg" class="column-body img-fluid figure-img" data-ref-parent="fig-1403"></p>
-<figcaption class="figure-caption">(p) District of Hottingen</figcaption>
+<p class="page-columns page-full"><img src="14_dem_house_files/figure-html/fig-1403-16.svg" class="column-body img-fluid figure-img"></p>
+<figcaption class="figure-caption">Figure&nbsp;13.49: population by age, smoothed</figcaption>
 </figure>
 </div>
 </div>
 <div class="cell-output-display column-body page-columns page-full">
 <div id="fig-1403-17" class="quarto-figure quarto-figure-center column-body anchored page-columns page-full">
 <figure class="figure page-columns page-full">
-<p class="page-columns page-full"><img src="14_dem_house_files/figure-html/fig-1403-17.svg" class="column-body img-fluid figure-img" data-ref-parent="fig-1403"></p>
-<figcaption class="figure-caption">(q) District of Hirslanden</figcaption>
+<p class="page-columns page-full"><img src="14_dem_house_files/figure-html/fig-1403-17.svg" class="column-body img-fluid figure-img"></p>
+<figcaption class="figure-caption">Figure&nbsp;13.50: population by age, smoothed</figcaption>
 </figure>
 </div>
 </div>
 <div class="cell-output-display column-body page-columns page-full">
 <div id="fig-1403-18" class="quarto-figure quarto-figure-center column-body anchored page-columns page-full">
 <figure class="figure page-columns page-full">
-<p class="page-columns page-full"><img src="14_dem_house_files/figure-html/fig-1403-18.svg" class="column-body img-fluid figure-img" data-ref-parent="fig-1403"></p>
-<figcaption class="figure-caption">(r) District of Witikon</figcaption>
+<p class="page-columns page-full"><img src="14_dem_house_files/figure-html/fig-1403-18.svg" class="column-body img-fluid figure-img"></p>
+<figcaption class="figure-caption">Figure&nbsp;13.51: population by age, smoothed</figcaption>
 </figure>
 </div>
 </div>
 <div class="cell-output-display column-body page-columns page-full">
 <div id="fig-1403-19" class="quarto-figure quarto-figure-center column-body anchored page-columns page-full">
 <figure class="figure page-columns page-full">
-<p class="page-columns page-full"><img src="14_dem_house_files/figure-html/fig-1403-19.svg" class="column-body img-fluid figure-img" data-ref-parent="fig-1403"></p>
-<figcaption class="figure-caption">(s) District of Seefeld</figcaption>
+<p class="page-columns page-full"><img src="14_dem_house_files/figure-html/fig-1403-19.svg" class="column-body img-fluid figure-img"></p>
+<figcaption class="figure-caption">Figure&nbsp;13.52: population by age, smoothed</figcaption>
 </figure>
 </div>
 </div>
 <div class="cell-output-display column-body page-columns page-full">
 <div id="fig-1403-20" class="quarto-figure quarto-figure-center column-body anchored page-columns page-full">
 <figure class="figure page-columns page-full">
-<p class="page-columns page-full"><img src="14_dem_house_files/figure-html/fig-1403-20.svg" class="column-body img-fluid figure-img" data-ref-parent="fig-1403"></p>
-<figcaption class="figure-caption">(t) District of Muehlebach</figcaption>
+<p class="page-columns page-full"><img src="14_dem_house_files/figure-html/fig-1403-20.svg" class="column-body img-fluid figure-img"></p>
+<figcaption class="figure-caption">Figure&nbsp;13.53: population by age, smoothed</figcaption>
 </figure>
 </div>
 </div>
 <div class="cell-output-display column-body page-columns page-full">
 <div id="fig-1403-21" class="quarto-figure quarto-figure-center column-body anchored page-columns page-full">
 <figure class="figure page-columns page-full">
-<p class="page-columns page-full"><img src="14_dem_house_files/figure-html/fig-1403-21.svg" class="column-body img-fluid figure-img" data-ref-parent="fig-1403"></p>
-<figcaption class="figure-caption">(u) District of Weinegg</figcaption>
+<p class="page-columns page-full"><img src="14_dem_house_files/figure-html/fig-1403-21.svg" class="column-body img-fluid figure-img"></p>
+<figcaption class="figure-caption">Figure&nbsp;13.54: population by age, smoothed</figcaption>
 </figure>
 </div>
 </div>
 <div class="cell-output-display column-body page-columns page-full">
 <div id="fig-1403-22" class="quarto-figure quarto-figure-center column-body anchored page-columns page-full">
 <figure class="figure page-columns page-full">
-<p class="page-columns page-full"><img src="14_dem_house_files/figure-html/fig-1403-22.svg" class="column-body img-fluid figure-img" data-ref-parent="fig-1403"></p>
-<figcaption class="figure-caption">(v) District of Albisrieden</figcaption>
+<p class="page-columns page-full"><img src="14_dem_house_files/figure-html/fig-1403-22.svg" class="column-body img-fluid figure-img"></p>
+<figcaption class="figure-caption">Figure&nbsp;13.55: population by age, smoothed</figcaption>
 </figure>
 </div>
 </div>
 <div class="cell-output-display column-body page-columns page-full">
 <div id="fig-1403-23" class="quarto-figure quarto-figure-center column-body anchored page-columns page-full">
 <figure class="figure page-columns page-full">
-<p class="page-columns page-full"><img src="14_dem_house_files/figure-html/fig-1403-23.svg" class="column-body img-fluid figure-img" data-ref-parent="fig-1403"></p>
-<figcaption class="figure-caption">(w) District of Altstetten</figcaption>
+<p class="page-columns page-full"><img src="14_dem_house_files/figure-html/fig-1403-23.svg" class="column-body img-fluid figure-img"></p>
+<figcaption class="figure-caption">Figure&nbsp;13.56: population by age, smoothed</figcaption>
 </figure>
 </div>
 </div>
 <div class="cell-output-display column-body page-columns page-full">
 <div id="fig-1403-24" class="quarto-figure quarto-figure-center column-body anchored page-columns page-full">
 <figure class="figure page-columns page-full">
-<p class="page-columns page-full"><img src="14_dem_house_files/figure-html/fig-1403-24.svg" class="column-body img-fluid figure-img" data-ref-parent="fig-1403"></p>
-<figcaption class="figure-caption">(x) District of Hoengg</figcaption>
+<p class="page-columns page-full"><img src="14_dem_house_files/figure-html/fig-1403-24.svg" class="column-body img-fluid figure-img"></p>
+<figcaption class="figure-caption">Figure&nbsp;13.57: population by age, smoothed</figcaption>
 </figure>
 </div>
 </div>
 <div class="cell-output-display column-body page-columns page-full">
 <div id="fig-1403-25" class="quarto-figure quarto-figure-center column-body anchored page-columns page-full">
 <figure class="figure page-columns page-full">
-<p class="page-columns page-full"><img src="14_dem_house_files/figure-html/fig-1403-25.svg" class="column-body img-fluid figure-img" data-ref-parent="fig-1403"></p>
-<figcaption class="figure-caption">(y) District of Wipkingen</figcaption>
+<p class="page-columns page-full"><img src="14_dem_house_files/figure-html/fig-1403-25.svg" class="column-body img-fluid figure-img"></p>
+<figcaption class="figure-caption">Figure&nbsp;13.58: population by age, smoothed</figcaption>
 </figure>
 </div>
 </div>
 <div class="cell-output-display column-body page-columns page-full">
 <div id="fig-1403-26" class="quarto-figure quarto-figure-center column-body anchored page-columns page-full">
 <figure class="figure page-columns page-full">
-<p class="page-columns page-full"><img src="14_dem_house_files/figure-html/fig-1403-26.svg" class="column-body img-fluid figure-img" data-ref-parent="fig-1403"></p>
-<figcaption class="figure-caption">(z) District of Affoltern</figcaption>
+<p class="page-columns page-full"><img src="14_dem_house_files/figure-html/fig-1403-26.svg" class="column-body img-fluid figure-img"></p>
+<figcaption class="figure-caption">Figure&nbsp;13.59: population by age, smoothed</figcaption>
 </figure>
 </div>
 </div>
 <div class="cell-output-display column-body page-columns page-full">
 <div id="fig-1403-27" class="quarto-figure quarto-figure-center column-body anchored page-columns page-full">
 <figure class="figure page-columns page-full">
-<p class="page-columns page-full"><img src="14_dem_house_files/figure-html/fig-1403-27.svg" class="column-body img-fluid figure-img" data-ref-parent="fig-1403"></p>
-<figcaption class="figure-caption">({) District of Oerlikon</figcaption>
+<p class="page-columns page-full"><img src="14_dem_house_files/figure-html/fig-1403-27.svg" class="column-body img-fluid figure-img"></p>
+<figcaption class="figure-caption">Figure&nbsp;13.60: population by age, smoothed</figcaption>
 </figure>
 </div>
 </div>
 <div class="cell-output-display column-body page-columns page-full">
 <div id="fig-1403-28" class="quarto-figure quarto-figure-center column-body anchored page-columns page-full">
 <figure class="figure page-columns page-full">
-<p class="page-columns page-full"><img src="14_dem_house_files/figure-html/fig-1403-28.svg" class="column-body img-fluid figure-img" data-ref-parent="fig-1403"></p>
-<figcaption class="figure-caption">(|) District of Seebach</figcaption>
+<p class="page-columns page-full"><img src="14_dem_house_files/figure-html/fig-1403-28.svg" class="column-body img-fluid figure-img"></p>
+<figcaption class="figure-caption">Figure&nbsp;13.61: population by age, smoothed</figcaption>
 </figure>
 </div>
 </div>
 <div class="cell-output-display column-body page-columns page-full">
 <div id="fig-1403-29" class="quarto-figure quarto-figure-center column-body anchored page-columns page-full">
 <figure class="figure page-columns page-full">
-<p class="page-columns page-full"><img src="14_dem_house_files/figure-html/fig-1403-29.svg" class="column-body img-fluid figure-img" data-ref-parent="fig-1403"></p>
-<figcaption class="figure-caption">(}) District of Saatlen</figcaption>
+<p class="page-columns page-full"><img src="14_dem_house_files/figure-html/fig-1403-29.svg" class="column-body img-fluid figure-img"></p>
+<figcaption class="figure-caption">Figure&nbsp;13.62: population by age, smoothed</figcaption>
 </figure>
 </div>
 </div>
 <div class="cell-output-display column-body page-columns page-full">
 <div id="fig-1403-30" class="quarto-figure quarto-figure-center column-body anchored page-columns page-full">
 <figure class="figure page-columns page-full">
-<p class="page-columns page-full"><img src="14_dem_house_files/figure-html/fig-1403-30.svg" class="column-body img-fluid figure-img" data-ref-parent="fig-1403"></p>
-<figcaption class="figure-caption">(~) District of Schwamendingen-Mitte</figcaption>
+<p class="page-columns page-full"><img src="14_dem_house_files/figure-html/fig-1403-30.svg" class="column-body img-fluid figure-img"></p>
+<figcaption class="figure-caption">Figure&nbsp;13.63: population by age, smoothed</figcaption>
 </figure>
 </div>
 </div>
 <div class="cell-output-display column-body page-columns page-full">
 <div id="fig-1403-31" class="quarto-figure quarto-figure-center column-body anchored page-columns page-full">
 <figure class="figure page-columns page-full">
-<p class="page-columns page-full"><img src="14_dem_house_files/figure-html/fig-1403-31.svg" class="column-body img-fluid figure-img" data-ref-parent="fig-1403"></p>
-<figcaption class="figure-caption">() District of Hirzenbach</figcaption>
+<p class="page-columns page-full"><img src="14_dem_house_files/figure-html/fig-1403-31.svg" class="column-body img-fluid figure-img"></p>
+<figcaption class="figure-caption">Figure&nbsp;13.64: population by age, smoothed</figcaption>
 </figure>
 </div>
 </div>
-<figcaption class="figure-caption">Figure&nbsp;14.4: population by age, smoothed</figcaption>
-</figure>
 </div>
 </section>
-<section id="wollishofen-population-and-migration" class="level2 page-columns page-full" data-number="14.4">
-<h2 data-number="14.4" class="anchored" data-anchor-id="wollishofen-population-and-migration"><span class="header-section-number">14.4</span> Wollishofen, population and migration</h2>
-<section id="by-year-age-and-origin" class="level3 page-columns page-full" data-number="14.4.1">
-<h3 data-number="14.4.1" class="anchored" data-anchor-id="by-year-age-and-origin"><span class="header-section-number">14.4.1</span> by year, age and origin</h3>
+<section id="wollishofen-population-and-migration" class="level2 page-columns page-full" data-number="13.4">
+<h2 data-number="13.4" class="anchored" data-anchor-id="wollishofen-population-and-migration"><span class="header-section-number">13.4</span> Wollishofen, population and migration</h2>
+<section id="by-year-age-and-origin" class="level3 page-columns page-full" data-number="13.4.1">
+<h3 data-number="13.4.1" class="anchored" data-anchor-id="by-year-age-and-origin"><span class="header-section-number">13.4.1</span> by year, age and origin</h3>
 <p>why Wollishofen? need to check age patterns of this district why named d21? 21 is the number for district Wollishofen</p>
-<div id="fig-1404" class="quarto-figure quarto-figure-center anchored page-columns page-full">
-<figure class="figure page-columns page-full">
+<div class="cell page-columns page-full" data-hash="14_dem_house_cache/html/fig-1404_65e4383e4a59e317205ed3ad68a86bba">
 <div class="cell-output-display column-body page-columns page-full">
 <div id="fig-1404-1" class="quarto-figure quarto-figure-center column-body anchored page-columns page-full">
 <figure class="figure page-columns page-full">
-<p class="page-columns page-full"><img src="14_dem_house_files/figure-html/fig-1404-1.svg" class="column-body img-fluid figure-img" data-ref-parent="fig-1404"></p>
-<figcaption class="figure-caption">(a) Year 2022</figcaption>
+<p class="page-columns page-full"><img src="14_dem_house_files/figure-html/fig-1404-1.svg" class="column-body img-fluid figure-img"></p>
+<figcaption class="figure-caption">Figure&nbsp;13.65: Wollishofen population and migration, by year, age, origin</figcaption>
 </figure>
 </div>
 </div>
 <div class="cell-output-display column-body page-columns page-full">
 <div id="fig-1404-2" class="quarto-figure quarto-figure-center column-body anchored page-columns page-full">
 <figure class="figure page-columns page-full">
-<p class="page-columns page-full"><img src="14_dem_house_files/figure-html/fig-1404-2.svg" class="column-body img-fluid figure-img" data-ref-parent="fig-1404"></p>
-<figcaption class="figure-caption">(b) Year 2023</figcaption>
+<p class="page-columns page-full"><img src="14_dem_house_files/figure-html/fig-1404-2.svg" class="column-body img-fluid figure-img"></p>
+<figcaption class="figure-caption">Figure&nbsp;13.66: Wollishofen population and migration, by year, age, origin</figcaption>
 </figure>
 </div>
 </div>
 <div class="cell-output-display column-body page-columns page-full">
 <div id="fig-1404-3" class="quarto-figure quarto-figure-center column-body anchored page-columns page-full">
 <figure class="figure page-columns page-full">
-<p class="page-columns page-full"><img src="14_dem_house_files/figure-html/fig-1404-3.svg" class="column-body img-fluid figure-img" data-ref-parent="fig-1404"></p>
-<figcaption class="figure-caption">(c) Year 2024</figcaption>
+<p class="page-columns page-full"><img src="14_dem_house_files/figure-html/fig-1404-3.svg" class="column-body img-fluid figure-img"></p>
+<figcaption class="figure-caption">Figure&nbsp;13.67: Wollishofen population and migration, by year, age, origin</figcaption>
 </figure>
 </div>
 </div>
 <div class="cell-output-display column-body page-columns page-full">
 <div id="fig-1404-4" class="quarto-figure quarto-figure-center column-body anchored page-columns page-full">
 <figure class="figure page-columns page-full">
-<p class="page-columns page-full"><img src="14_dem_house_files/figure-html/fig-1404-4.svg" class="column-body img-fluid figure-img" data-ref-parent="fig-1404"></p>
-<figcaption class="figure-caption">(d) Year 2025</figcaption>
+<p class="page-columns page-full"><img src="14_dem_house_files/figure-html/fig-1404-4.svg" class="column-body img-fluid figure-img"></p>
+<figcaption class="figure-caption">Figure&nbsp;13.68: Wollishofen population and migration, by year, age, origin</figcaption>
 </figure>
 </div>
 </div>
 <div class="cell-output-display column-body page-columns page-full">
 <div id="fig-1404-5" class="quarto-figure quarto-figure-center column-body anchored page-columns page-full">
 <figure class="figure page-columns page-full">
-<p class="page-columns page-full"><img src="14_dem_house_files/figure-html/fig-1404-5.svg" class="column-body img-fluid figure-img" data-ref-parent="fig-1404"></p>
-<figcaption class="figure-caption">(e) Year 2026</figcaption>
+<p class="page-columns page-full"><img src="14_dem_house_files/figure-html/fig-1404-5.svg" class="column-body img-fluid figure-img"></p>
+<figcaption class="figure-caption">Figure&nbsp;13.69: Wollishofen population and migration, by year, age, origin</figcaption>
 </figure>
 </div>
 </div>
 <div class="cell-output-display column-body page-columns page-full">
 <div id="fig-1404-6" class="quarto-figure quarto-figure-center column-body anchored page-columns page-full">
 <figure class="figure page-columns page-full">
-<p class="page-columns page-full"><img src="14_dem_house_files/figure-html/fig-1404-6.svg" class="column-body img-fluid figure-img" data-ref-parent="fig-1404"></p>
-<figcaption class="figure-caption">(f) Year 2027</figcaption>
+<p class="page-columns page-full"><img src="14_dem_house_files/figure-html/fig-1404-6.svg" class="column-body img-fluid figure-img"></p>
+<figcaption class="figure-caption">Figure&nbsp;13.70: Wollishofen population and migration, by year, age, origin</figcaption>
 </figure>
 </div>
 </div>
 <div class="cell-output-display column-body page-columns page-full">
 <div id="fig-1404-7" class="quarto-figure quarto-figure-center column-body anchored page-columns page-full">
 <figure class="figure page-columns page-full">
-<p class="page-columns page-full"><img src="14_dem_house_files/figure-html/fig-1404-7.svg" class="column-body img-fluid figure-img" data-ref-parent="fig-1404"></p>
-<figcaption class="figure-caption">(g) Year 2028</figcaption>
+<p class="page-columns page-full"><img src="14_dem_house_files/figure-html/fig-1404-7.svg" class="column-body img-fluid figure-img"></p>
+<figcaption class="figure-caption">Figure&nbsp;13.71: Wollishofen population and migration, by year, age, origin</figcaption>
 </figure>
 </div>
 </div>
 <div class="cell-output-display column-body page-columns page-full">
 <div id="fig-1404-8" class="quarto-figure quarto-figure-center column-body anchored page-columns page-full">
 <figure class="figure page-columns page-full">
-<p class="page-columns page-full"><img src="14_dem_house_files/figure-html/fig-1404-8.svg" class="column-body img-fluid figure-img" data-ref-parent="fig-1404"></p>
-<figcaption class="figure-caption">(h) Year 2029</figcaption>
+<p class="page-columns page-full"><img src="14_dem_house_files/figure-html/fig-1404-8.svg" class="column-body img-fluid figure-img"></p>
+<figcaption class="figure-caption">Figure&nbsp;13.72: Wollishofen population and migration, by year, age, origin</figcaption>
 </figure>
 </div>
 </div>
 <div class="cell-output-display column-body page-columns page-full">
 <div id="fig-1404-9" class="quarto-figure quarto-figure-center column-body anchored page-columns page-full">
 <figure class="figure page-columns page-full">
-<p class="page-columns page-full"><img src="14_dem_house_files/figure-html/fig-1404-9.svg" class="column-body img-fluid figure-img" data-ref-parent="fig-1404"></p>
-<figcaption class="figure-caption">(i) Year 2030</figcaption>
+<p class="page-columns page-full"><img src="14_dem_house_files/figure-html/fig-1404-9.svg" class="column-body img-fluid figure-img"></p>
+<figcaption class="figure-caption">Figure&nbsp;13.73: Wollishofen population and migration, by year, age, origin</figcaption>
 </figure>
 </div>
 </div>
 <div class="cell-output-display column-body page-columns page-full">
 <div id="fig-1404-10" class="quarto-figure quarto-figure-center column-body anchored page-columns page-full">
 <figure class="figure page-columns page-full">
-<p class="page-columns page-full"><img src="14_dem_house_files/figure-html/fig-1404-10.svg" class="column-body img-fluid figure-img" data-ref-parent="fig-1404"></p>
-<figcaption class="figure-caption">(j) Year 2031</figcaption>
+<p class="page-columns page-full"><img src="14_dem_house_files/figure-html/fig-1404-10.svg" class="column-body img-fluid figure-img"></p>
+<figcaption class="figure-caption">Figure&nbsp;13.74: Wollishofen population and migration, by year, age, origin</figcaption>
 </figure>
 </div>
 </div>
 <div class="cell-output-display column-body page-columns page-full">
 <div id="fig-1404-11" class="quarto-figure quarto-figure-center column-body anchored page-columns page-full">
 <figure class="figure page-columns page-full">
-<p class="page-columns page-full"><img src="14_dem_house_files/figure-html/fig-1404-11.svg" class="column-body img-fluid figure-img" data-ref-parent="fig-1404"></p>
-<figcaption class="figure-caption">(k) Year 2032</figcaption>
+<p class="page-columns page-full"><img src="14_dem_house_files/figure-html/fig-1404-11.svg" class="column-body img-fluid figure-img"></p>
+<figcaption class="figure-caption">Figure&nbsp;13.75: Wollishofen population and migration, by year, age, origin</figcaption>
 </figure>
 </div>
 </div>
 <div class="cell-output-display column-body page-columns page-full">
 <div id="fig-1404-12" class="quarto-figure quarto-figure-center column-body anchored page-columns page-full">
 <figure class="figure page-columns page-full">
-<p class="page-columns page-full"><img src="14_dem_house_files/figure-html/fig-1404-12.svg" class="column-body img-fluid figure-img" data-ref-parent="fig-1404"></p>
-<figcaption class="figure-caption">(l) Year 2033</figcaption>
+<p class="page-columns page-full"><img src="14_dem_house_files/figure-html/fig-1404-12.svg" class="column-body img-fluid figure-img"></p>
+<figcaption class="figure-caption">Figure&nbsp;13.76: Wollishofen population and migration, by year, age, origin</figcaption>
 </figure>
 </div>
 </div>
 <div class="cell-output-display column-body page-columns page-full">
 <div id="fig-1404-13" class="quarto-figure quarto-figure-center column-body anchored page-columns page-full">
 <figure class="figure page-columns page-full">
-<p class="page-columns page-full"><img src="14_dem_house_files/figure-html/fig-1404-13.svg" class="column-body img-fluid figure-img" data-ref-parent="fig-1404"></p>
-<figcaption class="figure-caption">(m) Year 2034</figcaption>
+<p class="page-columns page-full"><img src="14_dem_house_files/figure-html/fig-1404-13.svg" class="column-body img-fluid figure-img"></p>
+<figcaption class="figure-caption">Figure&nbsp;13.77: Wollishofen population and migration, by year, age, origin</figcaption>
 </figure>
 </div>
 </div>
 <div class="cell-output-display column-body page-columns page-full">
 <div id="fig-1404-14" class="quarto-figure quarto-figure-center column-body anchored page-columns page-full">
 <figure class="figure page-columns page-full">
-<p class="page-columns page-full"><img src="14_dem_house_files/figure-html/fig-1404-14.svg" class="column-body img-fluid figure-img" data-ref-parent="fig-1404"></p>
-<figcaption class="figure-caption">(n) Year 2035</figcaption>
+<p class="page-columns page-full"><img src="14_dem_house_files/figure-html/fig-1404-14.svg" class="column-body img-fluid figure-img"></p>
+<figcaption class="figure-caption">Figure&nbsp;13.78: Wollishofen population and migration, by year, age, origin</figcaption>
 </figure>
 </div>
 </div>
 <div class="cell-output-display column-body page-columns page-full">
 <div id="fig-1404-15" class="quarto-figure quarto-figure-center column-body anchored page-columns page-full">
 <figure class="figure page-columns page-full">
-<p class="page-columns page-full"><img src="14_dem_house_files/figure-html/fig-1404-15.svg" class="column-body img-fluid figure-img" data-ref-parent="fig-1404"></p>
-<figcaption class="figure-caption">(o) Year 2036</figcaption>
+<p class="page-columns page-full"><img src="14_dem_house_files/figure-html/fig-1404-15.svg" class="column-body img-fluid figure-img"></p>
+<figcaption class="figure-caption">Figure&nbsp;13.79: Wollishofen population and migration, by year, age, origin</figcaption>
 </figure>
 </div>
 </div>
 <div class="cell-output-display column-body page-columns page-full">
 <div id="fig-1404-16" class="quarto-figure quarto-figure-center column-body anchored page-columns page-full">
 <figure class="figure page-columns page-full">
-<p class="page-columns page-full"><img src="14_dem_house_files/figure-html/fig-1404-16.svg" class="column-body img-fluid figure-img" data-ref-parent="fig-1404"></p>
-<figcaption class="figure-caption">(p) Year 2037</figcaption>
+<p class="page-columns page-full"><img src="14_dem_house_files/figure-html/fig-1404-16.svg" class="column-body img-fluid figure-img"></p>
+<figcaption class="figure-caption">Figure&nbsp;13.80: Wollishofen population and migration, by year, age, origin</figcaption>
 </figure>
 </div>
 </div>
 <div class="cell-output-display column-body page-columns page-full">
 <div id="fig-1404-17" class="quarto-figure quarto-figure-center column-body anchored page-columns page-full">
 <figure class="figure page-columns page-full">
-<p class="page-columns page-full"><img src="14_dem_house_files/figure-html/fig-1404-17.svg" class="column-body img-fluid figure-img" data-ref-parent="fig-1404"></p>
-<figcaption class="figure-caption">(q) Year 2038</figcaption>
+<p class="page-columns page-full"><img src="14_dem_house_files/figure-html/fig-1404-17.svg" class="column-body img-fluid figure-img"></p>
+<figcaption class="figure-caption">Figure&nbsp;13.81: Wollishofen population and migration, by year, age, origin</figcaption>
 </figure>
 </div>
 </div>
 <div class="cell-output-display column-body page-columns page-full">
 <div id="fig-1404-18" class="quarto-figure quarto-figure-center column-body anchored page-columns page-full">
 <figure class="figure page-columns page-full">
-<p class="page-columns page-full"><img src="14_dem_house_files/figure-html/fig-1404-18.svg" class="column-body img-fluid figure-img" data-ref-parent="fig-1404"></p>
-<figcaption class="figure-caption">(r) Year 2039</figcaption>
+<p class="page-columns page-full"><img src="14_dem_house_files/figure-html/fig-1404-18.svg" class="column-body img-fluid figure-img"></p>
+<figcaption class="figure-caption">Figure&nbsp;13.82: Wollishofen population and migration, by year, age, origin</figcaption>
 </figure>
 </div>
 </div>
 <div class="cell-output-display column-body page-columns page-full">
 <div id="fig-1404-19" class="quarto-figure quarto-figure-center column-body anchored page-columns page-full">
 <figure class="figure page-columns page-full">
-<p class="page-columns page-full"><img src="14_dem_house_files/figure-html/fig-1404-19.svg" class="column-body img-fluid figure-img" data-ref-parent="fig-1404"></p>
-<figcaption class="figure-caption">(s) Year 2040</figcaption>
+<p class="page-columns page-full"><img src="14_dem_house_files/figure-html/fig-1404-19.svg" class="column-body img-fluid figure-img"></p>
+<figcaption class="figure-caption">Figure&nbsp;13.83: Wollishofen population and migration, by year, age, origin</figcaption>
 </figure>
 </div>
 </div>
 <div class="cell-output-display column-body page-columns page-full">
 <div id="fig-1404-20" class="quarto-figure quarto-figure-center column-body anchored page-columns page-full">
 <figure class="figure page-columns page-full">
-<p class="page-columns page-full"><img src="14_dem_house_files/figure-html/fig-1404-20.svg" class="column-body img-fluid figure-img" data-ref-parent="fig-1404"></p>
-<figcaption class="figure-caption">(t) Year 2041</figcaption>
+<p class="page-columns page-full"><img src="14_dem_house_files/figure-html/fig-1404-20.svg" class="column-body img-fluid figure-img"></p>
+<figcaption class="figure-caption">Figure&nbsp;13.84: Wollishofen population and migration, by year, age, origin</figcaption>
 </figure>
 </div>
 </div>
 <div class="cell-output-display column-body page-columns page-full">
 <div id="fig-1404-21" class="quarto-figure quarto-figure-center column-body anchored page-columns page-full">
 <figure class="figure page-columns page-full">
-<p class="page-columns page-full"><img src="14_dem_house_files/figure-html/fig-1404-21.svg" class="column-body img-fluid figure-img" data-ref-parent="fig-1404"></p>
-<figcaption class="figure-caption">(u) Year 2042</figcaption>
+<p class="page-columns page-full"><img src="14_dem_house_files/figure-html/fig-1404-21.svg" class="column-body img-fluid figure-img"></p>
+<figcaption class="figure-caption">Figure&nbsp;13.85: Wollishofen population and migration, by year, age, origin</figcaption>
 </figure>
 </div>
 </div>
 <div class="cell-output-display column-body page-columns page-full">
 <div id="fig-1404-22" class="quarto-figure quarto-figure-center column-body anchored page-columns page-full">
 <figure class="figure page-columns page-full">
-<p class="page-columns page-full"><img src="14_dem_house_files/figure-html/fig-1404-22.svg" class="column-body img-fluid figure-img" data-ref-parent="fig-1404"></p>
-<figcaption class="figure-caption">(v) Year 2043</figcaption>
+<p class="page-columns page-full"><img src="14_dem_house_files/figure-html/fig-1404-22.svg" class="column-body img-fluid figure-img"></p>
+<figcaption class="figure-caption">Figure&nbsp;13.86: Wollishofen population and migration, by year, age, origin</figcaption>
 </figure>
 </div>
 </div>
 <div class="cell-output-display column-body page-columns page-full">
 <div id="fig-1404-23" class="quarto-figure quarto-figure-center column-body anchored page-columns page-full">
 <figure class="figure page-columns page-full">
-<p class="page-columns page-full"><img src="14_dem_house_files/figure-html/fig-1404-23.svg" class="column-body img-fluid figure-img" data-ref-parent="fig-1404"></p>
-<figcaption class="figure-caption">(w) Year 2044</figcaption>
+<p class="page-columns page-full"><img src="14_dem_house_files/figure-html/fig-1404-23.svg" class="column-body img-fluid figure-img"></p>
+<figcaption class="figure-caption">Figure&nbsp;13.87: Wollishofen population and migration, by year, age, origin</figcaption>
 </figure>
 </div>
 </div>
 <div class="cell-output-display column-body page-columns page-full">
 <div id="fig-1404-24" class="quarto-figure quarto-figure-center column-body anchored page-columns page-full">
 <figure class="figure page-columns page-full">
-<p class="page-columns page-full"><img src="14_dem_house_files/figure-html/fig-1404-24.svg" class="column-body img-fluid figure-img" data-ref-parent="fig-1404"></p>
-<figcaption class="figure-caption">(x) Year 2045</figcaption>
+<p class="page-columns page-full"><img src="14_dem_house_files/figure-html/fig-1404-24.svg" class="column-body img-fluid figure-img"></p>
+<figcaption class="figure-caption">Figure&nbsp;13.88: Wollishofen population and migration, by year, age, origin</figcaption>
 </figure>
 </div>
 </div>
 <div class="cell-output-display column-body page-columns page-full">
 <div id="fig-1404-25" class="quarto-figure quarto-figure-center column-body anchored page-columns page-full">
 <figure class="figure page-columns page-full">
-<p class="page-columns page-full"><img src="14_dem_house_files/figure-html/fig-1404-25.svg" class="column-body img-fluid figure-img" data-ref-parent="fig-1404"></p>
-<figcaption class="figure-caption">(y) Year 2046</figcaption>
+<p class="page-columns page-full"><img src="14_dem_house_files/figure-html/fig-1404-25.svg" class="column-body img-fluid figure-img"></p>
+<figcaption class="figure-caption">Figure&nbsp;13.89: Wollishofen population and migration, by year, age, origin</figcaption>
 </figure>
 </div>
 </div>
 <div class="cell-output-display column-body page-columns page-full">
 <div id="fig-1404-26" class="quarto-figure quarto-figure-center column-body anchored page-columns page-full">
 <figure class="figure page-columns page-full">
-<p class="page-columns page-full"><img src="14_dem_house_files/figure-html/fig-1404-26.svg" class="column-body img-fluid figure-img" data-ref-parent="fig-1404"></p>
-<figcaption class="figure-caption">(z) Year 2047</figcaption>
+<p class="page-columns page-full"><img src="14_dem_house_files/figure-html/fig-1404-26.svg" class="column-body img-fluid figure-img"></p>
+<figcaption class="figure-caption">Figure&nbsp;13.90: Wollishofen population and migration, by year, age, origin</figcaption>
 </figure>
 </div>
 </div>
 <div class="cell-output-display column-body page-columns page-full">
 <div id="fig-1404-27" class="quarto-figure quarto-figure-center column-body anchored page-columns page-full">
 <figure class="figure page-columns page-full">
-<p class="page-columns page-full"><img src="14_dem_house_files/figure-html/fig-1404-27.svg" class="column-body img-fluid figure-img" data-ref-parent="fig-1404"></p>
-<figcaption class="figure-caption">({) Year 2048</figcaption>
+<p class="page-columns page-full"><img src="14_dem_house_files/figure-html/fig-1404-27.svg" class="column-body img-fluid figure-img"></p>
+<figcaption class="figure-caption">Figure&nbsp;13.91: Wollishofen population and migration, by year, age, origin</figcaption>
 </figure>
 </div>
 </div>
-<div class="cell-output-display column-body page-columns page-full">
-<div id="fig-1404-28" class="quarto-figure quarto-figure-center column-body anchored page-columns page-full">
-<figure class="figure page-columns page-full">
-<p class="page-columns page-full"><img src="14_dem_house_files/figure-html/fig-1404-28.svg" class="column-body img-fluid figure-img" data-ref-parent="fig-1404"></p>
-<figcaption class="figure-caption">(|) Year 2049</figcaption>
-</figure>
-</div>
-</div>
-<div class="cell-output-display column-body page-columns page-full">
-<div id="fig-1404-29" class="quarto-figure quarto-figure-center column-body anchored page-columns page-full">
-<figure class="figure page-columns page-full">
-<p class="page-columns page-full"><img src="14_dem_house_files/figure-html/fig-1404-29.svg" class="column-body img-fluid figure-img" data-ref-parent="fig-1404"></p>
-<figcaption class="figure-caption">(}) Year 2050</figcaption>
-</figure>
-</div>
-</div>
-<figcaption class="figure-caption">Figure&nbsp;14.5: Wollishofen population and migration, by year, age, origin</figcaption>
-</figure>
 </div>
 </section>
-<section id="by-year-and-age" class="level3 page-columns page-full" data-number="14.4.2">
-<h3 data-number="14.4.2" class="anchored" data-anchor-id="by-year-and-age"><span class="header-section-number">14.4.2</span> by year and age</h3>
-<div id="fig-1405" class="quarto-figure quarto-figure-center anchored page-columns page-full">
-<figure class="figure page-columns page-full">
+<section id="by-year-and-age" class="level3 page-columns page-full" data-number="13.4.2">
+<h3 data-number="13.4.2" class="anchored" data-anchor-id="by-year-and-age"><span class="header-section-number">13.4.2</span> by year and age</h3>
+<div class="cell page-columns page-full" data-hash="14_dem_house_cache/html/fig-1405_73b665ee658c6f46aeedead20e3520fa">
 <div class="cell-output-display column-body page-columns page-full">
 <div id="fig-1405-1" class="quarto-figure quarto-figure-center column-body anchored page-columns page-full">
 <figure class="figure page-columns page-full">
-<p class="page-columns page-full"><img src="14_dem_house_files/figure-html/fig-1405-1.svg" class="column-body img-fluid figure-img" data-ref-parent="fig-1405"></p>
-<figcaption class="figure-caption">(a) Year 2022</figcaption>
+<p class="page-columns page-full"><img src="14_dem_house_files/figure-html/fig-1405-1.svg" class="column-body img-fluid figure-img"></p>
+<figcaption class="figure-caption">Figure&nbsp;13.92: Wollishofen population and migration, by year, age</figcaption>
 </figure>
 </div>
 </div>
 <div class="cell-output-display column-body page-columns page-full">
 <div id="fig-1405-2" class="quarto-figure quarto-figure-center column-body anchored page-columns page-full">
 <figure class="figure page-columns page-full">
-<p class="page-columns page-full"><img src="14_dem_house_files/figure-html/fig-1405-2.svg" class="column-body img-fluid figure-img" data-ref-parent="fig-1405"></p>
-<figcaption class="figure-caption">(b) Year 2023</figcaption>
+<p class="page-columns page-full"><img src="14_dem_house_files/figure-html/fig-1405-2.svg" class="column-body img-fluid figure-img"></p>
+<figcaption class="figure-caption">Figure&nbsp;13.93: Wollishofen population and migration, by year, age</figcaption>
 </figure>
 </div>
 </div>
 <div class="cell-output-display column-body page-columns page-full">
 <div id="fig-1405-3" class="quarto-figure quarto-figure-center column-body anchored page-columns page-full">
 <figure class="figure page-columns page-full">
-<p class="page-columns page-full"><img src="14_dem_house_files/figure-html/fig-1405-3.svg" class="column-body img-fluid figure-img" data-ref-parent="fig-1405"></p>
-<figcaption class="figure-caption">(c) Year 2024</figcaption>
+<p class="page-columns page-full"><img src="14_dem_house_files/figure-html/fig-1405-3.svg" class="column-body img-fluid figure-img"></p>
+<figcaption class="figure-caption">Figure&nbsp;13.94: Wollishofen population and migration, by year, age</figcaption>
 </figure>
 </div>
 </div>
 <div class="cell-output-display column-body page-columns page-full">
 <div id="fig-1405-4" class="quarto-figure quarto-figure-center column-body anchored page-columns page-full">
 <figure class="figure page-columns page-full">
-<p class="page-columns page-full"><img src="14_dem_house_files/figure-html/fig-1405-4.svg" class="column-body img-fluid figure-img" data-ref-parent="fig-1405"></p>
-<figcaption class="figure-caption">(d) Year 2025</figcaption>
+<p class="page-columns page-full"><img src="14_dem_house_files/figure-html/fig-1405-4.svg" class="column-body img-fluid figure-img"></p>
+<figcaption class="figure-caption">Figure&nbsp;13.95: Wollishofen population and migration, by year, age</figcaption>
 </figure>
 </div>
 </div>
 <div class="cell-output-display column-body page-columns page-full">
 <div id="fig-1405-5" class="quarto-figure quarto-figure-center column-body anchored page-columns page-full">
 <figure class="figure page-columns page-full">
-<p class="page-columns page-full"><img src="14_dem_house_files/figure-html/fig-1405-5.svg" class="column-body img-fluid figure-img" data-ref-parent="fig-1405"></p>
-<figcaption class="figure-caption">(e) Year 2026</figcaption>
+<p class="page-columns page-full"><img src="14_dem_house_files/figure-html/fig-1405-5.svg" class="column-body img-fluid figure-img"></p>
+<figcaption class="figure-caption">Figure&nbsp;13.96: Wollishofen population and migration, by year, age</figcaption>
 </figure>
 </div>
 </div>
 <div class="cell-output-display column-body page-columns page-full">
 <div id="fig-1405-6" class="quarto-figure quarto-figure-center column-body anchored page-columns page-full">
 <figure class="figure page-columns page-full">
-<p class="page-columns page-full"><img src="14_dem_house_files/figure-html/fig-1405-6.svg" class="column-body img-fluid figure-img" data-ref-parent="fig-1405"></p>
-<figcaption class="figure-caption">(f) Year 2027</figcaption>
+<p class="page-columns page-full"><img src="14_dem_house_files/figure-html/fig-1405-6.svg" class="column-body img-fluid figure-img"></p>
+<figcaption class="figure-caption">Figure&nbsp;13.97: Wollishofen population and migration, by year, age</figcaption>
 </figure>
 </div>
 </div>
 <div class="cell-output-display column-body page-columns page-full">
 <div id="fig-1405-7" class="quarto-figure quarto-figure-center column-body anchored page-columns page-full">
 <figure class="figure page-columns page-full">
-<p class="page-columns page-full"><img src="14_dem_house_files/figure-html/fig-1405-7.svg" class="column-body img-fluid figure-img" data-ref-parent="fig-1405"></p>
-<figcaption class="figure-caption">(g) Year 2028</figcaption>
+<p class="page-columns page-full"><img src="14_dem_house_files/figure-html/fig-1405-7.svg" class="column-body img-fluid figure-img"></p>
+<figcaption class="figure-caption">Figure&nbsp;13.98: Wollishofen population and migration, by year, age</figcaption>
 </figure>
 </div>
 </div>
 <div class="cell-output-display column-body page-columns page-full">
 <div id="fig-1405-8" class="quarto-figure quarto-figure-center column-body anchored page-columns page-full">
 <figure class="figure page-columns page-full">
-<p class="page-columns page-full"><img src="14_dem_house_files/figure-html/fig-1405-8.svg" class="column-body img-fluid figure-img" data-ref-parent="fig-1405"></p>
-<figcaption class="figure-caption">(h) Year 2029</figcaption>
+<p class="page-columns page-full"><img src="14_dem_house_files/figure-html/fig-1405-8.svg" class="column-body img-fluid figure-img"></p>
+<figcaption class="figure-caption">Figure&nbsp;13.99: Wollishofen population and migration, by year, age</figcaption>
 </figure>
 </div>
 </div>
 <div class="cell-output-display column-body page-columns page-full">
 <div id="fig-1405-9" class="quarto-figure quarto-figure-center column-body anchored page-columns page-full">
 <figure class="figure page-columns page-full">
-<p class="page-columns page-full"><img src="14_dem_house_files/figure-html/fig-1405-9.svg" class="column-body img-fluid figure-img" data-ref-parent="fig-1405"></p>
-<figcaption class="figure-caption">(i) Year 2030</figcaption>
+<p class="page-columns page-full"><img src="14_dem_house_files/figure-html/fig-1405-9.svg" class="column-body img-fluid figure-img"></p>
+<figcaption class="figure-caption">Figure&nbsp;13.100: Wollishofen population and migration, by year, age</figcaption>
 </figure>
 </div>
 </div>
 <div class="cell-output-display column-body page-columns page-full">
 <div id="fig-1405-10" class="quarto-figure quarto-figure-center column-body anchored page-columns page-full">
 <figure class="figure page-columns page-full">
-<p class="page-columns page-full"><img src="14_dem_house_files/figure-html/fig-1405-10.svg" class="column-body img-fluid figure-img" data-ref-parent="fig-1405"></p>
-<figcaption class="figure-caption">(j) Year 2031</figcaption>
+<p class="page-columns page-full"><img src="14_dem_house_files/figure-html/fig-1405-10.svg" class="column-body img-fluid figure-img"></p>
+<figcaption class="figure-caption">Figure&nbsp;13.101: Wollishofen population and migration, by year, age</figcaption>
 </figure>
 </div>
 </div>
 <div class="cell-output-display column-body page-columns page-full">
 <div id="fig-1405-11" class="quarto-figure quarto-figure-center column-body anchored page-columns page-full">
 <figure class="figure page-columns page-full">
-<p class="page-columns page-full"><img src="14_dem_house_files/figure-html/fig-1405-11.svg" class="column-body img-fluid figure-img" data-ref-parent="fig-1405"></p>
-<figcaption class="figure-caption">(k) Year 2032</figcaption>
+<p class="page-columns page-full"><img src="14_dem_house_files/figure-html/fig-1405-11.svg" class="column-body img-fluid figure-img"></p>
+<figcaption class="figure-caption">Figure&nbsp;13.102: Wollishofen population and migration, by year, age</figcaption>
 </figure>
 </div>
 </div>
 <div class="cell-output-display column-body page-columns page-full">
 <div id="fig-1405-12" class="quarto-figure quarto-figure-center column-body anchored page-columns page-full">
 <figure class="figure page-columns page-full">
-<p class="page-columns page-full"><img src="14_dem_house_files/figure-html/fig-1405-12.svg" class="column-body img-fluid figure-img" data-ref-parent="fig-1405"></p>
-<figcaption class="figure-caption">(l) Year 2033</figcaption>
+<p class="page-columns page-full"><img src="14_dem_house_files/figure-html/fig-1405-12.svg" class="column-body img-fluid figure-img"></p>
+<figcaption class="figure-caption">Figure&nbsp;13.103: Wollishofen population and migration, by year, age</figcaption>
 </figure>
 </div>
 </div>
 <div class="cell-output-display column-body page-columns page-full">
 <div id="fig-1405-13" class="quarto-figure quarto-figure-center column-body anchored page-columns page-full">
 <figure class="figure page-columns page-full">
-<p class="page-columns page-full"><img src="14_dem_house_files/figure-html/fig-1405-13.svg" class="column-body img-fluid figure-img" data-ref-parent="fig-1405"></p>
-<figcaption class="figure-caption">(m) Year 2034</figcaption>
+<p class="page-columns page-full"><img src="14_dem_house_files/figure-html/fig-1405-13.svg" class="column-body img-fluid figure-img"></p>
+<figcaption class="figure-caption">Figure&nbsp;13.104: Wollishofen population and migration, by year, age</figcaption>
 </figure>
 </div>
 </div>
 <div class="cell-output-display column-body page-columns page-full">
 <div id="fig-1405-14" class="quarto-figure quarto-figure-center column-body anchored page-columns page-full">
 <figure class="figure page-columns page-full">
-<p class="page-columns page-full"><img src="14_dem_house_files/figure-html/fig-1405-14.svg" class="column-body img-fluid figure-img" data-ref-parent="fig-1405"></p>
-<figcaption class="figure-caption">(n) Year 2035</figcaption>
+<p class="page-columns page-full"><img src="14_dem_house_files/figure-html/fig-1405-14.svg" class="column-body img-fluid figure-img"></p>
+<figcaption class="figure-caption">Figure&nbsp;13.105: Wollishofen population and migration, by year, age</figcaption>
 </figure>
 </div>
 </div>
 <div class="cell-output-display column-body page-columns page-full">
 <div id="fig-1405-15" class="quarto-figure quarto-figure-center column-body anchored page-columns page-full">
 <figure class="figure page-columns page-full">
-<p class="page-columns page-full"><img src="14_dem_house_files/figure-html/fig-1405-15.svg" class="column-body img-fluid figure-img" data-ref-parent="fig-1405"></p>
-<figcaption class="figure-caption">(o) Year 2036</figcaption>
+<p class="page-columns page-full"><img src="14_dem_house_files/figure-html/fig-1405-15.svg" class="column-body img-fluid figure-img"></p>
+<figcaption class="figure-caption">Figure&nbsp;13.106: Wollishofen population and migration, by year, age</figcaption>
 </figure>
 </div>
 </div>
 <div class="cell-output-display column-body page-columns page-full">
 <div id="fig-1405-16" class="quarto-figure quarto-figure-center column-body anchored page-columns page-full">
 <figure class="figure page-columns page-full">
-<p class="page-columns page-full"><img src="14_dem_house_files/figure-html/fig-1405-16.svg" class="column-body img-fluid figure-img" data-ref-parent="fig-1405"></p>
-<figcaption class="figure-caption">(p) Year 2037</figcaption>
+<p class="page-columns page-full"><img src="14_dem_house_files/figure-html/fig-1405-16.svg" class="column-body img-fluid figure-img"></p>
+<figcaption class="figure-caption">Figure&nbsp;13.107: Wollishofen population and migration, by year, age</figcaption>
 </figure>
 </div>
 </div>
 <div class="cell-output-display column-body page-columns page-full">
 <div id="fig-1405-17" class="quarto-figure quarto-figure-center column-body anchored page-columns page-full">
 <figure class="figure page-columns page-full">
-<p class="page-columns page-full"><img src="14_dem_house_files/figure-html/fig-1405-17.svg" class="column-body img-fluid figure-img" data-ref-parent="fig-1405"></p>
-<figcaption class="figure-caption">(q) Year 2038</figcaption>
+<p class="page-columns page-full"><img src="14_dem_house_files/figure-html/fig-1405-17.svg" class="column-body img-fluid figure-img"></p>
+<figcaption class="figure-caption">Figure&nbsp;13.108: Wollishofen population and migration, by year, age</figcaption>
 </figure>
 </div>
 </div>
 <div class="cell-output-display column-body page-columns page-full">
 <div id="fig-1405-18" class="quarto-figure quarto-figure-center column-body anchored page-columns page-full">
 <figure class="figure page-columns page-full">
-<p class="page-columns page-full"><img src="14_dem_house_files/figure-html/fig-1405-18.svg" class="column-body img-fluid figure-img" data-ref-parent="fig-1405"></p>
-<figcaption class="figure-caption">(r) Year 2039</figcaption>
+<p class="page-columns page-full"><img src="14_dem_house_files/figure-html/fig-1405-18.svg" class="column-body img-fluid figure-img"></p>
+<figcaption class="figure-caption">Figure&nbsp;13.109: Wollishofen population and migration, by year, age</figcaption>
 </figure>
 </div>
 </div>
 <div class="cell-output-display column-body page-columns page-full">
 <div id="fig-1405-19" class="quarto-figure quarto-figure-center column-body anchored page-columns page-full">
 <figure class="figure page-columns page-full">
-<p class="page-columns page-full"><img src="14_dem_house_files/figure-html/fig-1405-19.svg" class="column-body img-fluid figure-img" data-ref-parent="fig-1405"></p>
-<figcaption class="figure-caption">(s) Year 2040</figcaption>
+<p class="page-columns page-full"><img src="14_dem_house_files/figure-html/fig-1405-19.svg" class="column-body img-fluid figure-img"></p>
+<figcaption class="figure-caption">Figure&nbsp;13.110: Wollishofen population and migration, by year, age</figcaption>
 </figure>
 </div>
 </div>
 <div class="cell-output-display column-body page-columns page-full">
 <div id="fig-1405-20" class="quarto-figure quarto-figure-center column-body anchored page-columns page-full">
 <figure class="figure page-columns page-full">
-<p class="page-columns page-full"><img src="14_dem_house_files/figure-html/fig-1405-20.svg" class="column-body img-fluid figure-img" data-ref-parent="fig-1405"></p>
-<figcaption class="figure-caption">(t) Year 2041</figcaption>
+<p class="page-columns page-full"><img src="14_dem_house_files/figure-html/fig-1405-20.svg" class="column-body img-fluid figure-img"></p>
+<figcaption class="figure-caption">Figure&nbsp;13.111: Wollishofen population and migration, by year, age</figcaption>
 </figure>
 </div>
 </div>
 <div class="cell-output-display column-body page-columns page-full">
 <div id="fig-1405-21" class="quarto-figure quarto-figure-center column-body anchored page-columns page-full">
 <figure class="figure page-columns page-full">
-<p class="page-columns page-full"><img src="14_dem_house_files/figure-html/fig-1405-21.svg" class="column-body img-fluid figure-img" data-ref-parent="fig-1405"></p>
-<figcaption class="figure-caption">(u) Year 2042</figcaption>
+<p class="page-columns page-full"><img src="14_dem_house_files/figure-html/fig-1405-21.svg" class="column-body img-fluid figure-img"></p>
+<figcaption class="figure-caption">Figure&nbsp;13.112: Wollishofen population and migration, by year, age</figcaption>
 </figure>
 </div>
 </div>
 <div class="cell-output-display column-body page-columns page-full">
 <div id="fig-1405-22" class="quarto-figure quarto-figure-center column-body anchored page-columns page-full">
 <figure class="figure page-columns page-full">
-<p class="page-columns page-full"><img src="14_dem_house_files/figure-html/fig-1405-22.svg" class="column-body img-fluid figure-img" data-ref-parent="fig-1405"></p>
-<figcaption class="figure-caption">(v) Year 2043</figcaption>
+<p class="page-columns page-full"><img src="14_dem_house_files/figure-html/fig-1405-22.svg" class="column-body img-fluid figure-img"></p>
+<figcaption class="figure-caption">Figure&nbsp;13.113: Wollishofen population and migration, by year, age</figcaption>
 </figure>
 </div>
 </div>
 <div class="cell-output-display column-body page-columns page-full">
 <div id="fig-1405-23" class="quarto-figure quarto-figure-center column-body anchored page-columns page-full">
 <figure class="figure page-columns page-full">
-<p class="page-columns page-full"><img src="14_dem_house_files/figure-html/fig-1405-23.svg" class="column-body img-fluid figure-img" data-ref-parent="fig-1405"></p>
-<figcaption class="figure-caption">(w) Year 2044</figcaption>
+<p class="page-columns page-full"><img src="14_dem_house_files/figure-html/fig-1405-23.svg" class="column-body img-fluid figure-img"></p>
+<figcaption class="figure-caption">Figure&nbsp;13.114: Wollishofen population and migration, by year, age</figcaption>
 </figure>
 </div>
 </div>
 <div class="cell-output-display column-body page-columns page-full">
 <div id="fig-1405-24" class="quarto-figure quarto-figure-center column-body anchored page-columns page-full">
 <figure class="figure page-columns page-full">
-<p class="page-columns page-full"><img src="14_dem_house_files/figure-html/fig-1405-24.svg" class="column-body img-fluid figure-img" data-ref-parent="fig-1405"></p>
-<figcaption class="figure-caption">(x) Year 2045</figcaption>
+<p class="page-columns page-full"><img src="14_dem_house_files/figure-html/fig-1405-24.svg" class="column-body img-fluid figure-img"></p>
+<figcaption class="figure-caption">Figure&nbsp;13.115: Wollishofen population and migration, by year, age</figcaption>
 </figure>
 </div>
 </div>
 <div class="cell-output-display column-body page-columns page-full">
 <div id="fig-1405-25" class="quarto-figure quarto-figure-center column-body anchored page-columns page-full">
 <figure class="figure page-columns page-full">
-<p class="page-columns page-full"><img src="14_dem_house_files/figure-html/fig-1405-25.svg" class="column-body img-fluid figure-img" data-ref-parent="fig-1405"></p>
-<figcaption class="figure-caption">(y) Year 2046</figcaption>
+<p class="page-columns page-full"><img src="14_dem_house_files/figure-html/fig-1405-25.svg" class="column-body img-fluid figure-img"></p>
+<figcaption class="figure-caption">Figure&nbsp;13.116: Wollishofen population and migration, by year, age</figcaption>
 </figure>
 </div>
 </div>
 <div class="cell-output-display column-body page-columns page-full">
 <div id="fig-1405-26" class="quarto-figure quarto-figure-center column-body anchored page-columns page-full">
 <figure class="figure page-columns page-full">
-<p class="page-columns page-full"><img src="14_dem_house_files/figure-html/fig-1405-26.svg" class="column-body img-fluid figure-img" data-ref-parent="fig-1405"></p>
-<figcaption class="figure-caption">(z) Year 2047</figcaption>
+<p class="page-columns page-full"><img src="14_dem_house_files/figure-html/fig-1405-26.svg" class="column-body img-fluid figure-img"></p>
+<figcaption class="figure-caption">Figure&nbsp;13.117: Wollishofen population and migration, by year, age</figcaption>
 </figure>
 </div>
 </div>
 <div class="cell-output-display column-body page-columns page-full">
 <div id="fig-1405-27" class="quarto-figure quarto-figure-center column-body anchored page-columns page-full">
 <figure class="figure page-columns page-full">
-<p class="page-columns page-full"><img src="14_dem_house_files/figure-html/fig-1405-27.svg" class="column-body img-fluid figure-img" data-ref-parent="fig-1405"></p>
-<figcaption class="figure-caption">({) Year 2048</figcaption>
+<p class="page-columns page-full"><img src="14_dem_house_files/figure-html/fig-1405-27.svg" class="column-body img-fluid figure-img"></p>
+<figcaption class="figure-caption">Figure&nbsp;13.118: Wollishofen population and migration, by year, age</figcaption>
 </figure>
 </div>
 </div>
-<div class="cell-output-display column-body page-columns page-full">
-<div id="fig-1405-28" class="quarto-figure quarto-figure-center column-body anchored page-columns page-full">
-<figure class="figure page-columns page-full">
-<p class="page-columns page-full"><img src="14_dem_house_files/figure-html/fig-1405-28.svg" class="column-body img-fluid figure-img" data-ref-parent="fig-1405"></p>
-<figcaption class="figure-caption">(|) Year 2049</figcaption>
-</figure>
-</div>
-</div>
-<div class="cell-output-display column-body page-columns page-full">
-<div id="fig-1405-29" class="quarto-figure quarto-figure-center column-body anchored page-columns page-full">
-<figure class="figure page-columns page-full">
-<p class="page-columns page-full"><img src="14_dem_house_files/figure-html/fig-1405-29.svg" class="column-body img-fluid figure-img" data-ref-parent="fig-1405"></p>
-<figcaption class="figure-caption">(}) Year 2050</figcaption>
-</figure>
-</div>
-</div>
-<figcaption class="figure-caption">Figure&nbsp;14.6: Wollishofen population and migration, by year, age</figcaption>
-</figure>
 </div>
 
 
@@ -1532,12 +1482,12 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 <nav class="page-navigation column-body">
   <div class="nav-page nav-page-previous">
       <a href="./13_housing.html" class="pagination-link">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">Housing model</span></span>
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">Housing model</span></span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
       <a href="./15_model_output.html" class="pagination-link">
-        <span class="nav-page-text"><span class="chapter-number">15</span>&nbsp; <span class="chapter-title">Model outputs</span></span> <i class="bi bi-arrow-right-short"></i>
+        <span class="nav-page-text"><span class="chapter-number">14</span>&nbsp; <span class="chapter-title">Model outputs</span></span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>

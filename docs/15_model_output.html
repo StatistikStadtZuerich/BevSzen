@@ -2,12 +2,12 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.3.361">
+<meta name="generator" content="quarto-1.3.433">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>Plots for population scenarios - 15&nbsp; Model outputs</title>
+<title>Plots for population scenarios - 14&nbsp; Model outputs</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -75,7 +75,7 @@ ul.task-list li input[type="checkbox"] {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-      <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./15_model_output.html"><span class="chapter-number">15</span>&nbsp; <span class="chapter-title">Model outputs</span></a></li></ol></nav>
+      <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./15_model_output.html"><span class="chapter-number">14</span>&nbsp; <span class="chapter-title">Model outputs</span></a></li></ol></nav>
       <a class="flex-grow-1" role="button" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
       </a>
       <button type="button" class="btn quarto-search-button" aria-label="" onclick="window.quartoOpenSearch();">
@@ -174,26 +174,20 @@ ul.task-list li input[type="checkbox"] {
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./12_ownership.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">Ownership</span></span></a>
-  </div>
-</li>
-        <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
   <a href="./13_housing.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">Housing model</span></span></a>
+ <span class="menu-text"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">Housing model</span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./14_dem_house.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">14</span>&nbsp; <span class="chapter-title">Demography Housing</span></span></a>
+ <span class="menu-text"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">Demography Housing</span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./15_model_output.html" class="sidebar-item-text sidebar-link active">
- <span class="menu-text"><span class="chapter-number">15</span>&nbsp; <span class="chapter-title">Model outputs</span></span></a>
+ <span class="menu-text"><span class="chapter-number">14</span>&nbsp; <span class="chapter-title">Model outputs</span></span></a>
   </div>
 </li>
     </ul>
@@ -206,72 +200,80 @@ ul.task-list li input[type="checkbox"] {
     <h2 id="toc-title">Table of contents</h2>
    
   <ul>
-  <li><a href="#population" id="toc-population" class="nav-link active" data-scroll-target="#population"><span class="header-section-number">15.1</span> Population</a>
+  <li><a href="#population" id="toc-population" class="nav-link active" data-scroll-target="#population"><span class="header-section-number">14.1</span> Population</a>
   <ul>
-  <li><a href="#by-year-and-scenario" id="toc-by-year-and-scenario" class="nav-link" data-scroll-target="#by-year-and-scenario"><span class="header-section-number">15.1.1</span> by year and scenario</a></li>
-  <li><a href="#by-year-age-and-sex" id="toc-by-year-age-and-sex" class="nav-link" data-scroll-target="#by-year-age-and-sex"><span class="header-section-number">15.1.2</span> by year, age and sex</a></li>
-  <li><a href="#by-district-and-year" id="toc-by-district-and-year" class="nav-link" data-scroll-target="#by-district-and-year"><span class="header-section-number">15.1.3</span> by district and year</a></li>
-  <li><a href="#by-district-year-and-origin" id="toc-by-district-year-and-origin" class="nav-link" data-scroll-target="#by-district-year-and-origin"><span class="header-section-number">15.1.4</span> by district, year and origin</a></li>
-  <li><a href="#by-district-year-and-origin-foreign-population" id="toc-by-district-year-and-origin-foreign-population" class="nav-link" data-scroll-target="#by-district-year-and-origin-foreign-population"><span class="header-section-number">15.1.5</span> by district, year and origin; foreign population</a></li>
-  <li><a href="#by-year-origin-scenario" id="toc-by-year-origin-scenario" class="nav-link" data-scroll-target="#by-year-origin-scenario"><span class="header-section-number">15.1.6</span> by year, origin, scenario</a></li>
-  <li><a href="#by-year-origin-scenario-foreign-population" id="toc-by-year-origin-scenario-foreign-population" class="nav-link" data-scroll-target="#by-year-origin-scenario-foreign-population"><span class="header-section-number">15.1.7</span> by year, origin, scenario; foreign population</a></li>
-  <li><a href="#by-district-year-age-and-sex" id="toc-by-district-year-age-and-sex" class="nav-link" data-scroll-target="#by-district-year-age-and-sex"><span class="header-section-number">15.1.8</span> by district, year, age and sex</a></li>
-  <li><a href="#by-district-and-year-selected-years" id="toc-by-district-and-year-selected-years" class="nav-link" data-scroll-target="#by-district-and-year-selected-years"><span class="header-section-number">15.1.9</span> by district and year; selected years</a></li>
-  <li><a href="#by-district-year-and-scenario" id="toc-by-district-year-and-scenario" class="nav-link" data-scroll-target="#by-district-year-and-scenario"><span class="header-section-number">15.1.10</span> by district, year and scenario</a></li>
+  <li><a href="#by-year-and-scenario" id="toc-by-year-and-scenario" class="nav-link" data-scroll-target="#by-year-and-scenario"><span class="header-section-number">14.1.1</span> by year and scenario</a></li>
+  <li><a href="#by-year-age-and-sex" id="toc-by-year-age-and-sex" class="nav-link" data-scroll-target="#by-year-age-and-sex"><span class="header-section-number">14.1.2</span> by year, age and sex</a></li>
+  <li><a href="#by-district-and-year" id="toc-by-district-and-year" class="nav-link" data-scroll-target="#by-district-and-year"><span class="header-section-number">14.1.3</span> by district and year</a></li>
+  <li><a href="#by-district-year-and-origin" id="toc-by-district-year-and-origin" class="nav-link" data-scroll-target="#by-district-year-and-origin"><span class="header-section-number">14.1.4</span> by district, year and origin</a></li>
+  <li><a href="#by-district-year-and-origin-foreign-population" id="toc-by-district-year-and-origin-foreign-population" class="nav-link" data-scroll-target="#by-district-year-and-origin-foreign-population"><span class="header-section-number">14.1.5</span> by district, year and origin; foreign population</a></li>
+  <li><a href="#by-year-origin-scenario" id="toc-by-year-origin-scenario" class="nav-link" data-scroll-target="#by-year-origin-scenario"><span class="header-section-number">14.1.6</span> by year, origin, scenario</a></li>
+  <li><a href="#by-year-origin-scenario-foreign-population" id="toc-by-year-origin-scenario-foreign-population" class="nav-link" data-scroll-target="#by-year-origin-scenario-foreign-population"><span class="header-section-number">14.1.7</span> by year, origin, scenario; foreign population</a></li>
+  <li><a href="#by-district-year-age-and-sex" id="toc-by-district-year-age-and-sex" class="nav-link" data-scroll-target="#by-district-year-age-and-sex"><span class="header-section-number">14.1.8</span> by district, year, age and sex</a></li>
+  <li><a href="#by-district-and-year-selected-years" id="toc-by-district-and-year-selected-years" class="nav-link" data-scroll-target="#by-district-and-year-selected-years"><span class="header-section-number">14.1.9</span> by district and year; selected years</a></li>
+  <li><a href="#by-district-year-and-scenario" id="toc-by-district-year-and-scenario" class="nav-link" data-scroll-target="#by-district-year-and-scenario"><span class="header-section-number">14.1.10</span> by district, year and scenario</a></li>
+  <li><a href="#year-age-scenario-children" id="toc-year-age-scenario-children" class="nav-link" data-scroll-target="#year-age-scenario-children"><span class="header-section-number">14.1.11</span> year, age, scenario (children)</a></li>
+  <li><a href="#year-age-birth-version-children" id="toc-year-age-birth-version-children" class="nav-link" data-scroll-target="#year-age-birth-version-children"><span class="header-section-number">14.1.12</span> year, age, birth version (children)</a></li>
   </ul></li>
-  <li><a href="#population-new-and-previous-scenarios" id="toc-population-new-and-previous-scenarios" class="nav-link" data-scroll-target="#population-new-and-previous-scenarios"><span class="header-section-number">15.2</span> population: new and previous scenarios</a>
+  <li><a href="#population-new-and-previous-scenarios" id="toc-population-new-and-previous-scenarios" class="nav-link" data-scroll-target="#population-new-and-previous-scenarios"><span class="header-section-number">14.2</span> population: new and previous scenarios</a>
   <ul>
-  <li><a href="#by-year-and-scenario-1" id="toc-by-year-and-scenario-1" class="nav-link" data-scroll-target="#by-year-and-scenario-1"><span class="header-section-number">15.2.1</span> by year and scenario</a></li>
-  <li><a href="#age-80plus-by-yso" id="toc-age-80plus-by-yso" class="nav-link" data-scroll-target="#age-80plus-by-yso"><span class="header-section-number">15.2.2</span> age: 80plus, by yso</a></li>
-  <li><a href="#plus-by-year" id="toc-plus-by-year" class="nav-link" data-scroll-target="#plus-by-year"><span class="header-section-number">15.2.3</span> 80plus, by year</a></li>
-  <li><a href="#age-categories-by-year" id="toc-age-categories-by-year" class="nav-link" data-scroll-target="#age-categories-by-year"><span class="header-section-number">15.2.4</span> age categories, by year</a></li>
-  <li><a href="#only-younger-categories" id="toc-only-younger-categories" class="nav-link" data-scroll-target="#only-younger-categories"><span class="header-section-number">15.2.5</span> only younger categories</a></li>
-  <li><a href="#only-elder-categories" id="toc-only-elder-categories" class="nav-link" data-scroll-target="#only-elder-categories"><span class="header-section-number">15.2.6</span> only elder categories</a></li>
-  <li><a href="#new-and-previous-by-dy-selected-years-only" id="toc-new-and-previous-by-dy-selected-years-only" class="nav-link" data-scroll-target="#new-and-previous-by-dy-selected-years-only"><span class="header-section-number">15.2.7</span> new and previous: by dy (selected years only)</a></li>
+  <li><a href="#by-year-and-scenario-1" id="toc-by-year-and-scenario-1" class="nav-link" data-scroll-target="#by-year-and-scenario-1"><span class="header-section-number">14.2.1</span> by year and scenario</a></li>
+  <li><a href="#age-80plus-by-yso" id="toc-age-80plus-by-yso" class="nav-link" data-scroll-target="#age-80plus-by-yso"><span class="header-section-number">14.2.2</span> age: 80plus, by yso</a></li>
+  <li><a href="#plus-by-year" id="toc-plus-by-year" class="nav-link" data-scroll-target="#plus-by-year"><span class="header-section-number">14.2.3</span> 80plus, by year</a></li>
+  <li><a href="#age-categories-by-year" id="toc-age-categories-by-year" class="nav-link" data-scroll-target="#age-categories-by-year"><span class="header-section-number">14.2.4</span> age categories, by year</a></li>
+  <li><a href="#only-younger-categories" id="toc-only-younger-categories" class="nav-link" data-scroll-target="#only-younger-categories"><span class="header-section-number">14.2.5</span> only younger categories</a></li>
+  <li><a href="#only-elder-categories" id="toc-only-elder-categories" class="nav-link" data-scroll-target="#only-elder-categories"><span class="header-section-number">14.2.6</span> only elder categories</a></li>
+  <li><a href="#new-and-previous-by-dy-selected-years-only" id="toc-new-and-previous-by-dy-selected-years-only" class="nav-link" data-scroll-target="#new-and-previous-by-dy-selected-years-only"><span class="header-section-number">14.2.7</span> new and previous: by dy (selected years only)</a></li>
   </ul></li>
-  <li><a href="#birth" id="toc-birth" class="nav-link" data-scroll-target="#birth"><span class="header-section-number">15.3</span> birth</a>
+  <li><a href="#birth" id="toc-birth" class="nav-link" data-scroll-target="#birth"><span class="header-section-number">14.3</span> birth</a>
   <ul>
-  <li><a href="#by-year-and-scenario-2" id="toc-by-year-and-scenario-2" class="nav-link" data-scroll-target="#by-year-and-scenario-2"><span class="header-section-number">15.3.1</span> by year and scenario</a></li>
-  <li><a href="#by-year-origin-and-scenario" id="toc-by-year-origin-and-scenario" class="nav-link" data-scroll-target="#by-year-origin-and-scenario"><span class="header-section-number">15.3.2</span> by year, origin and scenario</a></li>
-  <li><a href="#by-district-year-and-origin-1" id="toc-by-district-year-and-origin-1" class="nav-link" data-scroll-target="#by-district-year-and-origin-1"><span class="header-section-number">15.3.3</span> by district, year and origin</a></li>
-  <li><a href="#by-district-year-and-origin-foreign-population-1" id="toc-by-district-year-and-origin-foreign-population-1" class="nav-link" data-scroll-target="#by-district-year-and-origin-foreign-population-1"><span class="header-section-number">15.3.4</span> by district, year and origin; foreign population</a></li>
+  <li><a href="#by-year-and-scenario-main-scenarios" id="toc-by-year-and-scenario-main-scenarios" class="nav-link" data-scroll-target="#by-year-and-scenario-main-scenarios"><span class="header-section-number">14.3.1</span> by year and scenario (main scenarios)</a></li>
+  <li><a href="#by-year-origin-and-scenario" id="toc-by-year-origin-and-scenario" class="nav-link" data-scroll-target="#by-year-origin-and-scenario"><span class="header-section-number">14.3.2</span> by year, origin and scenario</a></li>
+  <li><a href="#births-by-year-and-birth-versions-middle-scenario" id="toc-births-by-year-and-birth-versions-middle-scenario" class="nav-link" data-scroll-target="#births-by-year-and-birth-versions-middle-scenario"><span class="header-section-number">14.3.3</span> births by year and birth versions (middle scenario)</a></li>
+  <li><a href="#tfr-by-year-and-birth-versions-middle-scenario" id="toc-tfr-by-year-and-birth-versions-middle-scenario" class="nav-link" data-scroll-target="#tfr-by-year-and-birth-versions-middle-scenario"><span class="header-section-number">14.3.4</span> TFR by year and birth versions (middle scenario)</a></li>
+  <li><a href="#fertility-rate-by-year-and-birth-versions-middle-scenario" id="toc-fertility-rate-by-year-and-birth-versions-middle-scenario" class="nav-link" data-scroll-target="#fertility-rate-by-year-and-birth-versions-middle-scenario"><span class="header-section-number">14.3.5</span> fertility rate by year and birth versions (middle scenario)</a></li>
+  <li><a href="#by-district-year-and-origin-1" id="toc-by-district-year-and-origin-1" class="nav-link" data-scroll-target="#by-district-year-and-origin-1"><span class="header-section-number">14.3.6</span> by district, year and origin</a></li>
+  <li><a href="#by-district-year-and-origin-foreign-population-1" id="toc-by-district-year-and-origin-foreign-population-1" class="nav-link" data-scroll-target="#by-district-year-and-origin-foreign-population-1"><span class="header-section-number">14.3.7</span> by district, year and origin; foreign population</a></li>
   </ul></li>
-  <li><a href="#death" id="toc-death" class="nav-link" data-scroll-target="#death"><span class="header-section-number">15.4</span> death</a>
+  <li><a href="#death" id="toc-death" class="nav-link" data-scroll-target="#death"><span class="header-section-number">14.4</span> death</a>
   <ul>
-  <li><a href="#by-year-and-scenario-3" id="toc-by-year-and-scenario-3" class="nav-link" data-scroll-target="#by-year-and-scenario-3"><span class="header-section-number">15.4.1</span> by year and scenario</a></li>
-  <li><a href="#by-year-age-and-scenario" id="toc-by-year-age-and-scenario" class="nav-link" data-scroll-target="#by-year-age-and-scenario"><span class="header-section-number">15.4.2</span> by year, age and scenario</a></li>
-  <li><a href="#by-year-and-sex" id="toc-by-year-and-sex" class="nav-link" data-scroll-target="#by-year-and-sex"><span class="header-section-number">15.4.3</span> by year and sex</a></li>
-  <li><a href="#by-year-age-and-sex-1" id="toc-by-year-age-and-sex-1" class="nav-link" data-scroll-target="#by-year-age-and-sex-1"><span class="header-section-number">15.4.4</span> by year, age and sex</a></li>
+  <li><a href="#by-year-and-scenario-2" id="toc-by-year-and-scenario-2" class="nav-link" data-scroll-target="#by-year-and-scenario-2"><span class="header-section-number">14.4.1</span> by year and scenario</a></li>
+  <li><a href="#by-year-age-and-scenario" id="toc-by-year-age-and-scenario" class="nav-link" data-scroll-target="#by-year-age-and-scenario"><span class="header-section-number">14.4.2</span> by year, age and scenario</a></li>
+  <li><a href="#by-year-and-sex" id="toc-by-year-and-sex" class="nav-link" data-scroll-target="#by-year-and-sex"><span class="header-section-number">14.4.3</span> by year and sex</a></li>
+  <li><a href="#by-year-age-and-sex-1" id="toc-by-year-age-and-sex-1" class="nav-link" data-scroll-target="#by-year-age-and-sex-1"><span class="header-section-number">14.4.4</span> by year, age and sex</a></li>
   </ul></li>
-  <li><a href="#immigration" id="toc-immigration" class="nav-link" data-scroll-target="#immigration"><span class="header-section-number">15.5</span> immigration</a>
+  <li><a href="#immigration" id="toc-immigration" class="nav-link" data-scroll-target="#immigration"><span class="header-section-number">14.5</span> immigration</a>
   <ul>
-  <li><a href="#by-year-and-scenario-4" id="toc-by-year-and-scenario-4" class="nav-link" data-scroll-target="#by-year-and-scenario-4"><span class="header-section-number">15.5.1</span> by year and scenario</a></li>
-  <li><a href="#by-year-and-age" id="toc-by-year-and-age" class="nav-link" data-scroll-target="#by-year-and-age"><span class="header-section-number">15.5.2</span> by year and age</a></li>
-  <li><a href="#by-year-age-and-origin" id="toc-by-year-age-and-origin" class="nav-link" data-scroll-target="#by-year-age-and-origin"><span class="header-section-number">15.5.3</span> by year, age and origin</a></li>
-  <li><a href="#by-district-year-and-origin-2" id="toc-by-district-year-and-origin-2" class="nav-link" data-scroll-target="#by-district-year-and-origin-2"><span class="header-section-number">15.5.4</span> by district, year and origin</a></li>
-  <li><a href="#by-district-year-and-origin-foreign-population-2" id="toc-by-district-year-and-origin-foreign-population-2" class="nav-link" data-scroll-target="#by-district-year-and-origin-foreign-population-2"><span class="header-section-number">15.5.5</span> by district, year and origin; foreign population</a></li>
+  <li><a href="#by-year-and-scenario-3" id="toc-by-year-and-scenario-3" class="nav-link" data-scroll-target="#by-year-and-scenario-3"><span class="header-section-number">14.5.1</span> by year and scenario</a></li>
+  <li><a href="#by-year-and-age" id="toc-by-year-and-age" class="nav-link" data-scroll-target="#by-year-and-age"><span class="header-section-number">14.5.2</span> by year and age</a></li>
+  <li><a href="#by-year-age-children-and-scenario" id="toc-by-year-age-children-and-scenario" class="nav-link" data-scroll-target="#by-year-age-children-and-scenario"><span class="header-section-number">14.5.3</span> by year, age (children) and scenario</a></li>
+  <li><a href="#by-year-age-and-origin" id="toc-by-year-age-and-origin" class="nav-link" data-scroll-target="#by-year-age-and-origin"><span class="header-section-number">14.5.4</span> by year, age and origin</a></li>
+  <li><a href="#by-district-year-and-origin-2" id="toc-by-district-year-and-origin-2" class="nav-link" data-scroll-target="#by-district-year-and-origin-2"><span class="header-section-number">14.5.5</span> by district, year and origin</a></li>
+  <li><a href="#by-district-year-and-origin-foreign-population-2" id="toc-by-district-year-and-origin-foreign-population-2" class="nav-link" data-scroll-target="#by-district-year-and-origin-foreign-population-2"><span class="header-section-number">14.5.6</span> by district, year and origin; foreign population</a></li>
   </ul></li>
-  <li><a href="#emigration" id="toc-emigration" class="nav-link" data-scroll-target="#emigration"><span class="header-section-number">15.6</span> emigration</a>
+  <li><a href="#emigration" id="toc-emigration" class="nav-link" data-scroll-target="#emigration"><span class="header-section-number">14.6</span> emigration</a>
   <ul>
-  <li><a href="#by-year-and-scenario-5" id="toc-by-year-and-scenario-5" class="nav-link" data-scroll-target="#by-year-and-scenario-5"><span class="header-section-number">15.6.1</span> by year and scenario</a></li>
-  <li><a href="#by-year-and-age-1" id="toc-by-year-and-age-1" class="nav-link" data-scroll-target="#by-year-and-age-1"><span class="header-section-number">15.6.2</span> by year and age</a></li>
-  <li><a href="#by-year-age-and-origin-1" id="toc-by-year-age-and-origin-1" class="nav-link" data-scroll-target="#by-year-age-and-origin-1"><span class="header-section-number">15.6.3</span> by year, age and origin</a></li>
-  <li><a href="#by-district-year-and-origin-3" id="toc-by-district-year-and-origin-3" class="nav-link" data-scroll-target="#by-district-year-and-origin-3"><span class="header-section-number">15.6.4</span> by district, year and origin</a></li>
-  <li><a href="#by-district-year-and-origin-foreign-population-3" id="toc-by-district-year-and-origin-foreign-population-3" class="nav-link" data-scroll-target="#by-district-year-and-origin-foreign-population-3"><span class="header-section-number">15.6.5</span> by district, year and origin; foreign population</a></li>
+  <li><a href="#by-year-and-scenario-4" id="toc-by-year-and-scenario-4" class="nav-link" data-scroll-target="#by-year-and-scenario-4"><span class="header-section-number">14.6.1</span> by year and scenario</a></li>
+  <li><a href="#by-year-and-age-1" id="toc-by-year-and-age-1" class="nav-link" data-scroll-target="#by-year-and-age-1"><span class="header-section-number">14.6.2</span> by year and age</a></li>
+  <li><a href="#by-year-age-children-and-scenario-1" id="toc-by-year-age-children-and-scenario-1" class="nav-link" data-scroll-target="#by-year-age-children-and-scenario-1"><span class="header-section-number">14.6.3</span> by year, age (children) and scenario</a></li>
+  <li><a href="#by-year-age-and-origin-1" id="toc-by-year-age-and-origin-1" class="nav-link" data-scroll-target="#by-year-age-and-origin-1"><span class="header-section-number">14.6.4</span> by year, age and origin</a></li>
+  <li><a href="#by-district-year-and-origin-3" id="toc-by-district-year-and-origin-3" class="nav-link" data-scroll-target="#by-district-year-and-origin-3"><span class="header-section-number">14.6.5</span> by district, year and origin</a></li>
+  <li><a href="#by-district-year-and-origin-foreign-population-3" id="toc-by-district-year-and-origin-foreign-population-3" class="nav-link" data-scroll-target="#by-district-year-and-origin-foreign-population-3"><span class="header-section-number">14.6.6</span> by district, year and origin; foreign population</a></li>
   </ul></li>
-  <li><a href="#net-migration" id="toc-net-migration" class="nav-link" data-scroll-target="#net-migration"><span class="header-section-number">15.7</span> net migration</a>
+  <li><a href="#net-migration" id="toc-net-migration" class="nav-link" data-scroll-target="#net-migration"><span class="header-section-number">14.7</span> net migration</a>
   <ul>
-  <li><a href="#by-year-and-scenario-6" id="toc-by-year-and-scenario-6" class="nav-link" data-scroll-target="#by-year-and-scenario-6"><span class="header-section-number">15.7.1</span> by year and scenario</a></li>
-  <li><a href="#by-district-year-and-origin-4" id="toc-by-district-year-and-origin-4" class="nav-link" data-scroll-target="#by-district-year-and-origin-4"><span class="header-section-number">15.7.2</span> by district, year and origin</a></li>
+  <li><a href="#by-year-and-scenario-5" id="toc-by-year-and-scenario-5" class="nav-link" data-scroll-target="#by-year-and-scenario-5"><span class="header-section-number">14.7.1</span> by year and scenario</a></li>
+  <li><a href="#by-district-year-and-origin-4" id="toc-by-district-year-and-origin-4" class="nav-link" data-scroll-target="#by-district-year-and-origin-4"><span class="header-section-number">14.7.2</span> by district, year and origin</a></li>
+  <li><a href="#by-year-age-children-and-scenario-2" id="toc-by-year-age-children-and-scenario-2" class="nav-link" data-scroll-target="#by-year-age-children-and-scenario-2"><span class="header-section-number">14.7.3</span> by year, age (children) and scenario</a></li>
   </ul></li>
-  <li><a href="#naturalization" id="toc-naturalization" class="nav-link" data-scroll-target="#naturalization"><span class="header-section-number">15.8</span> naturalization</a>
+  <li><a href="#naturalization" id="toc-naturalization" class="nav-link" data-scroll-target="#naturalization"><span class="header-section-number">14.8</span> naturalization</a>
   <ul>
-  <li><a href="#by-year-and-scenario-7" id="toc-by-year-and-scenario-7" class="nav-link" data-scroll-target="#by-year-and-scenario-7"><span class="header-section-number">15.8.1</span> by year and scenario</a></li>
-  <li><a href="#by-district-and-year-1" id="toc-by-district-and-year-1" class="nav-link" data-scroll-target="#by-district-and-year-1"><span class="header-section-number">15.8.2</span> by district and year</a></li>
+  <li><a href="#by-year-and-scenario-6" id="toc-by-year-and-scenario-6" class="nav-link" data-scroll-target="#by-year-and-scenario-6"><span class="header-section-number">14.8.1</span> by year and scenario</a></li>
+  <li><a href="#by-district-and-year-1" id="toc-by-district-and-year-1" class="nav-link" data-scroll-target="#by-district-and-year-1"><span class="header-section-number">14.8.2</span> by district and year</a></li>
   </ul></li>
-  <li><a href="#relocation" id="toc-relocation" class="nav-link" data-scroll-target="#relocation"><span class="header-section-number">15.9</span> relocation</a>
+  <li><a href="#relocation" id="toc-relocation" class="nav-link" data-scroll-target="#relocation"><span class="header-section-number">14.9</span> relocation</a>
   <ul>
-  <li><a href="#by-year-scenario-and-category" id="toc-by-year-scenario-and-category" class="nav-link" data-scroll-target="#by-year-scenario-and-category"><span class="header-section-number">15.9.1</span> by year, scenario and category</a></li>
+  <li><a href="#by-year-scenario-and-category" id="toc-by-year-scenario-and-category" class="nav-link" data-scroll-target="#by-year-scenario-and-category"><span class="header-section-number">14.9.1</span> by year, scenario and category</a></li>
   </ul></li>
   </ul>
 </nav>
@@ -281,7 +283,7 @@ ul.task-list li input[type="checkbox"] {
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title"><span class="chapter-number">15</span>&nbsp; <span class="chapter-title">Model outputs</span></h1>
+<h1 class="title"><span class="chapter-number">14</span>&nbsp; <span class="chapter-title">Model outputs</span></h1>
 </div>
 
 
@@ -296,554 +298,643 @@ ul.task-list li input[type="checkbox"] {
 
 </header>
 
-<div class="cell" data-hash="15_model_output_cache/html/prep_6c40e063e470cc2e9a54eeff49afd991">
+<div class="cell" data-hash="15_model_output_cache/html/prep_869bf62b20a1435a4565a203b87198f0">
 
 </div>
-<section id="population" class="level2 page-columns page-full" data-number="15.1">
-<h2 data-number="15.1" class="anchored" data-anchor-id="population"><span class="header-section-number">15.1</span> Population</h2>
-<section id="by-year-and-scenario" class="level3 page-columns page-full" data-number="15.1.1">
-<h3 data-number="15.1.1" class="anchored" data-anchor-id="by-year-and-scenario"><span class="header-section-number">15.1.1</span> by year and scenario</h3>
-<div class="cell page-columns page-full" data-hash="15_model_output_cache/html/fig-1500_2c0b1bbdcd0dc413be7991166d30b5fb">
+<section id="population" class="level2 page-columns page-full" data-number="14.1">
+<h2 data-number="14.1" class="anchored" data-anchor-id="population"><span class="header-section-number">14.1</span> Population</h2>
+<section id="by-year-and-scenario" class="level3 page-columns page-full" data-number="14.1.1">
+<h3 data-number="14.1.1" class="anchored" data-anchor-id="by-year-and-scenario"><span class="header-section-number">14.1.1</span> by year and scenario</h3>
+<div class="cell page-columns page-full" data-hash="15_model_output_cache/html/fig-1500_0e7261b838be8081df04a356e4759e4d">
 <div class="cell-output-display column-body page-columns page-full">
 <div id="fig-1500" class="quarto-figure quarto-figure-center column-body anchored page-columns page-full">
 <figure class="figure page-columns page-full">
 <p class="page-columns page-full"><img src="15_model_output_files/figure-html/fig-1500-1.svg" class="column-body img-fluid figure-img"></p>
-<figcaption class="figure-caption">Figure&nbsp;15.1: population by year and scenario</figcaption>
+<figcaption class="figure-caption">Figure&nbsp;14.1: population by year and scenario</figcaption>
 </figure>
 </div>
 </div>
 </div>
 </section>
-<section id="by-year-age-and-sex" class="level3 page-columns page-full" data-number="15.1.2">
-<h3 data-number="15.1.2" class="anchored" data-anchor-id="by-year-age-and-sex"><span class="header-section-number">15.1.2</span> by year, age and sex</h3>
-<div class="cell page-columns page-full" data-hash="15_model_output_cache/html/fig-1501_cc41402e064d47499032effdbf2c2189">
+<section id="by-year-age-and-sex" class="level3 page-columns page-full" data-number="14.1.2">
+<h3 data-number="14.1.2" class="anchored" data-anchor-id="by-year-age-and-sex"><span class="header-section-number">14.1.2</span> by year, age and sex</h3>
+<div class="cell page-columns page-full" data-hash="15_model_output_cache/html/fig-1501_ae2cf806f1e3a3a943d26b1774a497b6">
 <div class="cell-output-display column-body page-columns page-full">
 <div id="fig-1501" class="quarto-figure quarto-figure-center column-body anchored page-columns page-full">
 <figure class="figure page-columns page-full">
 <p class="page-columns page-full"><img src="15_model_output_files/figure-html/fig-1501-1.svg" class="column-body img-fluid figure-img"></p>
-<figcaption class="figure-caption">Figure&nbsp;15.2: population by year, age and sex</figcaption>
+<figcaption class="figure-caption">Figure&nbsp;14.2: population by year, age and sex</figcaption>
 </figure>
 </div>
 </div>
 </div>
 </section>
-<section id="by-district-and-year" class="level3 page-columns page-full" data-number="15.1.3">
-<h3 data-number="15.1.3" class="anchored" data-anchor-id="by-district-and-year"><span class="header-section-number">15.1.3</span> by district and year</h3>
-<div class="cell page-columns page-full" data-hash="15_model_output_cache/html/fig-1502_906394c55e420b5bd857643152579b61">
+<section id="by-district-and-year" class="level3 page-columns page-full" data-number="14.1.3">
+<h3 data-number="14.1.3" class="anchored" data-anchor-id="by-district-and-year"><span class="header-section-number">14.1.3</span> by district and year</h3>
+<div class="cell page-columns page-full" data-hash="15_model_output_cache/html/fig-1502_78c42ae4f7ef518a2725a615ea28d442">
 <div class="cell-output-display column-body page-columns page-full">
 <div id="fig-1502" class="quarto-figure quarto-figure-center column-body anchored page-columns page-full">
 <figure class="figure page-columns page-full">
 <p class="page-columns page-full"><img src="15_model_output_files/figure-html/fig-1502-1.svg" class="column-body img-fluid figure-img"></p>
-<figcaption class="figure-caption">Figure&nbsp;15.3: population by district and year</figcaption>
+<figcaption class="figure-caption">Figure&nbsp;14.3: population by district and year</figcaption>
 </figure>
 </div>
 </div>
 </div>
 </section>
-<section id="by-district-year-and-origin" class="level3 page-columns page-full" data-number="15.1.4">
-<h3 data-number="15.1.4" class="anchored" data-anchor-id="by-district-year-and-origin"><span class="header-section-number">15.1.4</span> by district, year and origin</h3>
-<div class="cell page-columns page-full" data-hash="15_model_output_cache/html/fig-1503_5c81c881ccec7be785febce658c9d15e">
+<section id="by-district-year-and-origin" class="level3 page-columns page-full" data-number="14.1.4">
+<h3 data-number="14.1.4" class="anchored" data-anchor-id="by-district-year-and-origin"><span class="header-section-number">14.1.4</span> by district, year and origin</h3>
+<div class="cell page-columns page-full" data-hash="15_model_output_cache/html/fig-1503_1bda35f1d8b259f8ab769beffc46c22f">
 <div class="cell-output-display column-body page-columns page-full">
 <div id="fig-1503" class="quarto-figure quarto-figure-center column-body anchored page-columns page-full">
 <figure class="figure page-columns page-full">
 <p class="page-columns page-full"><img src="15_model_output_files/figure-html/fig-1503-1.svg" class="column-body img-fluid figure-img"></p>
-<figcaption class="figure-caption">Figure&nbsp;15.4: population by district, year and origin</figcaption>
+<figcaption class="figure-caption">Figure&nbsp;14.4: population by district, year and origin</figcaption>
 </figure>
 </div>
 </div>
 </div>
 </section>
-<section id="by-district-year-and-origin-foreign-population" class="level3 page-columns page-full" data-number="15.1.5">
-<h3 data-number="15.1.5" class="anchored" data-anchor-id="by-district-year-and-origin-foreign-population"><span class="header-section-number">15.1.5</span> by district, year and origin; foreign population</h3>
-<div class="cell page-columns page-full" data-hash="15_model_output_cache/html/fig-1504_5d46887755982804a6ecc66813cf4cdc">
+<section id="by-district-year-and-origin-foreign-population" class="level3 page-columns page-full" data-number="14.1.5">
+<h3 data-number="14.1.5" class="anchored" data-anchor-id="by-district-year-and-origin-foreign-population"><span class="header-section-number">14.1.5</span> by district, year and origin; foreign population</h3>
+<div class="cell page-columns page-full" data-hash="15_model_output_cache/html/fig-1504_42cf24f60448fee360badf04ab7043bd">
 <div class="cell-output-display column-body page-columns page-full">
 <div id="fig-1504" class="quarto-figure quarto-figure-center column-body anchored page-columns page-full">
 <figure class="figure page-columns page-full">
 <p class="page-columns page-full"><img src="15_model_output_files/figure-html/fig-1504-1.svg" class="column-body img-fluid figure-img"></p>
-<figcaption class="figure-caption">Figure&nbsp;15.5: foreign proportion of population by district, year and origin</figcaption>
+<figcaption class="figure-caption">Figure&nbsp;14.5: foreign proportion of population by district, year and origin</figcaption>
 </figure>
 </div>
 </div>
 </div>
 </section>
-<section id="by-year-origin-scenario" class="level3 page-columns page-full" data-number="15.1.6">
-<h3 data-number="15.1.6" class="anchored" data-anchor-id="by-year-origin-scenario"><span class="header-section-number">15.1.6</span> by year, origin, scenario</h3>
-<div class="cell page-columns page-full" data-hash="15_model_output_cache/html/fig-1505_f444add8681d35f874428539b8a647e1">
+<section id="by-year-origin-scenario" class="level3 page-columns page-full" data-number="14.1.6">
+<h3 data-number="14.1.6" class="anchored" data-anchor-id="by-year-origin-scenario"><span class="header-section-number">14.1.6</span> by year, origin, scenario</h3>
+<div class="cell page-columns page-full" data-hash="15_model_output_cache/html/fig-1505_1a395bfc1119aeca26fb4891513ec42e">
 <div class="cell-output-display column-body page-columns page-full">
 <div id="fig-1505" class="quarto-figure quarto-figure-center column-body anchored page-columns page-full">
 <figure class="figure page-columns page-full">
 <p class="page-columns page-full"><img src="15_model_output_files/figure-html/fig-1505-1.svg" class="column-body img-fluid figure-img"></p>
-<figcaption class="figure-caption">Figure&nbsp;15.6: population by year, origin and scenario</figcaption>
+<figcaption class="figure-caption">Figure&nbsp;14.6: population by year, origin and scenario</figcaption>
 </figure>
 </div>
 </div>
 </div>
 </section>
-<section id="by-year-origin-scenario-foreign-population" class="level3 page-columns page-full" data-number="15.1.7">
-<h3 data-number="15.1.7" class="anchored" data-anchor-id="by-year-origin-scenario-foreign-population"><span class="header-section-number">15.1.7</span> by year, origin, scenario; foreign population</h3>
-<div class="cell page-columns page-full" data-hash="15_model_output_cache/html/fig-1506_e15c04c6e1a4598aeb36e974c8dba3cc">
+<section id="by-year-origin-scenario-foreign-population" class="level3 page-columns page-full" data-number="14.1.7">
+<h3 data-number="14.1.7" class="anchored" data-anchor-id="by-year-origin-scenario-foreign-population"><span class="header-section-number">14.1.7</span> by year, origin, scenario; foreign population</h3>
+<div class="cell page-columns page-full" data-hash="15_model_output_cache/html/fig-1506_abde1ca1f773a760dfce12469595b42d">
 <div class="cell-output-display column-body page-columns page-full">
 <div id="fig-1506" class="quarto-figure quarto-figure-center column-body anchored page-columns page-full">
 <figure class="figure page-columns page-full">
 <p class="page-columns page-full"><img src="15_model_output_files/figure-html/fig-1506-1.svg" class="column-body img-fluid figure-img"></p>
-<figcaption class="figure-caption">Figure&nbsp;15.7: foreign proportion of population by year, origin and scenario</figcaption>
+<figcaption class="figure-caption">Figure&nbsp;14.7: foreign proportion of population by year, origin and scenario</figcaption>
 </figure>
 </div>
 </div>
 </div>
 </section>
-<section id="by-district-year-age-and-sex" class="level3 page-columns page-full" data-number="15.1.8">
-<h3 data-number="15.1.8" class="anchored" data-anchor-id="by-district-year-age-and-sex"><span class="header-section-number">15.1.8</span> by district, year, age and sex</h3>
-<div class="cell page-columns page-full" data-hash="15_model_output_cache/html/fig-1507_c1a89c7edff0b197647952968564b56b">
+<section id="by-district-year-age-and-sex" class="level3 page-columns page-full" data-number="14.1.8">
+<h3 data-number="14.1.8" class="anchored" data-anchor-id="by-district-year-age-and-sex"><span class="header-section-number">14.1.8</span> by district, year, age and sex</h3>
+<div class="cell page-columns page-full" data-hash="15_model_output_cache/html/fig-1507_251cc3b173ffc380d7c932f0be73cc34">
 <div class="cell-output-display column-body page-columns page-full">
 <div id="fig-1507" class="quarto-figure quarto-figure-center column-body anchored page-columns page-full">
 <figure class="figure page-columns page-full">
 <p class="page-columns page-full"><img src="15_model_output_files/figure-html/fig-1507-1.svg" class="column-body img-fluid figure-img"></p>
-<figcaption class="figure-caption">Figure&nbsp;15.8: population by district, year, age and sex</figcaption>
+<figcaption class="figure-caption">Figure&nbsp;14.8: population by district, year, age and sex</figcaption>
 </figure>
 </div>
 </div>
 </div>
 </section>
-<section id="by-district-and-year-selected-years" class="level3 page-columns page-full" data-number="15.1.9">
-<h3 data-number="15.1.9" class="anchored" data-anchor-id="by-district-and-year-selected-years"><span class="header-section-number">15.1.9</span> by district and year; selected years</h3>
+<section id="by-district-and-year-selected-years" class="level3 page-columns page-full" data-number="14.1.9">
+<h3 data-number="14.1.9" class="anchored" data-anchor-id="by-district-and-year-selected-years"><span class="header-section-number">14.1.9</span> by district and year; selected years</h3>
 <p>plot for slides</p>
-<div class="cell page-columns page-full" data-hash="15_model_output_cache/html/fig-1508_16e90c8d2cb98989c1eab024e8269815">
+<div class="cell page-columns page-full" data-hash="15_model_output_cache/html/fig-1508_114302b89d9f947e078f04ed2107541f">
 <div class="cell-output-display column-body page-columns page-full">
 <div id="fig-1508" class="quarto-figure quarto-figure-center column-body anchored page-columns page-full">
 <figure class="figure page-columns page-full">
 <p class="page-columns page-full"><img src="15_model_output_files/figure-html/fig-1508-1.svg" class="column-body img-fluid figure-img"></p>
-<figcaption class="figure-caption">Figure&nbsp;15.9: population by district and year</figcaption>
+<figcaption class="figure-caption">Figure&nbsp;14.9: population by district and year</figcaption>
 </figure>
 </div>
 </div>
 </div>
 </section>
-<section id="by-district-year-and-scenario" class="level3 page-columns page-full" data-number="15.1.10">
-<h3 data-number="15.1.10" class="anchored" data-anchor-id="by-district-year-and-scenario"><span class="header-section-number">15.1.10</span> by district, year and scenario</h3>
-<div class="cell page-columns page-full" data-hash="15_model_output_cache/html/fig-1509_d7f861fd1869b5d6f05949f871213888">
+<section id="by-district-year-and-scenario" class="level3 page-columns page-full" data-number="14.1.10">
+<h3 data-number="14.1.10" class="anchored" data-anchor-id="by-district-year-and-scenario"><span class="header-section-number">14.1.10</span> by district, year and scenario</h3>
+<div class="cell page-columns page-full" data-hash="15_model_output_cache/html/fig-1509_513dc4f29c6620023ae3448ca0396bf4">
 <div class="cell-output-display column-body page-columns page-full">
 <div id="fig-1509" class="quarto-figure quarto-figure-center column-body anchored page-columns page-full">
 <figure class="figure page-columns page-full">
 <p class="page-columns page-full"><img src="15_model_output_files/figure-html/fig-1509-1.svg" class="column-body img-fluid figure-img"></p>
-<figcaption class="figure-caption">Figure&nbsp;15.10: population by district, year and scenario</figcaption>
+<figcaption class="figure-caption">Figure&nbsp;14.10: population by district, year and scenario</figcaption>
 </figure>
 </div>
 </div>
 </div>
 </section>
+<section id="year-age-scenario-children" class="level3 page-columns page-full" data-number="14.1.11">
+<h3 data-number="14.1.11" class="anchored" data-anchor-id="year-age-scenario-children"><span class="header-section-number">14.1.11</span> year, age, scenario (children)</h3>
+<div class="cell page-columns page-full" data-hash="15_model_output_cache/html/unnamed-chunk-12_badda707e8bb4acc87c49a0cdc7a0c81">
+<div class="cell-output-display column-body page-columns page-full">
+<p class="page-columns page-full"><img src="15_model_output_files/figure-html/unnamed-chunk-12-1.svg" class="column-body img-fluid"></p>
+</div>
+</div>
 </section>
-<section id="population-new-and-previous-scenarios" class="level2 page-columns page-full" data-number="15.2">
-<h2 data-number="15.2" class="anchored" data-anchor-id="population-new-and-previous-scenarios"><span class="header-section-number">15.2</span> population: new and previous scenarios</h2>
-<section id="by-year-and-scenario-1" class="level3 page-columns page-full" data-number="15.2.1">
-<h3 data-number="15.2.1" class="anchored" data-anchor-id="by-year-and-scenario-1"><span class="header-section-number">15.2.1</span> by year and scenario</h3>
-<div class="cell page-columns page-full" data-hash="15_model_output_cache/html/fig-1510_aeef0d7c161039f26202829b600e09b0">
+<section id="year-age-birth-version-children" class="level3 page-columns page-full" data-number="14.1.12">
+<h3 data-number="14.1.12" class="anchored" data-anchor-id="year-age-birth-version-children"><span class="header-section-number">14.1.12</span> year, age, birth version (children)</h3>
+<div class="cell page-columns page-full" data-hash="15_model_output_cache/html/unnamed-chunk-13_dd24d279d26816a8a3ab934891030491">
+<div class="cell-output-display column-body page-columns page-full">
+<p class="page-columns page-full"><img src="15_model_output_files/figure-html/unnamed-chunk-13-1.svg" class="column-body img-fluid"></p>
+</div>
+</div>
+</section>
+</section>
+<section id="population-new-and-previous-scenarios" class="level2 page-columns page-full" data-number="14.2">
+<h2 data-number="14.2" class="anchored" data-anchor-id="population-new-and-previous-scenarios"><span class="header-section-number">14.2</span> population: new and previous scenarios</h2>
+<section id="by-year-and-scenario-1" class="level3 page-columns page-full" data-number="14.2.1">
+<h3 data-number="14.2.1" class="anchored" data-anchor-id="by-year-and-scenario-1"><span class="header-section-number">14.2.1</span> by year and scenario</h3>
+<div class="cell page-columns page-full" data-hash="15_model_output_cache/html/fig-1510_51faafb69cd6f1ae9439d6ef3c10ecb6">
 <div class="cell-output-display column-body page-columns page-full">
 <div id="fig-1510" class="quarto-figure quarto-figure-center column-body anchored page-columns page-full">
 <figure class="figure page-columns page-full">
 <p class="page-columns page-full"><img src="15_model_output_files/figure-html/fig-1510-1.svg" class="column-body img-fluid figure-img"></p>
-<figcaption class="figure-caption">Figure&nbsp;15.11: previous and new population by year, scenario</figcaption>
+<figcaption class="figure-caption">Figure&nbsp;14.11: previous and new population by year, scenario</figcaption>
 </figure>
 </div>
 </div>
 </div>
 </section>
-<section id="age-80plus-by-yso" class="level3 page-columns page-full" data-number="15.2.2">
-<h3 data-number="15.2.2" class="anchored" data-anchor-id="age-80plus-by-yso"><span class="header-section-number">15.2.2</span> age: 80plus, by yso</h3>
-<div class="cell page-columns page-full" data-hash="15_model_output_cache/html/fig-1511_b5784918a5eb1561a36e99b362febf4e">
+<section id="age-80plus-by-yso" class="level3 page-columns page-full" data-number="14.2.2">
+<h3 data-number="14.2.2" class="anchored" data-anchor-id="age-80plus-by-yso"><span class="header-section-number">14.2.2</span> age: 80plus, by yso</h3>
+<div class="cell page-columns page-full" data-hash="15_model_output_cache/html/fig-1511_78b3cf85c7c76abd8faa0cf021fc2738">
 <div class="cell-output-display column-body page-columns page-full">
 <div id="fig-1511" class="quarto-figure quarto-figure-center column-body anchored page-columns page-full">
 <figure class="figure page-columns page-full">
 <p class="page-columns page-full"><img src="15_model_output_files/figure-html/fig-1511-1.svg" class="column-body img-fluid figure-img"></p>
-<figcaption class="figure-caption">Figure&nbsp;15.12: previous and new population for 80+ by sex and origin</figcaption>
+<figcaption class="figure-caption">Figure&nbsp;14.12: previous and new population for 80+ by sex and origin</figcaption>
 </figure>
 </div>
 </div>
 </div>
 </section>
-<section id="plus-by-year" class="level3 page-columns page-full" data-number="15.2.3">
-<h3 data-number="15.2.3" class="anchored" data-anchor-id="plus-by-year"><span class="header-section-number">15.2.3</span> 80plus, by year</h3>
-<div class="cell page-columns page-full" data-hash="15_model_output_cache/html/fig-1512_8d056dc60b9742184926e298a88561fa">
+<section id="plus-by-year" class="level3 page-columns page-full" data-number="14.2.3">
+<h3 data-number="14.2.3" class="anchored" data-anchor-id="plus-by-year"><span class="header-section-number">14.2.3</span> 80plus, by year</h3>
+<div class="cell page-columns page-full" data-hash="15_model_output_cache/html/fig-1512_7af7b61e0e1138da4c7b0e41a6a7a11e">
 <div class="cell-output-display column-body page-columns page-full">
 <div id="fig-1512" class="quarto-figure quarto-figure-center column-body anchored page-columns page-full">
 <figure class="figure page-columns page-full">
 <p class="page-columns page-full"><img src="15_model_output_files/figure-html/fig-1512-1.svg" class="column-body img-fluid figure-img"></p>
-<figcaption class="figure-caption">Figure&nbsp;15.13: previous and new population for 80+ by year</figcaption>
+<figcaption class="figure-caption">Figure&nbsp;14.13: previous and new population for 80+ by year</figcaption>
 </figure>
 </div>
 </div>
 </div>
 </section>
-<section id="age-categories-by-year" class="level3 page-columns page-full" data-number="15.2.4">
-<h3 data-number="15.2.4" class="anchored" data-anchor-id="age-categories-by-year"><span class="header-section-number">15.2.4</span> age categories, by year</h3>
+<section id="age-categories-by-year" class="level3 page-columns page-full" data-number="14.2.4">
+<h3 data-number="14.2.4" class="anchored" data-anchor-id="age-categories-by-year"><span class="header-section-number">14.2.4</span> age categories, by year</h3>
 <p>one category for 80+</p>
-<div class="cell page-columns page-full" data-hash="15_model_output_cache/html/fig-1513_220ead841fd25892a60f6d3c2c47ff31">
+<div class="cell page-columns page-full" data-hash="15_model_output_cache/html/fig-1513_fb0c46cfd565357bdd29a415a0631828">
 <div class="cell-output-display column-body page-columns page-full">
 <div id="fig-1513" class="quarto-figure quarto-figure-center column-body anchored page-columns page-full">
 <figure class="figure page-columns page-full">
 <p class="page-columns page-full"><img src="15_model_output_files/figure-html/fig-1513-1.svg" class="column-body img-fluid figure-img"></p>
-<figcaption class="figure-caption">Figure&nbsp;15.14: previous and new population by age categories</figcaption>
+<figcaption class="figure-caption">Figure&nbsp;14.14: previous and new population by age categories</figcaption>
 </figure>
 </div>
 </div>
 </div>
 </section>
-<section id="only-younger-categories" class="level3 page-columns page-full" data-number="15.2.5">
-<h3 data-number="15.2.5" class="anchored" data-anchor-id="only-younger-categories"><span class="header-section-number">15.2.5</span> only younger categories</h3>
-<div class="cell page-columns page-full" data-hash="15_model_output_cache/html/fig-1514_0fc4b1973f14f43ee9745237b57015fc">
+<section id="only-younger-categories" class="level3 page-columns page-full" data-number="14.2.5">
+<h3 data-number="14.2.5" class="anchored" data-anchor-id="only-younger-categories"><span class="header-section-number">14.2.5</span> only younger categories</h3>
+<div class="cell page-columns page-full" data-hash="15_model_output_cache/html/fig-1514_31df0418412ae1372a3413bba0527f2f">
 <div class="cell-output-display column-body page-columns page-full">
 <div id="fig-1514" class="quarto-figure quarto-figure-center column-body anchored page-columns page-full">
 <figure class="figure page-columns page-full">
 <p class="page-columns page-full"><img src="15_model_output_files/figure-html/fig-1514-1.svg" class="column-body img-fluid figure-img"></p>
-<figcaption class="figure-caption">Figure&nbsp;15.15: previous and new population for 19- by age categories</figcaption>
+<figcaption class="figure-caption">Figure&nbsp;14.15: previous and new population for 19- by age categories</figcaption>
 </figure>
 </div>
 </div>
 </div>
 </section>
-<section id="only-elder-categories" class="level3 page-columns page-full" data-number="15.2.6">
-<h3 data-number="15.2.6" class="anchored" data-anchor-id="only-elder-categories"><span class="header-section-number">15.2.6</span> only elder categories</h3>
-<div class="cell page-columns page-full" data-hash="15_model_output_cache/html/fig-1515_4edb0258f131633708f3d42c71022b9e">
+<section id="only-elder-categories" class="level3 page-columns page-full" data-number="14.2.6">
+<h3 data-number="14.2.6" class="anchored" data-anchor-id="only-elder-categories"><span class="header-section-number">14.2.6</span> only elder categories</h3>
+<div class="cell page-columns page-full" data-hash="15_model_output_cache/html/fig-1515_979774b0ace7943f3bfdaa62a5c196a8">
 <div class="cell-output-display column-body page-columns page-full">
 <div id="fig-1515" class="quarto-figure quarto-figure-center column-body anchored page-columns page-full">
 <figure class="figure page-columns page-full">
 <p class="page-columns page-full"><img src="15_model_output_files/figure-html/fig-1515-1.svg" class="column-body img-fluid figure-img"></p>
-<figcaption class="figure-caption">Figure&nbsp;15.16: previous and new population for 60+ by age categories</figcaption>
+<figcaption class="figure-caption">Figure&nbsp;14.16: previous and new population for 60+ by age categories</figcaption>
 </figure>
 </div>
 </div>
 </div>
 </section>
-<section id="new-and-previous-by-dy-selected-years-only" class="level3 page-columns page-full" data-number="15.2.7">
-<h3 data-number="15.2.7" class="anchored" data-anchor-id="new-and-previous-by-dy-selected-years-only"><span class="header-section-number">15.2.7</span> new and previous: by dy (selected years only)</h3>
-<div class="cell page-columns page-full" data-hash="15_model_output_cache/html/fig-1516_8cba9be57ee21524713f41fcf5131de2">
+<section id="new-and-previous-by-dy-selected-years-only" class="level3 page-columns page-full" data-number="14.2.7">
+<h3 data-number="14.2.7" class="anchored" data-anchor-id="new-and-previous-by-dy-selected-years-only"><span class="header-section-number">14.2.7</span> new and previous: by dy (selected years only)</h3>
+<div class="cell page-columns page-full" data-hash="15_model_output_cache/html/fig-1516_b345dcd677799125f03c02030b9af974">
 <div class="cell-output-display column-body page-columns page-full">
 <div id="fig-1516" class="quarto-figure quarto-figure-center column-body anchored page-columns page-full">
 <figure class="figure page-columns page-full">
 <p class="page-columns page-full"><img src="15_model_output_files/figure-html/fig-1516-1.svg" class="column-body img-fluid figure-img"></p>
-<figcaption class="figure-caption">Figure&nbsp;15.17: previous and new population by district</figcaption>
+<figcaption class="figure-caption">Figure&nbsp;14.17: previous and new population by district</figcaption>
 </figure>
 </div>
 </div>
 </div>
 </section>
 </section>
-<section id="birth" class="level2 page-columns page-full" data-number="15.3">
-<h2 data-number="15.3" class="anchored" data-anchor-id="birth"><span class="header-section-number">15.3</span> birth</h2>
-<section id="by-year-and-scenario-2" class="level3 page-columns page-full" data-number="15.3.1">
-<h3 data-number="15.3.1" class="anchored" data-anchor-id="by-year-and-scenario-2"><span class="header-section-number">15.3.1</span> by year and scenario</h3>
-<div class="cell page-columns page-full" data-hash="15_model_output_cache/html/fig-1520_8445a385f216241e5e4896c2d41f0729">
+<section id="birth" class="level2 page-columns page-full" data-number="14.3">
+<h2 data-number="14.3" class="anchored" data-anchor-id="birth"><span class="header-section-number">14.3</span> birth</h2>
+<section id="by-year-and-scenario-main-scenarios" class="level3 page-columns page-full" data-number="14.3.1">
+<h3 data-number="14.3.1" class="anchored" data-anchor-id="by-year-and-scenario-main-scenarios"><span class="header-section-number">14.3.1</span> by year and scenario (main scenarios)</h3>
+<div class="cell page-columns page-full" data-hash="15_model_output_cache/html/fig-1520_8683c31e4f018e2ab6da4489ef78b692">
 <div class="cell-output-display column-body page-columns page-full">
 <div id="fig-1520" class="quarto-figure quarto-figure-center column-body anchored page-columns page-full">
 <figure class="figure page-columns page-full">
 <p class="page-columns page-full"><img src="15_model_output_files/figure-html/fig-1520-1.svg" class="column-body img-fluid figure-img"></p>
-<figcaption class="figure-caption">Figure&nbsp;15.18: births by year and scenario</figcaption>
+<figcaption class="figure-caption">Figure&nbsp;14.18: births by year and scenario</figcaption>
 </figure>
 </div>
 </div>
 </div>
 </section>
-<section id="by-year-origin-and-scenario" class="level3 page-columns page-full" data-number="15.3.2">
-<h3 data-number="15.3.2" class="anchored" data-anchor-id="by-year-origin-and-scenario"><span class="header-section-number">15.3.2</span> by year, origin and scenario</h3>
-<div class="cell page-columns page-full" data-hash="15_model_output_cache/html/fig-1521_b8f9ca87bd985b9ede4faf0283894f46">
+<section id="by-year-origin-and-scenario" class="level3 page-columns page-full" data-number="14.3.2">
+<h3 data-number="14.3.2" class="anchored" data-anchor-id="by-year-origin-and-scenario"><span class="header-section-number">14.3.2</span> by year, origin and scenario</h3>
+<div class="cell page-columns page-full" data-hash="15_model_output_cache/html/fig-1521_c80d0bcf0296a5a7e74238cb2e14baaf">
 <div class="cell-output-display column-body page-columns page-full">
 <div id="fig-1521" class="quarto-figure quarto-figure-center column-body anchored page-columns page-full">
 <figure class="figure page-columns page-full">
 <p class="page-columns page-full"><img src="15_model_output_files/figure-html/fig-1521-1.svg" class="column-body img-fluid figure-img"></p>
-<figcaption class="figure-caption">Figure&nbsp;15.19: births by year, origin and scenario</figcaption>
+<figcaption class="figure-caption">Figure&nbsp;14.19: births by year, origin and scenario</figcaption>
 </figure>
 </div>
 </div>
 </div>
 </section>
-<section id="by-district-year-and-origin-1" class="level3 page-columns page-full" data-number="15.3.3">
-<h3 data-number="15.3.3" class="anchored" data-anchor-id="by-district-year-and-origin-1"><span class="header-section-number">15.3.3</span> by district, year and origin</h3>
-<div class="cell page-columns page-full" data-hash="15_model_output_cache/html/fig-1522_130de9e575b7e340e2c4c52c72c97196">
+<section id="births-by-year-and-birth-versions-middle-scenario" class="level3 page-columns page-full" data-number="14.3.3">
+<h3 data-number="14.3.3" class="anchored" data-anchor-id="births-by-year-and-birth-versions-middle-scenario"><span class="header-section-number">14.3.3</span> births by year and birth versions (middle scenario)</h3>
+<div class="cell page-columns page-full" data-hash="15_model_output_cache/html/fig-1521a_e41dc64c78a4e000897bf877ccc866e4">
+<div class="cell-output-display column-body page-columns page-full">
+<div id="fig-1521a" class="quarto-figure quarto-figure-center column-body anchored page-columns page-full">
+<figure class="figure page-columns page-full">
+<p class="page-columns page-full"><img src="15_model_output_files/figure-html/fig-1521a-1.svg" class="column-body img-fluid figure-img"></p>
+<figcaption class="figure-caption">Figure&nbsp;14.20: births by year and birth version (middle scenario)</figcaption>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="tfr-by-year-and-birth-versions-middle-scenario" class="level3 page-columns page-full" data-number="14.3.4">
+<h3 data-number="14.3.4" class="anchored" data-anchor-id="tfr-by-year-and-birth-versions-middle-scenario"><span class="header-section-number">14.3.4</span> TFR by year and birth versions (middle scenario)</h3>
+<div class="cell page-columns page-full" data-hash="15_model_output_cache/html/fig-1521b_c1f357f5d8a0930bf7bd2cc873157494">
+<div class="cell-output-display column-body page-columns page-full">
+<div id="fig-1521b" class="quarto-figure quarto-figure-center column-body anchored page-columns page-full">
+<figure class="figure page-columns page-full">
+<p class="page-columns page-full"><img src="15_model_output_files/figure-html/fig-1521b-1.svg" class="column-body img-fluid figure-img"></p>
+<figcaption class="figure-caption">Figure&nbsp;14.21: TFR by year and birth version (middle scenario)</figcaption>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="fertility-rate-by-year-and-birth-versions-middle-scenario" class="level3 page-columns page-full" data-number="14.3.5">
+<h3 data-number="14.3.5" class="anchored" data-anchor-id="fertility-rate-by-year-and-birth-versions-middle-scenario"><span class="header-section-number">14.3.5</span> fertility rate by year and birth versions (middle scenario)</h3>
+<div class="cell page-columns page-full" data-hash="15_model_output_cache/html/unnamed-chunk-25_23cb420f16d0a6a15daac64148d6e2b4">
+<div class="cell-output-display column-body page-columns page-full">
+<p class="page-columns page-full"><img src="15_model_output_files/figure-html/unnamed-chunk-25-1.svg" class="column-body img-fluid"></p>
+</div>
+</div>
+</section>
+<section id="by-district-year-and-origin-1" class="level3 page-columns page-full" data-number="14.3.6">
+<h3 data-number="14.3.6" class="anchored" data-anchor-id="by-district-year-and-origin-1"><span class="header-section-number">14.3.6</span> by district, year and origin</h3>
+<div class="cell page-columns page-full" data-hash="15_model_output_cache/html/fig-1522_eb1167b8ac98654f829d89454c241b3c">
 <div class="cell-output-display column-body page-columns page-full">
 <div id="fig-1522" class="quarto-figure quarto-figure-center column-body anchored page-columns page-full">
 <figure class="figure page-columns page-full">
 <p class="page-columns page-full"><img src="15_model_output_files/figure-html/fig-1522-1.svg" class="column-body img-fluid figure-img"></p>
-<figcaption class="figure-caption">Figure&nbsp;15.20: births by district, year and origin</figcaption>
+<figcaption class="figure-caption">Figure&nbsp;14.22: births by district, year and origin</figcaption>
 </figure>
 </div>
 </div>
 </div>
 </section>
-<section id="by-district-year-and-origin-foreign-population-1" class="level3 page-columns page-full" data-number="15.3.4">
-<h3 data-number="15.3.4" class="anchored" data-anchor-id="by-district-year-and-origin-foreign-population-1"><span class="header-section-number">15.3.4</span> by district, year and origin; foreign population</h3>
-<div class="cell page-columns page-full" data-hash="15_model_output_cache/html/fig-1523_529b5e9cc77f56e81cef143acb583de6">
+<section id="by-district-year-and-origin-foreign-population-1" class="level3 page-columns page-full" data-number="14.3.7">
+<h3 data-number="14.3.7" class="anchored" data-anchor-id="by-district-year-and-origin-foreign-population-1"><span class="header-section-number">14.3.7</span> by district, year and origin; foreign population</h3>
+<div class="cell page-columns page-full" data-hash="15_model_output_cache/html/fig-1523_072c382e043b6213fa51761725342807">
 <div class="cell-output-display column-body page-columns page-full">
 <div id="fig-1523" class="quarto-figure quarto-figure-center column-body anchored page-columns page-full">
 <figure class="figure page-columns page-full">
 <p class="page-columns page-full"><img src="15_model_output_files/figure-html/fig-1523-1.svg" class="column-body img-fluid figure-img"></p>
-<figcaption class="figure-caption">Figure&nbsp;15.21: foreign proportion of births by district, year and origin</figcaption>
+<figcaption class="figure-caption">Figure&nbsp;14.23: foreign proportion of births by district, year and origin</figcaption>
 </figure>
 </div>
 </div>
 </div>
 </section>
 </section>
-<section id="death" class="level2 page-columns page-full" data-number="15.4">
-<h2 data-number="15.4" class="anchored" data-anchor-id="death"><span class="header-section-number">15.4</span> death</h2>
-<section id="by-year-and-scenario-3" class="level3 page-columns page-full" data-number="15.4.1">
-<h3 data-number="15.4.1" class="anchored" data-anchor-id="by-year-and-scenario-3"><span class="header-section-number">15.4.1</span> by year and scenario</h3>
-<div class="cell page-columns page-full" data-hash="15_model_output_cache/html/fig-1530_3c7609102184b6d5013d3f548bd6238a">
+<section id="death" class="level2 page-columns page-full" data-number="14.4">
+<h2 data-number="14.4" class="anchored" data-anchor-id="death"><span class="header-section-number">14.4</span> death</h2>
+<section id="by-year-and-scenario-2" class="level3 page-columns page-full" data-number="14.4.1">
+<h3 data-number="14.4.1" class="anchored" data-anchor-id="by-year-and-scenario-2"><span class="header-section-number">14.4.1</span> by year and scenario</h3>
+<div class="cell page-columns page-full" data-hash="15_model_output_cache/html/fig-1530_febbcd624c0bb2fb2b6e6c9c3a754630">
 <div class="cell-output-display column-body page-columns page-full">
 <div id="fig-1530" class="quarto-figure quarto-figure-center column-body anchored page-columns page-full">
 <figure class="figure page-columns page-full">
 <p class="page-columns page-full"><img src="15_model_output_files/figure-html/fig-1530-1.svg" class="column-body img-fluid figure-img"></p>
-<figcaption class="figure-caption">Figure&nbsp;15.22: deaths by year and scenario</figcaption>
+<figcaption class="figure-caption">Figure&nbsp;14.24: deaths by year and scenario</figcaption>
 </figure>
 </div>
 </div>
 </div>
 </section>
-<section id="by-year-age-and-scenario" class="level3 page-columns page-full" data-number="15.4.2">
-<h3 data-number="15.4.2" class="anchored" data-anchor-id="by-year-age-and-scenario"><span class="header-section-number">15.4.2</span> by year, age and scenario</h3>
-<div class="cell page-columns page-full" data-hash="15_model_output_cache/html/fig-1531_b43dfd9c744957b4f7fdedc3ae1724b5">
+<section id="by-year-age-and-scenario" class="level3 page-columns page-full" data-number="14.4.2">
+<h3 data-number="14.4.2" class="anchored" data-anchor-id="by-year-age-and-scenario"><span class="header-section-number">14.4.2</span> by year, age and scenario</h3>
+<div class="cell page-columns page-full" data-hash="15_model_output_cache/html/fig-1531_b4975e970e44a38bcb4ffc51b5db276c">
 <div class="cell-output-display column-body page-columns page-full">
 <div id="fig-1531" class="quarto-figure quarto-figure-center column-body anchored page-columns page-full">
 <figure class="figure page-columns page-full">
 <p class="page-columns page-full"><img src="15_model_output_files/figure-html/fig-1531-1.svg" class="column-body img-fluid figure-img"></p>
-<figcaption class="figure-caption">Figure&nbsp;15.23: deaths by year, age and scenario</figcaption>
+<figcaption class="figure-caption">Figure&nbsp;14.25: deaths by year, age and scenario</figcaption>
 </figure>
 </div>
 </div>
 </div>
 </section>
-<section id="by-year-and-sex" class="level3 page-columns page-full" data-number="15.4.3">
-<h3 data-number="15.4.3" class="anchored" data-anchor-id="by-year-and-sex"><span class="header-section-number">15.4.3</span> by year and sex</h3>
-<div class="cell page-columns page-full" data-hash="15_model_output_cache/html/fig-15232_ef83407185fc7391dd3a8533edf5ae8e">
+<section id="by-year-and-sex" class="level3 page-columns page-full" data-number="14.4.3">
+<h3 data-number="14.4.3" class="anchored" data-anchor-id="by-year-and-sex"><span class="header-section-number">14.4.3</span> by year and sex</h3>
+<div class="cell page-columns page-full" data-hash="15_model_output_cache/html/fig-15232_8245d172ed895aafb762b89d1e99ad62">
 <div class="cell-output-display column-body page-columns page-full">
 <div id="fig-15232" class="quarto-figure quarto-figure-center column-body anchored page-columns page-full">
 <figure class="figure page-columns page-full">
 <p class="page-columns page-full"><img src="15_model_output_files/figure-html/fig-15232-1.svg" class="column-body img-fluid figure-img"></p>
-<figcaption class="figure-caption">Figure&nbsp;15.24: deaths by year and sex</figcaption>
+<figcaption class="figure-caption">Figure&nbsp;14.26: deaths by year and sex</figcaption>
 </figure>
 </div>
 </div>
 </div>
 </section>
-<section id="by-year-age-and-sex-1" class="level3 page-columns page-full" data-number="15.4.4">
-<h3 data-number="15.4.4" class="anchored" data-anchor-id="by-year-age-and-sex-1"><span class="header-section-number">15.4.4</span> by year, age and sex</h3>
-<div class="cell page-columns page-full" data-hash="15_model_output_cache/html/fig-1533_42cde8800c3810c0b75012e04e0eab83">
+<section id="by-year-age-and-sex-1" class="level3 page-columns page-full" data-number="14.4.4">
+<h3 data-number="14.4.4" class="anchored" data-anchor-id="by-year-age-and-sex-1"><span class="header-section-number">14.4.4</span> by year, age and sex</h3>
+<div class="cell page-columns page-full" data-hash="15_model_output_cache/html/fig-1533_b2559be5719895673ec5ff96dd583dbe">
 <div class="cell-output-display column-body page-columns page-full">
 <div id="fig-1533" class="quarto-figure quarto-figure-center column-body anchored page-columns page-full">
 <figure class="figure page-columns page-full">
 <p class="page-columns page-full"><img src="15_model_output_files/figure-html/fig-1533-1.svg" class="column-body img-fluid figure-img"></p>
-<figcaption class="figure-caption">Figure&nbsp;15.25: deaths by year, age and sex</figcaption>
+<figcaption class="figure-caption">Figure&nbsp;14.27: deaths by year, age and sex</figcaption>
 </figure>
 </div>
 </div>
 </div>
 </section>
 </section>
-<section id="immigration" class="level2 page-columns page-full" data-number="15.5">
-<h2 data-number="15.5" class="anchored" data-anchor-id="immigration"><span class="header-section-number">15.5</span> immigration</h2>
-<section id="by-year-and-scenario-4" class="level3 page-columns page-full" data-number="15.5.1">
-<h3 data-number="15.5.1" class="anchored" data-anchor-id="by-year-and-scenario-4"><span class="header-section-number">15.5.1</span> by year and scenario</h3>
-<div class="cell page-columns page-full" data-hash="15_model_output_cache/html/fig-1540_920dc91a908142f6f387e9d6e0ee04eb">
+<section id="immigration" class="level2 page-columns page-full" data-number="14.5">
+<h2 data-number="14.5" class="anchored" data-anchor-id="immigration"><span class="header-section-number">14.5</span> immigration</h2>
+<section id="by-year-and-scenario-3" class="level3 page-columns page-full" data-number="14.5.1">
+<h3 data-number="14.5.1" class="anchored" data-anchor-id="by-year-and-scenario-3"><span class="header-section-number">14.5.1</span> by year and scenario</h3>
+<div class="cell page-columns page-full" data-hash="15_model_output_cache/html/fig-1540_dbf99180c82f44cedc4d8ae2a5a64ffa">
 <div class="cell-output-display column-body page-columns page-full">
 <div id="fig-1540" class="quarto-figure quarto-figure-center column-body anchored page-columns page-full">
 <figure class="figure page-columns page-full">
 <p class="page-columns page-full"><img src="15_model_output_files/figure-html/fig-1540-1.svg" class="column-body img-fluid figure-img"></p>
-<figcaption class="figure-caption">Figure&nbsp;15.26: immigration by year and scenario</figcaption>
+<figcaption class="figure-caption">Figure&nbsp;14.28: immigration by year and scenario</figcaption>
 </figure>
 </div>
 </div>
 </div>
 </section>
-<section id="by-year-and-age" class="level3 page-columns page-full" data-number="15.5.2">
-<h3 data-number="15.5.2" class="anchored" data-anchor-id="by-year-and-age"><span class="header-section-number">15.5.2</span> by year and age</h3>
-<div class="cell page-columns page-full" data-hash="15_model_output_cache/html/fig-1541_e05b6ada583548990223d5bd3c9732c5">
+<section id="by-year-and-age" class="level3 page-columns page-full" data-number="14.5.2">
+<h3 data-number="14.5.2" class="anchored" data-anchor-id="by-year-and-age"><span class="header-section-number">14.5.2</span> by year and age</h3>
+<div class="cell page-columns page-full" data-hash="15_model_output_cache/html/fig-1541_569cff598345315ec718198efd66280c">
 <div class="cell-output-display column-body page-columns page-full">
 <div id="fig-1541" class="quarto-figure quarto-figure-center column-body anchored page-columns page-full">
 <figure class="figure page-columns page-full">
 <p class="page-columns page-full"><img src="15_model_output_files/figure-html/fig-1541-1.svg" class="column-body img-fluid figure-img"></p>
-<figcaption class="figure-caption">Figure&nbsp;15.27: immigration by year and age</figcaption>
+<figcaption class="figure-caption">Figure&nbsp;14.29: immigration by year and age</figcaption>
 </figure>
 </div>
 </div>
 </div>
 </section>
-<section id="by-year-age-and-origin" class="level3 page-columns page-full" data-number="15.5.3">
-<h3 data-number="15.5.3" class="anchored" data-anchor-id="by-year-age-and-origin"><span class="header-section-number">15.5.3</span> by year, age and origin</h3>
-<div class="cell page-columns page-full" data-hash="15_model_output_cache/html/fig-1542_f5a05490af239af4fed11ee8355091e7">
+<section id="by-year-age-children-and-scenario" class="level3 page-columns page-full" data-number="14.5.3">
+<h3 data-number="14.5.3" class="anchored" data-anchor-id="by-year-age-children-and-scenario"><span class="header-section-number">14.5.3</span> by year, age (children) and scenario</h3>
+<div class="cell page-columns page-full" data-hash="15_model_output_cache/html/fig-1541a_38619c6d9462f30618e19faa1f644614">
+<div class="cell-output-display column-body page-columns page-full">
+<div id="fig-1541a" class="quarto-figure quarto-figure-center column-body anchored page-columns page-full">
+<figure class="figure page-columns page-full">
+<p class="page-columns page-full"><img src="15_model_output_files/figure-html/fig-1541a-1.svg" class="column-body img-fluid figure-img"></p>
+<figcaption class="figure-caption">Figure&nbsp;14.30: immigration by year, age (children) and scenario</figcaption>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="by-year-age-and-origin" class="level3 page-columns page-full" data-number="14.5.4">
+<h3 data-number="14.5.4" class="anchored" data-anchor-id="by-year-age-and-origin"><span class="header-section-number">14.5.4</span> by year, age and origin</h3>
+<div class="cell page-columns page-full" data-hash="15_model_output_cache/html/fig-1542_d0322610db1ce867f4c518e5ca184b7b">
 <div class="cell-output-display column-body page-columns page-full">
 <div id="fig-1542" class="quarto-figure quarto-figure-center column-body anchored page-columns page-full">
 <figure class="figure page-columns page-full">
 <p class="page-columns page-full"><img src="15_model_output_files/figure-html/fig-1542-1.svg" class="column-body img-fluid figure-img"></p>
-<figcaption class="figure-caption">Figure&nbsp;15.28: immigration by year, age and origin</figcaption>
+<figcaption class="figure-caption">Figure&nbsp;14.31: immigration by year, age and origin</figcaption>
 </figure>
 </div>
 </div>
 </div>
 </section>
-<section id="by-district-year-and-origin-2" class="level3 page-columns page-full" data-number="15.5.4">
-<h3 data-number="15.5.4" class="anchored" data-anchor-id="by-district-year-and-origin-2"><span class="header-section-number">15.5.4</span> by district, year and origin</h3>
-<div class="cell page-columns page-full" data-hash="15_model_output_cache/html/fig-1543_7d8954c3dcc833c03f40a46418624d51">
+<section id="by-district-year-and-origin-2" class="level3 page-columns page-full" data-number="14.5.5">
+<h3 data-number="14.5.5" class="anchored" data-anchor-id="by-district-year-and-origin-2"><span class="header-section-number">14.5.5</span> by district, year and origin</h3>
+<div class="cell page-columns page-full" data-hash="15_model_output_cache/html/fig-1543_bd2d3b76bf95e24b24cbf612999265cb">
 <div class="cell-output-display column-body page-columns page-full">
 <div id="fig-1543" class="quarto-figure quarto-figure-center column-body anchored page-columns page-full">
 <figure class="figure page-columns page-full">
 <p class="page-columns page-full"><img src="15_model_output_files/figure-html/fig-1543-1.svg" class="column-body img-fluid figure-img"></p>
-<figcaption class="figure-caption">Figure&nbsp;15.29: immigration by district, year and origin</figcaption>
+<figcaption class="figure-caption">Figure&nbsp;14.32: immigration by district, year and origin</figcaption>
 </figure>
 </div>
 </div>
 </div>
 </section>
-<section id="by-district-year-and-origin-foreign-population-2" class="level3 page-columns page-full" data-number="15.5.5">
-<h3 data-number="15.5.5" class="anchored" data-anchor-id="by-district-year-and-origin-foreign-population-2"><span class="header-section-number">15.5.5</span> by district, year and origin; foreign population</h3>
-<div class="cell page-columns page-full" data-hash="15_model_output_cache/html/fig-1544_45e0b9d5cb4f17fc9356c659e351dc1f">
+<section id="by-district-year-and-origin-foreign-population-2" class="level3 page-columns page-full" data-number="14.5.6">
+<h3 data-number="14.5.6" class="anchored" data-anchor-id="by-district-year-and-origin-foreign-population-2"><span class="header-section-number">14.5.6</span> by district, year and origin; foreign population</h3>
+<div class="cell page-columns page-full" data-hash="15_model_output_cache/html/fig-1544_fffe41dfe2c9bdfe8674cf019ef639c8">
 <div class="cell-output-display column-body page-columns page-full">
 <div id="fig-1544" class="quarto-figure quarto-figure-center column-body anchored page-columns page-full">
 <figure class="figure page-columns page-full">
 <p class="page-columns page-full"><img src="15_model_output_files/figure-html/fig-1544-1.svg" class="column-body img-fluid figure-img"></p>
-<figcaption class="figure-caption">Figure&nbsp;15.30: foreign proportion of immigration by district, year and origin</figcaption>
+<figcaption class="figure-caption">Figure&nbsp;14.33: foreign proportion of immigration by district, year and origin</figcaption>
 </figure>
 </div>
 </div>
 </div>
 </section>
 </section>
-<section id="emigration" class="level2 page-columns page-full" data-number="15.6">
-<h2 data-number="15.6" class="anchored" data-anchor-id="emigration"><span class="header-section-number">15.6</span> emigration</h2>
-<section id="by-year-and-scenario-5" class="level3 page-columns page-full" data-number="15.6.1">
-<h3 data-number="15.6.1" class="anchored" data-anchor-id="by-year-and-scenario-5"><span class="header-section-number">15.6.1</span> by year and scenario</h3>
-<div class="cell page-columns page-full" data-hash="15_model_output_cache/html/fig-1550_19dbdb8929592b08d50cf5882ed235e4">
+<section id="emigration" class="level2 page-columns page-full" data-number="14.6">
+<h2 data-number="14.6" class="anchored" data-anchor-id="emigration"><span class="header-section-number">14.6</span> emigration</h2>
+<section id="by-year-and-scenario-4" class="level3 page-columns page-full" data-number="14.6.1">
+<h3 data-number="14.6.1" class="anchored" data-anchor-id="by-year-and-scenario-4"><span class="header-section-number">14.6.1</span> by year and scenario</h3>
+<div class="cell page-columns page-full" data-hash="15_model_output_cache/html/fig-1550_1a6be5873e5f6a856f02f252429243be">
 <div class="cell-output-display column-body page-columns page-full">
 <div id="fig-1550" class="quarto-figure quarto-figure-center column-body anchored page-columns page-full">
 <figure class="figure page-columns page-full">
 <p class="page-columns page-full"><img src="15_model_output_files/figure-html/fig-1550-1.svg" class="column-body img-fluid figure-img"></p>
-<figcaption class="figure-caption">Figure&nbsp;15.31: emigration by year and scenario</figcaption>
+<figcaption class="figure-caption">Figure&nbsp;14.34: emigration by year and scenario</figcaption>
 </figure>
 </div>
 </div>
 </div>
 </section>
-<section id="by-year-and-age-1" class="level3 page-columns page-full" data-number="15.6.2">
-<h3 data-number="15.6.2" class="anchored" data-anchor-id="by-year-and-age-1"><span class="header-section-number">15.6.2</span> by year and age</h3>
-<div class="cell page-columns page-full" data-hash="15_model_output_cache/html/fig-1551_b7996695d16c76a98b1d990af08eabf8">
+<section id="by-year-and-age-1" class="level3 page-columns page-full" data-number="14.6.2">
+<h3 data-number="14.6.2" class="anchored" data-anchor-id="by-year-and-age-1"><span class="header-section-number">14.6.2</span> by year and age</h3>
+<div class="cell page-columns page-full" data-hash="15_model_output_cache/html/fig-1551_7baf7193efcb5a6df3b50615f549abbf">
 <div class="cell-output-display column-body page-columns page-full">
 <div id="fig-1551" class="quarto-figure quarto-figure-center column-body anchored page-columns page-full">
 <figure class="figure page-columns page-full">
 <p class="page-columns page-full"><img src="15_model_output_files/figure-html/fig-1551-1.svg" class="column-body img-fluid figure-img"></p>
-<figcaption class="figure-caption">Figure&nbsp;15.32: emigration by year and age</figcaption>
+<figcaption class="figure-caption">Figure&nbsp;14.35: emigration by year and age</figcaption>
 </figure>
 </div>
 </div>
 </div>
 </section>
-<section id="by-year-age-and-origin-1" class="level3 page-columns page-full" data-number="15.6.3">
-<h3 data-number="15.6.3" class="anchored" data-anchor-id="by-year-age-and-origin-1"><span class="header-section-number">15.6.3</span> by year, age and origin</h3>
-<div class="cell page-columns page-full" data-hash="15_model_output_cache/html/fig-1552_3ff07d6cfb459b1ae6b53cb8ab33bf9c">
+<section id="by-year-age-children-and-scenario-1" class="level3 page-columns page-full" data-number="14.6.3">
+<h3 data-number="14.6.3" class="anchored" data-anchor-id="by-year-age-children-and-scenario-1"><span class="header-section-number">14.6.3</span> by year, age (children) and scenario</h3>
+<div class="cell page-columns page-full" data-hash="15_model_output_cache/html/fig-1551a_cef9871b26e6471e28709cc941fc779f">
+<div class="cell-output-display column-body page-columns page-full">
+<div id="fig-1551a" class="quarto-figure quarto-figure-center column-body anchored page-columns page-full">
+<figure class="figure page-columns page-full">
+<p class="page-columns page-full"><img src="15_model_output_files/figure-html/fig-1551a-1.svg" class="column-body img-fluid figure-img"></p>
+<figcaption class="figure-caption">Figure&nbsp;14.36: emigration by year, age (children) and scenario</figcaption>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="by-year-age-and-origin-1" class="level3 page-columns page-full" data-number="14.6.4">
+<h3 data-number="14.6.4" class="anchored" data-anchor-id="by-year-age-and-origin-1"><span class="header-section-number">14.6.4</span> by year, age and origin</h3>
+<div class="cell page-columns page-full" data-hash="15_model_output_cache/html/fig-1552_3b4383b8fd800d1f53120e40e39334aa">
 <div class="cell-output-display column-body page-columns page-full">
 <div id="fig-1552" class="quarto-figure quarto-figure-center column-body anchored page-columns page-full">
 <figure class="figure page-columns page-full">
 <p class="page-columns page-full"><img src="15_model_output_files/figure-html/fig-1552-1.svg" class="column-body img-fluid figure-img"></p>
-<figcaption class="figure-caption">Figure&nbsp;15.33: emigration by year, age and origin</figcaption>
+<figcaption class="figure-caption">Figure&nbsp;14.37: emigration by year, age and origin</figcaption>
 </figure>
 </div>
 </div>
 </div>
 </section>
-<section id="by-district-year-and-origin-3" class="level3 page-columns page-full" data-number="15.6.4">
-<h3 data-number="15.6.4" class="anchored" data-anchor-id="by-district-year-and-origin-3"><span class="header-section-number">15.6.4</span> by district, year and origin</h3>
-<div class="cell page-columns page-full" data-hash="15_model_output_cache/html/fig-1553_85e46f455388a62924d73b44bb35d506">
+<section id="by-district-year-and-origin-3" class="level3 page-columns page-full" data-number="14.6.5">
+<h3 data-number="14.6.5" class="anchored" data-anchor-id="by-district-year-and-origin-3"><span class="header-section-number">14.6.5</span> by district, year and origin</h3>
+<div class="cell page-columns page-full" data-hash="15_model_output_cache/html/fig-1553_142c3cd15fbbd014fe6be029dcef962b">
 <div class="cell-output-display column-body page-columns page-full">
 <div id="fig-1553" class="quarto-figure quarto-figure-center column-body anchored page-columns page-full">
 <figure class="figure page-columns page-full">
 <p class="page-columns page-full"><img src="15_model_output_files/figure-html/fig-1553-1.svg" class="column-body img-fluid figure-img"></p>
-<figcaption class="figure-caption">Figure&nbsp;15.34: emigration by district, year and origin</figcaption>
+<figcaption class="figure-caption">Figure&nbsp;14.38: emigration by district, year and origin</figcaption>
 </figure>
 </div>
 </div>
 </div>
 </section>
-<section id="by-district-year-and-origin-foreign-population-3" class="level3 page-columns page-full" data-number="15.6.5">
-<h3 data-number="15.6.5" class="anchored" data-anchor-id="by-district-year-and-origin-foreign-population-3"><span class="header-section-number">15.6.5</span> by district, year and origin; foreign population</h3>
-<div class="cell page-columns page-full" data-hash="15_model_output_cache/html/fig-1554_135503ccbfbdaa1c1463bb0b76a881f8">
+<section id="by-district-year-and-origin-foreign-population-3" class="level3 page-columns page-full" data-number="14.6.6">
+<h3 data-number="14.6.6" class="anchored" data-anchor-id="by-district-year-and-origin-foreign-population-3"><span class="header-section-number">14.6.6</span> by district, year and origin; foreign population</h3>
+<div class="cell page-columns page-full" data-hash="15_model_output_cache/html/fig-1554_31796342dfac35c30f379cec2f1d75a2">
 <div class="cell-output-display column-body page-columns page-full">
 <div id="fig-1554" class="quarto-figure quarto-figure-center column-body anchored page-columns page-full">
 <figure class="figure page-columns page-full">
 <p class="page-columns page-full"><img src="15_model_output_files/figure-html/fig-1554-1.svg" class="column-body img-fluid figure-img"></p>
-<figcaption class="figure-caption">Figure&nbsp;15.35: foreign proportion of emigration by district, year and origin</figcaption>
+<figcaption class="figure-caption">Figure&nbsp;14.39: foreign proportion of emigration by district, year and origin</figcaption>
 </figure>
 </div>
 </div>
 </div>
 </section>
 </section>
-<section id="net-migration" class="level2 page-columns page-full" data-number="15.7">
-<h2 data-number="15.7" class="anchored" data-anchor-id="net-migration"><span class="header-section-number">15.7</span> net migration</h2>
-<section id="by-year-and-scenario-6" class="level3 page-columns page-full" data-number="15.7.1">
-<h3 data-number="15.7.1" class="anchored" data-anchor-id="by-year-and-scenario-6"><span class="header-section-number">15.7.1</span> by year and scenario</h3>
-<div class="cell page-columns page-full" data-hash="15_model_output_cache/html/fig-1560_1e713e80215883e4e219527473716d5e">
+<section id="net-migration" class="level2 page-columns page-full" data-number="14.7">
+<h2 data-number="14.7" class="anchored" data-anchor-id="net-migration"><span class="header-section-number">14.7</span> net migration</h2>
+<section id="by-year-and-scenario-5" class="level3 page-columns page-full" data-number="14.7.1">
+<h3 data-number="14.7.1" class="anchored" data-anchor-id="by-year-and-scenario-5"><span class="header-section-number">14.7.1</span> by year and scenario</h3>
+<div class="cell page-columns page-full" data-hash="15_model_output_cache/html/fig-1560_441a729d9b80c8fe4b2a71a008cba40c">
 <div class="cell-output-display column-body page-columns page-full">
 <div id="fig-1560" class="quarto-figure quarto-figure-center column-body anchored page-columns page-full">
 <figure class="figure page-columns page-full">
 <p class="page-columns page-full"><img src="15_model_output_files/figure-html/fig-1560-1.svg" class="column-body img-fluid figure-img"></p>
-<figcaption class="figure-caption">Figure&nbsp;15.36: net migration by year and scenario</figcaption>
+<figcaption class="figure-caption">Figure&nbsp;14.40: net migration by year and scenario</figcaption>
 </figure>
 </div>
 </div>
 </div>
 </section>
-<section id="by-district-year-and-origin-4" class="level3 page-columns page-full" data-number="15.7.2">
-<h3 data-number="15.7.2" class="anchored" data-anchor-id="by-district-year-and-origin-4"><span class="header-section-number">15.7.2</span> by district, year and origin</h3>
-<div class="cell page-columns page-full" data-hash="15_model_output_cache/html/fig-1561_203fa8eb7c567cc29b038e2e931c55f2">
+<section id="by-district-year-and-origin-4" class="level3 page-columns page-full" data-number="14.7.2">
+<h3 data-number="14.7.2" class="anchored" data-anchor-id="by-district-year-and-origin-4"><span class="header-section-number">14.7.2</span> by district, year and origin</h3>
+<div class="cell page-columns page-full" data-hash="15_model_output_cache/html/fig-1561_1fff518b576a727a8094081515a760e6">
 <div class="cell-output-display column-body page-columns page-full">
 <div id="fig-1561" class="quarto-figure quarto-figure-center column-body anchored page-columns page-full">
 <figure class="figure page-columns page-full">
 <p class="page-columns page-full"><img src="15_model_output_files/figure-html/fig-1561-1.svg" class="column-body img-fluid figure-img"></p>
-<figcaption class="figure-caption">Figure&nbsp;15.37: net migration by district, year and origin</figcaption>
+<figcaption class="figure-caption">Figure&nbsp;14.41: net migration by district, year and origin</figcaption>
 </figure>
 </div>
 </div>
 </div>
 <p>foreign proportion: not possible to calculate for net migration cannot be applied here e.g.&nbsp;low values in the denominator if negative and positive value</p>
 </section>
+<section id="by-year-age-children-and-scenario-2" class="level3 page-columns page-full" data-number="14.7.3">
+<h3 data-number="14.7.3" class="anchored" data-anchor-id="by-year-age-children-and-scenario-2"><span class="header-section-number">14.7.3</span> by year, age (children) and scenario</h3>
+<div class="cell page-columns page-full" data-hash="15_model_output_cache/html/fig-1562_b47889ac0030a119d7d240bc5c0aa54b">
+<div class="cell-output-display column-body page-columns page-full">
+<div id="fig-1562" class="quarto-figure quarto-figure-center column-body anchored page-columns page-full">
+<figure class="figure page-columns page-full">
+<p class="page-columns page-full"><img src="15_model_output_files/figure-html/fig-1562-1.svg" class="column-body img-fluid figure-img"></p>
+<figcaption class="figure-caption">Figure&nbsp;14.42: net migration by year and age (children)</figcaption>
+</figure>
+</div>
+</div>
+</div>
 </section>
-<section id="naturalization" class="level2 page-columns page-full" data-number="15.8">
-<h2 data-number="15.8" class="anchored" data-anchor-id="naturalization"><span class="header-section-number">15.8</span> naturalization</h2>
-<section id="by-year-and-scenario-7" class="level3 page-columns page-full" data-number="15.8.1">
-<h3 data-number="15.8.1" class="anchored" data-anchor-id="by-year-and-scenario-7"><span class="header-section-number">15.8.1</span> by year and scenario</h3>
-<div class="cell page-columns page-full" data-hash="15_model_output_cache/html/fig-1570_b003c7c0270e9d095b7b1c3989115bfe">
+</section>
+<section id="naturalization" class="level2 page-columns page-full" data-number="14.8">
+<h2 data-number="14.8" class="anchored" data-anchor-id="naturalization"><span class="header-section-number">14.8</span> naturalization</h2>
+<section id="by-year-and-scenario-6" class="level3 page-columns page-full" data-number="14.8.1">
+<h3 data-number="14.8.1" class="anchored" data-anchor-id="by-year-and-scenario-6"><span class="header-section-number">14.8.1</span> by year and scenario</h3>
+<div class="cell page-columns page-full" data-hash="15_model_output_cache/html/fig-1570_07fb9d50d49c734cc91c78ec939d7b86">
 <div class="cell-output-display column-body page-columns page-full">
 <div id="fig-1570" class="quarto-figure quarto-figure-center column-body anchored page-columns page-full">
 <figure class="figure page-columns page-full">
 <p class="page-columns page-full"><img src="15_model_output_files/figure-html/fig-1570-1.svg" class="column-body img-fluid figure-img"></p>
-<figcaption class="figure-caption">Figure&nbsp;15.38: naturalization by year and scenario</figcaption>
+<figcaption class="figure-caption">Figure&nbsp;14.43: naturalization by year and scenario</figcaption>
 </figure>
 </div>
 </div>
 </div>
 </section>
-<section id="by-district-and-year-1" class="level3 page-columns page-full" data-number="15.8.2">
-<h3 data-number="15.8.2" class="anchored" data-anchor-id="by-district-and-year-1"><span class="header-section-number">15.8.2</span> by district and year</h3>
-<div class="cell page-columns page-full" data-hash="15_model_output_cache/html/fig-1571_b5292340affdd196da5994f7efc5338f">
+<section id="by-district-and-year-1" class="level3 page-columns page-full" data-number="14.8.2">
+<h3 data-number="14.8.2" class="anchored" data-anchor-id="by-district-and-year-1"><span class="header-section-number">14.8.2</span> by district and year</h3>
+<div class="cell page-columns page-full" data-hash="15_model_output_cache/html/fig-1571_bbe2ef2bbf26e5be74dcc0ca8f96647c">
 <div class="cell-output-display column-body page-columns page-full">
 <div id="fig-1571" class="quarto-figure quarto-figure-center column-body anchored page-columns page-full">
 <figure class="figure page-columns page-full">
 <p class="page-columns page-full"><img src="15_model_output_files/figure-html/fig-1571-1.svg" class="column-body img-fluid figure-img"></p>
-<figcaption class="figure-caption">Figure&nbsp;15.39: naturalization by district and year</figcaption>
+<figcaption class="figure-caption">Figure&nbsp;14.44: naturalization by district and year</figcaption>
 </figure>
 </div>
 </div>
 </div>
 </section>
 </section>
-<section id="relocation" class="level2 page-columns page-full" data-number="15.9">
-<h2 data-number="15.9" class="anchored" data-anchor-id="relocation"><span class="header-section-number">15.9</span> relocation</h2>
-<section id="by-year-scenario-and-category" class="level3 page-columns page-full" data-number="15.9.1">
-<h3 data-number="15.9.1" class="anchored" data-anchor-id="by-year-scenario-and-category"><span class="header-section-number">15.9.1</span> by year, scenario and category</h3>
+<section id="relocation" class="level2 page-columns page-full" data-number="14.9">
+<h2 data-number="14.9" class="anchored" data-anchor-id="relocation"><span class="header-section-number">14.9</span> relocation</h2>
+<section id="by-year-scenario-and-category" class="level3 page-columns page-full" data-number="14.9.1">
+<h3 data-number="14.9.1" class="anchored" data-anchor-id="by-year-scenario-and-category"><span class="header-section-number">14.9.1</span> by year, scenario and category</h3>
 <p>past: no district WHY? since for future data only one district available one district does not make sense for relocation (the district comes from immigration* and emigration*)</p>
-<div class="cell page-columns page-full" data-hash="15_model_output_cache/html/fig-1580_40d2b0ca2077615914200911c0da89d1">
+<div class="cell page-columns page-full" data-hash="15_model_output_cache/html/fig-1580_ef4aa66d802d44501985bf438cc3d2cb">
 <div class="cell-output-display column-body page-columns page-full">
 <div id="fig-1580" class="quarto-figure quarto-figure-center column-body anchored page-columns page-full">
 <figure class="figure page-columns page-full">
 <p class="page-columns page-full"><img src="15_model_output_files/figure-html/fig-1580-1.svg" class="column-body img-fluid figure-img"></p>
-<figcaption class="figure-caption">Figure&nbsp;15.40: relocation by year, scenaio and category</figcaption>
+<figcaption class="figure-caption">Figure&nbsp;14.45: relocation by year, scenaio and category</figcaption>
 </figure>
 </div>
 </div>
@@ -1090,7 +1181,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 <nav class="page-navigation column-body">
   <div class="nav-page nav-page-previous">
       <a href="./14_dem_house.html" class="pagination-link">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">14</span>&nbsp; <span class="chapter-title">Demography Housing</span></span>
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">Demography Housing</span></span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">

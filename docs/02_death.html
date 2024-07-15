@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.3.361">
+<meta name="generator" content="quarto-1.3.433">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -175,26 +175,20 @@ ul.task-list li input[type="checkbox"] {
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./12_ownership.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">Ownership</span></span></a>
-  </div>
-</li>
-        <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
   <a href="./13_housing.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">Housing model</span></span></a>
+ <span class="menu-text"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">Housing model</span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./14_dem_house.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">14</span>&nbsp; <span class="chapter-title">Demography Housing</span></span></a>
+ <span class="menu-text"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">Demography Housing</span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./15_model_output.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">15</span>&nbsp; <span class="chapter-title">Model outputs</span></span></a>
+ <span class="menu-text"><span class="chapter-number">14</span>&nbsp; <span class="chapter-title">Model outputs</span></span></a>
   </div>
 </li>
     </ul>
@@ -229,11 +223,13 @@ ul.task-list li input[type="checkbox"] {
   <li><a href="#smoothing-with-loess" id="toc-smoothing-with-loess" class="nav-link" data-scroll-target="#smoothing-with-loess"><span class="header-section-number">2.1.6</span> smoothing with LOESS</a></li>
   <li><a href="#ratio-zurich-switzerland" id="toc-ratio-zurich-switzerland" class="nav-link" data-scroll-target="#ratio-zurich-switzerland"><span class="header-section-number">2.1.7</span> ratio Zurich / Switzerland</a></li>
   <li><a href="#zurich-future-mortality-rate" id="toc-zurich-future-mortality-rate" class="nav-link" data-scroll-target="#zurich-future-mortality-rate"><span class="header-section-number">2.1.8</span> Zurich: future mortality rate</a></li>
-  <li><a href="#zurich-life-expectancy-including-the-model-data" id="toc-zurich-life-expectancy-including-the-model-data" class="nav-link" data-scroll-target="#zurich-life-expectancy-including-the-model-data"><span class="header-section-number">2.1.9</span> Zurich: life expectancy (including the model data)</a>
+  <li><a href="#zurich-and-switzerland-future-mortality-rate" id="toc-zurich-and-switzerland-future-mortality-rate" class="nav-link" data-scroll-target="#zurich-and-switzerland-future-mortality-rate"><span class="header-section-number">2.1.9</span> Zurich and Switzerland: future mortality rate</a></li>
+  <li><a href="#zurich-life-expectancy-including-the-model-data" id="toc-zurich-life-expectancy-including-the-model-data" class="nav-link" data-scroll-target="#zurich-life-expectancy-including-the-model-data"><span class="header-section-number">2.1.10</span> Zurich: life expectancy (including the model data)</a>
   <ul class="collapse">
-  <li><a href="#focus-differences-by-sex-1" id="toc-focus-differences-by-sex-1" class="nav-link" data-scroll-target="#focus-differences-by-sex-1"><span class="header-section-number">2.1.9.1</span> focus: differences by sex</a></li>
-  <li><a href="#focus-differences-by-region-1" id="toc-focus-differences-by-region-1" class="nav-link" data-scroll-target="#focus-differences-by-region-1"><span class="header-section-number">2.1.9.2</span> focus: differences by region</a></li>
+  <li><a href="#focus-differences-by-sex-1" id="toc-focus-differences-by-sex-1" class="nav-link" data-scroll-target="#focus-differences-by-sex-1"><span class="header-section-number">2.1.10.1</span> focus: differences by sex</a></li>
+  <li><a href="#focus-differences-by-region-1" id="toc-focus-differences-by-region-1" class="nav-link" data-scroll-target="#focus-differences-by-region-1"><span class="header-section-number">2.1.10.2</span> focus: differences by region</a></li>
   </ul></li>
+  <li><a href="#zurich-life-expectancy-at-different-age" id="toc-zurich-life-expectancy-at-different-age" class="nav-link" data-scroll-target="#zurich-life-expectancy-at-different-age"><span class="header-section-number">2.1.11</span> Zurich: life expectancy at different age</a></li>
   </ul></li>
   </ul>
 </nav>
@@ -258,7 +254,7 @@ ul.task-list li input[type="checkbox"] {
 
 </header>
 
-<div class="cell" data-hash="02_death_cache/html/prep_b5bd33f3f615324c3f30c9a569409630">
+<div class="cell" data-hash="02_death_cache/html/prep_f06fbfca5591faf1ef5d7e200b54ff3b">
 
 </div>
 <section id="mortality" class="level2 page-columns page-full" data-number="2.1">
@@ -267,7 +263,7 @@ ul.task-list li input[type="checkbox"] {
 <h3 data-number="2.1.1" class="anchored" data-anchor-id="age-plots"><span class="header-section-number">2.1.1</span> age plots</h3>
 <section id="focus-difference-in-mortality-by-sex" class="level4 page-columns page-full" data-number="2.1.1.1">
 <h4 data-number="2.1.1.1" class="anchored" data-anchor-id="focus-difference-in-mortality-by-sex"><span class="header-section-number">2.1.1.1</span> focus: difference in mortality by sex</h4>
-<div class="cell page-columns page-full" data-hash="02_death_cache/html/fig-0200_a9eb20b9b71de0b1159dbedc8fa1498c">
+<div class="cell page-columns page-full" data-hash="02_death_cache/html/fig-0200_9e876ea2cc4c9efb2436e038db53b426">
 <div class="cell-output-display column-body page-columns page-full">
 <div id="fig-0200" class="quarto-figure quarto-figure-center column-body anchored page-columns page-full">
 <figure class="figure page-columns page-full">
@@ -280,7 +276,7 @@ ul.task-list li input[type="checkbox"] {
 </section>
 <section id="focus-difference-in-mortality-by-region" class="level4 page-columns page-full" data-number="2.1.1.2">
 <h4 data-number="2.1.1.2" class="anchored" data-anchor-id="focus-difference-in-mortality-by-region"><span class="header-section-number">2.1.1.2</span> focus: difference in mortality by region</h4>
-<div class="cell page-columns page-full" data-hash="02_death_cache/html/fig-0201_e3bb32113eb13780682e5811ecce684b">
+<div class="cell page-columns page-full" data-hash="02_death_cache/html/fig-0201_bde6edb369702a78154aef17512ab9a7">
 <div class="cell-output-display column-body page-columns page-full">
 <div id="fig-0201" class="quarto-figure quarto-figure-center column-body anchored page-columns page-full">
 <figure class="figure page-columns page-full">
@@ -296,7 +292,7 @@ ul.task-list li input[type="checkbox"] {
 <h3 data-number="2.1.2" class="anchored" data-anchor-id="year-plots"><span class="header-section-number">2.1.2</span> year plots</h3>
 <section id="focus-difference-in-mortality-by-sex-1" class="level4 page-columns page-full" data-number="2.1.2.1">
 <h4 data-number="2.1.2.1" class="anchored" data-anchor-id="focus-difference-in-mortality-by-sex-1"><span class="header-section-number">2.1.2.1</span> focus: difference in mortality by sex</h4>
-<div class="cell page-columns page-full" data-hash="02_death_cache/html/fig-0202_922da56ffc35b9d92e6cae03d3faf364">
+<div class="cell page-columns page-full" data-hash="02_death_cache/html/fig-0202_2c763dc4b15076731d91e97d8f7281d3">
 <div class="cell-output-display column-body page-columns page-full">
 <div id="fig-0202" class="quarto-figure quarto-figure-center column-body anchored page-columns page-full">
 <figure class="figure page-columns page-full">
@@ -309,7 +305,7 @@ ul.task-list li input[type="checkbox"] {
 </section>
 <section id="focus-difference-in-mortality-by-region-1" class="level4 page-columns page-full" data-number="2.1.2.2">
 <h4 data-number="2.1.2.2" class="anchored" data-anchor-id="focus-difference-in-mortality-by-region-1"><span class="header-section-number">2.1.2.2</span> focus: difference in mortality by region</h4>
-<div class="cell page-columns page-full" data-hash="02_death_cache/html/fig-0203_9c303917e2a94a072da3392c6fba0049">
+<div class="cell page-columns page-full" data-hash="02_death_cache/html/fig-0203_e58829f2464e6dd3fdfe00aee510a6b5">
 <div class="cell-output-display column-body page-columns page-full">
 <div id="fig-0203" class="quarto-figure quarto-figure-center column-body anchored page-columns page-full">
 <figure class="figure page-columns page-full">
@@ -324,7 +320,7 @@ ul.task-list li input[type="checkbox"] {
 <section id="method-comparison-based-on-rate-vs.-deathbirthpopulation" class="level3 page-columns page-full" data-number="2.1.3">
 <h3 data-number="2.1.3" class="anchored" data-anchor-id="method-comparison-based-on-rate-vs.-deathbirthpopulation"><span class="header-section-number">2.1.3</span> method comparison (based on rate vs.&nbsp;death/birth/population)</h3>
 <p>method differences (rate vs.&nbsp;deaths/births/population) details: see life expectancy function definition</p>
-<div class="cell page-columns page-full" data-hash="02_death_cache/html/fig-0204_50729c2d625faa12453cb28c09de754f">
+<div class="cell page-columns page-full" data-hash="02_death_cache/html/fig-0204_7ff8577b24ae4009bf94e0f9d308fe27">
 <div class="cell-output-display column-body page-columns page-full">
 <div id="fig-0204" class="quarto-figure quarto-figure-center column-body anchored page-columns page-full">
 <figure class="figure page-columns page-full">
@@ -339,7 +335,7 @@ ul.task-list li input[type="checkbox"] {
 <h3 data-number="2.1.4" class="anchored" data-anchor-id="life-expectancy"><span class="header-section-number">2.1.4</span> life expectancy</h3>
 <section id="focus-differences-by-sex" class="level4 page-columns page-full" data-number="2.1.4.1">
 <h4 data-number="2.1.4.1" class="anchored" data-anchor-id="focus-differences-by-sex"><span class="header-section-number">2.1.4.1</span> focus: differences by sex</h4>
-<div class="cell page-columns page-full" data-hash="02_death_cache/html/fig-0205_483f7255c078341631ebc301cf187800">
+<div class="cell page-columns page-full" data-hash="02_death_cache/html/fig-0205_ed3c539171dee4a761f72528516fa735">
 <div class="cell-output-display column-body page-columns page-full">
 <div id="fig-0205" class="quarto-figure quarto-figure-center column-body anchored page-columns page-full">
 <figure class="figure page-columns page-full">
@@ -352,7 +348,7 @@ ul.task-list li input[type="checkbox"] {
 </section>
 <section id="focus-differences-by-region" class="level4 page-columns page-full" data-number="2.1.4.2">
 <h4 data-number="2.1.4.2" class="anchored" data-anchor-id="focus-differences-by-region"><span class="header-section-number">2.1.4.2</span> focus: differences by region</h4>
-<div class="cell page-columns page-full" data-hash="02_death_cache/html/fig-0206_cb8e73e87d53457f8df3158346884566">
+<div class="cell page-columns page-full" data-hash="02_death_cache/html/fig-0206_dc2333b72540a4d4666f1fb316251ac0">
 <div class="cell-output-display column-body page-columns page-full">
 <div id="fig-0206" class="quarto-figure quarto-figure-center column-body anchored page-columns page-full">
 <figure class="figure page-columns page-full">
@@ -366,7 +362,7 @@ ul.task-list li input[type="checkbox"] {
 </section>
 <section id="mortality-over-base-years-including-tail-correction" class="level3 page-columns page-full" data-number="2.1.5">
 <h3 data-number="2.1.5" class="anchored" data-anchor-id="mortality-over-base-years-including-tail-correction"><span class="header-section-number">2.1.5</span> mortality over base years (including tail correction)</h3>
-<div class="cell page-columns page-full" data-hash="02_death_cache/html/fig-0207_a3a618f69ba94c4493f7f67d57d491e5">
+<div class="cell page-columns page-full" data-hash="02_death_cache/html/fig-0207_1af3f869f1829bd90343e69a4bc7697d">
 <div class="cell-output-display column-body page-columns page-full">
 <div id="fig-0207" class="quarto-figure quarto-figure-center column-body anchored page-columns page-full">
 <figure class="figure page-columns page-full">
@@ -379,7 +375,7 @@ ul.task-list li input[type="checkbox"] {
 </section>
 <section id="smoothing-with-loess" class="level3 page-columns page-full" data-number="2.1.6">
 <h3 data-number="2.1.6" class="anchored" data-anchor-id="smoothing-with-loess"><span class="header-section-number">2.1.6</span> smoothing with LOESS</h3>
-<div class="cell page-columns page-full" data-hash="02_death_cache/html/fig-0208_58e37049c8acda91cf96008fc56af08d">
+<div class="cell page-columns page-full" data-hash="02_death_cache/html/fig-0208_23f60bfc0e069a49af0e9ac1706615e9">
 <div class="cell-output-display column-body page-columns page-full">
 <div id="fig-0208" class="quarto-figure quarto-figure-center column-body anchored page-columns page-full">
 <figure class="figure page-columns page-full">
@@ -392,7 +388,7 @@ ul.task-list li input[type="checkbox"] {
 </section>
 <section id="ratio-zurich-switzerland" class="level3 page-columns page-full" data-number="2.1.7">
 <h3 data-number="2.1.7" class="anchored" data-anchor-id="ratio-zurich-switzerland"><span class="header-section-number">2.1.7</span> ratio Zurich / Switzerland</h3>
-<div class="cell page-columns page-full" data-hash="02_death_cache/html/fig-0209_1d161b739e02c06ff5e0714dcf25717c">
+<div class="cell page-columns page-full" data-hash="02_death_cache/html/fig-0209_a795e5025835f0221351c5c1eac5a6be">
 <div class="cell-output-display column-body page-columns page-full">
 <div id="fig-0209" class="quarto-figure quarto-figure-center column-body anchored page-columns page-full">
 <figure class="figure page-columns page-full">
@@ -405,7 +401,7 @@ ul.task-list li input[type="checkbox"] {
 </section>
 <section id="zurich-future-mortality-rate" class="level3 page-columns page-full" data-number="2.1.8">
 <h3 data-number="2.1.8" class="anchored" data-anchor-id="zurich-future-mortality-rate"><span class="header-section-number">2.1.8</span> Zurich: future mortality rate</h3>
-<div class="cell page-columns page-full" data-hash="02_death_cache/html/fig-0210_af80f626d711ed97d29ee13de0d2fa50">
+<div class="cell page-columns page-full" data-hash="02_death_cache/html/fig-0210_990923d49e2fff8e39b77a7e632f52ba">
 <div class="cell-output-display column-body page-columns page-full">
 <div id="fig-0210" class="quarto-figure quarto-figure-center column-body anchored page-columns page-full">
 <figure class="figure page-columns page-full">
@@ -416,36 +412,62 @@ ul.task-list li input[type="checkbox"] {
 </div>
 </div>
 </section>
-<section id="zurich-life-expectancy-including-the-model-data" class="level3 page-columns page-full" data-number="2.1.9">
-<h3 data-number="2.1.9" class="anchored" data-anchor-id="zurich-life-expectancy-including-the-model-data"><span class="header-section-number">2.1.9</span> Zurich: life expectancy (including the model data)</h3>
-<section id="focus-differences-by-sex-1" class="level4 page-columns page-full" data-number="2.1.9.1">
-<h4 data-number="2.1.9.1" class="anchored" data-anchor-id="focus-differences-by-sex-1"><span class="header-section-number">2.1.9.1</span> focus: differences by sex</h4>
-<div class="cell page-columns page-full" data-hash="02_death_cache/html/fig-0211_dbf4d0f43a22ad3c886969868d441dc3">
+<section id="zurich-and-switzerland-future-mortality-rate" class="level3 page-columns page-full" data-number="2.1.9">
+<h3 data-number="2.1.9" class="anchored" data-anchor-id="zurich-and-switzerland-future-mortality-rate"><span class="header-section-number">2.1.9</span> Zurich and Switzerland: future mortality rate</h3>
+<div class="cell page-columns page-full" data-hash="02_death_cache/html/fig-0210a_da4062803f9afbcdc05c3c734b6f0477">
+<div class="cell-output-display column-body page-columns page-full">
+<div id="fig-0210a" class="quarto-figure quarto-figure-center column-body anchored page-columns page-full">
+<figure class="figure page-columns page-full">
+<p class="page-columns page-full"><img src="02_death_files/figure-html/fig-0210a-1.svg" class="column-body img-fluid figure-img"></p>
+<figcaption class="figure-caption">Figure&nbsp;2.12: mortality by year, age, sex, region</figcaption>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="zurich-life-expectancy-including-the-model-data" class="level3 page-columns page-full" data-number="2.1.10">
+<h3 data-number="2.1.10" class="anchored" data-anchor-id="zurich-life-expectancy-including-the-model-data"><span class="header-section-number">2.1.10</span> Zurich: life expectancy (including the model data)</h3>
+<section id="focus-differences-by-sex-1" class="level4 page-columns page-full" data-number="2.1.10.1">
+<h4 data-number="2.1.10.1" class="anchored" data-anchor-id="focus-differences-by-sex-1"><span class="header-section-number">2.1.10.1</span> focus: differences by sex</h4>
+<div class="cell page-columns page-full" data-hash="02_death_cache/html/fig-0211_eb7b39ba5ec8ae3932e2ed17706358ec">
 <div class="cell-output-display column-body page-columns page-full">
 <div id="fig-0211" class="quarto-figure quarto-figure-center column-body anchored page-columns page-full">
 <figure class="figure page-columns page-full">
 <p class="page-columns page-full"><img src="02_death_files/figure-html/fig-0211-1.svg" class="column-body img-fluid figure-img"></p>
-<figcaption class="figure-caption">Figure&nbsp;2.12: life expectancy at birth by year, sex, region; with model</figcaption>
+<figcaption class="figure-caption">Figure&nbsp;2.13: life expectancy at birth by year, sex, region; with model</figcaption>
 </figure>
 </div>
 </div>
 </div>
 </section>
-<section id="focus-differences-by-region-1" class="level4 page-columns page-full" data-number="2.1.9.2">
-<h4 data-number="2.1.9.2" class="anchored" data-anchor-id="focus-differences-by-region-1"><span class="header-section-number">2.1.9.2</span> focus: differences by region</h4>
-<div class="cell page-columns page-full" data-hash="02_death_cache/html/fig-0212_311353a9179f82608c5a65db3f12f36c">
+<section id="focus-differences-by-region-1" class="level4 page-columns page-full" data-number="2.1.10.2">
+<h4 data-number="2.1.10.2" class="anchored" data-anchor-id="focus-differences-by-region-1"><span class="header-section-number">2.1.10.2</span> focus: differences by region</h4>
+<div class="cell page-columns page-full" data-hash="02_death_cache/html/fig-0212_9348b3ec69d921a2af62d9dcf6505ab2">
 <div class="cell-output-display column-body page-columns page-full">
 <div id="fig-0212" class="quarto-figure quarto-figure-center column-body anchored page-columns page-full">
 <figure class="figure page-columns page-full">
 <p class="page-columns page-full"><img src="02_death_files/figure-html/fig-0212-1.svg" class="column-body img-fluid figure-img"></p>
-<figcaption class="figure-caption">Figure&nbsp;2.13: life expectancy at birth by year, region, sex; with model</figcaption>
+<figcaption class="figure-caption">Figure&nbsp;2.14: life expectancy at birth by year, region, sex; with model</figcaption>
+</figure>
+</div>
+</div>
+</div>
+</section>
+</section>
+<section id="zurich-life-expectancy-at-different-age" class="level3 page-columns page-full" data-number="2.1.11">
+<h3 data-number="2.1.11" class="anchored" data-anchor-id="zurich-life-expectancy-at-different-age"><span class="header-section-number">2.1.11</span> Zurich: life expectancy at different age</h3>
+<div class="cell page-columns page-full" data-hash="02_death_cache/html/fig-0213_e336fbf382af97489492650d951d85af">
+<div class="cell-output-display column-body page-columns page-full">
+<div id="fig-0213" class="quarto-figure quarto-figure-center column-body anchored page-columns page-full">
+<figure class="figure page-columns page-full">
+<p class="page-columns page-full"><img src="02_death_files/figure-html/fig-0213-1.svg" class="column-body img-fluid figure-img"></p>
+<figcaption class="figure-caption">Figure&nbsp;2.15: life expectancy at different age (0 and 65), by year, region, sex</figcaption>
 </figure>
 </div>
 </div>
 </div>
 
 
-</section>
 </section>
 </section>
 
