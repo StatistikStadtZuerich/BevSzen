@@ -18,7 +18,6 @@
 #' spa (living space)  
 #' aca (allocation)  
 #' pro (projects)  
-#' own (ownership)  
 #' hou (housing model)  
 #' deh (demography and housing model)  
 #' out (model outputs)  
@@ -102,11 +101,6 @@ run_scen <- function(scenarios, modules, keep_log = TRUE) {
     # projects
     if (modules %in% c("all", "alw", "how", "hom", "pro")) {
       source(paste0(code_path, "1100_Projects/1100_projects.r"))
-    }
-    
-    # ownership
-    if (modules %in% c("all", "alw", "how", "hom", "own")) {
-      source(paste0(code_path, "1200_Ownership/1200_ownership.r"))
     }
     
     # housing model
@@ -246,20 +240,20 @@ dir_ex_create <- function(path){
 }
 
 
-#' check if 3 files are present
+#' check if 5 files are present
 #' 
-#' @description checks if the input contains 3 values and stops execution if this is not the case
+#' @description checks if the input contains 5 values and stops execution if this is not the case
 #'
 #' @param files character vector
 #'
 #' @return stops execution if condition is not met
 #' @export
 #'
-#' @examples stop_3(c("a.csv", "b.csv", "c.csv"))
-stop_3 <- function(files){
+#' @examples stop_5(c("a.csv", "b.csv", "c.csv", "d.csv", "e.csv"))
+stop_5 <- function(files){
   stopifnot("missing files;\
             make sure to run the whole model (0001_model_control-flow.r) beforehand" = 
-              length(read_files) == 3)
+              length(read_files) == 5)
 }
 
 

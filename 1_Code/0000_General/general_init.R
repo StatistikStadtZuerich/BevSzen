@@ -10,40 +10,44 @@
 #' @export
 #'
 #' @examples util_gf("lower")
+
+
 init <- function(i_scen = "middle", var_file = "/2_Data/3_Parameter/variables.yml"){
+  
   # packages
-  require(tidyverse)
+  require(ckanr) # download of open data directly from ckan  
   require(dvmisc) # for expand_grid
-  require(gridExtra) # for ggplot on multiple pages
-  require(nlme) # needed for mgcv, see below
-  require(mgcv) # for gam
-  require(flexclust) # weighted kmeans clustering
-  require(ggrepel) # to label lines (when too many for a normal legend)
-  require(zoo) # moving average (no confusion with filter function in base R)
-  require(ckanr) # download of open data directly from ckan
-  require(scales) # for pretty axis breaks
-  require(rlang) # for functions: symbols, quasiquotation (!!, !!!, :=)
-  require(gtools) # invalid function (to check for NA, NULL, NaN), e.g. in constrained regression
-  # require(this.path) # to extract the current file name
-  require(modelr) # add_predictions
+  require(flexclust) # weighted kmeans clustering  
+  require(ggrepel) # to label lines (when too many for a normal legend)  
+  require(gridExtra) # for ggplot on multiple pages  
+  require(gtools) # invalid function (to check for NA, NULL, NaN), e.g. in constrained regression  
+  require(mgcv) # for gam   
+  require(modelr) # add_predictions  
+  require(nlme) # needed for mgcv  
   require(quarto) #for programmatically rendering quarto
+  require(rlang) # for functions: symbols, quasiquotation (!!, !!!, :=)  
+  require(scales) # for pretty axis breaks  
+  require(this.path) #for this.dir function
+  require(tidyverse) #tidyverse functionality
+  require(zoo) # moving average (no confusion with filter function in base R)  
+
   
   # no scientic notation
   options(scipen = 999)
     
-  # general stuff (without dependency on parameters) ----------------------------------
+  # general objects without dependency on parameters ----------------------------------
   # read general variables for common use
   vars <- yaml::read_yaml(paste0(here::here(), var_file), eval.expr = TRUE, fileEncoding = "UTF-8")
   vars$i_scen <- i_scen
   
   # import parameters
   para <- read_delim(paste0(here::here(), vars$para_file), ";", lazy = FALSE) %>%
-    select(parameter, lower, middle, upper) %>%
+    select(parameter, lower, middle, middle_birth_lower, middle_birth_upper, upper) %>%
     pivot_longer(cols = lower:upper, names_to = "scenario") %>%
     filter(scenario == i_scen) %>%
     select(parameter, value)
   
-  # read parameters (depend on scenario)
+  # read parameters (depending on scenario)
   for (i_para in 1:nrow(para)) {
     assign(para$parameter[i_para], para$value[i_para], envir = .GlobalEnv)
   }
@@ -53,11 +57,11 @@ init <- function(i_scen = "middle", var_file = "/2_Data/3_Parameter/variables.ym
   
 
   # create variables --------------------------------------------------------
+  
   # lookup tables
   vars$look_dis <- read_csv2(paste0(here::here(), vars$dis_file), lazy = FALSE) %>%
     select(QuarCd, distr)
 
-  
   vars$look_reg <- mutate(vars$look_dis, distnum = if_else(distr == "Kreis 1", 10, as.numeric(QuarCd))) %>%
     select(distnum, distr) %>%
     unique() %>%
@@ -105,6 +109,16 @@ init <- function(i_scen = "middle", var_file = "/2_Data/3_Parameter/variables.ym
       age < vars$age_4[5] ~ vars$age_4t[4],
       TRUE ~ vars$age_4t[5]
     ), levels = vars$age_4t))
+  
+  vars$look_a5 <- tibble(age = 0:120) %>%
+    mutate(age_5 = factor(case_when(
+      age < vars$age_5[1] ~ vars$age_5t[1],
+      age < vars$age_5[2] ~ vars$age_5t[2],
+      age < vars$age_5[3] ~ vars$age_5t[3],
+      TRUE ~ vars$age_5t[4]
+    ), levels = vars$age_5t))  
+  
+  
 
   # unique levels
   vars$text_d <- unique(vars$look_dis$distr)
@@ -118,6 +132,7 @@ init <- function(i_scen = "middle", var_file = "/2_Data/3_Parameter/variables.ym
   vars$uni_t <- factor(vars$pro_category, levels = vars$pro_category)
   vars$uni_i <- factor(vars$text_i, levels = vars$text_i)
   vars$uni_c <- factor(vars$text_c, levels = vars$text_c)
+  vars$uni_cb <- factor(vars$text_cb, levels = vars$text_cb) 
   
   vars$look_own <- tibble(EigentumGrundstkCd = as.integer(labels(vars$uni_w)), owner = levels(vars$uni_w))
   
@@ -165,7 +180,10 @@ init <- function(i_scen = "middle", var_file = "/2_Data/3_Parameter/variables.ym
   # relocation functions
   source(paste0(vars$code_path, "/0000_general/general_relocation-function.r"))
      
-  # general stuff (with dependency on parameters) ----------------------------------
+  
+  
+  
+  # general objects with dependency on parameters ----------------------------------
   
   # path for results
   vars$res_path <- paste0(vars$res_path, i_scen)
@@ -202,7 +220,7 @@ init <- function(i_scen = "middle", var_file = "/2_Data/3_Parameter/variables.ym
   # color for year (base period)
   vars$col_y_base <- colorRampPalette(vars$col_6)(length(vars$uniy_bir_base))
   
-  # colour for time distributions
+  # colors for time distributions
   vars$col_time <- c(
     rep(vars$col_grey, length(vars$uniy_bir_base)),
     colorRampPalette(vars$col_6[1:5])(length(vars$uniy_scen))

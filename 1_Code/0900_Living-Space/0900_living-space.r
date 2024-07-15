@@ -16,7 +16,7 @@ spa_dat <- read_csv(spa_od) %>%
   rename(year = StichtagDatJahr, area = Wohnflaeche, apartments = AnzWhgStat, people = AnzBestWir) %>%
   left_join(look_dis, by = "QuarCd") %>%
   mutate(
-    owner = fact_if(EigentuemerSSZPubl3Cd_noDM , uni_w),
+    owner = fact_if(EigentuemerSSZPubl3Cd_noDM, uni_w),
     district = factor(distr, uni_d)
   ) %>%
   group_by(year, district, owner) %>% 

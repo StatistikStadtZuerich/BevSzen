@@ -51,7 +51,7 @@ pop <- read_csv(pop_od) %>%
 # FSO data (used in the prediction)
 # rate is converted to percent
 mor_fso <- read_csv(dea_fso_od) %>%
-  rename(year = EreignisDatJahr, age = AlterVCd) %>%
+  rename(year = EreignisDatJahr, age = AlterVCd, KategorieCd = KategorieDatenBFSCd) %>%
   filter(HerkunftCd == 0) %>%
   mutate(
     sex = fact_if(SexCd, uni_s),
@@ -315,6 +315,18 @@ mor_zh_yas_past_future <- select(mor_zh_yas, year, age, sex, mor_yas) %>%
   bind_rows(mor_zh_yas_future)
 
 # plot 0210
+
+# ZH and CH: past and future
+mor_zh_ch_yas_past_future <- mor_zh_yas_past_future |> 
+  mutate(region = factor(text_r[1], uni_r)) |> 
+  right_join(mor_yasr, by = c("year", "age", "sex", "region")) |> 
+  mutate(mor_new = if_else((year >= scen_begin) & (region == uni_r[1]), 
+                           mor_yas, mor_yasr)) |> 
+  select(year, age, sex, region, mor_new) |> 
+  rename(mor_yasr = mor_new) |> 
+  arrange(year, age, sex, region)
+
+# plot 0210a
 
 # export mortality rates --------------------------------------------------
 

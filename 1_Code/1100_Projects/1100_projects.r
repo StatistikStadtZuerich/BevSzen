@@ -100,7 +100,7 @@ pro_delay <- as_tibble(expand_grid(
   owner = uni_w,
   status = pro_category,
   indicator = uni_i,
-  delay = as.double(0:5)
+  delay = as.double(0:pro_max_delay)
 )) %>%
   left_join(select(pro_not, c(district, year, owner, status, indicator, realized)),
     by = c("district", "year", "owner", "status", "indicator")
