@@ -52,27 +52,27 @@ sszplot(pop_with_past,
 #| fig-width: 12
 #| fig-height: 14
 
-prop_coop %>%
-  pivot_longer(
-    cols = c("prop_car", "prop_trend"),
-    names_prefix = "prop_",
-    names_to = "category", values_to = "prop"
-  ) %>%
-  mutate(
-    cat = if_else(category == "car",
-      "capacity/reserves", "district trends"
-    ),
-    district = factor(district, levels = uni_d)
-  ) %>%
-  sszplot(
-    aes_x = "year", aes_y = "prop", aes_col = "cat",
-    labs_y = "proportion of cooperative housing (in %)",
-    wrap = "district", ncol = 4,
-    scale_y = c(0, NA),
-    i_x = c(NA, date_end),
-    name = plot_name("1301_proportion-cooperative-housing_data-sources"),
-    width = 12, height = 14
-  )
+# prop_coop %>%
+#   pivot_longer(
+#     cols = c("prop_car", "prop_trend"),
+#     names_prefix = "prop_",
+#     names_to = "category", values_to = "prop"
+#   ) %>%
+#   mutate(
+#     cat = if_else(category == "car",
+#       "capacity/reserves", "district trends"
+#     ),
+#     district = factor(district, levels = uni_d)
+#   ) %>%
+#   sszplot(
+#     aes_x = "year", aes_y = "prop", aes_col = "cat",
+#     labs_y = "proportion of cooperative housing (in %)",
+#     wrap = "district", ncol = 4,
+#     scale_y = c(0, NA),
+#     i_x = c(NA, date_end),
+#     name = plot_name("1301_proportion-cooperative-housing_data-sources"),
+#     width = 12, height = 14
+#   )
 ```
 
 ## projects, capcity and reserves
@@ -275,6 +275,7 @@ pro_car_dw %>%
   )
 ```
 
+
 ### total proportion by district
 
 ```{r}
@@ -302,3 +303,4 @@ pro_car_dw %>%
     width = 8, height = 8
   )
 ```
+

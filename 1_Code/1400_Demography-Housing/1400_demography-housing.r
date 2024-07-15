@@ -151,7 +151,7 @@ out_pop_smooth <- NULL # WHY? for smoothing checks
 # loop over years
 for (iyear in future) {
 
-  # iyear <- 2022
+  # iyear <- 2024
 
   # population at the begin of the year = population at the end of the previous year
   if (iyear == min(future)) {
@@ -161,27 +161,27 @@ for (iyear in future) {
   }
 
   # births (fertility rate * women in the population)
-  bir_do <- fer %>%
+  bir_dao <- fer %>%
     filter(year == iyear) %>%
     left_join(popu, by = c("district", "age", "sex", "origin")) %>%
     replace_na(list(fer = 0, pop = 0)) %>%
-    mutate(bir = pop * fer / 100) %>%
-    group_by(district, origin) %>%
+    mutate(bir = pop * fer / 100) |> 
+    group_by(district, age, origin) %>%
     summarize(bir = sum(bir),
               .groups = "drop")
 
-  # sum(bir_do$bir)
+  # sum(bir_dao$bir)
 
   # births: origin changes (from mother to baby)
-  bir_do_new <- cha %>%
+  bir_dao_new <- cha %>%
     filter(year == iyear) %>%
     select(-year) %>%
-    right_join(bir_do, by = c("district", "origin")) %>%
+    right_join(bir_dao, by = c("district", "origin")) %>%
     mutate(
       change = bir * cha / 100,
       keep = bir - change
     ) %>%
-    select(district, origin, change, keep) %>%
+    select(district, age, origin, change, keep) %>%
     pivot_longer(
       cols = c("change", "keep"),
       names_to = "category", values_to = "bir"
@@ -191,11 +191,15 @@ for (iyear in future) {
       origin == uni_o[1] ~ uni_o[2],
       TRUE ~ uni_o[1]
     )) %>%
-    select(district, new_origin, bir) %>%
+    select(district, age, new_origin, bir) %>%
     rename(origin = new_origin) %>%
-    group_by(district, origin) %>%
+    group_by(district, age, origin) %>%
     summarize(bir = sum(bir),
-              .groups = "drop")
+              .groups = "drop") |> 
+    rename(age_mother = age)
+  
+  # sum(bir_dao_new$bir)  
+  
 
   # births: with variable 'sex'
 
@@ -205,7 +209,7 @@ for (iyear in future) {
 
   pro_male_value <- filter(pro_male, year == iyear)
 
-  bir <- bir_do_new %>%
+  bir_temp <- bir_dao_new %>%
     mutate(
       pro_male = pro_male_value$pro_male,
       male = bir * pro_male / 100,
@@ -220,13 +224,27 @@ for (iyear in future) {
       age = -1,
       sex = factor(sex, levels = uni_s)
     ) %>%
-    select(district, age, sex, origin, bir) %>%
-    arrange(district, sex, origin)
+    select(district, age, age_mother, sex, origin, bir)
 
-  # sum(bir_do$bir)
-  # sum(bir_do_new$bir)
+
+  # birth with age of the mother (used for TFR)
+  bir_age_mother <- bir_temp |> 
+    select(district, age_mother, sex, origin, bir) |>     
+    arrange(district, age_mother, sex, origin)   
+    
+  # birth without the age of the mother (used in this model)
+  bir <- bir_temp |> 
+    select(-age_mother) |> 
+    group_by(district, age, sex, origin) %>%
+    summarize(bir = sum(bir),
+              .groups = "drop") |> 
+    arrange(district, sex, origin)      
+  
+  # sum(bir_dao$bir)
+  # sum(bir_dao_new$bir)
+  # sum(bir_age_mother$bir)
   # sum(bir$bir)
-
+  
   # deaths (mortality rate * population)
   dea <- mor %>%
     filter(year == iyear) %>%
@@ -494,9 +512,9 @@ for (iyear in future) {
     select(-pop_end_year)
   
   # outputs: birth (separate, since no 'age' variable), with variable 'year'
-  out_bir <- bir %>%
+  out_bir <- bir_age_mother %>%
     mutate(year = iyear) %>%
-    select(district, year, sex, origin, bir) %>%
+    select(district, year, age_mother, sex, origin, bir) %>%
     bind_rows(out_bir)
 
   # outputs: demographic processes, with variable 'year'
@@ -563,7 +581,7 @@ out_bal %>%
 
 # births
 out_bir %>%
-  arrange(district, year, sex, origin) %>%
+  arrange(district, year, age_mother, sex, origin) %>%
   write_csv(paste0(out_path, "/births_future.csv"))
 
 # demographic processes

@@ -225,6 +225,50 @@ pop %>%
   )
 ```
 
+### year, age, scenario (children)
+
+```{r}
+
+#| label: fig-1509a
+#| fig-cap: year, age, scenario (children)
+#| fig-width: 8
+#| fig-height: 5
+
+sszplot(pop_yac_children,
+  aes_x = "year", aes_y = "pop", aes_col = "scenario",
+  labs_y = "population",
+  grid = c(".", "age_5"),
+  scale_y = c(0, NA),
+  name = plot_name("1509a_pop_yac_children")
+)
+
+
+
+```
+
+
+### year, age, birth version (children)
+
+```{r}
+
+#| label: fig-1509a
+#| fig-cap: year, age, birth version (children)
+#| fig-width: 8
+#| fig-height: 5
+
+sszplot(pop_yav_children,
+  aes_x = "year", aes_y = "pop", aes_col = "scenario",
+  labs_y = "population",
+  grid = c(".", "age_5"),
+  scale_y = c(0, NA),
+  name = plot_name("1509b_pop_yac_children")
+)
+
+
+
+```
+
+
 ## population: new and previous scenarios
 
 ### by year and scenario
@@ -394,7 +438,7 @@ pop_dy_new_sel %>%
 
 ## birth
 
-### by year and scenario
+### by year and scenario (main scenarios)
 
 ```{r}
 #| label: fig-1520
@@ -419,6 +463,7 @@ bir %>%
   )
 ```
 
+
 ### by year, origin and scenario
 
 ```{r}
@@ -436,6 +481,100 @@ bir %>%
           name = plot_name("1521_bir_yoc")
   )
 ```
+
+### births by year and birth versions (middle scenario)
+
+```{r}
+#| label: fig-1521a
+#| fig-cap: births by year and birth version (middle scenario)
+
+# birth: past and future (birth versions)
+bir_ver <- bir_past |> 
+  bind_rows(bir_middle) |> 
+  bind_rows(bir_middle_birth_lower) |> 
+  bind_rows(bir_middle_birth_upper) |> 
+  mutate(scenario = factor(scenario, levels = uni_cb),
+         sex = factor(sex, levels = uni_s),
+         origin = factor(origin, levels = uni_o))
+
+bir_ver |> 
+  group_by(year, scenario) |> 
+  summarize(bir = sum(bir), .groups = "drop") |> 
+  sszplot(aes_x = "year", aes_y = "bir", aes_col = "scenario",
+          labs_y = "births per year",
+          scale_y = c(0, NA),
+          name = plot_name("1521a_bir_ver_yc")
+  )
+
+```
+
+
+### TFR by year and birth versions (middle scenario)
+
+```{r}
+#| label: fig-1521b
+#| fig-cap: TFR by year and birth version (middle scenario)
+
+# population: past and future (for birth versions)
+pop_ver_yac <- pop_past |> 
+  bind_rows(pop_middle) |> 
+  bind_rows(pop_middle_birth_lower) |> 
+  bind_rows(pop_middle_birth_upper) |> 
+  filter((sex == uni_s[2]) & (age >= bir_age_begin) & (age <= bir_age_end)) |> 
+  mutate(scenario = factor(scenario, levels = uni_cb)) |> 
+  group_by(year, age, scenario) |> 
+  summarize(pop = sum_NA(pop), .groups = "drop")
+
+# births (for birth versions)
+bir_ver_yac <- bir_ver |> 
+  rename(age = age_mother) |> 
+  group_by(year, age, scenario) |> 
+  summarize(bir = sum_NA(bir), .groups = "drop")  
+
+
+# TFR  
+pop_bir_ver_yac <- pop_ver_yac |> 
+  left_join(bir_ver_yac, by = c("year", "age", "scenario")) |> 
+  replace_na(list(bir = 0))  
+ 
+pop_bir_ver_yac |>   
+  mutate(fer_yac = bir / pop) |> 
+  group_by(year, scenario) |> 
+  summarize(tfr = sum_NA(fer_yac), .groups = "drop") |>   
+  sszplot(
+    aes_x = "year", aes_y = "tfr", aes_col = "scenario",
+    labs_y = "TFR", 
+    scale_y = c(0, NA),
+    name = plot_name("1521b_tfr_ver_yc")
+  )
+
+
+
+
+```
+
+### fertility rate by year and birth versions (middle scenario)
+
+```{r}
+
+#| label: fig-1521c
+#| fig-cap: fertility rate by year and birth version (middle scenario)
+
+# fertility rate
+pop_bir_ver_yac |> 
+  group_by(year, scenario) |> 
+  summarize(bir = sum_NA(bir), pop = sum_NA(pop), .groups = "drop") |> 
+  mutate(fer_yc = bir / pop * 100) |> 
+  sszplot(
+    aes_x = "year", aes_y = "fer_yc", aes_col = "scenario",
+    labs_y = "fertility rate (in % per year)", 
+    scale_y = c(0, NA),
+    name = plot_name("1521c_fer_ver_yc")
+  )
+
+```
+
+
 
 ### by district, year and origin
 
@@ -612,6 +751,35 @@ imm %>%
   )
 ```
 
+### by year, age (children) and scenario
+
+```{r}
+#| label: fig-1541a
+#| fig-cap: immigration by year, age (children) and scenario
+
+imm_a5 <- imm |> 
+  filter(age < age_5[3]) |> 
+  left_join(look_a5, by = "age") |>   
+  group_by(year, age_5, scenario) %>%
+  summarize(imm = sum(imm), .groups = "drop")
+
+imm_a5 |> 
+  sszplot(aes_x = "year", aes_y = "imm", aes_col = "scenario",
+          labs_y = "immigration per year",
+          wrap = "age_5", ncol = 3,
+          scale_y = c(0, NA),
+          i_x = scen_begin,
+          width = 12, height = 6,
+          name = plot_name("1541a_imm_ya")
+  )
+
+
+```
+
+
+
+
+
 ### by year, age and origin
 
 ```{r}
@@ -714,7 +882,7 @@ emi %>%
 emi %>%
   filter(scenario %in% uni_c[c(1, 3)]) %>%
   group_by(year, age_3) %>%
-  summarize(emi = sum(emi), .groups = "drop") %>%
+  summarize(emi = sum(emi), .groups = "drop") |> 
   sszplot(aes_x = "year", aes_y = "emi",
           labs_y = "emigration per year",
           wrap = "age_3", ncol = 5,
@@ -723,6 +891,30 @@ emi %>%
           width = 12, height = 6,
           name = plot_name("1551_emi_ya")
   )
+```
+### by year, age (children) and scenario
+
+```{r}
+#| label: fig-1551a
+#| fig-cap: emigration by year, age (children) and scenario
+
+emi_a5 <- emi |> 
+  filter(age < age_5[3]) |> 
+  left_join(look_a5, by = "age") |>   
+  group_by(year, age_5, scenario) %>%
+  summarize(emi = sum(emi), .groups = "drop") 
+  
+emi_a5 |> 
+  sszplot(aes_x = "year", aes_y = "emi", aes_col = "scenario",
+          labs_y = "emigration per year",
+          wrap = "age_5", ncol = 3,
+          scale_y = c(0, NA),
+          i_x = scen_begin,
+          width = 12, height = 6,
+          name = plot_name("1551a_imm_ya")
+  )
+
+
 ```
 
 ### by year, age and origin
@@ -850,6 +1042,27 @@ net %>%
 foreign proportion: not possible to calculate for net migration
 cannot be applied here
 e.g. low values in the denominator if negative and positive value
+
+### by year, age (children) and scenario
+
+```{r}
+#| label: fig-1562
+#| fig-cap: net migration by year and age (children)
+
+imm_a5 |> 
+  left_join(emi_a5, by = c("year", "age_5", "scenario")) |> 
+  mutate(net = imm - emi) |> 
+  sszplot(aes_x = "year", aes_y = "net", aes_col = "scenario",
+          labs_y = "net migration per year",
+          wrap = "age_5", ncol = 3,
+          scale_y = c(0, NA),
+          i_x = scen_begin,
+          width = 12, height = 6,
+          name = plot_name("1562_net_ya")
+  )
+
+```
+
 
 ## naturalization
 
