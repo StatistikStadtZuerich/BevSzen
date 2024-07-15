@@ -50,6 +50,8 @@ A log file is being created at [2_Data/6_Log](2_Data/6_Log).
 
 ## Documentation:
 
+Verification charts may be found on [Github Pages.](https://statistikstadtzuerich.github.io/BevSzen/)
+
 [Documentation (german)](https://www.stadt-zuerich.ch/prd/de/index/statistik/themen/bevoelkerung/bevoelkerungsentwicklung/bevoelkerungsszenarien.html#dokumentation)
 
 ## Author:
