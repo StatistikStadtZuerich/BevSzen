@@ -7,7 +7,7 @@
 # source general functions
 if (!exists("i_scen")) {
   source(paste0(here::here(), "/1_code/0000_general/general_init.R"))
-  params <- init("middle")
+  params <- init("middle_birth_lower")
 }
 
 # run the scenario
@@ -143,7 +143,7 @@ sszplot(tfr_ya2o,
   labs_y = "TFR", i_x = "5",
   geom = c("line", "point"),
   name = plot_name("0105_TFR_by-year-age2"),
-  width = 16, height = 5
+  width = 20, height = 5
 )
 ```
 
@@ -282,7 +282,7 @@ sszplot(fer_pred,
   wrap = "district",
   labs_y = "fertility rate (in % per year)",
   name = plot_name("0140_fertility-prediction_by-district"),
-  width = 12, height = 14,
+  width = 20, height = 24,
   multi = uni_o,
   quotes = quote(ylim(c(0, bir_plot_lim)))
 )
@@ -303,7 +303,7 @@ sel_age <- uni_age[(uni_age %% 5) == 0]
 
 age_dat <- filter(fer_pred, (origin == uni_o[1]) & (age %in% sel_age))
 sszplot(age_dat,
-  aes_x = "year", aes_y = "fer_fit",
+  aes_x = "year", aes_y = "fer_all",
   labs_y = "fertility rate (in % per year)",
   wrap = "age", ncol = 4,
   scale_y = c(0, bir_plot_lim),
@@ -332,7 +332,7 @@ foreign
 # plot: foreign
 age_dat <- filter(fer_pred, (origin == uni_o[2]) & (age %in% sel_age))
 sszplot(age_dat,
-  aes_x = "year", aes_y = "fer_fit",
+  aes_x = "year", aes_y = "fer_all",
   labs_y = "fertility rate (in % per year)",
   wrap = "age", ncol = 4,
   scale_y = c(0, bir_plot_lim),
@@ -362,8 +362,8 @@ sel_years <- uniy_scen[(uniy_scen %% 10) == 0]
 sel_lev <- c("initial", "smoothed")
 
 sel_dat <- pred_fit %>%
-  pivot_longer(c(pred_fit, pred_roll), names_to = "category", values_to = "fer") %>%
-  mutate(cat = fact_if(category, sel_lev, "pred_roll")) %>%
+  pivot_longer(c(pred_fit, fer_all), names_to = "category", values_to = "fer") %>%
+  mutate(cat = fact_if(category, sel_lev, "fer_all")) %>%
   filter(year %in% sel_years)
 
 # plot
