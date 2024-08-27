@@ -3,7 +3,7 @@
 # calculate values for Schulraumplanung according request by SSD
 # nr. of children by district and age group, middle scenario, KaReB according BZO2040
 # (age groups: 5-6, 7-12, 13-15)
-# for the years 2021, 2037, 2040, 2045, 2050
+# for the years 2023, 2038, 2040, 2045, 2050 (information from Thomas Stohler, 2024-08-27)
 
 # prep work ---------------------------------------------------------------
 
@@ -44,7 +44,7 @@ run_scen(
 source(paste0(code_path, "1500_Model/1501_model_outputs.r"))
 
 pop %>%
-  filter(year %in% c(date_end, 2037, 2040, 2045, 2050),
+  filter(year %in% c(date_end, 2038, 2040, 2045, 2050),
          age >= 5 & age <= 15,
          scenario %in% c("past", "middle")) %>%
   mutate(age1 = factor(case_when(age <= 6 ~ uni_kids[1],
