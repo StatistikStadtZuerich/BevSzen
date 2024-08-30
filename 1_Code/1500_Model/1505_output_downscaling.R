@@ -31,7 +31,7 @@ req_path <- paste0(req_path, "pop_scen_downscaling.csv")
 run_scen(
   scenarios = c("middle"),
   modules = c("all"))
-source(paste0(code_path, "1500/1501_model_outputs.r"))
+source(paste0(code_path, "1500_Model/1501_model_outputs.r"))
 
 # load data ---------------------------------------------------------------
 kareb <- read_csv("2_Data/1_Input/KaReB.csv") %>%

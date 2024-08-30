@@ -3,11 +3,16 @@
 # calculate values for Schulraumplanung according request by SSD
 # nr. of children by district and age group, middle scenario, KaReB according BZO2040
 # (age groups: 5-6, 7-12, 13-15)
-# for the years 2021, 2037, 2040, 2045, 2050
+# for the years 2023, 2038, 2040, 2045, 2050 (information from Thomas Stohler, 2024-08-27)
 
 # prep work ---------------------------------------------------------------
-# source(paste0(here::here(),"/1_code/0000_general/general_init.R"))
+
+# run the model with BZO2016
+source("1_code/0000_general/general_init.R")
 params <- init("middle")
+
+run_scen(scenarios = c("middle"), modules = c("alw"))
+run_scen(scenarios = c("middle"), modules = c("out"))
 
 # exchange KaReB file
 inp_path <- paste0(data_path, "1_Input/")
@@ -36,10 +41,10 @@ pop_middle_16 <- pop_middle
 run_scen(
   scenarios = c("middle"),
   modules = c("all"))
-source(paste0(code_path, "1500/1501_model_outputs.r"))
+source(paste0(code_path, "1500_Model/1501_model_outputs.r"))
 
 pop %>%
-  filter(year %in% c(2021, 2037, 2040, 2045, 2050),
+  filter(year %in% c(date_end, 2038, 2040, 2045, 2050),
          age >= 5 & age <= 15,
          scenario %in% c("past", "middle")) %>%
   mutate(age1 = factor(case_when(age <= 6 ~ uni_kids[1],
@@ -187,7 +192,7 @@ pop_middle_16 %>%
           width = 20, height = 14,
           wrap = "age_group", ncol = 3)
 
-# scenario results from last year and this year in comparison
+# scenario results from 2021 and this year in comparison
 xlp <- "//szh.loc/ssz/data/Projekte/BevSzen/2021_BZO2040/3_Resultate/3000_Auswertungen/3_Zukuenftige-Bevoelkerungsentwicklung_BZO2040_nach-Altersklasse-Quartier-Jahr.xlsx"
 sheets <- readxl::excel_sheets(xlp)
 sheets <- sheets[2:length(sheets)]
@@ -211,13 +216,13 @@ for (i in sheets) {
 }
 
 pop_prev_current <- pop_middle %>%
-  mutate(model_year = 22) %>%
+  mutate(model_year = scen_begin) %>%
   mutate(age_group = age %/% 10 + 1) %>%
   mutate(age_group = if_else(age_group > 9, 9, age_group)) %>%
   filter(year %in% as.integer(sheets)) %>%
   group_by(district, age_group, year) %>%
   summarise(pop = sum(pop)) %>%
-  mutate(model_year = 22) %>%
+  mutate(model_year = scen_begin) %>%
   union(pop_middle_prevyear)
 
 # total
@@ -228,7 +233,7 @@ pop_prev_current %>%
           geom = "col",
           fix_col = 2,
           labs_x = "year", labs_y = "frequency",
-          name = "15A8_pop_y_bzo40_21_vs_22",
+          name = "15A8_pop_y_bzo40_21_vs_now",
           width = 10, height = 7)
 
 # by district
@@ -239,7 +244,7 @@ pop_prev_current %>%
           geom = "col",
           fix_col = 2,
           labs_x = "year", labs_y = "frequency",
-          name = "15A9_pop_yd_bzo40_21_vs_22",
+          name = "15A9_pop_yd_bzo40_21_vs_now",
           width = 10, height = 7,
           wrap = "district")
 
@@ -252,7 +257,7 @@ pop_prev_current %>%
           fix_col = 2,
           labs_x = "year", labs_y = "frequency",
           angle = 90,
-          name = "15B1_pop_ya_bzo40_21_vs_22",
+          name = "15B1_pop_ya_bzo40_21_vs_now",
           width = 20, height = 14,
           wrap = "age_group", ncol = 3)
 
