@@ -8,8 +8,8 @@
 # prep work ---------------------------------------------------------------
 
 # run the model with BZO2016
-params <- init("middle")
 source("1_code/0000_general/general_init.R")
+params <- init("middle")
 
 run_scen(scenarios = c("middle"), modules = c("alw"))
 run_scen(scenarios = c("middle"), modules = c("out"))
