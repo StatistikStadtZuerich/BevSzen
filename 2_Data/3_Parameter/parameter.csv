@@ -11,9 +11,9 @@ time;bir_cha_base_end;no parameter in previous model;2024;2024;2024;2024;2024;ye
 time;bir_sex_ratio_begin;no parameter in previous model;1993;1993;1993;1993;1993;year;low;base period (in the past) for sex ratio calculation, begin
 time;bir_sex_ratio_end;no parameter in previous model;2024;2024;2024;2024;2024;year;low;base period (in the past) for sex ratio calculation, begin
 time;dea_fso_date_start;no parameter in previous model;1993;1993;1993;1993;1993;year;low;fso mortality data of the past: begin
-time;dea_fso_date_end;no parameter in previous model;2022;2022;2022;2022;2022;year;low;fso mortality data of the past: end
+time;dea_fso_date_end;no parameter in previous model;2023;2023;2023;2023;2023;year;low;fso mortality data of the past: end
 time;dea_base_begin;tod.basis.beginn;2013;2013;2013;2013;2013;year;low;base period (in the past) for death rate, begin (data should be available for both Zurich and Switzerland)
-time;dea_base_end;tod.basis.ende;2022;2022;2022;2022;2022;year;low;base period (in the past) for death rate, end (data should be available for both Zurich and Switzerland)
+time;dea_base_end;tod.basis.ende;2023;2023;2023;2023;2023;year;low;base period (in the past) for death rate, end (data should be available for both Zurich and Switzerland)
 time;ims_base_begin;no parameter in previous model;2015;2015;2015;2015;2015;year;low;base period (not the future) for immigration* rate, begin
 time;ims_base_end;no parameter in previous model;2024;2024;2024;2024;2024;year;low;base period (not the future) for immigration* rate, end
 time;ims_so_base_begin;no parameter in previous model;2015;2015;2015;2015;2015;year;low;base period (not the future) for proportion of sex and origin in immigration*, begin
