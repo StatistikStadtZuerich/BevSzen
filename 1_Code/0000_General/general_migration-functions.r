@@ -228,7 +228,7 @@ mig_prop_so_dy <- function(mig_path, mig_vari, mig_district,
       mig = sum(mig),
       .groups = "drop"
     )
-
+  
   # relocation
   # only migration to a certain district
   # WHY? this is needed to calculate immigration* (i.e. migration to a certain district)
