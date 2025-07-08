@@ -1,5 +1,6 @@
 ﻿category;parameter;parameter_old;lower;middle;middle_birth_lower;middle_birth_upper;upper;unit;relevance;description
 time;date_start;daten.beginn;1993;1993;1993;1993;1993;year;no parameter (strictly speaking);begin of data
+
 time;date_end;daten.ende;2024;2024;2024;2024;2024;year;no parameter (strictly speaking);end of data
 time;scen_begin;szen.beginn;2025;2025;2025;2025;2025;year;no parameter (strictly speaking);future: begin
 time;scen_end;szen.ende;2050;2050;2050;2050;2050;year;no parameter (strictly speaking);future: end

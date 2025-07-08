@@ -1,0 +1,2523 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.3.433">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>Plots for population scenarios - 1&nbsp; Birth</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+</style>
+
+
+<script src="site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="site_libs/quarto-nav/headroom.min.js"></script>
+<script src="site_libs/clipboard/clipboard.min.js"></script>
+<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="site_libs/quarto-search/fuse.min.js"></script>
+<script src="site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="./">
+<link href="./02_death.html" rel="next">
+<link href="./index.html" rel="prev">
+<script src="site_libs/quarto-html/quarto.js"></script>
+<script src="site_libs/quarto-html/popper.min.js"></script>
+<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="site_libs/quarto-html/anchor.min.js"></script>
+<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "sidebar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "start",
+  "type": "textbox",
+  "limit": 20,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+<style>html{ scroll-behavior: smooth; }</style>
+
+
+<link rel="stylesheet" href="sszTheme.css">
+</head>
+
+<body class="nav-sidebar docked">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+      <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./01_birth.html"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Birth</span></a></li></ol></nav>
+      <a class="flex-grow-1" role="button" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+      </a>
+      <button type="button" class="btn quarto-search-button" aria-label="" onclick="window.quartoOpenSearch();">
+        <i class="bi bi-search"></i>
+      </button>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-full">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal sidebar-navigation docked overflow-auto">
+    <div class="pt-lg-2 mt-2 text-left sidebar-header">
+    <div class="sidebar-title mb-0 py-0">
+      <a href="./">Plots for population scenarios</a> 
+    </div>
+      </div>
+        <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="sidebar-search">
+        <div id="quarto-search" class="" title="Search"></div>
+        </div>
+        </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Preface</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./01_birth.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Birth</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./02_death.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Death</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./03_immigration.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Immigration</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./04_emigration.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Emigration</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./05_reloc_immigration.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Relocation on immigration</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./06_reloc_emigration.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Relocation on emigration</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./07_naturalization.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Naturalization</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./08_careb.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Capacity reserves</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./09_living_space.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Living spaces</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./10_allocation.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Allocation</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./11_projects.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Projects</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./13_housing.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">Housing model</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./14_dem_house.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">Demography Housing</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./15_model_output.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">14</span>&nbsp; <span class="chapter-title">Model outputs</span></span></a>
+  </div>
+</li>
+    </ul>
+    </div>
+</nav>
+<div id="quarto-sidebar-glass" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Table of contents</h2>
+   
+  <ul>
+  <li><a href="#fertility" id="toc-fertility" class="nav-link active" data-scroll-target="#fertility"><span class="header-section-number">1.1</span> Fertility</a>
+  <ul>
+  <li><a href="#tfr-total-fertility-rate" id="toc-tfr-total-fertility-rate" class="nav-link" data-scroll-target="#tfr-total-fertility-rate"><span class="header-section-number">1.1.1</span> TFR (total fertility rate)</a>
+  <ul class="collapse">
+  <li><a href="#plots-to-define-the-base-period-for-fertility-prediction" id="toc-plots-to-define-the-base-period-for-fertility-prediction" class="nav-link" data-scroll-target="#plots-to-define-the-base-period-for-fertility-prediction"><span class="header-section-number">1.1.1.1</span> plots to define the base period for fertility prediction</a></li>
+  <li><a href="#fertility-plots-before-any-corrections" id="toc-fertility-plots-before-any-corrections" class="nav-link" data-scroll-target="#fertility-plots-before-any-corrections"><span class="header-section-number">1.1.1.2</span> fertility plots (before any corrections)</a></li>
+  </ul></li>
+  <li><a href="#corrected-fertility" id="toc-corrected-fertility" class="nav-link" data-scroll-target="#corrected-fertility"><span class="header-section-number">1.1.2</span> corrected fertility:</a></li>
+  <li><a href="#prediction" id="toc-prediction" class="nav-link" data-scroll-target="#prediction"><span class="header-section-number">1.1.3</span> Prediction</a>
+  <ul class="collapse">
+  <li><a href="#tfr-total-fertility-rate-of-past-and-future" id="toc-tfr-total-fertility-rate-of-past-and-future" class="nav-link" data-scroll-target="#tfr-total-fertility-rate-of-past-and-future"><span class="header-section-number">1.1.3.1</span> TFR (total fertility rate) of past and future</a></li>
+  </ul></li>
+  </ul></li>
+  <li><a href="#origin" id="toc-origin" class="nav-link" data-scroll-target="#origin"><span class="header-section-number">1.2</span> Origin</a>
+  <ul>
+  <li><a href="#origin-change" id="toc-origin-change" class="nav-link" data-scroll-target="#origin-change"><span class="header-section-number">1.2.1</span> Origin change</a></li>
+  <li><a href="#prediction-of-origin-change" id="toc-prediction-of-origin-change" class="nav-link" data-scroll-target="#prediction-of-origin-change"><span class="header-section-number">1.2.2</span> Prediction of origin change</a></li>
+  </ul></li>
+  <li><a href="#sex-ratio" id="toc-sex-ratio" class="nav-link" data-scroll-target="#sex-ratio"><span class="header-section-number">1.3</span> Sex ratio</a>
+  <ul>
+  <li><a href="#current-proportion" id="toc-current-proportion" class="nav-link" data-scroll-target="#current-proportion"><span class="header-section-number">1.3.1</span> Current proportion</a></li>
+  <li><a href="#prediction-of-proportion" id="toc-prediction-of-proportion" class="nav-link" data-scroll-target="#prediction-of-proportion"><span class="header-section-number">1.3.2</span> Prediction of proportion</a></li>
+  </ul></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content page-columns page-full column-body" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Birth</span></h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+</header>
+
+<div class="cell" data-hash="01_birth_cache/html/prep_64b90fdd6556c4b3121458b355cdd254">
+
+</div>
+<section id="fertility" class="level2 page-columns page-full" data-number="1.1">
+<h2 data-number="1.1" class="anchored" data-anchor-id="fertility"><span class="header-section-number">1.1</span> Fertility</h2>
+<section id="tfr-total-fertility-rate" class="level3 page-columns page-full" data-number="1.1.1">
+<h3 data-number="1.1.1" class="anchored" data-anchor-id="tfr-total-fertility-rate"><span class="header-section-number">1.1.1</span> TFR (total fertility rate)</h3>
+<section id="plots-to-define-the-base-period-for-fertility-prediction" class="level4 page-columns page-full" data-number="1.1.1.1">
+<h4 data-number="1.1.1.1" class="anchored" data-anchor-id="plots-to-define-the-base-period-for-fertility-prediction"><span class="header-section-number">1.1.1.1</span> plots to define the base period for fertility prediction</h4>
+<div class="cell page-columns page-full" data-hash="01_birth_cache/html/fig-0100_b4d1b2b250ce25e114b740017a738ae2">
+<div class="cell-output-display column-body page-columns page-full">
+<div id="fig-0100" class="quarto-figure quarto-figure-center column-body anchored page-columns page-full">
+<figure class="figure page-columns page-full">
+<p class="page-columns page-full"><img src="01_birth_files/figure-html/fig-0100-1.svg" class="column-body img-fluid figure-img"></p>
+<figcaption class="figure-caption">Figure&nbsp;1.1: total fertility rate by year</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<div class="cell page-columns page-full" data-hash="01_birth_cache/html/fig-0101_c7db4a7846e9ab1411c6dab2f6b4029f">
+<div class="cell-output-display column-body page-columns page-full">
+<div id="fig-0101" class="quarto-figure quarto-figure-center column-body anchored page-columns page-full">
+<figure class="figure page-columns page-full">
+<p class="page-columns page-full"><img src="01_birth_files/figure-html/fig-0101-1.svg" class="column-body img-fluid figure-img"></p>
+<figcaption class="figure-caption">Figure&nbsp;1.2: total fertility rate by year and origin</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<div class="cell page-columns page-full" data-hash="01_birth_cache/html/fig-0102_861e11c6ea557b8c514c9783bba305b5">
+<div class="cell-output-display column-body page-columns page-full">
+<div id="fig-0102" class="quarto-figure quarto-figure-center column-body anchored page-columns page-full">
+<figure class="figure page-columns page-full">
+<p class="page-columns page-full"><img src="01_birth_files/figure-html/fig-0102-1.svg" class="column-body img-fluid figure-img"></p>
+<figcaption class="figure-caption">Figure&nbsp;1.3: total fertility rate by year and age class (3)</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<div class="cell page-columns page-full" data-hash="01_birth_cache/html/fig-0103_e8f88dd35a0abcc5c462285fc667331f">
+<div class="cell-output-display column-body page-columns page-full">
+<div id="fig-0103" class="quarto-figure quarto-figure-center column-body anchored page-columns page-full">
+<figure class="figure page-columns page-full">
+<p class="page-columns page-full"><img src="01_birth_files/figure-html/fig-0103-1.svg" class="column-body img-fluid figure-img"></p>
+<figcaption class="figure-caption">Figure&nbsp;1.4: total fertility rate by year and age class (5)</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<div class="cell page-columns page-full" data-hash="01_birth_cache/html/fig-0104_aa42d38e8a53236d14731a7f8adf0cd3">
+<div class="cell-output-display column-body page-columns page-full">
+<div id="fig-0104" class="quarto-figure quarto-figure-center column-body anchored page-columns page-full">
+<figure class="figure page-columns page-full">
+<p class="page-columns page-full"><img src="01_birth_files/figure-html/fig-0104-1.svg" class="column-body img-fluid figure-img"></p>
+<figcaption class="figure-caption">Figure&nbsp;1.5: total fertility rate by year, origin and age class (3)</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<div class="cell page-columns page-full" data-hash="01_birth_cache/html/fig-0105_ba56c44fb5747029c1b8129b183991a9">
+<div class="cell-output-display column-body page-columns page-full">
+<div id="fig-0105" class="quarto-figure quarto-figure-center column-body anchored page-columns page-full">
+<figure class="figure page-columns page-full">
+<p class="page-columns page-full"><img src="01_birth_files/figure-html/fig-0105-1.svg" class="column-body img-fluid figure-img"></p>
+<figcaption class="figure-caption">Figure&nbsp;1.6: total fertility rate by year, origin and age class (5)</figcaption>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="fertility-plots-before-any-corrections" class="level4 page-columns page-full" data-number="1.1.1.2">
+<h4 data-number="1.1.1.2" class="anchored" data-anchor-id="fertility-plots-before-any-corrections"><span class="header-section-number">1.1.1.2</span> fertility plots (before any corrections)</h4>
+<div class="cell page-columns page-full" data-hash="01_birth_cache/html/fig-0110_8a2ad13d057ca53f62694a43932c4073">
+<div class="cell-output-display column-body page-columns page-full">
+<div id="fig-0110-1" class="quarto-figure quarto-figure-center column-body anchored page-columns page-full">
+<figure class="figure page-columns page-full">
+<p class="page-columns page-full"><img src="01_birth_files/figure-html/fig-0110-1.svg" class="column-body img-fluid figure-img"></p>
+<figcaption class="figure-caption">Figure&nbsp;1.7: fertility by district, year, age, origin</figcaption>
+</figure>
+</div>
+</div>
+<div class="cell-output-display column-body page-columns page-full">
+<div id="fig-0110-2" class="quarto-figure quarto-figure-center column-body anchored page-columns page-full">
+<figure class="figure page-columns page-full">
+<p class="page-columns page-full"><img src="01_birth_files/figure-html/fig-0110-2.svg" class="column-body img-fluid figure-img"></p>
+<figcaption class="figure-caption">Figure&nbsp;1.8: fertility by district, year, age, origin</figcaption>
+</figure>
+</div>
+</div>
+<div class="cell-output-display column-body page-columns page-full">
+<div id="fig-0110-3" class="quarto-figure quarto-figure-center column-body anchored page-columns page-full">
+<figure class="figure page-columns page-full">
+<p class="page-columns page-full"><img src="01_birth_files/figure-html/fig-0110-3.svg" class="column-body img-fluid figure-img"></p>
+<figcaption class="figure-caption">Figure&nbsp;1.9: fertility by district, year, age, origin</figcaption>
+</figure>
+</div>
+</div>
+<div class="cell-output-display column-body page-columns page-full">
+<div id="fig-0110-4" class="quarto-figure quarto-figure-center column-body anchored page-columns page-full">
+<figure class="figure page-columns page-full">
+<p class="page-columns page-full"><img src="01_birth_files/figure-html/fig-0110-4.svg" class="column-body img-fluid figure-img"></p>
+<figcaption class="figure-caption">Figure&nbsp;1.10: fertility by district, year, age, origin</figcaption>
+</figure>
+</div>
+</div>
+<div class="cell-output-display column-body page-columns page-full">
+<div id="fig-0110-5" class="quarto-figure quarto-figure-center column-body anchored page-columns page-full">
+<figure class="figure page-columns page-full">
+<p class="page-columns page-full"><img src="01_birth_files/figure-html/fig-0110-5.svg" class="column-body img-fluid figure-img"></p>
+<figcaption class="figure-caption">Figure&nbsp;1.11: fertility by district, year, age, origin</figcaption>
+</figure>
+</div>
+</div>
+<div class="cell-output-display column-body page-columns page-full">
+<div id="fig-0110-6" class="quarto-figure quarto-figure-center column-body anchored page-columns page-full">
+<figure class="figure page-columns page-full">
+<p class="page-columns page-full"><img src="01_birth_files/figure-html/fig-0110-6.svg" class="column-body img-fluid figure-img"></p>
+<figcaption class="figure-caption">Figure&nbsp;1.12: fertility by district, year, age, origin</figcaption>
+</figure>
+</div>
+</div>
+<div class="cell-output-display column-body page-columns page-full">
+<div id="fig-0110-7" class="quarto-figure quarto-figure-center column-body anchored page-columns page-full">
+<figure class="figure page-columns page-full">
+<p class="page-columns page-full"><img src="01_birth_files/figure-html/fig-0110-7.svg" class="column-body img-fluid figure-img"></p>
+<figcaption class="figure-caption">Figure&nbsp;1.13: fertility by district, year, age, origin</figcaption>
+</figure>
+</div>
+</div>
+<div class="cell-output-display column-body page-columns page-full">
+<div id="fig-0110-8" class="quarto-figure quarto-figure-center column-body anchored page-columns page-full">
+<figure class="figure page-columns page-full">
+<p class="page-columns page-full"><img src="01_birth_files/figure-html/fig-0110-8.svg" class="column-body img-fluid figure-img"></p>
+<figcaption class="figure-caption">Figure&nbsp;1.14: fertility by district, year, age, origin</figcaption>
+</figure>
+</div>
+</div>
+<div class="cell-output-display column-body page-columns page-full">
+<div id="fig-0110-9" class="quarto-figure quarto-figure-center column-body anchored page-columns page-full">
+<figure class="figure page-columns page-full">
+<p class="page-columns page-full"><img src="01_birth_files/figure-html/fig-0110-9.svg" class="column-body img-fluid figure-img"></p>
+<figcaption class="figure-caption">Figure&nbsp;1.15: fertility by district, year, age, origin</figcaption>
+</figure>
+</div>
+</div>
+<div class="cell-output-display column-body page-columns page-full">
+<div id="fig-0110-10" class="quarto-figure quarto-figure-center column-body anchored page-columns page-full">
+<figure class="figure page-columns page-full">
+<p class="page-columns page-full"><img src="01_birth_files/figure-html/fig-0110-10.svg" class="column-body img-fluid figure-img"></p>
+<figcaption class="figure-caption">Figure&nbsp;1.16: fertility by district, year, age, origin</figcaption>
+</figure>
+</div>
+</div>
+<div class="cell-output-display column-body page-columns page-full">
+<div id="fig-0110-11" class="quarto-figure quarto-figure-center column-body anchored page-columns page-full">
+<figure class="figure page-columns page-full">
+<p class="page-columns page-full"><img src="01_birth_files/figure-html/fig-0110-11.svg" class="column-body img-fluid figure-img"></p>
+<figcaption class="figure-caption">Figure&nbsp;1.17: fertility by district, year, age, origin</figcaption>
+</figure>
+</div>
+</div>
+<div class="cell-output-display column-body page-columns page-full">
+<div id="fig-0110-12" class="quarto-figure quarto-figure-center column-body anchored page-columns page-full">
+<figure class="figure page-columns page-full">
+<p class="page-columns page-full"><img src="01_birth_files/figure-html/fig-0110-12.svg" class="column-body img-fluid figure-img"></p>
+<figcaption class="figure-caption">Figure&nbsp;1.18: fertility by district, year, age, origin</figcaption>
+</figure>
+</div>
+</div>
+<div class="cell-output-display column-body page-columns page-full">
+<div id="fig-0110-13" class="quarto-figure quarto-figure-center column-body anchored page-columns page-full">
+<figure class="figure page-columns page-full">
+<p class="page-columns page-full"><img src="01_birth_files/figure-html/fig-0110-13.svg" class="column-body img-fluid figure-img"></p>
+<figcaption class="figure-caption">Figure&nbsp;1.19: fertility by district, year, age, origin</figcaption>
+</figure>
+</div>
+</div>
+<div class="cell-output-display column-body page-columns page-full">
+<div id="fig-0110-14" class="quarto-figure quarto-figure-center column-body anchored page-columns page-full">
+<figure class="figure page-columns page-full">
+<p class="page-columns page-full"><img src="01_birth_files/figure-html/fig-0110-14.svg" class="column-body img-fluid figure-img"></p>
+<figcaption class="figure-caption">Figure&nbsp;1.20: fertility by district, year, age, origin</figcaption>
+</figure>
+</div>
+</div>
+<div class="cell-output-display column-body page-columns page-full">
+<div id="fig-0110-15" class="quarto-figure quarto-figure-center column-body anchored page-columns page-full">
+<figure class="figure page-columns page-full">
+<p class="page-columns page-full"><img src="01_birth_files/figure-html/fig-0110-15.svg" class="column-body img-fluid figure-img"></p>
+<figcaption class="figure-caption">Figure&nbsp;1.21: fertility by district, year, age, origin</figcaption>
+</figure>
+</div>
+</div>
+<div class="cell-output-display column-body page-columns page-full">
+<div id="fig-0110-16" class="quarto-figure quarto-figure-center column-body anchored page-columns page-full">
+<figure class="figure page-columns page-full">
+<p class="page-columns page-full"><img src="01_birth_files/figure-html/fig-0110-16.svg" class="column-body img-fluid figure-img"></p>
+<figcaption class="figure-caption">Figure&nbsp;1.22: fertility by district, year, age, origin</figcaption>
+</figure>
+</div>
+</div>
+<div class="cell-output-display column-body page-columns page-full">
+<div id="fig-0110-17" class="quarto-figure quarto-figure-center column-body anchored page-columns page-full">
+<figure class="figure page-columns page-full">
+<p class="page-columns page-full"><img src="01_birth_files/figure-html/fig-0110-17.svg" class="column-body img-fluid figure-img"></p>
+<figcaption class="figure-caption">Figure&nbsp;1.23: fertility by district, year, age, origin</figcaption>
+</figure>
+</div>
+</div>
+<div class="cell-output-display column-body page-columns page-full">
+<div id="fig-0110-18" class="quarto-figure quarto-figure-center column-body anchored page-columns page-full">
+<figure class="figure page-columns page-full">
+<p class="page-columns page-full"><img src="01_birth_files/figure-html/fig-0110-18.svg" class="column-body img-fluid figure-img"></p>
+<figcaption class="figure-caption">Figure&nbsp;1.24: fertility by district, year, age, origin</figcaption>
+</figure>
+</div>
+</div>
+<div class="cell-output-display column-body page-columns page-full">
+<div id="fig-0110-19" class="quarto-figure quarto-figure-center column-body anchored page-columns page-full">
+<figure class="figure page-columns page-full">
+<p class="page-columns page-full"><img src="01_birth_files/figure-html/fig-0110-19.svg" class="column-body img-fluid figure-img"></p>
+<figcaption class="figure-caption">Figure&nbsp;1.25: fertility by district, year, age, origin</figcaption>
+</figure>
+</div>
+</div>
+<div class="cell-output-display column-body page-columns page-full">
+<div id="fig-0110-20" class="quarto-figure quarto-figure-center column-body anchored page-columns page-full">
+<figure class="figure page-columns page-full">
+<p class="page-columns page-full"><img src="01_birth_files/figure-html/fig-0110-20.svg" class="column-body img-fluid figure-img"></p>
+<figcaption class="figure-caption">Figure&nbsp;1.26: fertility by district, year, age, origin</figcaption>
+</figure>
+</div>
+</div>
+<div class="cell-output-display column-body page-columns page-full">
+<div id="fig-0110-21" class="quarto-figure quarto-figure-center column-body anchored page-columns page-full">
+<figure class="figure page-columns page-full">
+<p class="page-columns page-full"><img src="01_birth_files/figure-html/fig-0110-21.svg" class="column-body img-fluid figure-img"></p>
+<figcaption class="figure-caption">Figure&nbsp;1.27: fertility by district, year, age, origin</figcaption>
+</figure>
+</div>
+</div>
+<div class="cell-output-display column-body page-columns page-full">
+<div id="fig-0110-22" class="quarto-figure quarto-figure-center column-body anchored page-columns page-full">
+<figure class="figure page-columns page-full">
+<p class="page-columns page-full"><img src="01_birth_files/figure-html/fig-0110-22.svg" class="column-body img-fluid figure-img"></p>
+<figcaption class="figure-caption">Figure&nbsp;1.28: fertility by district, year, age, origin</figcaption>
+</figure>
+</div>
+</div>
+<div class="cell-output-display column-body page-columns page-full">
+<div id="fig-0110-23" class="quarto-figure quarto-figure-center column-body anchored page-columns page-full">
+<figure class="figure page-columns page-full">
+<p class="page-columns page-full"><img src="01_birth_files/figure-html/fig-0110-23.svg" class="column-body img-fluid figure-img"></p>
+<figcaption class="figure-caption">Figure&nbsp;1.29: fertility by district, year, age, origin</figcaption>
+</figure>
+</div>
+</div>
+<div class="cell-output-display column-body page-columns page-full">
+<div id="fig-0110-24" class="quarto-figure quarto-figure-center column-body anchored page-columns page-full">
+<figure class="figure page-columns page-full">
+<p class="page-columns page-full"><img src="01_birth_files/figure-html/fig-0110-24.svg" class="column-body img-fluid figure-img"></p>
+<figcaption class="figure-caption">Figure&nbsp;1.30: fertility by district, year, age, origin</figcaption>
+</figure>
+</div>
+</div>
+<div class="cell-output-display column-body page-columns page-full">
+<div id="fig-0110-25" class="quarto-figure quarto-figure-center column-body anchored page-columns page-full">
+<figure class="figure page-columns page-full">
+<p class="page-columns page-full"><img src="01_birth_files/figure-html/fig-0110-25.svg" class="column-body img-fluid figure-img"></p>
+<figcaption class="figure-caption">Figure&nbsp;1.31: fertility by district, year, age, origin</figcaption>
+</figure>
+</div>
+</div>
+<div class="cell-output-display column-body page-columns page-full">
+<div id="fig-0110-26" class="quarto-figure quarto-figure-center column-body anchored page-columns page-full">
+<figure class="figure page-columns page-full">
+<p class="page-columns page-full"><img src="01_birth_files/figure-html/fig-0110-26.svg" class="column-body img-fluid figure-img"></p>
+<figcaption class="figure-caption">Figure&nbsp;1.32: fertility by district, year, age, origin</figcaption>
+</figure>
+</div>
+</div>
+<div class="cell-output-display column-body page-columns page-full">
+<div id="fig-0110-27" class="quarto-figure quarto-figure-center column-body anchored page-columns page-full">
+<figure class="figure page-columns page-full">
+<p class="page-columns page-full"><img src="01_birth_files/figure-html/fig-0110-27.svg" class="column-body img-fluid figure-img"></p>
+<figcaption class="figure-caption">Figure&nbsp;1.33: fertility by district, year, age, origin</figcaption>
+</figure>
+</div>
+</div>
+<div class="cell-output-display column-body page-columns page-full">
+<div id="fig-0110-28" class="quarto-figure quarto-figure-center column-body anchored page-columns page-full">
+<figure class="figure page-columns page-full">
+<p class="page-columns page-full"><img src="01_birth_files/figure-html/fig-0110-28.svg" class="column-body img-fluid figure-img"></p>
+<figcaption class="figure-caption">Figure&nbsp;1.34: fertility by district, year, age, origin</figcaption>
+</figure>
+</div>
+</div>
+<div class="cell-output-display column-body page-columns page-full">
+<div id="fig-0110-29" class="quarto-figure quarto-figure-center column-body anchored page-columns page-full">
+<figure class="figure page-columns page-full">
+<p class="page-columns page-full"><img src="01_birth_files/figure-html/fig-0110-29.svg" class="column-body img-fluid figure-img"></p>
+<figcaption class="figure-caption">Figure&nbsp;1.35: fertility by district, year, age, origin</figcaption>
+</figure>
+</div>
+</div>
+<div class="cell-output-display column-body page-columns page-full">
+<div id="fig-0110-30" class="quarto-figure quarto-figure-center column-body anchored page-columns page-full">
+<figure class="figure page-columns page-full">
+<p class="page-columns page-full"><img src="01_birth_files/figure-html/fig-0110-30.svg" class="column-body img-fluid figure-img"></p>
+<figcaption class="figure-caption">Figure&nbsp;1.36: fertility by district, year, age, origin</figcaption>
+</figure>
+</div>
+</div>
+<div class="cell-output-display column-body page-columns page-full">
+<div id="fig-0110-31" class="quarto-figure quarto-figure-center column-body anchored page-columns page-full">
+<figure class="figure page-columns page-full">
+<p class="page-columns page-full"><img src="01_birth_files/figure-html/fig-0110-31.svg" class="column-body img-fluid figure-img"></p>
+<figcaption class="figure-caption">Figure&nbsp;1.37: fertility by district, year, age, origin</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<div class="cell page-columns page-full" data-hash="01_birth_cache/html/fig-0111_e1b93588284c1bff862c58dc76513237">
+<div class="cell-output-display column-body page-columns page-full">
+<div id="fig-0111" class="quarto-figure quarto-figure-center column-body anchored page-columns page-full">
+<figure class="figure page-columns page-full">
+<p class="page-columns page-full"><img src="01_birth_files/figure-html/fig-0111-1.svg" class="column-body img-fluid figure-img"></p>
+<figcaption class="figure-caption">Figure&nbsp;1.38: fertility by year, age, origin</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<div class="cell page-columns page-full" data-hash="01_birth_cache/html/fig-0112_f1f2b5c15daa2a2387625a7a1f741526">
+<div class="cell-output-display column-body page-columns page-full">
+<div id="fig-0112" class="quarto-figure quarto-figure-center column-body anchored page-columns page-full">
+<figure class="figure page-columns page-full">
+<p class="page-columns page-full"><img src="01_birth_files/figure-html/fig-0112-1.svg" class="column-body img-fluid figure-img"></p>
+<figcaption class="figure-caption">Figure&nbsp;1.39: fertility by year, age</figcaption>
+</figure>
+</div>
+</div>
+</div>
+</section>
+</section>
+<section id="corrected-fertility" class="level3 page-columns page-full" data-number="1.1.2">
+<h3 data-number="1.1.2" class="anchored" data-anchor-id="corrected-fertility"><span class="header-section-number">1.1.2</span> corrected fertility:</h3>
+<div class="cell page-columns page-full" data-hash="01_birth_cache/html/fig-0120_9eaa448a2446d147b57d1d543d288b1d">
+<div class="cell-output-display column-body page-columns page-full">
+<div id="fig-0120-1" class="quarto-figure quarto-figure-center column-body anchored page-columns page-full">
+<figure class="figure page-columns page-full">
+<p class="page-columns page-full"><img src="01_birth_files/figure-html/fig-0120-1.svg" class="column-body img-fluid figure-img"></p>
+<figcaption class="figure-caption">Figure&nbsp;1.40: initial vs.&nbsp;corrected fertility</figcaption>
+</figure>
+</div>
+</div>
+<div class="cell-output-display column-body page-columns page-full">
+<div id="fig-0120-2" class="quarto-figure quarto-figure-center column-body anchored page-columns page-full">
+<figure class="figure page-columns page-full">
+<p class="page-columns page-full"><img src="01_birth_files/figure-html/fig-0120-2.svg" class="column-body img-fluid figure-img"></p>
+<figcaption class="figure-caption">Figure&nbsp;1.41: initial vs.&nbsp;corrected fertility</figcaption>
+</figure>
+</div>
+</div>
+<div class="cell-output-display column-body page-columns page-full">
+<div id="fig-0120-3" class="quarto-figure quarto-figure-center column-body anchored page-columns page-full">
+<figure class="figure page-columns page-full">
+<p class="page-columns page-full"><img src="01_birth_files/figure-html/fig-0120-3.svg" class="column-body img-fluid figure-img"></p>
+<figcaption class="figure-caption">Figure&nbsp;1.42: initial vs.&nbsp;corrected fertility</figcaption>
+</figure>
+</div>
+</div>
+<div class="cell-output-display column-body page-columns page-full">
+<div id="fig-0120-4" class="quarto-figure quarto-figure-center column-body anchored page-columns page-full">
+<figure class="figure page-columns page-full">
+<p class="page-columns page-full"><img src="01_birth_files/figure-html/fig-0120-4.svg" class="column-body img-fluid figure-img"></p>
+<figcaption class="figure-caption">Figure&nbsp;1.43: initial vs.&nbsp;corrected fertility</figcaption>
+</figure>
+</div>
+</div>
+<div class="cell-output-display column-body page-columns page-full">
+<div id="fig-0120-5" class="quarto-figure quarto-figure-center column-body anchored page-columns page-full">
+<figure class="figure page-columns page-full">
+<p class="page-columns page-full"><img src="01_birth_files/figure-html/fig-0120-5.svg" class="column-body img-fluid figure-img"></p>
+<figcaption class="figure-caption">Figure&nbsp;1.44: initial vs.&nbsp;corrected fertility</figcaption>
+</figure>
+</div>
+</div>
+<div class="cell-output-display column-body page-columns page-full">
+<div id="fig-0120-6" class="quarto-figure quarto-figure-center column-body anchored page-columns page-full">
+<figure class="figure page-columns page-full">
+<p class="page-columns page-full"><img src="01_birth_files/figure-html/fig-0120-6.svg" class="column-body img-fluid figure-img"></p>
+<figcaption class="figure-caption">Figure&nbsp;1.45: initial vs.&nbsp;corrected fertility</figcaption>
+</figure>
+</div>
+</div>
+<div class="cell-output-display column-body page-columns page-full">
+<div id="fig-0120-7" class="quarto-figure quarto-figure-center column-body anchored page-columns page-full">
+<figure class="figure page-columns page-full">
+<p class="page-columns page-full"><img src="01_birth_files/figure-html/fig-0120-7.svg" class="column-body img-fluid figure-img"></p>
+<figcaption class="figure-caption">Figure&nbsp;1.46: initial vs.&nbsp;corrected fertility</figcaption>
+</figure>
+</div>
+</div>
+<div class="cell-output-display column-body page-columns page-full">
+<div id="fig-0120-8" class="quarto-figure quarto-figure-center column-body anchored page-columns page-full">
+<figure class="figure page-columns page-full">
+<p class="page-columns page-full"><img src="01_birth_files/figure-html/fig-0120-8.svg" class="column-body img-fluid figure-img"></p>
+<figcaption class="figure-caption">Figure&nbsp;1.47: initial vs.&nbsp;corrected fertility</figcaption>
+</figure>
+</div>
+</div>
+<div class="cell-output-display column-body page-columns page-full">
+<div id="fig-0120-9" class="quarto-figure quarto-figure-center column-body anchored page-columns page-full">
+<figure class="figure page-columns page-full">
+<p class="page-columns page-full"><img src="01_birth_files/figure-html/fig-0120-9.svg" class="column-body img-fluid figure-img"></p>
+<figcaption class="figure-caption">Figure&nbsp;1.48: initial vs.&nbsp;corrected fertility</figcaption>
+</figure>
+</div>
+</div>
+<div class="cell-output-display column-body page-columns page-full">
+<div id="fig-0120-10" class="quarto-figure quarto-figure-center column-body anchored page-columns page-full">
+<figure class="figure page-columns page-full">
+<p class="page-columns page-full"><img src="01_birth_files/figure-html/fig-0120-10.svg" class="column-body img-fluid figure-img"></p>
+<figcaption class="figure-caption">Figure&nbsp;1.49: initial vs.&nbsp;corrected fertility</figcaption>
+</figure>
+</div>
+</div>
+<div class="cell-output-display column-body page-columns page-full">
+<div id="fig-0120-11" class="quarto-figure quarto-figure-center column-body anchored page-columns page-full">
+<figure class="figure page-columns page-full">
+<p class="page-columns page-full"><img src="01_birth_files/figure-html/fig-0120-11.svg" class="column-body img-fluid figure-img"></p>
+<figcaption class="figure-caption">Figure&nbsp;1.50: initial vs.&nbsp;corrected fertility</figcaption>
+</figure>
+</div>
+</div>
+<div class="cell-output-display column-body page-columns page-full">
+<div id="fig-0120-12" class="quarto-figure quarto-figure-center column-body anchored page-columns page-full">
+<figure class="figure page-columns page-full">
+<p class="page-columns page-full"><img src="01_birth_files/figure-html/fig-0120-12.svg" class="column-body img-fluid figure-img"></p>
+<figcaption class="figure-caption">Figure&nbsp;1.51: initial vs.&nbsp;corrected fertility</figcaption>
+</figure>
+</div>
+</div>
+<div class="cell-output-display column-body page-columns page-full">
+<div id="fig-0120-13" class="quarto-figure quarto-figure-center column-body anchored page-columns page-full">
+<figure class="figure page-columns page-full">
+<p class="page-columns page-full"><img src="01_birth_files/figure-html/fig-0120-13.svg" class="column-body img-fluid figure-img"></p>
+<figcaption class="figure-caption">Figure&nbsp;1.52: initial vs.&nbsp;corrected fertility</figcaption>
+</figure>
+</div>
+</div>
+<div class="cell-output-display column-body page-columns page-full">
+<div id="fig-0120-14" class="quarto-figure quarto-figure-center column-body anchored page-columns page-full">
+<figure class="figure page-columns page-full">
+<p class="page-columns page-full"><img src="01_birth_files/figure-html/fig-0120-14.svg" class="column-body img-fluid figure-img"></p>
+<figcaption class="figure-caption">Figure&nbsp;1.53: initial vs.&nbsp;corrected fertility</figcaption>
+</figure>
+</div>
+</div>
+<div class="cell-output-display column-body page-columns page-full">
+<div id="fig-0120-15" class="quarto-figure quarto-figure-center column-body anchored page-columns page-full">
+<figure class="figure page-columns page-full">
+<p class="page-columns page-full"><img src="01_birth_files/figure-html/fig-0120-15.svg" class="column-body img-fluid figure-img"></p>
+<figcaption class="figure-caption">Figure&nbsp;1.54: initial vs.&nbsp;corrected fertility</figcaption>
+</figure>
+</div>
+</div>
+<div class="cell-output-display column-body page-columns page-full">
+<div id="fig-0120-16" class="quarto-figure quarto-figure-center column-body anchored page-columns page-full">
+<figure class="figure page-columns page-full">
+<p class="page-columns page-full"><img src="01_birth_files/figure-html/fig-0120-16.svg" class="column-body img-fluid figure-img"></p>
+<figcaption class="figure-caption">Figure&nbsp;1.55: initial vs.&nbsp;corrected fertility</figcaption>
+</figure>
+</div>
+</div>
+<div class="cell-output-display column-body page-columns page-full">
+<div id="fig-0120-17" class="quarto-figure quarto-figure-center column-body anchored page-columns page-full">
+<figure class="figure page-columns page-full">
+<p class="page-columns page-full"><img src="01_birth_files/figure-html/fig-0120-17.svg" class="column-body img-fluid figure-img"></p>
+<figcaption class="figure-caption">Figure&nbsp;1.56: initial vs.&nbsp;corrected fertility</figcaption>
+</figure>
+</div>
+</div>
+<div class="cell-output-display column-body page-columns page-full">
+<div id="fig-0120-18" class="quarto-figure quarto-figure-center column-body anchored page-columns page-full">
+<figure class="figure page-columns page-full">
+<p class="page-columns page-full"><img src="01_birth_files/figure-html/fig-0120-18.svg" class="column-body img-fluid figure-img"></p>
+<figcaption class="figure-caption">Figure&nbsp;1.57: initial vs.&nbsp;corrected fertility</figcaption>
+</figure>
+</div>
+</div>
+<div class="cell-output-display column-body page-columns page-full">
+<div id="fig-0120-19" class="quarto-figure quarto-figure-center column-body anchored page-columns page-full">
+<figure class="figure page-columns page-full">
+<p class="page-columns page-full"><img src="01_birth_files/figure-html/fig-0120-19.svg" class="column-body img-fluid figure-img"></p>
+<figcaption class="figure-caption">Figure&nbsp;1.58: initial vs.&nbsp;corrected fertility</figcaption>
+</figure>
+</div>
+</div>
+<div class="cell-output-display column-body page-columns page-full">
+<div id="fig-0120-20" class="quarto-figure quarto-figure-center column-body anchored page-columns page-full">
+<figure class="figure page-columns page-full">
+<p class="page-columns page-full"><img src="01_birth_files/figure-html/fig-0120-20.svg" class="column-body img-fluid figure-img"></p>
+<figcaption class="figure-caption">Figure&nbsp;1.59: initial vs.&nbsp;corrected fertility</figcaption>
+</figure>
+</div>
+</div>
+<div class="cell-output-display column-body page-columns page-full">
+<div id="fig-0120-21" class="quarto-figure quarto-figure-center column-body anchored page-columns page-full">
+<figure class="figure page-columns page-full">
+<p class="page-columns page-full"><img src="01_birth_files/figure-html/fig-0120-21.svg" class="column-body img-fluid figure-img"></p>
+<figcaption class="figure-caption">Figure&nbsp;1.60: initial vs.&nbsp;corrected fertility</figcaption>
+</figure>
+</div>
+</div>
+<div class="cell-output-display column-body page-columns page-full">
+<div id="fig-0120-22" class="quarto-figure quarto-figure-center column-body anchored page-columns page-full">
+<figure class="figure page-columns page-full">
+<p class="page-columns page-full"><img src="01_birth_files/figure-html/fig-0120-22.svg" class="column-body img-fluid figure-img"></p>
+<figcaption class="figure-caption">Figure&nbsp;1.61: initial vs.&nbsp;corrected fertility</figcaption>
+</figure>
+</div>
+</div>
+<div class="cell-output-display column-body page-columns page-full">
+<div id="fig-0120-23" class="quarto-figure quarto-figure-center column-body anchored page-columns page-full">
+<figure class="figure page-columns page-full">
+<p class="page-columns page-full"><img src="01_birth_files/figure-html/fig-0120-23.svg" class="column-body img-fluid figure-img"></p>
+<figcaption class="figure-caption">Figure&nbsp;1.62: initial vs.&nbsp;corrected fertility</figcaption>
+</figure>
+</div>
+</div>
+<div class="cell-output-display column-body page-columns page-full">
+<div id="fig-0120-24" class="quarto-figure quarto-figure-center column-body anchored page-columns page-full">
+<figure class="figure page-columns page-full">
+<p class="page-columns page-full"><img src="01_birth_files/figure-html/fig-0120-24.svg" class="column-body img-fluid figure-img"></p>
+<figcaption class="figure-caption">Figure&nbsp;1.63: initial vs.&nbsp;corrected fertility</figcaption>
+</figure>
+</div>
+</div>
+<div class="cell-output-display column-body page-columns page-full">
+<div id="fig-0120-25" class="quarto-figure quarto-figure-center column-body anchored page-columns page-full">
+<figure class="figure page-columns page-full">
+<p class="page-columns page-full"><img src="01_birth_files/figure-html/fig-0120-25.svg" class="column-body img-fluid figure-img"></p>
+<figcaption class="figure-caption">Figure&nbsp;1.64: initial vs.&nbsp;corrected fertility</figcaption>
+</figure>
+</div>
+</div>
+<div class="cell-output-display column-body page-columns page-full">
+<div id="fig-0120-26" class="quarto-figure quarto-figure-center column-body anchored page-columns page-full">
+<figure class="figure page-columns page-full">
+<p class="page-columns page-full"><img src="01_birth_files/figure-html/fig-0120-26.svg" class="column-body img-fluid figure-img"></p>
+<figcaption class="figure-caption">Figure&nbsp;1.65: initial vs.&nbsp;corrected fertility</figcaption>
+</figure>
+</div>
+</div>
+<div class="cell-output-display column-body page-columns page-full">
+<div id="fig-0120-27" class="quarto-figure quarto-figure-center column-body anchored page-columns page-full">
+<figure class="figure page-columns page-full">
+<p class="page-columns page-full"><img src="01_birth_files/figure-html/fig-0120-27.svg" class="column-body img-fluid figure-img"></p>
+<figcaption class="figure-caption">Figure&nbsp;1.66: initial vs.&nbsp;corrected fertility</figcaption>
+</figure>
+</div>
+</div>
+<div class="cell-output-display column-body page-columns page-full">
+<div id="fig-0120-28" class="quarto-figure quarto-figure-center column-body anchored page-columns page-full">
+<figure class="figure page-columns page-full">
+<p class="page-columns page-full"><img src="01_birth_files/figure-html/fig-0120-28.svg" class="column-body img-fluid figure-img"></p>
+<figcaption class="figure-caption">Figure&nbsp;1.67: initial vs.&nbsp;corrected fertility</figcaption>
+</figure>
+</div>
+</div>
+<div class="cell-output-display column-body page-columns page-full">
+<div id="fig-0120-29" class="quarto-figure quarto-figure-center column-body anchored page-columns page-full">
+<figure class="figure page-columns page-full">
+<p class="page-columns page-full"><img src="01_birth_files/figure-html/fig-0120-29.svg" class="column-body img-fluid figure-img"></p>
+<figcaption class="figure-caption">Figure&nbsp;1.68: initial vs.&nbsp;corrected fertility</figcaption>
+</figure>
+</div>
+</div>
+<div class="cell-output-display column-body page-columns page-full">
+<div id="fig-0120-30" class="quarto-figure quarto-figure-center column-body anchored page-columns page-full">
+<figure class="figure page-columns page-full">
+<p class="page-columns page-full"><img src="01_birth_files/figure-html/fig-0120-30.svg" class="column-body img-fluid figure-img"></p>
+<figcaption class="figure-caption">Figure&nbsp;1.69: initial vs.&nbsp;corrected fertility</figcaption>
+</figure>
+</div>
+</div>
+<div class="cell-output-display column-body page-columns page-full">
+<div id="fig-0120-31" class="quarto-figure quarto-figure-center column-body anchored page-columns page-full">
+<figure class="figure page-columns page-full">
+<p class="page-columns page-full"><img src="01_birth_files/figure-html/fig-0120-31.svg" class="column-body img-fluid figure-img"></p>
+<figcaption class="figure-caption">Figure&nbsp;1.70: initial vs.&nbsp;corrected fertility</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<div class="cell page-columns page-full" data-hash="01_birth_cache/html/fig-0121_27732a71b80c7239bb00efbe13ef98dd">
+<div class="cell-output-display column-body page-columns page-full">
+<div id="fig-0121-1" class="quarto-figure quarto-figure-center column-body anchored page-columns page-full">
+<figure class="figure page-columns page-full">
+<p class="page-columns page-full"><img src="01_birth_files/figure-html/fig-0121-1.svg" class="column-body img-fluid figure-img"></p>
+<figcaption class="figure-caption">Figure&nbsp;1.71: cumulative population from the tails</figcaption>
+</figure>
+</div>
+</div>
+<div class="cell-output-display column-body page-columns page-full">
+<div id="fig-0121-2" class="quarto-figure quarto-figure-center column-body anchored page-columns page-full">
+<figure class="figure page-columns page-full">
+<p class="page-columns page-full"><img src="01_birth_files/figure-html/fig-0121-2.svg" class="column-body img-fluid figure-img"></p>
+<figcaption class="figure-caption">Figure&nbsp;1.72: cumulative population from the tails</figcaption>
+</figure>
+</div>
+</div>
+<div class="cell-output-display column-body page-columns page-full">
+<div id="fig-0121-3" class="quarto-figure quarto-figure-center column-body anchored page-columns page-full">
+<figure class="figure page-columns page-full">
+<p class="page-columns page-full"><img src="01_birth_files/figure-html/fig-0121-3.svg" class="column-body img-fluid figure-img"></p>
+<figcaption class="figure-caption">Figure&nbsp;1.73: cumulative population from the tails</figcaption>
+</figure>
+</div>
+</div>
+<div class="cell-output-display column-body page-columns page-full">
+<div id="fig-0121-4" class="quarto-figure quarto-figure-center column-body anchored page-columns page-full">
+<figure class="figure page-columns page-full">
+<p class="page-columns page-full"><img src="01_birth_files/figure-html/fig-0121-4.svg" class="column-body img-fluid figure-img"></p>
+<figcaption class="figure-caption">Figure&nbsp;1.74: cumulative population from the tails</figcaption>
+</figure>
+</div>
+</div>
+<div class="cell-output-display column-body page-columns page-full">
+<div id="fig-0121-5" class="quarto-figure quarto-figure-center column-body anchored page-columns page-full">
+<figure class="figure page-columns page-full">
+<p class="page-columns page-full"><img src="01_birth_files/figure-html/fig-0121-5.svg" class="column-body img-fluid figure-img"></p>
+<figcaption class="figure-caption">Figure&nbsp;1.75: cumulative population from the tails</figcaption>
+</figure>
+</div>
+</div>
+<div class="cell-output-display column-body page-columns page-full">
+<div id="fig-0121-6" class="quarto-figure quarto-figure-center column-body anchored page-columns page-full">
+<figure class="figure page-columns page-full">
+<p class="page-columns page-full"><img src="01_birth_files/figure-html/fig-0121-6.svg" class="column-body img-fluid figure-img"></p>
+<figcaption class="figure-caption">Figure&nbsp;1.76: cumulative population from the tails</figcaption>
+</figure>
+</div>
+</div>
+<div class="cell-output-display column-body page-columns page-full">
+<div id="fig-0121-7" class="quarto-figure quarto-figure-center column-body anchored page-columns page-full">
+<figure class="figure page-columns page-full">
+<p class="page-columns page-full"><img src="01_birth_files/figure-html/fig-0121-7.svg" class="column-body img-fluid figure-img"></p>
+<figcaption class="figure-caption">Figure&nbsp;1.77: cumulative population from the tails</figcaption>
+</figure>
+</div>
+</div>
+<div class="cell-output-display column-body page-columns page-full">
+<div id="fig-0121-8" class="quarto-figure quarto-figure-center column-body anchored page-columns page-full">
+<figure class="figure page-columns page-full">
+<p class="page-columns page-full"><img src="01_birth_files/figure-html/fig-0121-8.svg" class="column-body img-fluid figure-img"></p>
+<figcaption class="figure-caption">Figure&nbsp;1.78: cumulative population from the tails</figcaption>
+</figure>
+</div>
+</div>
+<div class="cell-output-display column-body page-columns page-full">
+<div id="fig-0121-9" class="quarto-figure quarto-figure-center column-body anchored page-columns page-full">
+<figure class="figure page-columns page-full">
+<p class="page-columns page-full"><img src="01_birth_files/figure-html/fig-0121-9.svg" class="column-body img-fluid figure-img"></p>
+<figcaption class="figure-caption">Figure&nbsp;1.79: cumulative population from the tails</figcaption>
+</figure>
+</div>
+</div>
+<div class="cell-output-display column-body page-columns page-full">
+<div id="fig-0121-10" class="quarto-figure quarto-figure-center column-body anchored page-columns page-full">
+<figure class="figure page-columns page-full">
+<p class="page-columns page-full"><img src="01_birth_files/figure-html/fig-0121-10.svg" class="column-body img-fluid figure-img"></p>
+<figcaption class="figure-caption">Figure&nbsp;1.80: cumulative population from the tails</figcaption>
+</figure>
+</div>
+</div>
+<div class="cell-output-display column-body page-columns page-full">
+<div id="fig-0121-11" class="quarto-figure quarto-figure-center column-body anchored page-columns page-full">
+<figure class="figure page-columns page-full">
+<p class="page-columns page-full"><img src="01_birth_files/figure-html/fig-0121-11.svg" class="column-body img-fluid figure-img"></p>
+<figcaption class="figure-caption">Figure&nbsp;1.81: cumulative population from the tails</figcaption>
+</figure>
+</div>
+</div>
+<div class="cell-output-display column-body page-columns page-full">
+<div id="fig-0121-12" class="quarto-figure quarto-figure-center column-body anchored page-columns page-full">
+<figure class="figure page-columns page-full">
+<p class="page-columns page-full"><img src="01_birth_files/figure-html/fig-0121-12.svg" class="column-body img-fluid figure-img"></p>
+<figcaption class="figure-caption">Figure&nbsp;1.82: cumulative population from the tails</figcaption>
+</figure>
+</div>
+</div>
+<div class="cell-output-display column-body page-columns page-full">
+<div id="fig-0121-13" class="quarto-figure quarto-figure-center column-body anchored page-columns page-full">
+<figure class="figure page-columns page-full">
+<p class="page-columns page-full"><img src="01_birth_files/figure-html/fig-0121-13.svg" class="column-body img-fluid figure-img"></p>
+<figcaption class="figure-caption">Figure&nbsp;1.83: cumulative population from the tails</figcaption>
+</figure>
+</div>
+</div>
+<div class="cell-output-display column-body page-columns page-full">
+<div id="fig-0121-14" class="quarto-figure quarto-figure-center column-body anchored page-columns page-full">
+<figure class="figure page-columns page-full">
+<p class="page-columns page-full"><img src="01_birth_files/figure-html/fig-0121-14.svg" class="column-body img-fluid figure-img"></p>
+<figcaption class="figure-caption">Figure&nbsp;1.84: cumulative population from the tails</figcaption>
+</figure>
+</div>
+</div>
+<div class="cell-output-display column-body page-columns page-full">
+<div id="fig-0121-15" class="quarto-figure quarto-figure-center column-body anchored page-columns page-full">
+<figure class="figure page-columns page-full">
+<p class="page-columns page-full"><img src="01_birth_files/figure-html/fig-0121-15.svg" class="column-body img-fluid figure-img"></p>
+<figcaption class="figure-caption">Figure&nbsp;1.85: cumulative population from the tails</figcaption>
+</figure>
+</div>
+</div>
+<div class="cell-output-display column-body page-columns page-full">
+<div id="fig-0121-16" class="quarto-figure quarto-figure-center column-body anchored page-columns page-full">
+<figure class="figure page-columns page-full">
+<p class="page-columns page-full"><img src="01_birth_files/figure-html/fig-0121-16.svg" class="column-body img-fluid figure-img"></p>
+<figcaption class="figure-caption">Figure&nbsp;1.86: cumulative population from the tails</figcaption>
+</figure>
+</div>
+</div>
+<div class="cell-output-display column-body page-columns page-full">
+<div id="fig-0121-17" class="quarto-figure quarto-figure-center column-body anchored page-columns page-full">
+<figure class="figure page-columns page-full">
+<p class="page-columns page-full"><img src="01_birth_files/figure-html/fig-0121-17.svg" class="column-body img-fluid figure-img"></p>
+<figcaption class="figure-caption">Figure&nbsp;1.87: cumulative population from the tails</figcaption>
+</figure>
+</div>
+</div>
+<div class="cell-output-display column-body page-columns page-full">
+<div id="fig-0121-18" class="quarto-figure quarto-figure-center column-body anchored page-columns page-full">
+<figure class="figure page-columns page-full">
+<p class="page-columns page-full"><img src="01_birth_files/figure-html/fig-0121-18.svg" class="column-body img-fluid figure-img"></p>
+<figcaption class="figure-caption">Figure&nbsp;1.88: cumulative population from the tails</figcaption>
+</figure>
+</div>
+</div>
+<div class="cell-output-display column-body page-columns page-full">
+<div id="fig-0121-19" class="quarto-figure quarto-figure-center column-body anchored page-columns page-full">
+<figure class="figure page-columns page-full">
+<p class="page-columns page-full"><img src="01_birth_files/figure-html/fig-0121-19.svg" class="column-body img-fluid figure-img"></p>
+<figcaption class="figure-caption">Figure&nbsp;1.89: cumulative population from the tails</figcaption>
+</figure>
+</div>
+</div>
+<div class="cell-output-display column-body page-columns page-full">
+<div id="fig-0121-20" class="quarto-figure quarto-figure-center column-body anchored page-columns page-full">
+<figure class="figure page-columns page-full">
+<p class="page-columns page-full"><img src="01_birth_files/figure-html/fig-0121-20.svg" class="column-body img-fluid figure-img"></p>
+<figcaption class="figure-caption">Figure&nbsp;1.90: cumulative population from the tails</figcaption>
+</figure>
+</div>
+</div>
+<div class="cell-output-display column-body page-columns page-full">
+<div id="fig-0121-21" class="quarto-figure quarto-figure-center column-body anchored page-columns page-full">
+<figure class="figure page-columns page-full">
+<p class="page-columns page-full"><img src="01_birth_files/figure-html/fig-0121-21.svg" class="column-body img-fluid figure-img"></p>
+<figcaption class="figure-caption">Figure&nbsp;1.91: cumulative population from the tails</figcaption>
+</figure>
+</div>
+</div>
+<div class="cell-output-display column-body page-columns page-full">
+<div id="fig-0121-22" class="quarto-figure quarto-figure-center column-body anchored page-columns page-full">
+<figure class="figure page-columns page-full">
+<p class="page-columns page-full"><img src="01_birth_files/figure-html/fig-0121-22.svg" class="column-body img-fluid figure-img"></p>
+<figcaption class="figure-caption">Figure&nbsp;1.92: cumulative population from the tails</figcaption>
+</figure>
+</div>
+</div>
+<div class="cell-output-display column-body page-columns page-full">
+<div id="fig-0121-23" class="quarto-figure quarto-figure-center column-body anchored page-columns page-full">
+<figure class="figure page-columns page-full">
+<p class="page-columns page-full"><img src="01_birth_files/figure-html/fig-0121-23.svg" class="column-body img-fluid figure-img"></p>
+<figcaption class="figure-caption">Figure&nbsp;1.93: cumulative population from the tails</figcaption>
+</figure>
+</div>
+</div>
+<div class="cell-output-display column-body page-columns page-full">
+<div id="fig-0121-24" class="quarto-figure quarto-figure-center column-body anchored page-columns page-full">
+<figure class="figure page-columns page-full">
+<p class="page-columns page-full"><img src="01_birth_files/figure-html/fig-0121-24.svg" class="column-body img-fluid figure-img"></p>
+<figcaption class="figure-caption">Figure&nbsp;1.94: cumulative population from the tails</figcaption>
+</figure>
+</div>
+</div>
+<div class="cell-output-display column-body page-columns page-full">
+<div id="fig-0121-25" class="quarto-figure quarto-figure-center column-body anchored page-columns page-full">
+<figure class="figure page-columns page-full">
+<p class="page-columns page-full"><img src="01_birth_files/figure-html/fig-0121-25.svg" class="column-body img-fluid figure-img"></p>
+<figcaption class="figure-caption">Figure&nbsp;1.95: cumulative population from the tails</figcaption>
+</figure>
+</div>
+</div>
+<div class="cell-output-display column-body page-columns page-full">
+<div id="fig-0121-26" class="quarto-figure quarto-figure-center column-body anchored page-columns page-full">
+<figure class="figure page-columns page-full">
+<p class="page-columns page-full"><img src="01_birth_files/figure-html/fig-0121-26.svg" class="column-body img-fluid figure-img"></p>
+<figcaption class="figure-caption">Figure&nbsp;1.96: cumulative population from the tails</figcaption>
+</figure>
+</div>
+</div>
+<div class="cell-output-display column-body page-columns page-full">
+<div id="fig-0121-27" class="quarto-figure quarto-figure-center column-body anchored page-columns page-full">
+<figure class="figure page-columns page-full">
+<p class="page-columns page-full"><img src="01_birth_files/figure-html/fig-0121-27.svg" class="column-body img-fluid figure-img"></p>
+<figcaption class="figure-caption">Figure&nbsp;1.97: cumulative population from the tails</figcaption>
+</figure>
+</div>
+</div>
+<div class="cell-output-display column-body page-columns page-full">
+<div id="fig-0121-28" class="quarto-figure quarto-figure-center column-body anchored page-columns page-full">
+<figure class="figure page-columns page-full">
+<p class="page-columns page-full"><img src="01_birth_files/figure-html/fig-0121-28.svg" class="column-body img-fluid figure-img"></p>
+<figcaption class="figure-caption">Figure&nbsp;1.98: cumulative population from the tails</figcaption>
+</figure>
+</div>
+</div>
+<div class="cell-output-display column-body page-columns page-full">
+<div id="fig-0121-29" class="quarto-figure quarto-figure-center column-body anchored page-columns page-full">
+<figure class="figure page-columns page-full">
+<p class="page-columns page-full"><img src="01_birth_files/figure-html/fig-0121-29.svg" class="column-body img-fluid figure-img"></p>
+<figcaption class="figure-caption">Figure&nbsp;1.99: cumulative population from the tails</figcaption>
+</figure>
+</div>
+</div>
+<div class="cell-output-display column-body page-columns page-full">
+<div id="fig-0121-30" class="quarto-figure quarto-figure-center column-body anchored page-columns page-full">
+<figure class="figure page-columns page-full">
+<p class="page-columns page-full"><img src="01_birth_files/figure-html/fig-0121-30.svg" class="column-body img-fluid figure-img"></p>
+<figcaption class="figure-caption">Figure&nbsp;1.100: cumulative population from the tails</figcaption>
+</figure>
+</div>
+</div>
+<div class="cell-output-display column-body page-columns page-full">
+<div id="fig-0121-31" class="quarto-figure quarto-figure-center column-body anchored page-columns page-full">
+<figure class="figure page-columns page-full">
+<p class="page-columns page-full"><img src="01_birth_files/figure-html/fig-0121-31.svg" class="column-body img-fluid figure-img"></p>
+<figcaption class="figure-caption">Figure&nbsp;1.101: cumulative population from the tails</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<div class="cell page-columns page-full" data-hash="01_birth_cache/html/fig-0122_cf05a3d4d91bf726c5c8b9477668f128">
+<div class="cell-output-display column-body page-columns page-full">
+<div id="fig-0122-1" class="quarto-figure quarto-figure-center column-body anchored page-columns page-full">
+<figure class="figure page-columns page-full">
+<p class="page-columns page-full"><img src="01_birth_files/figure-html/fig-0122-1.svg" class="column-body img-fluid figure-img"></p>
+<figcaption class="figure-caption">Figure&nbsp;1.102: smooth the corrected fertility rate”</figcaption>
+</figure>
+</div>
+</div>
+<div class="cell-output-display column-body page-columns page-full">
+<div id="fig-0122-2" class="quarto-figure quarto-figure-center column-body anchored page-columns page-full">
+<figure class="figure page-columns page-full">
+<p class="page-columns page-full"><img src="01_birth_files/figure-html/fig-0122-2.svg" class="column-body img-fluid figure-img"></p>
+<figcaption class="figure-caption">Figure&nbsp;1.103: smooth the corrected fertility rate”</figcaption>
+</figure>
+</div>
+</div>
+<div class="cell-output-display column-body page-columns page-full">
+<div id="fig-0122-3" class="quarto-figure quarto-figure-center column-body anchored page-columns page-full">
+<figure class="figure page-columns page-full">
+<p class="page-columns page-full"><img src="01_birth_files/figure-html/fig-0122-3.svg" class="column-body img-fluid figure-img"></p>
+<figcaption class="figure-caption">Figure&nbsp;1.104: smooth the corrected fertility rate”</figcaption>
+</figure>
+</div>
+</div>
+<div class="cell-output-display column-body page-columns page-full">
+<div id="fig-0122-4" class="quarto-figure quarto-figure-center column-body anchored page-columns page-full">
+<figure class="figure page-columns page-full">
+<p class="page-columns page-full"><img src="01_birth_files/figure-html/fig-0122-4.svg" class="column-body img-fluid figure-img"></p>
+<figcaption class="figure-caption">Figure&nbsp;1.105: smooth the corrected fertility rate”</figcaption>
+</figure>
+</div>
+</div>
+<div class="cell-output-display column-body page-columns page-full">
+<div id="fig-0122-5" class="quarto-figure quarto-figure-center column-body anchored page-columns page-full">
+<figure class="figure page-columns page-full">
+<p class="page-columns page-full"><img src="01_birth_files/figure-html/fig-0122-5.svg" class="column-body img-fluid figure-img"></p>
+<figcaption class="figure-caption">Figure&nbsp;1.106: smooth the corrected fertility rate”</figcaption>
+</figure>
+</div>
+</div>
+<div class="cell-output-display column-body page-columns page-full">
+<div id="fig-0122-6" class="quarto-figure quarto-figure-center column-body anchored page-columns page-full">
+<figure class="figure page-columns page-full">
+<p class="page-columns page-full"><img src="01_birth_files/figure-html/fig-0122-6.svg" class="column-body img-fluid figure-img"></p>
+<figcaption class="figure-caption">Figure&nbsp;1.107: smooth the corrected fertility rate”</figcaption>
+</figure>
+</div>
+</div>
+<div class="cell-output-display column-body page-columns page-full">
+<div id="fig-0122-7" class="quarto-figure quarto-figure-center column-body anchored page-columns page-full">
+<figure class="figure page-columns page-full">
+<p class="page-columns page-full"><img src="01_birth_files/figure-html/fig-0122-7.svg" class="column-body img-fluid figure-img"></p>
+<figcaption class="figure-caption">Figure&nbsp;1.108: smooth the corrected fertility rate”</figcaption>
+</figure>
+</div>
+</div>
+<div class="cell-output-display column-body page-columns page-full">
+<div id="fig-0122-8" class="quarto-figure quarto-figure-center column-body anchored page-columns page-full">
+<figure class="figure page-columns page-full">
+<p class="page-columns page-full"><img src="01_birth_files/figure-html/fig-0122-8.svg" class="column-body img-fluid figure-img"></p>
+<figcaption class="figure-caption">Figure&nbsp;1.109: smooth the corrected fertility rate”</figcaption>
+</figure>
+</div>
+</div>
+<div class="cell-output-display column-body page-columns page-full">
+<div id="fig-0122-9" class="quarto-figure quarto-figure-center column-body anchored page-columns page-full">
+<figure class="figure page-columns page-full">
+<p class="page-columns page-full"><img src="01_birth_files/figure-html/fig-0122-9.svg" class="column-body img-fluid figure-img"></p>
+<figcaption class="figure-caption">Figure&nbsp;1.110: smooth the corrected fertility rate”</figcaption>
+</figure>
+</div>
+</div>
+<div class="cell-output-display column-body page-columns page-full">
+<div id="fig-0122-10" class="quarto-figure quarto-figure-center column-body anchored page-columns page-full">
+<figure class="figure page-columns page-full">
+<p class="page-columns page-full"><img src="01_birth_files/figure-html/fig-0122-10.svg" class="column-body img-fluid figure-img"></p>
+<figcaption class="figure-caption">Figure&nbsp;1.111: smooth the corrected fertility rate”</figcaption>
+</figure>
+</div>
+</div>
+<div class="cell-output-display column-body page-columns page-full">
+<div id="fig-0122-11" class="quarto-figure quarto-figure-center column-body anchored page-columns page-full">
+<figure class="figure page-columns page-full">
+<p class="page-columns page-full"><img src="01_birth_files/figure-html/fig-0122-11.svg" class="column-body img-fluid figure-img"></p>
+<figcaption class="figure-caption">Figure&nbsp;1.112: smooth the corrected fertility rate”</figcaption>
+</figure>
+</div>
+</div>
+<div class="cell-output-display column-body page-columns page-full">
+<div id="fig-0122-12" class="quarto-figure quarto-figure-center column-body anchored page-columns page-full">
+<figure class="figure page-columns page-full">
+<p class="page-columns page-full"><img src="01_birth_files/figure-html/fig-0122-12.svg" class="column-body img-fluid figure-img"></p>
+<figcaption class="figure-caption">Figure&nbsp;1.113: smooth the corrected fertility rate”</figcaption>
+</figure>
+</div>
+</div>
+<div class="cell-output-display column-body page-columns page-full">
+<div id="fig-0122-13" class="quarto-figure quarto-figure-center column-body anchored page-columns page-full">
+<figure class="figure page-columns page-full">
+<p class="page-columns page-full"><img src="01_birth_files/figure-html/fig-0122-13.svg" class="column-body img-fluid figure-img"></p>
+<figcaption class="figure-caption">Figure&nbsp;1.114: smooth the corrected fertility rate”</figcaption>
+</figure>
+</div>
+</div>
+<div class="cell-output-display column-body page-columns page-full">
+<div id="fig-0122-14" class="quarto-figure quarto-figure-center column-body anchored page-columns page-full">
+<figure class="figure page-columns page-full">
+<p class="page-columns page-full"><img src="01_birth_files/figure-html/fig-0122-14.svg" class="column-body img-fluid figure-img"></p>
+<figcaption class="figure-caption">Figure&nbsp;1.115: smooth the corrected fertility rate”</figcaption>
+</figure>
+</div>
+</div>
+<div class="cell-output-display column-body page-columns page-full">
+<div id="fig-0122-15" class="quarto-figure quarto-figure-center column-body anchored page-columns page-full">
+<figure class="figure page-columns page-full">
+<p class="page-columns page-full"><img src="01_birth_files/figure-html/fig-0122-15.svg" class="column-body img-fluid figure-img"></p>
+<figcaption class="figure-caption">Figure&nbsp;1.116: smooth the corrected fertility rate”</figcaption>
+</figure>
+</div>
+</div>
+<div class="cell-output-display column-body page-columns page-full">
+<div id="fig-0122-16" class="quarto-figure quarto-figure-center column-body anchored page-columns page-full">
+<figure class="figure page-columns page-full">
+<p class="page-columns page-full"><img src="01_birth_files/figure-html/fig-0122-16.svg" class="column-body img-fluid figure-img"></p>
+<figcaption class="figure-caption">Figure&nbsp;1.117: smooth the corrected fertility rate”</figcaption>
+</figure>
+</div>
+</div>
+<div class="cell-output-display column-body page-columns page-full">
+<div id="fig-0122-17" class="quarto-figure quarto-figure-center column-body anchored page-columns page-full">
+<figure class="figure page-columns page-full">
+<p class="page-columns page-full"><img src="01_birth_files/figure-html/fig-0122-17.svg" class="column-body img-fluid figure-img"></p>
+<figcaption class="figure-caption">Figure&nbsp;1.118: smooth the corrected fertility rate”</figcaption>
+</figure>
+</div>
+</div>
+<div class="cell-output-display column-body page-columns page-full">
+<div id="fig-0122-18" class="quarto-figure quarto-figure-center column-body anchored page-columns page-full">
+<figure class="figure page-columns page-full">
+<p class="page-columns page-full"><img src="01_birth_files/figure-html/fig-0122-18.svg" class="column-body img-fluid figure-img"></p>
+<figcaption class="figure-caption">Figure&nbsp;1.119: smooth the corrected fertility rate”</figcaption>
+</figure>
+</div>
+</div>
+<div class="cell-output-display column-body page-columns page-full">
+<div id="fig-0122-19" class="quarto-figure quarto-figure-center column-body anchored page-columns page-full">
+<figure class="figure page-columns page-full">
+<p class="page-columns page-full"><img src="01_birth_files/figure-html/fig-0122-19.svg" class="column-body img-fluid figure-img"></p>
+<figcaption class="figure-caption">Figure&nbsp;1.120: smooth the corrected fertility rate”</figcaption>
+</figure>
+</div>
+</div>
+<div class="cell-output-display column-body page-columns page-full">
+<div id="fig-0122-20" class="quarto-figure quarto-figure-center column-body anchored page-columns page-full">
+<figure class="figure page-columns page-full">
+<p class="page-columns page-full"><img src="01_birth_files/figure-html/fig-0122-20.svg" class="column-body img-fluid figure-img"></p>
+<figcaption class="figure-caption">Figure&nbsp;1.121: smooth the corrected fertility rate”</figcaption>
+</figure>
+</div>
+</div>
+<div class="cell-output-display column-body page-columns page-full">
+<div id="fig-0122-21" class="quarto-figure quarto-figure-center column-body anchored page-columns page-full">
+<figure class="figure page-columns page-full">
+<p class="page-columns page-full"><img src="01_birth_files/figure-html/fig-0122-21.svg" class="column-body img-fluid figure-img"></p>
+<figcaption class="figure-caption">Figure&nbsp;1.122: smooth the corrected fertility rate”</figcaption>
+</figure>
+</div>
+</div>
+<div class="cell-output-display column-body page-columns page-full">
+<div id="fig-0122-22" class="quarto-figure quarto-figure-center column-body anchored page-columns page-full">
+<figure class="figure page-columns page-full">
+<p class="page-columns page-full"><img src="01_birth_files/figure-html/fig-0122-22.svg" class="column-body img-fluid figure-img"></p>
+<figcaption class="figure-caption">Figure&nbsp;1.123: smooth the corrected fertility rate”</figcaption>
+</figure>
+</div>
+</div>
+<div class="cell-output-display column-body page-columns page-full">
+<div id="fig-0122-23" class="quarto-figure quarto-figure-center column-body anchored page-columns page-full">
+<figure class="figure page-columns page-full">
+<p class="page-columns page-full"><img src="01_birth_files/figure-html/fig-0122-23.svg" class="column-body img-fluid figure-img"></p>
+<figcaption class="figure-caption">Figure&nbsp;1.124: smooth the corrected fertility rate”</figcaption>
+</figure>
+</div>
+</div>
+<div class="cell-output-display column-body page-columns page-full">
+<div id="fig-0122-24" class="quarto-figure quarto-figure-center column-body anchored page-columns page-full">
+<figure class="figure page-columns page-full">
+<p class="page-columns page-full"><img src="01_birth_files/figure-html/fig-0122-24.svg" class="column-body img-fluid figure-img"></p>
+<figcaption class="figure-caption">Figure&nbsp;1.125: smooth the corrected fertility rate”</figcaption>
+</figure>
+</div>
+</div>
+<div class="cell-output-display column-body page-columns page-full">
+<div id="fig-0122-25" class="quarto-figure quarto-figure-center column-body anchored page-columns page-full">
+<figure class="figure page-columns page-full">
+<p class="page-columns page-full"><img src="01_birth_files/figure-html/fig-0122-25.svg" class="column-body img-fluid figure-img"></p>
+<figcaption class="figure-caption">Figure&nbsp;1.126: smooth the corrected fertility rate”</figcaption>
+</figure>
+</div>
+</div>
+<div class="cell-output-display column-body page-columns page-full">
+<div id="fig-0122-26" class="quarto-figure quarto-figure-center column-body anchored page-columns page-full">
+<figure class="figure page-columns page-full">
+<p class="page-columns page-full"><img src="01_birth_files/figure-html/fig-0122-26.svg" class="column-body img-fluid figure-img"></p>
+<figcaption class="figure-caption">Figure&nbsp;1.127: smooth the corrected fertility rate”</figcaption>
+</figure>
+</div>
+</div>
+<div class="cell-output-display column-body page-columns page-full">
+<div id="fig-0122-27" class="quarto-figure quarto-figure-center column-body anchored page-columns page-full">
+<figure class="figure page-columns page-full">
+<p class="page-columns page-full"><img src="01_birth_files/figure-html/fig-0122-27.svg" class="column-body img-fluid figure-img"></p>
+<figcaption class="figure-caption">Figure&nbsp;1.128: smooth the corrected fertility rate”</figcaption>
+</figure>
+</div>
+</div>
+<div class="cell-output-display column-body page-columns page-full">
+<div id="fig-0122-28" class="quarto-figure quarto-figure-center column-body anchored page-columns page-full">
+<figure class="figure page-columns page-full">
+<p class="page-columns page-full"><img src="01_birth_files/figure-html/fig-0122-28.svg" class="column-body img-fluid figure-img"></p>
+<figcaption class="figure-caption">Figure&nbsp;1.129: smooth the corrected fertility rate”</figcaption>
+</figure>
+</div>
+</div>
+<div class="cell-output-display column-body page-columns page-full">
+<div id="fig-0122-29" class="quarto-figure quarto-figure-center column-body anchored page-columns page-full">
+<figure class="figure page-columns page-full">
+<p class="page-columns page-full"><img src="01_birth_files/figure-html/fig-0122-29.svg" class="column-body img-fluid figure-img"></p>
+<figcaption class="figure-caption">Figure&nbsp;1.130: smooth the corrected fertility rate”</figcaption>
+</figure>
+</div>
+</div>
+<div class="cell-output-display column-body page-columns page-full">
+<div id="fig-0122-30" class="quarto-figure quarto-figure-center column-body anchored page-columns page-full">
+<figure class="figure page-columns page-full">
+<p class="page-columns page-full"><img src="01_birth_files/figure-html/fig-0122-30.svg" class="column-body img-fluid figure-img"></p>
+<figcaption class="figure-caption">Figure&nbsp;1.131: smooth the corrected fertility rate”</figcaption>
+</figure>
+</div>
+</div>
+<div class="cell-output-display column-body page-columns page-full">
+<div id="fig-0122-31" class="quarto-figure quarto-figure-center column-body anchored page-columns page-full">
+<figure class="figure page-columns page-full">
+<p class="page-columns page-full"><img src="01_birth_files/figure-html/fig-0122-31.svg" class="column-body img-fluid figure-img"></p>
+<figcaption class="figure-caption">Figure&nbsp;1.132: smooth the corrected fertility rate”</figcaption>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="prediction" class="level3 page-columns page-full" data-number="1.1.3">
+<h3 data-number="1.1.3" class="anchored" data-anchor-id="prediction"><span class="header-section-number">1.1.3</span> Prediction</h3>
+<div class="cell page-columns page-full" data-hash="01_birth_cache/html/fig-0140_14862b60acfb206adef984f9e92123b4">
+<div class="cell-output-display column-body page-columns page-full">
+<div id="fig-0140-1" class="quarto-figure quarto-figure-center column-body anchored page-columns page-full">
+<figure class="figure page-columns page-full">
+<p class="page-columns page-full"><img src="01_birth_files/figure-html/fig-0140-1.svg" class="column-body img-fluid figure-img"></p>
+<figcaption class="figure-caption">Figure&nbsp;1.133: plot the predictions: age distribution by district and year</figcaption>
+</figure>
+</div>
+</div>
+<div class="cell-output-display column-body page-columns page-full">
+<div id="fig-0140-2" class="quarto-figure quarto-figure-center column-body anchored page-columns page-full">
+<figure class="figure page-columns page-full">
+<p class="page-columns page-full"><img src="01_birth_files/figure-html/fig-0140-2.svg" class="column-body img-fluid figure-img"></p>
+<figcaption class="figure-caption">Figure&nbsp;1.134: plot the predictions: age distribution by district and year</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<p>swiss</p>
+<div class="cell page-columns page-full" data-hash="01_birth_cache/html/fig-0141_c5cba07075b7df458587bf0ed05e42e2">
+<div class="cell-output-display column-body page-columns page-full">
+<div id="fig-0141-1" class="quarto-figure quarto-figure-center column-body anchored page-columns page-full">
+<figure class="figure page-columns page-full">
+<p class="page-columns page-full"><img src="01_birth_files/figure-html/fig-0141-1.svg" class="column-body img-fluid figure-img"></p>
+<figcaption class="figure-caption">Figure&nbsp;1.135: predictions: along year, for selected age</figcaption>
+</figure>
+</div>
+</div>
+<div class="cell-output-display column-body page-columns page-full">
+<div id="fig-0141-2" class="quarto-figure quarto-figure-center column-body anchored page-columns page-full">
+<figure class="figure page-columns page-full">
+<p class="page-columns page-full"><img src="01_birth_files/figure-html/fig-0141-2.svg" class="column-body img-fluid figure-img"></p>
+<figcaption class="figure-caption">Figure&nbsp;1.136: predictions: along year, for selected age</figcaption>
+</figure>
+</div>
+</div>
+<div class="cell-output-display column-body page-columns page-full">
+<div id="fig-0141-3" class="quarto-figure quarto-figure-center column-body anchored page-columns page-full">
+<figure class="figure page-columns page-full">
+<p class="page-columns page-full"><img src="01_birth_files/figure-html/fig-0141-3.svg" class="column-body img-fluid figure-img"></p>
+<figcaption class="figure-caption">Figure&nbsp;1.137: predictions: along year, for selected age</figcaption>
+</figure>
+</div>
+</div>
+<div class="cell-output-display column-body page-columns page-full">
+<div id="fig-0141-4" class="quarto-figure quarto-figure-center column-body anchored page-columns page-full">
+<figure class="figure page-columns page-full">
+<p class="page-columns page-full"><img src="01_birth_files/figure-html/fig-0141-4.svg" class="column-body img-fluid figure-img"></p>
+<figcaption class="figure-caption">Figure&nbsp;1.138: predictions: along year, for selected age</figcaption>
+</figure>
+</div>
+</div>
+<div class="cell-output-display column-body page-columns page-full">
+<div id="fig-0141-5" class="quarto-figure quarto-figure-center column-body anchored page-columns page-full">
+<figure class="figure page-columns page-full">
+<p class="page-columns page-full"><img src="01_birth_files/figure-html/fig-0141-5.svg" class="column-body img-fluid figure-img"></p>
+<figcaption class="figure-caption">Figure&nbsp;1.139: predictions: along year, for selected age</figcaption>
+</figure>
+</div>
+</div>
+<div class="cell-output-display column-body page-columns page-full">
+<div id="fig-0141-6" class="quarto-figure quarto-figure-center column-body anchored page-columns page-full">
+<figure class="figure page-columns page-full">
+<p class="page-columns page-full"><img src="01_birth_files/figure-html/fig-0141-6.svg" class="column-body img-fluid figure-img"></p>
+<figcaption class="figure-caption">Figure&nbsp;1.140: predictions: along year, for selected age</figcaption>
+</figure>
+</div>
+</div>
+<div class="cell-output-display column-body page-columns page-full">
+<div id="fig-0141-7" class="quarto-figure quarto-figure-center column-body anchored page-columns page-full">
+<figure class="figure page-columns page-full">
+<p class="page-columns page-full"><img src="01_birth_files/figure-html/fig-0141-7.svg" class="column-body img-fluid figure-img"></p>
+<figcaption class="figure-caption">Figure&nbsp;1.141: predictions: along year, for selected age</figcaption>
+</figure>
+</div>
+</div>
+<div class="cell-output-display column-body page-columns page-full">
+<div id="fig-0141-8" class="quarto-figure quarto-figure-center column-body anchored page-columns page-full">
+<figure class="figure page-columns page-full">
+<p class="page-columns page-full"><img src="01_birth_files/figure-html/fig-0141-8.svg" class="column-body img-fluid figure-img"></p>
+<figcaption class="figure-caption">Figure&nbsp;1.142: predictions: along year, for selected age</figcaption>
+</figure>
+</div>
+</div>
+<div class="cell-output-display column-body page-columns page-full">
+<div id="fig-0141-9" class="quarto-figure quarto-figure-center column-body anchored page-columns page-full">
+<figure class="figure page-columns page-full">
+<p class="page-columns page-full"><img src="01_birth_files/figure-html/fig-0141-9.svg" class="column-body img-fluid figure-img"></p>
+<figcaption class="figure-caption">Figure&nbsp;1.143: predictions: along year, for selected age</figcaption>
+</figure>
+</div>
+</div>
+<div class="cell-output-display column-body page-columns page-full">
+<div id="fig-0141-10" class="quarto-figure quarto-figure-center column-body anchored page-columns page-full">
+<figure class="figure page-columns page-full">
+<p class="page-columns page-full"><img src="01_birth_files/figure-html/fig-0141-10.svg" class="column-body img-fluid figure-img"></p>
+<figcaption class="figure-caption">Figure&nbsp;1.144: predictions: along year, for selected age</figcaption>
+</figure>
+</div>
+</div>
+<div class="cell-output-display column-body page-columns page-full">
+<div id="fig-0141-11" class="quarto-figure quarto-figure-center column-body anchored page-columns page-full">
+<figure class="figure page-columns page-full">
+<p class="page-columns page-full"><img src="01_birth_files/figure-html/fig-0141-11.svg" class="column-body img-fluid figure-img"></p>
+<figcaption class="figure-caption">Figure&nbsp;1.145: predictions: along year, for selected age</figcaption>
+</figure>
+</div>
+</div>
+<div class="cell-output-display column-body page-columns page-full">
+<div id="fig-0141-12" class="quarto-figure quarto-figure-center column-body anchored page-columns page-full">
+<figure class="figure page-columns page-full">
+<p class="page-columns page-full"><img src="01_birth_files/figure-html/fig-0141-12.svg" class="column-body img-fluid figure-img"></p>
+<figcaption class="figure-caption">Figure&nbsp;1.146: predictions: along year, for selected age</figcaption>
+</figure>
+</div>
+</div>
+<div class="cell-output-display column-body page-columns page-full">
+<div id="fig-0141-13" class="quarto-figure quarto-figure-center column-body anchored page-columns page-full">
+<figure class="figure page-columns page-full">
+<p class="page-columns page-full"><img src="01_birth_files/figure-html/fig-0141-13.svg" class="column-body img-fluid figure-img"></p>
+<figcaption class="figure-caption">Figure&nbsp;1.147: predictions: along year, for selected age</figcaption>
+</figure>
+</div>
+</div>
+<div class="cell-output-display column-body page-columns page-full">
+<div id="fig-0141-14" class="quarto-figure quarto-figure-center column-body anchored page-columns page-full">
+<figure class="figure page-columns page-full">
+<p class="page-columns page-full"><img src="01_birth_files/figure-html/fig-0141-14.svg" class="column-body img-fluid figure-img"></p>
+<figcaption class="figure-caption">Figure&nbsp;1.148: predictions: along year, for selected age</figcaption>
+</figure>
+</div>
+</div>
+<div class="cell-output-display column-body page-columns page-full">
+<div id="fig-0141-15" class="quarto-figure quarto-figure-center column-body anchored page-columns page-full">
+<figure class="figure page-columns page-full">
+<p class="page-columns page-full"><img src="01_birth_files/figure-html/fig-0141-15.svg" class="column-body img-fluid figure-img"></p>
+<figcaption class="figure-caption">Figure&nbsp;1.149: predictions: along year, for selected age</figcaption>
+</figure>
+</div>
+</div>
+<div class="cell-output-display column-body page-columns page-full">
+<div id="fig-0141-16" class="quarto-figure quarto-figure-center column-body anchored page-columns page-full">
+<figure class="figure page-columns page-full">
+<p class="page-columns page-full"><img src="01_birth_files/figure-html/fig-0141-16.svg" class="column-body img-fluid figure-img"></p>
+<figcaption class="figure-caption">Figure&nbsp;1.150: predictions: along year, for selected age</figcaption>
+</figure>
+</div>
+</div>
+<div class="cell-output-display column-body page-columns page-full">
+<div id="fig-0141-17" class="quarto-figure quarto-figure-center column-body anchored page-columns page-full">
+<figure class="figure page-columns page-full">
+<p class="page-columns page-full"><img src="01_birth_files/figure-html/fig-0141-17.svg" class="column-body img-fluid figure-img"></p>
+<figcaption class="figure-caption">Figure&nbsp;1.151: predictions: along year, for selected age</figcaption>
+</figure>
+</div>
+</div>
+<div class="cell-output-display column-body page-columns page-full">
+<div id="fig-0141-18" class="quarto-figure quarto-figure-center column-body anchored page-columns page-full">
+<figure class="figure page-columns page-full">
+<p class="page-columns page-full"><img src="01_birth_files/figure-html/fig-0141-18.svg" class="column-body img-fluid figure-img"></p>
+<figcaption class="figure-caption">Figure&nbsp;1.152: predictions: along year, for selected age</figcaption>
+</figure>
+</div>
+</div>
+<div class="cell-output-display column-body page-columns page-full">
+<div id="fig-0141-19" class="quarto-figure quarto-figure-center column-body anchored page-columns page-full">
+<figure class="figure page-columns page-full">
+<p class="page-columns page-full"><img src="01_birth_files/figure-html/fig-0141-19.svg" class="column-body img-fluid figure-img"></p>
+<figcaption class="figure-caption">Figure&nbsp;1.153: predictions: along year, for selected age</figcaption>
+</figure>
+</div>
+</div>
+<div class="cell-output-display column-body page-columns page-full">
+<div id="fig-0141-20" class="quarto-figure quarto-figure-center column-body anchored page-columns page-full">
+<figure class="figure page-columns page-full">
+<p class="page-columns page-full"><img src="01_birth_files/figure-html/fig-0141-20.svg" class="column-body img-fluid figure-img"></p>
+<figcaption class="figure-caption">Figure&nbsp;1.154: predictions: along year, for selected age</figcaption>
+</figure>
+</div>
+</div>
+<div class="cell-output-display column-body page-columns page-full">
+<div id="fig-0141-21" class="quarto-figure quarto-figure-center column-body anchored page-columns page-full">
+<figure class="figure page-columns page-full">
+<p class="page-columns page-full"><img src="01_birth_files/figure-html/fig-0141-21.svg" class="column-body img-fluid figure-img"></p>
+<figcaption class="figure-caption">Figure&nbsp;1.155: predictions: along year, for selected age</figcaption>
+</figure>
+</div>
+</div>
+<div class="cell-output-display column-body page-columns page-full">
+<div id="fig-0141-22" class="quarto-figure quarto-figure-center column-body anchored page-columns page-full">
+<figure class="figure page-columns page-full">
+<p class="page-columns page-full"><img src="01_birth_files/figure-html/fig-0141-22.svg" class="column-body img-fluid figure-img"></p>
+<figcaption class="figure-caption">Figure&nbsp;1.156: predictions: along year, for selected age</figcaption>
+</figure>
+</div>
+</div>
+<div class="cell-output-display column-body page-columns page-full">
+<div id="fig-0141-23" class="quarto-figure quarto-figure-center column-body anchored page-columns page-full">
+<figure class="figure page-columns page-full">
+<p class="page-columns page-full"><img src="01_birth_files/figure-html/fig-0141-23.svg" class="column-body img-fluid figure-img"></p>
+<figcaption class="figure-caption">Figure&nbsp;1.157: predictions: along year, for selected age</figcaption>
+</figure>
+</div>
+</div>
+<div class="cell-output-display column-body page-columns page-full">
+<div id="fig-0141-24" class="quarto-figure quarto-figure-center column-body anchored page-columns page-full">
+<figure class="figure page-columns page-full">
+<p class="page-columns page-full"><img src="01_birth_files/figure-html/fig-0141-24.svg" class="column-body img-fluid figure-img"></p>
+<figcaption class="figure-caption">Figure&nbsp;1.158: predictions: along year, for selected age</figcaption>
+</figure>
+</div>
+</div>
+<div class="cell-output-display column-body page-columns page-full">
+<div id="fig-0141-25" class="quarto-figure quarto-figure-center column-body anchored page-columns page-full">
+<figure class="figure page-columns page-full">
+<p class="page-columns page-full"><img src="01_birth_files/figure-html/fig-0141-25.svg" class="column-body img-fluid figure-img"></p>
+<figcaption class="figure-caption">Figure&nbsp;1.159: predictions: along year, for selected age</figcaption>
+</figure>
+</div>
+</div>
+<div class="cell-output-display column-body page-columns page-full">
+<div id="fig-0141-26" class="quarto-figure quarto-figure-center column-body anchored page-columns page-full">
+<figure class="figure page-columns page-full">
+<p class="page-columns page-full"><img src="01_birth_files/figure-html/fig-0141-26.svg" class="column-body img-fluid figure-img"></p>
+<figcaption class="figure-caption">Figure&nbsp;1.160: predictions: along year, for selected age</figcaption>
+</figure>
+</div>
+</div>
+<div class="cell-output-display column-body page-columns page-full">
+<div id="fig-0141-27" class="quarto-figure quarto-figure-center column-body anchored page-columns page-full">
+<figure class="figure page-columns page-full">
+<p class="page-columns page-full"><img src="01_birth_files/figure-html/fig-0141-27.svg" class="column-body img-fluid figure-img"></p>
+<figcaption class="figure-caption">Figure&nbsp;1.161: predictions: along year, for selected age</figcaption>
+</figure>
+</div>
+</div>
+<div class="cell-output-display column-body page-columns page-full">
+<div id="fig-0141-28" class="quarto-figure quarto-figure-center column-body anchored page-columns page-full">
+<figure class="figure page-columns page-full">
+<p class="page-columns page-full"><img src="01_birth_files/figure-html/fig-0141-28.svg" class="column-body img-fluid figure-img"></p>
+<figcaption class="figure-caption">Figure&nbsp;1.162: predictions: along year, for selected age</figcaption>
+</figure>
+</div>
+</div>
+<div class="cell-output-display column-body page-columns page-full">
+<div id="fig-0141-29" class="quarto-figure quarto-figure-center column-body anchored page-columns page-full">
+<figure class="figure page-columns page-full">
+<p class="page-columns page-full"><img src="01_birth_files/figure-html/fig-0141-29.svg" class="column-body img-fluid figure-img"></p>
+<figcaption class="figure-caption">Figure&nbsp;1.163: predictions: along year, for selected age</figcaption>
+</figure>
+</div>
+</div>
+<div class="cell-output-display column-body page-columns page-full">
+<div id="fig-0141-30" class="quarto-figure quarto-figure-center column-body anchored page-columns page-full">
+<figure class="figure page-columns page-full">
+<p class="page-columns page-full"><img src="01_birth_files/figure-html/fig-0141-30.svg" class="column-body img-fluid figure-img"></p>
+<figcaption class="figure-caption">Figure&nbsp;1.164: predictions: along year, for selected age</figcaption>
+</figure>
+</div>
+</div>
+<div class="cell-output-display column-body page-columns page-full">
+<div id="fig-0141-31" class="quarto-figure quarto-figure-center column-body anchored page-columns page-full">
+<figure class="figure page-columns page-full">
+<p class="page-columns page-full"><img src="01_birth_files/figure-html/fig-0141-31.svg" class="column-body img-fluid figure-img"></p>
+<figcaption class="figure-caption">Figure&nbsp;1.165: predictions: along year, for selected age</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<p>foreign</p>
+<div class="cell page-columns page-full" data-hash="01_birth_cache/html/fig-0142_6470b3932822c6ae22564751f29dff63">
+<div class="cell-output-display column-body page-columns page-full">
+<div id="fig-0142-1" class="quarto-figure quarto-figure-center column-body anchored page-columns page-full">
+<figure class="figure page-columns page-full">
+<p class="page-columns page-full"><img src="01_birth_files/figure-html/fig-0142-1.svg" class="column-body img-fluid figure-img"></p>
+<figcaption class="figure-caption">Figure&nbsp;1.166: predictions: along year, for selected age</figcaption>
+</figure>
+</div>
+</div>
+<div class="cell-output-display column-body page-columns page-full">
+<div id="fig-0142-2" class="quarto-figure quarto-figure-center column-body anchored page-columns page-full">
+<figure class="figure page-columns page-full">
+<p class="page-columns page-full"><img src="01_birth_files/figure-html/fig-0142-2.svg" class="column-body img-fluid figure-img"></p>
+<figcaption class="figure-caption">Figure&nbsp;1.167: predictions: along year, for selected age</figcaption>
+</figure>
+</div>
+</div>
+<div class="cell-output-display column-body page-columns page-full">
+<div id="fig-0142-3" class="quarto-figure quarto-figure-center column-body anchored page-columns page-full">
+<figure class="figure page-columns page-full">
+<p class="page-columns page-full"><img src="01_birth_files/figure-html/fig-0142-3.svg" class="column-body img-fluid figure-img"></p>
+<figcaption class="figure-caption">Figure&nbsp;1.168: predictions: along year, for selected age</figcaption>
+</figure>
+</div>
+</div>
+<div class="cell-output-display column-body page-columns page-full">
+<div id="fig-0142-4" class="quarto-figure quarto-figure-center column-body anchored page-columns page-full">
+<figure class="figure page-columns page-full">
+<p class="page-columns page-full"><img src="01_birth_files/figure-html/fig-0142-4.svg" class="column-body img-fluid figure-img"></p>
+<figcaption class="figure-caption">Figure&nbsp;1.169: predictions: along year, for selected age</figcaption>
+</figure>
+</div>
+</div>
+<div class="cell-output-display column-body page-columns page-full">
+<div id="fig-0142-5" class="quarto-figure quarto-figure-center column-body anchored page-columns page-full">
+<figure class="figure page-columns page-full">
+<p class="page-columns page-full"><img src="01_birth_files/figure-html/fig-0142-5.svg" class="column-body img-fluid figure-img"></p>
+<figcaption class="figure-caption">Figure&nbsp;1.170: predictions: along year, for selected age</figcaption>
+</figure>
+</div>
+</div>
+<div class="cell-output-display column-body page-columns page-full">
+<div id="fig-0142-6" class="quarto-figure quarto-figure-center column-body anchored page-columns page-full">
+<figure class="figure page-columns page-full">
+<p class="page-columns page-full"><img src="01_birth_files/figure-html/fig-0142-6.svg" class="column-body img-fluid figure-img"></p>
+<figcaption class="figure-caption">Figure&nbsp;1.171: predictions: along year, for selected age</figcaption>
+</figure>
+</div>
+</div>
+<div class="cell-output-display column-body page-columns page-full">
+<div id="fig-0142-7" class="quarto-figure quarto-figure-center column-body anchored page-columns page-full">
+<figure class="figure page-columns page-full">
+<p class="page-columns page-full"><img src="01_birth_files/figure-html/fig-0142-7.svg" class="column-body img-fluid figure-img"></p>
+<figcaption class="figure-caption">Figure&nbsp;1.172: predictions: along year, for selected age</figcaption>
+</figure>
+</div>
+</div>
+<div class="cell-output-display column-body page-columns page-full">
+<div id="fig-0142-8" class="quarto-figure quarto-figure-center column-body anchored page-columns page-full">
+<figure class="figure page-columns page-full">
+<p class="page-columns page-full"><img src="01_birth_files/figure-html/fig-0142-8.svg" class="column-body img-fluid figure-img"></p>
+<figcaption class="figure-caption">Figure&nbsp;1.173: predictions: along year, for selected age</figcaption>
+</figure>
+</div>
+</div>
+<div class="cell-output-display column-body page-columns page-full">
+<div id="fig-0142-9" class="quarto-figure quarto-figure-center column-body anchored page-columns page-full">
+<figure class="figure page-columns page-full">
+<p class="page-columns page-full"><img src="01_birth_files/figure-html/fig-0142-9.svg" class="column-body img-fluid figure-img"></p>
+<figcaption class="figure-caption">Figure&nbsp;1.174: predictions: along year, for selected age</figcaption>
+</figure>
+</div>
+</div>
+<div class="cell-output-display column-body page-columns page-full">
+<div id="fig-0142-10" class="quarto-figure quarto-figure-center column-body anchored page-columns page-full">
+<figure class="figure page-columns page-full">
+<p class="page-columns page-full"><img src="01_birth_files/figure-html/fig-0142-10.svg" class="column-body img-fluid figure-img"></p>
+<figcaption class="figure-caption">Figure&nbsp;1.175: predictions: along year, for selected age</figcaption>
+</figure>
+</div>
+</div>
+<div class="cell-output-display column-body page-columns page-full">
+<div id="fig-0142-11" class="quarto-figure quarto-figure-center column-body anchored page-columns page-full">
+<figure class="figure page-columns page-full">
+<p class="page-columns page-full"><img src="01_birth_files/figure-html/fig-0142-11.svg" class="column-body img-fluid figure-img"></p>
+<figcaption class="figure-caption">Figure&nbsp;1.176: predictions: along year, for selected age</figcaption>
+</figure>
+</div>
+</div>
+<div class="cell-output-display column-body page-columns page-full">
+<div id="fig-0142-12" class="quarto-figure quarto-figure-center column-body anchored page-columns page-full">
+<figure class="figure page-columns page-full">
+<p class="page-columns page-full"><img src="01_birth_files/figure-html/fig-0142-12.svg" class="column-body img-fluid figure-img"></p>
+<figcaption class="figure-caption">Figure&nbsp;1.177: predictions: along year, for selected age</figcaption>
+</figure>
+</div>
+</div>
+<div class="cell-output-display column-body page-columns page-full">
+<div id="fig-0142-13" class="quarto-figure quarto-figure-center column-body anchored page-columns page-full">
+<figure class="figure page-columns page-full">
+<p class="page-columns page-full"><img src="01_birth_files/figure-html/fig-0142-13.svg" class="column-body img-fluid figure-img"></p>
+<figcaption class="figure-caption">Figure&nbsp;1.178: predictions: along year, for selected age</figcaption>
+</figure>
+</div>
+</div>
+<div class="cell-output-display column-body page-columns page-full">
+<div id="fig-0142-14" class="quarto-figure quarto-figure-center column-body anchored page-columns page-full">
+<figure class="figure page-columns page-full">
+<p class="page-columns page-full"><img src="01_birth_files/figure-html/fig-0142-14.svg" class="column-body img-fluid figure-img"></p>
+<figcaption class="figure-caption">Figure&nbsp;1.179: predictions: along year, for selected age</figcaption>
+</figure>
+</div>
+</div>
+<div class="cell-output-display column-body page-columns page-full">
+<div id="fig-0142-15" class="quarto-figure quarto-figure-center column-body anchored page-columns page-full">
+<figure class="figure page-columns page-full">
+<p class="page-columns page-full"><img src="01_birth_files/figure-html/fig-0142-15.svg" class="column-body img-fluid figure-img"></p>
+<figcaption class="figure-caption">Figure&nbsp;1.180: predictions: along year, for selected age</figcaption>
+</figure>
+</div>
+</div>
+<div class="cell-output-display column-body page-columns page-full">
+<div id="fig-0142-16" class="quarto-figure quarto-figure-center column-body anchored page-columns page-full">
+<figure class="figure page-columns page-full">
+<p class="page-columns page-full"><img src="01_birth_files/figure-html/fig-0142-16.svg" class="column-body img-fluid figure-img"></p>
+<figcaption class="figure-caption">Figure&nbsp;1.181: predictions: along year, for selected age</figcaption>
+</figure>
+</div>
+</div>
+<div class="cell-output-display column-body page-columns page-full">
+<div id="fig-0142-17" class="quarto-figure quarto-figure-center column-body anchored page-columns page-full">
+<figure class="figure page-columns page-full">
+<p class="page-columns page-full"><img src="01_birth_files/figure-html/fig-0142-17.svg" class="column-body img-fluid figure-img"></p>
+<figcaption class="figure-caption">Figure&nbsp;1.182: predictions: along year, for selected age</figcaption>
+</figure>
+</div>
+</div>
+<div class="cell-output-display column-body page-columns page-full">
+<div id="fig-0142-18" class="quarto-figure quarto-figure-center column-body anchored page-columns page-full">
+<figure class="figure page-columns page-full">
+<p class="page-columns page-full"><img src="01_birth_files/figure-html/fig-0142-18.svg" class="column-body img-fluid figure-img"></p>
+<figcaption class="figure-caption">Figure&nbsp;1.183: predictions: along year, for selected age</figcaption>
+</figure>
+</div>
+</div>
+<div class="cell-output-display column-body page-columns page-full">
+<div id="fig-0142-19" class="quarto-figure quarto-figure-center column-body anchored page-columns page-full">
+<figure class="figure page-columns page-full">
+<p class="page-columns page-full"><img src="01_birth_files/figure-html/fig-0142-19.svg" class="column-body img-fluid figure-img"></p>
+<figcaption class="figure-caption">Figure&nbsp;1.184: predictions: along year, for selected age</figcaption>
+</figure>
+</div>
+</div>
+<div class="cell-output-display column-body page-columns page-full">
+<div id="fig-0142-20" class="quarto-figure quarto-figure-center column-body anchored page-columns page-full">
+<figure class="figure page-columns page-full">
+<p class="page-columns page-full"><img src="01_birth_files/figure-html/fig-0142-20.svg" class="column-body img-fluid figure-img"></p>
+<figcaption class="figure-caption">Figure&nbsp;1.185: predictions: along year, for selected age</figcaption>
+</figure>
+</div>
+</div>
+<div class="cell-output-display column-body page-columns page-full">
+<div id="fig-0142-21" class="quarto-figure quarto-figure-center column-body anchored page-columns page-full">
+<figure class="figure page-columns page-full">
+<p class="page-columns page-full"><img src="01_birth_files/figure-html/fig-0142-21.svg" class="column-body img-fluid figure-img"></p>
+<figcaption class="figure-caption">Figure&nbsp;1.186: predictions: along year, for selected age</figcaption>
+</figure>
+</div>
+</div>
+<div class="cell-output-display column-body page-columns page-full">
+<div id="fig-0142-22" class="quarto-figure quarto-figure-center column-body anchored page-columns page-full">
+<figure class="figure page-columns page-full">
+<p class="page-columns page-full"><img src="01_birth_files/figure-html/fig-0142-22.svg" class="column-body img-fluid figure-img"></p>
+<figcaption class="figure-caption">Figure&nbsp;1.187: predictions: along year, for selected age</figcaption>
+</figure>
+</div>
+</div>
+<div class="cell-output-display column-body page-columns page-full">
+<div id="fig-0142-23" class="quarto-figure quarto-figure-center column-body anchored page-columns page-full">
+<figure class="figure page-columns page-full">
+<p class="page-columns page-full"><img src="01_birth_files/figure-html/fig-0142-23.svg" class="column-body img-fluid figure-img"></p>
+<figcaption class="figure-caption">Figure&nbsp;1.188: predictions: along year, for selected age</figcaption>
+</figure>
+</div>
+</div>
+<div class="cell-output-display column-body page-columns page-full">
+<div id="fig-0142-24" class="quarto-figure quarto-figure-center column-body anchored page-columns page-full">
+<figure class="figure page-columns page-full">
+<p class="page-columns page-full"><img src="01_birth_files/figure-html/fig-0142-24.svg" class="column-body img-fluid figure-img"></p>
+<figcaption class="figure-caption">Figure&nbsp;1.189: predictions: along year, for selected age</figcaption>
+</figure>
+</div>
+</div>
+<div class="cell-output-display column-body page-columns page-full">
+<div id="fig-0142-25" class="quarto-figure quarto-figure-center column-body anchored page-columns page-full">
+<figure class="figure page-columns page-full">
+<p class="page-columns page-full"><img src="01_birth_files/figure-html/fig-0142-25.svg" class="column-body img-fluid figure-img"></p>
+<figcaption class="figure-caption">Figure&nbsp;1.190: predictions: along year, for selected age</figcaption>
+</figure>
+</div>
+</div>
+<div class="cell-output-display column-body page-columns page-full">
+<div id="fig-0142-26" class="quarto-figure quarto-figure-center column-body anchored page-columns page-full">
+<figure class="figure page-columns page-full">
+<p class="page-columns page-full"><img src="01_birth_files/figure-html/fig-0142-26.svg" class="column-body img-fluid figure-img"></p>
+<figcaption class="figure-caption">Figure&nbsp;1.191: predictions: along year, for selected age</figcaption>
+</figure>
+</div>
+</div>
+<div class="cell-output-display column-body page-columns page-full">
+<div id="fig-0142-27" class="quarto-figure quarto-figure-center column-body anchored page-columns page-full">
+<figure class="figure page-columns page-full">
+<p class="page-columns page-full"><img src="01_birth_files/figure-html/fig-0142-27.svg" class="column-body img-fluid figure-img"></p>
+<figcaption class="figure-caption">Figure&nbsp;1.192: predictions: along year, for selected age</figcaption>
+</figure>
+</div>
+</div>
+<div class="cell-output-display column-body page-columns page-full">
+<div id="fig-0142-28" class="quarto-figure quarto-figure-center column-body anchored page-columns page-full">
+<figure class="figure page-columns page-full">
+<p class="page-columns page-full"><img src="01_birth_files/figure-html/fig-0142-28.svg" class="column-body img-fluid figure-img"></p>
+<figcaption class="figure-caption">Figure&nbsp;1.193: predictions: along year, for selected age</figcaption>
+</figure>
+</div>
+</div>
+<div class="cell-output-display column-body page-columns page-full">
+<div id="fig-0142-29" class="quarto-figure quarto-figure-center column-body anchored page-columns page-full">
+<figure class="figure page-columns page-full">
+<p class="page-columns page-full"><img src="01_birth_files/figure-html/fig-0142-29.svg" class="column-body img-fluid figure-img"></p>
+<figcaption class="figure-caption">Figure&nbsp;1.194: predictions: along year, for selected age</figcaption>
+</figure>
+</div>
+</div>
+<div class="cell-output-display column-body page-columns page-full">
+<div id="fig-0142-30" class="quarto-figure quarto-figure-center column-body anchored page-columns page-full">
+<figure class="figure page-columns page-full">
+<p class="page-columns page-full"><img src="01_birth_files/figure-html/fig-0142-30.svg" class="column-body img-fluid figure-img"></p>
+<figcaption class="figure-caption">Figure&nbsp;1.195: predictions: along year, for selected age</figcaption>
+</figure>
+</div>
+</div>
+<div class="cell-output-display column-body page-columns page-full">
+<div id="fig-0142-31" class="quarto-figure quarto-figure-center column-body anchored page-columns page-full">
+<figure class="figure page-columns page-full">
+<p class="page-columns page-full"><img src="01_birth_files/figure-html/fig-0142-31.svg" class="column-body img-fluid figure-img"></p>
+<figcaption class="figure-caption">Figure&nbsp;1.196: predictions: along year, for selected age</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<p>smoothed (only the prediction years)</p>
+<div class="cell page-columns page-full" data-hash="01_birth_cache/html/fig-0150_6b14732a3ec26d26b77ed2bdf7441736">
+<div class="cell-output-display column-body page-columns page-full">
+<div id="fig-0150-1" class="quarto-figure quarto-figure-center column-body anchored page-columns page-full">
+<figure class="figure page-columns page-full">
+<p class="page-columns page-full"><img src="01_birth_files/figure-html/fig-0150-1.svg" class="column-body img-fluid figure-img"></p>
+<figcaption class="figure-caption">Figure&nbsp;1.197: prediction of fertility rates, smoothed</figcaption>
+</figure>
+</div>
+</div>
+<div class="cell-output-display column-body page-columns page-full">
+<div id="fig-0150-2" class="quarto-figure quarto-figure-center column-body anchored page-columns page-full">
+<figure class="figure page-columns page-full">
+<p class="page-columns page-full"><img src="01_birth_files/figure-html/fig-0150-2.svg" class="column-body img-fluid figure-img"></p>
+<figcaption class="figure-caption">Figure&nbsp;1.198: prediction of fertility rates, smoothed</figcaption>
+</figure>
+</div>
+</div>
+<div class="cell-output-display column-body page-columns page-full">
+<div id="fig-0150-3" class="quarto-figure quarto-figure-center column-body anchored page-columns page-full">
+<figure class="figure page-columns page-full">
+<p class="page-columns page-full"><img src="01_birth_files/figure-html/fig-0150-3.svg" class="column-body img-fluid figure-img"></p>
+<figcaption class="figure-caption">Figure&nbsp;1.199: prediction of fertility rates, smoothed</figcaption>
+</figure>
+</div>
+</div>
+<div class="cell-output-display column-body page-columns page-full">
+<div id="fig-0150-4" class="quarto-figure quarto-figure-center column-body anchored page-columns page-full">
+<figure class="figure page-columns page-full">
+<p class="page-columns page-full"><img src="01_birth_files/figure-html/fig-0150-4.svg" class="column-body img-fluid figure-img"></p>
+<figcaption class="figure-caption">Figure&nbsp;1.200: prediction of fertility rates, smoothed</figcaption>
+</figure>
+</div>
+</div>
+<div class="cell-output-display column-body page-columns page-full">
+<div id="fig-0150-5" class="quarto-figure quarto-figure-center column-body anchored page-columns page-full">
+<figure class="figure page-columns page-full">
+<p class="page-columns page-full"><img src="01_birth_files/figure-html/fig-0150-5.svg" class="column-body img-fluid figure-img"></p>
+<figcaption class="figure-caption">Figure&nbsp;1.201: prediction of fertility rates, smoothed</figcaption>
+</figure>
+</div>
+</div>
+<div class="cell-output-display column-body page-columns page-full">
+<div id="fig-0150-6" class="quarto-figure quarto-figure-center column-body anchored page-columns page-full">
+<figure class="figure page-columns page-full">
+<p class="page-columns page-full"><img src="01_birth_files/figure-html/fig-0150-6.svg" class="column-body img-fluid figure-img"></p>
+<figcaption class="figure-caption">Figure&nbsp;1.202: prediction of fertility rates, smoothed</figcaption>
+</figure>
+</div>
+</div>
+<div class="cell-output-display column-body page-columns page-full">
+<div id="fig-0150-7" class="quarto-figure quarto-figure-center column-body anchored page-columns page-full">
+<figure class="figure page-columns page-full">
+<p class="page-columns page-full"><img src="01_birth_files/figure-html/fig-0150-7.svg" class="column-body img-fluid figure-img"></p>
+<figcaption class="figure-caption">Figure&nbsp;1.203: prediction of fertility rates, smoothed</figcaption>
+</figure>
+</div>
+</div>
+<div class="cell-output-display column-body page-columns page-full">
+<div id="fig-0150-8" class="quarto-figure quarto-figure-center column-body anchored page-columns page-full">
+<figure class="figure page-columns page-full">
+<p class="page-columns page-full"><img src="01_birth_files/figure-html/fig-0150-8.svg" class="column-body img-fluid figure-img"></p>
+<figcaption class="figure-caption">Figure&nbsp;1.204: prediction of fertility rates, smoothed</figcaption>
+</figure>
+</div>
+</div>
+<div class="cell-output-display column-body page-columns page-full">
+<div id="fig-0150-9" class="quarto-figure quarto-figure-center column-body anchored page-columns page-full">
+<figure class="figure page-columns page-full">
+<p class="page-columns page-full"><img src="01_birth_files/figure-html/fig-0150-9.svg" class="column-body img-fluid figure-img"></p>
+<figcaption class="figure-caption">Figure&nbsp;1.205: prediction of fertility rates, smoothed</figcaption>
+</figure>
+</div>
+</div>
+<div class="cell-output-display column-body page-columns page-full">
+<div id="fig-0150-10" class="quarto-figure quarto-figure-center column-body anchored page-columns page-full">
+<figure class="figure page-columns page-full">
+<p class="page-columns page-full"><img src="01_birth_files/figure-html/fig-0150-10.svg" class="column-body img-fluid figure-img"></p>
+<figcaption class="figure-caption">Figure&nbsp;1.206: prediction of fertility rates, smoothed</figcaption>
+</figure>
+</div>
+</div>
+<div class="cell-output-display column-body page-columns page-full">
+<div id="fig-0150-11" class="quarto-figure quarto-figure-center column-body anchored page-columns page-full">
+<figure class="figure page-columns page-full">
+<p class="page-columns page-full"><img src="01_birth_files/figure-html/fig-0150-11.svg" class="column-body img-fluid figure-img"></p>
+<figcaption class="figure-caption">Figure&nbsp;1.207: prediction of fertility rates, smoothed</figcaption>
+</figure>
+</div>
+</div>
+<div class="cell-output-display column-body page-columns page-full">
+<div id="fig-0150-12" class="quarto-figure quarto-figure-center column-body anchored page-columns page-full">
+<figure class="figure page-columns page-full">
+<p class="page-columns page-full"><img src="01_birth_files/figure-html/fig-0150-12.svg" class="column-body img-fluid figure-img"></p>
+<figcaption class="figure-caption">Figure&nbsp;1.208: prediction of fertility rates, smoothed</figcaption>
+</figure>
+</div>
+</div>
+<div class="cell-output-display column-body page-columns page-full">
+<div id="fig-0150-13" class="quarto-figure quarto-figure-center column-body anchored page-columns page-full">
+<figure class="figure page-columns page-full">
+<p class="page-columns page-full"><img src="01_birth_files/figure-html/fig-0150-13.svg" class="column-body img-fluid figure-img"></p>
+<figcaption class="figure-caption">Figure&nbsp;1.209: prediction of fertility rates, smoothed</figcaption>
+</figure>
+</div>
+</div>
+<div class="cell-output-display column-body page-columns page-full">
+<div id="fig-0150-14" class="quarto-figure quarto-figure-center column-body anchored page-columns page-full">
+<figure class="figure page-columns page-full">
+<p class="page-columns page-full"><img src="01_birth_files/figure-html/fig-0150-14.svg" class="column-body img-fluid figure-img"></p>
+<figcaption class="figure-caption">Figure&nbsp;1.210: prediction of fertility rates, smoothed</figcaption>
+</figure>
+</div>
+</div>
+<div class="cell-output-display column-body page-columns page-full">
+<div id="fig-0150-15" class="quarto-figure quarto-figure-center column-body anchored page-columns page-full">
+<figure class="figure page-columns page-full">
+<p class="page-columns page-full"><img src="01_birth_files/figure-html/fig-0150-15.svg" class="column-body img-fluid figure-img"></p>
+<figcaption class="figure-caption">Figure&nbsp;1.211: prediction of fertility rates, smoothed</figcaption>
+</figure>
+</div>
+</div>
+<div class="cell-output-display column-body page-columns page-full">
+<div id="fig-0150-16" class="quarto-figure quarto-figure-center column-body anchored page-columns page-full">
+<figure class="figure page-columns page-full">
+<p class="page-columns page-full"><img src="01_birth_files/figure-html/fig-0150-16.svg" class="column-body img-fluid figure-img"></p>
+<figcaption class="figure-caption">Figure&nbsp;1.212: prediction of fertility rates, smoothed</figcaption>
+</figure>
+</div>
+</div>
+<div class="cell-output-display column-body page-columns page-full">
+<div id="fig-0150-17" class="quarto-figure quarto-figure-center column-body anchored page-columns page-full">
+<figure class="figure page-columns page-full">
+<p class="page-columns page-full"><img src="01_birth_files/figure-html/fig-0150-17.svg" class="column-body img-fluid figure-img"></p>
+<figcaption class="figure-caption">Figure&nbsp;1.213: prediction of fertility rates, smoothed</figcaption>
+</figure>
+</div>
+</div>
+<div class="cell-output-display column-body page-columns page-full">
+<div id="fig-0150-18" class="quarto-figure quarto-figure-center column-body anchored page-columns page-full">
+<figure class="figure page-columns page-full">
+<p class="page-columns page-full"><img src="01_birth_files/figure-html/fig-0150-18.svg" class="column-body img-fluid figure-img"></p>
+<figcaption class="figure-caption">Figure&nbsp;1.214: prediction of fertility rates, smoothed</figcaption>
+</figure>
+</div>
+</div>
+<div class="cell-output-display column-body page-columns page-full">
+<div id="fig-0150-19" class="quarto-figure quarto-figure-center column-body anchored page-columns page-full">
+<figure class="figure page-columns page-full">
+<p class="page-columns page-full"><img src="01_birth_files/figure-html/fig-0150-19.svg" class="column-body img-fluid figure-img"></p>
+<figcaption class="figure-caption">Figure&nbsp;1.215: prediction of fertility rates, smoothed</figcaption>
+</figure>
+</div>
+</div>
+<div class="cell-output-display column-body page-columns page-full">
+<div id="fig-0150-20" class="quarto-figure quarto-figure-center column-body anchored page-columns page-full">
+<figure class="figure page-columns page-full">
+<p class="page-columns page-full"><img src="01_birth_files/figure-html/fig-0150-20.svg" class="column-body img-fluid figure-img"></p>
+<figcaption class="figure-caption">Figure&nbsp;1.216: prediction of fertility rates, smoothed</figcaption>
+</figure>
+</div>
+</div>
+<div class="cell-output-display column-body page-columns page-full">
+<div id="fig-0150-21" class="quarto-figure quarto-figure-center column-body anchored page-columns page-full">
+<figure class="figure page-columns page-full">
+<p class="page-columns page-full"><img src="01_birth_files/figure-html/fig-0150-21.svg" class="column-body img-fluid figure-img"></p>
+<figcaption class="figure-caption">Figure&nbsp;1.217: prediction of fertility rates, smoothed</figcaption>
+</figure>
+</div>
+</div>
+<div class="cell-output-display column-body page-columns page-full">
+<div id="fig-0150-22" class="quarto-figure quarto-figure-center column-body anchored page-columns page-full">
+<figure class="figure page-columns page-full">
+<p class="page-columns page-full"><img src="01_birth_files/figure-html/fig-0150-22.svg" class="column-body img-fluid figure-img"></p>
+<figcaption class="figure-caption">Figure&nbsp;1.218: prediction of fertility rates, smoothed</figcaption>
+</figure>
+</div>
+</div>
+<div class="cell-output-display column-body page-columns page-full">
+<div id="fig-0150-23" class="quarto-figure quarto-figure-center column-body anchored page-columns page-full">
+<figure class="figure page-columns page-full">
+<p class="page-columns page-full"><img src="01_birth_files/figure-html/fig-0150-23.svg" class="column-body img-fluid figure-img"></p>
+<figcaption class="figure-caption">Figure&nbsp;1.219: prediction of fertility rates, smoothed</figcaption>
+</figure>
+</div>
+</div>
+<div class="cell-output-display column-body page-columns page-full">
+<div id="fig-0150-24" class="quarto-figure quarto-figure-center column-body anchored page-columns page-full">
+<figure class="figure page-columns page-full">
+<p class="page-columns page-full"><img src="01_birth_files/figure-html/fig-0150-24.svg" class="column-body img-fluid figure-img"></p>
+<figcaption class="figure-caption">Figure&nbsp;1.220: prediction of fertility rates, smoothed</figcaption>
+</figure>
+</div>
+</div>
+<div class="cell-output-display column-body page-columns page-full">
+<div id="fig-0150-25" class="quarto-figure quarto-figure-center column-body anchored page-columns page-full">
+<figure class="figure page-columns page-full">
+<p class="page-columns page-full"><img src="01_birth_files/figure-html/fig-0150-25.svg" class="column-body img-fluid figure-img"></p>
+<figcaption class="figure-caption">Figure&nbsp;1.221: prediction of fertility rates, smoothed</figcaption>
+</figure>
+</div>
+</div>
+<div class="cell-output-display column-body page-columns page-full">
+<div id="fig-0150-26" class="quarto-figure quarto-figure-center column-body anchored page-columns page-full">
+<figure class="figure page-columns page-full">
+<p class="page-columns page-full"><img src="01_birth_files/figure-html/fig-0150-26.svg" class="column-body img-fluid figure-img"></p>
+<figcaption class="figure-caption">Figure&nbsp;1.222: prediction of fertility rates, smoothed</figcaption>
+</figure>
+</div>
+</div>
+<div class="cell-output-display column-body page-columns page-full">
+<div id="fig-0150-27" class="quarto-figure quarto-figure-center column-body anchored page-columns page-full">
+<figure class="figure page-columns page-full">
+<p class="page-columns page-full"><img src="01_birth_files/figure-html/fig-0150-27.svg" class="column-body img-fluid figure-img"></p>
+<figcaption class="figure-caption">Figure&nbsp;1.223: prediction of fertility rates, smoothed</figcaption>
+</figure>
+</div>
+</div>
+<div class="cell-output-display column-body page-columns page-full">
+<div id="fig-0150-28" class="quarto-figure quarto-figure-center column-body anchored page-columns page-full">
+<figure class="figure page-columns page-full">
+<p class="page-columns page-full"><img src="01_birth_files/figure-html/fig-0150-28.svg" class="column-body img-fluid figure-img"></p>
+<figcaption class="figure-caption">Figure&nbsp;1.224: prediction of fertility rates, smoothed</figcaption>
+</figure>
+</div>
+</div>
+<div class="cell-output-display column-body page-columns page-full">
+<div id="fig-0150-29" class="quarto-figure quarto-figure-center column-body anchored page-columns page-full">
+<figure class="figure page-columns page-full">
+<p class="page-columns page-full"><img src="01_birth_files/figure-html/fig-0150-29.svg" class="column-body img-fluid figure-img"></p>
+<figcaption class="figure-caption">Figure&nbsp;1.225: prediction of fertility rates, smoothed</figcaption>
+</figure>
+</div>
+</div>
+<div class="cell-output-display column-body page-columns page-full">
+<div id="fig-0150-30" class="quarto-figure quarto-figure-center column-body anchored page-columns page-full">
+<figure class="figure page-columns page-full">
+<p class="page-columns page-full"><img src="01_birth_files/figure-html/fig-0150-30.svg" class="column-body img-fluid figure-img"></p>
+<figcaption class="figure-caption">Figure&nbsp;1.226: prediction of fertility rates, smoothed</figcaption>
+</figure>
+</div>
+</div>
+<div class="cell-output-display column-body page-columns page-full">
+<div id="fig-0150-31" class="quarto-figure quarto-figure-center column-body anchored page-columns page-full">
+<figure class="figure page-columns page-full">
+<p class="page-columns page-full"><img src="01_birth_files/figure-html/fig-0150-31.svg" class="column-body img-fluid figure-img"></p>
+<figcaption class="figure-caption">Figure&nbsp;1.227: prediction of fertility rates, smoothed</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<section id="tfr-total-fertility-rate-of-past-and-future" class="level4 page-columns page-full" data-number="1.1.3.1">
+<h4 data-number="1.1.3.1" class="anchored" data-anchor-id="tfr-total-fertility-rate-of-past-and-future"><span class="header-section-number">1.1.3.1</span> TFR (total fertility rate) of past and future</h4>
+<div class="cell page-columns page-full" data-hash="01_birth_cache/html/fig-0160_b2a093fb0ba657f2dedc30e7119c0dd2">
+<div class="cell-output-display column-body page-columns page-full">
+<div id="fig-0160" class="quarto-figure quarto-figure-center column-body anchored page-columns page-full">
+<figure class="figure page-columns page-full">
+<p class="page-columns page-full"><img src="01_birth_files/figure-html/fig-0160-1.svg" class="column-body img-fluid figure-img"></p>
+<figcaption class="figure-caption">Figure&nbsp;1.228: TFR by year and origin</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<div class="cell page-columns page-full" data-hash="01_birth_cache/html/fig-0161_a4865387eb0c4f906848209488346c6f">
+<div class="cell-output-display column-body page-columns page-full">
+<div id="fig-0161-1" class="quarto-figure quarto-figure-center column-body anchored page-columns page-full">
+<figure class="figure page-columns page-full">
+<p class="page-columns page-full"><img src="01_birth_files/figure-html/fig-0161-1.svg" class="column-body img-fluid figure-img"></p>
+<figcaption class="figure-caption">Figure&nbsp;1.229: TFR by year and age class (3 groups)</figcaption>
+</figure>
+</div>
+</div>
+<div class="cell-output-display column-body page-columns page-full">
+<div id="fig-0161-2" class="quarto-figure quarto-figure-center column-body anchored page-columns page-full">
+<figure class="figure page-columns page-full">
+<p class="page-columns page-full"><img src="01_birth_files/figure-html/fig-0161-2.svg" class="column-body img-fluid figure-img"></p>
+<figcaption class="figure-caption">Figure&nbsp;1.230: TFR by year and age class (3 groups)</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<div class="cell page-columns page-full" data-hash="01_birth_cache/html/fig-0162_8ab4737e3d272e440f5c016653cc6178">
+<div class="cell-output-display column-body page-columns page-full">
+<div id="fig-0162-1" class="quarto-figure quarto-figure-center column-body anchored page-columns page-full">
+<figure class="figure page-columns page-full">
+<p class="page-columns page-full"><img src="01_birth_files/figure-html/fig-0162-1.svg" class="column-body img-fluid figure-img"></p>
+<figcaption class="figure-caption">Figure&nbsp;1.231: TFR by year and age class (5 groups)</figcaption>
+</figure>
+</div>
+</div>
+<div class="cell-output-display column-body page-columns page-full">
+<div id="fig-0162-2" class="quarto-figure quarto-figure-center column-body anchored page-columns page-full">
+<figure class="figure page-columns page-full">
+<p class="page-columns page-full"><img src="01_birth_files/figure-html/fig-0162-2.svg" class="column-body img-fluid figure-img"></p>
+<figcaption class="figure-caption">Figure&nbsp;1.232: TFR by year and age class (5 groups)</figcaption>
+</figure>
+</div>
+</div>
+</div>
+</section>
+</section>
+</section>
+<section id="origin" class="level2 page-columns page-full" data-number="1.2">
+<h2 data-number="1.2" class="anchored" data-anchor-id="origin"><span class="header-section-number">1.2</span> Origin</h2>
+<section id="origin-change" class="level3 page-columns page-full" data-number="1.2.1">
+<h3 data-number="1.2.1" class="anchored" data-anchor-id="origin-change"><span class="header-section-number">1.2.1</span> Origin change</h3>
+<div class="cell page-columns page-full" data-hash="01_birth_cache/html/fig-0170_8d574a63531f7cc01cd2cd020cd18319">
+<div class="cell-output-display column-body page-columns page-full">
+<div id="fig-0170" class="quarto-figure quarto-figure-center column-body anchored page-columns page-full">
+<figure class="figure page-columns page-full">
+<p class="page-columns page-full"><img src="01_birth_files/figure-html/fig-0170-1.svg" class="column-body img-fluid figure-img"></p>
+<figcaption class="figure-caption">Figure&nbsp;1.233: origin change by year, origin</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<div class="cell page-columns page-full" data-hash="01_birth_cache/html/fig-0171_7094fed2dccc47a9c55d1c49baa76eaf">
+<div class="cell-output-display column-body page-columns page-full">
+<div id="fig-0171" class="quarto-figure quarto-figure-center column-body anchored page-columns page-full">
+<figure class="figure page-columns page-full">
+<p class="page-columns page-full"><img src="01_birth_files/figure-html/fig-0171-1.svg" class="column-body img-fluid figure-img"></p>
+<figcaption class="figure-caption">Figure&nbsp;1.234: origin change by year, age class (3), origin</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<div class="cell page-columns page-full" data-hash="01_birth_cache/html/fig-0172_3add8d8998b357eaa1bd474e73258ae5">
+<div class="cell-output-display column-body page-columns page-full">
+<div id="fig-0172" class="quarto-figure quarto-figure-center column-body anchored page-columns page-full">
+<figure class="figure page-columns page-full">
+<p class="page-columns page-full"><img src="01_birth_files/figure-html/fig-0172-1.svg" class="column-body img-fluid figure-img"></p>
+<figcaption class="figure-caption">Figure&nbsp;1.235: origin change by year, age class (5), origin</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<div class="cell page-columns page-full" data-hash="01_birth_cache/html/fig-0173_fc1a18bb232fc63704899dbf3189cdd2">
+<div class="cell-output-display column-body page-columns page-full">
+<div id="fig-0173" class="quarto-figure quarto-figure-center column-body anchored page-columns page-full">
+<figure class="figure page-columns page-full">
+<p class="page-columns page-full"><img src="01_birth_files/figure-html/fig-0173-1.svg" class="column-body img-fluid figure-img"></p>
+<figcaption class="figure-caption">Figure&nbsp;1.236: origin change by district, year, origin</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<div class="cell page-columns page-full" data-hash="01_birth_cache/html/fig-0174_c3cf84d022f967b55ca3c6e1591bd06e">
+<div class="cell-output-display column-body page-columns page-full">
+<div id="fig-0174" class="quarto-figure quarto-figure-center column-body anchored page-columns page-full">
+<figure class="figure page-columns page-full">
+<p class="page-columns page-full"><img src="01_birth_files/figure-html/fig-0174-1.svg" class="column-body img-fluid figure-img"></p>
+<figcaption class="figure-caption">Figure&nbsp;1.237: origin change by district, year, age1 (foreign only, since few cases for Swiss)</figcaption>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="prediction-of-origin-change" class="level3 page-columns page-full" data-number="1.2.2">
+<h3 data-number="1.2.2" class="anchored" data-anchor-id="prediction-of-origin-change"><span class="header-section-number">1.2.2</span> Prediction of origin change</h3>
+<div class="cell page-columns page-full" data-hash="01_birth_cache/html/fig-0175_a6a4b80a048d6e69feef90ca62a4e937">
+<div class="cell-output-display column-body page-columns page-full">
+<div id="fig-0175" class="quarto-figure quarto-figure-center column-body anchored page-columns page-full">
+<figure class="figure page-columns page-full">
+<p class="page-columns page-full"><img src="01_birth_files/figure-html/fig-0175-1.svg" class="column-body img-fluid figure-img"></p>
+<figcaption class="figure-caption">Figure&nbsp;1.238: predicted origin change by year and origin</figcaption>
+</figure>
+</div>
+</div>
+</div>
+</section>
+</section>
+<section id="sex-ratio" class="level2 page-columns page-full" data-number="1.3">
+<h2 data-number="1.3" class="anchored" data-anchor-id="sex-ratio"><span class="header-section-number">1.3</span> Sex ratio</h2>
+<section id="current-proportion" class="level3 page-columns page-full" data-number="1.3.1">
+<h3 data-number="1.3.1" class="anchored" data-anchor-id="current-proportion"><span class="header-section-number">1.3.1</span> Current proportion</h3>
+<div class="cell page-columns page-full" data-hash="01_birth_cache/html/fig-0190_3a3fb34d7eb88fa3343cd0194cfb6016">
+<div class="cell-output-display column-body page-columns page-full">
+<div id="fig-0190" class="quarto-figure quarto-figure-center column-body anchored page-columns page-full">
+<figure class="figure page-columns page-full">
+<p class="page-columns page-full"><img src="01_birth_files/figure-html/fig-0190-1.svg" class="column-body img-fluid figure-img"></p>
+<figcaption class="figure-caption">Figure&nbsp;1.239: proportion of sexes by year</figcaption>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="prediction-of-proportion" class="level3 page-columns page-full" data-number="1.3.2">
+<h3 data-number="1.3.2" class="anchored" data-anchor-id="prediction-of-proportion"><span class="header-section-number">1.3.2</span> Prediction of proportion</h3>
+<div class="cell page-columns page-full" data-hash="01_birth_cache/html/fig-0191_7f985706b071cee2b6825bf7ab961ad2">
+<div class="cell-output-display column-body page-columns page-full">
+<div id="fig-0191" class="quarto-figure quarto-figure-center column-body anchored page-columns page-full">
+<figure class="figure page-columns page-full">
+<p class="page-columns page-full"><img src="01_birth_files/figure-html/fig-0191-1.svg" class="column-body img-fluid figure-img"></p>
+<figcaption class="figure-caption">Figure&nbsp;1.240: predicted mean proportion of sexes by year</figcaption>
+</figure>
+</div>
+</div>
+</div>
+
+
+</section>
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    text: function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+  function tippyHover(el, contentFn) {
+    const config = {
+      allowHTML: true,
+      content: contentFn,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start'
+    };
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      return note.innerHTML;
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+<nav class="page-navigation column-body">
+  <div class="nav-page nav-page-previous">
+      <a href="./index.html" class="pagination-link">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text">Preface</span>
+      </a>          
+  </div>
+  <div class="nav-page nav-page-next">
+      <a href="./02_death.html" class="pagination-link">
+        <span class="nav-page-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Death</span></span> <i class="bi bi-arrow-right-short"></i>
+      </a>
+  </div>
+</nav>
+</div> <!-- /content -->
+
+
+
+<script src="site_libs/quarto-html/zenscroll-min.js"></script>
+</body></html>
