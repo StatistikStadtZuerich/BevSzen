@@ -1,0 +1,589 @@
+# Evaluation
+
+```{r, include=FALSE}
+#| label: prep
+#| output: false
+#| cache: true
+
+# project root
+library(rprojroot)
+root <- find_root(is_rstudio_project)
+
+# get the parameters
+source(file.path(root, "R/0000_General/0002_init.R"))
+vars_once <- init_once(i_data_path = "~/v/Szen/BevSzen/2026")
+params <- init_scen(i_scen = "middle", vars_init_once = vars_once)
+
+# import the data of the past (population, processes)
+real_pop <- read_csv(params$pop_od)
+real_bir <- read_csv(params$bir_od)
+real_dea <- read_csv(params$dea_od)
+real_imm <- read_csv(params$imm_od)
+real_emi <- read_csv(params$emi_od)
+real_nat <- read_csv(params$nat_od)
+
+# as of 2016: similar model structure
+similar_model <- 2016
+
+# import the previous scenarios (for population, processes)
+scen_pop <- read_csv(params$eval_pop_path) |>
+  filter(PublJahr >= similar_model)
+
+scen_prc <- read_csv(params$eval_prc_path) |>
+  filter(PublJahr >= similar_model)
+
+
+```
+
+
+## Population
+
+### Population by year
+
+```{r}
+#| label: fig-1601
+#| fig-cap: evaluation by year (middle scenario only)
+#| fig-width: 10
+#| fig-height: 10
+
+# real population by year
+real_pop_y <- real_pop |> 
+  rename(year = StichtagDatJahr) |> 
+  group_by(year) |> 
+  summarize(pop = sum(AnzBestWir), .groups = "drop") |> 
+  mutate(cat = "reality") |> 
+  select(year, pop, cat)
+  
+# past scenarios by year (middle scenario only)
+scen_pop_y <- scen_pop |> 
+  filter(VersionArtCd == 2) |> 
+  rename(pub = PublJahr, year = Jahr) |> 
+  group_by(pub, year) |> 
+  summarize(pop = sum(AnzBestWir), .groups = "drop") |> 
+  mutate(cat = paste("scenarios", pub)) |> 
+  select(year, pop, cat)
+
+
+# color palette (reality: black)
+col_pal <- colorRampPalette(params$col_6[1:5])(length(unique(scen_pop_y$cat)) + 1)
+col_pal[1] <- "black"
+
+
+(real_pop_y |> 
+  bind_rows(scen_pop_y) |> 
+  mutate(line_size = ifelse(cat == "reality", "reality", "scenarios")) |> 
+  ggplot() +
+  geom_line(aes(x = year, y = pop, color = cat, linewidth = line_size)) +
+  scale_color_manual(values = col_pal) +
+  scale_linewidth_manual(values = c("reality" = 1.0, "scenarios" = 0.7)) +
+  labs(x = "", y = "population", color = "", linewidth = "") +
+  expand_limits(y = 0) +
+  guides(linewidth = "none") +
+  params$neutral ) |>  
+ ggplotly() 
+
+
+```
+
+
+```{r}
+#| label: fig-1602
+#| fig-cap: evaluation by year (lower and upper scenario)
+#| fig-width: 10
+#| fig-height: 10
+
+
+# real population by year
+real_pop_y_low_upp <- real_pop_y |> 
+  mutate(scenario = factor(params$text_c[1], levels = params$text_c)) |> 
+  select(year, cat, scenario, pop)
+
+# past scenarios by year (lower and upper scenario)
+scen_pop_y_low_upp <- scen_pop |> 
+  filter(VersionArtCd %in% c(1,3)) |> 
+  mutate(scenario = factor(if_else(VersionArtCd == 1, params$text_c[2], 
+                                   params$text_c[4]), 
+                           levels = params$text_c)) |> 
+  rename(pub = PublJahr, year = Jahr) |>
+  group_by(pub, year, scenario) |>
+  summarize(pop = sum(AnzBestWir), .groups = "drop") |>
+  mutate(cat = paste("scenarios", pub)) |>
+  select(year, cat, scenario, pop)
+
+# plot
+(real_pop_y_low_upp |> 
+  bind_rows(scen_pop_y_low_upp) |> 
+  mutate(line_size = ifelse(cat == "reality", "reality", "scenarios")) |> 
+  ggplot() +
+  geom_line(aes(x = year, y = pop, color = cat, 
+                linewidth = line_size, linetype = scenario)) +
+  scale_color_manual(values = col_pal) +
+  scale_linewidth_manual(values = c("reality" = 1.0, "scenarios" = 0.7)) +
+  scale_linetype_manual(values = c("solid", "dotdash", "dotted")) +
+  labs(x = "", y = "population", color = "", linewidth = "", linetype = "") +
+  expand_limits(y = 0) +
+  guides(linewidth = "none") +
+  params$neutral ) |>  
+ ggplotly() 
+
+
+  
+```
+
+
+```{r}
+#| label: fig-1603
+#| fig-cap: evaluation by year (lower, middle, and upper scenario)
+#| fig-width: 7
+#| fig-height: 20
+
+# past scenarios by year
+scen_pop_yc <- scen_pop |> 
+  filter(VersionArtCd %in% c(1,2,3)) |> 
+  mutate(scenario = factor(
+    case_when(
+      VersionArtCd == 1 ~ params$text_c[2],
+      VersionArtCd == 2 ~ params$text_c[3],
+      TRUE       ~ params$text_c[4]
+  ))) |> 
+  rename(pub = PublJahr, year = Jahr) |>
+  group_by(pub, year, scenario) |>
+  summarize(pop = sum(AnzBestWir), .groups = "drop") |>
+  mutate(cat = paste("scenarios", pub)) |>
+  select(year, scenario, cat, pop)
+
+
+# real population by year
+real_pop_yc <- real_pop_y |> 
+  mutate(scenario = factor(params$text_c[1], levels = params$text_c)) |> 
+  select(year, scenario, pop)
+
+# plot
+(expand_grid(year = sort(unique(real_pop_yc$year)),
+            scenario = sort(unique(real_pop_yc$scenario)),
+            cat = sort(unique(scen_pop_yc$cat))) |> 
+  left_join(real_pop_yc, by = c("year", "scenario")) |> 
+  bind_rows(scen_pop_yc) |> 
+  ggplot() +
+  geom_line(aes(x = year, y = pop, color = scenario)) +
+  facet_wrap(~ cat, ncol = 2) +
+  scale_color_manual(values = params$col_c) +
+  labs(x = "", y = "population", color = "") +
+  expand_limits(y = 0) +
+  params$neutral + 
+  theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust = 1))) |> 
+ ggplotly(height = 2000)
+
+
+```
+
+### Population by district and year
+
+Evaluation by district (last publication)
+
+```{r}
+#| label: fig-1604
+#| fig-cap: evaluation by district (last publication)
+#| fig-width: 15
+#| fig-height: 25
+
+# real population by district and year
+real_pop_dy <- real_pop |> 
+  rename(year = StichtagDatJahr) |> 
+  left_join(params$look_dis, by = "QuarCd") |> 
+  mutate(district = factor(distr, levels = params$uni_d)) |> 
+  group_by(year, district) |>   
+  summarize(pop = sum(AnzBestWir), .groups = "drop") |> 
+  mutate(scenario = params$text_c[1]) |> 
+  select(district, year, scenario, pop)         
+  
+
+# past scenarios by district and year
+scen_pop_dyc <- scen_pop |> 
+  mutate(distnum = as.numeric(QuarCd)) |> 
+  left_join(params$look_reg, by = "distnum") |> 
+  filter(VersionArtCd %in% c(1,2,3)) |> 
+  mutate(scenario = factor(
+    case_when(
+      VersionArtCd == 1 ~ params$text_c[2],
+      VersionArtCd == 2 ~ params$text_c[3],
+      TRUE       ~ params$text_c[4]
+  ))) |> 
+  rename(pub = PublJahr, year = Jahr) |>
+  group_by(district, pub, year, scenario) |>
+  summarize(pop = sum(AnzBestWir), .groups = "drop") |>
+  mutate(cat = paste("scenarios", pub)) |>
+  select(district, year, scenario, cat, pop)
+
+# plot: last publication
+(scen_pop_dyc |> 
+  filter(cat == max(cat)) |> 
+  select(-cat) |> 
+  bind_rows(real_pop_dy) |> 
+  mutate(scenario = factor(scenario, levels = params$uni_c)) |> 
+  ggplot() +
+	  geom_line(aes(x = year, y = pop, color = scenario)) +
+	  facet_wrap(~district, ncol = 3, scales = "free_y") +
+	  labs(x = "", y = "population", color = "") +
+    scale_color_manual(values = params$col_c) +
+    expand_limits(y = 0) + 
+    params$neutral + 
+    theme(
+      axis.text.x = element_text(angle = 90, vjust = 0.5, hjust = 1),
+      panel.spacing = unit(2.0, "lines"),
+      axis.text.y = element_text(margin = margin(r = 10)),
+      strip.background = element_blank())) |>  
+  ggplotly(height = 2500)
+
+
+```
+
+Evaluation by district ('first' publication, 2016),
+the first publication with the current model structure.
+
+```{r}
+#| label: fig-1605
+#| fig-cap: evaluation by district ('first' publication, 2016)
+#| fig-width: 15
+#| fig-height: 25
+
+# plot: first publication
+(scen_pop_dyc |> 
+  filter(cat == min(cat)) |>     
+  select(-cat) |> 
+  bind_rows(real_pop_dy) |> 
+  mutate(scenario = factor(scenario, levels = params$uni_c)) |> 
+  ggplot() +
+	  geom_line(aes(x = year, y = pop, color = scenario)) +
+	  facet_wrap(~district, ncol = 3, scales = "free_y") +
+	  labs(x = "", y = "population", color = "") +
+    scale_color_manual(values = params$col_c) +
+    expand_limits(y = 0) +  
+    params$neutral + 
+    theme(
+      axis.text.x = element_text(angle = 90, vjust = 0.5, hjust = 1),
+      panel.spacing = unit(2.0, "lines"),
+      axis.text.y = element_text(margin = margin(r = 10)),
+      strip.background = element_blank())) |>     
+  ggplotly(height = 2500)
+
+
+```
+
+### Population by year and age
+
+```{r}
+#| label: fig-1606
+#| fig-cap: evaluation by year and age category (middle scenario only)
+#| fig-width: 20
+#| fig-height: 20
+
+# check: age category
+# real_pop |> 
+#   select(AlterV10Cd, AlterV10Kurz) |> 
+#   unique()
+
+# real population by year and age (ten year category)
+real_pop_ya <- real_pop |> 
+  rename(year = StichtagDatJahr) |> 
+  mutate(age_3 = factor(if_else(AlterV10Cd >= 90, params$age_3t[10], AlterV10Kurz), levels = params$age_3t)) |> 
+  group_by(year, age_3) |>
+  summarize(pop = sum(AnzBestWir), .groups = "drop") |>
+  mutate(cat = "reality") |>
+  select(year, age_3, cat, pop)
+
+# past scenarios by year (middle scenario only)
+scen_pop_ya <- scen_pop |> 
+  filter(VersionArtCd == 2) |> 
+  rename(pub = PublJahr, year = Jahr) |> 
+  left_join(params$look_a3, by = c("AlterVNum" = "age")) |> 
+  group_by(pub, year, age_3) |> 
+  summarize(pop = sum(AnzBestWir), .groups = "drop") |> 
+  mutate(cat = paste("scenarios", pub)) |> 
+  select(year, age_3, cat, pop)
+
+# plot
+(real_pop_ya |> 
+  bind_rows(scen_pop_ya) |> 
+  mutate(line_size = ifelse(cat == "reality", "reality", "scenarios")) |> 
+  ggplot() +
+  geom_line(aes(x = year, y = pop, color = cat, linewidth = line_size)) +
+  facet_wrap(~age_3, ncol = 2, scales = "free_y") +
+  scale_color_manual(values = col_pal) +
+  scale_linewidth_manual(values = c("reality" = 1.0, "scenarios" = 0.7)) +
+  labs(x = "", y = "population", color = "", linewidth = "") +
+  expand_limits(y = 0) +
+  guides(linewidth = "none") +
+  params$neutral ) |>  
+ ggplotly(height = 2000) 
+
+```
+
+
+## Births
+
+### Births by year
+
+```{r}
+#| label: fig-1607
+#| fig-cap: birth evaluation by year (middle scenario only)
+#| fig-width: 10
+#| fig-height: 10
+
+# check data
+# unique(real_bir$LebensfaehigkeitCd)
+
+# real births by year
+real_bir_y <- real_bir |> 
+    rename(year = EreignisDatJahr) |> 
+  group_by(year) |> 
+  summarize(bir = sum(AnzGebuWir), .groups = "drop") |> 
+  mutate(cat = "reality") |> 
+  select(year, cat, bir)
+  
+   
+# past scenarios by year (middle scenario only)
+scen_bir_y <- scen_prc |> 
+  filter(VersionArtCd == 2) |> 
+  rename(pub = PublJahr, year = Jahr) |>
+  group_by(pub, year) |>
+  summarize(bir = sum(AnzGebuWir), .groups = "drop") |>
+  mutate(cat = paste("scenarios", pub)) |>
+  select(year, cat, bir)
+
+# plot
+(real_bir_y |> 
+  bind_rows(scen_bir_y) |> 
+  mutate(line_size = ifelse(cat == "reality", "reality", "scenarios")) |> 
+  ggplot() +
+  geom_line(aes(x = year, y = bir, color = cat, linewidth = line_size)) +
+  scale_color_manual(values = col_pal) +
+  scale_linewidth_manual(values = c("reality" = 1.0, "scenarios" = 0.7)) +
+  labs(x = "", y = "births", color = "", linewidth = "") +
+  expand_limits(y = 0) +
+  guides(linewidth = "none") +
+  params$neutral ) |>  
+ ggplotly() 
+
+
+```
+
+## Deaths
+
+### Death by year
+
+```{r}
+#| label: fig-1608
+#| fig-cap: death evaluation by year (middle scenario only)
+#| fig-width: 10
+#| fig-height: 10
+
+# real deaths by year
+real_dea_y <- real_dea |> 
+    rename(year = EreignisDatJahr) |> 
+  group_by(year) |> 
+  summarize(dea = sum(AnzSterWir), .groups = "drop") |> 
+  mutate(cat = "reality") |> 
+  select(year, cat, dea)
+
+   
+# past scenarios by year (middle scenario only)
+scen_dea_y <- scen_prc |> 
+  filter(VersionArtCd == 2) |> 
+  rename(pub = PublJahr, year = Jahr) |>
+  group_by(pub, year) |>
+  summarize(dea = sum(AnzSterWir), .groups = "drop") |>
+  mutate(cat = paste("scenarios", pub)) |>
+  select(year, cat, dea)
+
+# plot
+(real_dea_y |>
+  bind_rows(scen_dea_y) |>
+  mutate(line_size = ifelse(cat == "reality", "reality", "scenarios")) |>
+  ggplot() +
+  geom_line(aes(x = year, y = dea, color = cat, linewidth = line_size)) +
+  scale_color_manual(values = col_pal) +
+  scale_linewidth_manual(values = c("reality" = 1.0, "scenarios" = 0.7)) +
+  labs(x = "", y = "deaths", color = "", linewidth = "") +
+  expand_limits(y = 0) +
+  guides(linewidth = "none") +
+  params$neutral ) |>
+ ggplotly()
+
+```
+
+## Immigration
+
+### Immigration by year
+
+
+```{r}
+#| label: fig-1609
+#| fig-cap: immigration evaluation by year (middle scenario only)
+#| fig-width: 10
+#| fig-height: 10
+
+# real immigration by year
+real_imm_y <- real_imm |> 
+    rename(year = EreignisDatJahr) |> 
+  group_by(year) |> 
+  summarize(imm = sum(AnzZuzuWir), .groups = "drop") |> 
+  mutate(cat = "reality") |> 
+  select(year, cat, imm)
+
+
+# past scenarios by year (middle scenario only)
+scen_imm_y <- scen_prc |>
+  filter(VersionArtCd == 2) |>
+  rename(pub = PublJahr, year = Jahr) |>
+  group_by(pub, year) |>
+  summarize(imm = sum(AnzZuzuWir), .groups = "drop") |>
+  mutate(cat = paste("scenarios", pub)) |>
+  select(year, cat, imm)
+
+# plot
+(real_imm_y |>
+  bind_rows(scen_imm_y) |>
+  mutate(line_size = ifelse(cat == "reality", "reality", "scenarios")) |>
+  ggplot() +
+  geom_line(aes(x = year, y = imm, color = cat, linewidth = line_size)) +
+  scale_color_manual(values = col_pal) +
+  scale_linewidth_manual(values = c("reality" = 1.0, "scenarios" = 0.7)) +
+  labs(x = "", y = "immigration", color = "", linewidth = "") +
+  expand_limits(y = 0) +
+  guides(linewidth = "none") +
+  params$neutral ) |>
+ ggplotly()
+
+
+```
+
+
+## Emigration
+
+### Emigration by year
+
+```{r}
+#| label: fig-1610
+#| fig-cap: emigration evaluation by year (middle scenario only)
+#| fig-width: 10
+#| fig-height: 10
+
+# real emigration by year
+real_emi_y <- real_emi |> 
+    rename(year = EreignisDatJahr) |> 
+  group_by(year) |> 
+  summarize(emi = sum(AnzWezuWir), .groups = "drop") |> 
+  mutate(cat = "reality") |> 
+  select(year, cat, emi)
+
+
+# past scenarios by year (middle scenario only)
+scen_emi_y <- scen_prc |>
+  filter(VersionArtCd == 2) |>
+  rename(pub = PublJahr, year = Jahr) |>
+  group_by(pub, year) |>
+  summarize(emi = sum(AnzWezuWir), .groups = "drop") |>
+  mutate(cat = paste("scenarios", pub)) |>
+  select(year, cat, emi)
+
+# plot
+(real_emi_y |>
+  bind_rows(scen_emi_y) |>
+  mutate(line_size = ifelse(cat == "reality", "reality", "scenarios")) |>
+  ggplot() +
+  geom_line(aes(x = year, y = emi, color = cat, linewidth = line_size)) +
+  scale_color_manual(values = col_pal) +
+  scale_linewidth_manual(values = c("reality" = 1.0, "scenarios" = 0.7)) +
+  labs(x = "", y = "emigration", color = "", linewidth = "") +
+  expand_limits(y = 0) +
+  guides(linewidth = "none") +
+  params$neutral ) |>
+ ggplotly()
+
+
+```
+
+## Net migration
+
+### net migration by year
+
+```{r}
+#| label: fig-1611
+#| fig-cap: net migration evaluation by year (middle scenario only)
+#| fig-width: 10
+#| fig-height: 10
+
+
+imm_temp <- real_imm_y |>
+  bind_rows(scen_imm_y)
+
+(real_emi_y |>
+  bind_rows(scen_emi_y) |> 
+  left_join(imm_temp, by = c("year", "cat")) |> 
+  mutate(net = imm - emi, 
+         line_size = ifelse(cat == "reality", "reality", "scenarios")) |>
+  ggplot() +
+  geom_hline(yintercept = 0, color = params$col_grey) +    
+  geom_line(aes(x = year, y = net, color = cat, linewidth = line_size)) +
+  scale_color_manual(values = col_pal) +
+  scale_linewidth_manual(values = c("reality" = 1.0, "scenarios" = 0.7)) +
+  labs(x = "", y = "net migration", color = "", linewidth = "") +
+  expand_limits(y = 0) +
+  guides(linewidth = "none") +
+  params$neutral ) |>
+ ggplotly()
+
+
+```
+
+## Naturalization
+
+### Naturalization by year
+
+
+```{r}
+#| label: fig-1612
+#| fig-cap: naturalization evaluation by year (middle scenario only)
+#| fig-width: 10
+#| fig-height: 10
+
+# real naturalization by year
+real_nat_y <- real_nat |> 
+  filter(HerkunftBisherCd == 2, HerkunftCd == 1) |> 
+    rename(year = EreignisDatJahr) |> 
+  group_by(year) |> 
+  summarize(nat = sum(AnzEinbWir), .groups = "drop") |> 
+  mutate(cat = "reality") |> 
+  select(year, cat, nat)
+
+# past scenarios by year (middle scenario only)
+scen_nat_y <- scen_prc |>
+  filter(VersionArtCd == 2) |>
+  rename(pub = PublJahr, year = Jahr) |>
+  group_by(pub, year) |>
+  summarize(nat = sum(AnzEinbWir), .groups = "drop") |>
+  mutate(cat = paste("scenarios", pub)) |>
+  select(year, cat, nat)
+
+# plot
+(real_nat_y |>
+  bind_rows(scen_nat_y) |>
+  mutate(line_size = ifelse(cat == "reality", "reality", "scenarios")) |>
+  ggplot() +
+  geom_line(aes(x = year, y = nat, color = cat, linewidth = line_size)) +
+  scale_color_manual(values = col_pal) +
+  scale_linewidth_manual(values = c("reality" = 1.0, "scenarios" = 0.7)) +
+  labs(x = "", y = "naturalization", color = "", linewidth = "") +
+  expand_limits(y = 0) +
+  guides(linewidth = "none") +
+  params$neutral ) |>
+ ggplotly()
+
+
+
+
+
+
+```
+

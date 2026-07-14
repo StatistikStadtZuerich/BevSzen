@@ -1,0 +1,477 @@
+
+# Death
+
+```{r, include=FALSE}
+#| label: prep
+#| echo: false
+#| results: 'hide'
+#| message: false
+#| warning: false
+#| cache: true
+
+# project root
+library(rprojroot)
+root <- find_root(is_rstudio_project)
+
+# get the parameters
+source(file.path(root, "R/0000_General/0002_init.R"))
+vars_once <- init_once(i_data_path = "~/v/Szen/BevSzen/2026")
+params <- init_scen(i_scen = "middle", vars_init_once = vars_once)
+
+# load the mortality function
+source(file.path(root, "R/0201_mortality_rate_fun.R"))
+
+# execute the mortality functions
+mor <- mortality_rate_fun(params)
+
+```
+
+## Mortality
+
+### age plots
+
+#### focus: difference in mortality by sex 
+
+For the year `r params$dea_fso_date_end`.
+
+```{r}
+#| label: fig-0200
+#| fig-cap: "mortality by age, year, sex, region (focus sex)"
+#| fig-width: 10
+#| fig-height: 8
+
+(mor$mor_yasr |> 
+  filter(year == params$dea_fso_date_end) |> 
+  mutate(rate = if_else(mor_yasr == 0, 0.001, mor_yasr)) |> 
+  ggplot(aes(x = age, y = rate, color = sex)) +
+    geom_line() +
+    scale_color_manual(values = params$col_s) +
+    scale_y_log10() +
+    facet_wrap(~region, nrow = 1) +
+    labs(x = "age", y = "mortality rate (in % per year)", color = "") +
+    params$neutral) |> 
+ggplotly()
+
+```
+
+#### focus: difference in mortality by region
+
+For the year `r params$dea_fso_date_end`.
+
+```{r}
+#| label: fig-0201
+#| fig-cap: "mortality by age, year, region, sex (focus: region)"
+#| fig-width: 10
+#| fig-height: 8
+
+(mor$mor_yasr |> 
+  filter(year == params$dea_fso_date_end) |> 
+  mutate(rate = if_else(mor_yasr == 0, 0.001, mor_yasr)) |> 
+  ggplot(aes(x = age, y = rate, color = region)) +
+    geom_line() +
+    scale_color_manual(values = params$col_r) +
+    scale_y_log10() +
+    facet_wrap(~sex, nrow = 1) +
+    labs(x = "age", y = "mortality rate (in % per year)", color = "") +
+    params$neutral) |> 
+ggplotly()
+
+```
+
+### year plots
+
+#### focus: difference in mortality by sex
+
+```{r}
+#| label: fig-0202
+#| fig-cap: "mortality by year, age, sex, region"
+#| fig-width: 14
+#| fig-height: 12
+
+age_select <- c(0, 20, 40, 50, 60, 70, 75, 80, 85)
+
+(mor$mor_yasr |> 
+  filter(age %in% age_select) |> 
+  mutate(rate = if_else(mor_yasr == 0, 0.001, mor_yasr)) |> 
+  ggplot(aes(x = year, y = rate, color = sex)) +
+    geom_line() +
+    scale_color_manual(values = params$col_s) +
+    scale_y_log10() +
+    facet_grid(region ~  age, 
+               labeller = labeller(age = function(x) paste("age", x))) +
+    labs(x = "", y = "mortality rate (in % per year)", color = "") +
+    params$neutral + 
+    theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust = 1))) |> 
+ ggplotly() |>
+  layout(legend = list(x = 1.05, y = 1))
+
+
+```
+
+#### focus: difference in mortality by region
+
+```{r}
+#| label: fig-0203
+#| fig-cap: "mortality by year, age, region, sex"
+#| fig-width: 15
+#| fig-height: 12
+
+(mor$mor_yasr |> 
+  filter(age %in% age_select) |> 
+  mutate(rate = if_else(mor_yasr == 0, 0.001, mor_yasr)) |> 
+  ggplot(aes(x = year, y = rate, color = region)) +
+    geom_line() +
+    scale_color_manual(values = params$col_r) +
+    scale_y_log10() +
+    facet_grid(sex ~  age, 
+               labeller = labeller(age = function(x) paste("age", x))) +
+    labs(x = "", y = "mortality rate (in % per year)", color = "") +
+    params$neutral + 
+    theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust = 1))) |> 
+ ggplotly() |>
+  layout(legend = list(x = 1.05, y = 1))
+
+```
+
+### life expectancy calculation
+
+For the year `r params$dea_fso_date_end`.
+
+```{r}
+#| label: fig-0204a
+#| fig-cap: "cumulative survival probability (last year)"
+#| fig-width: 8
+#| fig-height: 6
+
+(mor$le_mult |> 
+  filter(year == params$dea_fso_date_end) |> 
+  ggplot(aes(x = age, y = mult, color = sex)) +
+  geom_line() +
+  scale_color_manual(values = params$col_s) +  
+  labs(x = "age", y = "cumulative survival probability", color = "") +
+  params$neutral) |> 
+ ggplotly()
+
+```
+
+
+
+### method comparison (based on rate vs. death/birth/population)
+
+method differences (rate vs. deaths/births/population) details: see life expectancy function definition
+
+```{r}
+#| label: fig-0204b
+#| fig-cap: "life expectancy at birth by year: method comparison (Zurich only)"
+#| fig-width: 10
+#| fig-height: 8
+
+(mor$le_ysr |> 
+  filter(region == params$uni_r[1]) |> 
+  right_join(mor$le, by = c("year", "sex")) |> 
+  rename(basic = life, rate = le_ysr) |>
+  pivot_longer(c(rate, basic), names_to = "method", values_to = "life") |> 
+  ggplot(aes(x = year, y = life, color = method)) +
+    geom_line() +
+    facet_wrap(~sex, nrow = 1) +
+    scale_color_manual(values = params$col_6[1:2]) +
+    labs(x = "", y = "life expectancy at birth", color = "") +
+    params$neutral) |> 
+ggplotly()  
+    
+    
+```
+
+### life expectancy
+
+#### focus: differences by sex
+
+```{r}
+#| label: fig-0205
+#| fig-cap: "life expecancy at birth by year, sex and region"
+#| fig-width: 10
+#| fig-height: 8
+
+(mor$le_ysr |> 
+  filter(!is.na(le_ysr)) |> 
+  ggplot(aes(x = year, y = le_ysr, color = sex)) +
+    geom_line() +
+    facet_wrap(~region, nrow = 1) +
+    scale_color_manual(values = params$col_s) +
+    labs(x = "", y = "life expectancy at birth", color = "") +
+    params$neutral) |> 
+ggplotly()  
+
+```
+
+#### focus: differences by region
+
+```{r}
+#| label: fig-0206
+#| fig-cap: "life expecancy at birth by year, region and sex"
+#| fig-width: 10
+#| fig-height: 8
+
+(mor$le_ysr |> 
+  filter(!is.na(le_ysr)) |> 
+  ggplot(aes(x = year, y = le_ysr, color = region)) +
+    geom_line() +
+    facet_wrap(~sex, nrow = 1) +
+    scale_color_manual(values = params$col_r) +
+    labs(x = "", y = "life expectancy at birth", color = "") +
+    params$neutral) |> 
+ggplotly()  
+
+```
+
+### mortality over base years (including tail correction)
+
+```{r}
+#| label: fig-0207
+#| fig-cap: "mortality by age, sex, region (tails corrected)"
+#| fig-width: 10
+#| fig-height: 10
+
+(mor$mor_asr |> 
+  ggplot(aes(x = age, y = mor_asr, color = region)) +
+    geom_line() +
+    scale_y_log10() +
+    facet_wrap(~sex, ncol = 1) +
+    scale_color_manual(values = params$col_r) +
+    labs(x = "", y = "mortality rate (in % per year)", color = "") +
+    params$neutral) |> 
+ggplotly()
+
+```
+
+### smoothing with LOESS
+
+```{r}
+#| label: fig-0208
+#| fig-cap: "mortality by age, sex and region; fitted"
+#| fig-width: 10
+#| fig-height: 10
+
+fit_lev <- c("initial", "smoothed")
+
+(mor$mor_fit |> 
+  pivot_longer(c(mor_asr, mor_fit), names_to = "category", values_to = "mor") |>
+  mutate(cat = fact_if(category, fit_lev, "mor_asr")) |> 
+  ggplot(aes(x = age, y = mor, color = region, linetype = cat)) +
+    geom_line() +
+    scale_y_log10() +
+    facet_wrap(~sex, ncol = 1) +
+    scale_color_manual(values = params$col_r) +
+      scale_linetype_manual(values = c("solid", "dotted")) +  
+    labs(x = "", y = "mortality rate (in % per year)", 
+         color = "", linetype = "") +
+    params$neutral) |> 
+ggplotly()
+
+```
+
+### ratio Zurich / Switzerland
+
+```{r}
+#| label: fig-0209
+#| fig-cap: "ratio Zurich/Switzerland by age and sex"
+#| fig-width: 10
+#| fig-height: 8
+
+(mor$ratio_as |> 
+  ggplot(aes(x = age, y = ratio, color = sex)) +
+    geom_hline(yintercept = 0.5, linetype = "dashed", color = params$col_grey) + 
+    geom_line() +
+    scale_color_manual(values = params$col_s) +
+    scale_y_continuous(limits = c(0, NA)) + 
+    labs(x = "age", y = "mortality ratio (Zurich / Switzerland)", color = "") +
+    params$neutral) |> 
+ggplotly()
+
+```
+
+### Zurich: future mortality rate
+
+```{r}
+#| label: fig-0210
+#| fig-cap: mortality prediction by year, age and sex
+#| fig-width: 8
+#| fig-height: 10
+
+n_years <- length(params$scen_begin:params$scen_end)
+pal_year <- colorRampPalette(params$col_6[5:1])(n_years)
+
+(mor$mor_zh_yas_past_future |> 
+  filter(year >= params$scen_begin) |> 
+  mutate(rate = if_else(mor_yas == 0, 0.001, mor_yas)) |>   
+    ggplot(aes(x = age, y = rate, color = as.factor(year))) +
+    geom_line() +
+    scale_y_log10() +
+    facet_wrap(~sex, ncol = 1) +
+    scale_color_manual(values = pal_year) +
+    labs(x = "age", y = "mortality rate (in % per year)", color = "") +
+    params$neutral) |> 
+ ggplotly() 
+
+```
+
+### Zurich and Switzerland: future mortality rate
+
+
+```{r}
+#| label: fig-0210a
+#| fig-cap: mortality by year, age, sex, region
+#| fig-width: 15
+#| fig-height: 12
+
+age_select <- c(0, 20, 40, 50, 60, 70, 75, 80, 85, 90)
+
+(mor$mor_zh_ch_yas_past_future |> 
+  filter(age %in% age_select) |> 
+  mutate(rate = if_else(mor_yasr == 0, 0.001, mor_yasr)) |> 
+  ggplot(aes(x = year, y = rate, color = sex)) +
+    geom_line() +
+    scale_color_manual(values = params$col_s) +
+    scale_y_log10() +
+    facet_grid(region ~  age, 
+               labeller = labeller(age = function(x) paste("age", x))) +
+    labs(x = "", y = "mortality rate (in % per year)", color = "") +
+    params$neutral + 
+    theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust = 1))) |> 
+ ggplotly() |>
+  layout(legend = list(x = 1.05, y = 1))
+
+
+```
+
+
+
+
+### Zurich: life expectancy (including the model data)
+
+#### focus: differences by sex
+
+```{r}
+#| label: fig-0211
+#| fig-cap: "life expectancy at birth by year, sex, region; with model"
+#| fig-width: 10
+#| fig-height: 8
+#| warning: false
+#| message: false
+
+# why? visual check, if life expectancy based on predicted rates are ok
+
+# ZH: life expectancy
+le_ys_ZH <- life_exp(
+  data = mor$mor_zh_yas_past_future, mor = "mor_yas",
+  age = "age", group_cols = c("year", "sex"),
+  age_max = params$dea_age_max_le, qx_NA = params$dea_qx_NA_le,
+  age_at = params$dea_age_at, radix = params$dea_radix
+) |> 
+  mutate(region = factor(params$text_r[1], params$uni_r)) |>
+  rename(le_ysr = life_exp) |>
+  select(year, sex, region, le_ysr)
+
+# plot data (also used in the next chunk)
+le_ysr_model_dat <- mor$le_ysr |> 
+  filter(region != params$uni_r[1]) |>
+  bind_rows(le_ys_ZH) |>
+  arrange(year, sex, region) |> 
+  filter(!is.na(le_ysr))
+    
+# plot
+(le_ysr_model_dat |>
+ggplot(aes(x = year, y = le_ysr, color = sex)) +
+    geom_line() +
+    facet_wrap(~region, nrow = 1) +
+    scale_color_manual(values = params$col_s) +
+    labs(x = "", y = "life expectancy at birth", color = "") +
+    params$neutral) |>
+ggplotly()
+
+
+```
+
+#### focus: differences by region
+
+```{r}
+#| label: fig-0212
+#| fig-cap: "life expectancy at birth by year, region, sex; with model"
+#| fig-width: 10
+#| fig-height: 8
+
+(le_ysr_model_dat |> 
+  ggplot(aes(x = year, y = le_ysr, color = region)) +
+    geom_line() +
+    facet_wrap(~sex, nrow = 1) +
+    scale_color_manual(values = params$col_r) +
+    labs(x = "", y = "life expectancy at birth", color = "") +
+    params$neutral) |> 
+ggplotly()  
+
+```
+
+
+### Zurich: life expectancy at different age
+
+```{r}
+#| label: fig-0213
+#| fig-cap: "life expectancy at different age (0 and 65), by year, region, sex"
+#| fig-width: 10
+#| fig-height: 12
+#| warning: false
+#| message: false
+
+# mortality preparation (CH)
+mor_prep_ch <- mor$mor_yasr |> 
+  filter(region == params$uni_r[2])
+
+# mortality preparation (ZH/CH, past/future)
+mor_prep <- mor$mor_zh_yas_past_future |>
+  mutate(region = factor(params$text_r[1], params$uni_r)) |>
+  rename(mor_yasr = mor_yas) |>
+  select(year, age, sex, region, mor_yasr) |>
+  bind_rows(mor_prep_ch)
+
+# life expectancy at different age (0 and 65)
+le_ysr_a0 <- life_exp(
+  data = mor_prep, mor = "mor_yasr",
+  age = "age", group_cols = c("year", "sex", "region"),
+  age_max = params$dea_age_max_le, qx_NA = params$dea_qx_NA_le,
+  age_at = 0, radix = params$dea_radix
+) |>
+  mutate(age = 0)
+
+le_ysr_a65 <- life_exp(
+  data = mor_prep, mor = "mor_yasr",
+  age = "age", group_cols = c("year", "sex", "region"),
+  age_max = params$dea_age_max_le, qx_NA = params$dea_qx_NA_le,
+  age_at = 65, radix = params$dea_radix
+) |>
+  mutate(age = 65)
+
+# life expectancy for all combinations (ZH/CH, past/future, sex, region)
+
+# correction for Switzerland: latest values not available yet
+# the same correction as before
+le_yasr <- le_ysr_a0 |>
+  bind_rows(le_ysr_a65) |>
+  mutate(le_yasr = if_else((region == params$uni_r[2]) &
+           !(year %in% c(params$dea_fso_date_start:params$dea_fso_date_end,
+                         params$scen_begin:params$scen_end)),
+      NA_real_, life_exp))
+
+
+(le_yasr |> 
+  ggplot(aes(x = year, y = le_yasr, color = as.factor(age))) +
+    geom_line() +
+    facet_grid(region ~ sex) +
+    scale_color_manual(values = params$col_6[1:2]) +
+    labs(x = "", y = "life expectancy", color = "age") +
+    params$neutral) |> 
+ ggplotly() |>
+  layout(legend = list(x = 1.05, y = 1))
+
+```
+
+

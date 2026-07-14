@@ -1,0 +1,485 @@
+
+# Emigration
+
+```{r, include=FALSE}
+#| label: prep
+#| echo: false
+#| results: 'hide'
+#| message: false
+#| warning: false
+#| cache: true
+
+# project root
+library(rprojroot)
+root <- find_root(is_rstudio_project)
+
+# get the parameters
+source(file.path(root, "R/0000_General/0002_init.R"))
+vars_once <- init_once(i_data_path = "~/v/Szen/BevSzen/2026")
+params <- init_scen(i_scen = "middle", vars_init_once = vars_once)
+
+# load the migration functions
+source(file.path(root, "R/0301_mig_rate_dy_fun.R"))
+source(file.path(root, "R/0302_mig_prop_so_dy_fun.R"))
+source(file.path(root, "R/0303_mig_prop_a_dyso_fun.R"))
+
+# execute the migration functions (mig_prop_a_dyso_fun: approx 30 seconds)
+ems_rate_dy <- mig_rate_dy_fun(process = "emigration", params = params)
+ems_prop_so <- mig_prop_so_dy_fun(process = "emigration", params = params)
+ems_prop_a <- mig_prop_a_dyso_fun(process = "emigration", params = params)
+
+```
+
+## emigration\* rate (per district and year)
+
+emigration* rate by district and year
+
+```{r}
+#| label: fig-0300
+#| fig-cap: emigration* rate by district and year
+#| fig-width: 20
+#| fig-height: 20
+
+(ggplot(ems_rate_dy$mis_rate_dy) +
+		  geom_line(aes(x = year, y = mis_rate_dy), color = params$col_1) +
+		  facet_wrap(~district, ncol = 4) +
+		  labs(x = "", y = "emigration* rate (in % per year)") +
+		  params$neutral) |> 
+ggplotly(height = 2000)
+
+	
+```
+
+
+## prediction: future emigration\* rate (per year and district)
+
+### overview
+
+emigration* rate by district and year (past and prediction)
+
+```{r}
+#| label: fig-0301
+#| fig-cap: emigration* rate by district and year (past and prediction)
+#| fig-height: 10
+
+time_lev <- c("past", "future")
+
+(ems_rate_dy$mis_past_pred |> 
+    select(district, year, rate_all) |> 
+    mutate(time = factor(if_else(year <= params$ems_base_end,
+      time_lev[1], time_lev[2]
+    ), levels = time_lev)) |> 
+ ggplot() +
+		  geom_line(aes(x = year, y = rate_all, linetype = time), 
+		            color = params$col_1) +
+		  facet_wrap(~district, ncol = 4) +
+		  labs(x = "", y = "emigration* rate (in % per year)", linetype = "") +
+      scale_linetype_manual(values = c("solid", "dotted")) +
+		  params$neutral ) |> 
+ggplotly(height = 2000) 
+  
+```
+
+
+## migration: distribution of sex and origin
+
+emigration proportion of sex by origin, district and year
+
+```{r}
+#| label: fig-0303
+#| fig-cap: emigration proportion of sex by origin, district and year
+#| fig-width: 20
+#| fig-height: 20
+
+ (ggplot(ems_prop_so$mis_dyso) +
+		  geom_line(aes(x = year, y = mis_prop_dyso, 
+		                color = sex, linetype = origin)) +
+		  facet_wrap(~district, ncol = 4) +
+		  labs(x = "", y = "proportion in % (per district and year, in emigration*", 
+		       color = "", linetype = "") +
+      scale_color_manual(values = params$col_s) +
+      scale_linetype_manual(values = c("solid", "dotted")) +
+		  params$neutral) |> 
+ggplotly(height = 2000)
+  
+```
+
+## distribution of sex and origin: prediction
+
+emigration proportion of sex by origin, district and year (past and prediction)
+
+```{r}
+#| label: fig-0304
+#| fig-cap: emigration proportion of sex by origin, district and year (past and prediction) 
+#| fig-width: 20
+#| fig-height: 20
+
+(ggplot(ems_prop_so$mis_so_past_pred) +
+		  geom_line(aes(x = year, y = prop_all, 
+		                color = sex, linetype = origin)) +
+		  facet_wrap(~district, ncol = 4) +
+		  labs(x = "", y = "proportion in % (per district and year, in emigration*", 
+		       color = "", linetype = "") +
+      scale_color_manual(values = params$col_s) +
+      scale_linetype_manual(values = c("solid", "dotted")) +
+		  params$neutral) |> 
+ggplotly(height = 2000)
+
+```
+
+## age proportion
+
+### emigration\*
+
+emigration* per district, year, sex, origin
+
+```{r}
+#| label: fig-0310
+#| fig-cap: emigration* per district, year, sex, origin
+#| fig-width: 20
+#| fig-height: 20
+
+(ggplot(ems_prop_a$mis_dyso) +
+		  geom_line(aes(x = year, y = mis_dyso, 
+		                color = sex, linetype = origin)) +
+		  facet_wrap(~district, ncol = 4) +
+		  labs(x = "", y = "emigration* per year", 
+		       color = "", linetype = "") +
+      scale_color_manual(values = params$col_s) +
+      scale_linetype_manual(values = c("solid", "dotted")) +
+		  params$neutral) |> 
+ggplotly(height = 2000)
+  
+```
+emigration* per district, year, sex, origin (free scales)
+
+```{r}
+#| label: fig-0311
+#| fig-cap: emigration* per district, year, sex, origin; free scales
+#| fig-width: 20
+#| fig-height: 20
+
+(ggplot(ems_prop_a$mis_dyso) +
+		  geom_line(aes(x = year, y = mis_dyso, 
+		                color = sex, linetype = origin)) +
+		  facet_wrap(~district, ncol = 4, scales = "free_y") +
+		  labs(x = "", y = "emigration* per year", 
+		       color = "", linetype = "") +
+      scale_color_manual(values = params$col_s) +
+      scale_linetype_manual(values = c("solid", "dotted")) +
+		  params$neutral) |> 
+ggplotly(height = 2000)
+
+```
+
+### age proportion: per district, year, sex, origin
+
+#### focus age
+
+emigration* age proportion per district, year, sex (Swiss only)
+
+```{r}
+#| label: fig-0312a
+#| fig-cap: emigration* age proportion per district, year, sex (Swiss only)
+#| fig-width: 20
+#| fig-height: 20
+
+(ems_prop_a$mis_dyaso |> 
+  filter(year == max(year), origin == params$uni_o[1]) |> 
+  ggplot() +
+	  geom_line(aes(x = age, y = mis_prop_a, 
+	                color = sex, linetype = origin)) +
+	  facet_wrap(~district, ncol = 4) +
+	  labs(x = "age", y = "proportion in %", color = "") +
+    scale_color_manual(values = params$col_s) +
+	  params$neutral) |> 
+ggplotly(height = 2000)
+
+
+```
+
+
+emigration* age proportion per district, year, sex (foreign only)
+
+```{r}
+#| label: fig-0312b
+#| fig-cap: emigration* age proportion per district, year, sex (foreign only)
+#| fig-width: 20
+#| fig-height: 20
+
+(ems_prop_a$mis_dyaso |> 
+  filter(year == max(year), origin == params$uni_o[2]) |> 
+  ggplot() +
+	  geom_line(aes(x = age, y = mis_prop_a, 
+	                color = sex, linetype = origin)) +
+	  facet_wrap(~district, ncol = 4) +
+	  labs(x = "age", y = "proportion in %", color = "") +
+    scale_color_manual(values = params$col_s) +
+	  params$neutral) |> 
+ggplotly(height = 2000)
+
+```
+
+
+#### focus years
+
+```{r}
+#| label: fig-0313a
+#| fig-cap: emigration* age proportion per selected district, year, sex (Swiss only, focus on years)
+#| fig-width: 15
+#| fig-height: 15
+
+(ems_prop_a$mis_dyaso |> 
+  filter(origin == params$uni_o[1], 
+         age %in% seq(0, 60, by = 20),
+         district %in% params$d_select) |> 
+  ggplot() +
+	  geom_line(aes(x = year, y = mis_prop_a, color = as.factor(age))) +
+	  facet_grid(district ~ sex) +
+	  labs(x = "year", y = "proportion in %", color = "age") +
+    scale_color_manual(values = params$col_6[1:4]) +
+	  params$neutral) |> 
+ggplotly() |>
+  layout(legend = list(x = 1.05, y = 1))
+
+```
+
+
+
+```{r}
+#| label: fig-0313b
+#| fig-cap: emigration* age proportion per selected district, year, sex (foreign only, focus on years)
+#| fig-width: 15
+#| fig-height: 15
+
+(ems_prop_a$mis_dyaso |> 
+  filter(origin == params$uni_o[2], 
+         age %in% seq(0, 60, by = 20),
+         district %in% params$d_select) |> 
+  ggplot() +
+	  geom_line(aes(x = year, y = mis_prop_a, color = as.factor(age))) +
+	  facet_grid(district ~ sex) +
+	  labs(x = "year", y = "proportion in %", color = "age") +
+    scale_color_manual(values = params$col_6[1:4]) +
+	  params$neutral) |> 
+ggplotly() |>
+  layout(legend = list(x = 1.05, y = 1))
+
+```
+
+## smoothing emigration\* with LOESS over years (by district, age, sex)
+
+#### focus age
+
+```{r}
+#| label: fig-0314a
+#| fig-cap: emigration* smoothed over year (Swiss only, last year, focus on age)
+#| fig-width: 15
+#| fig-height: 15
+
+fit_lev <- c("initial", "smoothed")
+
+(ems_prop_a$mis_smooth |> 
+  filter(origin == params$uni_o[1], 
+         year == max(year),
+         district %in% params$d_select) |> 
+  pivot_longer(c(mis_dyaso, mis_smooth), 
+               names_to = "category", values_to = "mis") |>  
+  mutate(cat = fact_if(category, fit_lev, "mis_dyaso")) |> 
+  ggplot() +
+	  geom_line(aes(x = age, y = mis, color = cat)) +
+	  facet_grid(district ~ sex) +
+	  labs(x = "age", y = "emigration* per year", color = "") +
+    scale_color_manual(values = params$col_6[1:2]) +
+    params$neutral) |> 
+ggplotly() |>
+  layout(legend = list(x = 1.05, y = 1))
+
+```
+
+
+```{r}
+#| label: fig-0314b
+#| fig-cap: emigration* smoothed over year (foreign only, last year, focus on age)
+#| fig-width: 15
+#| fig-height: 15
+
+(ems_prop_a$mis_smooth |> 
+  filter(origin == params$uni_o[2], 
+         year == max(year),
+         district %in% params$d_select) |> 
+  pivot_longer(c(mis_dyaso, mis_smooth), 
+               names_to = "category", values_to = "mis") |>  
+  mutate(cat = fact_if(category, fit_lev, "mis_dyaso")) |> 
+  ggplot() +
+	  geom_line(aes(x = age, y = mis, color = cat)) +
+	  facet_grid(district ~ sex) +
+	  labs(x = "age", y = "emigration* per year", color = "") +
+    scale_color_manual(values = params$col_6[1:2]) +
+    params$neutral) |> 
+ggplotly() |>
+  layout(legend = list(x = 1.05, y = 1))
+
+```
+
+#### focus years
+
+```{r}
+#| label: fig-0315a
+#| fig-cap: emigration* smoothed over year (Swiss only, focus on years)
+#| fig-width: 15
+#| fig-height: 20
+
+(ems_prop_a$mis_smooth |> 
+  filter(origin == params$uni_o[1],
+         age %in% seq(0, 60, by = 20),
+         district %in% params$d_select) |> 
+  pivot_longer(c(mis_dyaso, mis_smooth), 
+               names_to = "category", values_to = "mis") |>  
+  mutate(cat = fact_if(category, fit_lev, "mis_dyaso")) |> 
+  ggplot() +
+	  geom_line(aes(x = year, y = mis, color = as.factor(age), linetype = cat)) +
+	  facet_grid(district ~ sex) +
+	  labs(x = "age", y = "emigration* per year", color = "age", linetype = "") +
+    scale_color_manual(values = params$col_6[1:4]) +
+    scale_linetype_manual(values = c("solid", "dotted")) +
+    # guides(color = "none") +
+    params$neutral) |> 
+  ggplotly() |>
+    layout(legend = list(x = 1.05, y = 1))
+
+
+```
+
+
+```{r}
+#| label: fig-0315b
+#| fig-cap: emigration* smoothed over year (foreign only, focus on years)
+#| fig-width: 15
+#| fig-height: 20
+
+(ems_prop_a$mis_smooth |> 
+  filter(origin == params$uni_o[2],
+         age %in% seq(0, 60, by = 20),
+         district %in% params$d_select) |> 
+  pivot_longer(c(mis_dyaso, mis_smooth), 
+               names_to = "category", values_to = "mis") |>  
+  mutate(cat = fact_if(category, fit_lev, "mis_dyaso")) |> 
+  ggplot() +
+	  geom_line(aes(x = year, y = mis, color = as.factor(age), linetype = cat)) +
+	  facet_grid(district ~ sex) +
+	  labs(x = "age", y = "emigration* per year", color = "age", linetype = "") +
+    scale_color_manual(values = params$col_6[1:4]) +
+    scale_linetype_manual(values = c("solid", "dotted")) +
+    # guides(color = "none") +
+    params$neutral) |> 
+  ggplotly() |>
+    layout(legend = list(x = 1.05, y = 1))
+
+
+```
+
+## smoothing with LOESS, proportion by age 
+
+### focus age
+
+```{r}
+#| label: fig-0318a
+#| fig-cap: emigration* age proportion smoothed (Swiss only, focus on age)
+#| fig-width: 15
+#| fig-height: 20
+  
+(ems_prop_a$prop_fit |> 
+  filter(origin == params$uni_o[1], 
+         year == max(year),
+         district %in% params$d_select) |> 
+    pivot_longer(c(prop_a_smooth, prop_fit), 
+                 names_to = "category", values_to = "prop") |>
+    mutate(cat = fact_if(category, fit_lev, "prop_a_smooth")) |> 
+  ggplot() +
+	  geom_line(aes(x = age, y = prop, color = cat)) +
+	  facet_grid(district ~ sex) +
+	  labs(x = "age", y = "proportion in %", color = "") +
+    scale_color_manual(values = params$col_6[1:2]) +
+    params$neutral) |>
+ ggplotly() |>
+  layout(legend = list(x = 1.05, y = 1))
+
+```
+
+```{r}
+#| label: fig-0318b
+#| fig-cap: emigration* age proportion smoothed (foreign only, focus on age)
+#| fig-width: 15
+#| fig-height: 20
+  
+(ems_prop_a$prop_fit |> 
+  filter(origin == params$uni_o[2], 
+         year == max(year),
+         district %in% params$d_select) |> 
+    pivot_longer(c(prop_a_smooth, prop_fit), 
+                 names_to = "category", values_to = "prop") |>
+    mutate(cat = fact_if(category, fit_lev, "prop_a_smooth")) |> 
+  ggplot() +
+	  geom_line(aes(x = age, y = prop, color = cat)) +
+	  facet_grid(district ~ sex) +
+	  labs(x = "age", y = "proportion in %", color = "") +
+    scale_color_manual(values = params$col_6[1:2]) +
+    params$neutral) |> 
+ ggplotly() |>
+  layout(legend = list(x = 1.05, y = 1)) 
+
+```
+
+
+## regression
+
+```{r}
+#| label: fig-0319a
+#| fig-cap: emigration* age proportion by district, year, sex (Swiss only, future)
+#| fig-width: 15
+#| fig-height: 20
+
+n_years <- length(params$scen_begin:params$scen_end)
+pal_year <- colorRampPalette(params$col_6[5:1])(n_years)
+
+(ems_prop_a$mis_a_past_pred |> 
+  filter(origin == params$uni_o[1],
+         year >= params$scen_begin,
+         district %in% params$d_select) |> 
+  ggplot() +
+	  geom_line(aes(x = age, y = prop_a, color = as.factor(year))) +
+	  facet_grid(district ~ sex) +
+	  labs(x = "age", y = "proportion in %", color = "") +
+    scale_color_manual(values = rev(pal_year)) +
+    params$neutral) |> 
+ ggplotly() |>
+  layout(legend = list(x = 1.05, y = 1))
+
+```
+
+
+```{r}
+#| label: fig-0319b
+#| fig-cap: emigration* age proportion by district, year, sex (foreign only, future)
+#| fig-width: 15
+#| fig-height: 20
+
+n_years <- length(params$scen_begin:params$scen_end)
+pal_year <- colorRampPalette(params$col_6[5:1])(n_years)
+
+(ems_prop_a$mis_a_past_pred |> 
+  filter(origin == params$uni_o[2],
+         year >= params$scen_begin,
+         district %in% params$d_select) |> 
+  ggplot() +
+	  geom_line(aes(x = age, y = prop_a, color = as.factor(year))) +
+	  facet_grid(district ~ sex) +
+	  labs(x = "age", y = "proportion in %", color = "") +
+    scale_color_manual(values = rev(pal_year)) +
+    params$neutral) |> 
+ ggplotly() |>
+  layout(legend = list(x = 1.05, y = 1))
+
+```
+

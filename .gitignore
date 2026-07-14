@@ -1,0 +1,7 @@
+.Rhistory
+.Rproj.user
+.Ruserdata
+*.RData
+.DS_Store
+.Rbuildignore
+/book/

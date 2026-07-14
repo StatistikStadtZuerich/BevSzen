@@ -1,0 +1,314 @@
+# Living space
+
+```{r, include=FALSE}
+#| label: prep
+#| echo: false
+#| results: 'hide'
+#| message: false
+#| warning: false
+#| cache: true
+
+# project root
+library(rprojroot)
+root <- find_root(is_rstudio_project)
+
+# get the parameters
+source(file.path(root, "R/0000_General/0002_init.R"))
+vars_once <- init_once(i_data_path = "~/v/Szen/BevSzen/2026")
+params <- init_scen(i_scen = "middle", vars_init_once = vars_once)
+
+# load the living space function
+source(file.path(root, "R/0901_living_space_fun.R"))
+
+# execute the living space function
+spa <- living_space_fun(params = params)
+
+```
+
+
+
+## living space: past data
+
+### living space by year
+
+WHY? e.g. to support the base year decision
+
+```{r}
+#| label: fig-0900
+#| fig-cap: living space by year
+#| fig-width: 8
+#| fig-height: 7
+
+(spa$spa_dat |> 
+group_by(year) |>
+  summarize(
+    area = sum_NA(area),
+    people = sum_NA(people), 
+    .groups = "drop"
+  ) |>
+  mutate(spa_y = round(area / people, params$round_area)) |> 
+  ggplot() +
+	  geom_line(aes(x = year, y = spa_y), col = params$col_1) +
+	  labs(x = "", y = "living space (m² per person)") +
+    expand_limits(y = 0) +
+	  params$neutral) |> 
+ggplotly()
+
+```
+
+### living space by year and owner
+
+```{r}
+#| label: fig-0901
+#| fig-cap: living space by year and owner
+#| fig-width: 8
+#| fig-height: 7
+
+(spa$spa_yw |> 
+  ggplot() +
+	  geom_line(aes(x = year, y = spa_yw, color = owner)) +
+	  labs(x = "", y = "living space (m² per person)", color = "") +
+    scale_color_manual(values = params$col_w) +
+    expand_limits(y = 0) +
+	  params$neutral) |>
+ggplotly()
+
+```
+
+## living space: past data by district
+
+### space
+
+```{r}
+#| label: fig-0902
+#| fig-cap: living space by district, year and owner
+#| fig-width: 20
+#| fig-height: 20
+
+(spa$spa_dyw |> 
+  ggplot() +
+	  geom_line(aes(x = year, y = spa_dyw, color = owner)) +
+	  facet_wrap(~district, ncol = 4, scales = "free_y") +
+	  labs(x = "", y = "living space (m² per person)", color = "") +
+    scale_color_manual(values = params$col_w) +
+    expand_limits(y = 0) +  
+	  params$neutral) |> 
+  ggplotly(height = 2000)
+
+
+```
+
+### area
+
+```{r}
+#| label: fig-0903
+#| fig-cap: area by district, year and owner
+#| fig-width: 20
+#| fig-height: 20
+
+(spa$spa_dyw |> 
+  ggplot() +
+	  geom_line(aes(x = year, y = area_ha, color = owner)) +
+	  facet_wrap(~district, ncol = 4, scales = "free_y") +
+	  labs(x = "", y = "living area (in ha)", color = "") +
+    scale_color_manual(values = params$col_w) +
+    expand_limits(y = 0) +  
+	  params$neutral) |> 
+  ggplotly(height = 2000)
+
+```
+
+### apartments
+
+```{r}
+#| label: fig-0904
+#| fig-cap: apartments by district, year and owner
+#| fig-width: 20
+#| fig-height: 20
+
+(spa$spa_dyw |> 
+  ggplot() +
+	  geom_line(aes(x = year, y = apartments, color = owner)) +
+	  facet_wrap(~district, ncol = 4, scales = "free_y") +
+	  labs(x = "", y = "apartments", color = "") +
+    scale_color_manual(values = params$col_w) +
+    expand_limits(y = 0) +  
+	  params$neutral) |> 
+  ggplotly(height = 2000)
+
+```
+
+### people
+
+```{r}
+#| label: fig-0905
+#| fig-cap: people by district, year and owner
+#| fig-width: 12
+#| fig-height: 14
+
+(spa$spa_dyw |> 
+  ggplot() +
+	  geom_line(aes(x = year, y = people, color = owner)) +
+	  facet_wrap(~district, ncol = 4, scales = "free_y") +
+	  labs(x = "", y = "people", color = "") +
+    scale_color_manual(values = params$col_w) +
+    expand_limits(y = 0) +  
+	  params$neutral) |> 
+  ggplotly(height = 2000)
+
+```
+
+## predictions
+
+### entire city, by owner
+
+```{r}
+#| label: fig-0906
+#| fig-cap: living space prediction by year and ownership
+#| fig-width: 8
+#| fig-height: 7
+
+(spa$spa_yw_past_pred |> 
+  ggplot() +
+    geom_vline(xintercept = c(params$spa_base_begin, params$spa_base_end), 
+               color = params$col_grey, linetype = "dashed") +
+	  geom_line(aes(x = year, y = spa_yw_all, color = owner)) +
+	  labs(x = "", y = "living space (m² per person)", color = "") +
+    scale_color_manual(values = params$col_w) +
+    expand_limits(y = 0) +
+	  params$neutral) |>
+  ggplotly()
+
+```
+
+### entire city, by district and owner
+
+```{r}
+#| label: fig-0907
+#| fig-cap: living space prediction by district, year and ownership
+#| fig-width: 20
+#| fig-height: 20
+
+(spa$spa_dyw_past_pred |> 
+  ggplot() +
+    geom_vline(xintercept = c(params$spa_base_begin, params$spa_base_end), 
+               color = params$col_grey, linetype = "dashed") +  
+	  geom_line(aes(x = year, y = spa_dyw_all, color = owner)) +
+	  facet_wrap(~district, ncol = 4, scales = "free_y") +
+	  labs(x = "", y = "living space (m² per person)", color = "") +
+    scale_color_manual(values = params$col_w) +
+    expand_limits(y = 0) +  
+	  params$neutral) |> 
+  ggplotly(height = 2000)
+
+```
+
+### Escher Wyss, by owner {#sec-escherwyss_ls}
+
+WHY a different approach for the Escher Wyss district, private housing? the living space over time differs substantially from the other districts (increase until 2013, then decrease) reason: few apartments in 2008 then very intense construction activity numbers: less than 1500 apartments in 2008, more than 3100 apartments in 2017 after construction some apartments were finished, yet no one lived there yet for a certain moment the empty apartments increase the living space (based on buildings) due to the high ratio of new buildings (compared to existing buildings) the living space was increased this will not happen again in future (due to the higher amount of buildings)
+
+```{r}
+#| label: fig-0908
+#| fig-cap: living space prediction for Escher Wyss district, by year and ownership
+#| fig-width: 8
+#| fig-height: 7
+
+
+(spa$spa_yw_past_pred_52 |> 
+  ggplot() +
+    geom_vline(xintercept = c(params$spa_base_begin_52p, params$spa_base_end), 
+               color = params$col_grey, linetype = "dashed") +
+	  geom_line(aes(x = year, y = spa_dyw_all, color = owner)) +
+	  labs(x = "", y = "living space (m² per person)", color = "") +
+    scale_color_manual(values = params$col_w) +
+    expand_limits(y = 0) +
+	  params$neutral) |>
+  ggplotly()
+
+```
+
+## combine datasets
+
+### past and prediction
+
+```{r}
+#| label: fig-0909
+#| fig-cap: living space prediction by district, year and owner; different datasets
+#| fig-width: 20
+#| fig-height: 20
+
+(spa$spa_comb |> 
+  ggplot() +
+    geom_vline(xintercept = c(params$spa_base_begin, params$spa_base_end), 
+               color = params$col_grey, linetype = "dashed") +  
+	  geom_line(aes(x = year, y = spa, color = owner)) +
+	  facet_wrap(~district, ncol = 4, scales = "free_y") +
+	  labs(x = "", y = "living space (m² per person)", color = "") +
+    scale_color_manual(values = params$col_w) +
+    expand_limits(y = 0) +  
+	  params$neutral) |> 
+  ggplotly(height = 2000)
+
+```
+
+### living space prediction per district and entire city: cooperative housing
+
+```{r}
+#| label: fig-0910a
+#| fig-cap: living space prediction per district and entire city, cooperative housing
+#| fig-width: 20
+#| fig-height: 20
+
+names_before <- c("spa_dyw", "spa_yw", "spa")
+names_plot <- c("by district", "entire city", "prediction")
+
+spa_both <- spa$spa_comb |> select(district, year, owner, spa_dyw, spa_yw, spa) |>
+  pivot_longer(cols = names_before, names_to = "category", values_to = "spa") |>
+  mutate(cat = factor(case_when(
+    category == names_before[1] ~ names_plot[1],
+    category == names_before[2] ~ names_plot[2],
+    TRUE ~ names_plot[3]
+  ), levels = names_plot))
+
+(spa_both |> 
+  filter(owner == params$uni_w[1]) |> 
+  ggplot() +
+    geom_vline(xintercept = c(params$spa_base_begin, params$spa_base_end), 
+               color = params$col_grey, linetype = "dashed") +  
+	  geom_line(aes(x = year, y = spa, color = cat)) +
+	  facet_wrap(~district, ncol = 4, scales = "free_y") +
+	  labs(x = "", y = "living space (m² per person)", color = "") +
+    scale_color_manual(values = params$col_6[c(1,3,4)]) +
+    expand_limits(y = 0) +  
+	  params$neutral) |> 
+  ggplotly(height = 2000)
+
+```
+
+### prediction per district and entire city: private housing
+
+```{r}
+#| label: fig-0910b
+#| fig-cap: living space prediction per district and entire city, private housing
+#| fig-width: 20
+#| fig-height: 20
+
+(spa_both |> 
+  filter(owner == params$uni_w[2]) |> 
+  ggplot() +
+    geom_vline(xintercept = c(params$spa_base_begin, params$spa_base_end), 
+               color = params$col_grey, linetype = "dashed") +  
+	  geom_line(aes(x = year, y = spa, color = cat)) +
+	  facet_wrap(~district, ncol = 4, scales = "free_y") +
+	  labs(x = "", y = "living space (m² per person)", color = "") +
+    scale_color_manual(values = params$col_6[c(1,3,4)]) +
+    expand_limits(y = 0) +  
+	  params$neutral) |> 
+  ggplotly(height = 2000)
+
+```
+
+
+
+
+

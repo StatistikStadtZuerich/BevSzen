@@ -1,0 +1,593 @@
+# Birth
+
+```{r, include=FALSE}
+#| label: prep
+#| echo: false
+#| results: 'hide'
+#| message: false
+#| warning: false
+#| cache: true
+
+# project root
+library(rprojroot)
+root <- find_root(is_rstudio_project)
+
+# get the parameters
+source(file.path(root, "R/0000_General/0002_init.R"))
+vars_once <- init_once(i_data_path = "~/v/Szen/BevSzen/2026")
+params <- init_scen(i_scen = "middle", vars_init_once = vars_once)
+
+# load the birth functions
+source(file.path(root, "R/0101_fertility_rate_fun.R"))
+source(file.path(root, "R/0102_birth_origin_change_fun.R"))
+source(file.path(root, "R/0103_birth_sex_ratio_fun.R"))
+
+# execute the birth functions
+fer <- fertility_rate_fun(params)
+boc <- birth_origin_change_fun(params)
+bsr <- birth_sex_ratio_fun(params)
+
+```
+
+## Fertility
+
+### TFR (total fertility rate)
+
+#### plots to define the base period for fertility prediction
+
+```{r}
+#| label: fig-0100
+#| fig-cap: "total fertility rate by year"
+#| fig-width: 8
+#| fig-height: 6
+
+(fer$fer_ya |> 
+  group_by(year) |>
+  summarize(
+    tfr_y = sum_NA(fer_ya / 100),
+    .groups = "drop"
+  ) |> 
+  ggplot(aes(x = year, y = tfr_y)) +
+  geom_line(col = params$col_1) +
+  labs(x = "", y = "TFR") +
+  params$neutral) |> 
+  ggplotly()
+
+```
+
+```{r}
+#| label: fig-0101
+#| fig-cap: "total fertility rate by year and origin"
+#| fig-width: 8
+#| fig-height: 6
+
+(fer$fer_yao |> 
+  group_by(year, origin) |>
+  summarize(
+    tfr_yo = sum_NA(fer_yao / 100),
+    .groups = "drop"
+  ) |> 
+ggplot(aes(x = year, y = tfr_yo, color = origin)) +
+  geom_line() +
+  scale_color_manual(values = params$col_o) +  
+  labs(x = "", y = "TFR", color = "origin") +
+  params$neutral) |> 
+ggplotly()
+
+```
+
+
+
+
+```{r}
+#| label: fig-0102
+#| fig-cap: "total fertility rate by year and age class (3)"
+#| fig-width: 8
+#| fig-height: 6
+
+(fer$fer_ya |> 
+  left_join(params$look_a1, by = "age") |>
+  group_by(year, age_1) |>
+  summarize(
+    tfr_ya1 = sum_NA(fer_ya / 100),
+    .groups = "drop"
+  ) |>
+ggplot(aes(x = year, y = tfr_ya1, color = age_1)) +
+  geom_line() +
+  scale_color_manual(values = params$col_a1) +
+  labs(x = "", y = "TFR", color = "age") +
+  params$neutral) |> 
+ggplotly()
+
+
+```
+
+```{r}
+#| label: fig-0103
+#| fig-cap: "total fertility rate by year and age class (5)"
+#| fig-width: 8
+#| fig-height: 6
+
+(fer$fer_ya |> 
+  left_join(params$look_a2, by = "age") |>
+  group_by(year, age_2) |>
+  summarize(
+    tfr_ya2 = sum_NA(fer_ya / 100),
+    .groups = "drop"
+  ) |>
+ggplot(aes(x = year, y = tfr_ya2, color = age_2)) +
+  geom_line() +
+  scale_color_manual(values = params$col_a2) +
+  labs(x = "", y = "TFR", color = "age") +
+  params$neutral) |> 
+ggplotly()
+
+```
+
+```{r}
+#| label: fig-0104
+#| fig-cap: "total fertility rate by year, origin and age class (3)"
+#| fig-width: 16
+#| fig-height: 10
+
+(fer$fer_yao |> 
+  left_join(params$look_a1, by = "age") |>
+  group_by(year, age_1, origin) |>
+  summarize(
+    tfr_ya1o = sum_NA(fer_yao / 100),
+    .groups = "drop"
+  ) |> 
+ggplot(aes(x = year, y = tfr_ya1o, color = origin)) +
+  geom_line() +
+  scale_color_manual(values = params$col_o) +
+  facet_wrap(~age_1, nrow = 1) +
+  labs(x = "", y = "TFR", color = "origin") +
+  params$neutral) |> 
+ggplotly()
+
+```
+
+```{r}
+#| label: fig-0105
+#| fig-cap: "total fertility rate by year, origin and age class (5)"
+#| fig-width: 16
+#| fig-height: 10
+
+(fer$fer_yao |> 
+  left_join(params$look_a2, by = "age") |>
+  group_by(year, age_2, origin) |>
+  summarize(
+    tfr_ya2o = sum_NA(fer_yao / 100),
+    .groups = "drop"
+  ) |>
+ggplot(aes(x = year, y = tfr_ya2o, color = origin)) +
+  geom_line() +
+  scale_color_manual(values = params$col_o) +
+  facet_wrap(~age_2, nrow = 1) +
+  labs(x = "", y = "TFR", color = "origin") +
+  params$neutral) |> 
+ggplotly()
+
+```
+
+
+```{r}
+#| label: fig-0106
+#| fig-cap: "total fertility rate by district, year and origin"
+#| fig-width: 11
+#| fig-height: 7
+
+fer$fer_dyao |>
+  group_by(district, year, origin) |>
+  summarize(
+    tfr = sum_NA(fer_dyao / 100),
+    .groups = "drop"
+  ) |> 
+plot_ly(
+  x = ~year,
+  y = ~tfr,
+  color = ~origin,
+  colors = params$col_o, 
+  frame = ~district
+) %>%
+  add_lines() %>%
+  layout(xaxis = list(title = ""), 
+         yaxis = list(title = "TFR"))
+
+```
+
+
+
+#### fertility plots (before the corrections)
+
+fertility by district, age, origin (last year only)
+
+```{r}
+#| label: fig-0110
+#| fig-cap: "fertility by district, age, and origin (last year)"
+#| fig-width: 20
+#| fig-height: 20
+
+(fer$fer_dyao |>
+  filter(year == max(year)) |>
+  arrange(district, origin, age) |> 
+ggplot(aes(x = age, y = fer_dyao, color = origin)) +
+  geom_line() +
+  scale_color_manual(values = params$col_o) +
+  facet_wrap(~district, ncol = 4) +
+  labs(x = "age", y = "fertility rate (in % per year)", color = "origin") +
+  params$neutral) |> 
+ggplotly(height = 2000)
+
+```
+
+
+
+```{r}
+#| label: fig-0111
+#| fig-cap: "fertility by year, age, origin"
+#| fig-width: 11
+#| fig-height: 7
+
+fer_yao_plot <- fer$fer_yao |> 
+  filter(year >= params$bir_base_begin) 
+
+n_years <- length(unique(fer_yao_plot$year))
+pal_year <- colorRampPalette(params$col_6[3:1])(n_years)
+
+(ggplot(fer_yao_plot, aes(x = age, y = fer_yao, color = as.factor(year))) +
+  geom_line() +
+  scale_color_manual(values = pal_year) +
+  facet_wrap(~origin, nrow = 1) +
+  labs(x = "age", y = "fertility rate (in % per year)", color = "") +
+  params$neutral) |> 
+ggplotly()
+
+```
+
+
+
+```{r}
+#| label: fig-0112
+#| fig-cap: "fertility by year, age"
+#| fig-width: 11
+#| fig-height: 7
+
+(fer$fer_ya |> 
+  filter(year >= params$bir_base_begin) |> 
+ggplot(aes(x = age, y = fer_ya, color = as.factor(year))) +
+  geom_line() +
+  scale_color_manual(values = pal_year) +
+  labs(x = "age", y = "fertility rate (in % per year)", color = "") +
+  params$neutral) |> 
+ggplotly()
+
+```
+
+### corrected fertility (tail corrections)
+
+```{r}
+#| label: fig-0120
+#| fig-cap: "initial vs. corrected fertility (last year only)"
+#| fig-width: 15
+#| fig-height: 12
+
+cor_level <- c("initial", "corrected")
+
+fer$fer_tail |> 
+  filter(year == max(year)) |> 
+  select(district, origin, age, fer_dyao, fer) |>
+  pivot_longer(c(fer_dyao, fer), names_to = "category", values_to = "fer") |>
+  mutate(cat = fact_if(category, cor_level, "fer_dyao")) |>
+  select(district, origin, age, cat, fer) |> 
+plot_ly(
+  x = ~age,
+  y = ~fer,
+  color = ~origin,
+  colors = params$col_o,
+  linetype = ~cat,      
+  frame = ~district,    
+  type = 'scatter',
+  mode = 'lines'
+) %>%
+  layout(
+    xaxis = list(title = "age"),
+    yaxis = list(title = "fertility rate (in % per year)"),
+    legend = list(title = list(text = ""))
+  )
+
+```
+
+cumulative population from the tails (last year only)
+
+```{r}
+#| label: fig-0121
+#| fig-cap: "cumulative population from the tails (last year only)"
+#| fig-width: 20
+#| fig-height: 20
+
+(fer$fer_tail |> 
+  filter(year == max(year)) |> 
+  ggplot() +
+  geom_line(aes(x = age, y = low_cum, color = origin)) + 
+  geom_line(aes(x = age, y = up_cum, color = origin)) +   
+  facet_wrap(~district, ncol = 4) + 
+  scale_color_manual(values = params$col_o) +
+  labs(x = "age", y = "cumulative population from tails") + 
+  params$neutral) |> 
+ggplotly(height = 2000)
+
+```
+
+
+
+```{r}
+#| label: fig-0122
+#| fig-cap: smooth the corrected fertility rate (last year only)
+#| fig-width: 12
+#| fig-height: 10
+
+fit_lev <- c("initial", "smoothed")
+
+fer$fer_fit |> 
+  filter(year == max(year)) |> 
+  select(district, origin, age, fer, fer_fit) |>
+  pivot_longer(c(fer, fer_fit), names_to = "category", values_to = "fer") |>
+  mutate(cat = fact_if(category, fit_lev, "fer")) |>
+  select(district, age, origin, cat, fer) |> 
+plot_ly(
+  x = ~age,
+  y = ~fer,
+  color = ~origin,
+  colors = params$col_o,
+  linetype = ~cat,      
+  frame = ~district,    
+  type = 'scatter',
+  mode = 'lines'
+) %>%
+  layout(
+    xaxis = list(title = "age"),
+    yaxis = list(title = "fertility rate (in % per year)"),
+    legend = list(title = list(text = ""))
+)
+
+```
+
+### Prediction
+
+#### fertility rate: past and future
+
+fertility rate: age distribution by district and year (Swiss only)
+
+```{r}
+#| label: fig-0140
+#| fig-cap: "fertility rate: age distribution by district and year (Swiss only)"
+#| fig-width: 20
+#| fig-height: 20
+
+n_years <- length(unique(fer$fer_pred$year))
+pal_year <- colorRampPalette(params$col_6[1:5])(n_years)
+
+(fer$fer_pred |> 
+  filter(origin == params$uni_o[1]) |> 
+  ggplot(aes(x = age, y = fer_all, color = as.factor(year))) +
+  geom_line() +           
+  facet_wrap(~district, ncol = 4) + 
+  scale_color_manual(values = pal_year) +    
+  labs(x = "age", y = "fertility rate (in % per year)", color = "") +
+  params$neutral) |> 
+ggplotly(height = 2000)
+
+```
+
+fertility rate: age distribution by district and year (foreign only)
+
+```{r}
+#| label: fig-0141
+#| fig-cap: "fertility rate: age distribution by district and year (foreign only)"
+#| fig-width: 20
+#| fig-height: 20
+
+n_years <- length(unique(fer$fer_pred$year))
+pal_year <- colorRampPalette(params$col_6[1:5])(n_years)
+
+(fer$fer_pred |> 
+  filter(origin == params$uni_o[2]) |> 
+  ggplot(aes(x = age, y = fer_all, color = as.factor(year))) +
+  geom_line() +           
+  facet_wrap(~district, ncol = 4) + 
+  scale_color_manual(values = pal_year) +    
+  labs(x = "age", y = "fertility rate (in % per year)", color = "") +
+  params$neutral) |> 
+ggplotly(height = 2000)
+
+```
+
+
+#### TFR: past and future
+
+```{r}
+#| label: fig-0160
+#| fig-cap: TFR by district, year, and origin
+#| fig-width: 20
+#| fig-height: 20
+
+(fer$fer_ex_past |> 
+  bind_rows(fer$fer_ex) |>
+  group_by(district, year, origin) |>
+  summarize(
+    TFR = sum_NA(fer / 100),
+    .groups = "drop"
+  ) |> 
+  ggplot(aes(x = year, y = TFR, color = origin)) +
+		  geom_line() +
+		  scale_color_manual(values = params$col_o) +
+		  facet_wrap(~district, ncol = 4) +
+		  labs(x = "", y = "TFR", color = "") +
+		  params$neutral) |> 
+ggplotly(height = 2000)
+
+```
+
+
+
+
+
+
+
+
+## Origin
+
+### Past origin change
+
+```{r}
+#| label: fig-0170
+#| fig-cap: origin change by year, origin
+
+(boc$cha |> 
+  group_by(year, origin) |>
+  summarize(
+    change = sum(change),
+    total = sum(total),
+    .groups = "drop"
+  ) |>
+  mutate(cha_yo = if_else(total == 0, NA_real_, round(change / total * 100, params$round_rate))) |> 
+  ggplot(aes(x = year, y = cha_yo, color = origin)) +
+	  geom_line() +
+	  scale_color_manual(values = params$col_o) +
+	  labs(x = "", y = "origin change in %", color = "") +
+  params$neutral) |> 
+ggplotly() 
+    
+```
+
+```{r}
+#| label: fig-0171
+#| fig-cap: origin change by year, age class (3), origin
+#| fig-width: 12
+
+(boc$cha |> 
+  left_join(params$look_a1, by = "age") |>
+  group_by(year, age_1, origin) |>
+  summarize(
+    change = sum(change),
+    total = sum(total),
+    .groups = "drop"
+  ) |>
+  mutate(cha_ya1o = if_else(total == 0, NA_real_, round(change / total * 100, 
+                                                        params$round_rate))) |>
+  ggplot(aes(x = year, y = cha_ya1o, color = origin)) +
+	  geom_line() +
+    facet_wrap(~age_1, nrow = 1) +
+	  scale_color_manual(values = params$col_o) +
+	  labs(x = "", y = "origin change in %", color = "") +
+  params$neutral) |> 
+ggplotly() 
+
+```
+
+```{r}
+#| label: fig-0172
+#| fig-cap: origin change by year, age class (5), origin
+#| fig-width: 12
+
+(boc$cha |> 
+  left_join(params$look_a2, by = "age") |>
+  group_by(year, age_2, origin) |>
+  summarize(
+    change = sum(change),
+    total = sum(total),
+    .groups = "drop"
+  ) |>
+  mutate(cha_ya2o = if_else(total == 0, NA_real_, round(change / total * 100, 
+                                                        params$round_rate))) |>
+  ggplot(aes(x = year, y = cha_ya2o, color = origin)) +
+	  geom_line() +
+    facet_wrap(~age_2, nrow = 1) +
+	  scale_color_manual(values = params$col_o) +
+	  labs(x = "", y = "origin change in %", color = "") +
+  params$neutral) |> 
+ggplotly() 
+
+```
+
+```{r}
+#| label: fig-0173
+#| fig-cap: origin change by district, year, origin
+#| fig-width: 20
+#| fig-height: 20
+
+(boc$cha |> 
+  group_by(district, year, origin) |>
+  summarize(
+    change = sum(change),
+    total = sum(total),
+    .groups = "drop"
+  ) |>
+  mutate(cha_dyo = if_else(total == 0, NA_real_, round(change / total * 100, 
+                                                        params$round_rate))) |> 
+  ggplot(aes(x = year, y = cha_dyo, color = origin)) +
+  geom_line() +
+  scale_color_manual(values = params$col_o) +
+  facet_wrap(~district, ncol = 4) +
+  labs(x = "", y = "origin change in %", color = "") +
+  params$neutral) |> 
+ggplotly(height = 2000)
+
+```
+
+
+### Prediction of origin change
+
+```{r}
+#| label: fig-0175
+#| fig-cap: predicted origin change by year and origin
+#| fig-width: 20
+#| fig-height: 20
+
+(ggplot(boc$cha_pred, aes(x = year, y = cha_all, color = origin)) +
+  geom_line() +
+  scale_color_manual(values = params$col_o) +
+  facet_wrap(~district, ncol = 4) +
+  labs(x = "", y = "origin change in %", color = "") +
+  params$neutral) |> 
+ggplotly(height = 2000)
+
+```
+
+## Sex ratio
+
+### Past proportion
+
+```{r}
+#| label: fig-0190
+#| fig-cap: past proportion of male babies by year
+
+(ggplot() +
+  geom_line(data = bsr$pro_male, aes(x = year, y = pro_male), color = params$col_1) +  
+  geom_hline(yintercept = 50, color = params$col_grey, linetype = "dashed") +  
+  scale_y_continuous(limits = c(0, 70)) +
+  labs(x = "", y = "proportion male in %") +
+  params$neutral) |> 
+ggplotly()
+
+```
+
+### Prediction of proportion
+
+```{r, eval}
+#| label: fig-0191
+#| fig-cap: predicted proportion of male babies by year
+
+
+p <- ggplot(bsr$pro_male_pred) +
+  geom_hline(yintercept = 50, color = params$col_grey, linetype = "dashed") +
+  geom_line(data = bsr$pro_male_pred, aes(x = year, y = pro_male), color = params$col_1) +    
+  geom_point(data = bsr$pro_male, aes(x = year, y = pro_male), color = params$col_1) +
+  scale_y_continuous(limits = c(0, 70)) +
+  labs(x = "", y = "proportion male in %") +
+  params$neutral
+
+ggplotly(p)
+
+```

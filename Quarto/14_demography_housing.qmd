@@ -1,0 +1,371 @@
+# Demography and housing
+
+```{r, include=FALSE}
+#| label: prep
+#| echo: false
+#| results: 'hide'
+#| message: false
+#| warning: false
+#| cache: true
+
+# project root
+library(rprojroot)
+root <- find_root(is_rstudio_project)
+
+# get the parameters
+source(file.path(root, "R/0000_General/0002_init.R"))
+vars_once <- init_once(i_data_path = "~/v/Szen/BevSzen/2026")
+params <- init_scen(i_scen = "middle", vars_init_once = vars_once)
+
+# load the demography and housing function
+source(file.path(root, "R/1401_demography_housing_fun.R"))
+
+# execute the demography and housing model function (approx. 35 seconds)
+deh <- demography_housing_fun(params = params)
+
+```
+
+
+```{r}
+#| label: data_preparation
+#| echo: false
+#| results: 'hide'
+#| message: false
+#| warning: false
+#| cache: true
+
+#immigration (for ims-plot)
+imm_past <- read_csv(params$imm_od) |> 
+  rename(year = EreignisDatJahr) |>    
+  left_join(params$look_dis, by = "QuarCd") |> 
+  mutate(district = factor(distr, params$uni_d)) |>  
+  group_by(district, year) |> 
+  summarize(ims = sum(AnzZuzuWir),
+            .groups = "drop")
+
+
+#emigration (for ems-plot)
+emi_past <- read_csv(params$emi_od) |>
+  rename(year = EreignisDatJahr) |>
+  left_join(params$look_dis, by = "QuarCd") |>
+  mutate(district = factor(distr, params$uni_d)) |>
+  group_by(district, year) |>
+  summarize(ems = sum(AnzWezuWir),
+            .groups = "drop")
+
+#immigration* (for plot)
+ims_past <- read_csv(params$rel_od) |>
+  rename(year = EreignisDatJahr, ims = AnzUmzuWir) |>
+  left_join(params$look_dis, by = "QuarCd") |>
+  mutate(district = factor(distr, params$uni_d)) |>
+  select(district, year, ims) |>
+  bind_rows(imm_past) |>
+  group_by(district, year) |>
+  summarize(ims = sum(ims),
+            .groups = "drop")
+
+#emigration* (for plot)
+ems_past <- read_csv(params$rel_od) |>
+  rename(year = EreignisDatJahr, ems = AnzUmzuWir) |>
+  left_join(params$look_dis, by = c("QuarBisherCd" = "QuarCd")) |>
+  mutate(district = factor(distr, params$uni_d)) |>
+  select(district, year, ems) |>
+  bind_rows(emi_past) |>
+  group_by(district, year) |>
+  summarize(ems = sum(ems),
+            .groups = "drop")
+```
+
+## effects of the population limit
+
+### absolute difference
+
+difference: population limit minus population (based on migration trends)\
+negative value: not enough space (immigration decreased, emigration increased)\
+positive value: too much space (immigration increased, emigration decreased)\
+
+```{r}
+#| label: fig-1400
+#| fig-cap: absolute difference of population limit
+#| fig-width: 20
+#| fig-height: 15
+
+pos_neg <- c("positive", "negative")
+
+dat_pos_neg <- deh$out_bal |>
+  mutate(
+    differ_prop = differ / pop_limit * 100,   
+    cat = factor(if_else(differ < 0, pos_neg[2], pos_neg[1]),
+                 levels = pos_neg)
+  )
+
+(dat_pos_neg |> 
+  ggplot() +
+  geom_col(aes(x = year, y = differ, fill = cat),
+           position = "dodge") +
+  facet_wrap( ~ owner) +
+	labs(x = "", 
+	     y = "people ('population limit' minus 'population based on trends'", 
+	     fill = "") +
+	facet_wrap(~district, ncol = 4) +    
+  scale_fill_manual(values = params$col_6[c(1,3)]) +
+  params$neutral) |>
+  ggplotly(height = 1500)
+
+```
+
+### relative difference
+
+```{r}
+#| label: fig-1401
+#| fig-cap: relative difference of population limit
+#| fig-width: 20
+#| fig-height: 15
+
+(dat_pos_neg |> 
+  ggplot() +
+  geom_col(aes(x = year, y = differ_prop, fill = cat),
+           position = "dodge") +
+  facet_wrap( ~ owner) +
+	labs(x = "", 
+	     y = "difference in % ('population limit' minus 'population based on trends')", 
+	     fill = "") +
+	facet_wrap(~district, ncol = 4) +    
+  scale_fill_manual(values = params$col_6[c(1,3)]) +
+  params$neutral) |>
+  ggplotly(height = 1500)
+
+```
+
+## migration correction
+
+### immigration-star correction
+
+```{r}
+#| label: fig-1402a
+#| fig-cap: immigration-star correction
+#| fig-width: 20
+#| fig-height: 15
+
+cat <- c("past", "initial", "corrected")
+proc <- c("immigration*", "emigration*")  
+  
+ims_ems_past <- ims_past |> 
+    left_join(ems_past, by = c("district", "year")) |> 
+    rename(ims_past = ims, ems_past = ems) |> 
+    pivot_longer(c(ims_past, ems_past),
+    names_to = "category", values_to = "people")  
+
+ims_ems_future <- deh$out_bal |> 
+  select(district, year, ims, ems, new_ims3, new_ems3) |> 
+  pivot_longer(c(ims, ems, new_ims3, new_ems3),
+    names_to = "category", values_to = "people")
+
+mig_correction <- ims_ems_past |>
+  bind_rows(ims_ems_future) |>
+  mutate(
+    cat = factor(case_when(
+      category %in% c("ims_past", "ems_past") ~ cat[1],
+      category %in% c("ims", "ems") ~ cat[2],
+      TRUE ~ cat[3]
+    ), levels = cat),
+    process = factor(if_else(category %in% c("ims_past", "ims", "new_ims3"),
+      proc[1], proc[2]
+    ), levels = proc)
+  )
+  
+(mig_correction |> 
+  filter(process == proc[1]) |> 
+  ggplot() +
+	  geom_line(aes(x = year, y = people, color = cat)) +
+	  facet_wrap(~district, ncol = 4, scales = "free_y") +
+	  labs(x = "", y = "immigration* per year", color = "") +
+    scale_color_manual(values = params$col_6[c(1,3,4)]) +
+    expand_limits(y = 0) +
+	  params$neutral) |> 
+  ggplotly(height = 1500)
+
+```
+
+### emigration-star correction
+
+
+```{r}
+#| label: fig-1402b
+#| fig-cap: emigration-star correction
+#| fig-width: 20
+#| fig-height: 15
+
+(mig_correction |> 
+  filter(process == proc[2]) |> 
+  ggplot() +
+	  geom_line(aes(x = year, y = people, color = cat)) +
+	  facet_wrap(~district, ncol = 4, scales = "free_y") +
+	  labs(x = "", y = "emigration* per year", color = "") +
+    scale_color_manual(values = params$col_6[c(1,3,4)]) +
+    expand_limits(y = 0) +
+	  params$neutral) |> 
+  ggplotly(height = 1500)
+
+```
+
+
+
+
+## smoothing over age
+
+Population smoothed over age, last prediction year, Swiss only.
+
+```{r}
+#| label: fig-1403a
+#| fig-cap: population smoothed over age, last prediction year, Swiss only
+#| fig-width: 20
+#| fig-height: 20
+
+sel_lev <- c("initial", "smoothed")
+
+age_smoothed <- deh$out_pop_smooth |>
+  pivot_longer(c(pop_end_year, pop), names_to = "category", values_to = "pop") |>
+  mutate(cat = fact_if(category, sel_lev, equals = "pop_end_year"),
+    pop_pyramid = round(if_else(sex == params$uni_s[1], -pop, pop)), 0) |>
+  filter(year == max(year))
+
+(age_smoothed |> 
+  filter(origin == params$uni_o[1]) |> 
+  ggplot() +
+    geom_hline(yintercept = 0, color = params$col_grey) +    
+	  geom_line(aes(x = age, y = pop_pyramid, color = sex, linetype = cat)) +
+	  facet_wrap(~district, ncol = 4, scales = "free_x") +   
+    coord_flip() +
+	  labs(x = "people", y = "age", color = "", linetype = "") +
+    scale_color_manual(values = params$col_s) +
+    scale_linetype_manual(values = c("solid", "dotted")) +
+    expand_limits(y = 0) +
+	  params$neutral) |> 
+  ggplotly(height = 2000)
+
+```
+
+Population smoothed over age, last prediction year, foreign only.
+
+```{r}
+#| label: fig-1403b
+#| fig-cap: population smoothed over age, last prediction year, foreign only
+#| fig-width: 20
+#| fig-height: 20
+
+(age_smoothed |> 
+  filter(origin == params$uni_o[2]) |> 
+  ggplot() +
+    geom_hline(yintercept = 0, color = params$col_grey) +    
+	  geom_line(aes(x = age, y = pop_pyramid, color = sex, linetype = cat)) +
+	  facet_wrap(~district, ncol = 4, scales = "free_x") +   
+    coord_flip() +
+	  labs(x = "people", y = "age", color = "", linetype = "") +
+    scale_color_manual(values = params$col_s) +
+    scale_linetype_manual(values = c("solid", "dotted")) +
+    expand_limits(y = 0) +
+	  params$neutral) |> 
+  ggplotly(height = 2000)
+
+```
+
+
+
+
+## Wollishofen, population and migration
+
+### by year, age and origin
+
+why Wollishofen? need to check age patterns of this district why named d21? 21 is the number for district Wollishofen
+
+```{r}
+#| label: fig-1404a
+#| fig-cap: Wollishofen population and migration, age, origin, first prediction year
+#| fig-width: 10
+#| fig-height: 10
+
+catego <- c("immigration", "emigration", "net migration", "population")
+line_catego <- c("initial", "final")
+
+
+# why not piped into plot? to get limits, and another plot (without origin)
+
+pop_mig_21_yao <- deh$out_dem |>
+  filter(district == "Wollishofen") |>
+  select(year, age, origin, ims_initial, ims, ems_initial, ems, pop_bir_dea, pop_end_year) |>
+  mutate(
+    net_initial = ims_initial - ems_initial,
+    net = ims - ems
+  ) |>
+  pivot_longer(
+    cols = c(
+      "ims_initial", "ims", "ems_initial", "ems",
+      "net_initial", "net", "pop_bir_dea", "pop_end_year"
+    ),
+    names_to = "category", values_to = "people"
+  ) |>
+  group_by(year, age, origin, category) |>
+  summarize(
+    people = sum_NA(people),
+    .groups = "drop"
+  ) |>
+  mutate(
+    cat = factor(case_when(
+      category %in% c("ims", "ims_initial") ~ catego[1],
+      category %in% c("ems", "ems_initial") ~ catego[2],
+      category %in% c("net", "net_initial") ~ catego[3],
+      TRUE ~ catego[4]
+    ), levels = catego),
+    line_cat = factor(if_else(
+      category %in% c("ims_initial", "ems_initial", "net_initial", "pop_bir_dea"),
+      line_catego[1], line_catego[2]
+    ), levels = line_catego))
+  
+upper_lim_yao <- pop_mig_21_yao |>   
+  group_by(cat) |> 
+    summarize(upper = max_NA(people),
+              .groups = "drop")
+
+(pop_mig_21_yao |> 
+  filter(year == params$scen_begin) |> 
+  ggplot() +
+	  geom_line(aes(x = age, y = people, color = origin, linetype = line_cat)) +
+	  facet_wrap(~ cat, ncol = 2, scales = "free_y") +
+	  labs(x = "age",
+	       y = "people",
+	       color = "", linetype = "") +
+    scale_color_manual(values = params$col_o) +
+    scale_linetype_manual(values = c("solid", "dotted")) +
+    scale_y_continuous(limits = c(0, max(upper_lim_yao$upper))) +
+	  params$neutral) |> 
+ggplotly()  
+
+```
+
+
+```{r}
+#| label: fig-1404b
+#| fig-cap: Wollishofen population and migration, age, origin, last prediction year
+#| fig-width: 10
+#| fig-height: 10
+
+(pop_mig_21_yao |> 
+  filter(year == params$scen_end) |> 
+  ggplot() +
+	  geom_line(aes(x = age, y = people, color = origin, linetype = line_cat)) +
+	  facet_wrap(~ cat, ncol = 2, scales = "free_y") +
+	  labs(x = "age",
+	       y = "people",
+	       color = "", linetype = "") +
+    scale_color_manual(values = params$col_o) +
+    scale_linetype_manual(values = c("solid", "dotted")) +
+    scale_y_continuous(limits = c(0, max(upper_lim_yao$upper))) +
+	  params$neutral) |> 
+ggplotly()  
+
+
+
+```
+
+

@@ -1,0 +1,59 @@
+project:
+  output-dir: "../book"
+  execute-dir: project
+  type: book
+
+book:
+  title: "Population Scenarios"
+  author: "Klemens Rosin"
+  date: today
+  page-navigation: true
+  search: true
+  sidebar:
+    style: "docked"
+  chapters:
+    - index.qmd
+    - 01_birth.qmd
+    - 02_death.qmd
+    - 03_immigration.qmd
+    - 04_emigration.qmd
+    - 05_reloc_immigration.qmd
+    - 06_reloc_emigration.qmd
+    - 07_naturalization.qmd
+    - 08_careb.qmd
+    - 09_living_space.qmd
+    - 10_allocation.qmd
+    - 11_projects.qmd
+    - 13_housing.qmd
+    - 14_demography_housing.qmd
+    - 15_model_output.qmd
+    - 16_evaluation.qmd 
+
+toc: true
+toc-depth: 4
+number-sections: true
+format:
+  html:
+    # theme: cosmo
+    code-fold: true
+    df-print: kable
+    embed-resources: false
+    css: "sszTheme.css"
+    fig-format: svg
+    page-layout: full
+    fig-width: 15
+    fig-height: 8
+    column: body
+    anchor-sections: true
+    smooth-scroll: true
+    max-width: "2400"
+editor: visual
+execute:
+  echo: false
+  warning: false
+  cache: false
+
+knitr:
+  opts_chunk: 
+    R.options:
+      scipen: 999

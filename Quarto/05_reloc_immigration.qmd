@@ -1,0 +1,544 @@
+# Relocation-immigration
+
+```{r, include=FALSE}
+#| label: prep
+#| echo: false
+#| results: 'hide'
+#| message: false
+#| warning: false
+#| cache: true
+
+# project root
+library(rprojroot)
+root <- find_root(is_rstudio_project)
+
+# get the parameters
+source(file.path(root, "R/0000_General/0002_init.R"))
+vars_once <- init_once(i_data_path = "~/v/Szen/BevSzen/2026")
+params <- init_scen(i_scen = "middle", vars_init_once = vars_once)
+
+# load the mortality function
+source(file.path(root, "R/0501_relocation_fun.R"))
+
+# execute the relocation function
+rel_imm <- relocation_fun(process = "relocation-immigration", params = params)
+
+```
+
+
+## Past proportion of relocation on immigration*
+
+### Differences by sex
+
+Why this check? Can the variable sex be omitted in the prediction?
+
+Proportion of relocation on immigration* by district, age, sex (Swiss only)
+
+```{r}
+#| label: fig-0500a
+#| fig-cap: proportion of relocation by district, age, sex (Swiss only)
+#| fig-width: 20
+#| fig-height: 20
+
+rel_prop_daso <- rel_imm$mis_rel |> 
+  group_by(district, age, sex, origin) |> 
+    summarize(
+      mis = sum(mis),
+      rel = sum(rel),
+      .groups = "drop"
+    ) |>
+    mutate(rel_prop_daso = if_else(mis == 0, NA_real_, 
+                                   round(rel / mis * 100, params$round_prop)))
+
+(rel_prop_daso |> 
+  filter(origin == params$uni_o[1], !is.na(rel_prop_daso)) |> 
+  ggplot() +
+		  geom_line(aes(x = age, y = rel_prop_daso,
+		                color = sex)) +
+		  facet_wrap(~district, ncol = 4) +
+		  labs(x = "", y = "proportion in % (relocation on immigration*)",
+		       color = "") +
+      scale_color_manual(values = params$col_s) +
+		  params$neutral) |> 
+ggplotly(height = 1500)
+
+```
+
+Proportion of relocation on immigration* by district, age, sex (foreign only)
+
+```{r}
+#| label: fig-0500b
+#| fig-cap: proportion of relocation by district, age, sex (foreign only)
+#| fig-width: 20
+#| fig-height: 20
+
+(rel_prop_daso |> 
+  filter(origin == params$uni_o[2], !is.na(rel_prop_daso)) |> 
+  ggplot() +
+		  geom_line(aes(x = age, y = rel_prop_daso,
+		                color = sex)) +
+		  facet_wrap(~district, ncol = 4) +
+		  labs(x = "", y = "proportion in % (relocation on immigration*)",
+		       color = "") +
+      scale_color_manual(values = params$col_s) +
+		  params$neutral) |> 
+ggplotly(height = 1500)
+
+```
+
+
+### Differences by origin
+
+Why this check?
+First, to emphasize the need of origin in the model.
+Second, the plots can be used to get an idea of the value of the age threshold parameter.
+
+```{r}
+#| label: fig-0501
+#| fig-cap: proportion of relocation by district, age and origin
+#| fig-width: 20
+#| fig-height: 20
+
+(rel_imm$mis_rel |> 
+    group_by(district, age, origin) |>
+    summarize(
+      mis = sum(mis),
+      rel = sum(rel),
+      .groups = "drop"
+    ) |>
+    mutate(rel_prop_dao = if_else(mis == 0, NA_real_, 
+                                  round(rel / mis * 100, 
+                                        params$round_prop))) |> 
+  filter(!is.na(rel_prop_dao)) |> 
+  ggplot() +
+		  geom_line(aes(x = age, y = rel_prop_dao, color = origin)) +
+		  facet_wrap(~district, ncol = 4) +
+		  labs(x = "", y = "proportion in % (relocation on immigration*)",
+		       color = "") +
+      scale_color_manual(values = params$col_o) +
+		  params$neutral) |> 
+ggplotly(height = 1500)
+
+```
+
+### Which base years?
+
+#### Year, origin
+
+Why? Several plots to determine the base years.
+
+```{r}
+#| label: fig-0502
+#| fig-cap: proportion by year and origin
+#| fig-width: 15
+#| fig-height: 12
+
+(rel_imm$mis_rel |> 
+  group_by(year, origin) |>
+    summarize(
+      mis = sum(mis),
+      rel = sum(rel),
+      .groups = "drop"
+    ) |>
+    mutate(rel_prop_yo = if_else(mis == 0, NA_real_, 
+                                 round(rel / mis * 100, 
+                                       params$round_prop))) |> 
+ggplot(aes(x = year, y = rel_prop_yo, color = origin)) +
+  geom_line() +
+  scale_color_manual(values = params$col_o) +
+  labs(x = "", y = "proportion in % (relocation on immigration*)", 
+       color = "") +
+  scale_y_continuous(limits = c(0, NA)) +
+  params$neutral) |> 
+ggplotly()
+  
+```
+
+#### Year, age, origin
+
+```{r}
+#| label: fig-0503
+#| fig-cap: propportion by year, age and origin
+#| fig-width: 20
+#| fig-height: 20
+
+age_plot <- seq(0, 80, by = 10)
+
+(rel_imm$mis_rel |> 
+  group_by(, year, age, origin) |>
+    summarize(
+      mis = sum(mis),
+      rel = sum(rel),
+      .groups = "drop"
+    ) |>
+    rename(age_num = age) |>
+    mutate(
+      rel_prop_yao = if_else(mis == 0, NA_real_, 
+                             round(rel / mis * 100, 
+                                   params$round_prop)),
+      age = as.factor(age_num)
+    ) |> 
+  filter(age_num %in% age_plot) |> 
+ggplot(aes(x = year, y = rel_prop_yao, color = origin)) +
+  geom_line() +
+  scale_color_manual(values = params$col_o) +
+  facet_wrap(~age, ncol = 2, 
+               labeller = labeller(age = function(x) paste("age", x))) +  
+  labs(x = "", y = "proportion in % (relocation on immigration*)", 
+       color = "") +
+  scale_y_continuous(limits = c(0, NA)) +
+  params$neutral) |> 
+ggplotly(height = 1200)
+  
+
+```
+
+### Aggregate over sex
+
+This plot is the starting point (before smoothing, age corrections).
+
+#### Focus on age
+
+Processes by district, age, year `r max(rel_imm$rem_dyao$year)`, Swiss only.
+
+```{r}
+#| label: fig-0504a
+#| fig-cap: processes by district, age, last year, Swiss only
+#| fig-width: 20
+#| fig-height: 20
+
+process_lev <- c("relocation", "immigration*")
+
+process_plot <- rel_imm$rem_dyao |> 
+    gather(`rel`, `mis`, key = category, value = count) |>
+    mutate(cat = fact_if(category, process_lev, "rel")) |>
+    select(district, year, age, origin, cat, count)
+
+(process_plot |>
+  filter(origin == params$uni_o[1], year == max(year)) |>
+  ggplot() +
+		  geom_line(aes(x = age, y = count, color = cat)) +
+		  facet_wrap(~district, ncol = 4) +
+		  labs(x = "", y = "quantity per year", color = "") +
+      scale_color_manual(values = params$col_6[1:2]) +
+		  params$neutral) |> 
+ggplotly(height = 1500)
+
+```
+
+
+Processes by district, age, year `r max(rel_imm$rem_dyao$year)`, foreign only.
+
+```{r}
+#| label: fig-0504b
+#| fig-cap: processes by district, age, last year, foreign only
+#| fig-width: 20
+#| fig-height: 20
+
+(process_plot |>
+  filter(origin == params$uni_o[2], year == max(year)) |>
+  ggplot() +
+		  geom_line(aes(x = age, y = count, color = cat)) +
+		  facet_wrap(~district, ncol = 4) +
+		  labs(x = "", y = "quantity per year", color = "") +
+      scale_color_manual(values = params$col_6[1:2]) +
+		  params$neutral) |> 
+ggplotly(height = 1500)
+
+```
+
+#### Focus on years
+
+Processes by district (selected), year, age (selected), Swiss only
+
+```{r}
+#| label: fig-0505a
+#| fig-cap: processes by district (selected), year, age (selected), Swiss only
+#| fig-width: 20
+#| fig-height: 20
+
+age_plot <- seq(0, 80, by = 20)
+
+process_plot_age <- process_plot |> 
+    rename(age_num = age) |>
+    mutate(age = as.factor(age_num)) |> 
+    filter(district %in% params$d_select, 
+           age_num %in% age_plot)
+
+  
+(process_plot_age |> 
+  filter(origin == params$uni_o[1]) |>
+  ggplot() +
+		  geom_line(aes(x = year, y = count, color = cat)) +
+		  facet_grid(age ~ district, 
+               labeller = labeller(age = function(x) paste("age", x))) +   
+		  labs(x = "", y = "quantity per year", color = "") +
+      scale_color_manual(values = params$col_6[1:2]) +
+		  params$neutral) |> 
+ggplotly(height = 1500) |> 
+  layout(legend = list(x = 1.05, y = 1))
+  
+```
+
+Processes by district (selected), year, age (selected), foreign only
+
+```{r}
+#| label: fig-0505b
+#| fig-cap: processes by district (selected), year, age (selected), foreign only
+#| fig-width: 20
+#| fig-height: 20
+
+(process_plot_age |> 
+  filter(origin == params$uni_o[2]) |>
+  ggplot() +
+		  geom_line(aes(x = year, y = count, color = cat)) +
+		  facet_grid(age ~ district, 
+               labeller = labeller(age = function(x) paste("age", x))) +   
+		  labs(x = "", y = "quantity per year", color = "") +
+      scale_color_manual(values = params$col_6[1:2]) +
+		  params$neutral) |> 
+ggplotly(height = 1500) |> 
+  layout(legend = list(x = 1.05, y = 1))
+
+```
+
+
+
+### Relocation and immigration* after smoothing: dyao
+
+Processes by district (selected), age, year `r params$date_end`, origin.
+
+```{r}
+#| label: fig-0506
+#| fig-cap: processes by district, age, last year, origin
+#| fig-width: 12
+#| fig-height: 12
+
+smooth_lev <- c("initial", "smoothed")
+
+temp_initial <- rel_imm$dyao_smooth |> 
+  gather(`rel`, `mis`, key = category, value = count) |>
+  mutate(
+    cat = fact_if(category, process_lev, "rel"),
+    smooth = factor(smooth_lev[1], levels = smooth_lev)
+  ) |>
+  select(district, year, age, origin, cat, smooth, count)
+
+temp_smooth <- rel_imm$dyao_smooth |> 
+  gather(`rel_a`, `mis_a`, key = category, value = count) |>
+  mutate(
+    cat = fact_if(category, process_lev, "rel_a"),
+    smooth = factor(smooth_lev[2], levels = smooth_lev)
+  ) |>
+  select(district, year, age, origin, cat, smooth, count)
+
+(bind_rows(temp_initial, temp_smooth) |> 
+  filter(district %in% params$d_select, 
+         year == max(year)) |> 
+  ggplot() +
+		  geom_line(aes(x = age, y = count, color = cat, linetype = smooth)) +
+		  facet_grid(district ~ origin) +
+		  labs(x = "", y = "quantity per year", color = "", linetype = "") +
+      scale_color_manual(values = params$col_6[1:2]) +
+      scale_linetype_manual(values = c("solid", "dotted")) +
+		  params$neutral) |> 
+ggplotly() |> 
+    layout(legend = list(x = 1.05, y = 1))
+  
+
+```
+
+### Proportion of relocation on immigration* after smoothing: dyao 
+
+Proportion by district, age, year `r params$date_end` and origin.
+
+```{r}
+#| label: fig-0508
+#| fig-cap: proportion smooothed by district, age, last year and origin
+#| fig-width: 20
+#| fig-height: 20
+
+(rel_imm$prop_dyao_smooth |> 
+  filter(year == max(year)) |> 
+  ggplot() +
+		  geom_line(aes(x = age, y = rel_prop_dyao, color = origin)) +
+		  facet_wrap(~district, ncol = 4) +
+		  labs(x = "age", y = "proportion in % (relocation on immigration*)",
+		       color = "") +
+      scale_color_manual(values = params$col_o) +
+		  params$neutral) |> 
+ggplotly(height = 1500)
+
+
+```
+
+### Smoothing the proportion
+
+```{r}
+#| label: fig-0510
+#| fig-cap: processes by district (selected), age and origin (smoothed)
+#| fig-width: 12
+#| fig-height: 15
+
+  temp_initial <- rel_imm$dao_smooth |> 
+    gather(`rel`, `mis`, key = category, value = count) |>
+    mutate(
+      cat = fact_if(category, process_lev, "rel"),
+      smooth = factor(smooth_lev[1], levels = smooth_lev)
+    ) |>
+    select(district, age, origin, cat, smooth, count)
+
+  temp_smooth <- rel_imm$dao_smooth |> 
+    gather(`rel_a`, `mis_a`, key = category, value = count) |>
+    mutate(
+      cat = fact_if(category, process_lev, "rel_a"),
+      smooth = factor(smooth_lev[2], levels = smooth_lev)
+    ) |>
+    select(district, age, origin, cat, smooth, count)
+
+(bind_rows(temp_initial, temp_smooth) |> 
+  filter(district %in% params$d_select) |> 
+  ggplot() +
+		  geom_line(aes(x = age, y = count, color = cat, linetype = smooth)) +
+		  facet_grid(district ~ origin) +
+		  labs(x = "", y = "quantity per year", color = "", linetype = "") +
+      scale_color_manual(values = params$col_6[1:2]) +
+      scale_linetype_manual(values = c("solid", "dotted")) +
+		  params$neutral) |> 
+ggplotly() |>
+    layout(legend = list(x = 1.05, y = 1))
+
+```
+
+### Proportions: different aggregation levels
+
+```{r}
+#| label: fig-0512
+#| fig-cap: !expr paste0("proportions from different aggregation levels (", params$date_end, ")")
+#| fig-width: 15
+#| fig-height: 15
+
+(rel_imm$prop_agg |> 
+  select(district, year, age, origin, rel_prop_dyao, rel_prop_dao) |>
+  rename(dyao = rel_prop_dyao, dao = rel_prop_dao) |>
+  gather(`dyao`, `dao`, key = category, value = count) |>
+  mutate(cat = factor(category, levels = rel_imm$sources)) |> 
+  filter(district %in% params$d_select, year == max(year)) |>  
+  ggplot() +
+		  geom_line(aes(x = age, y = count, color = cat)) +
+		  facet_grid(district ~ origin) +
+		  labs(x = "", y = "proportion in % (relocation on immigration*)", 
+		       color = "") +
+      scale_color_manual(values = params$col_6[1:2]) +
+		  params$neutral) |> 
+ggplotly() |>
+    layout(legend = list(x = 1.05, y = 1))
+
+```
+
+
+### Smoothing (after different levels of aggregation were brought together)
+
+```{r}
+#| label: fig-0515
+#| fig-cap: !expr paste0("one proportion after smoothing (", params$date_end, ")")
+#| fig-width: 15
+#| fig-height: 15
+
+(rel_imm$prop_agg_smooth |> 
+  gather(`rel_prop`, `prop_smooth`, key = category, value = count) |>
+  mutate(cat = fact_if(category, smooth_lev, "rel_prop")) |>
+  select(district, year, age, origin, cat, count) |> 
+  filter(district %in% params$d_select, year == max(year)) |>  
+  ggplot() +
+		  geom_line(aes(x = age, y = count, linetype = cat), 
+		            col = params$col_1) +
+		  facet_grid(district ~ origin) +
+		  labs(x = "age", y = "proportion in % (relocation on immigration*)",
+		       linetype = "") +
+      scale_linetype_manual(values = c("solid", "dotted")) +
+		  params$neutral) |> 
+ggplotly() |>
+    layout(legend = list(x = 1.05, y = 1))
+
+
+```
+
+## Prediction of the relocation proportion on immigration*
+
+### Smoothing
+
+```{r}
+#| label: fig-0517
+#| fig-cap: prediction by district (selected), last prediction year, age, origin
+#| fig-width: 15
+#| fig-height: 15
+
+(rel_imm$pred_smooth |> 
+  select(district, year, age, origin, pred_all_age, pred_smooth) |>
+  gather(pred_smooth, `pred_all_age`, `pred_smooth`, key = category, value = count) |>
+  mutate(cat = fact_if(category, smooth_lev, "pred_all_age")) |>
+  select(district, year, age, origin, cat, count) |> 
+  filter(district %in% params$d_select, year == max(year)) |>  
+  ggplot() +
+		  geom_line(aes(x = age, y = count, linetype = cat), 
+		            col = params$col_1) +
+		  facet_grid(district ~ origin) +
+		  labs(x = "age", y = "proportion in % (relocation on immigration*)",
+		       linetype = "") +
+      scale_linetype_manual(values = c("solid", "dotted")) +
+		  params$neutral) |> 
+ggplotly() |>
+    layout(legend = list(x = 1.05, y = 1))
+
+
+```
+
+### Final prediction
+
+predicted proportions by district, year, age, Swiss only
+
+```{r}
+#| label: fig-0518a
+#| fig-cap: predicted proportions by district, year, age, Swiss only
+#| fig-width: 20
+#| fig-height: 20
+
+n_years <- length(params$scen_begin:params$scen_end)
+pal_year <- colorRampPalette(params$col_6[5:1])(n_years)
+
+(rel_imm$pred_smooth |> 
+  filter(origin == params$uni_o[1]) |> 
+  ggplot() +
+		  geom_line(aes(x = age, y = pred_smooth, color = as.factor(year))) +
+		  facet_wrap(~district, ncol = 4) +
+		  labs(x = "age", y = "proportion in % (relocation on immigration*)", color = "") +
+      scale_color_manual(values = rev(pal_year)) +
+		  params$neutral) |> 
+ggplotly(height = 1500)
+
+```
+
+predicted proportions by district, year, age, foreign only
+
+```{r}
+#| label: fig-0518b
+#| fig-cap: predicted proportions by district, year, age, foreign only
+#| fig-width: 20
+#| fig-height: 20
+
+n_years <- length(params$scen_begin:params$scen_end)
+pal_year <- colorRampPalette(params$col_6[5:1])(n_years)
+
+(rel_imm$pred_smooth |> 
+  filter(origin == params$uni_o[2]) |> 
+  ggplot() +
+		  geom_line(aes(x = age, y = pred_smooth, color = as.factor(year))) +
+		  facet_wrap(~district, ncol = 4) +
+		  labs(x = "age", y = "proportion in % (relocation on immigration*)", color = "") +
+      scale_color_manual(values = rev(pal_year)) +
+		  params$neutral) |> 
+ggplotly(height = 1500)
+
+```
+

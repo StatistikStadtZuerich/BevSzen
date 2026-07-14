@@ -1,0 +1,526 @@
+
+# Naturalization
+
+```{r, include=FALSE}
+#| label: prep
+#| echo: false
+#| results: 'hide'
+#| message: false
+#| warning: false
+#| cache: true
+
+# project root
+library(rprojroot)
+root <- find_root(is_rstudio_project)
+
+# get the parameters
+source(file.path(root, "R/0000_General/0002_init.R"))
+vars_once <- init_once(i_data_path = "~/v/Szen/BevSzen/2026")
+params <- init_scen(i_scen = "middle", vars_init_once = vars_once)
+
+# load the naturalization function
+source(file.path(root, "R/0701_naturalization_rate_fun.R"))
+
+# execute the naturalization function
+nat <- naturalization_rate_fun(params = params)
+
+```
+
+
+## naturalization vs. denaturalization
+
+proportion of naturalization on all citizenship changes (naturalization and denaturalization).
+
+```{r}
+#| label: fig-0700
+#| fig-cap: proportion of naturalization on all citizenship changes
+#| fig-width: 10
+#| fig-height: 8
+
+
+processes <- c("nat", "denat")
+
+(nat$nat_denat |> 
+  filter(origin_prev != origin) |> 
+  mutate(proc = fact_if(origin_prev, processes, params$uni_o[2])) |> 
+  group_by(year, proc) |>
+  summarize(
+    count = sum(nat),
+    .groups = "drop"
+  ) |> 
+  pivot_wider(names_from = proc, values_from = count) |> 
+  replace_na(list(nat = 0, denat = 0)) |>
+  mutate(
+    total = nat + denat,
+    prop_nat = if_else(total == 0, NA_real_, 
+                       round(nat / total * 100, params$round_prop))) |> 
+  ggplot(aes(x = year, y = prop_nat)) +
+  		  geom_line(color = params$col_1) +
+        scale_y_continuous(limits = c(0, 100)) +
+  		  labs(x = "", y = "proportion in % (naturalization on all citizenship changes)") +
+  		  params$neutral) |> 
+ggplotly()
+
+```
+
+## naturalization rate: which variables?
+
+### age and sex
+
+```{r}
+#| label: fig-0701
+#| fig-cap: rate age and sex
+#| fig-width: 10
+#| fig-height: 8
+
+(nat$nat_pop |> 
+  group_by(age, sex) |>
+  summarize(
+    pop = sum(pop),
+    nat = sum(nat),
+    .groups = "drop"
+  ) |>
+  mutate(nat_as = if_else(pop == 0, NA_real_, 
+                          round(nat / pop * 100, params$round_rate))) |> 
+  filter(!is.na(nat_as)) |> 
+ggplot() +
+		  geom_line(aes(x = age, y = nat_as, color = sex)) +
+		  labs(x = "age", y = "naturalization rate (in % per year)", color = "") +
+      scale_color_manual(values = params$col_s) +
+		  params$neutral) |> 
+ggplotly()
+
+
+```
+
+### year and sex
+
+```{r}
+#| label: fig-0702
+#| fig-cap: rate year and sex
+#| fig-width: 10
+#| fig-height: 8
+
+(nat$nat_pop |> 
+  group_by(year, sex) |>
+  summarize(
+    pop = sum(pop),
+    nat = sum(nat),
+    .groups = "drop"
+  ) |> 
+  mutate(nat_ys = if_else(pop == 0, NA_real_,
+                          round(nat / pop * 100, params$round_rate))) |> 
+  filter(!is.na(nat_ys)) |> 
+ggplot() +
+		  geom_line(aes(x = year, y = nat_ys, color = sex)) +
+		  labs(x = "year", y = "naturalization rate (in % per year)", color = "") +
+      scale_color_manual(values = params$col_s) +
+      scale_y_continuous(limits = c(0, NA)) +
+		  params$neutral) |>
+ggplotly()
+
+```
+
+### year, age and sex
+
+```{r}
+#| label: fig-0703
+#| fig-cap: rate year (last three years), age, sex
+#| fig-width: 18
+#| fig-height: 10
+
+
+(nat$nat_pop |> 
+group_by(year, age, sex) |>
+  summarize(
+    pop = sum(pop),
+    nat = sum(nat),
+    .groups = "drop"
+  ) |>
+  mutate(nat_yas = if_else(pop == 0, NA_real_, 
+                           round(nat / pop * 100, params$round_rate))) |> 
+  filter(!is.na(nat_yas), year >= (max(year) - 2)) |>  
+ggplot() +
+		  geom_line(aes(x = age, y = nat_yas, color = sex)) +
+		  labs(x = "age", y = "naturalization rate (in % per year)", color = "") +
+      facet_wrap(~as.factor(year), nrow = 1) +
+      scale_color_manual(values = params$col_s) +
+      scale_y_continuous(limits = c(0, NA)) +
+		  params$neutral) |>
+ggplotly()
+
+```
+
+### district, year and sex
+
+```{r}
+#| label: fig-0706
+#| fig-cap: rate district, year and sex
+#| fig-width: 20
+#| fig-height: 20
+
+(nat$nat_pop |> 
+  group_by(district, year, sex) |>
+  summarize(
+    pop = sum(pop),
+    nat = sum(nat),
+    .groups = "drop"
+  ) |>
+  mutate(nat_dys = if_else(pop == 0, NA_real_, 
+                           round(nat / pop * 100, params$round_rate))) |> 
+  filter(!is.na(nat_dys)) |>  
+  ggplot() +
+	  geom_line(aes(x = year, y = nat_dys, color = sex)) +
+	  facet_wrap(~district, ncol = 4) +
+	  labs(x = "age", y = "naturalization rate (in % per year)", color = "") +
+    scale_color_manual(values = params$col_s) +
+	  params$neutral) |>
+ggplotly(height = 2000)
+
+```
+
+## das: smoothing (nat and pop)
+
+```{r}
+#| label: fig-0707
+#| fig-cap: processes by district, age, sex; smoothed
+#| fig-width: 15
+#| fig-height: 12
+
+process_lev <- c("naturalization", "population")
+smooth_lev <- c("initial", "smoothed")
+
+temp_initial <- nat$nat_pop_das_smooth |> 
+  gather(`nat`, `pop`, key = category, value = count) |>
+  mutate(
+    cat = fact_if(category, process_lev, "nat"),
+    smooth = factor(smooth_lev[1], levels = smooth_lev)
+  ) |>
+  select(district, age, sex, cat, smooth, count)
+
+temp_smooth <- nat$nat_pop_das_smooth |> 
+  gather(`nat_a`, `pop_a`, key = category, value = count) |>
+  mutate(
+    cat = fact_if(category, process_lev, "nat_a"),
+    smooth = factor(smooth_lev[2], levels = smooth_lev)
+  ) |>
+  select(district, age, sex, cat, smooth, count)
+
+(bind_rows(temp_initial, temp_smooth) |>
+  filter(district %in% params$d_select) |>
+  mutate(cat = factor(cat, levels = rev(process_lev))) |> 
+  ggplot() +
+	  geom_line(aes(x = age, y = count, color = sex, linetype = smooth)) +
+	  facet_grid(cat ~ district, scales = "free_y") +
+	  labs(x = "age",
+	       y = "naturalization per year, population",
+	       color = "", linetype = "") +
+    scale_color_manual(values = params$col_s) +
+    scale_linetype_manual(values = c("solid", "dotted")) +
+	  params$neutral) |>
+ggplotly() |>
+  layout(legend = list(x = 1.05, y = 1))
+
+
+```
+
+## das: naturalization rate
+
+```{r}
+#| label: fig-0708
+#| fig-cap: rate by district, age and sex
+#| fig-width: 20
+#| fig-height: 20
+
+(nat$nat_rate_das |> 
+  pivot_longer(cols = c(rate_thres, rate_smooth), 
+               names_to = "category", values_to = "count") |>  
+  mutate(cat = fact_if(category, smooth_lev, "rate_thres")) |>
+  select(district, age, sex, cat, count) |> 
+  # filter(district %in% params$d_select) |>
+  ggplot() +
+	  geom_line(aes(x = age, y = count, color = sex, linetype = cat)) +
+	  facet_wrap(~district, ncol = 4) +
+	  labs(x = "age", y = "naturalization rate (in % per year)",
+	       color = "", linetype = "") +
+    scale_color_manual(values = params$col_s) +
+    scale_linetype_manual(values = c("solid", "dotted")) +
+	  params$neutral) |>
+ggplotly(height = 2000)
+
+
+```
+
+## ya: smooth processes (preparation for trend by ya)
+
+### by years (subjectively, but last year in the plot)
+
+```{r}
+#| label: fig-0709
+#| fig-cap: processes (smoothed) by year and age
+#| fig-width: 15
+#| fig-height: 12
+
+temp_initial_ya <- nat$nat_ya |> 
+  pivot_longer(cols = c(nat, pop), names_to = "category", values_to = "count") |>  
+  mutate(
+    cat = fact_if(category, process_lev, "nat"),
+    smooth = factor(smooth_lev[1], levels = smooth_lev)
+  ) |>
+  select(year, age, cat, smooth, count)
+
+temp_smooth_ya <- nat$nat_ya |> 
+  pivot_longer(cols = c(nat_a, pop_a), names_to = "category", values_to = "count") |>    
+  mutate(
+    cat = fact_if(category, process_lev, "nat_a"),
+    smooth = factor(smooth_lev[2], levels = smooth_lev)
+  ) |>
+  select(year, age, cat, smooth, count)
+
+smooth_plot_ya <- bind_rows(temp_initial_ya, temp_smooth_ya)
+
+(smooth_plot_ya |> 
+  filter(year >= (max(year)-2)) |> 
+  mutate(cat = factor(cat, levels = rev(process_lev))) |>
+  ggplot() +
+	  geom_line(aes(x = age, y = count, color = cat, linetype = smooth)) +
+	  facet_grid(cat ~ factor(year), scales = "free_y") +
+	  labs(x = "age",
+	       y = "naturalization per year, population",
+	       color = "", linetype = "") +
+    scale_color_manual(values = params$col_6[1:2]) +
+    scale_linetype_manual(values = c("solid", "dotted")) +
+	  params$neutral) |>
+ggplotly() |>
+  layout(legend = list(x = 1.05, y = 1))
+
+```
+
+## ya: rate
+
+```{r}
+#| label: fig-0711
+#| fig-cap: rate by year and age, focus on age
+#| fig-width: 12
+#| fig-height: 8
+
+(nat$nat_rate_ya |>
+  pivot_longer(cols = c(rate_thres, rate_smooth), 
+               names_to = "category", values_to = "count"
+  ) |>
+  mutate(cat = fact_if(category, smooth_lev, "rate_thres")) |>
+  filter(year >= max(year) - 2) |> 
+  select(year, age, cat, count) |> 
+  ggplot() +
+	  geom_line(aes(x = age, y = count, linetype = cat), 
+	            color = params$col_1) +
+	  facet_wrap(~ factor(year), nrow = 1) +
+	  labs(x = "age",
+	       y = "naturalization rate (in % per year)",
+	       linetype = "") +
+    scale_linetype_manual(values = c("solid", "dotted")) +
+	  params$neutral) |> 
+ggplotly()
+
+```
+
+
+## constrained regression
+
+### focus age
+
+```{r}
+#| label: fig-0713
+#| fig-cap: rate by year and age; past and future, focus on age
+#| fig-width: 10
+#| fig-height: 7
+
+n_years <- length(params$scen_begin:params$scen_end)
+pal_year <- colorRampPalette(params$col_6[1:5])(n_years)
+
+(nat$rate_ya_past_pred |> 
+  filter(year >= params$scen_begin) |> 
+  ggplot() +
+	  geom_line(aes(x = age, y = rate_ya, color = as.factor(year))) +
+	  labs(x = "age", y = "naturalization rate (in % per year)", color = "") +
+    scale_color_manual(values = pal_year) +
+    params$neutral) |> 
+ ggplotly()
+
+```
+
+### focus years
+
+```{r}
+#| label: fig-0714
+#| fig-cap: rate by year and age; past and future, focus on years
+#| fig-width: 9
+#| fig-height: 13
+
+(nat$rate_ya_past_pred |> 
+  filter(age %in% seq(0, 100, by = 10)) |> 
+  ggplot() +
+	  geom_line(aes(x = year, y = rate_ya), 
+	            color = params$col_1) +
+	  facet_wrap(~ age, ncol = 4, 
+	             labeller = labeller(age = function(x) paste("age", x))) +
+	  labs(x = "",
+	       y = "naturalization rate (in % per year)") +
+	  params$neutral) |> 
+ggplotly()
+
+```
+
+## smooth processes (preparation for the trend factor calculation)
+
+```{r}
+#| label: fig-0715
+#| fig-cap: processes by age, smoothed
+#| fig-width: 12
+#| fig-height: 15
+
+temp_initial_a <- nat$nat_a |> 
+  pivot_longer(cols = c(nat, pop), names_to = "category", values_to = "count") |>
+  mutate(
+    cat = fact_if(category, process_lev, "nat"),
+    smooth = factor(smooth_lev[1], levels = smooth_lev)
+  ) |>
+  select(age, cat, smooth, count)  
+
+temp_smooth_a <- nat$nat_a |> 
+  pivot_longer(cols = c(nat_a, pop_a), names_to = "category", values_to = "count") |>
+  mutate(
+    cat = fact_if(category, process_lev, "nat_a"),
+    smooth = factor(smooth_lev[2], levels = smooth_lev)
+  ) |>
+  select(age, cat, smooth, count)  
+  
+ 
+(bind_rows(temp_initial_a, temp_smooth_a) |> 
+  mutate(cat = factor(cat, levels = rev(process_lev))) |>
+  ggplot() +
+	  geom_line(aes(x = age, y = count, color = cat, linetype = smooth)) +
+	  facet_wrap(~ cat, ncol = 1, scales = "free_y") +
+	  labs(x = "age",
+	       y = "quantity per year (naturalization), quantity (population)",
+	       color = "", linetype = "") +
+    scale_color_manual(values = params$col_6[1:2]) +
+    scale_linetype_manual(values = c("solid", "dotted")) +
+	  params$neutral) |> 
+ggplotly() |>
+  layout(legend = list(x = 1.05, y = 1))
+
+```
+
+## rate
+
+```{r}
+#| label: fig-0716
+#| fig-cap: rate by age
+#| fig-width: 9
+#| fig-height: 7
+
+(nat$nat_rate_a |> 
+  pivot_longer(
+    cols = c(rate_thres, rate_smooth),
+    names_to = "category",
+    values_to = "count"
+  ) |>
+  mutate(cat = fact_if(category, smooth_lev, "rate_thres")) |>
+  select(age, cat, count) |> 
+  ggplot() +
+	  geom_line(aes(x = age, y = count, linetype = cat), 
+	            color = params$col_1) +
+	  labs(x = "age",
+	       y = "naturalization rate (in % per year)",
+	       linetype = "") +
+    scale_linetype_manual(values = c("solid", "dotted")) +
+	  params$neutral) |> 
+ggplotly()
+
+```
+
+## trend factor ('rate ya' to 'rate a')
+
+```{r}
+#| label: fig-0717
+#| fig-cap: trend factor by year and age, focus on age
+#| fig-width: 10
+#| fig-height: 8
+
+(nat$tf_ya |> 
+  ggplot() +
+    geom_hline(yintercept = 1, col = params$col_grey) +
+	  geom_line(aes(x = age, y = tf_ya, color = as.factor(year))) +
+	  labs(x = "age", y = "trend factor", color = "") +
+    scale_color_manual(values = pal_year) +
+    coord_cartesian(ylim = c(0, 2)) +
+    params$neutral) |> 
+ ggplotly()
+
+```
+
+```{r}
+#| label: fig-0718
+#| fig-cap: trend factor by year and age, focus on years
+#| fig-width: 12
+#| fig-height: 15
+
+
+(nat$tf_ya |>
+  filter(age %in% seq(0, 100, by = 10)) |>
+  ggplot() +
+	  geom_line(aes(x = year, y = tf_ya),
+	            color = params$col_1) +
+	  facet_wrap(~ age, ncol = 4,
+	             labeller = labeller(age = function(x) paste("age", x))) +
+	  labs(x = "", y = "trend factor") +
+	  params$neutral) |>
+ggplotly()
+
+```
+
+## future rate (dyas)
+
+future naturalization rate by district, year, age, sex (male only)
+
+```{r}
+#| label: fig-0721
+#| fig-cap: future rate by district, year, age, sex (male only)
+#| fig-width: 20
+#| fig-height: 20
+
+(nat$rate_dyas_future |> 
+  filter(sex %in% params$uni_s[1]) |> 
+  ggplot() +
+	  geom_line(aes(x = age, y = rate_smoothed, color = as.factor(year))) +
+	  facet_wrap(~district, ncol = 4) +
+	  labs(x = "age", y = "naturalization rate (in % per year)", color = "") +
+    scale_color_manual(values = pal_year) +
+	  params$neutral) |>
+ggplotly(height = 2000)
+
+
+```
+
+future naturalization rate by district, year, age, sex (female only)
+
+```{r}
+#| label: fig-0722
+#| fig-cap: future rate by district, year, age, sex (female only)
+#| fig-width: 20
+#| fig-height: 20
+
+(nat$rate_dyas_future |> 
+  filter(sex %in% params$uni_s[2]) |> 
+  ggplot() +
+	  geom_line(aes(x = age, y = rate_smoothed, color = as.factor(year))) +
+	  facet_wrap(~district, ncol = 4) +
+	  labs(x = "age", y = "naturalization rate (in % per year)", color = "") +
+    scale_color_manual(values = pal_year) +
+	  params$neutral) |>
+ggplotly(height = 2000)
+
+```
+
+

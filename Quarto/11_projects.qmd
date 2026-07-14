@@ -1,0 +1,294 @@
+
+# Projects
+
+```{r, include=FALSE}
+#| label: prep
+#| echo: false
+#| results: 'hide'
+#| message: false
+#| warning: false
+#| cache: true
+
+# project root
+library(rprojroot)
+root <- find_root(is_rstudio_project)
+
+# get the parameters
+source(file.path(root, "R/0000_General/0002_init.R"))
+vars_once <- init_once(i_data_path = "~/v/Szen/BevSzen/2026")
+params <- init_scen(i_scen = "middle", vars_init_once = vars_once)
+
+# load the projects function
+source(file.path(root, "R/1101_projects_fun.R"))
+
+# execute the projects function
+pro <- projects_fun(params = params)
+
+```
+
+## indicators (new/removed apartments)
+
+### by year
+
+```{r}
+#| label: fig-1100
+#| fig-cap: projects by year
+#| fig-width: 8
+#| fig-height: 7
+
+(pro$pro_all |> 
+  group_by(year, indicator) |> 
+  summarize(
+    apartments = sum_NA(apartments),
+    .groups = "drop"
+  ) |> 
+  ggplot() +
+  geom_col(aes(x = year, y = apartments, fill = indicator), 
+           position = "dodge") +
+	labs(x = "", y = "apartments", fill = "") +
+  scale_fill_manual(values = params$col_i) +
+  params$neutral) |> 
+  ggplotly()
+
+```
+
+### by year, status
+
+```{r}
+#| label: fig-1101
+#| fig-cap: projects by year and status
+#| fig-width: 8
+#| fig-height: 12
+
+(pro$pro_all |> 
+  group_by(year, status, indicator) |>
+  summarize(
+    apartments = sum_NA(apartments),
+    .groups = "drop"
+  ) |> 
+  ggplot() +
+  geom_col(aes(x = year, y = apartments, fill = indicator),
+           position = "dodge") +
+  facet_wrap( ~ status, ncol = 2) +
+	labs(x = "", y = "apartments", fill = "") +
+  scale_fill_manual(values = params$col_i) +
+  params$neutral) |>
+  ggplotly()
+
+
+```
+
+### by year, owner
+
+```{r}
+#| label: fig-1102
+#| fig-cap: projects by year and owner
+#| fig-width: 8
+#| fig-height: 6
+
+(pro$pro_all |> 
+  group_by(year, owner, indicator) |>
+  summarize(
+    apartments = sum_NA(apartments),
+    .groups = "drop"
+  ) |> 
+  ggplot() +
+  geom_col(aes(x = year, y = apartments, fill = indicator),
+           position = "dodge") +
+  facet_wrap( ~ owner, nrow = 1) +
+	labs(x = "", y = "apartments", fill = "") +
+  scale_fill_manual(values = params$col_i) +
+  params$neutral) |>
+  ggplotly()
+  
+
+```
+
+### by year, owner, status
+
+```{r}
+#| label: fig-1103
+#| fig-cap: projects by year, owner and status
+#| fig-width: 12
+#| fig-height: 18
+
+(pro$pro_all |> 
+  group_by(year, owner, status, indicator) |>
+  summarize(
+    apartments = sum_NA(apartments),
+    .groups = "drop"
+  ) |> 
+  ggplot() +
+  geom_col(aes(x = year, y = apartments, fill = indicator),
+           position = "dodge") +
+  facet_grid(status ~ owner) +
+	labs(x = "", y = "apartments", fill = "") +
+  scale_fill_manual(values = params$col_i) +
+  params$neutral) |>
+ ggplotly() |>
+  layout(legend = list(x = 1.05, y = 1))
+
+
+```
+
+### by district, year
+
+```{r}
+#| label: fig-1104
+#| fig-cap: projects by district and year
+#| fig-width: 18
+#| fig-height: 16
+
+(pro$pro_all |> 
+  group_by(district, year, indicator) |>
+  summarize(
+    apartments = sum_NA(apartments),
+    .groups = "drop"
+  ) |> 
+  ggplot() +
+  geom_col(aes(x = year, y = apartments, fill = indicator),
+           position = "dodge") +
+	facet_wrap(~district, ncol = 4) +
+	labs(x = "", y = "apartments", fill = "") +
+  scale_fill_manual(values = params$col_i) +
+  params$neutral) |>
+  ggplotly(height = 2000)
+
+```
+
+### by district, year, owner
+
+projects by district, year, cooperative housing only
+
+```{r}
+#| label: fig-1105a
+#| fig-cap: projects by district, year, cooperative housing only
+#| fig-width: 18
+#| fig-height: 16
+
+pro_dyw <- pro$pro_all |> 
+  group_by(district, year, owner, indicator) |>
+  summarize(
+    apartments = sum_NA(apartments),
+    .groups = "drop"
+  )
+
+(pro_dyw |> 
+  filter(owner == params$uni_w[1]) |> 
+  ggplot() +
+  geom_col(aes(x = year, y = apartments, fill = indicator),
+           position = "dodge") +
+	facet_wrap(~district, ncol = 4) +
+	labs(x = "", y = "apartments", fill = "") +
+  scale_fill_manual(values = params$col_i) +
+  params$neutral) |>
+  ggplotly(height = 2000)
+
+```
+
+projects by district, year, private housing only
+
+```{r}
+#| label: fig-1105b
+#| fig-cap: projects by district, year, private housing only
+#| fig-width: 18
+#| fig-height: 16
+
+(pro_dyw |> 
+  filter(owner == params$uni_w[2]) |> 
+  ggplot() +
+  geom_col(aes(x = year, y = apartments, fill = indicator),
+           position = "dodge") +
+	facet_wrap(~district, ncol = 4) +
+	labs(x = "", y = "apartments", fill = "") +
+  scale_fill_manual(values = params$col_i) +
+  params$neutral) |>
+  ggplotly(height = 2000)
+
+```
+
+
+
+## not realized projects
+
+### delayed
+
+```{r}
+#| label: fig-1106
+#| fig-cap: projects delay by year
+#| fig-width: 10
+#| fig-height: 8
+
+(pro$delay |> 
+  ggplot() +
+  geom_col(aes(x = as.factor(year), y = ynorm, fill = delayText),
+           position = "dodge") +
+	labs(x = "", y = "percent (of the apartments)", fill = "") +
+  scale_fill_manual(values = params$col_6) +
+  params$neutral) |>
+  ggplotly()
+
+
+```
+
+### initial vs. 'not realized'/'delayed'
+
+```{r}
+#| label: check initial vs. final amount of apartment
+#| tbl-cap: initial vs. final amount of apartments
+
+text_corr <- c("initial", "not realized, delayed")
+uni_corr <- factor(text_corr, levels = text_corr)
+
+pro_y_nd <- pro$pro_delay |>  
+  group_by(year, indicator) |>
+  summarize(
+    apartments = sum_NA(apartments),
+    .groups = "drop"
+  ) |>
+  mutate(corr = uni_corr[2])
+
+pro_y_both <- pro$pro_all |>
+  group_by(year, indicator) |>
+  summarize(
+    apartments = sum_NA(apartments),
+    .groups = "drop"
+  ) |> 
+  mutate(corr = uni_corr[1]) |> 
+  bind_rows(pro_y_nd)
+
+# check (difference, since parameter for 'not realized')
+check <- pro_y_both |> 
+  group_by(indicator, corr) |>
+  summarize(
+    apartments = sum(apartments),
+    .groups = "drop"
+  )
+
+gt::gt(check) |>
+  gt::cols_align(align = "left")
+
+
+```
+
+
+```{r}
+#| label: fig-1107
+#| fig-cap: projects; initial, delayed and not realized, by year
+#| fig-width: 10
+#| fig-height: 14
+
+(pro_y_both |> 
+  complete(year, corr, indicator, fill = list(apartments = 0)) |> 
+  ggplot() +
+  geom_col(aes(x = as.factor(year), y = apartments, fill = corr),
+           position = "dodge") +
+	facet_wrap(~indicator, ncol = 1) +
+	labs(x = "", y = "apartments", fill = "") +
+  scale_fill_manual(values = params$col_6[1:2]) +
+  params$neutral) |>
+  ggplotly()
+
+```
+
+

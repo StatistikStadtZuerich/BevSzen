@@ -1,0 +1,517 @@
+
+# Capacity and reserves
+
+```{r, include=FALSE}
+#| label: prep
+#| echo: false
+#| results: 'hide'
+#| message: false
+#| warning: false
+#| cache: true
+
+# project root
+library(rprojroot)
+root <- find_root(is_rstudio_project)
+
+# get the parameters
+source(file.path(root, "R/0000_General/0002_init.R"))
+vars_once <- init_once(i_data_path = "~/v/Szen/BevSzen/2026")
+params <- init_scen(i_scen = "middle", vars_init_once = vars_once)
+# params <- init_scen(i_scen = "middle_car_rev", vars_init_once = vars_once)
+
+# load the capacity-reserves function
+source(file.path(root, "R/0801_capacity_reserves_fun.R"))
+
+# execute the capacity-reserves function
+car <- capacity_reserves_fun(params = params)
+
+```
+
+
+## careb
+
+### plot entire city, all owner categories
+
+```{r}
+#| label: fig-0800
+#| fig-cap: entire city
+#| fig-width: 10
+#| fig-height: 14
+
+(car$car_dat |> 
+  group_by(year, residence, plot, cat) |>
+  summarize(ha = sum(ha), .groups = "drop") |> 
+  ggplot() +
+	  geom_line(aes(x = year, y = ha, color = residence, linetype = plot)) +
+	  facet_wrap(~ cat, ncol = 2, scales = "free_y") +
+	  labs(x = "year of data delivery",
+	       y = "area (in ha)",
+	       color = "", linetype = "") +
+    scale_color_manual(values = params$col_e) +
+    scale_linetype_manual(values = c("solid", "dotted")) +
+    expand_limits(y = 0) +
+	  params$neutral) |> 
+ggplotly() |>
+  layout(
+    legend = list(orientation = "h",  x = 0.5, 
+                  xanchor = "center",  y = -0.15, yanchor = "top"))
+
+```
+
+### plot entire city, by owner
+
+```{r}
+#| label: fig-0801
+#| fig-cap: entire city by owner
+#| fig-width: 10
+#| fig-height: 18
+
+(car$car_dat |> 
+  group_by(year, residence, plot, owner, cat) |>
+  summarize(ha = sum(ha), .groups = "drop") |> 
+  ggplot() +
+	  geom_line(aes(x = year, y = ha, color = residence, linetype = plot)) +
+	  facet_grid(cat ~ owner, scales = "free_y") +
+	  labs(x = "year of data delivery",
+	       y = "area (in ha)",
+	       color = "", linetype = "") +
+    scale_color_manual(values = params$col_e) +
+    scale_linetype_manual(values = c("solid", "dotted")) +
+    expand_limits(y = 0) +
+	  params$neutral) |> 
+  ggplotly() |>
+  layout(legend = list(orientation = "h",  x = 0.5, xanchor = "center",  
+                       y = -0.1, yanchor = "top"))
+
+```
+
+### capacity by district, cooperative housing
+
+```{r}
+#| label: fig-0802a
+#| fig-cap: capacity by district, cooperative housing
+#| fig-width: 20
+#| fig-height: 20
+
+(car$car_dat |> 
+group_by(district, year, owner, residence, plot, cat) |>
+  summarize(ha = sum(ha), .groups = "drop") |> 
+  filter(cat == params$car_category[1], owner == params$uni_w[1]) |> 
+  ggplot() +
+	  geom_line(aes(x = year, y = ha, color = residence, linetype = plot)) +
+	  facet_wrap(~district, ncol = 4, scales = "free_y") +
+	  labs(x = "year of data delivery", y = "area (in ha)",
+	       color = "", linetype = "") +
+    scale_color_manual(values = params$col_e) +
+    scale_linetype_manual(values = c("solid", "dotted")) +
+    expand_limits(y = 0) +
+	  params$neutral) |> 
+  ggplotly(height = 2000) |> 
+  layout(legend = list(orientation = "h",  x = 0.5, xanchor = "center",
+                       y = -0.02, yanchor = "top"))
+
+
+```
+
+### capacity by district, private housing
+
+```{r}
+#| label: fig-0802b
+#| fig-cap: capacity by district, private housing
+#| fig-width: 20
+#| fig-height: 20
+
+(car$car_dat |> 
+group_by(district, year, owner, residence, plot, cat) |>
+  summarize(ha = sum(ha), .groups = "drop") |> 
+  filter(cat == params$car_category[1], owner == params$uni_w[2]) |> 
+  ggplot() +
+	  geom_line(aes(x = year, y = ha, color = residence, linetype = plot)) +
+	  facet_wrap(~district, ncol = 4, scales = "free_y") +
+	  labs(x = "year of data delivery", y = "area (in ha)",
+	       color = "", linetype = "") +
+    scale_color_manual(values = params$col_e) +
+    scale_linetype_manual(values = c("solid", "dotted")) +
+    expand_limits(y = 0) +
+	  params$neutral) |> 
+  ggplotly(height = 2000) |> 
+  layout(legend = list(orientation = "h",  x = 0.5, xanchor = "center",
+                       y = -0.02, yanchor = "top"))
+
+```
+
+
+### buildings by district, cooperative housing
+
+```{r}
+#| label: fig-0802c
+#| fig-cap: buildings by district, cooperative housing
+#| fig-width: 20
+#| fig-height: 20
+
+(car$car_dat |> 
+group_by(district, year, owner, residence, plot, cat) |>
+  summarize(ha = sum(ha), .groups = "drop") |> 
+  filter(cat == params$car_category[2], owner == params$uni_w[1]) |> 
+  ggplot() +
+	  geom_line(aes(x = year, y = ha, color = residence, linetype = plot)) +
+	  facet_wrap(~district, ncol = 4, scales = "free_y") +
+	  labs(x = "year of data delivery", y = "area (in ha)",
+	       color = "", linetype = "") +
+    scale_color_manual(values = params$col_e) +
+    scale_linetype_manual(values = c("solid", "dotted")) +
+    expand_limits(y = 0) +
+	  params$neutral) |> 
+  ggplotly(height = 2000) |> 
+  layout(legend = list(orientation = "h",  x = 0.5, xanchor = "center",
+                       y = -0.02, yanchor = "top"))
+
+```
+
+
+### buildings by district, private housing
+
+```{r}
+#| label: fig-0802d
+#| fig-cap: buildings by district, private housing
+#| fig-width: 20
+#| fig-height: 20
+
+(car$car_dat |> 
+group_by(district, year, owner, residence, plot, cat) |>
+  summarize(ha = sum(ha), .groups = "drop") |> 
+  filter(cat == params$car_category[2], owner == params$uni_w[2]) |> 
+  ggplot() +
+	  geom_line(aes(x = year, y = ha, color = residence, linetype = plot)) +
+	  facet_wrap(~district, ncol = 4, scales = "free_y") +
+	  labs(x = "year of data delivery", y = "area (in ha)",
+	       color = "", linetype = "") +
+    scale_color_manual(values = params$col_e) +
+    scale_linetype_manual(values = c("solid", "dotted")) +
+    expand_limits(y = 0) +
+	  params$neutral) |> 
+  ggplotly(height = 2000) |> 
+  layout(legend = list(orientation = "h",  x = 0.5, xanchor = "center",
+                       y = -0.02, yanchor = "top"))
+
+```
+
+
+
+### reserves by district, cooperative housing
+
+```{r}
+#| label: fig-0802e
+#| fig-cap: reserves by district, cooperative housing
+#| fig-width: 20
+#| fig-height: 20
+
+(car$car_dat |> 
+group_by(district, year, owner, residence, plot, cat) |>
+  summarize(ha = sum(ha), .groups = "drop") |> 
+  filter(cat == params$car_category[3], owner == params$uni_w[1]) |> 
+  ggplot() +
+	  geom_line(aes(x = year, y = ha, color = residence, linetype = plot)) +
+	  facet_wrap(~district, ncol = 4, scales = "free_y") +
+	  labs(x = "year of data delivery", y = "area (in ha)",
+	       color = "", linetype = "") +
+    scale_color_manual(values = params$col_e) +
+    scale_linetype_manual(values = c("solid", "dotted")) +
+    expand_limits(y = 0) +
+	  params$neutral) |> 
+  ggplotly(height = 2000) |> 
+  layout(legend = list(orientation = "h",  x = 0.5, xanchor = "center",
+                       y = -0.02, yanchor = "top"))
+
+```
+
+### reserves by district, private housing
+
+```{r}
+#| label: fig-0802f
+#| fig-cap: reserves by district, private housing
+#| fig-width: 20
+#| fig-height: 20
+
+(car$car_dat |> 
+group_by(district, year, owner, residence, plot, cat) |>
+  summarize(ha = sum(ha), .groups = "drop") |> 
+  filter(cat == params$car_category[3], owner == params$uni_w[2]) |> 
+  ggplot() +
+	  geom_line(aes(x = year, y = ha, color = residence, linetype = plot)) +
+	  facet_wrap(~district, ncol = 4, scales = "free_y") +
+	  labs(x = "year of data delivery", y = "area (in ha)",
+	       color = "", linetype = "") +
+    scale_color_manual(values = params$col_e) +
+    scale_linetype_manual(values = c("solid", "dotted")) +
+    expand_limits(y = 0) +
+	  params$neutral) |> 
+  ggplotly(height = 2000) |> 
+  layout(legend = list(orientation = "h",  x = 0.5, xanchor = "center",
+                       y = -0.02, yanchor = "top"))
+
+
+```
+
+
+### usage by district, cooperative housing
+
+```{r}
+#| label: fig-0802g
+#| fig-cap: usage by district, cooperative housing
+#| fig-width: 20
+#| fig-height: 20
+
+(car$car_dat |> 
+group_by(district, year, owner, residence, plot, cat) |>
+  summarize(ha = sum(ha), .groups = "drop") |> 
+  filter(cat == params$car_category[4], owner == params$uni_w[1]) |> 
+  ggplot() +
+	  geom_line(aes(x = year, y = ha, color = residence, linetype = plot)) +
+	  facet_wrap(~district, ncol = 4, scales = "free_y") +
+	  labs(x = "year of data delivery", y = "area (in ha)",
+	       color = "", linetype = "") +
+    scale_color_manual(values = params$col_e) +
+    scale_linetype_manual(values = c("solid", "dotted")) +
+    expand_limits(y = 0) +
+	  params$neutral) |> 
+  ggplotly(height = 2000) |> 
+  layout(legend = list(orientation = "h",  x = 0.5, xanchor = "center",
+                       y = -0.02, yanchor = "top"))
+
+
+```
+
+
+### usage by district, private housing
+
+```{r}
+#| label: fig-0802h
+#| fig-cap: usage by district, private housing
+#| fig-width: 20
+#| fig-height: 20
+
+(car$car_dat |> 
+group_by(district, year, owner, residence, plot, cat) |>
+  summarize(ha = sum(ha), .groups = "drop") |> 
+  filter(cat == params$car_category[4], owner == params$uni_w[2]) |> 
+  ggplot() +
+	  geom_line(aes(x = year, y = ha, color = residence, linetype = plot)) +
+	  facet_wrap(~district, ncol = 4, scales = "free_y") +
+	  labs(x = "year of data delivery", y = "area (in ha)",
+	       color = "", linetype = "") +
+    scale_color_manual(values = params$col_e) +
+    scale_linetype_manual(values = c("solid", "dotted")) +
+    expand_limits(y = 0) +
+	  params$neutral) |> 
+  ggplotly(height = 2000) |> 
+  layout(legend = list(orientation = "h",  x = 0.5, xanchor = "center",
+                       y = -0.02, yanchor = "top"))
+
+```
+
+### selected districts
+
+```{r}
+#| label: fig-0803a
+#| fig-cap: selected districts, Hard
+#| fig-width: 10
+#| fig-height: 18
+
+(car$car_dat |> 
+group_by(district, year, owner, residence, plot, cat) |>
+  summarize(ha = sum(ha), .groups = "drop") |> 
+  filter(district == "Hard") |> 
+  ggplot() +
+	  geom_line(aes(x = year, y = ha, color = residence, linetype = plot)) +
+	  facet_grid(cat ~ owner, scales = "free_y") +
+	  labs(x = "year of data delivery",
+	       y = "area (in ha)",
+	       color = "", linetype = "") +
+    scale_color_manual(values = params$col_e) +
+    scale_linetype_manual(values = c("solid", "dotted")) +
+    expand_limits(y = 0) +
+	  params$neutral) |> 
+  ggplotly() |>
+  layout(legend = list(orientation = "h",  x = 0.5, xanchor = "center",
+                       y = -0.1, yanchor = "top"))
+
+
+```
+
+
+
+```{r}
+#| label: fig-0803b
+#| fig-cap: selected districts, Escher Wyss
+#| fig-width: 10
+#| fig-height: 18
+
+(car$car_dat |> 
+group_by(district, year, owner, residence, plot, cat) |>
+  summarize(ha = sum(ha), .groups = "drop") |> 
+  filter(district == "Escher Wyss") |> 
+  ggplot() +
+	  geom_line(aes(x = year, y = ha, color = residence, linetype = plot)) +
+	  facet_grid(cat ~ owner, scales = "free_y") +
+	  labs(x = "year of data delivery",
+	       y = "area (in ha)",
+	       color = "", linetype = "") +
+    scale_color_manual(values = params$col_e) +
+    scale_linetype_manual(values = c("solid", "dotted")) +
+    expand_limits(y = 0) +
+	  params$neutral) |> 
+  ggplotly() |>
+  layout(legend = list(orientation = "h",  x = 0.5, xanchor = "center",
+                       y = -0.1, yanchor = "top"))
+
+
+```
+
+
+
+```{r}
+#| label: fig-0803c
+#| fig-cap: selected districts, Oerlikon
+#| fig-width: 10
+#| fig-height: 18
+
+(car$car_dat |> 
+group_by(district, year, owner, residence, plot, cat) |>
+  summarize(ha = sum(ha), .groups = "drop") |> 
+  filter(district == "Oerlikon") |> 
+  ggplot() +
+	  geom_line(aes(x = year, y = ha, color = residence, linetype = plot)) +
+	  facet_grid(cat ~ owner, scales = "free_y") +
+	  labs(x = "year of data delivery",
+	       y = "area (in ha)",
+	       color = "", linetype = "") +
+    scale_color_manual(values = params$col_e) +
+    scale_linetype_manual(values = c("solid", "dotted")) +
+    expand_limits(y = 0) +
+	  params$neutral) |> 
+  ggplotly() |>
+  layout(legend = list(orientation = "h",  x = 0.5, xanchor = "center",
+                       y = -0.1, yanchor = "top"))
+```
+
+
+
+
+## combine information (with the parameters)
+
+### reserves (area)
+
+no area values below zero
+
+```{r}
+#| label: fig-0804
+#| fig-cap: reserves by district and ownership
+#| fig-width: 12
+#| fig-height: 16
+
+(car$usage_prop |> 
+  mutate(district = fct_rev(district)) |> 
+  ggplot() +
+  geom_col(aes(x = district, y = reserve_new, fill = owner), 
+           position = "dodge") +
+  coord_flip() +
+	labs(x = "", y = "reserves (in ha)", fill = "") +
+  scale_fill_manual(values = params$col_w) +
+  params$neutral) |> 
+  ggplotly()
+
+```
+
+### usage proportion
+
+```{r}
+#| label: fig-0805
+#| fig-cap: usage proportion by district and ownership
+#| fig-width: 12
+#| fig-height: 16
+
+(car$usage_prop |> 
+  mutate(district = fct_rev(district)) |> 
+  ggplot() +
+  geom_col(aes(x = district, y = usage_prop, fill = owner), 
+           position = "dodge") +
+  coord_flip() +
+	labs(x = "", y = "usage proportion (in % of the reserves)", fill = "") +
+  scale_fill_manual(values = params$col_w) +
+  params$neutral) |> 
+  ggplotly()
+
+
+```
+
+### usage area
+
+```{r}
+#| label: fig-0806
+#| fig-cap: usage area by district and ownership
+#| fig-width: 12
+#| fig-height: 16
+
+(car$usage_prop |> 
+  mutate(district = fct_rev(district)) |> 
+  ggplot() +
+  geom_col(aes(x = district, y = usage, fill = owner), 
+           position = "dodge") +
+  coord_flip() +
+	labs(x = "", y = "usage area (in ha)", fill = "") +
+  scale_fill_manual(values = params$col_w) +
+  params$neutral) |> 
+  ggplotly()
+
+```
+
+## usage per year
+### usage proportion
+
+```{r}
+#| label: fig-0807
+#| fig-cap: usage proportion by district and year
+#| fig-width: 20
+#| fig-height: 20
+
+(car$total |> 
+  ggplot() +
+	  geom_line(aes(x = year, y = usage_prop, color = owner)) +
+	  facet_wrap(~district, ncol = 4) +
+	  labs(x = "", 
+	       y = "usage proportion (in % of the reserves per year)",
+	       color = "") +
+    scale_color_manual(values = params$col_w) +
+    expand_limits(y = 0) +
+	  params$neutral) |> 
+  ggplotly(height = 2000) |> 
+  layout(legend = list(orientation = "h",  x = 0.5, xanchor = "center",
+                       y = -0.02, yanchor = "top"))
+
+```
+
+### usage area
+
+```{r}
+#| label: fig-0808
+#| fig-cap: usage area by district and year
+#| fig-width: 20
+#| fig-height: 20
+
+
+(car$total |> 
+  ggplot() +
+	  geom_line(aes(x = year, y = usage_area, color = owner)) +
+	  facet_wrap(~district, ncol = 4) +
+	  labs(x = "", 
+	       y = "usage area (in ha per year)",
+	       color = "") +
+    scale_color_manual(values = params$col_w) +
+    expand_limits(y = 0) +
+	  params$neutral) |> 
+  ggplotly(height = 2000) |> 
+  layout(legend = list(orientation = "h",  x = 0.5, xanchor = "center",
+                       y = -0.02, yanchor = "top"))
+
+```

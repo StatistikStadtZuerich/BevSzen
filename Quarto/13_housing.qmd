@@ -1,0 +1,318 @@
+
+# Housing model
+
+```{r, include=FALSE}
+#| label: prep
+#| echo: false
+#| results: 'hide'
+#| message: false
+#| warning: false
+#| cache: true
+
+# project root
+library(rprojroot)
+root <- find_root(is_rstudio_project)
+
+# get the parameters
+source(file.path(root, "R/0000_General/0002_init.R"))
+vars_once <- init_once(i_data_path = "~/v/Szen/BevSzen/2026")
+params <- init_scen(i_scen = "middle", vars_init_once = vars_once)
+
+# load the housing model function
+source(file.path(root, "R/0000_General/0024_projects-reserves.R"))
+source(file.path(root, "R/1301_housing_fun.R"))
+
+# execute the housing model function
+hou <- housing_fun(params = params)
+
+```
+
+## population based on reserves
+
+With the usage prediction (from capacity reserve module) and living space prediction  
+the additional (!) yearly (!) population is calculated.
+Therefore, these cumulative population values are added to the past population.
+
+
+```{r}
+#| label: fig-1300
+#| fig-cap: people, capacity, reserves
+#| fig-width: 20
+#| fig-height: 20
+
+(hou$pop_with_past |> 
+  ggplot() +
+    geom_vline(xintercept = params$scen_begin, 
+               color = params$col_grey, linetype = "dashed") +    
+	  geom_line(aes(x = year, y = pop, color = owner)) +
+	  facet_wrap(~district, ncol = 4, scales = "free_y") +
+	  labs(x = "", y = "people", color = "") +
+    scale_color_manual(values = params$col_w) +
+    expand_limits(y = 0) +  
+	  params$neutral) |> 
+  ggplotly(height = 1500)
+
+```
+
+
+## population based on projects and reserves
+
+### population by district and ownership
+
+```{r}
+#| label: fig-1302
+#| fig-cap: population by district and owner
+#| fig-width: 20
+#| fig-height: 20
+
+(hou$pop_fut_past |> 
+  ggplot() +
+    geom_vline(xintercept = params$scen_begin, 
+               color = params$col_grey, linetype = "dashed") +    
+	  geom_line(aes(x = year, y = pop, color = owner)) +
+	  facet_wrap(~district, ncol = 4, scales = "free_y") +
+	  labs(x = "", y = "people", color = "") +
+    scale_color_manual(values = params$col_w) +
+    expand_limits(y = 0) +  
+	  params$neutral) |> 
+  ggplotly(height = 1500)  
+
+
+```
+
+### population by district
+
+```{r}
+#| label: fig-1303
+#| fig-cap: population by district
+#| fig-width: 20
+#| fig-height: 20
+
+(hou$pop_d |> 
+  ggplot() +
+    geom_vline(xintercept = params$scen_begin, 
+               color = params$col_grey, linetype = "dashed") +    
+	  geom_line(aes(x = year, y = pop), col = params$col_1) +
+	  facet_wrap(~district, ncol = 4, scales = "free_y") +
+	  labs(x = "", y = "people") +
+    expand_limits(y = 0) +  
+	  params$neutral) |> 
+  ggplotly(height = 1500)  
+
+```
+
+### entire city
+
+```{r}
+#| label: fig-1304
+#| fig-cap: population
+#| fig-width: 10
+#| fig-height: 8
+
+(hou$pop_all |> 
+  ggplot() +
+    geom_vline(xintercept = params$scen_begin, 
+               color = params$col_grey, linetype = "dashed") +     
+	  geom_line(aes(x = year, y = pop), col = params$col_1) +
+	  labs(x = "", y = "people") +
+    expand_limits(y = 0) +
+	  params$neutral) |> 
+ggplotly()
+
+```
+
+## compare projects, reserves, final prediction
+
+### projects, reserves, final prediction by district, year, ownership
+
+Projects, reserves, final prediction by district, year, cooperative housing only.
+
+```{r}
+#| label: fig-1305a
+#| fig-cap: projects, reserves, final prediction by district, year, cooperative housing only
+#| fig-width: 20
+#| fig-height: 20
+
+cat_level <- c("projects", "reserves", "final")
+
+comp_pro_car <- hou$pro_car |> 
+  replace_na(list(pop = 0, car = 0)) |> 
+  mutate(car_cum = if_else(year == params$date_end, pop, car),
+         pro_y = if_else(year == params$date_end, pop, new - removed)) |> 
+  group_by(district, owner) |> 
+      arrange(year) |> 
+      mutate(pro_cum = cumsum(pro_y)) |> 
+  ungroup() |> 
+  arrange(district, owner, year) |> 
+  select(district, owner, year, pro_cum, car_cum)
+
+
+pre_res_fin <- hou$pro_res_all |>
+  left_join(comp_pro_car, by = c("district", "year", "owner")) |>
+  pivot_longer(c(pro_cum, car_cum, pop), names_to = "category", values_to = "people") |>
+  mutate(
+    district = factor(district, levels = params$uni_d),
+    cat = factor(case_when(
+      category == "pro_cum" ~ cat_level[1],
+      category == "car_cum" ~ cat_level[2],
+      TRUE ~ cat_level[3]
+    ), levels = cat_level)
+  ) |>
+  select(district, year, owner, cat, people)
+    
+(pre_res_fin |> 
+  filter(owner == params$uni_w[1]) |> 
+  ggplot() +
+	  geom_line(aes(x = year, y = people, color = cat)) +
+	  facet_wrap(~district, ncol = 4, scales = "free_y") +
+	  labs(x = "", y = "people", color = "") +
+    scale_color_manual(values = params$col_6[c(1,3,4)]) +
+    expand_limits(y = 0) +
+	  params$neutral) |>
+  ggplotly(height = 1500)
+
+```
+
+projects, reserves, final prediction by district, year, private housing only
+
+```{r}
+#| label: fig-1305b
+#| fig-cap: projects, reserves, final prediction by district, year, private housing only
+#| fig-width: 20
+#| fig-height: 20
+
+(pre_res_fin |> 
+  filter(owner == params$uni_w[2]) |> 
+  ggplot() +
+	  geom_line(aes(x = year, y = people, color = cat)) +
+	  facet_wrap(~district, ncol = 4, scales = "free_y") +
+	  labs(x = "", y = "people", color = "") +
+    scale_color_manual(values = params$col_6[c(1,3,4)]) +
+    expand_limits(y = 0) +
+	  params$neutral) |>
+  ggplotly(height = 1500)
+
+```
+
+
+
+
+### people by district and ownership (projects vs. reserves)
+
+```{r}
+#| label: fig-1306
+#| fig-cap: people by district and ownership (projects vs. reserves)
+#| fig-width: 15
+#| fig-height: 15
+
+# Comment on the data source for this plot: Why not with the object car_spa?
+# It is easier to calculate totals with the original objects and closer to the raw data.
+
+pro_res_level <- c("projects", "reserves")
+
+pro_dw <- hou$pro_aca |> 
+  group_by(district, owner) |> 
+    summarize(new = sum_NA(new), 
+              removed = sum_NA(removed),
+              .groups = "drop") |> 
+  mutate(pro = new - removed) |> 
+  select(district, owner, pro)
+
+pro_car_dw <- hou$car_spa |> 
+  group_by(district, owner) |> 
+    summarize(car = sum_NA(car), 
+              .groups = "drop") |> 
+  left_join(pro_dw, by = c("district", "owner")) |> 
+  pivot_longer(c(car, pro), names_to = "category", values_to = "people") |> 
+  mutate(district = factor(district, levels = rev(params$uni_d)),
+         owner = factor(owner, levels = params$uni_w),
+         cat = fact_if(category, pro_res_level, "pro")) |> 
+  select(district, owner, cat, people)
+    
+(pro_car_dw |>   
+  ggplot() +
+  geom_col(aes(x = district, y = people, fill = cat), 
+           position = "dodge") +
+  coord_flip() +
+  facet_wrap( ~ owner) +
+	labs(x = "", y = "people", fill = "") +
+  scale_fill_manual(values = params$col_6[c(1,3)]) +
+  params$neutral) |> 
+  ggplotly()  
+
+```
+
+### proportion of the projects on the reserves by district and ownership
+
+```{r}
+#| label: fig-1307
+#| fig-cap: proportion of the projects on the reserves by district and ownership
+#| fig-width: 15
+#| fig-height: 15
+
+(pro_car_dw |> 
+  group_by(district, owner) |> 
+  mutate(prop = people / sum_NA(people) * 100) |> 
+  filter(cat == pro_res_level[1]) |> 
+  ggplot() +
+  geom_col(aes(x = district, y = prop), fill = params$col_1, 
+           position = "dodge") +
+  coord_flip() +
+  facet_wrap( ~ owner) +
+	labs(x = "", y = "proportion in % (projects on reserves)") +
+  params$neutral) |> 
+  ggplotly()    
+  
+```
+
+### people by district (projects vs. reserves)
+
+```{r}
+#| label: fig-1308
+#| fig-cap: people by district (projects vs. reserves)
+#| fig-width: 10
+#| fig-height: 10
+
+(pro_car_dw |> 
+  group_by(district, cat) |> 
+  summarize(people = sum_NA(people),
+            .groups = "drop") |> 
+  ggplot() +
+  geom_col(aes(x = district, y = people, fill = cat), 
+           position = "dodge") +
+  coord_flip() +
+	labs(x = "", y = "people", fill = "") +
+  scale_fill_manual(values = params$col_6[c(1,3)]) +
+  params$neutral) |> 
+  ggplotly()    
+  
+
+```
+
+
+### proportion of the projects on the reserves by district 
+
+```{r}
+#| label: fig-1309
+#| fig-cap: proportion of the projects on the reserves by district 
+#| fig-width: 10
+#| fig-height: 10
+
+
+(pro_car_dw |> 
+  group_by(district, cat) |> 
+  summarize(people = sum_NA(people),
+            .groups = "drop") |> 
+  group_by(district) |> 
+  mutate(prop = people / sum_NA(people) * 100) |> 
+  filter(cat == pro_res_level[1]) |> 
+  ggplot() +
+  geom_col(aes(x = district, y = prop), fill = params$col_1, 
+           position = "dodge") +
+  coord_flip() +
+	labs(x = "", y = "proportion in % (projects on reserves)") +
+  params$neutral) |> 
+  ggplotly()    
+  
+```
+

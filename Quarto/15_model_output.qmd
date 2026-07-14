@@ -1,0 +1,1503 @@
+# Model outputs
+
+```{r, include=FALSE}
+#| label: prep
+#| echo: false
+#| results: 'hide'
+#| message: false
+#| warning: false
+#| cache: true
+
+# project root
+library(rprojroot)
+root <- find_root(is_rstudio_project)
+
+# get the parameters
+source(file.path(root, "R/0000_General/0002_init.R"))
+vars_once <- init_once(i_data_path = "~/v/Szen/BevSzen/2026")
+params <- init_scen(i_scen = "middle", vars_init_once = vars_once)
+
+# load the demography and housing function
+source(file.path(root, "R/1501_model_outputs_fun.R"))
+
+# execute the model outputs function
+mod <- model_outputs_fun(params = params, BZO_compare = TRUE)
+
+```
+
+## Population
+
+### by year and scenario
+
+```{r}
+#| label: fig-1500
+#| fig-cap: population by year and scenario
+#| fig-width: 8
+#| fig-height: 8
+
+(mod$pop_yc |> 
+  ggplot() +
+	  geom_line(aes(x = year, y = pop, color = scenario)) +
+	  labs(x = "", y = "population", color = "") +
+    scale_color_manual(values = params$col_c) +
+    expand_limits(y = 0) +  
+	  params$neutral) |> 
+  ggplotly()
+
+```
+
+### by year, age and sex
+
+```{r}
+#| label: fig-1501
+#| fig-cap: population by year, age and sex
+#| fig-width: 10
+#| fig-height: 13
+
+
+limits_ <- mod$pop_yas |>
+  pull(pop_pyramid) |>
+  abs() |>
+  max(na.rm = TRUE)
+
+(mod$pop_yas |> 
+  ggplot() +
+	  geom_line(aes(x = age, y = pop_pyramid, 
+	                color = sex, linetype = year_factor)) +
+	  labs(x = "age", y = "population", color = "", linetype = "") +
+    coord_flip() +
+    scale_color_manual(values = params$col_s) +
+    scale_linetype_manual(values = c("solid", "dotted")) +    
+    scale_y_continuous(limits = c(-limits_, limits_)) +
+	  params$neutral) |> 
+  ggplotly()
+
+
+```
+
+### by district and year
+
+```{r}
+#| label: fig-1502
+#| fig-cap: population by district and year
+#| fig-width: 20
+#| fig-height: 20
+
+(mod$pop_dy |> 
+  ggplot() +
+    geom_vline(xintercept = params$scen_begin, 
+               color = params$col_grey, linetype = "dotted") +    
+	  geom_line(aes(x = year, y = pop), color = params$col_1) +
+	  facet_wrap(~district, ncol = 4) +
+	  labs(x = "", y = "population") +
+    expand_limits(y = 0) +  
+	  params$neutral) |> 
+  ggplotly(height = 1500)
+
+```
+
+### by district, year and origin
+
+```{r}
+#| label: fig-1503
+#| fig-cap: population by district, year and origin
+#| fig-width: 10
+#| fig-height: 14
+
+pop_dyo <- mod$pop |> 
+  filter(scenario %in% params$uni_c[c(1, 3)]) |>
+  group_by(district, year, origin) |>
+  summarize(pop = sum(pop), .groups = "drop")
+
+(pop_dyo |> 
+  ggplot() +
+    geom_vline(xintercept = params$scen_begin, 
+               color = params$col_grey, linetype = "dotted") +    
+	  geom_line(aes(x = year, y = pop, color = origin)) +
+	  facet_wrap(~district, ncol = 4) +
+	  labs(x = "", y = "population", color = "") +
+    scale_color_manual(values = params$col_o) +
+    expand_limits(y = 0) +  
+	  params$neutral) |> 
+  ggplotly(height = 1500)
+
+
+```
+
+### by district, year and origin; foreign population
+
+```{r}
+#| label: fig-1504
+#| fig-cap: foreign proportion of population by district, year and origin
+#| fig-width: 20
+#| fig-height: 20
+
+(pop_dyo |>
+  pivot_wider(names_from = "origin", values_from = "pop") |>
+  mutate(foreign_prop = foreign / (Swiss + foreign) * 100) |>
+  ggplot() +
+    geom_vline(xintercept = params$scen_begin, 
+               color = params$col_grey, linetype = "dotted") +    
+	  geom_line(aes(x = year, y = foreign_prop), color = params$col_1) +
+	  facet_wrap(~district, ncol = 4) +
+	  labs(x = "", y = "foreign proportion in %") +
+    expand_limits(y = 0) +  
+	  params$neutral) |> 
+  ggplotly(height = 1500)  
+  
+```
+
+### by year, origin, scenario
+
+```{r}
+#| label: fig-1505
+#| fig-cap: population by year, origin and scenario
+#| fig-width: 12
+#| fig-height: 8
+
+pop_yoc <- mod$pop |>
+  group_by(year, origin, scenario) |>
+  summarize(pop = sum(pop), .groups = "drop")
+
+(pop_yoc |> 
+  ggplot() +
+	  geom_line(aes(x = year, y = pop, color = scenario)) +
+    facet_wrap(~origin, nrow = 1) + 
+	  labs(x = "", y = "population", color = "") +
+    scale_color_manual(values = params$col_c) +
+    expand_limits(y = 0) +  
+	  params$neutral) |> 
+  ggplotly()
+
+
+```
+
+### by year, origin, scenario; foreign population
+
+```{r}
+#| label: fig-1506
+#| fig-cap: foreign proportion of population by year, origin and scenario
+#| fig-width: 10
+#| fig-height: 8
+
+(pop_yoc |>
+  pivot_wider(names_from = "origin", values_from = "pop") |>
+  mutate(foreign_prop = foreign / (Swiss + foreign) * 100) |>
+  ggplot() +
+	  geom_line(aes(x = year, y = foreign_prop, color = scenario)) +
+	  labs(x = "", y = "foreign proportion in %", color = "") +
+    scale_color_manual(values = params$col_c) +
+    expand_limits(y = 0) +  
+	  params$neutral) |> 
+  ggplotly()  
+  
+```
+
+### by district, year, age and sex
+
+```{r}
+#| label: fig-1507
+#| fig-cap: population by district, year, age and sex
+#| fig-width: 20
+#| fig-height: 20
+
+(mod$pop |>
+  filter(scenario %in% params$uni_c[c(1, 3)],
+         year %in% unique(mod$pop_yas$year)) |>
+  group_by(district, year, age, sex) |>
+  summarize(pop = sum(pop), .groups = "drop") |>
+    mutate(pop_pyramid = if_else(sex == params$uni_s[1], -pop, pop), 
+           year_factor = as.factor(year)) |> 
+   ggplot() +
+	  geom_line(aes(x = age, y = pop_pyramid,
+	                color = sex, linetype = year_factor)) +
+	  labs(x = "age", y = "population", color = "", linetype = "") +
+    coord_flip() +
+	  facet_wrap(~district, ncol = 4, scales = "free_x") +
+    scale_color_manual(values = params$col_s) +
+    scale_linetype_manual(values = c("solid", "dotted")) +
+	  params$neutral) |>
+  ggplotly(height = 2000) 
+  
+  
+  
+```
+
+### by district and year; selected years
+
+plot for slides
+
+```{r}
+#| label: fig-1508
+#| fig-cap:  population by district and year
+#| fig-width: 12
+#| fig-height: 10
+
+(mod$pop_dy |> 
+  filter(year %in% c(params$date_end, params$scen_end_public)) |> 
+  mutate(year_text = paste0("year ", year)) |> 
+  ggplot() +
+  geom_col(aes(x = district, y = pop, fill = year_text), 
+           position = "dodge") +
+	labs(x = "", y = "people", fill = "") +
+  scale_fill_manual(values = params$col_6[c(1,3)]) +
+  params$neutral +
+  theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust = 1))) |> 
+  ggplotly()
+  
+```
+
+### by district, year and scenario
+
+```{r}
+#| label: fig-1509
+#| fig-cap:  population by district, year and scenario
+#| fig-width: 20
+#| fig-height: 20
+
+(mod$pop |>
+    group_by(district, year, scenario) |>
+    summarize(pop = sum(pop), .groups = "drop") |> 
+  ggplot() +
+	  geom_line(aes(x = year, y = pop, color = scenario)) +
+	  facet_wrap(~district, ncol = 4, scales = "free_y") +
+	  labs(x = "", y = "population", color = "") +
+    scale_color_manual(values = params$col_c) +
+    expand_limits(y = 0) +  
+	  params$neutral) |> 
+  ggplotly(height = 2000)  
+  
+```
+
+### year, age, scenario (children)
+
+```{r}
+#| label: fig-1509a
+#| fig-cap: year, age, scenario (children)
+#| fig-width: 10
+#| fig-height: 6
+
+(mod$pop_yac_children |> 
+  ggplot(aes(x = year, y = pop, color = scenario)) +
+    geom_line() +
+    facet_wrap(~age_5, nrow = 1) +
+    scale_color_manual(values = params$col_c) +
+    labs(x = "", y = "people", color = "") +
+    expand_limits(y = 0) +
+    params$neutral) |> 
+ggplotly()
+
+
+```
+
+
+### year, age, birth version (children)
+
+```{r}
+#| label: fig-1509b
+#| fig-cap: year, age, birth version (children)
+#| fig-width: 10
+#| fig-height: 6
+
+(mod$pop_yav_children |>
+  ggplot(aes(x = year, y = pop, color = scenario)) +
+    geom_line() +
+    facet_wrap(~age_5, nrow = 1) +
+    scale_color_manual(values = params$col_c) +
+    labs(x = "", y = "people", color = "") +
+    expand_limits(y = 0) +
+    params$neutral) |>
+ggplotly()
+
+```
+
+
+## population: new and previous scenarios
+
+### by year and scenario
+
+```{r}
+#| label: fig-1510
+#| fig-cap:  previous and new population by year, scenario
+#| fig-width: 8
+#| fig-height: 8
+
+(mod$pop_yc_new_prev |> 
+  ggplot() +
+	  geom_line(aes(x = year, y = pop, color = scenario, linetype = cat)) +
+	  labs(x = "", y = "population", color = "", linetype = "") +
+    scale_color_manual(values = params$col_c) +
+    scale_linetype_manual(values = c("solid", "dotted")) +
+    expand_limits(y = 0) +  
+	  params$neutral) |> 
+  ggplotly()
+
+```
+
+### age: 80plus, by yso 
+
+```{r}
+#| label: fig-1511
+#| fig-cap: previous and new population for 80+ by sex and origin
+#| fig-width: 10
+#| fig-height: 10
+
+new_prev <- factor(c("new", "previous"))
+
+pop_80p_new <- mod$pop_middle |>
+  filter(age >= 80, 
+         year %in% params$uniy_scen_public) |>  
+  group_by(year, sex, origin) |> 
+  summarize(pop = sum_NA(pop), .groups = "drop") |> 
+  mutate(sex = factor(sex, levels = params$uni_s), 
+         origin = factor(origin, levels = params$uni_o), 
+         cat = new_prev[1])  
+
+pop_80p_prev <- mod$sce |>
+  filter(age_class %in% params$age_3t[9:10],
+         scenario == params$text_c[3],
+         year %in% params$uniy_scen_public) |>
+  group_by(year, sex, origin) |>
+  summarize(pop = sum_NA(pop), .groups = "drop") |>
+  mutate(cat = new_prev[2])
+
+# WHY not piped into plot? used for total (age 80plus, without so)
+pop_80p_new_prev <- pop_80p_new |>
+  bind_rows(pop_80p_prev)
+
+(pop_80p_new_prev |> 
+  ggplot() +
+	  geom_line(aes(x = year, y = pop, color = cat)) +
+	  facet_grid(sex ~ origin) +
+	  labs(x = "", y = "population", color = "") +
+    scale_color_manual(values = params$col_6[c(1,3)]) +    
+    expand_limits(y = 0) +  
+	  params$neutral) |> 
+  ggplotly() |>
+    layout(legend = list(x = 1.05, y = 1))
+    
+
+```
+
+### 80plus, by year
+
+```{r}
+#| label: fig-1512
+#| fig-cap: previous and new population for 80+ by year
+#| fig-width: 10
+#| fig-height: 8
+
+(pop_80p_new_prev |> 
+  group_by(year, cat) |> 
+  summarize(pop = sum_NA(pop), .groups = "drop") |> 
+   ggplot() +
+	  geom_line(aes(x = year, y = pop, color = cat)) +
+	  labs(x = "", y = "population", color = "") +
+    scale_color_manual(values = params$col_6[c(1,3)]) +    
+    expand_limits(y = 0) +  
+	  params$neutral) |> 
+  ggplotly()
+  
+
+```
+
+### age categories, by year
+
+```{r}
+#| label: fig-1513
+#| fig-cap: previous and new population by age categories
+#| fig-width: 10
+#| fig-height: 10
+
+(mod$pop_age_new_prev |>
+  ggplot() +
+	  geom_line(aes(x = year, y = pop, color = cat)) +
+	  facet_wrap(~ age_class, ncol = 3) +
+	  labs(x = "", y = "population", color = "") +
+    scale_color_manual(values = params$col_6[c(1,3)]) +
+    expand_limits(y = 0) +
+	  params$neutral) |>
+  ggplotly() |>
+    layout(legend = list(x = 1.05, y = 1))
+
+```
+
+### only younger categories
+
+```{r}
+#| label: fig-1514
+#| fig-cap: previous and new population for 19- by age categories
+#| fig-width: 10
+#| fig-height: 6
+
+(mod$pop_age_new_prev |> 
+  filter(age_class %in% c("0-9", "10-19")) |> 
+  ggplot() +
+	  geom_line(aes(x = year, y = pop, color = cat)) +
+	  facet_wrap(~ age_class, nrow = 1) +
+	  labs(x = "", y = "population", color = "") +
+    scale_color_manual(values = params$col_6[c(1,3)]) +
+    expand_limits(y = 0) +
+	  params$neutral) |>
+  ggplotly()
+
+    
+```
+
+### only elder categories
+
+```{r}
+#| label: fig-1515
+#| fig-cap: previous and new population for 60+ by age categories
+#| fig-width: 10
+#| fig-height: 6
+
+(mod$pop_age_new_prev |> 
+  filter(age_class %in% c("60-69", "70-79", "80+")) |> 
+  ggplot() +
+	  geom_line(aes(x = year, y = pop, color = cat)) +
+	  facet_wrap(~ age_class, nrow = 1) +
+	  labs(x = "", y = "population", color = "") +
+    scale_color_manual(values = params$col_6[c(1,3)]) +
+    expand_limits(y = 0) +
+	  params$neutral) |>
+  ggplotly()
+
+```
+
+### new and previous: by dy (selected years only)
+
+```{r}
+#| label: fig-1516
+#| fig-cap: previous and new population by district
+#| fig-width: 12
+#| fig-height: 10
+
+pop_dy_new_sel <- mod$pop_dy |>
+  filter(year %in% c(params$date_end, mod$comp_year)) |>
+  mutate(cat = if_else(year == params$date_end,
+                       paste0(params$date_end, " (past)"),
+                       paste0(mod$comp_year, " (new)")))
+
+pop_dy_prev_sel <- mod$sce |>
+  filter((scenario == params$text_c[3]) &
+           (year == mod$comp_year)) |>
+  group_by(district, year) |>
+    summarize(pop = sum_NA(pop),
+              .groups = "drop") |>
+  mutate(cat = paste0(mod$comp_year, " (previous)"))
+
+levels_cate <- c(paste0(params$date_end, " (past)"),
+                 paste0(mod$comp_year, " (previous)"),
+                 paste0(mod$comp_year, " (new)"))
+
+
+(pop_dy_new_sel |>
+  bind_rows(pop_dy_prev_sel) |>
+  mutate(cat = factor(cat, levels = levels_cate)) |>
+  ggplot() +
+  geom_col(aes(x = district, y = pop, fill = cat),
+           position = "dodge") +
+	labs(x = "", y = "people", fill = "") +
+  scale_fill_manual(values = params$col_6[c(1,3,4)]) +
+  params$neutral +
+  theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust = 1))) |>
+  ggplotly()
+
+```
+
+## birth
+
+### by year and scenario (main scenarios)
+
+```{r}
+#| label: fig-1520
+#| fig-cap: births by year and scenario
+#| fig-width: 8
+#| fig-height: 8
+
+bir <- mod$bir_past |>
+  bind_rows(mod$bir_lower) |>
+  bind_rows(mod$bir_middle) |>
+  bind_rows(mod$bir_upper) |>
+  mutate(district = factor(district, params$uni_d),
+         sex = factor(sex, levels = params$uni_s),
+         origin = factor(origin, levels = params$uni_o))
+
+(bir |>
+  group_by(year, scenario) |>
+  summarize(bir = sum(bir), .groups = "drop") |>
+  ggplot() +
+	  geom_line(aes(x = year, y = bir, color = scenario)) +
+	  labs(x = "", y = "births per year", color = "") +
+    scale_color_manual(values = params$col_c) +
+    expand_limits(y = 0) +
+	  params$neutral) |>
+  ggplotly()
+
+```
+
+
+### by year, origin and scenario
+
+```{r}
+#| label: fig-1521
+#| fig-cap: births by year, origin and scenario
+#| fig-width: 10
+#| fig-height: 8
+
+(bir |>
+  group_by(year, origin, scenario) |>
+  summarize(bir = sum(bir),
+            .groups = "drop") |>
+  ggplot() +
+	  geom_line(aes(x = year, y = bir, color = scenario)) +
+    facet_wrap(~origin, nrow = 1) +  
+	  labs(x = "", y = "births per year", color = "") +
+    scale_color_manual(values = params$col_c) +
+    expand_limits(y = 0) +
+	  params$neutral) |>
+  ggplotly()  
+  
+```
+
+### births by year and birth versions (middle scenario)
+
+```{r}
+#| label: fig-1521a
+#| fig-cap: births by year and birth version (middle scenario)
+#| fig-width: 8
+#| fig-height: 7
+
+# birth: past and future (birth versions)
+bir_ver <- mod$bir_past |>
+  bind_rows(mod$bir_middle) |> 
+  bind_rows(mod$bir_middle_birth_lower) |> 
+  bind_rows(mod$bir_middle_birth_upper) |> 
+  mutate(scenario = factor(scenario, levels = params$uni_cb),
+         sex = factor(sex, levels = params$uni_s),
+         origin = factor(origin, levels = params$uni_o))
+
+(bir_ver |>
+  group_by(year, scenario) |>
+  summarize(bir = sum(bir), .groups = "drop") |>
+  ggplot() +
+	  geom_line(aes(x = year, y = bir, color = scenario)) +
+	  labs(x = "", y = "births per year", color = "") +
+    scale_color_manual(values = params$col_c) +
+    expand_limits(y = 0) +
+	  params$neutral) |>
+  ggplotly()
+
+```
+
+
+### TFR by year and birth versions (middle scenario)
+
+```{r}
+#| label: fig-1521b
+#| fig-cap: TFR by year and birth version (middle scenario)
+#| fig-width: 8
+#| fig-height: 7
+
+# population: past and future (for birth versions)
+pop_ver_yac <- mod$pop_birth_versions |> 
+  filter(sex == params$uni_s[2], 
+         age >= params$bir_age_begin, 
+         age <= params$bir_age_end) |>
+  mutate(scenario = factor(scenario, levels = params$uni_cb)) |>
+  group_by(year, age, scenario) |>
+  summarize(pop = sum_NA(pop), .groups = "drop")
+
+# births (for birth versions)
+bir_ver_yac <- bir_ver |>
+  rename(age = age_mother) |>
+  group_by(year, age, scenario) |>
+  summarize(bir = sum_NA(bir), .groups = "drop")
+
+# TFR
+pop_bir_ver_yac <- pop_ver_yac |>
+  left_join(bir_ver_yac, by = c("year", "age", "scenario")) |>
+  replace_na(list(bir = 0))
+
+(pop_bir_ver_yac |>
+  mutate(fer_yac = bir / pop) |>
+  group_by(year, scenario) |>
+  summarize(tfr = sum_NA(fer_yac), .groups = "drop") |>
+  ggplot() +
+	  geom_line(aes(x = year, y = tfr, color = scenario)) +
+	  labs(x = "", y = "TFR", color = "") +
+    scale_color_manual(values = params$col_c) +
+    expand_limits(y = 0) +
+	  params$neutral) |>
+  ggplotly()  
+  
+```
+
+### TFR by year, origin of mother, and birth versions (middle scenario)
+
+```{r}
+#| label: fig-1521b2
+#| fig-cap: TFR by year, origin of mother,  and birth version (middle scenario)
+#| fig-width: 8
+#| fig-height: 7
+
+# births: past
+bir_aoc_past <- read_csv(params$bir_od) |>
+  rename(year = EreignisDatJahr, age_mother = AlterVMutterCd, bir = AnzGebuWir) |> 
+  mutate(origin_mother = fact_if(HerkunftMutterCd, params$uni_o)) |> 
+  group_by(year, age_mother, origin_mother) |> 
+  summarize(bir = sum(bir), .groups = "drop") |> 
+  mutate(scenario = params$uni_cb[1]) |> 
+  select(scenario, year, age_mother, origin_mother, bir)
+
+# births: past and future
+bir_aoc_past_future <- mod$bir_dao_middle |> 
+  bind_rows(mod$bir_dao_middle_birth_lower) |> 
+  bind_rows(mod$bir_dao_middle_birth_upper) |>   
+  group_by(scenario, year, age_mother, origin_mother) |> 
+  summarize(bir = sum(bir), .groups = "drop") |> 
+  bind_rows(bir_aoc_past)
+
+# population: past and future (for birth versions)
+pop_ver_yaoc <- mod$pop_birth_versions |> 
+  filter(sex == params$uni_s[2], 
+         age >= params$bir_age_begin, 
+         age <= params$bir_age_end) |>
+  mutate(scenario = factor(scenario, levels = params$uni_cb)) |>
+  group_by(year, age, origin, scenario) |>
+  summarize(pop = sum_NA(pop), .groups = "drop") |> 
+  rename(age_mother = age, origin_mother = origin)
+
+# TFR
+pop_bir_yaoc <- pop_ver_yaoc |>
+  left_join(bir_aoc_past_future, by = c("year", "age_mother", "origin_mother", "scenario")) |>
+  replace_na(list(bir = 0)) |> 
+  mutate(origin_mother = factor(origin_mother, levels = params$uni_o))
+
+(pop_bir_yaoc |>
+  mutate(fer_yaoc = bir / pop) |>
+  group_by(year, origin_mother, scenario) |>
+  summarize(tfr = sum_NA(fer_yaoc), .groups = "drop") |>
+  ggplot() +
+	  geom_line(aes(x = year, y = tfr, color = scenario)) +
+	  labs(x = "", y = "TFR", color = "") +
+    scale_color_manual(values = params$col_c) +
+    facet_wrap(~origin_mother, nrow = 1) +
+    expand_limits(y = 0) +
+	  params$neutral) |>
+  ggplotly()  
+
+```
+
+
+
+### fertility rate by year and birth versions (middle scenario)
+
+```{r}
+#| label: fig-1521c
+#| fig-cap: fertility rate by year and birth version (middle scenario)
+#| fig-width: 8
+#| fig-height: 7
+
+# fertility rate
+(pop_bir_ver_yac |> 
+  group_by(year, scenario) |> 
+  summarize(bir = sum_NA(bir), pop = sum_NA(pop), .groups = "drop") |> 
+  mutate(fer_yc = bir / pop * 100) |> 
+  ggplot() +
+	  geom_line(aes(x = year, y = fer_yc, color = scenario)) +
+	  labs(x = "", y = "fertility rate (in % per year)", color = "") +
+    scale_color_manual(values = params$col_c) +
+    expand_limits(y = 0) +
+	  params$neutral) |>
+  ggplotly()    
+  
+```
+
+
+
+### births by district, year and origin
+
+```{r}
+#| label: fig-1522
+#| fig-cap: births by district, year and origin
+#| fig-width: 20
+#| fig-height: 20
+
+bir_dyo <- bir |>
+  filter(scenario %in% params$uni_c[c(1, 3)]) |>
+  group_by(district, year, origin) |>
+  summarize(bir = sum(bir), .groups = "drop")
+
+(bir_dyo |>
+  ggplot() +
+    geom_vline(xintercept = params$scen_begin,
+               color = params$col_grey, linetype = "dotted") +
+	  geom_line(aes(x = year, y = bir, color = origin)) +
+	  facet_wrap(~district, ncol = 4) +
+	  labs(x = "", y = "births", color = "") +
+    scale_color_manual(values = params$col_o) +
+    expand_limits(y = 0) +
+	  params$neutral) |>
+  ggplotly(height = 1500)
+
+```
+
+### foreign proportion of births by district, year
+
+```{r}
+#| label: fig-1523
+#| fig-cap: foreign proportion of births by district, year
+#| fig-width: 20
+#| fig-height: 20
+
+(bir_dyo |>
+  pivot_wider(names_from = "origin", values_from = "bir") |>
+  mutate(foreign_prop = foreign / (Swiss + foreign) * 100) |> 
+   ggplot() +
+    geom_vline(xintercept = params$scen_begin,
+               color = params$col_grey, linetype = "dotted") +
+	  geom_line(aes(x = year, y = foreign_prop), color = params$col_1) +
+	  facet_wrap(~district, ncol = 4) +
+	  labs(x = "", y = "births: foreign proportion in %") +
+    expand_limits(y = 0) +
+	  params$neutral) |>
+  ggplotly(height = 1500)
+
+```
+
+## death
+
+### by year and scenario
+
+```{r}
+#| label: fig-1530
+#| fig-cap: deaths by year and scenario
+#| fig-width: 8
+#| fig-height: 8
+
+dea <- mod$dem_future |>
+  select(year, age, sex, scenario, dea) |>
+  group_by(year, age, sex, scenario) |>
+  summarize(dea = sum(dea), .groups = "drop") |>
+  bind_rows(mod$dea_past) |>
+  left_join(params$look_a3, by = "age") |>
+  mutate(sex = factor(sex, levels = params$uni_s))
+
+(dea |>
+  group_by(year, scenario) |>
+  summarize(dea = sum(dea), .groups = "drop") |>
+  ggplot() +
+	  geom_line(aes(x = year, y = dea, color = scenario)) +
+	  labs(x = "", y = "deaths per year", color = "") +
+    scale_color_manual(values = params$col_c) +
+    expand_limits(y = 0) +
+	  params$neutral) |>
+  ggplotly()
+
+```
+
+### by year, age and scenario
+
+```{r}
+#| label: fig-1531
+#| fig-cap: deaths by year, age and scenario
+#| fig-width: 8
+#| fig-height: 10
+
+(dea |>
+  group_by(year, age_3, scenario) |>
+  summarize(dea = sum(dea), .groups = "drop") |>  
+  ggplot() +
+	  geom_line(aes(x = year, y = dea, color = scenario)) +
+	  labs(x = "", y = "deaths per year", color = "") +
+    facet_wrap(~age_3, ncol = 3) +
+    scale_color_manual(values = params$col_c) +
+    expand_limits(y = 0) +
+	  params$neutral) |>
+  ggplotly(height = 800)
+
+
+```
+
+### by year and sex
+
+for the middle scenario
+
+```{r}
+#| label: fig-15232
+#| fig-cap: deaths by year and sex
+#| fig-width: 8
+#| fig-height: 8
+
+(dea |>
+  filter(scenario %in% params$uni_c[c(1, 3)]) |>
+  group_by(year, sex) |>
+  summarize(dea = sum(dea), .groups = "drop") |>
+   ggplot() +
+    geom_vline(xintercept = params$scen_begin, 
+               color = params$col_grey, linetype = "dotted") +       
+	  geom_line(aes(x = year, y = dea, color = sex)) +
+	  labs(x = "", y = "deaths per year", color = "") +
+    scale_color_manual(values = params$col_s) +
+    expand_limits(y = 0) +
+	  params$neutral) |>
+  ggplotly() 
+  
+```
+
+### by year, age and sex
+
+```{r}
+#| label: fig-1533
+#| fig-cap: deaths by year, age and sex
+#| fig-width: 8
+#| fig-height: 10
+
+(dea |>
+  filter(scenario %in% params$uni_c[c(1, 3)]) |>
+  group_by(year, age_3, sex) |>
+  summarize(dea = sum(dea), .groups = "drop") |>
+  ggplot() +
+    geom_vline(xintercept = params$scen_begin, 
+               color = params$col_grey, linetype = "dotted") +   
+	  geom_line(aes(x = year, y = dea, color = sex)) +
+	  labs(x = "", y = "deaths per year", color = "") +
+    facet_wrap(~age_3, ncol = 3) +
+    scale_color_manual(values = params$col_s) +
+    expand_limits(y = 0) +
+	  params$neutral) |>
+  ggplotly(height = 800)
+  
+```
+
+## immigration
+
+### by year and scenario
+
+```{r}
+#| label: fig-1540
+#| fig-cap: immigration by year and scenario
+#| fig-width: 8
+#| fig-height: 8
+
+imm <- mod$dem_future |>
+  select(district, year, age, sex, origin, scenario, imm) |>
+  bind_rows(mod$imm_past) |>
+  left_join(params$look_a3, by = "age") |>
+  mutate(district = factor(district, params$uni_d),
+         sex = factor(sex, levels = params$uni_s),
+         origin = factor(origin, levels = params$uni_o))
+
+(imm |>
+  group_by(year, scenario) |>
+  summarize(imm = sum(imm), .groups = "drop") |>
+  ggplot() +
+	  geom_line(aes(x = year, y = imm, color = scenario)) +
+	  labs(x = "", y = "immigration per year", color = "") +
+    scale_color_manual(values = params$col_c) +
+    expand_limits(y = 0) +
+	  params$neutral) |>
+  ggplotly()
+
+
+```
+
+### by year and age
+
+```{r}
+#| label: fig-1541
+#| fig-cap: immigration by year and age
+#| fig-width: 10
+#| fig-height: 8
+
+(imm |>
+  filter(scenario %in% params$uni_c[c(1, 3)]) |>
+  group_by(year, age_3) |>
+  summarize(imm = sum(imm), .groups = "drop") |>
+  ggplot() +
+    geom_vline(xintercept = params$scen_begin, 
+               color = params$col_grey, linetype = "dotted") +  
+	  geom_line(aes(x = year, y = imm), color = params$col_1) +
+	  labs(x = "", y = "immigration per year") +
+    facet_wrap(~age_3, ncol = 4) +
+    scale_color_manual(values = params$col_c) +
+    expand_limits(y = 0) +
+	  params$neutral) |>
+  ggplotly(height = 800)  
+  
+
+```
+
+### by year, age (children) and scenario
+
+```{r}
+#| label: fig-1541a
+#| fig-cap: immigration by year, age (children) and scenario
+#| fig-width: 10
+#| fig-height: 6
+
+imm_a5 <- imm |> 
+  filter(age < params$age_5[4]) |> 
+  left_join(params$look_a5, by = "age") |>   
+  group_by(year, age_5, scenario) |>
+  summarize(imm = sum(imm), .groups = "drop")
+
+(imm_a5 |> 
+  ggplot() +
+	  geom_line(aes(x = year, y = imm, color = scenario)) +
+	  labs(x = "", y = "immigration per year", color = "") +
+    facet_wrap(~age_5, nrow = 1) +  
+    scale_color_manual(values = params$col_c) +
+    expand_limits(y = 0) +
+	  params$neutral) |>
+  ggplotly()
+
+```
+
+
+
+
+
+### by year, age and origin
+
+```{r}
+#| label: fig-1542
+#| fig-cap: immigration by year, age and origin
+#| fig-width: 11
+#| fig-height: 7
+
+(imm |>
+  filter(scenario %in% params$uni_c[c(1, 3)]) |>
+  group_by(year, age_3, origin) |>
+  summarize(imm = sum(imm), .groups = "drop") |>
+  ggplot() +
+    geom_vline(xintercept = params$scen_begin, 
+               color = params$col_grey, linetype = "dotted") +  
+	  geom_line(aes(x = year, y = imm, color = origin)) +
+	  labs(x = "", y = "immigration per year", color = "") +
+    facet_wrap(~age_3, ncol = 3) +  
+    scale_color_manual(values = params$col_o) +
+    expand_limits(y = 0) +
+	  params$neutral) |>
+  ggplotly(height = 700)
+  
+```
+
+### by district, year and origin
+
+```{r}
+#| label: fig-1543
+#| fig-cap: immigration by district, year and origin
+#| fig-width: 20
+#| fig-height: 20
+
+imm_dyo <- imm |>
+  filter(scenario %in% params$uni_c[c(1, 3)]) |>
+  group_by(district, year, origin) |>
+  summarize(imm = sum(imm), .groups = "drop")
+
+(imm_dyo |> 
+  ggplot() +
+    geom_vline(xintercept = params$scen_begin, 
+               color = params$col_grey, linetype = "dotted") +  
+	  geom_line(aes(x = year, y = imm, color = origin)) +
+	  labs(x = "", y = "immigration per year", color = "") +
+    facet_wrap(~district, ncol = 4, scales = "free_y") +
+    scale_color_manual(values = params$col_o) +
+    expand_limits(y = 0) +
+	  params$neutral) |>
+  ggplotly(height = 1500)
+
+
+```
+
+### by district, year and origin; foreign population
+
+```{r}
+#| label: fig-1544
+#| fig-cap: foreign proportion of immigration by district, year and origin
+#| fig-width: 20
+#| fig-height: 20
+
+(imm_dyo |>
+  pivot_wider(names_from = "origin", values_from = "imm") |>
+  mutate(foreign_prop = foreign / (Swiss + foreign) * 100) |>
+  ggplot() +
+    geom_vline(xintercept = params$scen_begin, 
+               color = params$col_grey, linetype = "dotted") +  
+	  geom_line(aes(x = year, y = foreign_prop), color = params$col_1) +
+	  labs(x = "", y = "foreign proportion (in immigration) in %") +
+    facet_wrap(~district, ncol = 4, scales = "free_y") +
+    expand_limits(y = 0) +
+	  params$neutral) |>
+  ggplotly(height = 1500)
+  
+```
+
+## emigration
+
+### by year and scenario
+
+```{r}
+#| label: fig-1550
+#| fig-cap: emigration by year and scenario
+#| fig-width: 8
+#| fig-height: 8
+
+# past and future
+emi <- mod$dem_future |>
+  select(district, year, age, sex, origin, scenario, emi) |>
+  bind_rows(mod$emi_past) |>
+  left_join(params$look_a3, by = "age") |>
+  mutate(district = factor(district, params$uni_d),
+         sex = factor(sex, levels = params$uni_s),
+         origin = factor(origin, levels = params$uni_o))
+
+(emi |>
+  group_by(year, scenario) |>
+  summarize(emi = sum(emi), .groups = "drop") |>
+  ggplot() +
+	  geom_line(aes(x = year, y = emi, color = scenario)) +
+	  labs(x = "", y = "emigration per year", color = "") +
+    scale_color_manual(values = params$col_c) +
+    expand_limits(y = 0) +
+	  params$neutral) |>
+  ggplotly()
+
+```
+
+### by year and age
+
+```{r}
+#| label: fig-1551
+#| fig-cap: emigration by year and age
+#| fig-width: 10
+#| fig-height: 8
+
+(emi |>
+  filter(scenario %in% params$uni_c[c(1, 3)]) |>
+  group_by(year, age_3) |>
+  summarize(emi = sum(emi), .groups = "drop") |> 
+   ggplot() +
+    geom_vline(xintercept = params$scen_begin, 
+               color = params$col_grey, linetype = "dotted") +  
+	  geom_line(aes(x = year, y = emi), color = params$col_1) +
+	  labs(x = "", y = "emigration per year") +
+    facet_wrap(~age_3, ncol = 4) +
+    scale_color_manual(values = params$col_c) +
+    expand_limits(y = 0) +
+	  params$neutral) |>
+  ggplotly(height = 800)     
+    
+
+```
+
+### by year, age (children) and scenario
+
+```{r}
+#| label: fig-1551a
+#| fig-cap: emigration by year, age (children) and scenario
+#| fig-width: 10
+#| fig-height: 6
+
+emi_a5 <- emi |> 
+  filter(age < params$age_5[4]) |> 
+  left_join(params$look_a5, by = "age") |>   
+  group_by(year, age_5, scenario) |>
+  summarize(emi = sum(emi), .groups = "drop") 
+  
+(emi_a5 |> 
+  ggplot() +
+	  geom_line(aes(x = year, y = emi, color = scenario)) +
+	  labs(x = "", y = "emigration per year", color = "") +
+    facet_wrap(~age_5, nrow = 1) +  
+    scale_color_manual(values = params$col_c) +
+    expand_limits(y = 0) +
+	  params$neutral) |>
+  ggplotly()  
+
+```
+
+### by year, age and origin
+
+```{r}
+#| label: fig-1552
+#| fig-cap: emigration by year, age and origin
+#| fig-width: 11
+#| fig-height: 7
+
+(emi |>
+  filter(scenario %in% params$uni_c[c(1, 3)]) |>
+  group_by(year, age_3, origin) |>
+  summarize(emi = sum(emi), .groups = "drop") |>
+  ggplot() +
+    geom_vline(xintercept = params$scen_begin, 
+               color = params$col_grey, linetype = "dotted") +  
+	  geom_line(aes(x = year, y = emi, color = origin)) +
+	  labs(x = "", y = "emigration per year", color = "") +
+    facet_wrap(~age_3, ncol = 3) +  
+    scale_color_manual(values = params$col_o) +
+    expand_limits(y = 0) +
+	  params$neutral) |>
+  ggplotly(height = 700)
+  
+```
+
+### by district, year and origin
+
+```{r}
+#| label: fig-1553
+#| fig-cap: emigration by district, year and origin
+#| fig-width: 20
+#| fig-height: 20
+
+emi_dyo <- emi |>
+  filter(scenario %in% params$uni_c[c(1, 3)]) |>
+  group_by(district, year, origin) |>
+  summarize(emi = sum(emi), .groups = "drop")
+
+(emi_dyo |> 
+  ggplot() +
+    geom_vline(xintercept = params$scen_begin, 
+               color = params$col_grey, linetype = "dotted") +  
+	  geom_line(aes(x = year, y = emi, color = origin)) +
+	  labs(x = "", y = "emigration per year", color = "") +
+    facet_wrap(~district, ncol = 4, scales = "free_y") +
+    scale_color_manual(values = params$col_o) +
+    expand_limits(y = 0) +
+	  params$neutral) |>
+  ggplotly(height = 1500)
+
+```
+
+### by district, year and origin; foreign population
+
+```{r}
+#| label: fig-1554
+#| fig-cap: foreign proportion of emigration by district, year and origin
+#| fig-width: 20
+#| fig-height: 20
+
+(emi_dyo |>
+  pivot_wider(names_from = "origin", values_from = "emi") |>
+  mutate(foreign_prop = foreign / (Swiss + foreign) * 100) |>
+  ggplot() +
+    geom_vline(xintercept = params$scen_begin, 
+               color = params$col_grey, linetype = "dotted") +  
+	  geom_line(aes(x = year, y = foreign_prop), color = params$col_1) +
+	  labs(x = "", y = "foreign proportion (in emigration) in %") +
+    facet_wrap(~district, ncol = 4, scales = "free_y") +
+    expand_limits(y = 0) +
+	  params$neutral) |>
+  ggplotly(height = 1500)
+  
+```
+
+## net migration
+
+### by year and scenario
+
+```{r}
+#| label: fig-1560
+#| fig-cap: net migration by year and scenario
+#| fig-width: 8
+#| fig-height: 7
+
+# calculate net migration
+net <- as_tibble(expand_grid(district = params$uni_d,
+                             year = params$date_start:params$scen_end,
+                             age = params$age_min:params$age_max,
+                             sex = params$uni_s,
+                             origin = params$uni_o,
+                             scenario = params$uni_c)) |>
+  left_join(params$look_a3, by = "age") |>
+  left_join(imm, by = c("district", "year", "age", "sex", "origin", "scenario", "age_3")) |>
+  left_join(emi, by = c("district", "year", "age", "sex", "origin", "scenario", "age_3")) |>
+  replace_na(list(imm = 0, emi = 0)) |>
+  mutate(net = if_else(((year < params$scen_begin) & (scenario != params$uni_c[1])) |
+                         ((year >= params$scen_begin) & (scenario == params$uni_c[1])),
+                       NA_real_, imm - emi))
+
+
+(net |>
+  group_by(year, scenario) |>
+  summarize(net = sum(net), .groups = "drop") |>
+  ggplot() +
+    geom_hline(yintercept = 0, 
+               color = params$col_grey) +      
+	  geom_line(aes(x = year, y = net, color = scenario)) +
+	  labs(x = "", y = "net migration per year", color = "") +
+    scale_color_manual(values = params$col_c) +
+    expand_limits(y = 0) +
+	  params$neutral) |>
+  ggplotly()
+
+```
+
+### by district, year and origin
+
+```{r}
+#| label: fig-1561
+#| fig-cap: net migration by district, year and origin
+#| fig-width: 20
+#| fig-height: 20
+
+(net |>
+  filter(scenario %in% params$uni_c[c(1, 3)]) |>
+  group_by(district, year, origin) |>
+  summarize(net = sum_NA(net), .groups = "drop") |>
+  ggplot() +
+    geom_hline(yintercept = 0, 
+               color = params$col_grey) +      
+    geom_vline(xintercept = params$scen_begin, 
+               color = params$col_grey, linetype = "dotted") +  
+	  geom_line(aes(x = year, y = net, color = origin)) +
+	  labs(x = "", y = "net migration per year", color = "") +
+    facet_wrap(~district, ncol = 4) +
+    scale_color_manual(values = params$col_o) +
+    expand_limits(y = 0) +
+	  params$neutral) |>
+  ggplotly(height = 1500)  
+  
+```
+
+
+
+### by year, age (children) and scenario
+
+```{r}
+#| label: fig-1562
+#| fig-cap: net migration by year and age (children)
+#| fig-width: 10
+#| fig-height: 6
+
+(imm_a5 |> 
+  left_join(emi_a5, by = c("year", "age_5", "scenario")) |> 
+  mutate(net = imm - emi) |> 
+  ggplot() +
+    geom_hline(yintercept = 0, 
+               color = params$col_grey) +      
+    geom_vline(xintercept = params$scen_begin, 
+               color = params$col_grey, linetype = "dotted") +      
+	  geom_line(aes(x = year, y = net, color = scenario)) +
+	  labs(x = "", y = "net migration per year", color = "") +
+    facet_wrap(~age_5, nrow = 1) +  
+    scale_color_manual(values = params$col_c) +
+    expand_limits(y = 0) +
+	  params$neutral) |>
+  ggplotly()    
+  
+
+```
+
+
+## naturalization
+
+### by year and scenario
+
+```{r}
+#| label: fig-1570
+#| fig-cap: naturalization by year and scenario
+#| fig-width: 8
+#| fig-height: 7
+
+# past and future
+nat <- mod$nat_future |>
+  bind_rows(mod$nat_past) |>
+  left_join(params$look_a3, by = "age") |>
+  mutate(
+    district = factor(district, levels = params$uni_d),
+    sex = factor(sex, levels = params$uni_s)
+  )
+
+
+(nat |>
+  group_by(year, scenario) |>
+  summarize(nat = sum(nat),
+            .groups = "drop") |>
+  ggplot() +
+	  geom_line(aes(x = year, y = nat, color = scenario)) +
+	  labs(x = "", y = "naturalizations per year", color = "") +
+    scale_color_manual(values = params$col_c) +
+    expand_limits(y = 0) +
+	  params$neutral) |>
+  ggplotly()
+
+
+```
+
+### by district and year
+
+```{r}
+#| label: fig-1571
+#| fig-cap: naturalization by district and year
+#| fig-width: 20
+#| fig-height: 20
+
+(nat |>
+  filter(scenario %in% params$uni_c[c(1, 3)]) |>
+  group_by(district, year) |>
+  summarize(nat = sum(nat),
+            .groups = "drop") |>
+  ggplot() +
+    geom_vline(xintercept = params$scen_begin, 
+               color = params$col_grey, linetype = "dotted") +  
+	  geom_line(aes(x = year, y = nat), color = params$col_1) +
+	  labs(x = "", y = "naturalizations per year") +
+    facet_wrap(~district, ncol = 4) +
+    expand_limits(y = 0) +
+	  params$neutral + 
+    theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust = 1))) |>
+  ggplotly(height = 1500)
+    
+
+```
+
+## relocation
+
+### by year, scenario and category
+
+past: no district
+WHY? since for future data only one district available
+one district does not make sense for relocation
+(the district comes from immigration* and emigration*)
+
+
+```{r}
+#| label: fig-1580
+#| fig-cap: relocation by year, scenario and category
+#| fig-width: 10
+#| fig-height: 8
+
+# categories
+uni_cat <- c("data", "from immigration*", "from emigration*")
+
+# past
+rel_past_yaso <- mod$rel_past |>
+  select(year, age, sex, origin, scenario, rel) |>
+  group_by(year, age, sex, origin, scenario) |>
+  summarize(rel = sum(rel), .groups = "drop") |>
+  mutate(cat = factor(uni_cat[1], levels = uni_cat))
+
+# future
+rel_future_yaso <- mod$dem_future |>
+  select(year, age, sex, origin, scenario, rei, ree) |>
+  group_by(year, age, sex, origin, scenario) |>
+  summarize(rei = sum(rei), ree = sum(ree), .groups = "drop") |>
+  pivot_longer(cols = c("rei", "ree"), values_to = "rel", names_to = "category") |>
+  mutate(cat = fact_if(category, uni_cat, equals = "rei", 2, 3)) |>
+  select(year, age, sex, origin, scenario, rel, cat)
+
+# past and future combined
+(rel_past_yaso |>
+  bind_rows(rel_future_yaso) |>
+  group_by(year, scenario, cat) |>
+  summarize(rel = sum(rel), .groups = "drop") |>
+  ggplot() +
+	  geom_line(aes(x = year, y = rel, color = scenario, linetype = cat)) +
+	  labs(x = "", y = "relocations per year", color = "", linetype = "") +
+    scale_color_manual(values = params$col_c) +
+    expand_limits(y = 0) +
+    scale_linetype_manual(values = c("solid", "dashed", "dotted")) +
+	  params$neutral) |>
+  ggplotly()
+
+
+```
+
+
+## BZO comparison
+
+### by year and scenario
+
+```{r}
+#| label: fig-1590
+#| fig-cap:  BZO versions by year, scenario
+#| fig-width: 8
+#| fig-height: 8
+
+BZO_names <- c("BZO 2016", "BZO revision")
+
+pop_BZO_old <- mod$pop |>
+    group_by(district, year, scenario) |>
+    summarize(pop = sum(pop), .groups = "drop") |>
+    mutate(BZO = BZO_names[1])
+
+pop_BZO_new <- mod$pop_car_rev |>
+  group_by(district, year, scenario) |>
+  summarize(pop = sum(pop),
+            .groups = "drop") |>
+  filter(year <= params$scen_end_public) |>
+  mutate(BZO = BZO_names[2], 
+         district = factor(district, levels = params$uni_d))
+
+pop_BZO <- pop_BZO_old |>
+  bind_rows(pop_BZO_new)
+
+# (pop_BZO |>
+#   group_by(year, scenario, BZO) |>
+#   summarize(pop = sum(pop),
+#             .groups = "drop") |>
+#   ggplot() +
+# 	  geom_line(aes(x = year, y = pop, color = scenario, linetype = BZO)) +
+# 	  labs(x = "", y = "population", color = "", linetype = "") +
+#     scale_color_manual(values = params$col_c) +
+#     scale_linetype_manual(values = c("solid", "dotted")) +
+#     expand_limits(y = 0) +
+# 	  params$neutral) |>
+#   ggplotly()
+
+```
+
+
+### by district, year, scenario
+
+```{r}
+#| label: fig-1591
+#| fig-cap:  BZO versions by district, year, scenario
+#| fig-width: 20
+#| fig-height: 20
+
+# (pop_BZO |>
+#   ggplot() +
+# 	  geom_line(aes(x = year, y = pop, color = scenario, linetype = BZO)) +
+# 	  facet_wrap(~district, ncol = 3, scales = "free_y") +
+# 	  labs(x = "", y = "population", color = "", linetype = "") +
+#     scale_color_manual(values = params$col_c) +
+#     scale_linetype_manual(values = c("solid", "dotted")) +
+#     expand_limits(y = 0) +
+# 	  params$neutral) |>
+#   ggplotly(height = 2000)
+
+
+```
+
+comparison for the last pusblished scenario year
+
+
+```{r}
+#| label: fig-1592
+#| fig-cap:  BZO versions by district, last scenario year, scenario
+#| fig-width: 14
+#| fig-height: 12
+
+# (pop_BZO |>
+#   filter(year %in% c(params$date_end, params$scen_end_public)) |> 
+#   mutate(year_text = paste0("year ", year)) |>
+#   ggplot() +
+#   geom_col(aes(x = district, y = pop, fill = scenario, alpha = BZO),
+#            position = "dodge") +
+# 	labs(x = "", y = "people", fill = "", alpha = "") +
+#   scale_fill_manual(values = params$col_c) +
+#   scale_alpha_manual(values = c(1, 0.5)) +
+#   params$neutral +
+#   theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust = 1))) |>
+#   ggplotly()
+
+
+```
+
+
+

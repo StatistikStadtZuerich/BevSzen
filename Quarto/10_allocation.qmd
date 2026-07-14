@@ -1,0 +1,295 @@
+
+# Allocation
+
+```{r, include=FALSE}
+#| label: prep
+#| echo: false
+#| results: 'hide'
+#| message: false
+#| warning: false
+#| cache: true
+
+# project root
+library(rprojroot)
+root <- find_root(is_rstudio_project)
+
+# get the parameters
+source(file.path(root, "R/0000_General/0002_init.R"))
+vars_once <- init_once(i_data_path = "~/v/Szen/BevSzen/2026")
+params <- init_scen(i_scen = "middle", vars_init_once = vars_once)
+
+# load the allocation function
+source(file.path(root, "R/1001_allocation_fun.R"))
+
+# execute the allocation function
+aca <- allocation_fun(params = params)
+
+```
+
+
+## allocation: past data
+
+### allocation by year
+
+WHY? e.g. to support the base year decision
+
+```{r}
+#| label: fig-0900
+#| fig-cap: allocation by year
+#| fig-width: 8
+#| fig-height: 7
+
+(aca$aca_dat |> 
+group_by(year) |>
+  summarize(
+    apartments = sum_NA(apartments),
+    people = sum_NA(people),
+    .groups = "drop"
+  ) |>
+  mutate(aca_y = round(people / apartments, params$round_aca)) |>  
+  ggplot() +
+	  geom_line(aes(x = year, y = aca_y), col = params$col_1) +
+	  labs(x = "", y = "allocation (people per apartment)") +
+    expand_limits(y = 0) +
+	  params$neutral) |> 
+ggplotly()
+
+```
+
+### allocation by year and owner
+
+```{r}
+#| label: fig-0901
+#| fig-cap: allocation by year and owner
+#| fig-width: 8
+#| fig-height: 7
+
+(aca$aca_yw |> 
+  ggplot() +
+	  geom_line(aes(x = year, y = aca_yw, color = owner)) +
+	  labs(x = "", y = "allocation (people per apartment)", color = "") +
+    scale_color_manual(values = params$col_w) +
+    expand_limits(y = 0) +
+	  params$neutral) |>
+ggplotly()
+
+```
+
+## allocation: past data by district
+
+### allocation
+
+```{r}
+#| label: fig-0902
+#| fig-cap: allocation by district, year and owner
+#| fig-width: 20
+#| fig-height: 20
+
+(aca$aca_dyw |> 
+  ggplot() +
+	  geom_line(aes(x = year, y = aca_dyw, color = owner)) +
+	  facet_wrap(~district, ncol = 4, scales = "free_y") +
+	  labs(x = "", y = "allocation (people per apartment)", color = "") +
+    scale_color_manual(values = params$col_w) +
+    expand_limits(y = 0) +  
+	  params$neutral) |> 
+  ggplotly(height = 2000)
+
+
+```
+
+### apartments
+
+```{r}
+#| label: fig-0904
+#| fig-cap: apartments by district, year and owner
+#| fig-width: 20
+#| fig-height: 20
+
+(aca$aca_dyw |> 
+  ggplot() +
+	  geom_line(aes(x = year, y = apartments, color = owner)) +
+	  facet_wrap(~district, ncol = 4, scales = "free_y") +
+	  labs(x = "", y = "apartments", color = "") +
+    scale_color_manual(values = params$col_w) +
+    expand_limits(y = 0) +  
+	  params$neutral) |> 
+  ggplotly(height = 2000)
+
+```
+
+### people
+
+```{r}
+#| label: fig-0905
+#| fig-cap: people by district, year and owner
+#| fig-width: 12
+#| fig-height: 14
+
+(aca$aca_dyw |> 
+  ggplot() +
+	  geom_line(aes(x = year, y = people, color = owner)) +
+	  facet_wrap(~district, ncol = 4, scales = "free_y") +
+	  labs(x = "", y = "people", color = "") +
+    scale_color_manual(values = params$col_w) +
+    expand_limits(y = 0) +  
+	  params$neutral) |> 
+  ggplotly(height = 2000)
+
+```
+
+## predictions
+
+### entire city, by owner
+
+```{r}
+#| label: fig-0906
+#| fig-cap: allocation prediction by year and ownership
+#| fig-width: 8
+#| fig-height: 7
+
+(aca$aca_yw_past_pred |> 
+  ggplot() +
+    geom_vline(xintercept = c(params$aca_base_begin, params$aca_base_end), 
+               color = params$col_grey, linetype = "dashed") +
+	  geom_line(aes(x = year, y = aca_yw_all, color = owner)) +
+	  labs(x = "", y = "allocation (people per apartment)", color = "") +
+    scale_color_manual(values = params$col_w) +
+    expand_limits(y = 0) +
+	  params$neutral) |>
+  ggplotly()
+
+```
+
+### entire city, by district and owner
+
+```{r}
+#| label: fig-0907
+#| fig-cap: allocation prediction by district, year and ownership
+#| fig-width: 20
+#| fig-height: 20
+
+(aca$aca_dyw_past_pred |> 
+  ggplot() +
+    geom_vline(xintercept = c(params$aca_base_begin, params$aca_base_end), 
+               color = params$col_grey, linetype = "dashed") +  
+	  geom_line(aes(x = year, y = aca_dyw_all, color = owner)) +
+	  facet_wrap(~district, ncol = 4, scales = "free_y") +
+	  labs(x = "", y = "allocation (people per apartment)", color = "") +
+    scale_color_manual(values = params$col_w) +
+    expand_limits(y = 0) +  
+	  params$neutral) |> 
+  ggplotly(height = 2000)
+
+```
+
+### Escher Wyss, by owner {#sec-escherwyss_ls}
+
+WWHY a different approach for the Escher Wyss district, private housing? same approach as in the living space model.
+
+```{r}
+#| label: fig-0908
+#| fig-cap: allocation prediction for Escher Wyss district, by year and ownership
+#| fig-width: 8
+#| fig-height: 7
+
+
+(aca$aca_yw_past_pred_52 |> 
+  ggplot() +
+    geom_vline(xintercept = c(params$aca_base_begin_52p, params$aca_base_end), 
+               color = params$col_grey, linetype = "dashed") +
+	  geom_line(aes(x = year, y = aca_dyw_all, color = owner)) +
+	  labs(x = "", y = "allocation (person per apartment)", color = "") +
+    scale_color_manual(values = params$col_w) +
+    expand_limits(y = 0) +
+	  params$neutral) |>
+  ggplotly()
+
+```
+
+## combine datasets
+
+### past and prediction
+
+```{r}
+#| label: fig-0909
+#| fig-cap: allocation prediction by district, year and owner; different datasets
+#| fig-width: 20
+#| fig-height: 20
+
+(aca$aca_comb |> 
+  ggplot() +
+    geom_vline(xintercept = c(params$aca_base_begin, params$aca_base_end), 
+               color = params$col_grey, linetype = "dashed") +  
+	  geom_line(aes(x = year, y = aca, color = owner)) +
+	  facet_wrap(~district, ncol = 4, scales = "free_y") +
+	  labs(x = "", y = "allocation (people per apartment)", color = "") +
+    scale_color_manual(values = params$col_w) +
+    expand_limits(y = 0) +  
+	  params$neutral) |> 
+  ggplotly(height = 2000)
+
+```
+
+### allocation prediction per district and entire city: cooperative housing
+
+```{r}
+#| label: fig-0910a
+#| fig-cap: allocation prediction per district and entire city, cooperative housing
+#| fig-width: 20
+#| fig-height: 20
+
+names_before <- c("aca_dyw", "aca_yw", "aca")
+names_plot <- c("by district", "entire city", "prediction")
+
+aca_both <- aca$aca_comb |> select(district, year, owner, aca_dyw, aca_yw, aca) |>
+  pivot_longer(cols = names_before, names_to = "category", values_to = "aca") |>
+  mutate(cat = factor(case_when(
+    category == names_before[1] ~ names_plot[1],
+    category == names_before[2] ~ names_plot[2],
+    TRUE ~ names_plot[3]
+  ), levels = names_plot))
+
+(aca_both |> 
+  filter(owner == params$uni_w[1]) |> 
+  ggplot() +
+    geom_vline(xintercept = c(params$aca_base_begin, params$aca_base_end), 
+               color = params$col_grey, linetype = "dashed") +  
+	  geom_line(aes(x = year, y = aca, color = cat)) +
+	  facet_wrap(~district, ncol = 4, scales = "free_y") +
+	  labs(x = "", y = "allocation (people per apartment)", color = "") +
+    scale_color_manual(values = params$col_6[c(1,3,4)]) +
+    expand_limits(y = 0) +  
+	  params$neutral) |> 
+  ggplotly(height = 2000)
+
+```
+
+### prediction per district and entire city: private housing
+
+```{r}
+#| label: fig-0910b
+#| fig-cap: allocation prediction per district and entire city, private housing
+#| fig-width: 20
+#| fig-height: 20
+
+(aca_both |> 
+  filter(owner == params$uni_w[2]) |> 
+  ggplot() +
+    geom_vline(xintercept = c(params$aca_base_begin, params$aca_base_end), 
+               color = params$col_grey, linetype = "dashed") +  
+	  geom_line(aes(x = year, y = aca, color = cat)) +
+	  facet_wrap(~district, ncol = 4, scales = "free_y") +
+	  labs(x = "", y = "allocation (people per apartment)", color = "") +
+    scale_color_manual(values = params$col_6[c(1,3,4)]) +
+    expand_limits(y = 0) +  
+	  params$neutral) |> 
+  ggplotly(height = 2000)
+
+```
+
+
+
+
+
+
