@@ -1,0 +1,1082 @@
+[
+  {
+    "objectID": "01_birth.html",
+    "href": "01_birth.html",
+    "title": "1  Birth",
+    "section": "",
+    "text": "1.1 Fertility",
+    "crumbs": [
+      "<span class='chapter-number'>1</span>  <span class='chapter-title'>Birth</span>"
+    ]
+  },
+  {
+    "objectID": "01_birth.html#fertility",
+    "href": "01_birth.html#fertility",
+    "title": "1  Birth",
+    "section": "",
+    "text": "1.1.1 TFR (total fertility rate)\n\n1.1.1.1 plots to define the base period for fertility prediction\n\n\n\n\n\n\n\n\nFigure 1.1: total fertility rate by year\n\n\n\n\n\n\n\n\n\n\n\n\nFigure 1.2: total fertility rate by year and origin\n\n\n\n\n\n\n\n\n\n\n\n\nFigure 1.3: total fertility rate by year and age class (3)\n\n\n\n\n\n\n\n\n\n\n\n\nFigure 1.4: total fertility rate by year and age class (5)\n\n\n\n\n\n\n\n\n\n\n\n\nFigure 1.5: total fertility rate by year, origin and age class (3)\n\n\n\n\n\n\n\n\n\n\n\n\nFigure 1.6: total fertility rate by year, origin and age class (5)\n\n\n\n\n\n\n\n\n\n\n\n\nFigure 1.7: total fertility rate by district, year and origin\n\n\n\n\n\n\n1.1.1.2 fertility plots (before the corrections)\nfertility by district, age, origin (last year only)\n\n\n\n\n\n\n\n\nFigure 1.8: fertility by district, age, and origin (last year)\n\n\n\n\n\n\n\n\n\n\n\n\nFigure 1.9: fertility by year, age, origin\n\n\n\n\n\n\n\n\n\n\n\n\nFigure 1.10: fertility by year, age\n\n\n\n\n\n\n\n1.1.2 corrected fertility (tail corrections)\n\n\n\n\n\n\n\n\nFigure 1.11: initial vs. corrected fertility (last year only)\n\n\n\n\ncumulative population from the tails (last year only)\n\n\n\n\n\n\n\n\nFigure 1.12: cumulative population from the tails (last year only)\n\n\n\n\n\n\n\n\n\n\n\n\nFigure 1.13: smooth the corrected fertility rate (last year only)\n\n\n\n\n\n\n1.1.3 Prediction\n\n1.1.3.1 fertility rate: past and future\nfertility rate: age distribution by district and year (Swiss only)\n\n\n\n\n\n\n\n\nFigure 1.14: fertility rate: age distribution by district and year (Swiss only)\n\n\n\n\nfertility rate: age distribution by district and year (foreign only)\n\n\n\n\n\n\n\n\nFigure 1.15: fertility rate: age distribution by district and year (foreign only)\n\n\n\n\n\n\n1.1.3.2 TFR: past and future\n\n\n\n\n\n\n\n\nFigure 1.16: TFR by district, year, and origin",
+    "crumbs": [
+      "<span class='chapter-number'>1</span>  <span class='chapter-title'>Birth</span>"
+    ]
+  },
+  {
+    "objectID": "01_birth.html#origin",
+    "href": "01_birth.html#origin",
+    "title": "1  Birth",
+    "section": "1.2 Origin",
+    "text": "1.2 Origin\n\n1.2.1 Past origin change\n\n\n\n\n\n\n\n\nFigure 1.17: origin change by year, origin\n\n\n\n\n\n\n\n\n\n\n\n\nFigure 1.18: origin change by year, age class (3), origin\n\n\n\n\n\n\n\n\n\n\n\n\nFigure 1.19: origin change by year, age class (5), origin\n\n\n\n\n\n\n\n\n\n\n\n\nFigure 1.20: origin change by district, year, origin\n\n\n\n\n\n\n1.2.2 Prediction of origin change\n\n\n\n\n\n\n\n\nFigure 1.21: predicted origin change by year and origin",
+    "crumbs": [
+      "<span class='chapter-number'>1</span>  <span class='chapter-title'>Birth</span>"
+    ]
+  },
+  {
+    "objectID": "01_birth.html#sex-ratio",
+    "href": "01_birth.html#sex-ratio",
+    "title": "1  Birth",
+    "section": "1.3 Sex ratio",
+    "text": "1.3 Sex ratio\n\n1.3.1 Past proportion\n\n\n\n\n\n\n\n\nFigure 1.22: past proportion of male babies by year\n\n\n\n\n\n\n1.3.2 Prediction of proportion\n\n\n\n\n\n\n\n\nFigure 1.23: predicted proportion of male babies by year",
+    "crumbs": [
+      "<span class='chapter-number'>1</span>  <span class='chapter-title'>Birth</span>"
+    ]
+  },
+  {
+    "objectID": "03_immigration.html",
+    "href": "03_immigration.html",
+    "title": "3  Immigration",
+    "section": "",
+    "text": "3.1 immigration* rate (per district and year)\nimmigration* rate by district and year\nFigure 3.1: immigration* rate by district and year",
+    "crumbs": [
+      "<span class='chapter-number'>3</span>  <span class='chapter-title'>Immigration</span>"
+    ]
+  },
+  {
+    "objectID": "03_immigration.html#prediction-future-immigration-rate-per-year-and-district",
+    "href": "03_immigration.html#prediction-future-immigration-rate-per-year-and-district",
+    "title": "3  Immigration",
+    "section": "3.2 prediction: future immigration* rate (per year and district)",
+    "text": "3.2 prediction: future immigration* rate (per year and district)\n\n3.2.1 overview\nimmigration* rate by district and year (past and prediction)\n\n\n\n\n\n\n\n\nFigure 3.2: immigration* rate by district and year (past and prediction)",
+    "crumbs": [
+      "<span class='chapter-number'>3</span>  <span class='chapter-title'>Immigration</span>"
+    ]
+  },
+  {
+    "objectID": "03_immigration.html#migration-distribution-of-sex-and-origin",
+    "href": "03_immigration.html#migration-distribution-of-sex-and-origin",
+    "title": "3  Immigration",
+    "section": "3.3 migration: distribution of sex and origin",
+    "text": "3.3 migration: distribution of sex and origin\nimmigration proportion of sex by origin, district and year\n\n\n\n\n\n\n\n\nFigure 3.3: immigration proportion of sex by origin, district and year",
+    "crumbs": [
+      "<span class='chapter-number'>3</span>  <span class='chapter-title'>Immigration</span>"
+    ]
+  },
+  {
+    "objectID": "03_immigration.html#distribution-of-sex-and-origin-prediction",
+    "href": "03_immigration.html#distribution-of-sex-and-origin-prediction",
+    "title": "3  Immigration",
+    "section": "3.4 distribution of sex and origin: prediction",
+    "text": "3.4 distribution of sex and origin: prediction\nimmigration proportion of sex by origin, district and year (past and prediction)\n\n\n\n\n\n\n\n\nFigure 3.4: immigration proportion of sex by origin, district and year (past and prediction)",
+    "crumbs": [
+      "<span class='chapter-number'>3</span>  <span class='chapter-title'>Immigration</span>"
+    ]
+  },
+  {
+    "objectID": "03_immigration.html#age-proportion",
+    "href": "03_immigration.html#age-proportion",
+    "title": "3  Immigration",
+    "section": "3.5 age proportion",
+    "text": "3.5 age proportion\n\n3.5.1 immigration*\nimmigration* per district, year, sex, origin\n\n\n\n\n\n\n\n\nFigure 3.5: immigration* per district, year, sex, origin\n\n\n\n\nimmigration* per district, year, sex, origin (free scales)\n\n\n\n\n\n\n\n\nFigure 3.6: immigration* per district, year, sex, origin; free scales\n\n\n\n\n\n\n3.5.2 age proportion: per district, year, sex, origin\n\n3.5.2.1 focus age\nimmigration* age proportion per district, year, sex (Swiss only)\n\n\n\n\n\n\n\n\nFigure 3.7: immigration* age proportion per district, year, sex (Swiss only)\n\n\n\n\nimmigration* age proportion per district, year, sex (foreign only)\n\n\n\n\n\n\n\n\nFigure 3.8: immigration* age proportion per district, year, sex (foreign only)\n\n\n\n\n\n\n3.5.2.2 focus years\n\n\n\n\n\n\n\n\nFigure 3.9: immigration* age proportion per selected district, year, sex (Swiss only, focus on years)\n\n\n\n\n\n\n\n\n\n\n\n\nFigure 3.10: immigration* age proportion per selected district, year, sex (foreign only, focus on years)",
+    "crumbs": [
+      "<span class='chapter-number'>3</span>  <span class='chapter-title'>Immigration</span>"
+    ]
+  },
+  {
+    "objectID": "03_immigration.html#smoothing-immigration-with-loess-over-years-by-district-age-sex",
+    "href": "03_immigration.html#smoothing-immigration-with-loess-over-years-by-district-age-sex",
+    "title": "3  Immigration",
+    "section": "3.6 smoothing immigration* with LOESS over years (by district, age, sex)",
+    "text": "3.6 smoothing immigration* with LOESS over years (by district, age, sex)\n\n3.6.0.1 focus age\n\n\n\n\n\n\n\n\nFigure 3.11: immigration* smoothed over year (Swiss only, last year, focus on age)\n\n\n\n\n\n\n\n\n\n\n\n\nFigure 3.12: immigration* smoothed over year (foreign only, last year, focus on age)\n\n\n\n\n\n\n3.6.0.2 focus years\n\n\n\n\n\n\n\n\nFigure 3.13: immigration* smoothed over year (Swiss only, focus on years)\n\n\n\n\n\n\n\n\n\n\n\n\nFigure 3.14: immigration* smoothed over year (foreign only, focus on years)",
+    "crumbs": [
+      "<span class='chapter-number'>3</span>  <span class='chapter-title'>Immigration</span>"
+    ]
+  },
+  {
+    "objectID": "03_immigration.html#age-proportion-after-smoothing-immigration-over-years",
+    "href": "03_immigration.html#age-proportion-after-smoothing-immigration-over-years",
+    "title": "3  Immigration",
+    "section": "3.7 age proportion (after smoothing immigration* over years)",
+    "text": "3.7 age proportion (after smoothing immigration* over years)\n\n3.7.0.1 focus age\n\n\n3.7.0.2 focus years\n\n\n3.7.1 smoothing proportion by age with LOESS\n\n3.7.1.1 focus age",
+    "crumbs": [
+      "<span class='chapter-number'>3</span>  <span class='chapter-title'>Immigration</span>"
+    ]
+  },
+  {
+    "objectID": "03_immigration.html#regression",
+    "href": "03_immigration.html#regression",
+    "title": "3  Immigration",
+    "section": "3.8 regression",
+    "text": "3.8 regression\n\n\n\n\n\n\n\n\nFigure 3.17: immigration* age proportion by district, year, sex (Swiss only, future)\n\n\n\n\n\n\n\n\n\n\n\n\nFigure 3.18: immigration* age proportion by district, year, sex (foreign only, future)",
+    "crumbs": [
+      "<span class='chapter-number'>3</span>  <span class='chapter-title'>Immigration</span>"
+    ]
+  },
+  {
+    "objectID": "03_immigration.html#smoothing-with-loess-proportion-by-age",
+    "href": "03_immigration.html#smoothing-with-loess-proportion-by-age",
+    "title": "3  Immigration",
+    "section": "3.7 smoothing with LOESS, proportion by age",
+    "text": "3.7 smoothing with LOESS, proportion by age\n\n3.7.1 focus age\n\n\n\n\n\n\n\n\nFigure 3.15: immigration* age proportion smoothed (Swiss only, focus on age)\n\n\n\n\n\n\n\n\n\n\n\n\nFigure 3.16: immigration* age proportion smoothed (foreign only, focus on age)",
+    "crumbs": [
+      "<span class='chapter-number'>3</span>  <span class='chapter-title'>Immigration</span>"
+    ]
+  },
+  {
+    "objectID": "04_emigration.html",
+    "href": "04_emigration.html",
+    "title": "4  Emigration",
+    "section": "",
+    "text": "4.1 emigration* rate (per district and year)\nemigration* rate by district and year\nFigure 4.1: emigration* rate by district and year",
+    "crumbs": [
+      "<span class='chapter-number'>4</span>  <span class='chapter-title'>Emigration</span>"
+    ]
+  },
+  {
+    "objectID": "04_emigration.html#prediction-future-emigration-rate-per-year-and-district",
+    "href": "04_emigration.html#prediction-future-emigration-rate-per-year-and-district",
+    "title": "4  Emigration",
+    "section": "4.2 prediction: future emigration* rate (per year and district)",
+    "text": "4.2 prediction: future emigration* rate (per year and district)\n\n4.2.1 overview\nemigration* rate by district and year (past and prediction)\n\n\n\n\n\n\n\n\nFigure 4.2: emigration* rate by district and year (past and prediction)",
+    "crumbs": [
+      "<span class='chapter-number'>4</span>  <span class='chapter-title'>Emigration</span>"
+    ]
+  },
+  {
+    "objectID": "04_emigration.html#migration-distribution-of-sex-and-origin",
+    "href": "04_emigration.html#migration-distribution-of-sex-and-origin",
+    "title": "4  Emigration",
+    "section": "4.3 migration: distribution of sex and origin",
+    "text": "4.3 migration: distribution of sex and origin\nemigration proportion of sex by origin, district and year\n\n\n\n\n\n\n\n\nFigure 4.3: emigration proportion of sex by origin, district and year",
+    "crumbs": [
+      "<span class='chapter-number'>4</span>  <span class='chapter-title'>Emigration</span>"
+    ]
+  },
+  {
+    "objectID": "04_emigration.html#distribution-of-sex-and-origin-prediction",
+    "href": "04_emigration.html#distribution-of-sex-and-origin-prediction",
+    "title": "4  Emigration",
+    "section": "4.4 distribution of sex and origin: prediction",
+    "text": "4.4 distribution of sex and origin: prediction\nemigration proportion of sex by origin, district and year (past and prediction)\n\n\n\n\n\n\n\n\nFigure 4.4: emigration proportion of sex by origin, district and year (past and prediction)",
+    "crumbs": [
+      "<span class='chapter-number'>4</span>  <span class='chapter-title'>Emigration</span>"
+    ]
+  },
+  {
+    "objectID": "04_emigration.html#age-proportion",
+    "href": "04_emigration.html#age-proportion",
+    "title": "4  Emigration",
+    "section": "4.5 age proportion",
+    "text": "4.5 age proportion\n\n4.5.1 emigration*\nemigration* per district, year, sex, origin\n\n\n\n\n\n\n\n\nFigure 4.5: emigration* per district, year, sex, origin\n\n\n\n\nemigration* per district, year, sex, origin (free scales)\n\n\n\n\n\n\n\n\nFigure 4.6: emigration* per district, year, sex, origin; free scales\n\n\n\n\n\n\n4.5.2 age proportion: per district, year, sex, origin\n\n4.5.2.1 focus age\nemigration* age proportion per district, year, sex (Swiss only)\n\n\n\n\n\n\n\n\nFigure 4.7: emigration* age proportion per district, year, sex (Swiss only)\n\n\n\n\nemigration* age proportion per district, year, sex (foreign only)\n\n\n\n\n\n\n\n\nFigure 4.8: emigration* age proportion per district, year, sex (foreign only)\n\n\n\n\n\n\n4.5.2.2 focus years\n\n\n\n\n\n\n\n\nFigure 4.9: emigration* age proportion per selected district, year, sex (Swiss only, focus on years)\n\n\n\n\n\n\n\n\n\n\n\n\nFigure 4.10: emigration* age proportion per selected district, year, sex (foreign only, focus on years)",
+    "crumbs": [
+      "<span class='chapter-number'>4</span>  <span class='chapter-title'>Emigration</span>"
+    ]
+  },
+  {
+    "objectID": "04_emigration.html#smoothing-emigration-with-loess-over-years-by-district-age-sex",
+    "href": "04_emigration.html#smoothing-emigration-with-loess-over-years-by-district-age-sex",
+    "title": "4  Emigration",
+    "section": "4.6 smoothing emigration* with LOESS over years (by district, age, sex)",
+    "text": "4.6 smoothing emigration* with LOESS over years (by district, age, sex)\n\n4.6.0.1 focus age\n\n\n\n\n\n\n\n\nFigure 4.11: emigration* smoothed over year (Swiss only, last year, focus on age)\n\n\n\n\n\n\n\n\n\n\n\n\nFigure 4.12: emigration* smoothed over year (foreign only, last year, focus on age)\n\n\n\n\n\n\n4.6.0.2 focus years\n\n\n\n\n\n\n\n\nFigure 4.13: emigration* smoothed over year (Swiss only, focus on years)\n\n\n\n\n\n\n\n\n\n\n\n\nFigure 4.14: emigration* smoothed over year (foreign only, focus on years)",
+    "crumbs": [
+      "<span class='chapter-number'>4</span>  <span class='chapter-title'>Emigration</span>"
+    ]
+  },
+  {
+    "objectID": "04_emigration.html#smoothing-with-loess-proportion-by-age",
+    "href": "04_emigration.html#smoothing-with-loess-proportion-by-age",
+    "title": "4  Emigration",
+    "section": "4.7 smoothing with LOESS, proportion by age",
+    "text": "4.7 smoothing with LOESS, proportion by age\n\n4.7.1 focus age\n\n\n\n\n\n\n\n\nFigure 4.15: emigration* age proportion smoothed (Swiss only, focus on age)\n\n\n\n\n\n\n\n\n\n\n\n\nFigure 4.16: emigration* age proportion smoothed (foreign only, focus on age)",
+    "crumbs": [
+      "<span class='chapter-number'>4</span>  <span class='chapter-title'>Emigration</span>"
+    ]
+  },
+  {
+    "objectID": "04_emigration.html#regression",
+    "href": "04_emigration.html#regression",
+    "title": "4  Emigration",
+    "section": "4.8 regression",
+    "text": "4.8 regression\n\n\n\n\n\n\n\n\nFigure 4.17: emigration* age proportion by district, year, sex (Swiss only, future)\n\n\n\n\n\n\n\n\n\n\n\n\nFigure 4.18: emigration* age proportion by district, year, sex (foreign only, future)",
+    "crumbs": [
+      "<span class='chapter-number'>4</span>  <span class='chapter-title'>Emigration</span>"
+    ]
+  },
+  {
+    "objectID": "02_death.html",
+    "href": "02_death.html",
+    "title": "2  Death",
+    "section": "",
+    "text": "2.1 Mortality",
+    "crumbs": [
+      "<span class='chapter-number'>2</span>  <span class='chapter-title'>Death</span>"
+    ]
+  },
+  {
+    "objectID": "02_death.html#mortality",
+    "href": "02_death.html#mortality",
+    "title": "2  Death",
+    "section": "",
+    "text": "2.1.1 age plots\n\n2.1.1.1 focus: difference in mortality by sex\nFor the year 2024.\n\n\n\n\n\n\n\n\nFigure 2.1: mortality by age, year, sex, region (focus sex)\n\n\n\n\n\n\n2.1.1.2 focus: difference in mortality by region\nFor the year 2024.\n\n\n\n\n\n\n\n\nFigure 2.2: mortality by age, year, region, sex (focus: region)\n\n\n\n\n\n\n\n2.1.2 year plots\n\n2.1.2.1 focus: difference in mortality by sex\n\n\n\n\n\n\n\n\nFigure 2.3: mortality by year, age, sex, region\n\n\n\n\n\n\n2.1.2.2 focus: difference in mortality by region\n\n\n\n\n\n\n\n\nFigure 2.4: mortality by year, age, region, sex\n\n\n\n\n\n\n\n2.1.3 life expectancy calculation\nFor the year 2024.\n\n\n\n\n\n\n\n\nFigure 2.5: cumulative survival probability (last year)\n\n\n\n\n\n\n2.1.4 method comparison (based on rate vs. death/birth/population)\nmethod differences (rate vs. deaths/births/population) details: see life expectancy function definition\n\n\n\n\n\n\n\n\nFigure 2.6: life expectancy at birth by year: method comparison (Zurich only)\n\n\n\n\n\n\n2.1.5 life expectancy\n\n2.1.5.1 focus: differences by sex\n\n\n\n\n\n\n\n\nFigure 2.7: life expecancy at birth by year, sex and region\n\n\n\n\n\n\n2.1.5.2 focus: differences by region\n\n\n\n\n\n\n\n\nFigure 2.8: life expecancy at birth by year, region and sex\n\n\n\n\n\n\n\n2.1.6 mortality over base years (including tail correction)\n\n\n\n\n\n\n\n\nFigure 2.9: mortality by age, sex, region (tails corrected)\n\n\n\n\n\n\n2.1.7 smoothing with LOESS\n\n\n\n\n\n\n\n\nFigure 2.10: mortality by age, sex and region; fitted\n\n\n\n\n\n\n2.1.8 ratio Zurich / Switzerland\n\n\n\n\n\n\n\n\nFigure 2.11: ratio Zurich/Switzerland by age and sex\n\n\n\n\n\n\n2.1.9 Zurich: future mortality rate\n\n\n\n\n\n\n\n\nFigure 2.12: mortality prediction by year, age and sex\n\n\n\n\n\n\n2.1.10 Zurich and Switzerland: future mortality rate\n\n\n\n\n\n\n\n\nFigure 2.13: mortality by year, age, sex, region\n\n\n\n\n\n\n2.1.11 Zurich: life expectancy (including the model data)\n\n2.1.11.1 focus: differences by sex\n\n\n\n\n\n\n\n\nFigure 2.14: life expectancy at birth by year, sex, region; with model\n\n\n\n\n\n\n2.1.11.2 focus: differences by region\n\n\n\n\n\n\n\n\nFigure 2.15: life expectancy at birth by year, region, sex; with model\n\n\n\n\n\n\n\n2.1.12 Zurich: life expectancy at different age\n\n\n\n\n\n\n\n\nFigure 2.16: life expectancy at different age (0 and 65), by year, region, sex",
+    "crumbs": [
+      "<span class='chapter-number'>2</span>  <span class='chapter-title'>Death</span>"
+    ]
+  },
+  {
+    "objectID": "05_reloc_immigration.html",
+    "href": "05_reloc_immigration.html",
+    "title": "5  Relocation-immigration",
+    "section": "",
+    "text": "5.1 Past proportion of relocation on immigration*",
+    "crumbs": [
+      "<span class='chapter-number'>5</span>  <span class='chapter-title'>Relocation-immigration</span>"
+    ]
+  },
+  {
+    "objectID": "05_reloc_immigration.html#relocation-proportion",
+    "href": "05_reloc_immigration.html#relocation-proportion",
+    "title": "5  Relocation-immigration",
+    "section": "",
+    "text": "5.1.1 Differences by sex (sum over years)\nWHY? Check if minor differences between sex? Because omitted in prediction\nproportion of relocation by district, age, sex (Swiss only)\n\n\n\n\n\n\n\n\nFigure 5.1: proportion of relocation by district, age, sex (Swiss only)\n\n\n\n\nproportion of relocation by district, age, sex (foreign only)\n\n\n\n\n\n\n\n\nFigure 5.2: proportion of relocation by district, age, sex (foreign only)\n\n\n\n\n\n\n5.1.2 Differences by origin (sum over years and sex)\nWHY? first: to emphasize the need of origin in the model second: the plots can be used to get an idea the value of an age threshold\n\n\n\n\n\n\n\n\nFigure 5.3: proportion of relocation by district, age and origin\n\n\n\n\n\n\n5.1.3 Which base years?\n\n5.1.3.1 Year, origin\nWHY? Several plots to determine the base years\n\n\n\n\n\n\n\n\nFigure 5.4: proportion by year and origin\n\n\n\n\n\n\n5.1.3.2 Year, age, origin\n\n\n\n\n\n\n\n\nFigure 5.5: propportion by year, age and origin\n\n\n\n\n\n\n\n5.1.4 Aggregate over sex\nThis plot is the starting point (before smoothing, age corrections)\n\n5.1.4.1 Focus on age\nProcesses by district, age, year 2025, Swiss only.\n\n\n\n\n\n\n\n\nFigure 5.6: processes by district, age, last year, Swiss only\n\n\n\n\nProcesses by district, age, year 2025, foreign only.\n\n\n\n\n\n\n\n\nFigure 5.7: processes by district, age, last year, foreign only\n\n\n\n\n\n\n5.1.4.2 Focus on years\nprocesses by district (selected), year, age (selected), Swiss only\n\n\n\n\n\n\n\n\nFigure 5.8: processes by district (selected), year, age (selected), Swiss only\n\n\n\n\nprocesses by district (selected), year, age (selected), foreign only\n\n\n\n\n\n\n\n\nFigure 5.9: processes by district (selected), year, age (selected), foreign only\n\n\n\n\n\n\n\n5.1.5 Smoothing: dyao\nprocesses by district (selected), age, year 2025, origin\n\n\n\n\n\n\n\n\nFigure 5.10: processes by district, age, last year, origin\n\n\n\n\n\n\n5.1.6 Proportion after smoothing: dyao\nproportion smooothed by district, age, year 2025 and origin\n\n\n\n\n\n\n\n\nFigure 5.11: proportion smooothed by district, age, last year and origin\n\n\n\n\n\n\n5.1.7 Smoothing\n\n\n\n\n\n\n\n\nFigure 5.12: processes by district (selected), age and origin; smoothed\n\n\n\n\n\n\n5.1.8 Proportions: different aggregation levels\n\n\n\n\n\n\n\n\nFigure 5.13: proportions from different aggregation levels (2025)\n\n\n\n\n\n\n5.1.9 Smoothing (after different levels of aggregation were brought together)\n\n\n\n\n\n\n\n\nFigure 5.14: one proportion after smoothing (2025)",
+    "crumbs": [
+      "<span class='chapter-number'>5</span>  <span class='chapter-title'>Relocation-immigration</span>"
+    ]
+  },
+  {
+    "objectID": "05_reloc_immigration.html#prediction",
+    "href": "05_reloc_immigration.html#prediction",
+    "title": "5  Relocation-immigration",
+    "section": "5.2 Prediction",
+    "text": "5.2 Prediction\n\n\n\n\n\n\n\n\nFigure 5.15: prediction by district (selected), last prediction year, age, origin",
+    "crumbs": [
+      "<span class='chapter-number'>5</span>  <span class='chapter-title'>Relocation-immigration</span>"
+    ]
+  },
+  {
+    "objectID": "05_reloc_immigration.html#final-predictions",
+    "href": "05_reloc_immigration.html#final-predictions",
+    "title": "5  Relocation-immigration",
+    "section": "5.3 final predictions",
+    "text": "5.3 final predictions\n\n5.3.1 past and future\n\n\n5.3.2 focus age distribution\nWHY this plot: it is recommendable to look precisely at the age plots over years therefore, a plot that focuses on certain years\n\n\n5.3.3 focus year distribution",
+    "crumbs": [
+      "<span class='chapter-number'>5</span>  <span class='chapter-title'>Relocation-immigration</span>"
+    ]
+  },
+  {
+    "objectID": "05_reloc_immigration.html#predictions-by-year",
+    "href": "05_reloc_immigration.html#predictions-by-year",
+    "title": "5  Relocation-immigration",
+    "section": "5.3 predictions by year",
+    "text": "5.3 predictions by year\npredicted proportions by district, year, age, Swiss only\n\n\n\n\n\n\n\n\nFigure 5.16: predicted proportions by district, year, age, Swiss only\n\n\n\n\npredicted proportions by district, year, age, foreign only\n\n\n\n\n\n\n\n\nFigure 5.17: predicted proportions by district, year, age, foreign only",
+    "crumbs": [
+      "<span class='chapter-number'>5</span>  <span class='chapter-title'>Relocation-immigration</span>"
+    ]
+  },
+  {
+    "objectID": "05_reloc_immigration.html#prediction-smoothing",
+    "href": "05_reloc_immigration.html#prediction-smoothing",
+    "title": "5  Relocation-immigration",
+    "section": "5.2 Prediction: smoothing",
+    "text": "5.2 Prediction: smoothing\n\n\n\n\n\n\n\n\nFigure 5.15: prediction by district (selected), last prediction year, age, origin",
+    "crumbs": [
+      "<span class='chapter-number'>5</span>  <span class='chapter-title'>Relocation-immigration</span>"
+    ]
+  },
+  {
+    "objectID": "05_reloc_immigration.html#final-prediction",
+    "href": "05_reloc_immigration.html#final-prediction",
+    "title": "5  Relocation-immigration",
+    "section": "5.3 Final prediction",
+    "text": "5.3 Final prediction\npredicted proportions by district, year, age, Swiss only\n\n\n\n\n\n\n\n\nFigure 5.16: predicted proportions by district, year, age, Swiss only\n\n\n\n\npredicted proportions by district, year, age, foreign only\n\n\n\n\n\n\n\n\nFigure 5.17: predicted proportions by district, year, age, foreign only",
+    "crumbs": [
+      "<span class='chapter-number'>5</span>  <span class='chapter-title'>Relocation-immigration</span>"
+    ]
+  },
+  {
+    "objectID": "05_reloc_immigration.html#past-relocation-proportion",
+    "href": "05_reloc_immigration.html#past-relocation-proportion",
+    "title": "5  Relocation-immigration",
+    "section": "",
+    "text": "5.1.1 Differences by sex (sum over years)\nWHY? Check if minor differences between sex? Because omitted in prediction\nproportion of relocation by district, age, sex (Swiss only)\n\n\n\n\n\n\n\n\nFigure 5.1: proportion of relocation by district, age, sex (Swiss only)\n\n\n\n\nproportion of relocation by district, age, sex (foreign only)\n\n\n\n\n\n\n\n\nFigure 5.2: proportion of relocation by district, age, sex (foreign only)\n\n\n\n\n\n\n5.1.2 Differences by origin (sum over years and sex)\nWHY? first: to emphasize the need of origin in the model second: the plots can be used to get an idea the value of an age threshold\n\n\n\n\n\n\n\n\nFigure 5.3: proportion of relocation by district, age and origin\n\n\n\n\n\n\n5.1.3 Which base years?\n\n5.1.3.1 Year, origin\nWHY? Several plots to determine the base years\n\n\n\n\n\n\n\n\nFigure 5.4: proportion by year and origin\n\n\n\n\n\n\n5.1.3.2 Year, age, origin\n\n\n\n\n\n\n\n\nFigure 5.5: propportion by year, age and origin\n\n\n\n\n\n\n\n5.1.4 Aggregate over sex\nThis plot is the starting point (before smoothing, age corrections)\n\n5.1.4.1 Focus on age\nProcesses by district, age, year 2025, Swiss only.\n\n\n\n\n\n\n\n\nFigure 5.6: processes by district, age, last year, Swiss only\n\n\n\n\nProcesses by district, age, year 2025, foreign only.\n\n\n\n\n\n\n\n\nFigure 5.7: processes by district, age, last year, foreign only\n\n\n\n\n\n\n5.1.4.2 Focus on years\nprocesses by district (selected), year, age (selected), Swiss only\n\n\n\n\n\n\n\n\nFigure 5.8: processes by district (selected), year, age (selected), Swiss only\n\n\n\n\nprocesses by district (selected), year, age (selected), foreign only\n\n\n\n\n\n\n\n\nFigure 5.9: processes by district (selected), year, age (selected), foreign only\n\n\n\n\n\n\n\n5.1.5 Smoothing: dyao\nprocesses by district (selected), age, year 2025, origin\n\n\n\n\n\n\n\n\nFigure 5.10: processes by district, age, last year, origin\n\n\n\n\n\n\n5.1.6 Proportion after smoothing: dyao\nproportion smooothed by district, age, year 2025 and origin\n\n\n\n\n\n\n\n\nFigure 5.11: proportion smooothed by district, age, last year and origin\n\n\n\n\n\n\n5.1.7 Smoothing\n\n\n\n\n\n\n\n\nFigure 5.12: processes by district (selected), age and origin; smoothed\n\n\n\n\n\n\n5.1.8 Proportions: different aggregation levels\n\n\n\n\n\n\n\n\nFigure 5.13: proportions from different aggregation levels (2025)\n\n\n\n\n\n\n5.1.9 Smoothing (after different levels of aggregation were brought together)\n\n\n\n\n\n\n\n\nFigure 5.14: one proportion after smoothing (2025)",
+    "crumbs": [
+      "<span class='chapter-number'>5</span>  <span class='chapter-title'>Relocation-immigration</span>"
+    ]
+  },
+  {
+    "objectID": "05_reloc_immigration.html#prediction-of-the-relocation-proportion",
+    "href": "05_reloc_immigration.html#prediction-of-the-relocation-proportion",
+    "title": "5  Relocation-immigration",
+    "section": "5.2 Prediction of the relocation proportion",
+    "text": "5.2 Prediction of the relocation proportion\n\n5.2.1 Smoothing\n\n\n\n\n\n\n\n\nFigure 5.15: prediction by district (selected), last prediction year, age, origin\n\n\n\n\n\n\n5.2.2 Final prediction\npredicted proportions by district, year, age, Swiss only\n\n\n\n\n\n\n\n\nFigure 5.16: predicted proportions by district, year, age, Swiss only\n\n\n\n\npredicted proportions by district, year, age, foreign only\n\n\n\n\n\n\n\n\nFigure 5.17: predicted proportions by district, year, age, foreign only",
+    "crumbs": [
+      "<span class='chapter-number'>5</span>  <span class='chapter-title'>Relocation-immigration</span>"
+    ]
+  },
+  {
+    "objectID": "05_reloc_immigration.html#past-proportion-of-relocation-on-immigration",
+    "href": "05_reloc_immigration.html#past-proportion-of-relocation-on-immigration",
+    "title": "5  Relocation-immigration",
+    "section": "",
+    "text": "5.1.1 Differences by sex\nWhy this check? Can the variable sex be omitted in the prediction?\nProportion of relocation on immigration* by district, age, sex (Swiss only)\n\n\n\n\n\n\n\n\nFigure 5.1: proportion of relocation by district, age, sex (Swiss only)\n\n\n\n\nProportion of relocation on immigration* by district, age, sex (foreign only)\n\n\n\n\n\n\n\n\nFigure 5.2: proportion of relocation by district, age, sex (foreign only)\n\n\n\n\n\n\n5.1.2 Differences by origin\nWhy this check? First, to emphasize the need of origin in the model. Second, the plots can be used to get an idea of the value of the age threshold parameter.\n\n\n\n\n\n\n\n\nFigure 5.3: proportion of relocation by district, age and origin\n\n\n\n\n\n\n5.1.3 Which base years?\n\n5.1.3.1 Year, origin\nWhy? Several plots to determine the base years.\n\n\n\n\n\n\n\n\nFigure 5.4: proportion by year and origin\n\n\n\n\n\n\n5.1.3.2 Year, age, origin\n\n\n\n\n\n\n\n\nFigure 5.5: propportion by year, age and origin\n\n\n\n\n\n\n\n5.1.4 Aggregate over sex\nThis plot is the starting point (before smoothing, age corrections).\n\n5.1.4.1 Focus on age\nProcesses by district, age, year 2025, Swiss only.\n\n\n\n\n\n\n\n\nFigure 5.6: processes by district, age, last year, Swiss only\n\n\n\n\nProcesses by district, age, year 2025, foreign only.\n\n\n\n\n\n\n\n\nFigure 5.7: processes by district, age, last year, foreign only\n\n\n\n\n\n\n5.1.4.2 Focus on years\nProcesses by district (selected), year, age (selected), Swiss only\n\n\n\n\n\n\n\n\nFigure 5.8: processes by district (selected), year, age (selected), Swiss only\n\n\n\n\nProcesses by district (selected), year, age (selected), foreign only\n\n\n\n\n\n\n\n\nFigure 5.9: processes by district (selected), year, age (selected), foreign only\n\n\n\n\n\n\n\n5.1.5 Relocation and immigration* after smoothing: dyao\nProcesses by district (selected), age, year 2025, origin.\n\n\n\n\n\n\n\n\nFigure 5.10: processes by district, age, last year, origin\n\n\n\n\n\n\n5.1.6 Proportion of relocation on immigration* after smoothing: dyao\nProportion by district, age, year 2025 and origin.\n\n\n\n\n\n\n\n\nFigure 5.11: proportion smooothed by district, age, last year and origin\n\n\n\n\n\n\n5.1.7 Smoothing the proportion\n\n\n\n\n\n\n\n\nFigure 5.12: processes by district (selected), age and origin (smoothed)\n\n\n\n\n\n\n5.1.8 Proportions: different aggregation levels\n\n\n\n\n\n\n\n\nFigure 5.13: proportions from different aggregation levels (2025)\n\n\n\n\n\n\n5.1.9 Smoothing (after different levels of aggregation were brought together)\n\n\n\n\n\n\n\n\nFigure 5.14: one proportion after smoothing (2025)",
+    "crumbs": [
+      "<span class='chapter-number'>5</span>  <span class='chapter-title'>Relocation-immigration</span>"
+    ]
+  },
+  {
+    "objectID": "05_reloc_immigration.html#prediction-of-the-relocation-proportion-on-immigration",
+    "href": "05_reloc_immigration.html#prediction-of-the-relocation-proportion-on-immigration",
+    "title": "5  Relocation-immigration",
+    "section": "5.2 Prediction of the relocation proportion on immigration*",
+    "text": "5.2 Prediction of the relocation proportion on immigration*\n\n5.2.1 Smoothing\n\n\n\n\n\n\n\n\nFigure 5.15: prediction by district (selected), last prediction year, age, origin\n\n\n\n\n\n\n5.2.2 Final prediction\npredicted proportions by district, year, age, Swiss only\n\n\n\n\n\n\n\n\nFigure 5.16: predicted proportions by district, year, age, Swiss only\n\n\n\n\npredicted proportions by district, year, age, foreign only\n\n\n\n\n\n\n\n\nFigure 5.17: predicted proportions by district, year, age, foreign only",
+    "crumbs": [
+      "<span class='chapter-number'>5</span>  <span class='chapter-title'>Relocation-immigration</span>"
+    ]
+  },
+  {
+    "objectID": "06_reloc_emigration.html",
+    "href": "06_reloc_emigration.html",
+    "title": "6  Relocation-emigration",
+    "section": "",
+    "text": "6.1 Past proportion of relocation on emigration*",
+    "crumbs": [
+      "<span class='chapter-number'>6</span>  <span class='chapter-title'>Relocation-emigration</span>"
+    ]
+  },
+  {
+    "objectID": "06_reloc_emigration.html#past-proportion-of-relocation-on-emigration",
+    "href": "06_reloc_emigration.html#past-proportion-of-relocation-on-emigration",
+    "title": "6  Relocation-emigration",
+    "section": "",
+    "text": "6.1.1 Differences by sex\nWhy this check? Can the variable sex be omitted in the prediction?\nProportion of relocation on emigration* by district, age, sex (Swiss only)\n\n\n\n\n\n\n\n\nFigure 6.1: proportion of relocation by district, age, sex (Swiss only)\n\n\n\n\nProportion of relocation on emigration* by district, age, sex (foreign only)\n\n\n\n\n\n\n\n\nFigure 6.2: proportion of relocation by district, age, sex (foreign only)\n\n\n\n\n\n\n6.1.2 Differences by origin\nWhy this check? First, to emphasize the need of origin in the model. Second, the plots can be used to get an idea of the value of the age threshold parameter.\n\n\n\n\n\n\n\n\nFigure 6.3: proportion of relocation by district, age and origin\n\n\n\n\n\n\n6.1.3 Which base years?\n\n6.1.3.1 Year, origin\nWhy? Several plots to determine the base years.\n\n\n\n\n\n\n\n\nFigure 6.4: proportion by year and origin\n\n\n\n\n\n\n6.1.3.2 Year, age, origin\n\n\n\n\n\n\n\n\nFigure 6.5: propportion by year, age and origin\n\n\n\n\n\n\n\n6.1.4 Aggregate over sex\nThis plot is the starting point (before smoothing, age corrections).\n\n6.1.4.1 Focus on age\nProcesses by district, age, year 2025, Swiss only.\n\n\n\n\n\n\n\n\nFigure 6.6: processes by district, age, last year, Swiss only\n\n\n\n\nProcesses by district, age, year 2025, foreign only.\n\n\n\n\n\n\n\n\nFigure 6.7: processes by district, age, last year, foreign only\n\n\n\n\n\n\n6.1.4.2 Focus on years\nProcesses by district (selected), year, age (selected), Swiss only\n\n\n\n\n\n\n\n\nFigure 6.8: processes by district (selected), year, age (selected), Swiss only\n\n\n\n\nProcesses by district (selected), year, age (selected), foreign only\n\n\n\n\n\n\n\n\nFigure 6.9: processes by district (selected), year, age (selected), foreign only\n\n\n\n\n\n\n\n6.1.5 Relocation and emigration* after smoothing: dyao\nProcesses by district (selected), age, year 2025, origin.\n\n\n\n\n\n\n\n\nFigure 6.10: processes by district, age, last year, origin\n\n\n\n\n\n\n6.1.6 Proportion of relocation on emigration* after smoothing: dyao\nProportion by district, age, year 2025 and origin.\n\n\n\n\n\n\n\n\nFigure 6.11: proportion smooothed by district, age, last year and origin\n\n\n\n\n\n\n6.1.7 Smoothing the proportion\n\n\n\n\n\n\n\n\nFigure 6.12: processes by district (selected), age and origin (smoothed)\n\n\n\n\n\n\n6.1.8 Proportions: different aggregation levels\n\n\n\n\n\n\n\n\nFigure 6.13: proportions from different aggregation levels (2025)\n\n\n\n\n\n\n6.1.9 Smoothing (after different levels of aggregation were brought together)\n\n\n\n\n\n\n\n\nFigure 6.14: one proportion after smoothing (2025)",
+    "crumbs": [
+      "<span class='chapter-number'>6</span>  <span class='chapter-title'>Relocation-emigration</span>"
+    ]
+  },
+  {
+    "objectID": "06_reloc_emigration.html#prediction-of-the-relocation-proportion-on-emigration",
+    "href": "06_reloc_emigration.html#prediction-of-the-relocation-proportion-on-emigration",
+    "title": "6  Relocation-emigration",
+    "section": "6.2 Prediction of the relocation proportion on emigration*",
+    "text": "6.2 Prediction of the relocation proportion on emigration*\n\n6.2.1 Smoothing\n\n\n\n\n\n\n\n\nFigure 6.15: prediction by district (selected), last prediction year, age, origin\n\n\n\n\n\n\n6.2.2 Final prediction\npredicted proportions by district, year, age, Swiss only\n\n\n\n\n\n\n\n\nFigure 6.16: predicted proportions by district, year, age, Swiss only\n\n\n\n\npredicted proportions by district, year, age, foreign only\n\n\n\n\n\n\n\n\nFigure 6.17: predicted proportions by district, year, age, foreign only",
+    "crumbs": [
+      "<span class='chapter-number'>6</span>  <span class='chapter-title'>Relocation-emigration</span>"
+    ]
+  },
+  {
+    "objectID": "07_naturalization.html",
+    "href": "07_naturalization.html",
+    "title": "7  Naturalization",
+    "section": "",
+    "text": "7.1 naturalization vs. denaturalization\nproportion of naturalization on all citizenship changes (naturalization and denaturalization).\nFigure 7.1: proportion of naturalization on all citizenship changes",
+    "crumbs": [
+      "<span class='chapter-number'>7</span>  <span class='chapter-title'>Naturalization</span>"
+    ]
+  },
+  {
+    "objectID": "07_naturalization.html#naturalization-rate-which-variables",
+    "href": "07_naturalization.html#naturalization-rate-which-variables",
+    "title": "7  Naturalization",
+    "section": "7.2 naturalization rate: which variables?",
+    "text": "7.2 naturalization rate: which variables?\n\n7.2.1 age and sex\n\n\n\n\n\n\n\n\nFigure 7.2: rate age and sex\n\n\n\n\n\n\n7.2.2 year and sex\n\n\n\n\n\n\n\n\nFigure 7.3: rate year and sex\n\n\n\n\n\n\n7.2.3 year, age and sex\n\n\n\n\n\n\n\n\nFigure 7.4: rate year (last three years), age, sex\n\n\n\n\n\n\n7.2.4 district, year and sex\n\n\n\n\n\n\n\n\nFigure 7.5: rate district, year and sex",
+    "crumbs": [
+      "<span class='chapter-number'>7</span>  <span class='chapter-title'>Naturalization</span>"
+    ]
+  },
+  {
+    "objectID": "07_naturalization.html#das-smoothing-nat-and-pop",
+    "href": "07_naturalization.html#das-smoothing-nat-and-pop",
+    "title": "7  Naturalization",
+    "section": "7.3 das: smoothing (nat and pop)",
+    "text": "7.3 das: smoothing (nat and pop)\n\n\n\n\n\n\n\n\nFigure 7.6: processes by district, age, sex; smoothed",
+    "crumbs": [
+      "<span class='chapter-number'>7</span>  <span class='chapter-title'>Naturalization</span>"
+    ]
+  },
+  {
+    "objectID": "07_naturalization.html#das-naturalization-rate",
+    "href": "07_naturalization.html#das-naturalization-rate",
+    "title": "7  Naturalization",
+    "section": "7.4 das: naturalization rate",
+    "text": "7.4 das: naturalization rate\n\n\n\n\n\n\n\n\nFigure 7.7: rate by district, age and sex",
+    "crumbs": [
+      "<span class='chapter-number'>7</span>  <span class='chapter-title'>Naturalization</span>"
+    ]
+  },
+  {
+    "objectID": "07_naturalization.html#ya-smooth-processes-preparation-for-trend-by-ya",
+    "href": "07_naturalization.html#ya-smooth-processes-preparation-for-trend-by-ya",
+    "title": "7  Naturalization",
+    "section": "7.5 ya: smooth processes (preparation for trend by ya)",
+    "text": "7.5 ya: smooth processes (preparation for trend by ya)\n\n7.5.1 by years (subjectively, but last year in the plot)\n\n\n\n\n\n\n\n\nFigure 7.8: processes (smoothed) by year and age",
+    "crumbs": [
+      "<span class='chapter-number'>7</span>  <span class='chapter-title'>Naturalization</span>"
+    ]
+  },
+  {
+    "objectID": "07_naturalization.html#ya-rate",
+    "href": "07_naturalization.html#ya-rate",
+    "title": "7  Naturalization",
+    "section": "7.6 ya: rate",
+    "text": "7.6 ya: rate\n\n\n\n\n\n\n\n\nFigure 7.9: rate by year and age, focus on age",
+    "crumbs": [
+      "<span class='chapter-number'>7</span>  <span class='chapter-title'>Naturalization</span>"
+    ]
+  },
+  {
+    "objectID": "07_naturalization.html#constrained-regression",
+    "href": "07_naturalization.html#constrained-regression",
+    "title": "7  Naturalization",
+    "section": "7.7 constrained regression",
+    "text": "7.7 constrained regression\n\n7.7.1 focus age\n\n\n\n\n\n\n\n\nFigure 7.10: rate by year and age; past and future, focus on age\n\n\n\n\n\n\n7.7.2 focus years\n\n\n\n\n\n\n\n\nFigure 7.11: rate by year and age; past and future, focus on years",
+    "crumbs": [
+      "<span class='chapter-number'>7</span>  <span class='chapter-title'>Naturalization</span>"
+    ]
+  },
+  {
+    "objectID": "07_naturalization.html#smooth-processes-preparation-for-the-trend-factor-calculation",
+    "href": "07_naturalization.html#smooth-processes-preparation-for-the-trend-factor-calculation",
+    "title": "7  Naturalization",
+    "section": "7.8 smooth processes (preparation for the trend factor calculation)",
+    "text": "7.8 smooth processes (preparation for the trend factor calculation)\n\n\n\n\n\n\n\n\nFigure 7.12: processes by age, smoothed",
+    "crumbs": [
+      "<span class='chapter-number'>7</span>  <span class='chapter-title'>Naturalization</span>"
+    ]
+  },
+  {
+    "objectID": "07_naturalization.html#rate",
+    "href": "07_naturalization.html#rate",
+    "title": "7  Naturalization",
+    "section": "7.9 rate",
+    "text": "7.9 rate\n\n\n\n\n\n\n\n\nFigure 7.13: rate by age",
+    "crumbs": [
+      "<span class='chapter-number'>7</span>  <span class='chapter-title'>Naturalization</span>"
+    ]
+  },
+  {
+    "objectID": "07_naturalization.html#trend-factor-rate-ya-to-rate-a",
+    "href": "07_naturalization.html#trend-factor-rate-ya-to-rate-a",
+    "title": "7  Naturalization",
+    "section": "7.10 trend factor (‘rate ya’ to ‘rate a’)",
+    "text": "7.10 trend factor (‘rate ya’ to ‘rate a’)\n\n\n\n\n\n\n\n\nFigure 7.14: trend factor by year and age, focus on age\n\n\n\n\n\n\n\n\n\n\n\n\nFigure 7.15: trend factor by year and age, focus on years",
+    "crumbs": [
+      "<span class='chapter-number'>7</span>  <span class='chapter-title'>Naturalization</span>"
+    ]
+  },
+  {
+    "objectID": "07_naturalization.html#future-rate-dyas",
+    "href": "07_naturalization.html#future-rate-dyas",
+    "title": "7  Naturalization",
+    "section": "7.11 future rate (dyas)",
+    "text": "7.11 future rate (dyas)\nfuture naturalization rate by district, year, age, sex (male only)\n\n\n\n\n\n\n\n\nFigure 7.16: future rate by district, year, age, sex (male only)\n\n\n\n\nfuture naturalization rate by district, year, age, sex (female only)\n\n\n\n\n\n\n\n\nFigure 7.17: future rate by district, year, age, sex (female only)",
+    "crumbs": [
+      "<span class='chapter-number'>7</span>  <span class='chapter-title'>Naturalization</span>"
+    ]
+  },
+  {
+    "objectID": "07_naturalization.html#past-and-rate-dyas",
+    "href": "07_naturalization.html#past-and-rate-dyas",
+    "title": "7  Naturalization",
+    "section": "7.12 past and rate (dyas)",
+    "text": "7.12 past and rate (dyas)\n\n7.12.1 overview\n\n\n7.12.2 focus age\nplot: focus age distribution WHY this plot: it is recommendable to look precisely at the age plots over years therefore, a plot that focuses on certain years\n\n\n7.12.3 focus years",
+    "crumbs": [
+      "<span class='chapter-number'>7</span>  <span class='chapter-title'>Naturalization</span>"
+    ]
+  },
+  {
+    "objectID": "08_careb.html",
+    "href": "08_careb.html",
+    "title": "8  Capacity and reserves",
+    "section": "",
+    "text": "8.1 careb",
+    "crumbs": [
+      "<span class='chapter-number'>8</span>  <span class='chapter-title'>Capacity and reserves</span>"
+    ]
+  },
+  {
+    "objectID": "08_careb.html#careb",
+    "href": "08_careb.html#careb",
+    "title": "8  Capacity and reserves",
+    "section": "",
+    "text": "8.1.1 plot entire city, all owner categories\n\n\n\n\n\n\n\n\nFigure 8.1: entire city\n\n\n\n\n\n\n8.1.2 plot entire city, by owner\n\n\n\n\n\n\n\n\nFigure 8.2: entire city by owner\n\n\n\n\n\n\n8.1.3 capacity by district, cooperative housing\n\n\n\n\n\n\n\n\nFigure 8.3: capacity by district, cooperative housing\n\n\n\n\n\n\n8.1.4 capacity by district, private housing\n\n\n\n\n\n\n\n\nFigure 8.4: capacity by district, private housing\n\n\n\n\n\n\n8.1.5 buildings by district, cooperative housing\n\n\n\n\n\n\n\n\nFigure 8.5: buildings by district, cooperative housing\n\n\n\n\n\n\n8.1.6 buildings by district, private housing\n\n\n\n\n\n\n\n\nFigure 8.6: buildings by district, private housing\n\n\n\n\n\n\n8.1.7 reserves by district, cooperative housing\n\n\n\n\n\n\n\n\nFigure 8.7: reserves by district, cooperative housing\n\n\n\n\n\n\n8.1.8 reserves by district, private housing\n\n\n\n\n\n\n\n\nFigure 8.8: reserves by district, private housing\n\n\n\n\n\n\n8.1.9 usage by district, cooperative housing\n\n\n\n\n\n\n\n\nFigure 8.9: usage by district, cooperative housing\n\n\n\n\n\n\n8.1.10 usage by district, private housing\n\n\n\n\n\n\n\n\nFigure 8.10: usage by district, private housing\n\n\n\n\n\n\n8.1.11 selected districts\n\n\n\n\n\n\n\n\nFigure 8.11: selected districts, Hard\n\n\n\n\n\n\n\n\n\n\n\n\nFigure 8.12: selected districts, Escher Wyss\n\n\n\n\n\n\n\n\n\n\n\n\nFigure 8.13: selected districts, Oerlikon",
+    "crumbs": [
+      "<span class='chapter-number'>8</span>  <span class='chapter-title'>Capacity and reserves</span>"
+    ]
+  },
+  {
+    "objectID": "08_careb.html#combine-information-with-the-parameters",
+    "href": "08_careb.html#combine-information-with-the-parameters",
+    "title": "8  Capacity and reserves",
+    "section": "8.2 combine information (with the parameters)",
+    "text": "8.2 combine information (with the parameters)\n\n8.2.1 reserves (area)\nno area values below zero\n\n\n\n\n\n\n\n\nFigure 8.14: reserves by district and ownership\n\n\n\n\n\n\n8.2.2 usage proportion\n\n\n\n\n\n\n\n\nFigure 8.15: usage proportion by district and ownership\n\n\n\n\n\n\n8.2.3 usage area\n\n\n\n\n\n\n\n\nFigure 8.16: usage area by district and ownership",
+    "crumbs": [
+      "<span class='chapter-number'>8</span>  <span class='chapter-title'>Capacity and reserves</span>"
+    ]
+  },
+  {
+    "objectID": "08_careb.html#usage-per-year",
+    "href": "08_careb.html#usage-per-year",
+    "title": "8  Capacity and reserves",
+    "section": "8.3 usage per year",
+    "text": "8.3 usage per year\n\n8.3.1 usage proportion\n\n\n\n\n\n\n\n\nFigure 8.17: usage proportion by district and year\n\n\n\n\n\n\n8.3.2 usage area\n\n\n\n\n\n\n\n\nFigure 8.18: usage area by district and year",
+    "crumbs": [
+      "<span class='chapter-number'>8</span>  <span class='chapter-title'>Capacity and reserves</span>"
+    ]
+  },
+  {
+    "objectID": "09_living_space.html",
+    "href": "09_living_space.html",
+    "title": "9  Living space",
+    "section": "",
+    "text": "9.1 living space: past data",
+    "crumbs": [
+      "<span class='chapter-number'>9</span>  <span class='chapter-title'>Living space</span>"
+    ]
+  },
+  {
+    "objectID": "09_living_space.html#living-space-yearly",
+    "href": "09_living_space.html#living-space-yearly",
+    "title": "9  Living space",
+    "section": "",
+    "text": "9.1.1 livings space by year\nWHY? e.g. to support the base year decision\n\n\n\n\n\n\n\n\nFigure 9.1: living space by year\n\n\n\n\n\n\n9.1.2 living space by year and owner\n\n\n\n\n\n\n\n\nFigure 9.2: living space by year and owner",
+    "crumbs": [
+      "<span class='chapter-number'>9</span>  <span class='chapter-title'>Living space</span>"
+    ]
+  },
+  {
+    "objectID": "09_living_space.html#living-space-area-apartments-people-by-dyw",
+    "href": "09_living_space.html#living-space-area-apartments-people-by-dyw",
+    "title": "9  Living space",
+    "section": "9.2 living space (area, apartments, people, by dyw)",
+    "text": "9.2 living space (area, apartments, people, by dyw)\n\n9.2.1 space\n\n\n\n\n\n\n\n\nFigure 9.3: living space by district, year and owner\n\n\n\n\n\n\n9.2.2 area\n\n\n\n\n\n\n\n\nFigure 9.4: area by district, year and owner\n\n\n\n\n\n\n9.2.3 apartments\n\n\n\n\n\n\n\n\nFigure 9.5: apartments by district, year and owner\n\n\n\n\n\n\n9.2.4 people\n\n\n\n\n\n\n\n\nFigure 9.6: people by district, year and owner",
+    "crumbs": [
+      "<span class='chapter-number'>9</span>  <span class='chapter-title'>Living space</span>"
+    ]
+  },
+  {
+    "objectID": "09_living_space.html#predictions",
+    "href": "09_living_space.html#predictions",
+    "title": "9  Living space",
+    "section": "9.3 predictions",
+    "text": "9.3 predictions\n\n9.3.1 entire city, by owner\n\n\n\n\n\n\n\n\nFigure 9.7: living space prediction by year and ownership\n\n\n\n\n\n\n9.3.2 entire city, by district and owner\n\n\n\n\n\n\n\n\nFigure 9.8: living space prediction by district, year and ownership\n\n\n\n\n\n\n9.3.3 Escher Wyss, by owner\nWHY a different approach for the Escher Wyss district, private housing? the living space over time differs substantially from the other districts (increase until 2013, then decrease) reason: few apartments in 2008 then very intense construction activity numbers: less than 1500 apartments in 2008, more than 3100 apartments in 2017 after construction some apartments were finished, yet no one lived there yet for a certain moment the empty apartments increase the living space (based on buildings) due to the high ratio of new buildings (compared to existing buildings) the living space was increased this will not happen again in future (due to the higher amount of buildings)\n\n\n\n\n\n\n\n\nFigure 9.9: living space prediction for Escher Wyss district, by year and ownership",
+    "crumbs": [
+      "<span class='chapter-number'>9</span>  <span class='chapter-title'>Living space</span>"
+    ]
+  },
+  {
+    "objectID": "09_living_space.html#combine-datasets",
+    "href": "09_living_space.html#combine-datasets",
+    "title": "9  Living space",
+    "section": "9.4 combine datasets",
+    "text": "9.4 combine datasets\n\n9.4.1 past and prediction\n\n\n\n\n\n\n\n\nFigure 9.10: living space prediction by district, year and owner; different datasets\n\n\n\n\n\n\n9.4.2 living space prediction per district and entire city: cooperative housing\n\n\n\n\n\n\n\n\nFigure 9.11: living space prediction per district and entire city, cooperative housing\n\n\n\n\n\n\n9.4.3 prediction per district and entire city: private housing\n\n\n\n\n\n\n\n\nFigure 9.12: living space prediction per district and entire city, private housing",
+    "crumbs": [
+      "<span class='chapter-number'>9</span>  <span class='chapter-title'>Living space</span>"
+    ]
+  },
+  {
+    "objectID": "09_living_space.html#living-space-past-data",
+    "href": "09_living_space.html#living-space-past-data",
+    "title": "9  Living space",
+    "section": "",
+    "text": "9.1.1 living space by year\nWHY? e.g. to support the base year decision\n\n\n\n\n\n\n\n\nFigure 9.1: living space by year\n\n\n\n\n\n\n9.1.2 living space by year and owner\n\n\n\n\n\n\n\n\nFigure 9.2: living space by year and owner",
+    "crumbs": [
+      "<span class='chapter-number'>9</span>  <span class='chapter-title'>Living space</span>"
+    ]
+  },
+  {
+    "objectID": "09_living_space.html#living-space-past-data-by-district",
+    "href": "09_living_space.html#living-space-past-data-by-district",
+    "title": "9  Living space",
+    "section": "9.2 living space: past data by district",
+    "text": "9.2 living space: past data by district\n\n9.2.1 space\n\n\n\n\n\n\n\n\nFigure 9.3: living space by district, year and owner\n\n\n\n\n\n\n9.2.2 area\n\n\n\n\n\n\n\n\nFigure 9.4: area by district, year and owner\n\n\n\n\n\n\n9.2.3 apartments\n\n\n\n\n\n\n\n\nFigure 9.5: apartments by district, year and owner\n\n\n\n\n\n\n9.2.4 people\n\n\n\n\n\n\n\n\nFigure 9.6: people by district, year and owner",
+    "crumbs": [
+      "<span class='chapter-number'>9</span>  <span class='chapter-title'>Living space</span>"
+    ]
+  },
+  {
+    "objectID": "10_allocation.html",
+    "href": "10_allocation.html",
+    "title": "10  Allocation",
+    "section": "",
+    "text": "10.1 allocation: past data",
+    "crumbs": [
+      "<span class='chapter-number'>10</span>  <span class='chapter-title'>Allocation</span>"
+    ]
+  },
+  {
+    "objectID": "10_allocation.html#allocation-past-data",
+    "href": "10_allocation.html#allocation-past-data",
+    "title": "10  Allocation",
+    "section": "",
+    "text": "10.1.1 allocation by year\nWHY? e.g. to support the base year decision\n\n\n\n\n\n\n\n\nFigure 10.1: allocation by year\n\n\n\n\n\n\n10.1.2 allocation by year and owner\n\n\n\n\n\n\n\n\nFigure 10.2: allocation by year and owner",
+    "crumbs": [
+      "<span class='chapter-number'>10</span>  <span class='chapter-title'>Allocation</span>"
+    ]
+  },
+  {
+    "objectID": "10_allocation.html#allocation-past-data-by-district",
+    "href": "10_allocation.html#allocation-past-data-by-district",
+    "title": "10  Allocation",
+    "section": "10.2 allocation: past data by district",
+    "text": "10.2 allocation: past data by district\n\n10.2.1 allocation\n\n\n\n\n\n\n\n\nFigure 10.3: allocation by district, year and owner\n\n\n\n\n\n\n10.2.2 apartments\n\n\n\n\n\n\n\n\nFigure 10.4: apartments by district, year and owner\n\n\n\n\n\n\n10.2.3 people\n\n\n\n\n\n\n\n\nFigure 10.5: people by district, year and owner",
+    "crumbs": [
+      "<span class='chapter-number'>10</span>  <span class='chapter-title'>Allocation</span>"
+    ]
+  },
+  {
+    "objectID": "10_allocation.html#predictions",
+    "href": "10_allocation.html#predictions",
+    "title": "10  Allocation",
+    "section": "10.3 predictions",
+    "text": "10.3 predictions\n\n10.3.1 entire city, by owner\n\n\n\n\n\n\n\n\nFigure 10.6: allocation prediction by year and ownership\n\n\n\n\n\n\n10.3.2 entire city, by district and owner\n\n\n\n\n\n\n\n\nFigure 10.7: allocation prediction by district, year and ownership\n\n\n\n\n\n\n10.3.3 Escher Wyss, by owner\nWWHY a different approach for the Escher Wyss district, private housing? same approach as in the living space model.\n\n\n\n\n\n\n\n\nFigure 10.8: allocation prediction for Escher Wyss district, by year and ownership",
+    "crumbs": [
+      "<span class='chapter-number'>10</span>  <span class='chapter-title'>Allocation</span>"
+    ]
+  },
+  {
+    "objectID": "10_allocation.html#combine-datasets",
+    "href": "10_allocation.html#combine-datasets",
+    "title": "10  Allocation",
+    "section": "10.4 combine datasets",
+    "text": "10.4 combine datasets\n\n10.4.1 past and prediction\n\n\n\n\n\n\n\n\nFigure 10.9: allocation prediction by district, year and owner; different datasets\n\n\n\n\n\n\n10.4.2 allocation prediction per district and entire city: cooperative housing\n\n\n\n\n\n\n\n\nFigure 10.10: allocation prediction per district and entire city, cooperative housing\n\n\n\n\n\n\n10.4.3 prediction per district and entire city: private housing\n\n\n\n\n\n\n\n\nFigure 10.11: allocation prediction per district and entire city, private housing",
+    "crumbs": [
+      "<span class='chapter-number'>10</span>  <span class='chapter-title'>Allocation</span>"
+    ]
+  },
+  {
+    "objectID": "16_evaluation.html",
+    "href": "16_evaluation.html",
+    "title": "15  Evaluation",
+    "section": "",
+    "text": "15.1 Population",
+    "crumbs": [
+      "<span class='chapter-number'>15</span>  <span class='chapter-title'>Evaluation</span>"
+    ]
+  },
+  {
+    "objectID": "11_projects.html",
+    "href": "11_projects.html",
+    "title": "11  Projects",
+    "section": "",
+    "text": "11.1 indicators (new/removed apartments)",
+    "crumbs": [
+      "<span class='chapter-number'>11</span>  <span class='chapter-title'>Projects</span>"
+    ]
+  },
+  {
+    "objectID": "11_projects.html#indicators-newremoved-apartments",
+    "href": "11_projects.html#indicators-newremoved-apartments",
+    "title": "11  Projects",
+    "section": "",
+    "text": "11.1.1 by year\n\n\n\n\n\n\n\n\nFigure 11.1: projects by year\n\n\n\n\n\n\n11.1.2 by year, status\n\n\n\n\n\n\n\n\nFigure 11.2: projects by year and status\n\n\n\n\n\n\n11.1.3 by year, owner\n\n\n\n\n\n\n\n\nFigure 11.3: projects by year and owner\n\n\n\n\n\n\n11.1.4 by year, owner, status\n\n\n\n\n\n\n\n\nFigure 11.4: projects by year, owner and status\n\n\n\n\n\n\n11.1.5 by district, year\n\n\n\n\n\n\n\n\nFigure 11.5: projects by district and year\n\n\n\n\n\n\n11.1.6 by district, year, owner\nprojects by district, year, cooperative housing only\n\n\n\n\n\n\n\n\nFigure 11.6: projects by district, year, cooperative housing only\n\n\n\n\nprojects by district, year, private housing only\n\n\n\n\n\n\n\n\nFigure 11.7: projects by district, year, private housing only",
+    "crumbs": [
+      "<span class='chapter-number'>11</span>  <span class='chapter-title'>Projects</span>"
+    ]
+  },
+  {
+    "objectID": "11_projects.html#not-realized-projects",
+    "href": "11_projects.html#not-realized-projects",
+    "title": "11  Projects",
+    "section": "11.2 not realized projects",
+    "text": "11.2 not realized projects\n\n11.2.1 delayed\n\n\n\n\n\n\n\n\nFigure 11.8: projects delay by year\n\n\n\n\n\n\n11.2.2 initial vs. ‘not realized’/‘delayed’\n\n\n\n\n\n\ninitial vs. final amount of apartments\n\n\nindicator\ncorr\napartments\n\n\n\n\nnew\ninitial\n37409.0\n\n\nnew\nnot realized, delayed\n27284.5\n\n\nremoved\ninitial\n8129.0\n\n\nremoved\nnot realized, delayed\n5763.7\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nFigure 11.9: projects; initial, delayed and not realized, by year",
+    "crumbs": [
+      "<span class='chapter-number'>11</span>  <span class='chapter-title'>Projects</span>"
+    ]
+  },
+  {
+    "objectID": "13_housing.html",
+    "href": "13_housing.html",
+    "title": "12  Housing model",
+    "section": "",
+    "text": "12.1 population based on reserves\nWith the usage prediction (from capacity reserve module) and living space prediction\nthe additional (!) yearly (!) population is calculated. Therefore, these cumulative population values are added to the past population.\nFigure 12.1: people, capacity, reserves",
+    "crumbs": [
+      "<span class='chapter-number'>12</span>  <span class='chapter-title'>Housing model</span>"
+    ]
+  },
+  {
+    "objectID": "13_housing.html#combine-capacityreserves-and-ownership-prediction",
+    "href": "13_housing.html#combine-capacityreserves-and-ownership-prediction",
+    "title": "12  Housing model",
+    "section": "",
+    "text": "12.1.1 proportion of cooperative housing according to capacity/reserves\ncapacity/reserves contains only people due to additional (!) yearly (!) usage of reserves therefore, add the cumulative values to the past population\nwith past (for plot) why? for plotting why a plot? to check if capacity/reserves population values are… …meaningful in comparison to the past\n\n\n\n\n\n\n\n\nFigure 12.1: people, capacity, reserves\n\n\n\n\n\n\n12.1.2 proportion cooperative housing (according to capacity/reserves vs. district trends)",
+    "crumbs": [
+      "<span class='chapter-number'>12</span>  <span class='chapter-title'>Housing model</span>"
+    ]
+  },
+  {
+    "objectID": "13_housing.html#projects-capcity-and-reserves",
+    "href": "13_housing.html#projects-capcity-and-reserves",
+    "title": "12  Housing model",
+    "section": "12.2 projects, capcity and reserves",
+    "text": "12.2 projects, capcity and reserves\n\n12.2.1 with the past\n\n\n12.2.2 by district (without owner)\n\n\n12.2.3 all (entire city)",
+    "crumbs": [
+      "<span class='chapter-number'>12</span>  <span class='chapter-title'>Housing model</span>"
+    ]
+  },
+  {
+    "objectID": "13_housing.html#compare-projects-and-reserves",
+    "href": "13_housing.html#compare-projects-and-reserves",
+    "title": "12  Housing model",
+    "section": "12.3 compare projects and reserves",
+    "text": "12.3 compare projects and reserves\n\n12.3.1 projects and reserves (cumulative amount of people)\n\n\n12.3.2 total people per district and ownership\nWHY not with the object car_spa? it is easier to calculate totals with the original objects and closer to ‘raw’ data, i.e. ownership trends not considered\n\n\n12.3.3 total proportion by district and ownership\n\n\n12.3.4 total people by district\n\n\n12.3.5 total proportion by district",
+    "crumbs": [
+      "<span class='chapter-number'>12</span>  <span class='chapter-title'>Housing model</span>"
+    ]
+  },
+  {
+    "objectID": "13_housing.html#population-according-to-capacity-reserves-and-livingspace-prediction",
+    "href": "13_housing.html#population-according-to-capacity-reserves-and-livingspace-prediction",
+    "title": "12  Housing model",
+    "section": "",
+    "text": "12.1.1 proportion cooperative housing (according to capacity/reserves vs. district trends)",
+    "crumbs": [
+      "<span class='chapter-number'>12</span>  <span class='chapter-title'>Housing model</span>"
+    ]
+  },
+  {
+    "objectID": "13_housing.html#population-according-to-the-combination-of-usage-and-projects-prediction",
+    "href": "13_housing.html#population-according-to-the-combination-of-usage-and-projects-prediction",
+    "title": "12  Housing model",
+    "section": "12.2 population according to the combination of usage and projects prediction",
+    "text": "12.2 population according to the combination of usage and projects prediction\n\n12.2.1 population by district and ownership\n\n\n\n\n\n\n\n\nFigure 12.2: population by district and owner\n\n\n\n\n\n\n12.2.2 population by district\n\n\n\n\n\n\n\n\nFigure 12.3: population by district\n\n\n\n\n\n\n12.2.3 entire city\n\n\n\n\n\n\n\n\nFigure 12.4: population",
+    "crumbs": [
+      "<span class='chapter-number'>12</span>  <span class='chapter-title'>Housing model</span>"
+    ]
+  },
+  {
+    "objectID": "13_housing.html#compare-usage-projects-final-prediction",
+    "href": "13_housing.html#compare-usage-projects-final-prediction",
+    "title": "12  Housing model",
+    "section": "12.3 compare usage, projects, final prediction",
+    "text": "12.3 compare usage, projects, final prediction\n\n12.3.1 usage, projects, final prediction by district, year, ownership\nusage, projects, final prediction by district, year, cooperative housing only\n\n\n\n\n\n\n\n\nFigure 12.5: usage, projects, final prediction by district, year, cooperative housing only\n\n\n\n\nusage, projects, final prediction by district, year, private housing only\n\n\n\n\n\n\n\n\nFigure 12.6: usage, projects, final prediction by district, year, private housing only\n\n\n\n\n\n\n12.3.2 total people per district and ownership\nWHY not with the object car_spa? it is easier to calculate totals with the original objects and closer to ‘raw’ data, i.e. ownership trends not considered\n\n\n12.3.3 total proportion by district and ownership\n\n\n12.3.4 total people by district\n\n\n12.3.5 total proportion by district",
+    "crumbs": [
+      "<span class='chapter-number'>12</span>  <span class='chapter-title'>Housing model</span>"
+    ]
+  },
+  {
+    "objectID": "13_housing.html#compare-projects-reserves-final-prediction",
+    "href": "13_housing.html#compare-projects-reserves-final-prediction",
+    "title": "12  Housing model",
+    "section": "12.3 compare projects, reserves, final prediction",
+    "text": "12.3 compare projects, reserves, final prediction\n\n12.3.1 projects, reserves, final prediction by district, year, ownership\nProjects, reserves, final prediction by district, year, cooperative housing only.\n\n\n\n\n\n\n\n\nFigure 12.5: projects, reserves, final prediction by district, year, cooperative housing only\n\n\n\n\nprojects, reserves, final prediction by district, year, private housing only\n\n\n\n\n\n\n\n\nFigure 12.6: projects, reserves, final prediction by district, year, private housing only\n\n\n\n\n\n\n12.3.2 people by district and ownership (projects vs. reserves)\n\n\n\n\n\n\n\n\nFigure 12.7: people by district and ownership (projects vs. reserves)\n\n\n\n\n\n\n12.3.3 proportion of the projects on the reserves by district and ownership\n\n\n\n\n\n\n\n\nFigure 12.8: proportion of the projects on the reserves by district and ownership\n\n\n\n\n\n\n12.3.4 people by district (projects vs. reserves)\n\n\n\n\n\n\n\n\nFigure 12.9: people by district (projects vs. reserves)\n\n\n\n\n\n\n12.3.5 proportion of the projects on the reserves by district\n\n\n\n\n\n\n\n\nFigure 12.10: proportion of the projects on the reserves by district",
+    "crumbs": [
+      "<span class='chapter-number'>12</span>  <span class='chapter-title'>Housing model</span>"
+    ]
+  },
+  {
+    "objectID": "13_housing.html#population-based-on-projects-and-reserves",
+    "href": "13_housing.html#population-based-on-projects-and-reserves",
+    "title": "12  Housing model",
+    "section": "12.2 population based on projects and reserves",
+    "text": "12.2 population based on projects and reserves\n\n12.2.1 population by district and ownership\n\n\n\n\n\n\n\n\nFigure 12.2: population by district and owner\n\n\n\n\n\n\n12.2.2 population by district\n\n\n\n\n\n\n\n\nFigure 12.3: population by district\n\n\n\n\n\n\n12.2.3 entire city\n\n\n\n\n\n\n\n\nFigure 12.4: population",
+    "crumbs": [
+      "<span class='chapter-number'>12</span>  <span class='chapter-title'>Housing model</span>"
+    ]
+  },
+  {
+    "objectID": "14_dem_house.html",
+    "href": "14_dem_house.html",
+    "title": "13  Demography and housing",
+    "section": "",
+    "text": "13.1 population limit",
+    "crumbs": [
+      "<span class='chapter-number'>13</span>  <span class='chapter-title'>Demography and housing</span>"
+    ]
+  },
+  {
+    "objectID": "14_dem_house.html#population-limit",
+    "href": "14_dem_house.html#population-limit",
+    "title": "13  Demography and housing",
+    "section": "",
+    "text": "13.1.1 balance checks\n\n\n13.1.2 absolute difference\ndifference: population limit minus population (based on migration trends)\nnegative value: not enough space (immigration decreased, emigration increased)\npositive value: too much space (immigration increased, emigration decreased)\n\n\n\n13.1.3 relative difference",
+    "crumbs": [
+      "<span class='chapter-number'>13</span>  <span class='chapter-title'>Demography and housing</span>"
+    ]
+  },
+  {
+    "objectID": "14_dem_house.html#migration-correction",
+    "href": "14_dem_house.html#migration-correction",
+    "title": "13  Demography and housing",
+    "section": "13.2 migration correction",
+    "text": "13.2 migration correction",
+    "crumbs": [
+      "<span class='chapter-number'>13</span>  <span class='chapter-title'>Demography and housing</span>"
+    ]
+  },
+  {
+    "objectID": "14_dem_house.html#smoothing-over-age",
+    "href": "14_dem_house.html#smoothing-over-age",
+    "title": "13  Demography and housing",
+    "section": "13.3 smoothing over age",
+    "text": "13.3 smoothing over age",
+    "crumbs": [
+      "<span class='chapter-number'>13</span>  <span class='chapter-title'>Demography and housing</span>"
+    ]
+  },
+  {
+    "objectID": "14_dem_house.html#wollishofen-population-and-migration",
+    "href": "14_dem_house.html#wollishofen-population-and-migration",
+    "title": "13  Demography and housing",
+    "section": "13.4 Wollishofen, population and migration",
+    "text": "13.4 Wollishofen, population and migration\n\n13.4.1 by year, age and origin\nwhy Wollishofen? need to check age patterns of this district why named d21? 21 is the number for district Wollishofen\n\n\n13.4.2 by year and age",
+    "crumbs": [
+      "<span class='chapter-number'>13</span>  <span class='chapter-title'>Demography and housing</span>"
+    ]
+  },
+  {
+    "objectID": "14_demography_housing.html",
+    "href": "14_demography_housing.html",
+    "title": "13  Demography and housing",
+    "section": "",
+    "text": "13.1 effects of the population limit",
+    "crumbs": [
+      "<span class='chapter-number'>13</span>  <span class='chapter-title'>Demography and housing</span>"
+    ]
+  },
+  {
+    "objectID": "14_demography_housing.html#population-limit",
+    "href": "14_demography_housing.html#population-limit",
+    "title": "13  Demography and housing",
+    "section": "",
+    "text": "13.1.1 absolute difference\ndifference: population limit minus population (based on migration trends)\nnegative value: not enough space (immigration decreased, emigration increased)\npositive value: too much space (immigration increased, emigration decreased)\n\n\n\n\n\n\n\n\n\nFigure 13.1: absolute difference of population limit\n\n\n\n\n\n\n13.1.2 relative difference\n\n\n\n\n\n\n\n\nFigure 13.2: relative difference of population limit",
+    "crumbs": [
+      "<span class='chapter-number'>13</span>  <span class='chapter-title'>Demography and housing</span>"
+    ]
+  },
+  {
+    "objectID": "14_demography_housing.html#migration-correction",
+    "href": "14_demography_housing.html#migration-correction",
+    "title": "13  Demography and housing",
+    "section": "13.2 migration correction",
+    "text": "13.2 migration correction\n\n13.2.1 immigration-star correction\n\n\n\n\n\n\n\n\nFigure 13.3: immigration-star correction\n\n\n\n\n\n\n13.2.2 emigration-star correction\n\n\n\n\n\n\n\n\nFigure 13.4: emigration-star correction",
+    "crumbs": [
+      "<span class='chapter-number'>13</span>  <span class='chapter-title'>Demography and housing</span>"
+    ]
+  },
+  {
+    "objectID": "14_demography_housing.html#smoothing-over-age",
+    "href": "14_demography_housing.html#smoothing-over-age",
+    "title": "13  Demography and housing",
+    "section": "13.3 smoothing over age",
+    "text": "13.3 smoothing over age\nPopulation smoothed over age, last prediction year, Swiss only.\n\n\n\n\n\n\n\n\nFigure 13.5: population smoothed over age, last prediction year, Swiss only\n\n\n\n\nPopulation smoothed over age, last prediction year, foreign only.\n\n\n\n\n\n\n\n\nFigure 13.6: population smoothed over age, last prediction year, foreign only",
+    "crumbs": [
+      "<span class='chapter-number'>13</span>  <span class='chapter-title'>Demography and housing</span>"
+    ]
+  },
+  {
+    "objectID": "14_demography_housing.html#wollishofen-population-and-migration",
+    "href": "14_demography_housing.html#wollishofen-population-and-migration",
+    "title": "13  Demography and housing",
+    "section": "13.4 Wollishofen, population and migration",
+    "text": "13.4 Wollishofen, population and migration\n\n13.4.1 by year, age and origin\nwhy Wollishofen? need to check age patterns of this district why named d21? 21 is the number for district Wollishofen\n\n\n\n\n\n\n\n\nFigure 13.7: Wollishofen population and migration, age, origin, first prediction year\n\n\n\n\n\n\n\n\n\n\n\n\nFigure 13.8: Wollishofen population and migration, age, origin, last prediction year",
+    "crumbs": [
+      "<span class='chapter-number'>13</span>  <span class='chapter-title'>Demography and housing</span>"
+    ]
+  },
+  {
+    "objectID": "14_demography_housing.html#effects-of-the-population-limit",
+    "href": "14_demography_housing.html#effects-of-the-population-limit",
+    "title": "13  Demography and housing",
+    "section": "",
+    "text": "13.1.1 absolute difference\ndifference: population limit minus population (based on migration trends)\nnegative value: not enough space (immigration decreased, emigration increased)\npositive value: too much space (immigration increased, emigration decreased)\n\n\n\n\n\n\n\n\n\nFigure 13.1: absolute difference of population limit\n\n\n\n\n\n\n13.1.2 relative difference\n\n\n\n\n\n\n\n\nFigure 13.2: relative difference of population limit",
+    "crumbs": [
+      "<span class='chapter-number'>13</span>  <span class='chapter-title'>Demography and housing</span>"
+    ]
+  },
+  {
+    "objectID": "15_model_output.html",
+    "href": "15_model_output.html",
+    "title": "14  Model outputs",
+    "section": "",
+    "text": "14.1 Population",
+    "crumbs": [
+      "<span class='chapter-number'>14</span>  <span class='chapter-title'>Model outputs</span>"
+    ]
+  },
+  {
+    "objectID": "15_model_output.html#population",
+    "href": "15_model_output.html#population",
+    "title": "14  Model outputs",
+    "section": "",
+    "text": "14.1.1 by year and scenario\n\n\n\n\n\n\n\n\nFigure 14.1: population by year and scenario\n\n\n\n\n\n\n14.1.2 by year, age and sex\n\n\n\n\n\n\n\n\nFigure 14.2: population by year, age and sex\n\n\n\n\n\n\n14.1.3 by district and year\n\n\n\n\n\n\n\n\nFigure 14.3: population by district and year\n\n\n\n\n\n\n14.1.4 by district, year and origin\n\n\n\n\n\n\n\n\nFigure 14.4: population by district, year and origin\n\n\n\n\n\n\n14.1.5 by district, year and origin; foreign population\n\n\n\n\n\n\n\n\nFigure 14.5: foreign proportion of population by district, year and origin\n\n\n\n\n\n\n14.1.6 by year, origin, scenario\n\n\n\n\n\n\n\n\nFigure 14.6: population by year, origin and scenario\n\n\n\n\n\n\n14.1.7 by year, origin, scenario; foreign population\n\n\n\n\n\n\n\n\nFigure 14.7: foreign proportion of population by year, origin and scenario\n\n\n\n\n\n\n14.1.8 by district, year, age and sex\n\n\n\n\n\n\n\n\nFigure 14.8: population by district, year, age and sex\n\n\n\n\n\n\n14.1.9 by district and year; selected years\nplot for slides\n\n\n\n\n\n\n\n\nFigure 14.9: population by district and year\n\n\n\n\n\n\n14.1.10 by district, year and scenario\n\n\n\n\n\n\n\n\nFigure 14.10: population by district, year and scenario\n\n\n\n\n\n\n14.1.11 year, age, scenario (children)\n\n\n\n\n\n\n\n\nFigure 14.11: year, age, scenario (children)\n\n\n\n\n\n\n14.1.12 year, age, birth version (children)\n\n\n\n\n\n\n\n\nFigure 14.12: year, age, birth version (children)",
+    "crumbs": [
+      "<span class='chapter-number'>14</span>  <span class='chapter-title'>Model outputs</span>"
+    ]
+  },
+  {
+    "objectID": "15_model_output.html#population-new-and-previous-scenarios",
+    "href": "15_model_output.html#population-new-and-previous-scenarios",
+    "title": "14  Model outputs",
+    "section": "14.2 population: new and previous scenarios",
+    "text": "14.2 population: new and previous scenarios\n\n14.2.1 by year and scenario\n\n\n\n\n\n\n\n\nFigure 14.13: previous and new population by year, scenario\n\n\n\n\n\n\n14.2.2 age: 80plus, by yso\n\n\n\n\n\n\n\n\nFigure 14.14: previous and new population for 80+ by sex and origin\n\n\n\n\n\n\n14.2.3 80plus, by year\n\n\n\n\n\n\n\n\nFigure 14.15: previous and new population for 80+ by year\n\n\n\n\n\n\n14.2.4 age categories, by year\n\n\n\n\n\n\n\n\nFigure 14.16: previous and new population by age categories\n\n\n\n\n\n\n14.2.5 only younger categories\n\n\n\n\n\n\n\n\nFigure 14.17: previous and new population for 19- by age categories\n\n\n\n\n\n\n14.2.6 only elder categories\n\n\n\n\n\n\n\n\nFigure 14.18: previous and new population for 60+ by age categories\n\n\n\n\n\n\n14.2.7 new and previous: by dy (selected years only)\n\n\n\n\n\n\n\n\nFigure 14.19: previous and new population by district",
+    "crumbs": [
+      "<span class='chapter-number'>14</span>  <span class='chapter-title'>Model outputs</span>"
+    ]
+  },
+  {
+    "objectID": "15_model_output.html#birth",
+    "href": "15_model_output.html#birth",
+    "title": "14  Model outputs",
+    "section": "14.3 birth",
+    "text": "14.3 birth\n\n14.3.1 by year and scenario (main scenarios)\n\n\n\n\n\n\n\n\nFigure 14.20: births by year and scenario\n\n\n\n\n\n\n14.3.2 by year, origin and scenario\n\n\n\n\n\n\n\n\nFigure 14.21: births by year, origin and scenario\n\n\n\n\n\n\n14.3.3 births by year and birth versions (middle scenario)\n\n\n\n\n\n\n\n\nFigure 14.22: births by year and birth version (middle scenario)\n\n\n\n\n\n\n14.3.4 TFR by year and birth versions (middle scenario)\n\n\n\n\n\n\n\n\nFigure 14.23: TFR by year and birth version (middle scenario)\n\n\n\n\n\n\n14.3.5 TFR by year, origin of mother, and birth versions (middle scenario)\n\n\n\n\n\n\n\n\nFigure 14.24: TFR by year, origin of mother, and birth version (middle scenario)\n\n\n\n\n\n\n14.3.6 fertility rate by year and birth versions (middle scenario)\n\n\n\n\n\n\n\n\nFigure 14.25: fertility rate by year and birth version (middle scenario)\n\n\n\n\n\n\n14.3.7 births by district, year and origin\n\n\n\n\n\n\n\n\nFigure 14.26: births by district, year and origin\n\n\n\n\n\n\n14.3.8 foreign proportion of births by district, year\n\n\n\n\n\n\n\n\nFigure 14.27: foreign proportion of births by district, year",
+    "crumbs": [
+      "<span class='chapter-number'>14</span>  <span class='chapter-title'>Model outputs</span>"
+    ]
+  },
+  {
+    "objectID": "15_model_output.html#death",
+    "href": "15_model_output.html#death",
+    "title": "14  Model outputs",
+    "section": "14.4 death",
+    "text": "14.4 death\n\n14.4.1 by year and scenario\n\n\n\n\n\n\n\n\nFigure 14.28: deaths by year and scenario\n\n\n\n\n\n\n14.4.2 by year, age and scenario\n\n\n\n\n\n\n\n\nFigure 14.29: deaths by year, age and scenario\n\n\n\n\n\n\n14.4.3 by year and sex\nfor the middle scenario\n\n\n\n\n\n\n\n\nFigure 14.30: deaths by year and sex\n\n\n\n\n\n\n14.4.4 by year, age and sex\n\n\n\n\n\n\n\n\nFigure 14.31: deaths by year, age and sex",
+    "crumbs": [
+      "<span class='chapter-number'>14</span>  <span class='chapter-title'>Model outputs</span>"
+    ]
+  },
+  {
+    "objectID": "15_model_output.html#immigration",
+    "href": "15_model_output.html#immigration",
+    "title": "14  Model outputs",
+    "section": "14.5 immigration",
+    "text": "14.5 immigration\n\n14.5.1 by year and scenario\n\n\n\n\n\n\n\n\nFigure 14.32: immigration by year and scenario\n\n\n\n\n\n\n14.5.2 by year and age\n\n\n\n\n\n\n\n\nFigure 14.33: immigration by year and age\n\n\n\n\n\n\n14.5.3 by year, age (children) and scenario\n\n\n\n\n\n\n\n\nFigure 14.34: immigration by year, age (children) and scenario\n\n\n\n\n\n\n14.5.4 by year, age and origin\n\n\n\n\n\n\n\n\nFigure 14.35: immigration by year, age and origin\n\n\n\n\n\n\n14.5.5 by district, year and origin\n\n\n\n\n\n\n\n\nFigure 14.36: immigration by district, year and origin\n\n\n\n\n\n\n14.5.6 by district, year and origin; foreign population\n\n\n\n\n\n\n\n\nFigure 14.37: foreign proportion of immigration by district, year and origin",
+    "crumbs": [
+      "<span class='chapter-number'>14</span>  <span class='chapter-title'>Model outputs</span>"
+    ]
+  },
+  {
+    "objectID": "15_model_output.html#emigration",
+    "href": "15_model_output.html#emigration",
+    "title": "14  Model outputs",
+    "section": "14.6 emigration",
+    "text": "14.6 emigration\n\n14.6.1 by year and scenario\n\n\n\n\n\n\n\n\nFigure 14.38: emigration by year and scenario\n\n\n\n\n\n\n14.6.2 by year and age\n\n\n\n\n\n\n\n\nFigure 14.39: emigration by year and age\n\n\n\n\n\n\n14.6.3 by year, age (children) and scenario\n\n\n\n\n\n\n\n\nFigure 14.40: emigration by year, age (children) and scenario\n\n\n\n\n\n\n14.6.4 by year, age and origin\n\n\n\n\n\n\n\n\nFigure 14.41: emigration by year, age and origin\n\n\n\n\n\n\n14.6.5 by district, year and origin\n\n\n\n\n\n\n\n\nFigure 14.42: emigration by district, year and origin\n\n\n\n\n\n\n14.6.6 by district, year and origin; foreign population\n\n\n\n\n\n\n\n\nFigure 14.43: foreign proportion of emigration by district, year and origin",
+    "crumbs": [
+      "<span class='chapter-number'>14</span>  <span class='chapter-title'>Model outputs</span>"
+    ]
+  },
+  {
+    "objectID": "15_model_output.html#net-migration",
+    "href": "15_model_output.html#net-migration",
+    "title": "14  Model outputs",
+    "section": "14.7 net migration",
+    "text": "14.7 net migration\n\n14.7.1 by year and scenario\n\n\n\n\n\n\n\n\nFigure 14.44: net migration by year and scenario\n\n\n\n\n\n\n14.7.2 by district, year and origin\n\n\n\n\n\n\n\n\nFigure 14.45: net migration by district, year and origin\n\n\n\n\n\n\n14.7.3 by year, age (children) and scenario\n\n\n\n\n\n\n\n\nFigure 14.46: net migration by year and age (children)",
+    "crumbs": [
+      "<span class='chapter-number'>14</span>  <span class='chapter-title'>Model outputs</span>"
+    ]
+  },
+  {
+    "objectID": "15_model_output.html#naturalization",
+    "href": "15_model_output.html#naturalization",
+    "title": "14  Model outputs",
+    "section": "14.8 naturalization",
+    "text": "14.8 naturalization\n\n14.8.1 by year and scenario\n\n\n\n\n\n\n\n\nFigure 14.47: naturalization by year and scenario\n\n\n\n\n\n\n14.8.2 by district and year\n\n\n\n\n\n\n\n\nFigure 14.48: naturalization by district and year",
+    "crumbs": [
+      "<span class='chapter-number'>14</span>  <span class='chapter-title'>Model outputs</span>"
+    ]
+  },
+  {
+    "objectID": "15_model_output.html#relocation",
+    "href": "15_model_output.html#relocation",
+    "title": "14  Model outputs",
+    "section": "14.9 relocation",
+    "text": "14.9 relocation\n\n14.9.1 by year, scenario and category\npast: no district WHY? since for future data only one district available one district does not make sense for relocation (the district comes from immigration* and emigration*)\n\n\n\n\n\n\n\n\nFigure 14.49: relocation by year, scenario and category",
+    "crumbs": [
+      "<span class='chapter-number'>14</span>  <span class='chapter-title'>Model outputs</span>"
+    ]
+  },
+  {
+    "objectID": "15_model_output.html#bzo-comparison",
+    "href": "15_model_output.html#bzo-comparison",
+    "title": "14  Model outputs",
+    "section": "14.10 BZO comparison",
+    "text": "14.10 BZO comparison\n\n14.10.1 by year and scenario\n\n\n14.10.2 by district, year, scenario\ncomparison for the last pusblished scenario year",
+    "crumbs": [
+      "<span class='chapter-number'>14</span>  <span class='chapter-title'>Model outputs</span>"
+    ]
+  },
+  {
+    "objectID": "16_evaluation.html#population",
+    "href": "16_evaluation.html#population",
+    "title": "15  Evaluation",
+    "section": "",
+    "text": "15.1.1 Population by year\n\n\n\n\n\n\n\n\nFigure 15.1: evaluation by year (middle scenario only)\n\n\n\n\n\n\n\n\n\n\n\n\nFigure 15.2: evaluation by year (lower and upper scenario)\n\n\n\n\n\n\n\n\n\n\n\n\nFigure 15.3: evaluation by year (lower, middle, and upper scenario)\n\n\n\n\n\n\n15.1.2 Population by district and year\nEvaluation by district (last publication)\n\n\n\n\n\n\n\n\nFigure 15.4: evaluation by district (last publication)\n\n\n\n\nEvaluation by district (‘first’ publication, 2016), the first publication with the current model structure.\n\n\n\n\n\n\n\n\nFigure 15.5: evaluation by district (‘first’ publication, 2016)\n\n\n\n\n\n\n15.1.3 Population by year and age\n\n\n\n\n\n\n\n\nFigure 15.6: evaluation by year and age category (middle scenario only)",
+    "crumbs": [
+      "<span class='chapter-number'>15</span>  <span class='chapter-title'>Evaluation</span>"
+    ]
+  },
+  {
+    "objectID": "16_evaluation.html#birth",
+    "href": "16_evaluation.html#birth",
+    "title": "15  Evaluation",
+    "section": "15.2 Birth",
+    "text": "15.2 Birth\n\n15.2.1 Birth by year\n\n\n\n\n\n\n\n\nFigure 15.7: birth evaluation by year (middle scenario only)\n\n\n\n\n\n\n15.2.2 death by year\n\n\n\n\n\n\n\n\nFigure 15.8: death evaluation by year (middle scenario only)",
+    "crumbs": [
+      "<span class='chapter-number'>15</span>  <span class='chapter-title'>Evaluation</span>"
+    ]
+  },
+  {
+    "objectID": "16_evaluation.html#births",
+    "href": "16_evaluation.html#births",
+    "title": "15  Evaluation",
+    "section": "15.2 Births",
+    "text": "15.2 Births\n\n15.2.1 Births by year\n\n\n\n\n\n\n\n\nFigure 15.7: birth evaluation by year (middle scenario only)",
+    "crumbs": [
+      "<span class='chapter-number'>15</span>  <span class='chapter-title'>Evaluation</span>"
+    ]
+  },
+  {
+    "objectID": "16_evaluation.html#deaths",
+    "href": "16_evaluation.html#deaths",
+    "title": "15  Evaluation",
+    "section": "15.3 Deaths",
+    "text": "15.3 Deaths\n\n15.3.1 Death by year\n\n\n\n\n\n\n\n\nFigure 15.8: death evaluation by year (middle scenario only)",
+    "crumbs": [
+      "<span class='chapter-number'>15</span>  <span class='chapter-title'>Evaluation</span>"
+    ]
+  },
+  {
+    "objectID": "16_evaluation.html#immigration",
+    "href": "16_evaluation.html#immigration",
+    "title": "15  Evaluation",
+    "section": "15.4 Immigration",
+    "text": "15.4 Immigration\n\n15.4.1 Immigration by year\n\n\n\n\n\n\n\n\nFigure 15.9: immigration evaluation by year (middle scenario only)",
+    "crumbs": [
+      "<span class='chapter-number'>15</span>  <span class='chapter-title'>Evaluation</span>"
+    ]
+  },
+  {
+    "objectID": "16_evaluation.html#emigration",
+    "href": "16_evaluation.html#emigration",
+    "title": "15  Evaluation",
+    "section": "15.5 Emigration",
+    "text": "15.5 Emigration\n\n15.5.1 Emigration by year\n\n\n\n\n\n\n\n\nFigure 15.10: emigration evaluation by year (middle scenario only)",
+    "crumbs": [
+      "<span class='chapter-number'>15</span>  <span class='chapter-title'>Evaluation</span>"
+    ]
+  },
+  {
+    "objectID": "16_evaluation.html#net-migration",
+    "href": "16_evaluation.html#net-migration",
+    "title": "15  Evaluation",
+    "section": "15.6 Net migration",
+    "text": "15.6 Net migration\n\n15.6.1 net migration by year\n\n\n\n\n\n\n\n\nFigure 15.11: net migration evaluation by year (middle scenario only)",
+    "crumbs": [
+      "<span class='chapter-number'>15</span>  <span class='chapter-title'>Evaluation</span>"
+    ]
+  },
+  {
+    "objectID": "16_evaluation.html#naturalization",
+    "href": "16_evaluation.html#naturalization",
+    "title": "15  Evaluation",
+    "section": "15.7 Naturalization",
+    "text": "15.7 Naturalization\n\n15.7.1 Naturalization by year\n\n\n\n\n\n\n\n\nFigure 15.12: naturalization evaluation by year (middle scenario only)",
+    "crumbs": [
+      "<span class='chapter-number'>15</span>  <span class='chapter-title'>Evaluation</span>"
+    ]
+  }
+]
